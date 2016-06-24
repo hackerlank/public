@@ -1,0 +1,8 @@
+NAME= server
+BUILDMODE=execute
+CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -D_DEBUG
+CFLAGS+= -I../ -I../../ -I$(DEPENDENCIES)/include
+LDFLAGS+= -L$(DEPENDENCIES)/lib
+LIBS+= -lkeye -lcurses -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono -lpthread
+SRCS= alloc_test.cpp cache_test.cpp mysql_test.cpp server.cpp stdafx.cpp
+INCS= ../htio_fx.h alloc_test.h cache_test.h mysql_test.h stdafx.h

@@ -1,0 +1,8 @@
+NAME= autobot
+BUILDMODE=execute
+CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -D_DEBUG
+CFLAGS+= -I../ -I../../ -I$(DEPENDENCIES)/include
+LDFLAGS+= -L$(DEPENDENCIES)/lib
+LIBS+= -lkeye -lcurses -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono
+SRCS= autobot.cpp robot.cpp robot_ai.cpp stdafx.cpp
+INCS= ../htio_fx.h protocal.h robot.h robot_ai.h stdafx.h
