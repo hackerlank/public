@@ -1,21 +1,21 @@
 NAME= keye
 BUILDMODE=dynamic
 CFLAGS+= -D_DEBUG -D_CRT_SECURE_NO_DEPRECATE
-CFLAGS+= -I./ -I../ -I./htio/ -I./utility/threadpool/ -I$(DEPENDENCIES)/include -I/usr/local/mysql/mysql-advanced-5.6.24-linux-glibc2.5-x86_64/include
-LDFLAGS+= -L$(DEPENDENCIES)/lib
-#LIBS+= -lm -lmysqlclient -lstdc++ -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono -lwebsockets -lz
+CFLAGS+= -I./ -I../ -I./htio/ -I./utility/threadpool/ -I$(DEPENDENCIES)/include
+LDFLAGS+= -L$(DEPENDENCIES)/libs
+#LIBS+= -lboost_regex -lboost_thread -lboost_chrono -lwebsockets
 LIBS+= -lm -lmysqlclient -lstdc++ -lboost_system-mt -lboost_date_time-mt -lz
-SRCS= $(wildcard keye/allocator/*.cpp) \
-	$(wildcard keye/cache/*.cpp) \
-	$(wildcard keye/htio/*.cpp) \
+SRCS= $(wildcard keye/htio/*.cpp) \
+#	$(wildcard keye/allocator/*.cpp) \
+#	$(wildcard keye/cache/*.cpp) \
 	$(wildcard keye/keyeio/*.cpp) \
 	$(wildcard keye/wsio/*.cpp) \
 	$(wildcard keye/mysql_proxy/*.cpp) \
 	$(wildcard keye/utility/*.cpp) \
 	$(wildcard keye/*.cpp)
-INCS= $(wildcard keye/allocator/*.h) \
-	$(wildcard keye/cache/*.h) \
-	$(wildcard keye/htio/*.h) \
+INCS= $(wildcard keye/htio/*.h) \
+#	$(wildcard keye/allocator/*.h) \
+#	$(wildcard keye/cache/*.h) \
 	$(wildcard keye/htio/*.hpp) \
 	$(wildcard keye/htio/bas/*.hpp) \
 	$(wildcard keye/mysql_proxy/*.h) \
