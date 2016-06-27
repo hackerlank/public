@@ -70,7 +70,7 @@ private:
 	bool							_bExit;
 };};
 
-using namespace keye;
+namespace keye{
 // --------------------------------------------------------
 // service
 // --------------------------------------------------------
@@ -101,4 +101,4 @@ void service::unset_timer(size_t id){
 void service::post_event(void* buf,size_t length){
 	if(_svc)_svc->post_event(buf,length);
 }
-
+};
