@@ -36,20 +36,20 @@ typedef struct
         unsigned char in[64];
 } MD5Context;
 
+/*
 #ifdef __cplusplus
-extern "C"
-{
+extern "C"{
 #endif
-
+*/
 void MD5Init( MD5Context *ctx );
 void MD5Update( MD5Context *ctx, unsigned char *buf, unsigned len );
 void MD5Final( unsigned char digest[16], MD5Context *ctx );
 void MD5Transform( uint32 buf[4], uint32 in[16] );
-
+/*
 #ifdef __cplusplus
-}  /* end extern "C" */
+}  // end extern "C"
 #endif
-
+*/
 /*
  * This is needed to make RSAREF happy on some MS-DOS compilers.
  */

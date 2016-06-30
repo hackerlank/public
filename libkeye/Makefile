@@ -144,6 +144,7 @@ echo:
 # Object file rules.
 ##############################################################################
 OBJS=$(patsubst %.cpp,%.o,$(wildcard $(SRCS)))
+#OBJS+=$(patsubst %.c,%.o,$(wildcard $(SRCS)))
 $(SRCS):$(INCS)
 
 %.o: %.c

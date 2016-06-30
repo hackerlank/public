@@ -45,7 +45,7 @@ public:
 		,interval(WRITE_FREQ)
 		,pack(WRITE_MIN)
 		,conns(0){}
-
+	virtual	~RawService(){}
 	bool	client,show_status,response,send,echo,crc;
 	size_t	conns,interval,pack;
 protected:
