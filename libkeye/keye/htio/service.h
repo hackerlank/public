@@ -13,7 +13,7 @@
 
 #pragma warning(disable:4251)	//avoid export implementation class
 
-using namespace keye;
+namespace keye{
 // --------------------------------------------------------
 /* service to process io,
 	io runs on io threads,events and timer run on work threads,
@@ -49,5 +49,5 @@ private:
 	std::shared_ptr<service_impl>	_svc;
 };
 // --------------------------------------------------------
-//};
+};
 #endif // _service_h_
