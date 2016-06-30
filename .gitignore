@@ -1,0 +1,9 @@
+.vs/
+ipch/
+bin/
+intermediate/
+server.sdf
+server.VC.opendb
+server/.vs/
+*.o
+*.so
