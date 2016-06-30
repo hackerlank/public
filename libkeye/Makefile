@@ -2,27 +2,12 @@
 # keye Makefile. Requires GNU Make.
 # Copyright (C) 2005-2012 Keye Leo.
 ##############################################################################
-
 NAME=    keye
 export PREFIX= bin
 
 CC= gcc
 CXX= g++ -std=c++11
 #
-# Since the assembler part does NOT maintain a frame pointer, it's pointless
-# to slow down the C part by not omitting it. Debugging, tracebacks and
-# unwinding are not affected -- the assembler part has frame unwind
-# information and GCC emits it where needed (x64) or with -g (see CCDEBUG).
-CCOPT= -O0 -fomit-frame-pointer
-#
-CCDEBUG= -g
-#
-CCWARN= -Wall
-# Uncomment the next line to enable more warnings:
-#CCWARN+= -Wextra -Wdeclaration-after-statement -Wredundant-decls -Wshadow -Wpointer-arith
-#
-##############################################################################
-
 ##############################################################################
 ################################  BUILD MODE  ################################
 ##############################################################################
@@ -32,23 +17,6 @@ BUILDMODE= execute
 ##############################################################################
 # Flags and options for host and target.
 ##############################################################################
-
-# You can override the following variables at the make command line:
-#   CC       HOST_CC       STATIC_CC       DYNAMIC_CC
-#   CXX      HOST_CXX      STATIC_CXX      DYNAMIC_CXX
-#   CFLAGS   HOST_CFLAGS   TARGET_CFLAGS
-#   CXXFLAGS HOST_CXXFLAGS TARGET_CXXFLAGS
-#   LDFLAGS  HOST_LDFLAGS  TARGET_LDFLAGS  TARGET_SHLDFLAGS
-#   LIBS     HOST_LIBS     TARGET_LIBS
-#   CROSS    HOST_SYS      TARGET_SYS      TARGET_FLAGS
-#
-# Cross-compilation examples:
-#   make HOST_CC="gcc -m32" CROSS=i586-mingw32msvc- TARGET_SYS=Windows
-#   make HOST_CC="gcc -m32" CROSS=powerpc-linux-gnu-
-
-CCOPTIONS= $(CCDEBUG) $(CCOPT) $(CCWARN) $(CFLAGS)
-LDOPTIONS= $(CCDEBUG) $(LDFLAGS)
-
 Q= @
 E= @echo
 HOST_CC= $(CC)
@@ -71,24 +39,25 @@ TARGET_A=  lib$(NAME).a
 TARGET_SO=	lib$(NAME).so
 TARGETS=   $(TARGET_T)
 
-#TARGET_DYLIBNAME= $(NAME).$(VERSION).dylib
-TARGET_DYLIBNAME= $(NAME).dylib
-TARGET_DYLIBPATH= $(or $(PREFIX),/usr/local)/lib/$(TARGET_DYLIBNAME)
-TARGET_DLLNAME= $(NAME).dll
-TARGET_XSHLDFLAGS= -shared -fPIC -Wl,-soname,$(TARGET_SO)
-TARGET_DYNXLDOPTS=
-
 SRCS=
 INCS=
-CFLAGS+= -U_FORTIFY_SOURCE -I./
-LDFLAGS+= -L./ -L/usr/lib
-LIBS+= -lm -lstdc++
-# Target flags and source option.
+CFLAGS= -U_FORTIFY_SOURCE -I./
+LDFLAGS= -L./ -L/usr/lib
+LIBS= -lm -lstdc++
+CCDEBUG=
+CCOPT= -fomit-frame-pointer
+CCWARN= -Wall
+
+# Override: NAME,BUILDMODE,CFLAGS,LDFLAGS,LIBS,SRCS,INCS,CCDEBUG,CCOPT
 include Makefile.dep
+
+CCOPTIONS= $(CCDEBUG) $(CCOPT) $(CCWARN) $(CFLAGS)
+LDOPTIONS= $(CCDEBUG) $(LDFLAGS)
 
 TARGET_XCFLAGS= $(CCOPTIONS) $(TARGET_FLAGS) $(TARGET_CFLAGS)
 TARGET_XLDFLAGS= $(LDOPTIONS) $(TARGET_FLAGS) $(TARGET_LDFLAGS)
-TARGET_XSHLDFLAGS+= $(LDOPTIONS) $(TARGET_FLAGS) $(TARGET_SHLDFLAGS)
+TARGET_XSHLDFLAGS= $(LDOPTIONS) $(TARGET_FLAGS) $(TARGET_SHLDFLAGS)
+TARGET_XSHLDFLAGS+= -shared -fPIC -Wl,-soname,$(TARGET_SO)
 TARGET_XLIBS= $(LIBS)
 
 ##############################################################################
@@ -123,7 +92,6 @@ ifeq (dynamic,$(BUILDMODE))
   TARGET_CC= $(DYNAMIC_CC)
   TARGET_CXX= $(DYNAMIC_CXX)
   TARGETS= $(TARGET_SO)
-  TARGET_XLDFLAGS+= $(TARGET_DYNXLDOPTS)
 endif
 endif
 
