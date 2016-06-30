@@ -18,7 +18,7 @@
 typedef std::allocator<char> alloc_type;	//we can override this allocator
 #include "svc_handler.hpp"
 #include "work_handler.hpp"
-namespace keye{
+using namespace keye;
 class service_impl{
 public:
 	service_impl(service& w,size_t ios,size_t works,size_t rb_size)
@@ -68,9 +68,9 @@ private:
 	std::shared_ptr<service_type>	service_;
 	std::shared_ptr<std::thread>	_thread;
 	bool							_bExit;
-};};
+};//};
 
-namespace keye{
+//namespace keye{
 // --------------------------------------------------------
 // service
 // --------------------------------------------------------
@@ -101,4 +101,4 @@ void service::unset_timer(size_t id){
 void service::post_event(void* buf,size_t length){
 	if(_svc)_svc->post_event(buf,length);
 }
-};
+//};

@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 	server.run(port);
 
 	printf("press any key to continue ...\n");
-	getch();
+	//getch();
 
 	return 0;
 }
