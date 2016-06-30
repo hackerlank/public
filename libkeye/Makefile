@@ -89,7 +89,7 @@ include Makefile.dep
 TARGET_XCFLAGS= $(CCOPTIONS) $(TARGET_FLAGS) $(TARGET_CFLAGS)
 TARGET_XLDFLAGS= $(LDOPTIONS) $(TARGET_FLAGS) $(TARGET_LDFLAGS)
 TARGET_XSHLDFLAGS+= $(LDOPTIONS) $(TARGET_FLAGS) $(TARGET_SHLDFLAGS)
-TARGET_XLIBS= $(LIBS) $(TARGET_LIBS)
+TARGET_XLIBS= $(LIBS)
 
 ##############################################################################
 # System detection.
