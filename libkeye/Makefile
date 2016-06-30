@@ -49,16 +49,11 @@ BUILDMODE= execute
 CCOPTIONS= $(CCDEBUG) $(CCOPT) $(CCWARN) $(CFLAGS)
 LDOPTIONS= $(CCDEBUG) $(LDFLAGS)
 
+Q= @
+E= @echo
 HOST_CC= $(CC)
 HOST_CXX= $(CXX)
 HOST_RM= rm -f
-
-HOST_XCFLAGS= -I.
-HOST_XLDFLAGS=
-HOST_XLIBS=
-HOST_ACFLAGS= $(CCOPTIONS) $(HOST_XCFLAGS) $(TARGET_ARCH) $(HOST_CFLAGS)
-HOST_ALDFLAGS= $(LDOPTIONS) $(HOST_XLDFLAGS) $(HOST_LDFLAGS)
-HOST_ALIBS= $(HOST_XLIBS) $(LIBS) $(HOST_LIBS)
 
 STATIC_CC = $(CC)
 DYNAMIC_CC = $(CC) -fPIC
@@ -100,66 +95,16 @@ TARGET_XLIBS= $(LIBS) $(TARGET_LIBS)
 # System detection.
 ##############################################################################
 
-ifeq (Windows,$(findstring Windows,$(OS))$(MSYSTEM)$(TERM))
-  HOST_SYS= Windows
-  HOST_RM= del
-else
-  HOST_SYS:= $(shell uname -s)
-  ifneq (,$(findstring MINGW,$(HOST_SYS)))
-    HOST_SYS= Windows
-    HOST_MSYS= mingw
-  endif
-  ifneq (,$(findstring CYGWIN,$(HOST_SYS)))
-    HOST_SYS= Windows
-    HOST_MSYS= cygwin
-  endif
-endif
-
+HOST_SYS:= $(shell uname -s)
 TARGET_SYS?= $(HOST_SYS)
-ifeq (Windows,$(TARGET_SYS))
-  TARGET_STRIP+= --strip-unneeded
-  TARGET_XSHLDFLAGS= -shared
-  TARGET_DYNXLDOPTS=
-else
-ifeq (Darwin,$(TARGET_SYS))
-  ifeq (,$(MACOSX_DEPLOYMENT_TARGET))
-    export MACOSX_DEPLOYMENT_TARGET=10.4
-  endif
-  TARGET_STRIP+= -x
-  TARGET_AR+= 2>/dev/null
+ifneq (,$(findstring stack-protector,$(shell $(TARGET_CC) -dumpspecs)))
   TARGET_XCFLAGS+= -fno-stack-protector
-  TARGET_XSHLDFLAGS= -dynamiclib -single_module -undefined dynamic_lookup -fPIC
-  TARGET_DYNXLDOPTS=
-  TARGET_XSHLDFLAGS+= -install_name $(TARGET_DYLIBPATH) -compatibility_version $(MAJVER).$(MINVER) -current_version $(MAJVER).$(MINVER).$(RELVER)
-  ifeq (x64,$(TARGET_LJARCH))
-    TARGET_XLDFLAGS+= -pagezero_size 10000 -image_base 100000000
-    TARGET_XSHLDFLAGS+= -image_base 7fff04c4a000
-  endif
-else
-ifeq (iOS,$(TARGET_SYS))
-  TARGET_STRIP+= -x
-  TARGET_AR+= 2>/dev/null
-  TARGET_XCFLAGS+= -fno-stack-protector
-  TARGET_XSHLDFLAGS= -dynamiclib -single_module -undefined dynamic_lookup -fPIC
-  TARGET_DYNXLDOPTS=
-  TARGET_XSHLDFLAGS+= -install_name $(TARGET_DYLIBPATH) -compatibility_version $(MAJVER).$(MINVER) -current_version $(MAJVER).$(MINVER).$(RELVER)
-else
-  ifneq (,$(findstring stack-protector,$(shell $(TARGET_CC) -dumpspecs)))
-    TARGET_XCFLAGS+= -fno-stack-protector
-  endif
-  ifneq (SunOS,$(TARGET_SYS))
-    ifneq (PS3,$(TARGET_SYS))
-      TARGET_XLDFLAGS+= -Wl,-E
-    endif
-  endif
-  ifeq (Linux,$(TARGET_SYS))
-    TARGET_XLIBS+= -ldl
-  endif
-  ifeq (GNU/kFreeBSD,$(TARGET_SYS))
-    TARGET_XLIBS+= -ldl
-  endif
 endif
+ifeq (Linux,$(TARGET_SYS))
+  TARGET_XLIBS+= -ldl
 endif
+ifeq (GNU/kFreeBSD,$(TARGET_SYS))
+  TARGET_XLIBS+= -ldl
 endif
 
 ifneq (,$(CCDEBUG))
@@ -181,11 +126,6 @@ ifeq (dynamic,$(BUILDMODE))
   TARGET_XLDFLAGS+= $(TARGET_DYNXLDOPTS)
 endif
 endif
-
-Q= @
-E= @echo
-#Q=
-#E= @:
 
 ALL_T= $(TARGET_T)
 ifeq (static,$(BUILDMODE))
