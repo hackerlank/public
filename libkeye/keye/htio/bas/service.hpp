@@ -74,7 +74,7 @@ public:
 			acceptor_.bind(endpoint_);
 			acceptor_.listen();
 		}catch(boost::system::system_error se){
-			KEYE_LOG(se.what());
+			KEYE_LOG("%s",se.what());
 		}
 		  // Accept new connection.
 		accept_one();

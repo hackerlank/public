@@ -9,15 +9,15 @@
  */
 // --------------------------------------------------------
 #include "stdafx.h"
-#include "htio_fwd.h"
+#include "htio/htio_fwd.h"
 // --------------------------------------------------------
 // service_impl: service->service_impl->bas::service
 //					|						 |
 //					 <--work_handler_impl<---
 // --------------------------------------------------------
 typedef std::allocator<char> alloc_type;	//we can override this allocator
-#include "svc_handler.hpp"
-#include "work_handler.hpp"
+#include "htio/svc_handler.hpp"
+#include "htio/work_handler.hpp"
 using namespace keye;
 class service_impl{
 public:

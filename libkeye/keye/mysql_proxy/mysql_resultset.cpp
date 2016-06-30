@@ -72,7 +72,7 @@ mysql_resultset_impl::mysql_resultset_impl(mysql_resultset& host,MYSQL_STMT* _st
 				//0,1,MYSQL_NO_DATA,MYSQL_DATA_TRUNCATED
 				char msg[64];
 				sprintf(msg,"mysql_stmt_fetch error %d\n",code);
-				KEYE_LOG(msg);
+				KEYE_LOG("%s",msg);
 				throw std::runtime_error(msg);
 			}
 
@@ -103,7 +103,7 @@ mysql_resultset_impl::mysql_resultset_impl(mysql_resultset& host,MYSQL_STMT* _st
 				//0,1,MYSQL_NO_DATA,MYSQL_DATA_TRUNCATED
 				char msg[64];
 				sprintf(msg,"mysql_stmt_fetch error %d\n",code);
-				KEYE_LOG(msg);
+				KEYE_LOG("%s",msg);
 				throw std::runtime_error(msg);
 			}
 
@@ -218,6 +218,8 @@ size_t mysql_resultset_impl::_field_len(e_field field_type){
 		break;
 	case EF_LONGLONG:
 		len = sizeof(uint64_t);
+		break;
+	default:
 		break;
 	}
 	return len;

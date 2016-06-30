@@ -152,7 +152,8 @@ public:
 #ifdef _DO_READ_TIMER
 	if(read_ptr_){
 #else
-	if(read_ptr_=(void*)allocator_->allocate(rb_size_)){
+	read_ptr_ = (void*)allocator_->allocate(rb_size_);
+	if(nullptr!= read_ptr_){
 #endif
 		auto b=boost::asio::buffer(read_ptr_,rb_size_);
 		io_service_->dispatch(boost::bind(&service_handler_type::_async_read_some_i<decltype(b)>,

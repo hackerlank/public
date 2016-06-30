@@ -110,7 +110,7 @@ bool csv_file::_parse(const std::string& buf){
 				_grids.push_back(cast_t(f.c_str()));
 			}
 			//contents
-			for(auto i=1;i<nl;++i){
+			for(decltype(nl) i=1;i<nl;++i){
 				fields.clear();
 				auto& line=lines[i];
 				if(parse_csv(fields,line,!_use_comma)){
@@ -224,7 +224,7 @@ void csv_file::print()const{
 	KEYE_LOG("rows=%d,columns=%d\n",(int)_rows,(int)_cols);
 	//title
 	for(size_t j=0;j<_cols;++j)
-		KEYE_LOG(LINE);
+		KEYE_LOG("%s",LINE);
 	KEYE_LOG("|\n");
 	for(size_t j=0;j<_cols;++j){
 		auto s=(const char*)_grids[j];
@@ -237,7 +237,7 @@ void csv_file::print()const{
 	KEYE_LOG("\n");
 	//content
 	for(size_t j=0;j<_cols;++j)
-		KEYE_LOG(LINE);
+		KEYE_LOG("%s",LINE);
 	KEYE_LOG("|\n");
 	for(size_t i=0;i<_rows;++i){
 		for(size_t j=0;j<_cols;++j){
@@ -251,7 +251,7 @@ void csv_file::print()const{
 		KEYE_LOG("\n");
 	}
 	for(size_t j=0;j<_cols;++j)
-		KEYE_LOG(LINE);
+		KEYE_LOG("%s",LINE);
 	KEYE_LOG("|\n");
 }
 // --------------------------------------------------------
@@ -452,7 +452,7 @@ void tab_file::print()const{
 	KEYE_LOG("rows=%d,columns=%d\n",(int)_rows,(int)_cols);
 	//title
 	for(size_t j=0;j<_cols;++j)
-		KEYE_LOG(LINE);
+		KEYE_LOG("%s",LINE);
 	KEYE_LOG("|\n");
 	for(size_t j=0;j<_cols;++j){
 		auto s=(const char*)_grids[j];
@@ -465,7 +465,7 @@ void tab_file::print()const{
 	KEYE_LOG("\n");
 	//content
 	for(size_t j=0;j<_cols;++j)
-		KEYE_LOG(LINE);
+		KEYE_LOG("%s",LINE);
 	KEYE_LOG("|\n");
 	for(size_t i=0;i<_rows;++i){
 		for(size_t j=0;j<_cols;++j){
@@ -479,7 +479,7 @@ void tab_file::print()const{
 		KEYE_LOG("\n");
 	}
 	for(size_t j=0;j<_cols;++j)
-		KEYE_LOG(LINE);
+		KEYE_LOG("%s",LINE);
 	KEYE_LOG("|\n");
 }
 // --------------------------------------------------------
@@ -504,7 +504,7 @@ bool ini_file::_parse(const std::string& buf){
 }
 
 bool ini_file::_parse_content(const std::string& buf){
-	size_t beg=0,cur=0,end=buf.size();
+	size_t beg=0,cur=0;
 	cur=buf.find("=",beg);
 	if(std::string::npos!=cur){
 		std::string key(buf.substr(0,cur)),

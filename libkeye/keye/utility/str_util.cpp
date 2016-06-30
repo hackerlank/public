@@ -56,7 +56,7 @@ bool str_util::wstr2str(std::string& str,const wchar_t* wstr){
 		//char* old_locale=_strdup(setlocale(LC_CTYPE,nullptr));	//store locale
 		setlocale(LC_CTYPE,setlocale(LC_ALL,""));
 		auto len=wcstombs(nullptr,wstr,0);	//no need '\0' for string
-		if(len==-1)return false;
+		if(len==(size_t)-1)return false;
 		str.resize(len);
 		len=wcstombs((char*)str.data(),wstr,len);
 		//if(old_locale){ setlocale(LC_CTYPE,old_locale);free(old_locale); }	//restore locale
@@ -69,7 +69,7 @@ bool str_util::str2wstr(std::wstring& wstr,const char* str){
 	if(str){
 		setlocale(LC_CTYPE,setlocale(LC_ALL,""));
 		auto len=mbstowcs(nullptr,str,0);	//no need '\0' for string
-		if(len==-1)return false;
+		if(len==(size_t)-1)return false;
 		wstr.resize(len);
 		auto wbuf=wstr.data();
 		len=mbstowcs((wchar_t*)wbuf,str,len);

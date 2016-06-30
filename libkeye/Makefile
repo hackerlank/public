@@ -41,11 +41,11 @@ TARGETS=   $(TARGET_T)
 
 SRCS=
 INCS=
-CFLAGS= -U_FORTIFY_SOURCE -I./
+CFLAGS= -I./
 LDFLAGS= -L./ -L/usr/lib
 LIBS= -lm -lstdc++
 CCDEBUG=
-CCOPT= -fomit-frame-pointer
+CCOPT=
 CCWARN= -Wall
 
 # Override: NAME,BUILDMODE,CFLAGS,LDFLAGS,LIBS,SRCS,INCS,CCDEBUG,CCOPT
@@ -66,9 +66,6 @@ TARGET_XLIBS= $(LIBS)
 
 HOST_SYS:= $(shell uname -s)
 TARGET_SYS?= $(HOST_SYS)
-ifneq (,$(findstring stack-protector,$(shell $(TARGET_CC) -dumpspecs)))
-  TARGET_XCFLAGS+= -fno-stack-protector
-endif
 ifeq (Linux,$(TARGET_SYS))
   TARGET_XLIBS+= -ldl
 endif
