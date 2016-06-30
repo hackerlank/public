@@ -16,9 +16,12 @@ clean:
 	find ./ -name *.o -exec rm -f {} \;
 
 echo:
+	$(E)
+	@echo TARGET=$(TARGET)
 	@echo CXX=$(CXX)
 	@echo CFLAGS=$(CFLAGS)
 	@echo LFLAGS=$(LFLAGS)
+	$(E)
 	@echo FILES=$(FILES)
 	@echo OBJS=$(OBJS)
 
