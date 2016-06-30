@@ -68,9 +68,8 @@ private:
 	std::shared_ptr<service_type>	service_;
 	std::shared_ptr<std::thread>	_thread;
 	bool							_bExit;
-};};
+};
 
-namespace keye{
 // --------------------------------------------------------
 // service
 // --------------------------------------------------------

@@ -1,11 +1,11 @@
 TARGET = server
 TARGET := $(addprefix ./,$(TARGET))
 
-CXX= g++ -std=c++11 -g -O0 -Wall -Wno-unknown-pragmas -Wno-reorder  -Wno-unused-value -D_CRT_SECURE_NO_DEPRECATE -I./ -I$(DEPENDENCIES)/include -I../libkeye/ -L$(DEPENDENCIES)/libs/ -L../libkeye/ -L/usr/local/lib/ -lkeye -lpthread -lmysqlclient -lcurses
+CXX= g++ -std=c++11 -g -O0 -lkeye -Wall -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -L../libkeye/
 #CFLAGS= -g -O0 -Wall -D_CRT_SECURE_NO_DEPRECATE -fpermissive -Wno-parentheses -Wno-sign-compare -Wno-unused-variable -Wpointer-sign -Wparentheses -I./ -I$(DEPENDENCIES)include -I../libkeye/
 #LFLAGS += -lkeye -lcurses -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono
 
-FILES+= $(wildcard *.cpp)
+FILES= $(wildcard *.cpp)
 OBJS=$(patsubst %.cpp,%.o,$(FILES))
 
 default all: $(TARGET)
@@ -27,4 +27,4 @@ echo:
 .PHONY: default all clean
 
 $(TARGET): $(OBJS)
-	$(CXX) $(CFLAGS) $(LFLAGS) $(OBJS) -o $@
+	$(CXX) -o $@ $(OBJS) $(CFLAGS) $(LFLAGS)

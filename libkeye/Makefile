@@ -30,7 +30,7 @@ DYNAMIC_CXX = $(CXX) -fPIC
 
 TARGET_CC= $(STATIC_CC)
 TARGET_CXX= $(STATIC_CXX)
-TARGET_LD= $(CC)
+TARGET_LD= $(CXX)
 TARGET_AR= ar rcus
 TARGET_STRIP= strip
 
@@ -168,7 +168,7 @@ $(TARGET_A): $(OBJS)
 $(TARGET_SO): $(OBJS)
 	$(E) "DYNLINK   $@"
 	$(Q)$(TARGET_LD) $(TARGET_XSHLDFLAGS) -o $@ $(OBJS) $(TARGET_XLIBS)
-	$(Q)$(TARGET_STRIP) $@
+	#$(Q)$(TARGET_STRIP) $@
 
 $(TARGET_T): $(OBJS)
 	$(E) "LINK      $@"
