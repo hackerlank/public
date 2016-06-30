@@ -21,7 +21,7 @@ namespace keye{
 	// --------------------------------------------------------
 class service_impl;
 
-class service{
+class KEYE_API service{
 public:
 	//ios:io threads;works:work threads;rb_size:read buffer max size
 			service(size_t ios=1,size_t works=1,size_t rb_size=510);

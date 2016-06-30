@@ -25,9 +25,7 @@ private:
 	flow_metric&			_base;
 	flow_metric::metric_t	_current,_last;
 	std::mutex				_mutex_flow,_mutex_connect;
-};};
-
-using namespace keye;
+};
 
 flow_metric_impl::flow_metric_impl(flow_metric& base):_base(base){
 	memset(&_current,0,sizeof(_current));
@@ -95,3 +93,4 @@ void flow_metric::on_write(std::size_t bytes_transferred){
 bool flow_metric::on_timer(size_t elapsed_milliseconds){
 	return _impl?_impl->on_timer(elapsed_milliseconds):true;
 }
+};
