@@ -4,41 +4,16 @@
 ##############################################################################
 
 NAME=    keye
-MAJVER=  1
-MINVER=  1
-VERSION= $(MAJVER).$(MINVER)
-
-##############################################################################
-# Change the installation path as needed. Note: PREFIX must be an absolute path!
-#
 export PREFIX= bin
-#../$(PREFIX)
-##############################################################################
 
-##############################################################################
-#############################  COMPILER OPTIONS  #############################
-##############################################################################
-# Make sure you force a full recompile with "make clean",
-# followed by "make" if you change any options.
-#
-# LuaJIT builds as a native 32 or 64 bit binary by default.
 CC= gcc
 CXX= g++ -std=c++11
-#CC= gcc-5
-#CXX= g++-5 -std=c++11
-#
-# Use this if you want to force a 32 bit build on a 64 bit multilib OS.
-#CC= gcc -m32
 #
 # Since the assembler part does NOT maintain a frame pointer, it's pointless
 # to slow down the C part by not omitting it. Debugging, tracebacks and
 # unwinding are not affected -- the assembler part has frame unwind
 # information and GCC emits it where needed (x64) or with -g (see CCDEBUG).
 CCOPT= -O0 -fomit-frame-pointer
-# Use this if you want to generate a smaller binary (but it's slower):
-#CCOPT= -Os -fomit-frame-pointer
-# Note: it's no longer recommended to use -O3 with GCC 4.x.
-# The I-Cache bloat usually outweighs the benefits from aggressive inlining.
 #
 CCDEBUG= -g
 #
@@ -85,25 +60,20 @@ HOST_ACFLAGS= $(CCOPTIONS) $(HOST_XCFLAGS) $(TARGET_ARCH) $(HOST_CFLAGS)
 HOST_ALDFLAGS= $(LDOPTIONS) $(HOST_XLDFLAGS) $(HOST_LDFLAGS)
 HOST_ALIBS= $(HOST_XLIBS) $(LIBS) $(HOST_LIBS)
 
-STATIC_CC = $(CROSS)$(CC)
-DYNAMIC_CC = $(CROSS)$(CC) -fPIC
+STATIC_CC = $(CC)
+DYNAMIC_CC = $(CC) -fPIC
+STATIC_CXX = $(CXX)
+DYNAMIC_CXX = $(CXX) -fPIC
+
 TARGET_CC= $(STATIC_CC)
-TARGET_DYNCC= $(DYNAMIC_CC)
-STATIC_CXX = $(CROSS)$(CXX)
-DYNAMIC_CXX = $(CROSS)$(CXX) -fPIC
 TARGET_CXX= $(STATIC_CXX)
-TARGET_DYNCXX= $(DYNAMIC_CXX)
-TARGET_LD= $(CROSS)$(CC)
-TARGET_AR= $(CROSS)ar rcus
-TARGET_STRIP= $(CROSS)strip
+TARGET_LD= $(CC)
+TARGET_AR= ar rcus
+TARGET_STRIP= strip
 
 TARGET_T=  $(NAME)
-#TARGET_A=  lib$(NAME).a.$(VERSION)
-TARGET_A=  lib$(NAME)
-TARGET_SONAME=	lib$(NAME).so
-#TARGET_SO= $(TARGET_SONAME).$(VERSION)
-TARGET_SO= $(TARGET_SONAME)
-# TARGETS=  $(TARGET_T) $(TARGET_A) $(TARGET_SO)
+TARGET_A=  lib$(NAME).a
+TARGET_SO=	lib$(NAME).so
 TARGETS=   $(TARGET_T)
 
 #TARGET_DYLIBNAME= $(NAME).$(VERSION).dylib
@@ -201,47 +171,14 @@ endif
 ##############################################################################
 # Mixed mode defaults.
 
-ifeq (Windows,$(TARGET_SYS))
-  TARGET_DYNCC= $(STATIC_CC)
-  TARGET_T= $(NAME).exe
-  ifeq (cygwin,$(HOST_MSYS))
-    TARGET_SO= cyg$(TARGET_DLLNAME)
-  else
-    TARGET_SO= $(TARGET_DLLNAME)
-  endif
-endif
-ifeq (SunOS,$(TARGET_SYS))
-  BUILDMODE= static
-endif
-ifeq (PS3,$(TARGET_SYS))
-  BUILDMODE= static
-endif
-
-ifeq (Windows,$(HOST_SYS))
-  ifeq (,$(HOST_MSYS))
-    ALL_RM:= $(subst /,\,$(ALL_RM))
-  endif
-endif
-
 ifeq (static,$(BUILDMODE))
-  TARGET_DYNCC= @:
   TARGETS= $(TARGET_A)
 else
 ifeq (dynamic,$(BUILDMODE))
-#  ifneq (Windows,$(TARGET_SYS))
-    TARGET_CC= $(DYNAMIC_CC)
-    TARGET_CXX= $(DYNAMIC_CXX)
-#  endif
-  TARGET_DYNCC= @:
+  TARGET_CC= $(DYNAMIC_CC)
+  TARGET_CXX= $(DYNAMIC_CXX)
   TARGETS= $(TARGET_SO)
   TARGET_XLDFLAGS+= $(TARGET_DYNXLDOPTS)
-else
-ifeq (Darwin,$(TARGET_SYS))
-  TARGET_DYNCC= @:
-endif
-ifeq (iOS,$(TARGET_SYS))
-  TARGET_DYNCC= @:
-endif
 endif
 endif
 
@@ -250,11 +187,15 @@ E= @echo
 #Q=
 #E= @:
 
-ALL_T= $(TARGET_T) $(TARGET_A) $(TARGET_SO)
-ALL_HDRGEN= 
-ALL_GEN= $(ALL_HDRGEN)
-WIN_RM= *.obj *.lib *.exp *.dll *.exe *.manifest *.pdb *.ilk
-ALL_RM= $(ALL_T) $(ALL_GEN) *.o $(WIN_RM)
+ALL_T= $(TARGET_T)
+ifeq (static,$(BUILDMODE))
+  ALL_T= $(TARGET_A)
+else
+ifeq (dynamic,$(BUILDMODE))
+  ALL_T= $(TARGET_SO)
+endif
+endif
+ALL_RM= $(ALL_T) *.o
 ##############################################################################
 # Make targets.
 ##############################################################################
@@ -273,19 +214,7 @@ install:
 	find /usr/include/keye/ -name *.cpp -exec rm -f {} \;
 	find /usr/include/keye/ -name *.o -exec rm -f {} \;
 	cp $(TARGET_SO) /usr/lib
-	ln -s /usr/lib/$(TARGET_SO) /usr/lib/$(TARGET_SONAME)
-
-
-depend:
-	@for file in $(ALL_HDRGEN); do \
-	  test -f $$file || touch $$file; \
-	  done
-	@$(HOST_CC) $(HOST_ACFLAGS) -MM *.c host/*.c | \
-	  sed -e "s| [^ ]*/dasm_\S*\.h||g" \
-	      -e "s|^\([^l ]\)|host/\1|" >Makefile.dep
-	@for file in $(ALL_HDRGEN); do \
-	  test -s $$file || $(HOST_RM) $$file; \
-	  done
+	ln -s /usr/lib/$(TARGET_SO) /usr/lib/$(TARGET_SO)
 
 echo:
 	$(E) TARGET_SYS=$(TARGET_SYS)
@@ -303,7 +232,7 @@ echo:
 	$(E) TARGET_CXX=$(TARGET_CXX)
 	$(E) TARGETS=$(TARGETS)
 
-.PHONY: default all clean depend
+.PHONY: default all clean
 
 ##############################################################################
 # Object file rules.
@@ -313,12 +242,10 @@ $(SRCS):$(INCS)
 
 %.o: %.c
 	$(E) "CC        $@"
-#	$(Q)$(TARGET_DYNCC) $(TARGET_XCFLAGS) -c -o $(@:.o=_dyn.o) $<
 	$(Q)$(TARGET_CC) $(TARGET_XCFLAGS) -c -o $@ $<
 
 %.o: %.cpp
 	$(E) "CXX       $@"
-#	$(Q)$(TARGET_DYNCXX) $(TARGET_XCFLAGS) -c -o $(@:.o=_dyn.o) $<
 	$(Q)$(TARGET_CXX) $(TARGET_XCFLAGS) -c -o $@ $<
 
 #$(OBJS):%.o
