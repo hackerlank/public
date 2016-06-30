@@ -6,5 +6,6 @@ alias doma='docker-machine'
 doma start $vm
 eval "$(doma env $vm)"
 
-docker run -i --volumes-from=7fde94b9f555 docker_compiler
-#docker run -it -v `pwd`:/var/src -v `pwd`/../private/docker/data/thirdparts:/var/data docker_compiler
+docker run -v `pwd`:/var/data --name=data_volume docker_gcc6
+docker run -it --volumes-from=data_volume docker_gcc6 /var/data/bashrc.sh
+
