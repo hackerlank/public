@@ -1,6 +1,7 @@
 .vs/
 ipch/
 bin/
+sdks/
 intermediate/
 server.sdf
 server.VC.opendb
