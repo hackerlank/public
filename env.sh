@@ -6,6 +6,9 @@ alias doma='docker-machine'
 doma start $vm
 eval "$(doma env $vm)"
 
-docker run -v `pwd`:/var/data --name=data_volume docker_gcc6
-docker run -it --volumes-from=data_volume docker_gcc6 /var/data/bashrc.sh
+# run this at the first time
+#docker run -v `pwd`:/var/data --name=data_volume docker_gcc6
+docker run -i --volumes-from=data_volume docker_gcc6
+echo export DEPENDENCIES=/var/data/public/sdks
+echo then run make
 

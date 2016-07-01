@@ -2,12 +2,12 @@ NAME= keye
 BUILDMODE=dynamic
 CCDEBUG+= -g
 CCOPT+= -O0
-#CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE
+#CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -DBOOST_ALL_NO_LIB
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
 CFLAGS+= -I$(DEPENDENCIES)/include -I$(DEPENDENCIES)/include/mysql
-LDFLAGS+= -L$(DEPENDENCIES)/libs
+LDFLAGS+= -L$(DEPENDENCIES)/libs -Wl,-rpath-link=$(DEPENDENCIES)/libs
 #LIBS+= -lmysqlclient -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono -lwebsockets -lz
-LIBS+= -lmysqlclient -lboost_system-mt -lboost_date_time-mt -lz
+LIBS+= -lmysqlclient -lboost_system -lboost_date_time -lz
 SRCS= $(wildcard keye/htio/*.cpp) \
 	$(wildcard keye/mysql_proxy/*.cpp) \
 	$(wildcard keye/utility/*.cpp) \

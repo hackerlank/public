@@ -31,7 +31,7 @@ DYNAMIC_CXX = $(CXX) -fPIC
 TARGET_CC= $(STATIC_CC)
 TARGET_CXX= $(STATIC_CXX)
 TARGET_LD= $(CXX)
-TARGET_AR= ar rcus
+TARGET_AR= ar rcs
 TARGET_STRIP= strip
 
 TARGET_T=  $(NAME)
@@ -144,7 +144,6 @@ echo:
 # Object file rules.
 ##############################################################################
 OBJS=$(patsubst %.cpp,%.o,$(wildcard $(SRCS)))
-#OBJS+=$(patsubst %.c,%.o,$(wildcard $(SRCS)))
 $(SRCS):$(INCS)
 
 %.o: %.c

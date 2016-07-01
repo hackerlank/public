@@ -1,9 +1,9 @@
+# make echo first to ensure compile environment is fine
+
 TARGET = server
 TARGET := $(addprefix ./,$(TARGET))
 
-CXX= g++ -std=c++11 -g -O0 -lkeye -Wall -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -L../libkeye/ -L$(DEPENDENCIES)/libs -lcurses
-#CFLAGS= -g -O0 -Wall -D_CRT_SECURE_NO_DEPRECATE -fpermissive -Wno-parentheses -Wno-sign-compare -Wno-unused-variable -Wpointer-sign -Wparentheses -I./ -I$(DEPENDENCIES)include -I../libkeye/
-#LFLAGS += -lkeye -lcurses -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono
+CXX= g++ -std=c++11 -g -O0 -Wall -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -L$(DEPENDENCIES)/libs -L../libkeye/ -Wl,-rpath-link=$(DEPENDENCIES)/libs -Wl,-rpath=$(DEPENDENCIES)/libs -lkeye -lcurses
 
 FILES= $(wildcard *.cpp)
 OBJS=$(patsubst %.cpp,%.o,$(FILES))
