@@ -86,7 +86,7 @@
     <ClCompile Include="keye\mysql_proxy\mysql_proxy.cpp" />
     <ClCompile Include="keye\mysql_proxy\mysql_resultset.cpp" />
     <ClCompile Include="keye\mysql_proxy\mysql_statement.cpp" />
-    <ClCompile Include="keye\utility\md5.c">
+    <ClCompile Include="keye\utility\md5.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="keye\utility\str_util.cpp" />

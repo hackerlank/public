@@ -231,7 +231,7 @@
     <ClCompile Include="keye\utility\str_util.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="keye\utility\md5.c">
+    <ClCompile Include="keye\utility\md5.cpp">
       <Filter>utility</Filter>
     </ClCompile>
   </ItemGroup>
