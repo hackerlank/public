@@ -7,7 +7,7 @@
 #ifdef WIN32
 #include <conio.h>
 #else
-#include <curses.h>
+//#include <curses.h>
 #endif
 
 using namespace keye;

@@ -3,7 +3,8 @@
 TARGET = server
 TARGET := $(addprefix ./,$(TARGET))
 
-CXX= g++ -std=c++11 -g -O0 -Wall -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -L$(DEPENDENCIES)/libs -L../libkeye/ -Wl,-rpath-link=$(DEPENDENCIES)/libs -Wl,-rpath=$(DEPENDENCIES)/libs -lkeye -lcurses
+CXX= g++ -g -O0 -Wall -Wl,--no-as-needed -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -L../libkeye/ -Wl,-rpath-link=../libkeye/:$(DEPENDENCIES)/libs -Wl,-rpath=../libkeye/:$(DEPENDENCIES)/libs -lkeye
+# -lcurses
 
 FILES= $(wildcard *.cpp)
 OBJS=$(patsubst %.cpp,%.o,$(FILES))

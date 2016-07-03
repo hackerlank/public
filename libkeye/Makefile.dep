@@ -6,8 +6,8 @@ CCOPT+= -O0
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
 CFLAGS+= -I$(DEPENDENCIES)/include -I$(DEPENDENCIES)/include/mysql
 LDFLAGS+= -L$(DEPENDENCIES)/libs -Wl,-rpath-link=$(DEPENDENCIES)/libs
-#LIBS+= -lmysqlclient -lboost_system -lboost_date_time -lboost_regex -lboost_thread -lboost_chrono -lwebsockets -lz
 LIBS+= -lmysqlclient -lboost_system -lboost_date_time -lz
+#LIBS+= -lwebsockets
 SRCS= $(wildcard keye/htio/*.cpp) \
 	$(wildcard keye/mysql_proxy/*.cpp) \
 	$(wildcard keye/utility/*.cpp) \

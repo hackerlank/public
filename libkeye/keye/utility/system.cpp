@@ -13,7 +13,8 @@
 #ifdef WIN32
 #include <conio.h>
 #else
-#include <curses.h>
+#define getch getchar
+//#include <curses.h>
 #endif
 
 namespace keye{
