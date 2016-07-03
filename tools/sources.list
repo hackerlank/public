@@ -1,0 +1,17 @@
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+
+# ubuntu 16.04 xenial
+# ubuntu 16.10 yakkety
+
+deb http://mirrors.sohu.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.sohu.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.sohu.com/ubuntu/ xenial-backports main restricted universe multiverse
+

@@ -1,0 +1,52 @@
+version: "2"
+
+services:
+  data_volume:
+    image: ubuntu:16.04
+    volumes:
+      - .:/var/data/
+
+  redis:
+    image: redis:3.2.0
+    ports:
+      - 6543:6543
+      - 6379:6379
+    volumes_from:
+      - data_volume
+    #command: redis-server /var/redis/redis.conf
+    command: ls -lh /var/data
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes_from:
+      - data_volume
+    command: ls -lh /var/data
+
+  nginx:
+    image: nginx:1.10
+    ports:
+      - 80:80
+    volumes_from:
+      - data_volume
+    #command: nginx -c /etc/nginx/nginx.conf
+    command: /bin/bash
+
+  server:
+    image: ubuntu:16.04
+    volumes_from:
+      - data_volume
+#    links:
+#      - redis
+#      - mysql
+    ports:
+      - 8899:8899
+    command: /var/data/server/server
+
+  client:
+    image: ubuntu:16.04
+    volumes_from:
+      - data_volume
+    command: /var/data/client/client
+
