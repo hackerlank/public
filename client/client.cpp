@@ -13,8 +13,9 @@
 using namespace keye;
 
 int main(int argc, char* argv[]) {
+    const char* host="192.168.99.100";
 	unsigned short port = 8899;
-	myserver(port, 4, 4);
+	myclient(host,port);
 
 	return 0;
 }
