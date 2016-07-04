@@ -85,7 +85,7 @@ public:
     // If the next handler is busy,create new handler.
     if(service_handler.get()==0)
     {
-	  if(service_handlers_.size()<=__ERROR_CONNECTION_LIMIT_ONLY4_TEST)
+	  //if(service_handlers_.size()<=__ERROR_CONNECTION_LIMIT_ONLY4_TEST)
 	  service_handler.reset(make_handler());
       service_handlers_.push_back(service_handler);
     }
