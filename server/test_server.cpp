@@ -13,7 +13,24 @@
 using namespace keye;
 
 int main(int argc, char* argv[]) {
-	unsigned short port = 8899;
+    unsigned short port = 8899;
+    for(auto i=1;i<argc;++i){
+        auto arg=argv[i];
+        if(strlen(arg)>3&&arg[0]=='-')switch(arg[1]){
+            case 'p':{
+                auto a=&arg[2];
+                try{
+                    port=atoi(a);
+                }catch(...){}
+                break;
+            }
+            case 'w':
+                break;
+            case 'i':
+            default:
+                break;
+        }
+    }
 	myserver(port, 4, 4);
 
 	return 0;

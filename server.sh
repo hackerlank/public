@@ -8,5 +8,11 @@ eval "$(doma env $vm)"
 
 # run this at the first time
 #docker run -v `pwd`:/var/data --name=data_volume docker_gcc
-docker run -i --net=host --volumes-from=data_volume ubuntu:16.04 /var/data/server/server
+os=`uname -s`
+if [ "Linux"=$os ]
+then
+	docker run -it --net=host --volumes-from=data_volume ubuntu:16.04 /var/data/server/server
+else
+        docker run -i --net=host --volumes-from=data_volume ubuntu:16.04 /var/data/server/server
+fi
 
