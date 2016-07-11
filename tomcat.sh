@@ -11,8 +11,8 @@ eval "$(doma env $vm)"
 os=`uname -s`
 if [ "Linux"=$os ]
 then
-	docker run -it --net=host --volumes-from=data_volume docker_tomcat /var/src/run.sh
+	docker run -it --net=host --volumes-from=data_volume docker_tomcat
 else
-	docker run -i --net=host --volumes-from=data_volume docker_tomcat /var/src/run.sh
+        docker run -i --net=host --volumes-from=data_volume docker_tomcat /var/src/run.sh
 fi
 
