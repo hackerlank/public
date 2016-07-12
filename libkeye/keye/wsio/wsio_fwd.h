@@ -1,11 +1,11 @@
 // --------------------------------------------------------
 /*Copyright KeyeLeo.All rights reserved.
  *
- *File		: htio_fwd.h
+ *File		: wsio_fwd.h
  *Desc		: a high throuput io library
  *Version	: 1.0
- *Program	: KeyeLeo
- *Date		: 2012-3-7
+ *Program	: VicLiu
+ *Date		: 2016-7-11
  */
 // --------------------------------------------------------
 #ifndef _wsio_fwd_h_
@@ -27,18 +27,12 @@
 #	define KEYE_LOG printf
 #endif
 
-#ifndef NS_KEYE
-	#define NS_KEYE_BEGIN		namespace keye{
-	#define NS_KEYE_END			}
-	#define USING_NS_KEYE		using namespace keye;
-	#define NS_KEYE_WS_BEGIN	namespace keye{namespace ws{
-	#define NS_KEYE_WS_END		}}
-	#define USING_NS_KEYE_WS	using namespace keye::ws;
+#ifndef s_ptr
+#	define s_ptr std::shared_ptr
 #endif
 
-#include <keye/wsio/alloc.h>
-#include <keye/wsio/svc_handler.h>
+#include <keye/wsio/ws_handler.h>
+#include <keye/wsio/ws_service.h>
 #include <keye/wsio/work_handler.h>
-#include <keye/wsio/service.h>
 // --------------------------------------------------------
 #endif // _wsio_fwd_h_

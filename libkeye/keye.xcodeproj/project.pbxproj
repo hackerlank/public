@@ -31,15 +31,6 @@
 		5E2DBEC71C92FAFC009FC394 /* work_handler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEB41C92FAFC009FC394 /* work_handler.hpp */; };
 		5E2DBECA1C92FB0F009FC394 /* keye_fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEC81C92FB0E009FC394 /* keye_fwd.h */; };
 		5E2DBECB1C92FB0F009FC394 /* keye_pch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEC91C92FB0F009FC394 /* keye_pch.hpp */; };
-		5E2DBED81C92FB36009FC394 /* alloc.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBECF1C92FB36009FC394 /* alloc.h */; };
-		5E2DBED91C92FB36009FC394 /* impl_decl.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBED01C92FB36009FC394 /* impl_decl.hpp */; };
-		5E2DBEDA1C92FB36009FC394 /* service.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBED11C92FB36009FC394 /* service.h */; };
-		5E2DBEDB1C92FB36009FC394 /* svc_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBED21C92FB36009FC394 /* svc_handler.h */; };
-		5E2DBEDC1C92FB36009FC394 /* work_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBED31C92FB36009FC394 /* work_handler.h */; };
-		5E2DBEDD1C92FB36009FC394 /* ws_service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DBED41C92FB36009FC394 /* ws_service.cpp */; };
-		5E2DBEDE1C92FB36009FC394 /* ws_svc_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DBED51C92FB36009FC394 /* ws_svc_handler.cpp */; };
-		5E2DBEDF1C92FB36009FC394 /* wsio_fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBED61C92FB36009FC394 /* wsio_fwd.h */; };
-		5E2DBEE01C92FB36009FC394 /* wsio_pch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBED71C92FB36009FC394 /* wsio_pch.hpp */; };
 		5E2DBEE71C92FB43009FC394 /* conf_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DBEE11C92FB43009FC394 /* conf_file.cpp */; };
 		5E2DBEE81C92FB43009FC394 /* conf_file.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEE21C92FB43009FC394 /* conf_file.h */; };
 		5E2DBEE91C92FB43009FC394 /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DBEE31C92FB43009FC394 /* logger.cpp */; };
@@ -58,6 +49,15 @@
 		5E2DBF011C92FB80009FC394 /* svc_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEF61C92FB80009FC394 /* svc_handler.h */; };
 		5E2DBF021C92FB80009FC394 /* work_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEF71C92FB80009FC394 /* work_handler.h */; };
 		5E3845B01D35472600F9B096 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E3845AF1D35472600F9B096 /* md5.cpp */; };
+		5E3845BE1D354D6B00F9B096 /* work_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845B51D354D6B00F9B096 /* work_handler.h */; };
+		5E3845BF1D354D6B00F9B096 /* work_handler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845B61D354D6B00F9B096 /* work_handler.hpp */; };
+		5E3845C01D354D6B00F9B096 /* ws_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845B71D354D6B00F9B096 /* ws_handler.h */; };
+		5E3845C11D354D6B00F9B096 /* ws_handler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845B81D354D6B00F9B096 /* ws_handler.hpp */; };
+		5E3845C21D354D6B00F9B096 /* ws_service.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E3845B91D354D6B00F9B096 /* ws_service.cpp */; };
+		5E3845C31D354D6B00F9B096 /* ws_service.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845BA1D354D6B00F9B096 /* ws_service.h */; };
+		5E3845C41D354D6B00F9B096 /* wsio_demo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845BB1D354D6B00F9B096 /* wsio_demo.h */; };
+		5E3845C51D354D6B00F9B096 /* wsio_fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845BC1D354D6B00F9B096 /* wsio_fwd.h */; };
+		5E3845C61D354D6B00F9B096 /* wsio_pch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E3845BD1D354D6B00F9B096 /* wsio_pch.hpp */; };
 		5E5C424D1CEF5E04005CDF47 /* htio_demo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C424C1CEF5E04005CDF47 /* htio_demo.h */; };
 		5E5C42551CEF5E32005CDF47 /* buf_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C424E1CEF5E32005CDF47 /* buf_set.h */; };
 		5E5C42571CEF5E32005CDF47 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42501CEF5E32005CDF47 /* md5.h */; };
@@ -95,15 +95,6 @@
 		5E2DBEB41C92FAFC009FC394 /* work_handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = work_handler.hpp; path = htio/work_handler.hpp; sourceTree = "<group>"; };
 		5E2DBEC81C92FB0E009FC394 /* keye_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = keye_fwd.h; sourceTree = "<group>"; };
 		5E2DBEC91C92FB0F009FC394 /* keye_pch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = keye_pch.hpp; sourceTree = "<group>"; };
-		5E2DBECF1C92FB36009FC394 /* alloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = alloc.h; path = wsio/alloc.h; sourceTree = "<group>"; };
-		5E2DBED01C92FB36009FC394 /* impl_decl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = impl_decl.hpp; path = wsio/impl_decl.hpp; sourceTree = "<group>"; };
-		5E2DBED11C92FB36009FC394 /* service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = service.h; path = wsio/service.h; sourceTree = "<group>"; };
-		5E2DBED21C92FB36009FC394 /* svc_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svc_handler.h; path = wsio/svc_handler.h; sourceTree = "<group>"; };
-		5E2DBED31C92FB36009FC394 /* work_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = work_handler.h; path = wsio/work_handler.h; sourceTree = "<group>"; };
-		5E2DBED41C92FB36009FC394 /* ws_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ws_service.cpp; path = wsio/ws_service.cpp; sourceTree = "<group>"; };
-		5E2DBED51C92FB36009FC394 /* ws_svc_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ws_svc_handler.cpp; path = wsio/ws_svc_handler.cpp; sourceTree = "<group>"; };
-		5E2DBED61C92FB36009FC394 /* wsio_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wsio_fwd.h; path = wsio/wsio_fwd.h; sourceTree = "<group>"; };
-		5E2DBED71C92FB36009FC394 /* wsio_pch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = wsio_pch.hpp; path = wsio/wsio_pch.hpp; sourceTree = "<group>"; };
 		5E2DBEE11C92FB43009FC394 /* conf_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = conf_file.cpp; path = utility/conf_file.cpp; sourceTree = "<group>"; };
 		5E2DBEE21C92FB43009FC394 /* conf_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = conf_file.h; path = utility/conf_file.h; sourceTree = "<group>"; };
 		5E2DBEE31C92FB43009FC394 /* logger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = logger.cpp; path = utility/logger.cpp; sourceTree = "<group>"; };
@@ -122,6 +113,15 @@
 		5E2DBEF61C92FB80009FC394 /* svc_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svc_handler.h; path = keyeio/svc_handler.h; sourceTree = "<group>"; };
 		5E2DBEF71C92FB80009FC394 /* work_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = work_handler.h; path = keyeio/work_handler.h; sourceTree = "<group>"; };
 		5E3845AF1D35472600F9B096 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = md5.cpp; path = utility/md5.cpp; sourceTree = "<group>"; };
+		5E3845B51D354D6B00F9B096 /* work_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = work_handler.h; path = wsio/work_handler.h; sourceTree = "<group>"; };
+		5E3845B61D354D6B00F9B096 /* work_handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = work_handler.hpp; path = wsio/work_handler.hpp; sourceTree = "<group>"; };
+		5E3845B71D354D6B00F9B096 /* ws_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ws_handler.h; path = wsio/ws_handler.h; sourceTree = "<group>"; };
+		5E3845B81D354D6B00F9B096 /* ws_handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ws_handler.hpp; path = wsio/ws_handler.hpp; sourceTree = "<group>"; };
+		5E3845B91D354D6B00F9B096 /* ws_service.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ws_service.cpp; path = wsio/ws_service.cpp; sourceTree = "<group>"; };
+		5E3845BA1D354D6B00F9B096 /* ws_service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ws_service.h; path = wsio/ws_service.h; sourceTree = "<group>"; };
+		5E3845BB1D354D6B00F9B096 /* wsio_demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wsio_demo.h; path = wsio/wsio_demo.h; sourceTree = "<group>"; };
+		5E3845BC1D354D6B00F9B096 /* wsio_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wsio_fwd.h; path = wsio/wsio_fwd.h; sourceTree = "<group>"; };
+		5E3845BD1D354D6B00F9B096 /* wsio_pch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = wsio_pch.hpp; path = wsio/wsio_pch.hpp; sourceTree = "<group>"; };
 		5E5C424C1CEF5E04005CDF47 /* htio_demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = htio_demo.h; path = htio/htio_demo.h; sourceTree = "<group>"; };
 		5E5C424E1CEF5E32005CDF47 /* buf_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = buf_set.h; path = utility/buf_set.h; sourceTree = "<group>"; };
 		5E5C42501CEF5E32005CDF47 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5.h; path = utility/md5.h; sourceTree = "<group>"; };
@@ -226,15 +226,15 @@
 		5E2DBECE1C92FB24009FC394 /* wsio */ = {
 			isa = PBXGroup;
 			children = (
-				5E2DBECF1C92FB36009FC394 /* alloc.h */,
-				5E2DBED01C92FB36009FC394 /* impl_decl.hpp */,
-				5E2DBED11C92FB36009FC394 /* service.h */,
-				5E2DBED21C92FB36009FC394 /* svc_handler.h */,
-				5E2DBED31C92FB36009FC394 /* work_handler.h */,
-				5E2DBED41C92FB36009FC394 /* ws_service.cpp */,
-				5E2DBED51C92FB36009FC394 /* ws_svc_handler.cpp */,
-				5E2DBED61C92FB36009FC394 /* wsio_fwd.h */,
-				5E2DBED71C92FB36009FC394 /* wsio_pch.hpp */,
+				5E3845B51D354D6B00F9B096 /* work_handler.h */,
+				5E3845B61D354D6B00F9B096 /* work_handler.hpp */,
+				5E3845B71D354D6B00F9B096 /* ws_handler.h */,
+				5E3845B81D354D6B00F9B096 /* ws_handler.hpp */,
+				5E3845B91D354D6B00F9B096 /* ws_service.cpp */,
+				5E3845BA1D354D6B00F9B096 /* ws_service.h */,
+				5E3845BB1D354D6B00F9B096 /* wsio_demo.h */,
+				5E3845BC1D354D6B00F9B096 /* wsio_fwd.h */,
+				5E3845BD1D354D6B00F9B096 /* wsio_pch.hpp */,
 			);
 			name = wsio;
 			sourceTree = "<group>";
@@ -280,35 +280,33 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E3845BF1D354D6B00F9B096 /* work_handler.hpp in Headers */,
 				5E2DBE9C1C92FAEB009FC394 /* bas_fwd.hpp in Headers */,
 				5E2DBEB71C92FAFC009FC394 /* htio_pch.hpp in Headers */,
-				5E2DBEDA1C92FB36009FC394 /* service.h in Headers */,
 				5E2DBECA1C92FB0F009FC394 /* keye_fwd.h in Headers */,
 				5E2DBE9F1C92FAEB009FC394 /* service_handler_pool.hpp in Headers */,
-				5E2DBEDB1C92FB36009FC394 /* svc_handler.h in Headers */,
+				5E3845C61D354D6B00F9B096 /* wsio_pch.hpp in Headers */,
 				5E0A65E51C931285004D37CE /* stdafx.h in Headers */,
 				5E2DBEB51C92FAFC009FC394 /* alloc.h in Headers */,
 				5E2DBEC61C92FAFC009FC394 /* work_handler.h in Headers */,
 				5E5C424D1CEF5E04005CDF47 /* htio_demo.h in Headers */,
 				5E2DBE9D1C92FAEB009FC394 /* bas_pch.hpp in Headers */,
+				5E3845C31D354D6B00F9B096 /* ws_service.h in Headers */,
 				5E2DBF011C92FB80009FC394 /* svc_handler.h in Headers */,
 				5E2DBEB91C92FAFC009FC394 /* http_client.h in Headers */,
-				5E2DBED81C92FB36009FC394 /* alloc.h in Headers */,
 				5E2DBEE81C92FB43009FC394 /* conf_file.h in Headers */,
 				5E2DBEF91C92FB80009FC394 /* impl_decl.hpp in Headers */,
 				5E2DBEBE1C92FAFC009FC394 /* packet.h in Headers */,
-				5E2DBEDC1C92FB36009FC394 /* work_handler.h in Headers */,
+				5E3845C41D354D6B00F9B096 /* wsio_demo.h in Headers */,
 				5E2DBEFA1C92FB80009FC394 /* keyeio_fwd.h in Headers */,
 				5E2DBEF81C92FB80009FC394 /* alloc.h in Headers */,
 				5E2DBEB61C92FAFC009FC394 /* htio_fwd.h in Headers */,
-				5E2DBEDF1C92FB36009FC394 /* wsio_fwd.h in Headers */,
 				5E5C425B1CEF5E32005CDF47 /* str_util.h in Headers */,
 				5E2DBEC51C92FAFC009FC394 /* svc_handler.hpp in Headers */,
-				5E2DBED91C92FB36009FC394 /* impl_decl.hpp in Headers */,
 				5E2DBF021C92FB80009FC394 /* work_handler.h in Headers */,
 				5E2DBEEA1C92FB43009FC394 /* logger.h in Headers */,
 				5E2DBEC71C92FAFC009FC394 /* work_handler.hpp in Headers */,
-				5E2DBEE01C92FB36009FC394 /* wsio_pch.hpp in Headers */,
+				5E3845BE1D354D6B00F9B096 /* work_handler.h in Headers */,
 				5E5C42551CEF5E32005CDF47 /* buf_set.h in Headers */,
 				5E2DBEC21C92FAFC009FC394 /* service.h in Headers */,
 				5E2DBEA01C92FAEB009FC394 /* service_handler.hpp in Headers */,
@@ -318,11 +316,14 @@
 				5E2DBEFE1C92FB80009FC394 /* service.h in Headers */,
 				5E2DBEBC1C92FAFC009FC394 /* metric.h in Headers */,
 				5E2DBEC41C92FAFC009FC394 /* svc_handler.h in Headers */,
+				5E3845C01D354D6B00F9B096 /* ws_handler.h in Headers */,
 				5E2DBE9E1C92FAEB009FC394 /* io_service_pool.hpp in Headers */,
 				5E2DBECB1C92FB0F009FC394 /* keye_pch.hpp in Headers */,
 				5E2DBEEB1C92FB43009FC394 /* utility_fwd.h in Headers */,
+				5E3845C11D354D6B00F9B096 /* ws_handler.hpp in Headers */,
 				5E5C42571CEF5E32005CDF47 /* md5.h in Headers */,
 				5E2DBEEC1C92FB43009FC394 /* utility_pch.hpp in Headers */,
+				5E3845C51D354D6B00F9B096 /* wsio_fwd.h in Headers */,
 				5E2DBEFD1C92FB80009FC394 /* packet.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,10 +393,9 @@
 				5E2DBEFC1C92FB80009FC394 /* packet.cpp in Sources */,
 				5E2DBEE91C92FB43009FC394 /* logger.cpp in Sources */,
 				5E5C42581CEF5E32005CDF47 /* secure_hash.cpp in Sources */,
-				5E2DBEDD1C92FB36009FC394 /* ws_service.cpp in Sources */,
 				5E2DBEBB1C92FAFC009FC394 /* metric.cpp in Sources */,
+				5E3845C21D354D6B00F9B096 /* ws_service.cpp in Sources */,
 				5E0A65E41C931285004D37CE /* stdafx.cpp in Sources */,
-				5E2DBEDE1C92FB36009FC394 /* ws_svc_handler.cpp in Sources */,
 				5E2DBF001C92FB80009FC394 /* svc_handler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
