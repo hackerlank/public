@@ -8,3 +8,4 @@ server.VC.opendb
 server/.vs/
 *.o
 *.so
+*.pdb
