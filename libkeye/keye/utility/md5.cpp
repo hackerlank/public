@@ -32,8 +32,7 @@
 /*
  * Note: this code is harmless on little-endian machines.
  */
-void byteReverse(buf, longs)
-    unsigned char *buf; unsigned longs;
+void byteReverse(unsigned char *buf, unsigned longs)
 {
     uint32 t;
     do {
