@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5E3845AC1D35465900F9B096 /* server.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E3845AB1D35465900F9B096 /* server.cpp */; };
+		5E3845B21D3548FD00F9B096 /* libkeye.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3845B11D3548FD00F9B096 /* libkeye.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		5E3845A11D35462A00F9B096 /* server */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = server; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E3845AB1D35465900F9B096 /* server.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = server.cpp; sourceTree = "<group>"; };
+		5E3845B11D3548FD00F9B096 /* libkeye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkeye.a; path = "../../../Library/Developer/Xcode/DerivedData/server-dwybynuuejmzmkeiqegwnxidbfhh/Build/Products/Debug/libkeye.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E3845B21D3548FD00F9B096 /* libkeye.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +44,7 @@
 		5E3845981D35462A00F9B096 = {
 			isa = PBXGroup;
 			children = (
+				5E3845B11D3548FD00F9B096 /* libkeye.a */,
 				5E3845AB1D35465900F9B096 /* server.cpp */,
 				5E3845A21D35462A00F9B096 /* Products */,
 			);
@@ -199,6 +203,7 @@
 		5E3845A91D35462A00F9B096 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = ../libkeye;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -206,6 +211,7 @@
 		5E3845AA1D35462A00F9B096 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = ../libkeye;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
