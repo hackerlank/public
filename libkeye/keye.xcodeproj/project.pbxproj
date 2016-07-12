@@ -57,9 +57,9 @@
 		5E2DBF001C92FB80009FC394 /* svc_handler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2DBEF51C92FB80009FC394 /* svc_handler.cpp */; };
 		5E2DBF011C92FB80009FC394 /* svc_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEF61C92FB80009FC394 /* svc_handler.h */; };
 		5E2DBF021C92FB80009FC394 /* work_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2DBEF71C92FB80009FC394 /* work_handler.h */; };
+		5E3845B01D35472600F9B096 /* md5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E3845AF1D35472600F9B096 /* md5.cpp */; };
 		5E5C424D1CEF5E04005CDF47 /* htio_demo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C424C1CEF5E04005CDF47 /* htio_demo.h */; };
 		5E5C42551CEF5E32005CDF47 /* buf_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C424E1CEF5E32005CDF47 /* buf_set.h */; };
-		5E5C42561CEF5E32005CDF47 /* md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C424F1CEF5E32005CDF47 /* md5.c */; };
 		5E5C42571CEF5E32005CDF47 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42501CEF5E32005CDF47 /* md5.h */; };
 		5E5C42581CEF5E32005CDF47 /* secure_hash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C42511CEF5E32005CDF47 /* secure_hash.cpp */; };
 		5E5C42591CEF5E32005CDF47 /* secure_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42521CEF5E32005CDF47 /* secure_hash.h */; };
@@ -121,9 +121,9 @@
 		5E2DBEF51C92FB80009FC394 /* svc_handler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = svc_handler.cpp; path = keyeio/svc_handler.cpp; sourceTree = "<group>"; };
 		5E2DBEF61C92FB80009FC394 /* svc_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = svc_handler.h; path = keyeio/svc_handler.h; sourceTree = "<group>"; };
 		5E2DBEF71C92FB80009FC394 /* work_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = work_handler.h; path = keyeio/work_handler.h; sourceTree = "<group>"; };
+		5E3845AF1D35472600F9B096 /* md5.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = md5.cpp; path = utility/md5.cpp; sourceTree = "<group>"; };
 		5E5C424C1CEF5E04005CDF47 /* htio_demo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = htio_demo.h; path = htio/htio_demo.h; sourceTree = "<group>"; };
 		5E5C424E1CEF5E32005CDF47 /* buf_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = buf_set.h; path = utility/buf_set.h; sourceTree = "<group>"; };
-		5E5C424F1CEF5E32005CDF47 /* md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = md5.c; path = utility/md5.c; sourceTree = "<group>"; };
 		5E5C42501CEF5E32005CDF47 /* md5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = md5.h; path = utility/md5.h; sourceTree = "<group>"; };
 		5E5C42511CEF5E32005CDF47 /* secure_hash.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = secure_hash.cpp; path = utility/secure_hash.cpp; sourceTree = "<group>"; };
 		5E5C42521CEF5E32005CDF47 /* secure_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = secure_hash.h; path = utility/secure_hash.h; sourceTree = "<group>"; };
@@ -206,8 +206,8 @@
 		5E2DBECD1C92FB1B009FC394 /* utility */ = {
 			isa = PBXGroup;
 			children = (
+				5E3845AF1D35472600F9B096 /* md5.cpp */,
 				5E5C424E1CEF5E32005CDF47 /* buf_set.h */,
-				5E5C424F1CEF5E32005CDF47 /* md5.c */,
 				5E5C42501CEF5E32005CDF47 /* md5.h */,
 				5E5C42511CEF5E32005CDF47 /* secure_hash.cpp */,
 				5E5C42521CEF5E32005CDF47 /* secure_hash.h */,
@@ -383,12 +383,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5E5C42561CEF5E32005CDF47 /* md5.c in Sources */,
 				5E2DBEB81C92FAFC009FC394 /* http_client.cpp in Sources */,
 				5E2DBEFF1C92FB80009FC394 /* servicei.cpp in Sources */,
 				5E5C425A1CEF5E32005CDF47 /* str_util.cpp in Sources */,
 				5E2DBEC11C92FAFC009FC394 /* service.cpp in Sources */,
 				5E2DBEE71C92FB43009FC394 /* conf_file.cpp in Sources */,
+				5E3845B01D35472600F9B096 /* md5.cpp in Sources */,
 				5E2DBEFC1C92FB80009FC394 /* packet.cpp in Sources */,
 				5E2DBEE91C92FB43009FC394 /* logger.cpp in Sources */,
 				5E5C42581CEF5E32005CDF47 /* secure_hash.cpp in Sources */,
@@ -491,6 +491,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
 					/usr/local/include,
+					../sdks/include,
+					../sdks/include/mysql,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -509,6 +511,8 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)",
 					/usr/local/include,
+					../sdks/include,
+					../sdks/include/mysql,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
