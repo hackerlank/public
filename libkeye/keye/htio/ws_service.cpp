@@ -159,7 +159,7 @@ private:
 	}
 
 	server_type						_server;
-	ws_service						_handler;
+	ws_service&						_handler;
 	/// Events timers
 	std::map<std::size_t, server_type::timer_ptr> timers_;
 

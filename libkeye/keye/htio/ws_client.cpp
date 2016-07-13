@@ -163,7 +163,7 @@ private:
 	}
 
 	client_type						_client;
-	ws_client						_handler;
+	ws_client&						_handler;
 	/// Events timers
 	std::map<std::size_t, client_type::timer_ptr> timers_;
 
