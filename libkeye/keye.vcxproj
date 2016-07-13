@@ -66,13 +66,14 @@
     <ClInclude Include="keye\utility\secure_hash.h" />
     <ClInclude Include="keye\utility\utility_fwd.h" />
     <ClInclude Include="keye\utility\utility_pch.hpp" />
-    <ClInclude Include="keye\wsio\alloc.h" />
-    <ClInclude Include="keye\wsio\impl_decl.hpp" />
-    <ClInclude Include="keye\wsio\service.h" />
-    <ClInclude Include="keye\wsio\svc_handler.h" />
     <ClInclude Include="keye\wsio\work_handler.h" />
+    <ClInclude Include="keye\wsio\work_handler.hpp" />
+    <ClInclude Include="keye\wsio\wsio_demo.h" />
     <ClInclude Include="keye\wsio\wsio_fwd.h" />
     <ClInclude Include="keye\wsio\wsio_pch.hpp" />
+    <ClInclude Include="keye\wsio\ws_handler.h" />
+    <ClInclude Include="keye\wsio\ws_handler.hpp" />
+    <ClInclude Include="keye\wsio\ws_service.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +95,6 @@
     <ClCompile Include="keye\utility\logger.cpp" />
     <ClCompile Include="keye\utility\secure_hash.cpp" />
     <ClCompile Include="keye\wsio\ws_service.cpp" />
-    <ClCompile Include="keye\wsio\ws_svc_handler.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

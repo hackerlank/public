@@ -102,27 +102,6 @@
     <ClInclude Include="keye\htio\bas\bas_pch.hpp">
       <Filter>htio\bas</Filter>
     </ClInclude>
-    <ClInclude Include="keye\wsio\work_handler.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\wsio_fwd.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\wsio_pch.hpp">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\alloc.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\service.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\svc_handler.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\impl_decl.hpp">
-      <Filter>wsio</Filter>
-    </ClInclude>
     <ClInclude Include="keye\mysql_proxy\mysql_connection.hpp">
       <Filter>mysql_proxy</Filter>
     </ClInclude>
@@ -180,6 +159,30 @@
     <ClInclude Include="keye\utility\md5.h">
       <Filter>utility</Filter>
     </ClInclude>
+    <ClInclude Include="keye\wsio\work_handler.h">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\work_handler.hpp">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\ws_handler.h">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\ws_handler.hpp">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\ws_service.h">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\wsio_demo.h">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\wsio_fwd.h">
+      <Filter>wsio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\wsio\wsio_pch.hpp">
+      <Filter>wsio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="keye\keyeio\packet.cpp">
@@ -207,12 +210,6 @@
     <ClCompile Include="keye\htio\service.cpp">
       <Filter>htio</Filter>
     </ClCompile>
-    <ClCompile Include="keye\wsio\ws_service.cpp">
-      <Filter>wsio</Filter>
-    </ClCompile>
-    <ClCompile Include="keye\wsio\ws_svc_handler.cpp">
-      <Filter>wsio</Filter>
-    </ClCompile>
     <ClCompile Include="keye\mysql_proxy\mysql_parameters.cpp">
       <Filter>mysql_proxy</Filter>
     </ClCompile>
@@ -233,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="keye\utility\md5.cpp">
       <Filter>utility</Filter>
+    </ClCompile>
+    <ClCompile Include="keye\wsio\ws_service.cpp">
+      <Filter>wsio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
