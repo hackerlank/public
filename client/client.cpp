@@ -15,7 +15,7 @@ using namespace keye;
 int main(int argc, char* argv[]) {
     const char* host="192.168.99.100";
 	unsigned short port = 8899;
-	myclient(host,port);
-
+	//myclient<ws_client>(host, port);
+	myclient<service>(host,port);
 	return 0;
 }

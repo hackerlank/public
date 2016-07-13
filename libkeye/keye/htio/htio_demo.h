@@ -13,13 +13,6 @@
 
 #include <assert.h>
 // --------------------------------------------------------
-// forward declaration
-// --------------------------------------------------------
-namespace keye{
-int KEYE_API myclient(const char* host,unsigned short port,size_t ios=1,size_t works=1);
-int KEYE_API myserver(unsigned short port,size_t ios=1,size_t works=1);
-};
-// --------------------------------------------------------
 // implementation
 // --------------------------------------------------------
 #define FLOW_TIMER 999
@@ -34,7 +27,8 @@ using namespace keye;
 // --------------------------------------------------------
 // RawService
 // --------------------------------------------------------
-class RawService:public service{
+template<typename S>
+class RawService:public S{
 public:
 	RawService(): client(false)
 		,show_status(true)
@@ -52,7 +46,8 @@ protected:
 	flow_metric	_metric;
 };
 
-class RawServer:public RawService{
+template<typename S>
+class RawServer:public RawService<S>{
 public:
 	virtual void	on_open(svc_handler&){
 		_metric.on_open();
@@ -85,7 +80,8 @@ public:
 	}
 };
 
-class RawClient:public RawService{
+template<typename S>
+class RawClient:public RawService<S> {
 public:
 	virtual void	on_open(svc_handler& sh){
 		sh.set_timer(WRITE_TIMER,WRITE_FREQ);
@@ -111,7 +107,6 @@ public:
 private:
 	char _buf[WRITE_MAX];
 };
-
 // --------------------------------------------------------
 // SessionServer
 // --------------------------------------------------------
@@ -137,12 +132,14 @@ protected:
 // --------------------------------------------------------
 // helpers
 // --------------------------------------------------------
-void wait_for(RawService& s);
+template<typename S>
+void wait_for(RawService<S>& s);
 static std::string _host;
 static unsigned _port=0;
 namespace keye{
-inline int myclient(const char* host,unsigned short port,size_t ios,size_t works){
-	RawClient rc;
+template<typename S>
+inline int myclient(const char* host,unsigned short port,size_t ios=1,size_t works=1){
+	RawClient<S> rc;
 	rc.client=true;
 	size_t rb_size=1460;
 	_host=host;
@@ -151,15 +148,17 @@ inline int myclient(const char* host,unsigned short port,size_t ios,size_t works
 	return 0;
 }
 
-inline int myserver(unsigned short port,size_t ios,size_t works){
-	RawServer rs;
+template<typename S>
+inline int myserver(unsigned short port,size_t ios=1,size_t works=1){
+	RawServer<S> rs;
 	size_t rb_size=1460;
 	_port=port;
 	rs.run(port);
 	rs.set_timer(FLOW_TIMER,5000);
 	wait_for(rs);
 	return 0;
-}};
+}
+};
 
 inline void prompt(){
 	KEYE_LOG("\ncommand list:\n \
@@ -177,7 +176,8 @@ inline void prompt(){
 ");
 }
 
-inline void wait_for(RawService& s){
+template<typename S>
+inline void wait_for(RawService<S>& s){
 	prompt();
 	bool exit=false;
 	while(!exit||!s.closed())

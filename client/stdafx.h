@@ -17,6 +17,7 @@
 #include <Windows.h>
 #endif
 
+#define _USE_WEBSOCKETPP_
 #include <keye/keye_fwd.h>
 
 #endif // _stdafx_h_

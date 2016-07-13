@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
-	myserver(port, 4, 4);
-
+	//myserver<ws_service>(port, 4, 4);
+	myserver<service>(port, 4, 4);
 	return 0;
 }
