@@ -50,31 +50,31 @@ template<typename S>
 class RawServer:public RawService<S>{
 public:
 	virtual void	on_open(svc_handler&){
-		_metric.on_open();
+        RawService<S>::_metric.on_open();
 	}
 	virtual void	on_close(svc_handler&){
-		_metric.on_close();
+        RawService<S>::_metric.on_close();
 	}
 	virtual void	on_read(svc_handler& sh,void* buf,size_t sz){
-		_metric.on_read(sz);
+        RawService<S>::_metric.on_read(sz);
 
-		if(crc){
+        if(RawService<S>::crc){
 			//				auto sc=crc(cp.data,p.length-sizeof(packet_crc_t),16);
 		}
-		if(echo)
+		if(RawService<S>::echo)
 			KEYE_LOG("read %d:%s\n",(int)sz,(char*)buf);
-		if(response)
+		if(RawService<S>::response)
 			sh.send(buf,sz);
 	}
 	virtual void	on_write(svc_handler&,void*,size_t sz){
-		_metric.on_write(sz);
+        RawService<S>::_metric.on_write(sz);
 	}
 	virtual bool	on_timer(svc_handler&,size_t id,size_t milliseconds){
 		if(FLOW_TIMER==id){
-			_metric.on_timer(milliseconds);
-			if(show_status)
-				KEYE_LOG("connects:%d, rb:%dk/s, wb:%dk/s, rc:%d/s, wc:%d/s\n",(int)_metric.connects,
-					(int)_metric.metric.read_bytes>>10,(int)_metric.metric.write_bytes>>10,(int)_metric.metric.read_count,(int)_metric.metric.write_count);
+            RawService<S>::_metric.on_timer(milliseconds);
+			if(RawService<S>::show_status)
+				KEYE_LOG("connects:%d, rb:%dk/s, wb:%dk/s, rc:%d/s, wc:%d/s\n",(int)RawService<S>::_metric.connects,
+					(int)RawService<S>::_metric.metric.read_bytes>>10,(int)RawService<S>::_metric.metric.write_bytes>>10,(int)RawService<S>::_metric.metric.read_count,(int)RawService<S>::_metric.metric.write_count);
 		}
 		return true;
 	}
@@ -87,19 +87,19 @@ public:
 		sh.set_timer(WRITE_TIMER,WRITE_FREQ);
 	}
 	virtual void	on_read(svc_handler& sh,void* buf,size_t sz){
-		if(echo)
+		if(RawService<S>::echo)
 			KEYE_LOG("read %d:%s\n",(int)sz,(char*)buf);
 	}
 	virtual bool	on_timer(svc_handler& sh,size_t id,size_t milliseconds){
 		bool ret=true;
 		if(WRITE_TIMER==id){
-			if(interval!=milliseconds){
-				sh.set_timer(WRITE_TIMER,interval);
+			if(RawService<S>::interval!=milliseconds){
+				sh.set_timer(WRITE_TIMER,RawService<S>::interval);
 				ret=false;
 			}
-			if(send){
-				_buf[pack-1]='\0';
-				sh.send(_buf,pack);
+			if(RawService<S>::send){
+				_buf[RawService<S>::pack-1]='\0';
+				sh.send(_buf,RawService<S>::pack);
 			}
 		}
 		return ret;
