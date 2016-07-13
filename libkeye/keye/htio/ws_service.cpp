@@ -11,16 +11,14 @@
 #include "stdafx.h"
 #include "htio_fwd.h"
 // --------------------------------------------------------
-typedef std::allocator<char> alloc_type;	//we can override this allocator
 typedef websocketpp::server<websocketpp::config::asio> server_type;
 
 #include "ws_handler.hpp"
-//#include "work_handler.hpp"
 namespace keye{
 class ws_service_impl{
 public:
 	ws_service_impl(ws_service& w,size_t ios,size_t works,size_t rb_size)
-	:_handler(w),/*,_ios(ios),_works(works),_rb_size(rb_size),*/_bExit(true){}
+	:_handler(w),_bExit(true){}
 
 	void	run(unsigned short port,const char* address=nullptr){
 		if (_bExit) {
@@ -63,14 +61,11 @@ public:
 	}
 	void	close(){
 		if(!_bExit){
-			/*
-			if(ws_service_)
-				ws_service_->stop();
+			_server.stop();
 			if(_thread){
 				_thread->join();
 				_thread.reset();
 			}
-			*/
 			_bExit=true;
 		}
 	}
@@ -103,27 +98,39 @@ private:
 		return true;
 	}
 
-	void on_open(websocketpp::connection_hdl) {
-		//_handler.on_open();
+	void on_open(websocketpp::connection_hdl hdl) {
+		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
+		ws_handler_impl sh(con);
+		_handler.on_open(sh);
 		std::cout << "Open handler" << std::endl;
 	}
 
-	void on_close(websocketpp::connection_hdl) {
+	void on_close(websocketpp::connection_hdl hdl) {
+		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
+		ws_handler_impl sh(con);
+		_handler.on_close(sh);
 		std::cout << "Close handler" << std::endl;
 	}
 
 	void on_fail(websocketpp::connection_hdl hdl) {
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
-
+		ws_handler_impl sh(con);
+		_handler.on_close(sh);
 		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
 	}
 
 	// Define a callback to handle incoming messages
 	void on_message(websocketpp::connection_hdl hdl, message_ptr msg) {
+		auto& pl = msg->get_payload();
+		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
+		ws_handler_impl sh(con);
+		_handler.on_read(sh,(void*)pl.data(),pl.length());
+
 		std::cout << "on_message called with hdl: " << hdl.lock().get()
 			<< " and message: " << msg->get_payload()
 			<< std::endl;
-
+		_server.send(hdl, msg->get_payload(), msg->get_opcode());
+		/*
 		try {
 			_server.send(hdl, msg->get_payload(), msg->get_opcode());
 		}
@@ -131,6 +138,7 @@ private:
 			std::cout << "Echo failed because: " << e
 				<< "(" << e.message() << ")" << std::endl;
 		}
+		*/
 	}
 
 	void on_http(websocketpp::connection_hdl hdl) {
@@ -140,18 +148,12 @@ private:
 
 		std::stringstream ss;
 		ss << "got HTTP request with " << res.size() << " bytes of body data.";
-
+		/* response
 		con->set_body(ss.str());
 		con->set_status(websocketpp::http::status_code::ok);
+		*/
 	}
 
-	/*
-	typedef bas::ws_service<work_handler_impl,alloc_type> ws_service_type;
-	work_handler_impl	_w;
-	alloc_type			_a;
-	size_t				_ios,_works,_rb_size;
-	std::shared_ptr<ws_service_type>	ws_service_;
-	*/
 	server_type						_server;
 	ws_service						_handler;
 

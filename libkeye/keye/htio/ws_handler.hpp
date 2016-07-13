@@ -12,56 +12,54 @@
 #define _ws_handler_impl_hpp_
 
 using namespace keye;
-class work_handler_impl;
-/*
+
 class ws_handler_impl:public svc_handler{
-	typedef bas::service_handler<work_handler_impl,alloc_type> service_handler_type;
+	typedef server_type::connection_ptr service_handler_type;
 public:
 			ws_handler_impl(service_handler_type& sh):_sh(sh){}
 	virtual void	close(){
-		_sh.close();
+		_sh->close(0, _rc);
 	}
 	virtual size_t	id()const{
-		return (size_t)&_sh;
+		return (size_t)_sh->get_handle().lock().get();
 	}
 	virtual std::shared_ptr<svc_handler> operator()()const{
 		return std::shared_ptr<svc_handler>(new ws_handler_impl(_sh));
 	}
 	virtual void	send(void* buf,size_t length){
-		_sh.async_write(buf,length);
+		_sh->send((const void*)buf, length, websocketpp::frame::opcode::value::binary);
 	}
 	virtual void	post_event(void* buf,size_t length){
-		_sh.post_event(buf,length);
+		//_sh.post_event(buf,length);
 	}
 	virtual void	set_timer(size_t id,size_t milliseconds){
-		_sh.set_timer(id,milliseconds);
+		//_sh.set_timer(id,milliseconds);
 	}
 	virtual void	unset_timer(size_t id){
-		_sh.unset_timer(id);
+		//_sh.unset_timer(id);
 	}
 	virtual std::string	address()const{
 		try{
-			boost::asio::ip::tcp::endpoint remote_endpoint=_sh.socket().remote_endpoint();
-			boost::asio::ip::address address=remote_endpoint.address();
-			return address.to_string();
+			return _sh->get_host();
 		} catch(...){
 			return "0.0.0.0";
 		}
 	}
 	virtual unsigned short	port()const{
 		try{
-			boost::asio::ip::tcp::endpoint remote_endpoint=_sh.socket().remote_endpoint();
-			return remote_endpoint.port();
+			return _sh->get_port();
 		} catch(...){
 			return 0;
 		}
 	}
 	virtual std::shared_ptr<void>&	sptr(){
-		return _sh.sptr();
+		return _s_ptr;
 	}
 private:
-	//service_handler_type&	_sh;
+	service_handler_type&	_sh;
+	const std::string		_rc;
+	///the interface expsure
+	std::shared_ptr<void>	_s_ptr;
 };
-*/
 // --------------------------------------------------------
 #endif
