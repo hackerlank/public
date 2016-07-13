@@ -39,6 +39,7 @@
 #include <keye/htio/http_client.h>
 #ifdef _USE_WEBSOCKETPP_
 #include <keye/htio/ws_service.h>
+#include <keye/htio/ws_client.h>
 #endif
 // --------------------------------------------------------
 #endif // _htio_fwd_h_

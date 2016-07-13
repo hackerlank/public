@@ -36,6 +36,7 @@
     <ClInclude Include="keye\htio\svc_handler.h" />
     <ClInclude Include="keye\htio\svc_handler.hpp" />
     <ClInclude Include="keye\htio\work_handler.hpp" />
+    <ClInclude Include="keye\htio\ws_client.h" />
     <ClInclude Include="keye\htio\ws_handler.hpp" />
     <ClInclude Include="keye\htio\ws_service.h" />
     <ClInclude Include="keye\keyeio\alloc.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="keye\htio\http_client.cpp" />
     <ClCompile Include="keye\htio\metric.cpp" />
     <ClCompile Include="keye\htio\service.cpp" />
+    <ClCompile Include="keye\htio\ws_client.cpp" />
     <ClCompile Include="keye\htio\ws_service.cpp" />
     <ClCompile Include="keye\keyeio\packet.cpp" />
     <ClCompile Include="keye\keyeio\servicei.cpp" />

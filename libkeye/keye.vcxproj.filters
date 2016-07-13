@@ -162,6 +162,9 @@
     <ClInclude Include="keye\htio\ws_service.h">
       <Filter>htio</Filter>
     </ClInclude>
+    <ClInclude Include="keye\htio\ws_client.h">
+      <Filter>htio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="keye\keyeio\packet.cpp">
@@ -211,6 +214,9 @@
       <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="keye\htio\ws_service.cpp">
+      <Filter>htio</Filter>
+    </ClCompile>
+    <ClCompile Include="keye\htio\ws_client.cpp">
       <Filter>htio</Filter>
     </ClCompile>
   </ItemGroup>
