@@ -18,5 +18,8 @@
 #ifdef _USE_LIBWEBSOCKET_
 #include <keye/wsio/wsio_fwd.h>
 #endif
+#ifdef _USE_WEBSOCKETPP_
+#include "keye/wsio/wsio_fwd.h"
+#endif
 // --------------------------------------------------------
 #endif // _core_fwd_h_

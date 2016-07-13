@@ -36,6 +36,8 @@
     <ClInclude Include="keye\htio\svc_handler.h" />
     <ClInclude Include="keye\htio\svc_handler.hpp" />
     <ClInclude Include="keye\htio\work_handler.hpp" />
+    <ClInclude Include="keye\htio\ws_handler.hpp" />
+    <ClInclude Include="keye\htio\ws_service.h" />
     <ClInclude Include="keye\keyeio\alloc.h" />
     <ClInclude Include="keye\keyeio\impl_decl.hpp" />
     <ClInclude Include="keye\keyeio\keyeio_fwd.h" />
@@ -66,20 +68,13 @@
     <ClInclude Include="keye\utility\secure_hash.h" />
     <ClInclude Include="keye\utility\utility_fwd.h" />
     <ClInclude Include="keye\utility\utility_pch.hpp" />
-    <ClInclude Include="keye\wsio\work_handler.h" />
-    <ClInclude Include="keye\wsio\work_handler.hpp" />
-    <ClInclude Include="keye\wsio\wsio_demo.h" />
-    <ClInclude Include="keye\wsio\wsio_fwd.h" />
-    <ClInclude Include="keye\wsio\wsio_pch.hpp" />
-    <ClInclude Include="keye\wsio\ws_handler.h" />
-    <ClInclude Include="keye\wsio\ws_handler.hpp" />
-    <ClInclude Include="keye\wsio\ws_service.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="keye\htio\http_client.cpp" />
     <ClCompile Include="keye\htio\metric.cpp" />
     <ClCompile Include="keye\htio\service.cpp" />
+    <ClCompile Include="keye\htio\ws_service.cpp" />
     <ClCompile Include="keye\keyeio\packet.cpp" />
     <ClCompile Include="keye\keyeio\servicei.cpp" />
     <ClCompile Include="keye\keyeio\svc_handler.cpp" />
@@ -94,7 +89,6 @@
     <ClCompile Include="keye\utility\conf_file.cpp" />
     <ClCompile Include="keye\utility\logger.cpp" />
     <ClCompile Include="keye\utility\secure_hash.cpp" />
-    <ClCompile Include="keye\wsio\ws_service.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -200,7 +194,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./;../;./htio/;$(DEPENDENCIES)/include/mysql;$(DEPENDENCIES)/include;C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../;keye/htio/;$(DEPENDENCIES)/include/mysql;$(DEPENDENCIES)/include;C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0A00;_CRT_SECURE_NO_WARNINGS;_WIN64;NDEBUG;_CONSOLE;KEYE_EXPORT;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -252,7 +246,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./;../;./htio/;$(DEPENDENCIES)/include/mysql;$(DEPENDENCIES)/include;C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../;keye/htio/;$(DEPENDENCIES)/include/mysql;$(DEPENDENCIES)/include;C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN64;_DEBUG;_CONSOLE;KEYE_EXPORT;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>

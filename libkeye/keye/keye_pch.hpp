@@ -11,6 +11,7 @@
 #ifndef _core_pch_h_
 #define _core_pch_h_
 
+#define _USE_WEBSOCKETPP_
 //#define _USE_LIBWEBSOCKET_
 /* This defined the latest Window platform.
 	If you are compiling for the preversion of Windows platform,Please include <WinSDKVer.h>

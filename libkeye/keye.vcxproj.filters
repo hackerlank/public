@@ -13,9 +13,6 @@
     <Filter Include="htio\bas">
       <UniqueIdentifier>{c1df2e89-bf44-402f-a6a0-dfb2b3aaacc5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="wsio">
-      <UniqueIdentifier>{bf5b183c-8e4c-411f-b3cc-8b7633d4de19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="mysql_proxy">
       <UniqueIdentifier>{c9b28b00-ec8e-4bf5-acb9-b75b39e6b001}</UniqueIdentifier>
     </Filter>
@@ -159,29 +156,11 @@
     <ClInclude Include="keye\utility\md5.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="keye\wsio\work_handler.h">
-      <Filter>wsio</Filter>
+    <ClInclude Include="keye\htio\ws_handler.hpp">
+      <Filter>htio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\wsio\work_handler.hpp">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\ws_handler.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\ws_handler.hpp">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\ws_service.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\wsio_demo.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\wsio_fwd.h">
-      <Filter>wsio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\wsio\wsio_pch.hpp">
-      <Filter>wsio</Filter>
+    <ClInclude Include="keye\htio\ws_service.h">
+      <Filter>htio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,8 +210,8 @@
     <ClCompile Include="keye\utility\md5.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="keye\wsio\ws_service.cpp">
-      <Filter>wsio</Filter>
+    <ClCompile Include="keye\htio\ws_service.cpp">
+      <Filter>htio</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

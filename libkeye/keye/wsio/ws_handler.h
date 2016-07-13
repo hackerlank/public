@@ -23,7 +23,7 @@ public:
 	virtual void			close()=0;
 	virtual size_t			id()const=0;
 	//clone
-	virtual std::shared_ptr<svc_handler>
+	virtual std::shared_ptr<ws_handler>
 							operator()()const=0;
 	//io method
 	//send,post_event:buf must without length data
