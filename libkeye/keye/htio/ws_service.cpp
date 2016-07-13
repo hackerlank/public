@@ -12,6 +12,8 @@
 #include "htio_fwd.h"
 // --------------------------------------------------------
 typedef std::allocator<char> alloc_type;	//we can override this allocator
+typedef websocketpp::server<websocketpp::config::asio> server_type;
+
 #include "ws_handler.hpp"
 //#include "work_handler.hpp"
 namespace keye{
@@ -21,13 +23,53 @@ public:
 	:/*_w(w),_ios(ios),_works(works),_rb_size(rb_size),*/_bExit(true){}
 
 	void	run(unsigned short port,const char* address=nullptr){
-		_bExit=false;
-		/*
-		if(!ws_service_)
-			ws_service_.reset(new ws_service_type(&_w,&_a,_ios,_works,_rb_size));
-		//start ws_service thread
-		_thread.reset(new std::thread(boost::bind(&ws_service_type::run,ws_service_.get(),port,address)));
-		*/
+		if (_bExit) {
+			_bExit = false;
+
+			try {
+				//using websocketpp::lib::placeholders::_1;
+				//using websocketpp::lib::placeholders::_2;
+				//using websocketpp::lib::bind;
+				// Set logging settings
+				_server.set_error_channels(websocketpp::log::elevel::all);
+				_server.set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
+
+				// Initialize Asio
+				_server.init_asio();
+				_server.set_reuse_addr(true);
+
+				_server.set_message_handler(std::bind(&ws_service_impl::on_message, this, &_server, std::placeholders::_1, std::placeholders::_2));
+				_server.set_http_handler(std::bind(&ws_service_impl::on_http, this, &_server, std::placeholders::_1));
+				_server.set_fail_handler(std::bind(&ws_service_impl::on_fail, this, &_server, std::placeholders::_1));
+				//_server.set_close_handler(std::bind(&ws_service_impl::on_close,this));
+				/*
+				// Register our message handler
+				_server.set_message_handler(bind(&on_message, this, ::_1, ::_2));
+
+				_server.set_http_handler(bind(&on_http, this, ::_1));
+				_server.set_fail_handler(bind(&on_fail, this, ::_1));
+				_server.set_close_handler(&on_close);
+				_server.set_validate_handler(std::bind(&ws_service_impl::validate, this, &_server,::_1));
+				_server.set_validate_handler(bind(&validate, this, ::_1));
+				*/
+			}
+			catch (const std::exception & e) {
+				std::cout << e.what() << std::endl;
+			}
+			catch (websocketpp::lib::error_code e) {
+				std::cout << e.message() << std::endl;
+			}
+			catch (...) {
+				std::cout << "other exception" << std::endl;
+			}
+
+			// Listen on port
+			_server.listen(port);
+			// Queues a connection accept operation
+			_server.start_accept();
+			// Start the Asio io_service run loop in different thread
+			_thread.reset(new std::thread(boost::bind(&server_type::run, &_server)));
+		}
 	}
 	void	close(){
 		if(!_bExit){
@@ -63,6 +105,52 @@ public:
 		//if(ws_service_)ws_service_->post_event(buf,length);
 	}
 private:
+
+	// pull out the type of messages sent by our config
+	typedef server_type::message_ptr message_ptr;
+
+	bool validate(server_type *, websocketpp::connection_hdl) {
+		//sleep(6);
+		return true;
+	}
+
+	void on_http(server_type* s, websocketpp::connection_hdl hdl) {
+		server_type::connection_ptr con = s->get_con_from_hdl(hdl);
+
+		std::string res = con->get_request_body();
+
+		std::stringstream ss;
+		ss << "got HTTP request with " << res.size() << " bytes of body data.";
+
+		con->set_body(ss.str());
+		con->set_status(websocketpp::http::status_code::ok);
+	}
+
+	void on_fail(server_type* s, websocketpp::connection_hdl hdl) {
+		server_type::connection_ptr con = s->get_con_from_hdl(hdl);
+
+		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
+	}
+
+	void on_close(websocketpp::connection_hdl) {
+		std::cout << "Close handler" << std::endl;
+	}
+
+	// Define a callback to handle incoming messages
+	void on_message(server_type* s, websocketpp::connection_hdl hdl, message_ptr msg) {
+		std::cout << "on_message called with hdl: " << hdl.lock().get()
+			<< " and message: " << msg->get_payload()
+			<< std::endl;
+
+		try {
+			s->send(hdl, msg->get_payload(), msg->get_opcode());
+		}
+		catch (const websocketpp::lib::error_code& e) {
+			std::cout << "Echo failed because: " << e
+				<< "(" << e.message() << ")" << std::endl;
+		}
+	}
+
 	/*
 	typedef bas::ws_service<work_handler_impl,alloc_type> ws_service_type;
 	work_handler_impl	_w;
@@ -70,6 +158,8 @@ private:
 	size_t				_ios,_works,_rb_size;
 	std::shared_ptr<ws_service_type>	ws_service_;
 	*/
+	server_type						_server;
+
 	std::shared_ptr<std::thread>	_thread;
 	bool							_bExit;
 };
