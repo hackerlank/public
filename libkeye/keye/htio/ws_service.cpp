@@ -20,7 +20,7 @@ namespace keye{
 class ws_service_impl{
 public:
 	ws_service_impl(ws_service& w,size_t ios,size_t works,size_t rb_size)
-	:/*_w(w),_ios(ios),_works(works),_rb_size(rb_size),*/_bExit(true){}
+	:_handler(w),/*,_ios(ios),_works(works),_rb_size(rb_size),*/_bExit(true){}
 
 	void	run(unsigned short port,const char* address=nullptr){
 		if (_bExit) {
@@ -36,12 +36,12 @@ public:
 				_server.set_reuse_addr(true);
 
 				// Register our message handler
-				_server.set_message_handler	(std::bind(&ws_service_impl::on_message,this, &_server, std::placeholders::_1, std::placeholders::_2));
-				_server.set_http_handler	(std::bind(&ws_service_impl::on_http,	this, &_server, std::placeholders::_1));
-				_server.set_fail_handler	(std::bind(&ws_service_impl::on_fail,	this, &_server, std::placeholders::_1)); 
+				_server.set_message_handler	(std::bind(&ws_service_impl::on_message,this, std::placeholders::_1, std::placeholders::_2));
+				_server.set_http_handler	(std::bind(&ws_service_impl::on_http,	this, std::placeholders::_1));
+				_server.set_fail_handler	(std::bind(&ws_service_impl::on_fail,	this, std::placeholders::_1)); 
 				_server.set_open_handler	(std::bind(&ws_service_impl::on_open,	this, std::placeholders::_1));
 				_server.set_close_handler	(std::bind(&ws_service_impl::on_close,	this, std::placeholders::_1));
-				_server.set_validate_handler(std::bind(&ws_service_impl::validate,	this, &_server, std::placeholders::_1));
+				_server.set_validate_handler(std::bind(&ws_service_impl::validate,	this, std::placeholders::_1));
 			}
 			catch (const std::exception & e) {
 				std::cout << e.what() << std::endl;
@@ -95,17 +95,46 @@ public:
 		//if(ws_service_)ws_service_->post_event(buf,length);
 	}
 private:
-
 	// pull out the type of messages sent by our config
 	typedef server_type::message_ptr message_ptr;
 
-	bool validate(server_type *, websocketpp::connection_hdl) {
+	bool validate(websocketpp::connection_hdl) {
 		//sleep(6);
 		return true;
 	}
 
-	void on_http(server_type* s, websocketpp::connection_hdl hdl) {
-		server_type::connection_ptr con = s->get_con_from_hdl(hdl);
+	void on_open(websocketpp::connection_hdl) {
+		//_handler.on_open();
+		std::cout << "Open handler" << std::endl;
+	}
+
+	void on_close(websocketpp::connection_hdl) {
+		std::cout << "Close handler" << std::endl;
+	}
+
+	void on_fail(websocketpp::connection_hdl hdl) {
+		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
+
+		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
+	}
+
+	// Define a callback to handle incoming messages
+	void on_message(websocketpp::connection_hdl hdl, message_ptr msg) {
+		std::cout << "on_message called with hdl: " << hdl.lock().get()
+			<< " and message: " << msg->get_payload()
+			<< std::endl;
+
+		try {
+			_server.send(hdl, msg->get_payload(), msg->get_opcode());
+		}
+		catch (const websocketpp::lib::error_code& e) {
+			std::cout << "Echo failed because: " << e
+				<< "(" << e.message() << ")" << std::endl;
+		}
+	}
+
+	void on_http(websocketpp::connection_hdl hdl) {
+		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 
 		std::string res = con->get_request_body();
 
@@ -116,35 +145,6 @@ private:
 		con->set_status(websocketpp::http::status_code::ok);
 	}
 
-	void on_fail(server_type* s, websocketpp::connection_hdl hdl) {
-		server_type::connection_ptr con = s->get_con_from_hdl(hdl);
-
-		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
-	}
-
-	void on_open(websocketpp::connection_hdl) {
-		std::cout << "Open handler" << std::endl;
-	}
-
-	void on_close(websocketpp::connection_hdl) {
-		std::cout << "Close handler" << std::endl;
-	}
-
-	// Define a callback to handle incoming messages
-	void on_message(server_type* s, websocketpp::connection_hdl hdl, message_ptr msg) {
-		std::cout << "on_message called with hdl: " << hdl.lock().get()
-			<< " and message: " << msg->get_payload()
-			<< std::endl;
-
-		try {
-			s->send(hdl, msg->get_payload(), msg->get_opcode());
-		}
-		catch (const websocketpp::lib::error_code& e) {
-			std::cout << "Echo failed because: " << e
-				<< "(" << e.message() << ")" << std::endl;
-		}
-	}
-
 	/*
 	typedef bas::ws_service<work_handler_impl,alloc_type> ws_service_type;
 	work_handler_impl	_w;
@@ -153,6 +153,7 @@ private:
 	std::shared_ptr<ws_service_type>	ws_service_;
 	*/
 	server_type						_server;
+	ws_service						_handler;
 
 	std::shared_ptr<std::thread>	_thread;
 	bool							_bExit;
