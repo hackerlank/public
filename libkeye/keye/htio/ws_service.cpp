@@ -12,6 +12,7 @@
 #include "htio_fwd.h"
 // --------------------------------------------------------
 typedef websocketpp::server<websocketpp::config::asio>			server_type;
+typedef server_type service_type;
 
 #include "ws_handler.hpp"
 namespace keye{
@@ -74,11 +75,6 @@ public:
 	}
 	void	connect(const char* address,unsigned short port,unsigned short conns=1){
 		_bExit=false;
-		/*
-		if(!ws_service_)
-			ws_service_.reset(new ws_service_type(&_w,&_a,_ios,_works,_rb_size));
-		ws_service_->connect(address,port,conns);
-		*/
 	}
 	void	set_timer(size_t id,size_t milliseconds){
 		//if(ws_service_)ws_service_->set_timer(id,milliseconds);

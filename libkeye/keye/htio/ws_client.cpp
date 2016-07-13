@@ -12,7 +12,7 @@
 #include "htio_fwd.h"
 // --------------------------------------------------------
 typedef websocketpp::client<websocketpp::config::asio_client>	client_type;
-typedef client_type server_type;
+typedef client_type service_type;
 
 #include "ws_handler.hpp"
 namespace keye{
@@ -68,11 +68,17 @@ public:
 		catch (...) {
 			std::cout << "other exception" << std::endl;
 		}
-		/*
-		if(!ws_service_)
-			ws_service_.reset(new ws_service_type(&_w,&_a,_ios,_works,_rb_size));
-		ws_service_->connect(address,port,conns);
-		*/
+
+		char uri[128];
+		sprintf(uri,"ws://%s:%d",address,port);
+		websocketpp::lib::error_code ec;
+		client_type::connection_ptr con = _client.get_connection(uri, ec);
+		if (ec) 
+			std::cout << "could not create connection because: " << ec.message() << std::endl;
+		// Note that connect here only requests a connection. No network messages are
+		// exchanged until the event loop starts running in the next line.
+		_client.connect(con);
+		_thread.reset(new std::thread(boost::bind(&client_type::run, &_client)));
 	}
 	void	set_timer(size_t id,size_t milliseconds){
 		//if(ws_service_)ws_service_->set_timer(id,milliseconds);

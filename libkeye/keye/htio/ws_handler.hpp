@@ -14,7 +14,7 @@
 using namespace keye;
 
 class ws_handler_impl:public svc_handler{
-	typedef server_type::connection_ptr service_handler_type;
+	typedef service_type::connection_ptr service_handler_type;
 public:
 			ws_handler_impl(service_handler_type& sh):_sh(sh){}
 	virtual void	close(){
