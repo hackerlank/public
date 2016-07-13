@@ -80,11 +80,14 @@ public:
 		_client.connect(con);
 		_thread.reset(new std::thread(boost::bind(&client_type::run, &_client)));
 	}
-	void	set_timer(size_t id,size_t milliseconds){
-		//if(ws_service_)ws_service_->set_timer(id,milliseconds);
+	void	set_timer(size_t id, size_t milliseconds) {
+		unset_timer(id);
+		timers_[id] = _client.set_timer((long)milliseconds, std::bind(&ws_client_impl::on_timer, this, id, milliseconds, std::placeholders::_1));
 	}
-	void	unset_timer(size_t id){
-		//if(ws_service_)ws_service_->unset_timer(id);
+	void	unset_timer(size_t id) {
+		auto i = timers_.find(id);
+		if (i != timers_.end())
+			i->second->cancel();
 	}
 	void	post_event(void* buf,size_t length){
 		//if(ws_service_)ws_service_->post_event(buf,length);
@@ -153,8 +156,16 @@ private:
 		*/
 	}
 
+	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
+		if (!ec)
+			// set timer for next telemetry check
+			set_timer(id, milliseconds);
+	}
+
 	client_type						_client;
 	ws_client						_handler;
+	/// Events timers
+	std::map<std::size_t, client_type::timer_ptr> timers_;
 
 	std::shared_ptr<std::thread>	_thread;
 	bool							_bExit;

@@ -33,10 +33,13 @@ public:
 		//_sh.post_event(buf,length);
 	}
 	virtual void	set_timer(size_t id,size_t milliseconds){
-		//_sh.set_timer(id,milliseconds);
+		unset_timer(id);
+		timers_[id] = _sh->set_timer((long)milliseconds, std::bind(&ws_handler_impl::on_timer, this, id, milliseconds, std::placeholders::_1));
 	}
 	virtual void	unset_timer(size_t id){
-		//_sh.unset_timer(id);
+		auto i = timers_.find(id);
+		if (i != timers_.end())
+			i->second->cancel();
 	}
 	virtual std::string	address()const{
 		try{
@@ -55,11 +58,18 @@ public:
 	virtual std::shared_ptr<void>&	sptr(){
 		return _s_ptr;
 	}
+	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
+		if(!ec)
+			// set timer for next telemetry check
+			set_timer(id, milliseconds);
+	}
 private:
 	service_handler_type&	_sh;
 	const std::string		_rc;
 	///the interface expsure
 	std::shared_ptr<void>	_s_ptr;
+	/// Events timers
+	std::map<std::size_t, service_type::timer_ptr> timers_;
 };
 // --------------------------------------------------------
 #endif
