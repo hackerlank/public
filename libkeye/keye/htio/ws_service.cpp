@@ -27,9 +27,6 @@ public:
 			_bExit = false;
 
 			try {
-				//using websocketpp::lib::placeholders::_1;
-				//using websocketpp::lib::placeholders::_2;
-				//using websocketpp::lib::bind;
 				// Set logging settings
 				_server.set_error_channels(websocketpp::log::elevel::all);
 				_server.set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
@@ -38,20 +35,13 @@ public:
 				_server.init_asio();
 				_server.set_reuse_addr(true);
 
-				_server.set_message_handler(std::bind(&ws_service_impl::on_message, this, &_server, std::placeholders::_1, std::placeholders::_2));
-				_server.set_http_handler(std::bind(&ws_service_impl::on_http, this, &_server, std::placeholders::_1));
-				_server.set_fail_handler(std::bind(&ws_service_impl::on_fail, this, &_server, std::placeholders::_1));
-				//_server.set_close_handler(std::bind(&ws_service_impl::on_close,this));
-				/*
 				// Register our message handler
-				_server.set_message_handler(bind(&on_message, this, ::_1, ::_2));
-
-				_server.set_http_handler(bind(&on_http, this, ::_1));
-				_server.set_fail_handler(bind(&on_fail, this, ::_1));
-				_server.set_close_handler(&on_close);
-				_server.set_validate_handler(std::bind(&ws_service_impl::validate, this, &_server,::_1));
-				_server.set_validate_handler(bind(&validate, this, ::_1));
-				*/
+				_server.set_message_handler	(std::bind(&ws_service_impl::on_message,this, &_server, std::placeholders::_1, std::placeholders::_2));
+				_server.set_http_handler	(std::bind(&ws_service_impl::on_http,	this, &_server, std::placeholders::_1));
+				_server.set_fail_handler	(std::bind(&ws_service_impl::on_fail,	this, &_server, std::placeholders::_1)); 
+				_server.set_open_handler	(std::bind(&ws_service_impl::on_open,	this, std::placeholders::_1));
+				_server.set_close_handler	(std::bind(&ws_service_impl::on_close,	this, std::placeholders::_1));
+				_server.set_validate_handler(std::bind(&ws_service_impl::validate,	this, &_server, std::placeholders::_1));
 			}
 			catch (const std::exception & e) {
 				std::cout << e.what() << std::endl;
@@ -130,6 +120,10 @@ private:
 		server_type::connection_ptr con = s->get_con_from_hdl(hdl);
 
 		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
+	}
+
+	void on_open(websocketpp::connection_hdl) {
+		std::cout << "Open handler" << std::endl;
 	}
 
 	void on_close(websocketpp::connection_hdl) {
