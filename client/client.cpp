@@ -14,7 +14,7 @@ using namespace keye;
 
 #ifdef WRITE_FREQ
 #undef WRITE_FREQ
-#define WRITE_FREQ 2000
+#define WRITE_FREQ 1000
 #endif // WRITE_FREQ
 
 class MyClient :public ws_client{

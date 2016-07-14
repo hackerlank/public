@@ -33,6 +33,7 @@ public:
 				// Initialize Asio
 				_server.init_asio();
 				_server.set_reuse_addr(true);
+				_timer_con = _server.get_connection();
 
 				// Register our message handler
 				_server.set_message_handler	(std::bind(&ws_service_impl::on_message,this, std::placeholders::_1, std::placeholders::_2));
@@ -153,14 +154,16 @@ private:
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
-		if (!ec)
-			// set timer for next telemetry check
-			set_timer(id, milliseconds);
+		ws_handler_impl sh(_timer_con);
+		_handler.on_timer(sh, id, milliseconds);
+		// set timer for next telemetry check
+		if (!ec)set_timer(id, milliseconds);
 	}
 
 	server_type						_server;
 	ws_service&						_handler;
-	/// Events timers
+	server_type::connection_ptr		_timer_con;	//connection for timer
+	// Events timers
 	std::map<std::size_t, server_type::timer_ptr> timers_;
 
 	std::shared_ptr<std::thread>	_thread;

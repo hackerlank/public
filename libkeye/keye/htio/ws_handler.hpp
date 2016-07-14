@@ -33,8 +33,8 @@ public:
 		//_sh.post_event(buf,length);
 	}
 	virtual void	set_timer(size_t id,size_t milliseconds){
-		unset_timer(id);
-		timers_[id] = _sh->set_timer((long)milliseconds, std::bind(&ws_handler_impl::on_timer, this, id, milliseconds, std::placeholders::_1));
+		//unset_timer(id);
+		//timers_[id] = _sh->set_timer((long)milliseconds, std::bind(&ws_handler_impl::on_timer, this, id, milliseconds, std::placeholders::_1));
 	}
 	virtual void	unset_timer(size_t id){
 		auto i = timers_.find(id);

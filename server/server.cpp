@@ -12,11 +12,17 @@
 
 using namespace keye;
 
+#ifdef WRITE_FREQ
+#undef WRITE_FREQ
+#define WRITE_FREQ 1000
+#endif // WRITE_FREQ
+
 class MyServer :public ws_service {
 public:
 	MyServer(size_t ios = 1, size_t works = 1, size_t rb_size = 510) :ws_service(ios, works, rb_size) {}
 	virtual void	on_open(svc_handler&) {
 		KEYE_LOG("----on_open\n");
+		//set_timer(WRITE_TIMER, WRITE_FREQ);
 	}
 	virtual void	on_close(svc_handler&) {
 		KEYE_LOG("----on_open\n");
