@@ -72,7 +72,7 @@ public:
 		char uri[128];
 		sprintf(uri,"ws://%s:%d",address,port);
 		websocketpp::lib::error_code ec;
-		client_type::connection_ptr con = _client.get_connection(uri, ec);
+		con = _client.get_connection(uri, ec);
 		if (ec) 
 			std::cout << "could not create connection because: " << ec.message() << std::endl;
 		// Note that connect here only requests a connection. No network messages are
@@ -157,14 +157,16 @@ private:
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
-		if (!ec)
-			// set timer for next telemetry check
-			set_timer(id, milliseconds);
+		ws_handler_impl sh(con);
+		_handler.on_timer(sh,id, milliseconds);
+		// set timer for next telemetry check
+		if (!ec)set_timer(id, milliseconds);
 	}
 
 	client_type						_client;
 	ws_client&						_handler;
-	/// Events timers
+	client_type::connection_ptr		con;	//this connection
+	// Events timers
 	std::map<std::size_t, client_type::timer_ptr> timers_;
 
 	std::shared_ptr<std::thread>	_thread;
