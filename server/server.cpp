@@ -10,6 +10,9 @@
 //#include <curses.h>
 #endif
 
+#include "protocol/game_protocol.h"
+#include "protocol/game_protocol.pb.h"
+
 using namespace keye;
 
 #ifdef WRITE_FREQ
@@ -63,6 +66,7 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
+	proto3::ZoneInfo zi;
 	myserver<ws_service>(port, 4, 4);
 	//myserver<service>(port, 4, 4);
 	return 0;
