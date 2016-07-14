@@ -63,8 +63,9 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
-	//myserver<ws_service>(port, 4, 4);
+	myserver<ws_service>(port, 4, 4);
 	//myserver<service>(port, 4, 4);
+	return 0;
 	MyServer server;
 	server.run(port,"127.0.0.1");
 	KEYE_LOG("++++server start at %d\n", port);

@@ -50,6 +50,7 @@ public:
 			// Initialize Asio
 			_client.init_asio();
 			_client.set_reuse_addr(true);
+			_timer_con=_client.get_connection();
 
 			// Register our message handler
 			_client.set_message_handler	(std::bind(&ws_client_impl::on_message, this, std::placeholders::_1, std::placeholders::_2));
@@ -72,12 +73,15 @@ public:
 		char uri[128];
 		sprintf(uri,"ws://%s:%d",address,port);
 		websocketpp::lib::error_code ec;
-		con = _client.get_connection(uri, ec);
-		if (ec) 
-			std::cout << "could not create connection because: " << ec.message() << std::endl;
-		// Note that connect here only requests a connection. No network messages are
-		// exchanged until the event loop starts running in the next line.
-		_client.connect(con);
+		for(unsigned short i=0; i<conns;++i){
+			auto con=_client.get_connection(uri,ec);
+			if(ec)
+				std::cout<<"could not create connection because: "<<ec.message()<<std::endl;
+			// Note that connect here only requests a connection. No network messages are
+			// exchanged until the event loop starts running in the next line.
+			else
+				_client.connect(con);
+		}
 		_thread.reset(new std::thread(boost::bind(&client_type::run, &_client)));
 	}
 	void	set_timer(size_t id, size_t milliseconds) {
@@ -157,7 +161,7 @@ private:
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
-		ws_handler_impl sh(con);
+		ws_handler_impl sh(_timer_con);
 		_handler.on_timer(sh,id, milliseconds);
 		// set timer for next telemetry check
 		if (!ec)set_timer(id, milliseconds);
@@ -165,7 +169,7 @@ private:
 
 	client_type						_client;
 	ws_client&						_handler;
-	client_type::connection_ptr		con;	//this connection
+	client_type::connection_ptr		_timer_con;	//connection for timer
 	// Events timers
 	std::map<std::size_t, client_type::timer_ptr> timers_;
 

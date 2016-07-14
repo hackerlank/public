@@ -50,8 +50,9 @@ int main(int argc, char* argv[]) {
 	//const char* host = "192.168.99.100";
 	const char* host="127.0.0.1";
 	unsigned short port = 8899;
-	//myclient<ws_client>(host, port);
+	myclient<ws_client>(host, port);
 	//myclient<service>(host,port);
+	return 0;
 	MyClient client;
 	client.connect(host, port);
 	KEYE_LOG("++++client connect to %s:%d\n",host,port);

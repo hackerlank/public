@@ -59,7 +59,7 @@ public:
         RawService<S>::_metric.on_read(sz);
 
         if(RawService<S>::crc){
-			//				auto sc=crc(cp.data,p.length-sizeof(packet_crc_t),16);
+			//auto sc=crc(cp.data,p.length-sizeof(packet_crc_t),16);
 		}
 		if(RawService<S>::echo)
 			KEYE_LOG("read %d:%s\n",(int)sz,(char*)buf);
@@ -84,7 +84,7 @@ template<typename S>
 class RawClient:public RawService<S> {
 public:
 	virtual void	on_open(svc_handler& sh){
-		sh.set_timer(WRITE_TIMER,WRITE_FREQ);
+		set_timer(WRITE_TIMER,WRITE_FREQ);
 	}
 	virtual void	on_read(svc_handler& sh,void* buf,size_t sz){
 		if(RawService<S>::echo)
@@ -94,7 +94,7 @@ public:
 		bool ret=true;
 		if(WRITE_TIMER==id){
 			if(RawService<S>::interval!=milliseconds){
-				sh.set_timer(WRITE_TIMER,RawService<S>::interval);
+				set_timer(WRITE_TIMER,RawService<S>::interval);
 				ret=false;
 			}
 			if(RawService<S>::send){
@@ -164,7 +164,7 @@ inline void prompt(){
 	KEYE_LOG("\ncommand list:\n \
 	?:\t\tshow this\n \
 	e:\t\techo messages\n \
-	h[ip:port]:\tset host ip and port\n \
+	h[[ip]:port]:\tset host ip and port\n \
 	i[ms]:\t\tsend interval\n \
 	l[n]:\t\tsend packet length\n \
 	n[n]:\t\tincreament connects\n \

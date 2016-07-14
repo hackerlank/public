@@ -74,6 +74,20 @@ public:
         endpoint_type::m_alog.write(log::alevel::devel, "client constructor");
     }
 
+	/// Create and initialize a new connection
+	/**
+	* The connection will be initialized and ready to begin. Call its start()
+	* method to begin the processing loop.
+	*
+	* Note: The connection must either be started or terminated using
+	* connection::terminate in order to avoid memory leaks.
+	*
+	* @return A pointer to the new connection.
+	*/
+	connection_ptr get_connection(){
+		return endpoint_type::create_connection();
+	}
+
     /// Get a new connection
     /**
      * Creates and returns a pointer to a new connection to the given URI
