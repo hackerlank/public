@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="keye\dbproxy\r3c.h" />
     <ClInclude Include="keye\htio\bas\bas_fwd.hpp" />
     <ClInclude Include="keye\htio\bas\bas_pch.hpp" />
     <ClInclude Include="keye\htio\bas\io_service_pool.hpp" />
@@ -50,18 +49,6 @@
     <ClInclude Include="keye\keyeio\work_handler.h" />
     <ClInclude Include="keye\keye_fwd.h" />
     <ClInclude Include="keye\keye_pch.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_connection.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_error.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_parameters.h" />
-    <ClInclude Include="keye\mysql_proxy\mysql_parameters.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_proxy.h" />
-    <ClInclude Include="keye\mysql_proxy\mysql_proxy_fwd.h" />
-    <ClInclude Include="keye\mysql_proxy\mysql_proxy_pch.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_resultset.h" />
-    <ClInclude Include="keye\mysql_proxy\mysql_resultset.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_statement.h" />
-    <ClInclude Include="keye\mysql_proxy\mysql_statement.hpp" />
-    <ClInclude Include="keye\mysql_proxy\mysql_svc.hpp" />
     <ClInclude Include="keye\utility\buf_set.h" />
     <ClInclude Include="keye\utility\md5.h" />
     <ClInclude Include="keye\utility\str_util.h" />
@@ -73,7 +60,6 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="keye\dbproxy\r3c.cpp" />
     <ClCompile Include="keye\htio\http_client.cpp" />
     <ClCompile Include="keye\htio\metric.cpp" />
     <ClCompile Include="keye\htio\service.cpp" />
@@ -82,10 +68,6 @@
     <ClCompile Include="keye\keyeio\packet.cpp" />
     <ClCompile Include="keye\keyeio\servicei.cpp" />
     <ClCompile Include="keye\keyeio\svc_handler.cpp" />
-    <ClCompile Include="keye\mysql_proxy\mysql_parameters.cpp" />
-    <ClCompile Include="keye\mysql_proxy\mysql_proxy.cpp" />
-    <ClCompile Include="keye\mysql_proxy\mysql_resultset.cpp" />
-    <ClCompile Include="keye\mysql_proxy\mysql_statement.cpp" />
     <ClCompile Include="keye\utility\md5.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -198,7 +180,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./;../;keye/htio/;$(DEPENDENCIES)/include/mysql;$(DEPENDENCIES)/include;C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;keye/htio/;$(DEPENDENCIES)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN32_WINNT=0x0A00;_CRT_SECURE_NO_WARNINGS;_WIN64;NDEBUG;_CONSOLE;KEYE_EXPORT;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -209,18 +191,20 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libmysql.lib;libprotobuf-lite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/libs;"C:\Program Files\MySQL\MySQL Server 5.7\lib";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libprotobuf-lite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
       <TargetMachine>MachineX64</TargetMachine>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/lib;"C:\Program Files\MySQL\MySQL Server 5.7\lib";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libmysql.lib;</AdditionalDependencies>
     </Lib>
     <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -250,7 +234,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>./;../;keye/htio/;$(DEPENDENCIES)/include/mysql;$(DEPENDENCIES)/include;C:\Program Files\MySQL\MySQL Server 5.7\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;keye/htio/;$(DEPENDENCIES)/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_WIN64;_DEBUG;_CONSOLE;KEYE_EXPORT;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
@@ -260,20 +244,22 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libmysql.lib;libprotobuf-lite.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/libs;"C:\Program Files\MySQL\MySQL Server 5.7\lib";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libprotobuf-lite.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>Debug</GenerateDebugInformation>
       <SubSystem>
       </SubSystem>
       <TargetMachine>MachineX64</TargetMachine>
       <ProgramDatabaseFile>$(OutDir)$(TargetName).pdb</ProgramDatabaseFile>
+      <IgnoreSpecificDefaultLibraries>
+      </IgnoreSpecificDefaultLibraries>
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/lib;"C:\Program Files\MySQL\MySQL Server 5.7\lib";%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>libmysql.lib;</AdditionalDependencies>
     </Lib>
     <ProjectReference>
-      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
