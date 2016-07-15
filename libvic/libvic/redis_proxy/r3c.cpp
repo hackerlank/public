@@ -28,7 +28,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include <libvic/libvic_pch.hpp>
+#include "stdafx.h"
+//#include <libvic/libvic_pch.hpp>
 
 #include "r3c.h"
 #include <errno.h>
@@ -38,7 +39,7 @@
 #include <time.h>
 
 #if(defined(_WIN32)||defined(_WIN64))
-#define srandom srand
+//#define srandom srand
 //#define random rand
 const char* inet_ntoa(in_addr&){ return nullptr; }
 int inet_addr(const char *cp){ return 1000; }
@@ -61,7 +62,18 @@ __inline int gettimeofday(struct timeval *tp,void *tzp){
 	tp->tv_usec=wtm.wMilliseconds*1000;
 
 	return (0);
-}  
+}
+int replace_random(){
+	unsigned int x=0;
+	if(RtlGenRandom==NULL){
+		// Load proc if not loaded
+		HMODULE lib=LoadLibraryA("advapi32.dll");
+		RtlGenRandom=(RtlGenRandomFunc)GetProcAddress(lib,"SystemFunction036");
+		if(RtlGenRandom==NULL) return 1;
+	}
+	RtlGenRandom(&x,sizeof(unsigned int));
+	return (int)(x>>1);
+}
 #else
 #include <arpa/inet.h>
 #include <netinet/in.h>
