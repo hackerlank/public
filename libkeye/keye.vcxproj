@@ -61,6 +61,7 @@
     <ClInclude Include="keye\mysql_proxy\mysql_statement.h" />
     <ClInclude Include="keye\mysql_proxy\mysql_statement.hpp" />
     <ClInclude Include="keye\mysql_proxy\mysql_svc.hpp" />
+    <ClInclude Include="keye\redis\r3c.h" />
     <ClInclude Include="keye\utility\buf_set.h" />
     <ClInclude Include="keye\utility\md5.h" />
     <ClInclude Include="keye\utility\str_util.h" />
@@ -84,6 +85,7 @@
     <ClCompile Include="keye\mysql_proxy\mysql_proxy.cpp" />
     <ClCompile Include="keye\mysql_proxy\mysql_resultset.cpp" />
     <ClCompile Include="keye\mysql_proxy\mysql_statement.cpp" />
+    <ClCompile Include="keye\redis\r3c.cpp" />
     <ClCompile Include="keye\utility\md5.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>

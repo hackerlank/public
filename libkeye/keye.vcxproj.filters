@@ -16,6 +16,9 @@
     <Filter Include="mysql_proxy">
       <UniqueIdentifier>{c9b28b00-ec8e-4bf5-acb9-b75b39e6b001}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dbproxy">
+      <UniqueIdentifier>{ddb8cd7c-8a91-4b86-99cc-ddad1dc43705}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="keye\keye_fwd.h" />
@@ -165,6 +168,9 @@
     <ClInclude Include="keye\htio\ws_client.h">
       <Filter>htio</Filter>
     </ClInclude>
+    <ClInclude Include="keye\redis\r3c.h">
+      <Filter>dbproxy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="keye\keyeio\packet.cpp">
@@ -218,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="keye\htio\ws_client.cpp">
       <Filter>htio</Filter>
+    </ClCompile>
+    <ClCompile Include="keye\redis\r3c.cpp">
+      <Filter>dbproxy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
