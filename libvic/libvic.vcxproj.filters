@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="mysql_proxy">
+      <UniqueIdentifier>{c9b28b00-ec8e-4bf5-acb9-b75b39e6b001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="redis_proxy">
+      <UniqueIdentifier>{ddb8cd7c-8a91-4b86-99cc-ddad1dc43705}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="libvic\libvic_fwd.h" />
+    <ClInclude Include="libvic\libvic_pch.hpp" />
+    <ClInclude Include="libvic\mysql_proxy\mysql_connection.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_error.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_parameters.h">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_parameters.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_proxy.h">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_proxy_fwd.h">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_proxy_pch.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_resultset.h">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_resultset.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_statement.h">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_statement.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\mysql_proxy\mysql_svc.hpp">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\redis_proxy\dbproxy.h">
+      <Filter>redis_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\redis_proxy\r3c.h">
+      <Filter>redis_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\redis_proxy\redis_proxy_fwd.h">
+      <Filter>redis_proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="libvic\redis_proxy\redis_proxy_pch.hpp">
+      <Filter>redis_proxy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="libvic\mysql_proxy\mysql_statement.cpp">
+      <Filter>mysql_proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="libvic\mysql_proxy\mysql_parameters.cpp">
+      <Filter>mysql_proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="libvic\mysql_proxy\mysql_proxy.cpp">
+      <Filter>mysql_proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="libvic\mysql_proxy\mysql_resultset.cpp">
+      <Filter>mysql_proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="libvic\redis_proxy\crc16.cpp">
+      <Filter>redis_proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="libvic\redis_proxy\dbproxy.cpp">
+      <Filter>redis_proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="libvic\redis_proxy\r3c.cpp">
+      <Filter>redis_proxy</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
