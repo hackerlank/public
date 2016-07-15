@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="keye\dbproxy\r3c.h" />
     <ClInclude Include="keye\htio\bas\bas_fwd.hpp" />
     <ClInclude Include="keye\htio\bas\bas_pch.hpp" />
     <ClInclude Include="keye\htio\bas\io_service_pool.hpp" />
@@ -61,7 +62,6 @@
     <ClInclude Include="keye\mysql_proxy\mysql_statement.h" />
     <ClInclude Include="keye\mysql_proxy\mysql_statement.hpp" />
     <ClInclude Include="keye\mysql_proxy\mysql_svc.hpp" />
-    <ClInclude Include="keye\redis\r3c.h" />
     <ClInclude Include="keye\utility\buf_set.h" />
     <ClInclude Include="keye\utility\md5.h" />
     <ClInclude Include="keye\utility\str_util.h" />
@@ -73,6 +73,7 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="keye\dbproxy\r3c.cpp" />
     <ClCompile Include="keye\htio\http_client.cpp" />
     <ClCompile Include="keye\htio\metric.cpp" />
     <ClCompile Include="keye\htio\service.cpp" />
@@ -85,7 +86,6 @@
     <ClCompile Include="keye\mysql_proxy\mysql_proxy.cpp" />
     <ClCompile Include="keye\mysql_proxy\mysql_resultset.cpp" />
     <ClCompile Include="keye\mysql_proxy\mysql_statement.cpp" />
-    <ClCompile Include="keye\redis\r3c.cpp" />
     <ClCompile Include="keye\utility\md5.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>

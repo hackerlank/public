@@ -168,7 +168,7 @@
     <ClInclude Include="keye\htio\ws_client.h">
       <Filter>htio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\redis\r3c.h">
+    <ClInclude Include="keye\dbproxy\r3c.h">
       <Filter>dbproxy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -225,7 +225,7 @@
     <ClCompile Include="keye\htio\ws_client.cpp">
       <Filter>htio</Filter>
     </ClCompile>
-    <ClCompile Include="keye\redis\r3c.cpp">
+    <ClCompile Include="keye\dbproxy\r3c.cpp">
       <Filter>dbproxy</Filter>
     </ClCompile>
   </ItemGroup>
