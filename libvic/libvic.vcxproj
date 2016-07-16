@@ -37,6 +37,7 @@
     <ClInclude Include="libvic\redis_proxy\redis_proxy_fwd.h" />
     <ClInclude Include="libvic\redis_proxy\r3c.h" />
     <ClInclude Include="libvic\redis_proxy\win32fixes.hpp" />
+    <ClInclude Include="libvic\vic_proxy.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

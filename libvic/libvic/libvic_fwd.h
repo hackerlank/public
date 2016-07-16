@@ -27,6 +27,7 @@
 #	define KEYE_LOG printf
 #endif
 
+#include "libvic/vic_proxy.h"
 #include "libvic/redis_proxy/redis_proxy_fwd.h"
 #include "libvic/mysql_proxy/mysql_proxy_fwd.h"
 // --------------------------------------------------------
