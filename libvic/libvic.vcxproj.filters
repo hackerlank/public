@@ -48,16 +48,13 @@
     <ClInclude Include="libvic\mysql_proxy\mysql_svc.hpp">
       <Filter>mysql_proxy</Filter>
     </ClInclude>
-    <ClInclude Include="libvic\redis_proxy\dbproxy.h">
-      <Filter>redis_proxy</Filter>
-    </ClInclude>
     <ClInclude Include="libvic\redis_proxy\r3c.h">
       <Filter>redis_proxy</Filter>
     </ClInclude>
     <ClInclude Include="libvic\redis_proxy\redis_proxy_fwd.h">
       <Filter>redis_proxy</Filter>
     </ClInclude>
-    <ClInclude Include="libvic\redis_proxy\redis_proxy_pch.hpp">
+    <ClInclude Include="libvic\redis_proxy\redis_proxy.h">
       <Filter>redis_proxy</Filter>
     </ClInclude>
   </ItemGroup>
@@ -78,10 +75,10 @@
     <ClCompile Include="libvic\redis_proxy\crc16.cpp">
       <Filter>redis_proxy</Filter>
     </ClCompile>
-    <ClCompile Include="libvic\redis_proxy\dbproxy.cpp">
+    <ClCompile Include="libvic\redis_proxy\r3c.cpp">
       <Filter>redis_proxy</Filter>
     </ClCompile>
-    <ClCompile Include="libvic\redis_proxy\r3c.cpp">
+    <ClCompile Include="libvic\redis_proxy\redis_proxy.cpp">
       <Filter>redis_proxy</Filter>
     </ClCompile>
   </ItemGroup>

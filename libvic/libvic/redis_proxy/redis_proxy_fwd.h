@@ -1,19 +1,19 @@
 // --------------------------------------------------------
 /*Copyright KeyeLeo.All rights reserved.
  *
- *File		: dbproxy_fwd.h
+ *File		: redis_proxy_fwd.h
  *Desc		: 
  *Version	: 1.0
- *Program	: KeyeLeo
- *Date		: 2012-09-29
+ *Program	: Vic Liu
+ *Date		: 2016-07-15
  */
 // --------------------------------------------------------
-#ifndef _dbproxy_fwd_h_
-#define _dbproxy_fwd_h_
+#ifndef _redis_proxy_fwd_h_
+#define _redis_proxy_fwd_h_
 
 #define KEYE_API
 
 
-#include <libvic/redis_proxy/dbproxy.h>
+#include <libvic/redis_proxy/redis_proxy.h>
 
-#endif // _dbproxy_fwd_h_
+#endif // _redis_proxy_fwd_h_

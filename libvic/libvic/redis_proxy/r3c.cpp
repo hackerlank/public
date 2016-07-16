@@ -28,8 +28,9 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-#include "stdafx.h"
-//#include <libvic/libvic_pch.hpp>
+
+#include <hiredis/hiredis.h>
+#include <hiredis/Win32_Interop/win32fixes.h>
 
 #include "r3c.h"
 #include <errno.h>
@@ -39,8 +40,10 @@
 #include <time.h>
 
 #if(defined(_WIN32)||defined(_WIN64))
-//#define srandom srand
-//#define random rand
+#undef srandom
+#undef random
+#define srandom srand
+#define random rand
 const char* inet_ntoa(in_addr&){ return nullptr; }
 int inet_addr(const char *cp){ return 1000; }
 size_t getpagesize(){ return 4096; }

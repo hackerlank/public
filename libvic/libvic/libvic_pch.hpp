@@ -1,26 +1,20 @@
 // --------------------------------------------------------
 /*Copyright KeyeLeo.All rights reserved.
  *
- *File		: core_pch.h
+ *File		: libvic_pch.h
  *Desc		: 
  *Version	: 1.0
- *Program	: KeyeLeo
- *Date		: 2012-10-30
+ *Program	: Vic Liu
+ *Date		: 2016-07-15
  */
 // --------------------------------------------------------
-#ifndef _core_pch_h_
-#define _core_pch_h_
+#ifndef _libvic_pch_h_
+#define _libvic_pch_h_
 
-#define _USE_WEBSOCKETPP_
-//#define _USE_LIBWEBSOCKET_
-/* This defined the latest Window platform.
-	If you are compiling for the preversion of Windows platform,Please include <WinSDKVer.h>
-	and define proper WIN32_WINNT,then include <SDKDDKVer.h>*/
-#ifdef WIN32
+#if(defined(_WIN32)||defined(_WIN64))
 #include <SDKDDKVer.h>
 #endif
 
-#include "libvic/redis_proxy/redis_proxy_pch.hpp"
 #include "libvic/mysql_proxy/mysql_proxy_pch.hpp"
 // --------------------------------------------------------
-#endif // _core_pch_h_
+#endif // _libvic_pch_h_

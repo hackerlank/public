@@ -1,18 +1,18 @@
 // --------------------------------------------------------
 /*Copyright KeyeLeo.All rights reserved.
  *
- *File		: db_proxy.cpp
+ *File		: redis_proxy.cpp
  *Desc		: 
  *Version	: 1.0
- *Program	: KeyeLeo
- *Date		: 2011-4-22
+ *Program	: Vic Liu
+ *Date		: 2016-07-15
  */
 // --------------------------------------------------------
 #include "stdafx.h"
 #include <libvic/libvic_fwd.h>
 
 namespace keye{
-class db_proxy_impl{
+class redis_proxy_impl{
 public:
 };
 };
@@ -20,12 +20,12 @@ public:
 using namespace keye;
 
 // --------------------------------------------------------
-// db_proxy
+// redis_proxy
 // --------------------------------------------------------
-db_proxy::db_proxy(unsigned char conns){
+redis_proxy::redis_proxy(unsigned char conns){
 }
 
-bool db_proxy::connect(const char* host, unsigned short port,
+bool redis_proxy::connect(const char* host, unsigned short port,
 		const char* user, const char* passwd,const char* db){
 	return true;
 }

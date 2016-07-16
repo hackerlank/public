@@ -33,10 +33,9 @@
     <ClInclude Include="libvic\mysql_proxy\mysql_statement.h" />
     <ClInclude Include="libvic\mysql_proxy\mysql_statement.hpp" />
     <ClInclude Include="libvic\mysql_proxy\mysql_svc.hpp" />
-    <ClInclude Include="libvic\redis_proxy\dbproxy.h" />
+    <ClInclude Include="libvic\redis_proxy\redis_proxy.h" />
     <ClInclude Include="libvic\redis_proxy\redis_proxy_fwd.h" />
     <ClInclude Include="libvic\redis_proxy\r3c.h" />
-    <ClInclude Include="libvic\redis_proxy\redis_proxy_pch.hpp" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
@@ -48,10 +47,10 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="libvic\redis_proxy\dbproxy.cpp" />
+    <ClCompile Include="libvic\redis_proxy\redis_proxy.cpp" />
     <ClCompile Include="libvic\redis_proxy\r3c.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Use</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
