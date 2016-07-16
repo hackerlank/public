@@ -11,9 +11,6 @@
 #ifndef _redis_proxy_fwd_h_
 #define _redis_proxy_fwd_h_
 
-#define KEYE_API
-
-
 #include <libvic/redis_proxy/redis_proxy.h>
 
 #endif // _redis_proxy_fwd_h_

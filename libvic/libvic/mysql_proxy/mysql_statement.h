@@ -13,6 +13,7 @@
 
 namespace keye{
 class mysql_statement_impl;
+template class KEYE_API std::shared_ptr<mysql_statement_impl>;
 // procedure and statement compatible
 class KEYE_API mysql_statement{
 public:

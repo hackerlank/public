@@ -23,11 +23,19 @@ enum e_field:unsigned char{
 	EF_BLOB
 };
 
+#pragma warning(disable:4251)
+//template class KEYE_API std::vector<void*>;
 struct KEYE_API row_t{
 	size_t				length;
 	std::vector<void*>	fields;
 };
 // --------------------------------------------------------
+/*
+template class KEYE_API std::vector<e_field>;
+template class KEYE_API std::vector<row_t>;
+template class KEYE_API std::shared_ptr<char>;
+template class KEYE_API std::shared_ptr<mysql_resultset_impl>;
+*/
 class KEYE_API mysql_resultset{
 public:
 	//accessable data

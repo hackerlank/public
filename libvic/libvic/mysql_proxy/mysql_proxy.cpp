@@ -9,7 +9,7 @@
  */
 // --------------------------------------------------------
 #include "stdafx.h"
-#include <libvic/mysql_proxy/mysql_proxy_fwd.h>
+#include <libvic/libvic_fwd.h>
 #include <libvic/mysql_proxy/mysql_statement.hpp>
 #include <libvic/mysql_proxy/mysql_connection.hpp>
 

@@ -57,6 +57,9 @@
     <ClInclude Include="libvic\redis_proxy\redis_proxy.h">
       <Filter>redis_proxy</Filter>
     </ClInclude>
+    <ClInclude Include="libvic\redis_proxy\win32fixes.hpp">
+      <Filter>redis_proxy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

@@ -31,6 +31,7 @@
 
 #include <hiredis/hiredis.h>
 #include <hiredis/Win32_Interop/win32fixes.h>
+#include "win32fixes.hpp"
 
 #include "r3c.h"
 #include <errno.h>
@@ -39,45 +40,7 @@
 #include <string.h>
 #include <time.h>
 
-#if(defined(_WIN32)||defined(_WIN64))
-#undef srandom
-#undef random
-#define srandom srand
-#define random rand
-const char* inet_ntoa(in_addr&){ return nullptr; }
-int inet_addr(const char *cp){ return 1000; }
-size_t getpagesize(){ return 4096; }
-__inline int gettimeofday(struct timeval *tp,void *tzp){
-	time_t clock;
-	struct tm tm;
-	SYSTEMTIME wtm;
-
-	GetLocalTime(&wtm);
-	tm.tm_year=wtm.wYear-1900;
-	tm.tm_mon=wtm.wMonth-1;
-	tm.tm_mday=wtm.wDay;
-	tm.tm_hour=wtm.wHour;
-	tm.tm_min=wtm.wMinute;
-	tm.tm_sec=wtm.wSecond;
-	tm.tm_isdst=-1;
-	clock=mktime(&tm);
-	tp->tv_sec=clock;
-	tp->tv_usec=wtm.wMilliseconds*1000;
-
-	return (0);
-}
-int replace_random(){
-	unsigned int x=0;
-	if(RtlGenRandom==NULL){
-		// Load proc if not loaded
-		HMODULE lib=LoadLibraryA("advapi32.dll");
-		RtlGenRandom=(RtlGenRandomFunc)GetProcAddress(lib,"SystemFunction036");
-		if(RtlGenRandom==NULL) return 1;
-	}
-	RtlGenRandom(&x,sizeof(unsigned int));
-	return (int)(x>>1);
-}
-#else
+#if !(defined(_WIN32)||defined(_WIN64))
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <strings.h>
@@ -861,7 +824,7 @@ bool CRedisClient::rpop(const std::string& key, std::string* value, std::pair<st
 int CRedisClient::rpush(const std::string& key, const std::string& value, std::pair<std::string, uint16_t>* which) throw (CRedisException)
 {
     std::vector<std::string> values(1, value);
-    return rpush(key, value, which);
+    return rpush(key, values, which);
 }
 
 int CRedisClient::rpush(const std::string& key, const std::vector<std::string>& values, std::pair<std::string, uint16_t>* which) throw (CRedisException)

@@ -1,40 +1,33 @@
 // --------------------------------------------------------
-/*Copyright KeyeLeo.All rights reserved.
+/*Copyright Vic Liu. All rights reserved.
  *
- *File		: mysql_proxy.h
+ *File		: db_proxy.h
  *Desc		: 
  *Version	: 1.0
- *Program	: KeyeLeo
- *Date		: 2012-09-29
+ *Program	: Vic Liu
+ *Date		: 2016-07-15
  */
 // --------------------------------------------------------
-#ifndef _mysql_proxy_h_
-#define _mysql_proxy_h_
+#ifndef _db_proxy_h_
+#define _db_proxy_h_
 
 namespace keye{
 // --------------------------------------------------------
-// mysql_handler
+// db_handler
 // --------------------------------------------------------
-class KEYE_API mysql_handler{
+class KEYE_API db_handler{
 public:
-	virtual			~mysql_handler(){}
-	virtual void	handle(mysql_resultset& resultset)=0;
+	virtual			~db_handler(){}
 };
 // --------------------------------------------------------
-// mysql_proxy:multi-thread async mysql proxy
+// db_proxy: interface
 // --------------------------------------------------------
-class mysql_proxy_impl;
-template class KEYE_API std::shared_ptr<mysql_proxy_impl>;
-class KEYE_API mysql_proxy{
+class KEYE_API db_proxy{
 public:
-					mysql_proxy(unsigned char threads=1);
+					db_proxy(unsigned char threads=1);
 	//open multi-connections to database
 	bool			connect(const char* host,unsigned short port,const char* user,const char* passwd,const char* dbname);
-	//async execute
-	void			execute(mysql_statement&,mysql_parameter*,mysql_handler* =nullptr);
-private:
-	s_ptr<mysql_proxy_impl>	_impl;
 };
 // --------------------------------------------------------
 };// namespace
-#endif // _mysql_proxy_h_
+#endif // _db_proxy_h_
