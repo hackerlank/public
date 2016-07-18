@@ -7,7 +7,8 @@ CXX= g++ -g -O0 -Wall -Wl,--no-as-needed -Wno-unknown-pragmas -Wno-reorder -Wno-
 # -lcurses
 
 FILES= $(wildcard *.cpp)
-OBJS=$(patsubst %.cpp,%.o,$(FILES))
+PROTO_FILES= $(wildcard protocol/*.cc)
+OBJS=$(patsubst %.cpp,%.o,$(FILES)) $(patsubst %.cc,%.o,$(PROTO_FILES))
 
 default all: $(TARGET)
 
@@ -22,7 +23,7 @@ echo:
 	@echo CFLAGS=$(CFLAGS)
 	@echo LFLAGS=$(LFLAGS)
 	$(E)
-	@echo FILES=$(FILES)
+	@echo FILES=$(FILES) $(PROTO_FILES)
 	@echo OBJS=$(OBJS)
 
 .PHONY: default all clean
