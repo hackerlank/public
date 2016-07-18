@@ -3,7 +3,7 @@
 TARGET = server
 TARGET := $(addprefix ./,$(TARGET))
 
-CXX= g++ -g -O0 -Wall -Wl,--no-as-needed -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -I../libvic/ -I$(DEPENDENCIES)/include -L../libkeye/ -L../libvic/ -L$(DEPENDENCIES)/libs -Wl,-rpath-link=../libkeye/:../libvic/:$(DEPENDENCIES)/libs -Wl,-rpath=sdks:../libkeye/:../libvic/:$(DEPENDENCIES)/libs -lkeye -lvic -lprotobuf-lite -lstdc++ -lm
+CXX= g++ -g -O0 -Wall -Wl,--no-as-needed -Wno-unknown-pragmas -Wno-reorder -Wno-unused-value -I./ -I../libkeye/ -I../libvic/ -I$(DEPENDENCIES)/include -L../libkeye/ -L../libvic/ -L$(DEPENDENCIES)/libs -Wl,-rpath-link=../libkeye/:../libvic/:$(DEPENDENCIES)/libs -Wl,-rpath=sdks:../libkeye/:../libvic/:$(DEPENDENCIES)/libs -lkeye -lvic -lprotobuf-lite -lhiredis -lstdc++ -lm
 # -lcurses
 
 FILES= $(wildcard *.cpp)
