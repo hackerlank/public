@@ -10,9 +10,10 @@
 // --------------------------------------------------------
 #include "stdafx.h"
 
+#if !(defined(_WIN32)||defined(_WIN64))
+typedef long long           PORT_LONGLONG;
+#endif
 #include <hiredis/hiredis.h>
-//#include <hiredis/Win32_Interop/win32fixes.h>
-//#include "win32fixes.hpp"
 #include "r3c.h"
 
 #include <libvic/libvic_fwd.h>

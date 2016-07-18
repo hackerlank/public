@@ -61,6 +61,9 @@
       <Filter>redis_proxy</Filter>
     </ClInclude>
     <ClInclude Include="libvic\vic_proxy.h" />
+    <ClInclude Include="libvic\mysql_proxy\buf_set.h">
+      <Filter>mysql_proxy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

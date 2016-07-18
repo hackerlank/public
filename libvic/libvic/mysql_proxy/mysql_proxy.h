@@ -12,6 +12,11 @@
 #define _mysql_proxy_h_
 
 namespace keye{
+	class mysql_proxy_impl;
+};
+template class KEYE_API std::shared_ptr<keye::mysql_proxy_impl>;
+
+namespace keye{
 // --------------------------------------------------------
 // mysql_handler
 // --------------------------------------------------------
@@ -23,8 +28,6 @@ public:
 // --------------------------------------------------------
 // mysql_proxy:multi-thread async mysql proxy
 // --------------------------------------------------------
-class mysql_proxy_impl;
-template class KEYE_API std::shared_ptr<mysql_proxy_impl>;
 class KEYE_API mysql_proxy{
 public:
 					mysql_proxy(unsigned char threads=1);

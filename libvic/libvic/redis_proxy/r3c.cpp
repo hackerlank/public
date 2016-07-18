@@ -29,18 +29,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#if !(defined(_WIN32)||defined(_WIN64))
+typedef long long           PORT_LONGLONG;
+#endif
 #include <hiredis/hiredis.h>
+#if (defined(_WIN32)||defined(_WIN64))
 #include <hiredis/Win32_Interop/win32fixes.h>
 #include "win32fixes.hpp"
-
-#include "r3c.h"
-#include <errno.h>
-#include <inttypes.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#if !(defined(_WIN32)||defined(_WIN64))
+#else
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <strings.h>
@@ -48,6 +44,13 @@
 #include <sys/time.h>
 #include <unistd.h>
 #endif
+
+#include "r3c.h"
+#include <errno.h>
+#include <inttypes.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
 
 #define R3C_ASSERT(x) assert(x)
 

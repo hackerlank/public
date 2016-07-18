@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="libvic\libvic_fwd.h" />
     <ClInclude Include="libvic\libvic_pch.hpp" />
+    <ClInclude Include="libvic\mysql_proxy\buf_set.h" />
     <ClInclude Include="libvic\mysql_proxy\mysql_connection.hpp" />
     <ClInclude Include="libvic\mysql_proxy\mysql_error.hpp" />
     <ClInclude Include="libvic\mysql_proxy\mysql_parameters.h" />

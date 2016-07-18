@@ -11,6 +11,8 @@
 #ifndef _buf_set_h
 #define _buf_set_h
 
+#include <string.h>
+
 namespace keye{
 // --------------------------------------------------------
 // buffer help function

@@ -12,11 +12,14 @@
 #define _mysql_parameters_h_
 
 namespace keye{
+	class parameter_impl;
+};
+template class KEYE_API std::shared_ptr<keye::parameter_impl>;
+
+namespace keye{
 // --------------------------------------------------------
 // mysql parameter
 // --------------------------------------------------------
-class parameter_impl;
-template class KEYE_API std::shared_ptr<parameter_impl>;
 class KEYE_API mysql_parameter{
 public:
 				mysql_parameter(size_t num,size_t id=0,void* privdata=nullptr);

@@ -4,19 +4,15 @@ CCDEBUG+= -g
 CCOPT+= -O0
 #CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -DBOOST_ALL_NO_LIB
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
-CFLAGS+= -I$(DEPENDENCIES)/include -I$(DEPENDENCIES)/include/mysql
+CFLAGS+= -I$(DEPENDENCIES)/include -I$(DEPENDENCIES)/include/mysql -Ikeye/htio/
 LDFLAGS+= -L$(DEPENDENCIES)/libs -Wl,-rpath-link=$(DEPENDENCIES)/libs -Wl,--no-as-needed
-LIBS+= -lmysqlclient -lboost_system -lboost_date_time -lz
-#LIBS+= -lwebsockets
+LIBS+= -lboost_system -lboost_date_time -lz
 SRCS= $(wildcard keye/htio/*.cpp) \
-	$(wildcard keye/mysql_proxy/*.cpp) \
 	$(wildcard keye/utility/*.cpp) \
 	$(wildcard keye/*.cpp)
 INCS= $(wildcard keye/htio/*.h) \
 	$(wildcard keye/htio/*.hpp) \
 	$(wildcard keye/htio/bas/*.hpp) \
-	$(wildcard keye/mysql_proxy/*.h) \
-	$(wildcard keye/mysql_proxy/*.hpp) \
 	$(wildcard keye/utility/*.h) \
 	$(wildcard keye/utility/*.hpp) \
 	$(wildcard keye/*.h) \
