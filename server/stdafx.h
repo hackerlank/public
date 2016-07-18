@@ -19,5 +19,6 @@
 
 #define _USE_WEBSOCKETPP_
 #include <keye/keye_fwd.h>
+#include <libvic/libvic_fwd.h>
 
 #endif // _stdafx_h_

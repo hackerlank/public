@@ -23,7 +23,7 @@ namespace keye{
 class KEYE_API redis_proxy: public vic_proxy{
 public:
 				redis_proxy(unsigned char threads=1);
-	//open multi-connections to database
+	//open multi-connections to database,host=[ip:port],don't need port
 	bool		connect(const char* host,unsigned short port=0,const char* user=nullptr,const char* passwd=nullptr,const char* dbname=nullptr);
 	// raw command
 	int			command(result_t&,const char* cmd);
