@@ -84,7 +84,7 @@ template<typename S>
 class RawClient:public RawService<S> {
 public:
 	virtual void	on_open(svc_handler& sh){
-		set_timer(WRITE_TIMER,WRITE_FREQ);
+		RawService<S>::set_timer(WRITE_TIMER,WRITE_FREQ);
 	}
 	virtual void	on_read(svc_handler& sh,void* buf,size_t sz){
 		if(RawService<S>::echo)
