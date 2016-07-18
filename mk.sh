@@ -1,3 +1,3 @@
-export DEPENDENCIES=/var/data/
+export DEPENDENCIES=/var/data/sdks
 make
 
