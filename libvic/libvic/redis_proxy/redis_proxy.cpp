@@ -9,9 +9,76 @@
  */
 // --------------------------------------------------------
 #include "stdafx.h"
+
+#include <hiredis/hiredis.h>
+//#include <hiredis/Win32_Interop/win32fixes.h>
+//#include "win32fixes.hpp"
+#include "r3c.h"
+
 #include <libvic/libvic_fwd.h>
 
 using namespace keye;
+
+void copy(result_t& dest,const redisReply& src){
+
+}
+
+#define CHECK(RETURN) \
+	if(!redis){ \
+		KEYE_LOG("redis not connected\n"); \
+		return RETURN; \
+	}
+#define CHECK_VOID	CHECK()
+#define CHECK_BOOL	CHECK(false)
+#define CHECK_INT	CHECK(-1)
+
+#define DO_RET_ARG0(CMD,RETURN,arg0) \
+	if(!redis){ \
+		KEYE_LOG("redis not connected\n"); \
+		return RETURN; \
+	} \
+	try{ \
+		return redis->CMD(key,arg0); \
+	} catch(r3c::CRedisException& ex){ \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		return RETURN; \
+	}
+
+#define DO_RET(CMD,RETURN) \
+	if(!redis){ \
+		KEYE_LOG("redis not connected\n"); \
+		return RETURN; \
+	} \
+	try{ \
+		return redis->CMD(key); \
+	} catch(r3c::CRedisException& ex){ \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		return RETURN; \
+	}
+
+#define DO_ARG0(CMD,arg0) \
+	if(!redis){ \
+		KEYE_LOG("redis not connected\n"); \
+		return; \
+	} \
+	try{ \
+		return redis->CMD(key,arg0); \
+	} catch(r3c::CRedisException& ex){ \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		return; \
+	}
+
+#define DO(CMD) \
+	if(!redis){ \
+		KEYE_LOG("redis not connected\n"); \
+		return; \
+	} \
+	try{ \
+		redis->CMD(key); \
+	} catch(r3c::CRedisException& ex){ \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+	}
+
 // --------------------------------------------------------
 // redis_proxy
 // --------------------------------------------------------
@@ -20,18 +87,45 @@ redis_proxy::redis_proxy(unsigned char conns){
 
 bool redis_proxy::connect(const char* host, unsigned short port,
 		const char* user, const char* passwd,const char* db){
-	return true;
+	try{
+		redis.reset(new r3c::CRedisClient(host));
+		return true;
+	}catch(r3c::CRedisException& ex){
+		KEYE_LOG("redis_proxy::connect ERROR: %s",ex.str().c_str());
+		return false;
+	}
 }
 
-int redis_proxy::command(result_t&,const char* cmd){return 0;}
+int redis_proxy::command(result_t& result,const char* cmd){
+	CHECK_INT
+	try{
+		auto redis_res=redis->redis_command(REDIS_REPLY_STRING,nullptr,nullptr,nullptr,cmd);
+		if(redis_res)copy(result,*redis_res);
+		return redis_res!=nullptr;
+	} catch(r3c::CRedisException& ex){
+		KEYE_LOG("redis_proxy::command ERROR: %s",ex.str().c_str());
+		return -1;
+	}
+}
 
 //key
-bool redis_proxy::exists(const char* key){return 0;}
-bool redis_proxy::expire(const char* key,uint32_t seconds){return 0;}
-bool redis_proxy::del(const char* key){return 0;}
+bool redis_proxy::exists(const char* key){
+	DO_RET(exists,false)
+}
+
+bool redis_proxy::expire(const char* key,uint32_t seconds){
+	DO_RET_ARG0(expire,false,seconds)
+}
+
+bool redis_proxy::del(const char* key){
+	DO_RET(del,false)
+}
 
 //string							
-void redis_proxy::set(const char* key,const char* value){}
+void redis_proxy::set(const char* key,const char* value){
+	DO_ARG0(set,value)
+}
+
 bool redis_proxy::setnx(const char* key,const char* value){return 0;}	//set if not exists
 bool redis_proxy::get(const char* key,std::string& value){return 0;}
 

@@ -11,19 +11,20 @@
 #ifndef _redis_proxy_h_
 #define _redis_proxy_h_
 
-namespace keye{
-// --------------------------------------------------------
-// redis_proxy:multi-thread async mysql proxy
-// --------------------------------------------------------
 namespace r3c{
 	class CRedisClient;
 };
 
+template class KEYE_API std::shared_ptr<r3c::CRedisClient>;
+namespace keye{
+// --------------------------------------------------------
+// redis_proxy:multi-thread async mysql proxy
+// --------------------------------------------------------
 class KEYE_API redis_proxy: public vic_proxy{
 public:
 				redis_proxy(unsigned char threads=1);
 	//open multi-connections to database
-	bool		connect(const char* host,unsigned short port,const char* user,const char* passwd,const char* dbname=nullptr);
+	bool		connect(const char* host,unsigned short port=0,const char* user=nullptr,const char* passwd=nullptr,const char* dbname=nullptr);
 	// raw command
 	int			command(result_t&,const char* cmd);
 

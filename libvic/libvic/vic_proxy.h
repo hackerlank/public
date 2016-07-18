@@ -32,7 +32,7 @@ class KEYE_API vic_proxy{
 public:
 	virtual			~vic_proxy(){}
 	//open multi-connections to database
-	virtual bool		connect(const char* host,unsigned short port,const char* user,const char* passwd,const char* dbname=nullptr)=0;
+	virtual bool		connect(const char* host,unsigned short port=0,const char* user=nullptr,const char* passwd=nullptr,const char* dbname=nullptr)=0;
 	// raw command
 	virtual int			command(result_t&,const char* cmd)=0;
 
