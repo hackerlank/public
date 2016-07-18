@@ -20,6 +20,49 @@ using namespace keye;
 #define WRITE_FREQ 1000
 #endif // WRITE_FREQ
 
+// --------------------------------------------------------
+// PBHelper: protobuf helper
+// --------------------------------------------------------
+class PBHelper{
+public:
+	static const size_t send_buffer_size=2048;
+	PBHelper(keye::PacketWrapper& pw):_pw(pw){}
+
+	bool Parse(google::protobuf::MessageLite& msg){
+		return msg.ParseFromArray(_pw.data,(int)_pw.length);
+	}
+
+	eMsg Id(){
+		proto3::MsgBase mt;
+		mt.ParseFromArray(_pw.data,4);
+		return (eMsg)mt.mid();
+	}
+
+	static void Send(keye::svc_handler& sh,google::protobuf::MessageLite& msg){
+		auto bytes=msg.ByteSize();
+		assert(bytes<send_buffer_size);		//large message
+		char buffer[send_buffer_size];
+		if(msg.SerializeToArray(buffer,bytes)){
+			proto3::MsgBase mr;
+			if(mr.ParseFromArray(buffer,bytes)){
+				assert(mr.mid()<=0);
+
+				keye::HeadPacker packer;
+				keye::PacketWrapper pw(buffer,bytes);
+				packer<<pw;
+				packer>>pw;
+				sh.send(pw.data,pw.length);
+				return;
+			}
+		}
+		assert(false);
+	}
+	//make compiler happy
+	void	on_message(keye::svc_handler&,keye::PacketWrapper&){}
+private:
+	keye::PacketWrapper& _pw;
+};
+
 class MyServer :public ws_service {
 public:
 	MyServer(size_t ios = 1, size_t works = 1, size_t rb_size = 510) :ws_service(ios, works, rb_size) {}
@@ -71,6 +114,8 @@ int main(int argc, char* argv[]) {
 	//myserver<service>(port, 4, 4);
 
 	redis_proxy redis;
+	keye::PacketWrapper pw;
+	PBHelper helper(pw);
 	return 0;
 	MyServer server;
 	server.run(port,"127.0.0.1");

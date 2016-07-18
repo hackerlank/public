@@ -94,7 +94,7 @@ public:
 		bool ret=true;
 		if(WRITE_TIMER==id){
 			if(RawService<S>::interval!=milliseconds){
-				set_timer(WRITE_TIMER,RawService<S>::interval);
+				RawService<S>::set_timer(WRITE_TIMER,RawService<S>::interval);
 				ret=false;
 			}
 			if(RawService<S>::send){
