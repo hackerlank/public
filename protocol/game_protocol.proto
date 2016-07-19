@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+//import "google/protobuf/unittest_import.proto";
+
+package proto3;
+
+// Protos optimized for SPEED use a strict superset of the generated code
+// of equivalent ones optimized for CODE_SIZE, so we should optimize all our
+// tests for speed unless explicitly testing code size optimization.
+// option optimize_for = SPEED;
+option optimize_for = LITE_RUNTIME;
+
+//  *** Data ---------------- Struct Define Begin *** 
+
+enum eDeviceType{
+	PC		=0;
+	PS4		=1;
+	XBOX	=2;
+	IOS		=3;
+	Android	=4;
+	WinPhone=5;
+};
+
+message account_t{
+	string			account		=1;
+	uint32			uid			=2;
+	eDeviceType		device		=3;
+	string			profile		=4;
+};
+
+message user_t{
+	uint32			uid			=1;
+	string			name		=2;
+	uint32			age			=3;
+	uint32			gender		=4;
+	uint32			flag		=5;
+	string			country		=6;
+	string			province	=7;
+};
+
+message item_t{
+	uint32			id			=1;
+	uint32			pid			=2;
+	uint32			type		=3;
+};
+
+message player_t{
+	uint32			pid			=1;
+	uint32			uid			=2;
+	uint32			level		=3;
+	uint32			xp			=4;
+	uint32			currency	=5;
+	repeated item_t	items		=6;
+	string			last_ip		=6;
+	uint64			last_login	=7;
+};
+	
+message player_game_t{
+	uint32			pid			=1;
+	uint32			game_id		=2;
+	uint32			win			=1;
+	uint32			lose		=1;
+	uint32			draw		=1;
+};
+
+enum eResult{
+	SUCCEESS		=0;
+	FAILED			=100;
+	CANCELLED		=101;
+	ERR_PROTOCOL	=102;
+	ERR_PARAM		=103;
+	ERR_DUPLICATED	=104;
+	UNKNOWN			=999;
+};
+
+// *** Data ---------------- Struct Define End *** 
+
+message MsgBase{
+	uint32 mid		= 1;
+};
+//	Client	---------------- Login
+message MsgCLLogin{
+	uint32 mid					=1;
+	account_t account			=2;
+};
+
+message MsgLCLogin{
+	uint32 mid					=1;
+	user_t user					=2;
+	eResult result				=3;
+};
+
+//	Client	---------------- Lobby
+message MsgCLEnter{
+	uint32 mid					=1;
+	user_t user					=2;
+	uint32 version				=3;
+};
+
+message MsgLCEnter{
+	uint32 mid					=1;
+	lobby_t lobby				=2;
+	player_t player				=3;
+	uint32 version				=4;
+	eResult result				=5;
+};
+
+message MsgCLRequestGame{
+	uint32 mid					=1;
+	uint32 game_id				=2;
+};
+
+message MsgLCRequestGame{
+	uint32 mid					=1;
+	game_t game					=2;
+	eResult result				=3;
+};
+
+//	Client	---------------- GameNode

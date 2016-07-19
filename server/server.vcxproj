@@ -170,17 +170,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="protocol\game_protocol.h" />
-    <ClInclude Include="protocol\game_protocol.pb.h" />
+    <ClInclude Include="..\protocol\game_protocol.h" />
+    <ClInclude Include="..\protocol\game_protocol.pb.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="protocol\game_protocol.pb.cc" />
+    <ClCompile Include="..\protocol\game_protocol.pb.cc" />
     <ClCompile Include="server.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="protocol\game_protocol.proto" />
+    <None Include="..\protocol\game_protocol.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
