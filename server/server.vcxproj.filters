@@ -2,17 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="protocol\game_protocol.h">
+    <ClInclude Include="..\protocol\game_protocol.h">
       <Filter>protocol</Filter>
     </ClInclude>
-    <ClInclude Include="protocol\game_protocol.pb.h">
+    <ClInclude Include="..\protocol\game_protocol.pb.h">
       <Filter>protocol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="server.cpp" />
-    <ClCompile Include="protocol\game_protocol.pb.cc">
+    <ClCompile Include="..\protocol\game_protocol.pb.cc">
       <Filter>protocol</Filter>
     </ClCompile>
   </ItemGroup>
@@ -22,7 +22,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="protocol\game_protocol.proto">
+    <None Include="..\protocol\game_protocol.proto">
       <Filter>protocol</Filter>
     </None>
   </ItemGroup>
