@@ -10,8 +10,8 @@
 //#include <curses.h>
 #endif
 
-#include "protocol/game_protocol.h"
-#include "protocol/game_protocol.pb.h"
+#include "game_protocol.h"
+#include "game_protocol.pb.h"
 
 using namespace keye;
 
