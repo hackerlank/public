@@ -2,6 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:protocol/protocol.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:libvic/libvic.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:server/server.xcodeproj">
    </FileRef>
    <FileRef

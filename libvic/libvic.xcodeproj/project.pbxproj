@@ -1,0 +1,382 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5E1098941D67312700B02E6B /* db_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098901D67312700B02E6B /* db_proxy.h */; };
+		5E1098951D67312700B02E6B /* libvic_fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098911D67312700B02E6B /* libvic_fwd.h */; };
+		5E1098961D67312700B02E6B /* libvic_pch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098921D67312700B02E6B /* libvic_pch.hpp */; };
+		5E1098971D67312700B02E6B /* vic_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098931D67312700B02E6B /* vic_proxy.h */; };
+		5E1098A31D67314300B02E6B /* crc16.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E1098991D67314300B02E6B /* crc16.cpp */; };
+		5E1098A51D67314300B02E6B /* r3c.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10989B1D67314300B02E6B /* r3c.cpp */; };
+		5E1098A61D67314300B02E6B /* r3c.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E10989C1D67314300B02E6B /* r3c.h */; };
+		5E1098A81D67314300B02E6B /* redis_proxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E10989E1D67314300B02E6B /* redis_proxy.cpp */; };
+		5E1098A91D67314300B02E6B /* redis_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E10989F1D67314300B02E6B /* redis_proxy.h */; };
+		5E1098AB1D67314300B02E6B /* redis_proxy_fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098A11D67314300B02E6B /* redis_proxy_fwd.h */; };
+		5E1098AC1D67314300B02E6B /* win32fixes.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098A21D67314300B02E6B /* win32fixes.hpp */; };
+		5E1098EE1D67317600B02E6B /* buf_set.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098D91D67317600B02E6B /* buf_set.h */; };
+		5E1098EF1D67317600B02E6B /* mysql_connection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098DA1D67317600B02E6B /* mysql_connection.hpp */; };
+		5E1098F01D67317600B02E6B /* mysql_error.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098DB1D67317600B02E6B /* mysql_error.hpp */; };
+		5E1098F11D67317600B02E6B /* mysql_parameters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E1098DC1D67317600B02E6B /* mysql_parameters.cpp */; };
+		5E1098F21D67317600B02E6B /* mysql_parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098DD1D67317600B02E6B /* mysql_parameters.h */; };
+		5E1098F31D67317600B02E6B /* mysql_parameters.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098DE1D67317600B02E6B /* mysql_parameters.hpp */; };
+		5E1098F51D67317600B02E6B /* mysql_proxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E1098E01D67317600B02E6B /* mysql_proxy.cpp */; };
+		5E1098F61D67317600B02E6B /* mysql_proxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098E11D67317600B02E6B /* mysql_proxy.h */; };
+		5E1098F81D67317600B02E6B /* mysql_proxy_fwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098E31D67317600B02E6B /* mysql_proxy_fwd.h */; };
+		5E1098F91D67317600B02E6B /* mysql_proxy_pch.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098E41D67317600B02E6B /* mysql_proxy_pch.hpp */; };
+		5E1098FA1D67317600B02E6B /* mysql_resultset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E1098E51D67317600B02E6B /* mysql_resultset.cpp */; };
+		5E1098FB1D67317600B02E6B /* mysql_resultset.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098E61D67317600B02E6B /* mysql_resultset.h */; };
+		5E1098FC1D67317600B02E6B /* mysql_resultset.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098E71D67317600B02E6B /* mysql_resultset.hpp */; };
+		5E1098FE1D67317600B02E6B /* mysql_statement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E1098E91D67317600B02E6B /* mysql_statement.cpp */; };
+		5E1098FF1D67317600B02E6B /* mysql_statement.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098EA1D67317600B02E6B /* mysql_statement.h */; };
+		5E1099001D67317600B02E6B /* mysql_statement.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098EB1D67317600B02E6B /* mysql_statement.hpp */; };
+		5E1099021D67317600B02E6B /* mysql_svc.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E1098ED1D67317600B02E6B /* mysql_svc.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5E1098881D67305900B02E6B /* liblibvic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibvic.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E1098901D67312700B02E6B /* db_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = db_proxy.h; path = libvic/db_proxy.h; sourceTree = "<group>"; };
+		5E1098911D67312700B02E6B /* libvic_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = libvic_fwd.h; path = libvic/libvic_fwd.h; sourceTree = "<group>"; };
+		5E1098921D67312700B02E6B /* libvic_pch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = libvic_pch.hpp; path = libvic/libvic_pch.hpp; sourceTree = "<group>"; };
+		5E1098931D67312700B02E6B /* vic_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vic_proxy.h; path = libvic/vic_proxy.h; sourceTree = "<group>"; };
+		5E1098991D67314300B02E6B /* crc16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crc16.cpp; sourceTree = "<group>"; };
+		5E10989B1D67314300B02E6B /* r3c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = r3c.cpp; sourceTree = "<group>"; };
+		5E10989C1D67314300B02E6B /* r3c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = r3c.h; sourceTree = "<group>"; };
+		5E10989E1D67314300B02E6B /* redis_proxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = redis_proxy.cpp; sourceTree = "<group>"; };
+		5E10989F1D67314300B02E6B /* redis_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = redis_proxy.h; sourceTree = "<group>"; };
+		5E1098A11D67314300B02E6B /* redis_proxy_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = redis_proxy_fwd.h; sourceTree = "<group>"; };
+		5E1098A21D67314300B02E6B /* win32fixes.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = win32fixes.hpp; sourceTree = "<group>"; };
+		5E1098D91D67317600B02E6B /* buf_set.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = buf_set.h; sourceTree = "<group>"; };
+		5E1098DA1D67317600B02E6B /* mysql_connection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_connection.hpp; sourceTree = "<group>"; };
+		5E1098DB1D67317600B02E6B /* mysql_error.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_error.hpp; sourceTree = "<group>"; };
+		5E1098DC1D67317600B02E6B /* mysql_parameters.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mysql_parameters.cpp; sourceTree = "<group>"; };
+		5E1098DD1D67317600B02E6B /* mysql_parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_parameters.h; sourceTree = "<group>"; };
+		5E1098DE1D67317600B02E6B /* mysql_parameters.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_parameters.hpp; sourceTree = "<group>"; };
+		5E1098E01D67317600B02E6B /* mysql_proxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mysql_proxy.cpp; sourceTree = "<group>"; };
+		5E1098E11D67317600B02E6B /* mysql_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_proxy.h; sourceTree = "<group>"; };
+		5E1098E31D67317600B02E6B /* mysql_proxy_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_proxy_fwd.h; sourceTree = "<group>"; };
+		5E1098E41D67317600B02E6B /* mysql_proxy_pch.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_proxy_pch.hpp; sourceTree = "<group>"; };
+		5E1098E51D67317600B02E6B /* mysql_resultset.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mysql_resultset.cpp; sourceTree = "<group>"; };
+		5E1098E61D67317600B02E6B /* mysql_resultset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_resultset.h; sourceTree = "<group>"; };
+		5E1098E71D67317600B02E6B /* mysql_resultset.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_resultset.hpp; sourceTree = "<group>"; };
+		5E1098E91D67317600B02E6B /* mysql_statement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mysql_statement.cpp; sourceTree = "<group>"; };
+		5E1098EA1D67317600B02E6B /* mysql_statement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mysql_statement.h; sourceTree = "<group>"; };
+		5E1098EB1D67317600B02E6B /* mysql_statement.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_statement.hpp; sourceTree = "<group>"; };
+		5E1098ED1D67317600B02E6B /* mysql_svc.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = mysql_svc.hpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5E1098851D67305900B02E6B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E10987F1D67305900B02E6B = {
+			isa = PBXGroup;
+			children = (
+				5E1098D81D67317600B02E6B /* mysql_proxy */,
+				5E1098981D67314300B02E6B /* redis_proxy */,
+				5E10988F1D6730CC00B02E6B /* libvic */,
+				5E1098891D67305900B02E6B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5E1098891D67305900B02E6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E1098881D67305900B02E6B /* liblibvic.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5E10988F1D6730CC00B02E6B /* libvic */ = {
+			isa = PBXGroup;
+			children = (
+				5E1098901D67312700B02E6B /* db_proxy.h */,
+				5E1098911D67312700B02E6B /* libvic_fwd.h */,
+				5E1098921D67312700B02E6B /* libvic_pch.hpp */,
+				5E1098931D67312700B02E6B /* vic_proxy.h */,
+			);
+			name = libvic;
+			sourceTree = "<group>";
+		};
+		5E1098981D67314300B02E6B /* redis_proxy */ = {
+			isa = PBXGroup;
+			children = (
+				5E1098991D67314300B02E6B /* crc16.cpp */,
+				5E10989B1D67314300B02E6B /* r3c.cpp */,
+				5E10989C1D67314300B02E6B /* r3c.h */,
+				5E10989E1D67314300B02E6B /* redis_proxy.cpp */,
+				5E10989F1D67314300B02E6B /* redis_proxy.h */,
+				5E1098A11D67314300B02E6B /* redis_proxy_fwd.h */,
+				5E1098A21D67314300B02E6B /* win32fixes.hpp */,
+			);
+			name = redis_proxy;
+			path = libvic/redis_proxy;
+			sourceTree = "<group>";
+		};
+		5E1098D81D67317600B02E6B /* mysql_proxy */ = {
+			isa = PBXGroup;
+			children = (
+				5E1098D91D67317600B02E6B /* buf_set.h */,
+				5E1098DA1D67317600B02E6B /* mysql_connection.hpp */,
+				5E1098DB1D67317600B02E6B /* mysql_error.hpp */,
+				5E1098DC1D67317600B02E6B /* mysql_parameters.cpp */,
+				5E1098DD1D67317600B02E6B /* mysql_parameters.h */,
+				5E1098DE1D67317600B02E6B /* mysql_parameters.hpp */,
+				5E1098E01D67317600B02E6B /* mysql_proxy.cpp */,
+				5E1098E11D67317600B02E6B /* mysql_proxy.h */,
+				5E1098E31D67317600B02E6B /* mysql_proxy_fwd.h */,
+				5E1098E41D67317600B02E6B /* mysql_proxy_pch.hpp */,
+				5E1098E51D67317600B02E6B /* mysql_resultset.cpp */,
+				5E1098E61D67317600B02E6B /* mysql_resultset.h */,
+				5E1098E71D67317600B02E6B /* mysql_resultset.hpp */,
+				5E1098E91D67317600B02E6B /* mysql_statement.cpp */,
+				5E1098EA1D67317600B02E6B /* mysql_statement.h */,
+				5E1098EB1D67317600B02E6B /* mysql_statement.hpp */,
+				5E1098ED1D67317600B02E6B /* mysql_svc.hpp */,
+			);
+			name = mysql_proxy;
+			path = libvic/mysql_proxy;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5E1098861D67305900B02E6B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1098AB1D67314300B02E6B /* redis_proxy_fwd.h in Headers */,
+				5E1098F81D67317600B02E6B /* mysql_proxy_fwd.h in Headers */,
+				5E1098971D67312700B02E6B /* vic_proxy.h in Headers */,
+				5E1099001D67317600B02E6B /* mysql_statement.hpp in Headers */,
+				5E1098EE1D67317600B02E6B /* buf_set.h in Headers */,
+				5E1098941D67312700B02E6B /* db_proxy.h in Headers */,
+				5E1098A61D67314300B02E6B /* r3c.h in Headers */,
+				5E1098A91D67314300B02E6B /* redis_proxy.h in Headers */,
+				5E1098951D67312700B02E6B /* libvic_fwd.h in Headers */,
+				5E1098EF1D67317600B02E6B /* mysql_connection.hpp in Headers */,
+				5E1098AC1D67314300B02E6B /* win32fixes.hpp in Headers */,
+				5E1098F91D67317600B02E6B /* mysql_proxy_pch.hpp in Headers */,
+				5E1098FC1D67317600B02E6B /* mysql_resultset.hpp in Headers */,
+				5E1098F21D67317600B02E6B /* mysql_parameters.h in Headers */,
+				5E1098F61D67317600B02E6B /* mysql_proxy.h in Headers */,
+				5E1099021D67317600B02E6B /* mysql_svc.hpp in Headers */,
+				5E1098961D67312700B02E6B /* libvic_pch.hpp in Headers */,
+				5E1098FB1D67317600B02E6B /* mysql_resultset.h in Headers */,
+				5E1098F01D67317600B02E6B /* mysql_error.hpp in Headers */,
+				5E1098FF1D67317600B02E6B /* mysql_statement.h in Headers */,
+				5E1098F31D67317600B02E6B /* mysql_parameters.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5E1098871D67305900B02E6B /* libvic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E10988C1D67305900B02E6B /* Build configuration list for PBXNativeTarget "libvic" */;
+			buildPhases = (
+				5E1098841D67305900B02E6B /* Sources */,
+				5E1098851D67305900B02E6B /* Frameworks */,
+				5E1098861D67305900B02E6B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libvic;
+			productName = libvic;
+			productReference = 5E1098881D67305900B02E6B /* liblibvic.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5E1098801D67305900B02E6B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Vic Liu";
+				TargetAttributes = {
+					5E1098871D67305900B02E6B = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+				};
+			};
+			buildConfigurationList = 5E1098831D67305900B02E6B /* Build configuration list for PBXProject "libvic" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5E10987F1D67305900B02E6B;
+			productRefGroup = 5E1098891D67305900B02E6B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5E1098871D67305900B02E6B /* libvic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E1098841D67305900B02E6B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E1098A51D67314300B02E6B /* r3c.cpp in Sources */,
+				5E1098A31D67314300B02E6B /* crc16.cpp in Sources */,
+				5E1098FA1D67317600B02E6B /* mysql_resultset.cpp in Sources */,
+				5E1098F11D67317600B02E6B /* mysql_parameters.cpp in Sources */,
+				5E1098A81D67314300B02E6B /* redis_proxy.cpp in Sources */,
+				5E1098FE1D67317600B02E6B /* mysql_statement.cpp in Sources */,
+				5E1098F51D67317600B02E6B /* mysql_proxy.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5E10988A1D67305900B02E6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5E10988B1D67305900B02E6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5E10988D1D67305900B02E6B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					/usr/local/include,
+					../sdks/include,
+					../sdks/include/mysql,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5E10988E1D67305900B02E6B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)",
+					/usr/local/include,
+					../sdks/include,
+					../sdks/include/mysql,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5E1098831D67305900B02E6B /* Build configuration list for PBXProject "libvic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E10988A1D67305900B02E6B /* Debug */,
+				5E10988B1D67305900B02E6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E10988C1D67305900B02E6B /* Build configuration list for PBXNativeTarget "libvic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E10988D1D67305900B02E6B /* Debug */,
+				5E10988E1D67305900B02E6B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5E1098801D67305900B02E6B /* Project object */;
+}

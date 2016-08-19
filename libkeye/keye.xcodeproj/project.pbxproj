@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E0A65E41C931285004D37CE /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E0A65E21C931285004D37CE /* stdafx.cpp */; };
-		5E0A65E51C931285004D37CE /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E0A65E31C931285004D37CE /* stdafx.h */; };
 		5E2B3B611D368B9E00744A9C /* ws_client.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E2B3B5C1D368B9E00744A9C /* ws_client.cpp */; };
 		5E2B3B621D368B9E00744A9C /* ws_client.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E2B3B5D1D368B9E00744A9C /* ws_client.h */; };
 		5E2B3B631D368B9E00744A9C /* ws_handler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E2B3B5E1D368B9E00744A9C /* ws_handler.hpp */; };
@@ -67,8 +65,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5E0A65E21C931285004D37CE /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = "<group>"; };
-		5E0A65E31C931285004D37CE /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = "<group>"; };
 		5E2B3B5C1D368B9E00744A9C /* ws_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ws_client.cpp; path = htio/ws_client.cpp; sourceTree = "<group>"; };
 		5E2B3B5D1D368B9E00744A9C /* ws_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ws_client.h; path = htio/ws_client.h; sourceTree = "<group>"; };
 		5E2B3B5E1D368B9E00744A9C /* ws_handler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = ws_handler.hpp; path = htio/ws_handler.hpp; sourceTree = "<group>"; };
@@ -242,8 +238,6 @@
 		5E9FFF061C92F9D80069015B /* keye */ = {
 			isa = PBXGroup;
 			children = (
-				5E0A65E21C931285004D37CE /* stdafx.cpp */,
-				5E0A65E31C931285004D37CE /* stdafx.h */,
 				5E2DBECD1C92FB1B009FC394 /* utility */,
 				5E2DBECC1C92FB15009FC394 /* keyeio */,
 				5E2DBEC81C92FB0E009FC394 /* keye_fwd.h */,
@@ -264,7 +258,6 @@
 				5E2DBEB71C92FAFC009FC394 /* htio_pch.hpp in Headers */,
 				5E2DBECA1C92FB0F009FC394 /* keye_fwd.h in Headers */,
 				5E2DBE9F1C92FAEB009FC394 /* service_handler_pool.hpp in Headers */,
-				5E0A65E51C931285004D37CE /* stdafx.h in Headers */,
 				5E2DBEB51C92FAFC009FC394 /* alloc.h in Headers */,
 				5E2DBEC61C92FAFC009FC394 /* work_handler.h in Headers */,
 				5E2B3B621D368B9E00744A9C /* ws_client.h in Headers */,
@@ -371,7 +364,6 @@
 				5E2B3B611D368B9E00744A9C /* ws_client.cpp in Sources */,
 				5E5C42581CEF5E32005CDF47 /* secure_hash.cpp in Sources */,
 				5E2DBEBB1C92FAFC009FC394 /* metric.cpp in Sources */,
-				5E0A65E41C931285004D37CE /* stdafx.cpp in Sources */,
 				5E2DBF001C92FB80009FC394 /* svc_handler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -468,7 +460,7 @@
 					"$(SRCROOT)",
 					/usr/local/include,
 					../sdks/include,
-					../sdks/include/mysql,
+					"$(SRCROOT)/keye/htio",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -488,7 +480,7 @@
 					"$(SRCROOT)",
 					/usr/local/include,
 					../sdks/include,
-					../sdks/include/mysql,
+					"$(SRCROOT)/keye/htio",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
