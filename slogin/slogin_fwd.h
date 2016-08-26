@@ -14,6 +14,7 @@
 #include "game_protocol.h"
 #include "game_protocol.pb.h"
 
+#include "PBHelper.h"
 #include "MsgHandler.h"
 #include "slogin.h"
 

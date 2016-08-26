@@ -34,6 +34,7 @@
 		5E430E291D70151000B85CB8 /* MsgHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandler.h; sourceTree = "<group>"; };
 		5E430E2B1D70165C00B85CB8 /* robot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robot.h; sourceTree = "<group>"; };
 		5E430E2C1D70193C00B85CB8 /* robot_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = robot_fwd.h; sourceTree = "<group>"; };
+		5E430E331D7070FF00B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +55,7 @@
 			children = (
 				5E430E2C1D70193C00B85CB8 /* robot_fwd.h */,
 				5E430E281D70151000B85CB8 /* MsgHandler.cpp */,
+				5E430E331D7070FF00B85CB8 /* PBHelper.h */,
 				5E430E291D70151000B85CB8 /* MsgHandler.h */,
 				5E1099051D6731B900B02E6B /* liblibvic.a */,
 				5E430E2B1D70165C00B85CB8 /* robot.h */,
@@ -171,6 +173,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../libkeye,
+					../libvic,
+					../sdks/include,
+					../protocol,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib,
+					../sdks/libs,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -208,6 +221,17 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					../libkeye,
+					../libvic,
+					../sdks/include,
+					../protocol,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib,
+					../sdks/libs,
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
@@ -217,7 +241,12 @@
 		5E3845961D3545BB00F9B096 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = ../libkeye;
+				HEADER_SEARCH_PATHS = (
+					../libkeye,
+					../libvic,
+					../sdks/include,
+					../protocol,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -225,7 +254,12 @@
 		5E3845971D3545BB00F9B096 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				HEADER_SEARCH_PATHS = ../libkeye;
+				HEADER_SEARCH_PATHS = (
+					../libkeye,
+					../libvic,
+					../sdks/include,
+					../protocol,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

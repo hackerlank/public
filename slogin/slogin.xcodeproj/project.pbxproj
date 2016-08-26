@@ -37,6 +37,7 @@
 		5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandler.h; sourceTree = "<group>"; };
 		5E430E2F1D701CFA00B85CB8 /* slogin_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slogin_fwd.h; sourceTree = "<group>"; };
 		5E430E301D701CFA00B85CB8 /* slogin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = slogin.h; sourceTree = "<group>"; };
+		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
 		5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../../../../usr/local/lib/libprotobuf-lite.a"; sourceTree = "<group>"; };
 		5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhiredis.dylib; path = ../sdks/libs/libhiredis.dylib; sourceTree = "<group>"; };
 		5EEEA7B31D67A59D00630485 /* libprotocol.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotocol.a; path = ../Build/Debug/libprotocol.a; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		5E3845981D35462A00F9B096 = {
 			isa = PBXGroup;
 			children = (
+				5E430E321D706F7900B85CB8 /* PBHelper.h */,
 				5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */,
 				5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */,
 				5E430E2F1D701CFA00B85CB8 /* slogin_fwd.h */,
