@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:protocol/protocol.xcodeproj">
+      location = "group:robot/robot.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:libvic/libvic.xcodeproj">
+      location = "group:slogin/slogin.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:server/server.xcodeproj">
@@ -14,6 +14,12 @@
       location = "group:client/client.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:protocol/protocol.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:libkeye/keye.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:libvic/libvic.xcodeproj">
    </FileRef>
 </Workspace>
