@@ -7,7 +7,7 @@
 //
 
 #include "stdafx.h"
-#include "slogin_fwd.h"
+#include "LoginFwd.h"
 using namespace proto3;
 
 void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){

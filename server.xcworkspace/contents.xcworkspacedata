@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:robot/robot.xcodeproj">
+      location = "group:Login/Login.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:slogin/slogin.xcodeproj">
+      location = "group:robot/robot.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:server/server.xcodeproj">

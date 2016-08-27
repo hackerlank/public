@@ -6,8 +6,8 @@
 //  Copyright © 2016 Vic Liu. All rights reserved.
 //
 
-#ifndef robot_fwd_h
-#define robot_fwd_h
+#ifndef login_fwd_h
+#define login_fwd_h
 
 #include <keye/htio/htio_demo.h>
 
@@ -16,6 +16,6 @@
 
 #include "PBHelper.h"
 #include "MsgHandler.h"
-#include "slogin.h"
+#include "Login.h"
 
-#endif /* robot_fwd_h */
+#endif /* login_fwd_h */

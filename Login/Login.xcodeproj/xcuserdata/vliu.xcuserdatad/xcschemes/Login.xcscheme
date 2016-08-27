@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5E3845A01D35462A00F9B096"
-               BuildableName = "slogin"
-               BlueprintName = "slogin"
-               ReferencedContainer = "container:slogin.xcodeproj">
+               BuildableName = "Login"
+               BlueprintName = "Login"
+               ReferencedContainer = "container:Login.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E3845A01D35462A00F9B096"
-            BuildableName = "slogin"
-            BlueprintName = "slogin"
-            ReferencedContainer = "container:slogin.xcodeproj">
+            BuildableName = "Login"
+            BlueprintName = "Login"
+            ReferencedContainer = "container:Login.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -65,9 +65,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5E3845A01D35462A00F9B096"
-            BuildableName = "slogin"
-            BlueprintName = "slogin"
-            ReferencedContainer = "container:slogin.xcodeproj">
+            BuildableName = "Login"
+            BlueprintName = "Login"
+            ReferencedContainer = "container:Login.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "slogin_fwd.h"
+#include "LoginFwd.h"
 
 #ifdef WIN32
 #include <conio.h>

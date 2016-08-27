@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
-	proto3::ZoneInfo zi;
+//	proto3::ZoneInfo zi;
 	myserver<ws_service>(port, 4, 4);
 	//myserver<service>(port, 4, 4);
 
