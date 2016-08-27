@@ -13,6 +13,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E625AE81D713B3C000DC1C3 /* game_protocol.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = game_protocol.proto; sourceTree = "<group>"; };
 		5EEEA7A61D67A51B00630485 /* libprotocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libprotocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EEEA7AD1D67A54F00630485 /* game_protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game_protocol.h; sourceTree = "<group>"; };
 		5EEEA7AE1D67A54F00630485 /* game_protocol.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = game_protocol.pb.cc; sourceTree = "<group>"; };
@@ -36,6 +37,7 @@
 				5EEEA7AD1D67A54F00630485 /* game_protocol.h */,
 				5EEEA7AE1D67A54F00630485 /* game_protocol.pb.cc */,
 				5EEEA7AF1D67A54F00630485 /* game_protocol.pb.h */,
+				5E625AE81D713B3C000DC1C3 /* game_protocol.proto */,
 				5EEEA7A71D67A51B00630485 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -239,6 +241,7 @@
 				5EEEA7AC1D67A51B00630485 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
