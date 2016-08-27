@@ -15,7 +15,11 @@
 class PBHelper{
 public:
     static const size_t send_buffer_size=2048;
-    PBHelper(keye::PacketWrapper& pw):_pw(pw){}
+    PBHelper(keye::PacketWrapper& pw):_pw(pw){
+        keye::HeadUnpacker packer;
+        packer<<pw;
+        packer>>pw;
+    }
     
     bool Parse(google::protobuf::MessageLite& msg){
         return msg.ParseFromArray(_pw.data,(int)_pw.length);
@@ -34,7 +38,7 @@ public:
         if(msg.SerializeToArray(buffer,bytes)){
             proto3::MsgBase mr;
             if(mr.ParseFromArray(buffer,bytes)){
-                assert(mr.mid()<=0);
+                assert(mr.mid()>0);
                 
                 keye::HeadPacker packer;
                 keye::PacketWrapper pw(buffer,bytes);

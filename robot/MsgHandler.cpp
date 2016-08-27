@@ -8,9 +8,23 @@
 
 #include "stdafx.h"
 #include "robot_fwd.h"
+using namespace proto3;
 
 void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
-    KEYE_LOG("----on_read %zd\n", sz);
-    
-    KEYE_LOG("read %d:%s\n", (int)sz, (char*)buf);
+    keye::PacketWrapper pw(buf,sz);
+    PBHelper pb(pw);
+    auto mid=pb.Id();
+    switch (mid) {
+        case eMsg::MSG_SC_LOGIN:{
+            MsgSCLogin imsg;
+            if(pb.Parse(imsg)){
+            }else{
+                KEYE_LOG("----message error id=%zd\n",mid);
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }

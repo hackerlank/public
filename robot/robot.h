@@ -17,8 +17,10 @@ public:
     virtual bool	on_timer(keye::svc_handler& sh, size_t id, size_t milliseconds);
     
     MsgHandler      handler;
+    //test
+    void login();
 private:
-    char _buf[WRITE_MAX];
+    std::shared_ptr<keye::svc_handler> spsh;
 };
 
 #endif /* robot_h */
