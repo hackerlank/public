@@ -18,6 +18,47 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
         case eMsg::MSG_SC_LOGIN:{
             MsgSCLogin imsg;
             if(pb.Parse(imsg)){
+                auto ip=imsg.ip();
+                auto port=imsg.port();
+                robot::sRobot->lobby.connect(ip.c_str(),port);
+                KEYE_LOG("----enter lobby host=%s,port=%d\n",ip.c_str(),port);
+            }else{
+                KEYE_LOG("----message error id=%zd\n",mid);
+            }
+            break;
+        }
+        case eMsg::MSG_LC_ENTER:{
+            MsgLCEnter imsg;
+            if(pb.Parse(imsg)){
+                const char* host="127.0.0.1";
+                unsigned short port = 8820;
+                robot::sRobot->node.connect(host,port);
+                KEYE_LOG("----enter node host=%s,port=%d\n",host,port);
+            }else{
+                KEYE_LOG("----message error id=%zd\n",mid);
+            }
+            break;
+        }
+        case eMsg::MSG_NC_ENTER:{
+            MsgNCEnter imsg;
+            if(pb.Parse(imsg)){
+                KEYE_LOG("----entered node\n");
+                MsgCNCreate omsg;
+                omsg.set_mid(MSG_CN_CREATE);
+                omsg.set_rule(proto3::pb_enum::RULE_GENERIC);
+                omsg.set_category(proto3::pb_enum::CATEGORY_EASY);
+                omsg.set_robot(2);
+                PBHelper::Send(sh,omsg);
+            }else{
+                KEYE_LOG("----message error id=%zd\n",mid);
+            }
+            break;
+        }
+        case eMsg::MSG_NC_CREATE:{
+            MsgNCCreate imsg;
+            if(pb.Parse(imsg)){
+                auto gid=imsg.game_id();
+                KEYE_LOG("----game created id=%d\n",gid);
             }else{
                 KEYE_LOG("----message error id=%zd\n",mid);
             }

@@ -43,7 +43,7 @@ bool slogin::on_timer(svc_handler&, size_t id, size_t milliseconds) {
 }
 
 int main(int argc, char* argv[]) {
-    unsigned short port = 8899;
+    unsigned short port = 8820;
     for(auto i=1;i<argc;++i){
         auto arg=argv[i];
         if(strlen(arg)>3&&arg[0]=='-')switch(arg[1]){

@@ -22,7 +22,7 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
                 omsg.set_uid("clusters");
                 omsg.set_version(imsg.version()+1);
                 omsg.set_ip("127.0.0.1");
-                omsg.set_port(8900);
+                omsg.set_port(8810);
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
                 KEYE_LOG("----message error id=%zd\n",mid);
@@ -30,6 +30,7 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
             }
             omsg.set_mid(eMsg::MSG_SC_LOGIN);
             PBHelper::Send(sh,omsg);
+            sh.close();
             break;
         }
         default:
