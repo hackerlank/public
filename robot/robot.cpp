@@ -112,12 +112,37 @@ bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t millisecond
 }
 
 // -------------------------------------------------------
+robot::http_client::http_client(){
+}
+
+void robot::http_client::on_read(svc_handler& sh, void* buf, size_t sz) {
+    sRobot->handler.on_read(sh,buf,sz);
+}
+
+class A{
+public:
+    virtual void foo(){
+        printf("A\n");
+    }
+    void bar(){
+        foo();
+    }
+};
+class B :public A{
+public:
+    void foo(){
+        printf("B\n");
+    }
+};
+// -------------------------------------------------------
 int main(int argc, char* argv[]) {
+    
 	const char* host="127.0.0.1";
 	unsigned short port = 8800;
 	robot client;
-	client.login.connect(host, port);
-	KEYE_LOG("++++client connect to %s:%d\n",host,port);
+//	client.login.connect(host, port);
+//	KEYE_LOG("++++client connect to %s:%d\n",host,port);
+    client.http.request(host,"hello",port);
     
     std::getchar();
     /*

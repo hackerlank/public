@@ -50,9 +50,16 @@ public:
         std::shared_ptr<keye::svc_handler> spsh;
     };
     
+    class http_client :public keye::http_client{
+    public:
+        http_client();
+        virtual void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
+    };
+    
     login_client    login;
     lobby_client    lobby;
     node_client     node;
+    http_client     http;
     
     proto3::user_t  user;
     

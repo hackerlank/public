@@ -27,7 +27,7 @@ namespace keye{
                 http_client();
         virtual	~http_client(){close();}
         //run as client and connect to server
-        void	connect(const char* address,unsigned short port,unsigned short conns=1);
+        void	request(const char* address,const char* content,unsigned short port=80);
         void	close();
         
         //events handlers
