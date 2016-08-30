@@ -144,13 +144,14 @@ private:
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 
 		std::string res = con->get_request_body();
+        
+        std::cout<<"on_http, request="<<res<<std::endl;
 
 		std::stringstream ss;
 		ss << "got HTTP request with " << res.size() << " bytes of body data.";
-		/* response
+		// response
 		con->set_body(ss.str());
 		con->set_status(websocketpp::http::status_code::ok);
-		*/
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

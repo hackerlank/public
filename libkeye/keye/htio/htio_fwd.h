@@ -36,8 +36,8 @@
 #include <keye/htio/packer.h>
 #include <keye/htio/op_packer.h>
 #include <keye/htio/service.h>
-#include <keye/htio/http_client.h>
 #ifdef _USE_WEBSOCKETPP_
+#include <keye/htio/http_client.h>
 #include <keye/htio/ws_service.h>
 #include <keye/htio/ws_client.h>
 #endif
