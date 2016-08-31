@@ -25,16 +25,11 @@ namespace keye{
     public:
         //ios:io threads;works:work threads;rb_size:read buffer max size
                 http_client();
-        virtual	~http_client(){close();}
         //run as client and connect to server
         void	request(const char* address,const char* content,unsigned short port=80);
-        void	close();
         
         //events handlers
-        virtual void	on_open(svc_handler&){}
-        virtual void	on_close(svc_handler&){}
-        virtual void	on_read(svc_handler&,void*,size_t){}
-        virtual void	on_write(svc_handler&,void*,size_t){}
+        virtual void	on_response(void*,size_t){}
     private:
         std::shared_ptr<http_client_impl>	_svc;
     };
