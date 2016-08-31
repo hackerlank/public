@@ -18,6 +18,7 @@ namespace keye{
     // http parser
     // --------------------------------------------------------
     class http_parser_impl;
+    class http_client_impl;
     class KEYE_API http_parser{
     public:
         http_parser();
@@ -36,12 +37,12 @@ namespace keye{
         const char*         header(const char*)const;
         const char*         body()const;
     private:
+        friend class http_client_impl;
         std::shared_ptr<http_parser_impl>	_parser;
     };
     // --------------------------------------------------------
     // http client
     // --------------------------------------------------------
-    class http_client_impl;
     class KEYE_API http_client{
     public:
                         http_client();

@@ -17,6 +17,42 @@ namespace keye{
     typedef websocketpp::config::asio_client config;
 
     // --------------------------------------------------------
+    // http parser
+    // --------------------------------------------------------
+    class http_parser_impl{
+    public:
+        //request
+        void        set_uri(const char* s){if(s)_request.set_uri(s);}
+        void        set_version(const char* s){if(s)_request.set_version(s);}
+        void        set_method(const char* s){if(s)_request.set_method(s);}
+        void        set_body(const char* s){if(s)_request.set_body(s);}
+        void        set_header(const char* key,const char* val){
+            if(key){
+                _request.get_method();
+                if(val)
+                    _request.append_header(key,val);
+                else
+                    _request.remove_header(key);
+            }
+        }
+        const char* uri()const{return _request.get_uri().c_str();}
+        const char* method()const{return _request.get_method().c_str();}
+        const std::string raw()const{return _request.raw();}
+        
+        //response
+        const char* version()const{return _response.get_version().c_str();}
+        int         code(){return _response.get_status_code();}
+        const char* status(){return _response.get_status_msg().c_str();}
+        const char* body()const{return _response.get_body().c_str();}
+        const char* header(const char* key)const{
+            return key?_response.get_header(key).c_str():nullptr;
+        }
+    private:
+        friend class http_client_impl;
+        websocketpp::http::parser::request      _request;
+        websocketpp::http::parser::response     _response;
+    };
+    // --------------------------------------------------------
     // connection for http
     // --------------------------------------------------------
     class http_connect: public connection<config>{
@@ -143,17 +179,12 @@ namespace keye{
             } else {
                 endpoint_type::m_alog.write(log::alevel::http,"Successful connection");
                 
-                typedef typename config::request_type request_type;
-                request_type            req;
                 auto uri=con->get_uri();
-                
-                req.set_method(parser.method());
+                auto& req=parser._parser->_request;
                 req.set_uri(uri->get_resource());
-                req.set_version(parser.version());
-                
                 req.replace_header("Host",uri->get_host_port());
                 
-                auto req_buf = req.raw();
+                auto req_buf = parser._parser->_request.raw();
                 con->async_send(req_buf.data(),req_buf.size(),
                                 lib::bind(
                                           &type::handle_response,
@@ -170,12 +201,10 @@ namespace keye{
             s<<"Http response "<<bytes_transferred<<" bytes";
             endpoint_type::m_alog.write(log::alevel::http,s.str());
             
-            typedef typename config::response_type response_type;
-            response_type response;
+            http_parser parser;
+            auto& response=parser._parser->_response;
             response.consume(buf,bytes_transferred);
 
-            http_parser parser;
-            parser.set_body(response.get_body().c_str());
             _handler.on_response(parser);
         }
         
@@ -248,41 +277,10 @@ namespace keye{
     void http_client::request(const http_parser& parser){
         _svc->request(parser);
     }
-    // --------------------------------------------------------
-    // http parser
-    // --------------------------------------------------------
-    class http_parser_impl{
-    public:
-        void        set_uri(const char* s){if(s)_request.set_uri(s);}
-        void        set_version(const char* s){if(s)_request.set_version(s);}
-        void        set_method(const char* s){if(s)_request.set_method(s);}
-        void        set_body(const char* s){if(s)_request.set_body(s);}
-        void        set_header(const char* key,const char* val){
-            if(key){
-                _request.get_method();
-                if(val)
-                    _request.append_header(key,val);
-                else
-                    _request.remove_header(key);
-            }
-        }
-        const char* uri()const{return _request.get_uri().c_str();}
-        const char* method()const{return _request.get_method().c_str();}
-        const std::string raw()const{return _request.raw();}
-        
-        const char* version()const{return _response.get_version().c_str();}
-        int code(){return _response.get_status_code();}
-        const char* status(){return _response.get_status_msg().c_str();}
-        const char* body()const{return _response.get_body().c_str();}
-        const char* header(const char* key)const{
-            
-            return key?_response.get_header(key).c_str():nullptr;
-        }
-    private:
-        websocketpp::http::parser::request      _request;
-        websocketpp::http::parser::response     _response;
-    };
 
+    // --------------------------------------------------------
+    // parser for http
+    // --------------------------------------------------------
     http_parser::http_parser(){
         _parser.reset(new http_parser_impl());
     }
