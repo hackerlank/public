@@ -112,29 +112,12 @@ bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t millisecond
 }
 
 // -------------------------------------------------------
-robot::http_client::http_client(){
-}
-
-void robot::http_client::on_response(void* buf, size_t sz) {
+void robot::http_client::on_response(const http_parser& parser) {
     auto& sh=*shnull;
-    sRobot->handler.on_read(sh,buf,sz);
+    auto resp=parser.body();
+    auto sz=strlen(resp);
+    sRobot->handler.on_read(sh,(void*)resp,sz);
 }
-
-class A{
-public:
-    virtual void foo(){
-        printf("A\n");
-    }
-    void bar(){
-        foo();
-    }
-};
-class B :public A{
-public:
-    void foo(){
-        printf("B\n");
-    }
-};
 // -------------------------------------------------------
 int main(int argc, char* argv[]) {
     
@@ -143,7 +126,13 @@ int main(int argc, char* argv[]) {
 	robot client;
 //	client.login.connect(host, port);
 //	KEYE_LOG("++++client connect to %s:%d\n",host,port);
-    client.http.request(host,"hello",port);
+    char uri[128];
+    sprintf(uri,"http://%s:%d",host,port);
+    http_parser req;
+    req.set_uri(uri);
+    req.set_method("GET");
+    req.set_version("HTTP/1.1");
+    client.http.request(req);
     
     std::getchar();
     /*

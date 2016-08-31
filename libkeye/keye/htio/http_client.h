@@ -26,13 +26,15 @@ namespace keye{
         void                set_method(const char*);
         void                set_header(const char*,const char*);
         void                set_body(const char*);
-        const std::string   raw();
+        const char*         uri()const;
+        const char*         method()const;
+        const std::string   raw()const;
 
-        const char*         version();
+        const char*         version()const;
         int                 code();
         const char*         status();
-        const char*         header(const char*);
-        const char*         body();
+        const char*         header(const char*)const;
+        const char*         body()const;
     private:
         std::shared_ptr<http_parser_impl>	_parser;
     };
@@ -42,13 +44,9 @@ namespace keye{
     class http_client_impl;
     class KEYE_API http_client{
     public:
-        //ios:io threads;works:work threads;rb_size:read buffer max size
-                http_client();
-        //run as client and connect to server
-        void	request(const char* address,const char* content,unsigned short port=80);
-        
-        //events handlers
-        virtual void	on_response(void*,size_t){}
+                        http_client();
+        void            request(const http_parser&);
+        virtual void	on_response(const http_parser&){}
 
         //null svc_handler
         std::shared_ptr<svc_handler> shnull;
