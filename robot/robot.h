@@ -53,7 +53,7 @@ public:
     class http_client :public keye::http_client{
     public:
         http_client();
-        virtual void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
+        virtual void	on_response(void* buf, size_t sz);
     };
     
     login_client    login;

@@ -22,10 +22,10 @@ namespace keye{
     class http_connect: public connection<config>{
         typedef typename config::transport_type transport_type;
         typedef typename transport_type::transport_con_type transport_con_type;
-    public:
         typedef http_connect type;
-        typedef lib::shared_ptr<type> ptr;
         typedef lib::function<void(lib::error_code const &,const char*,size_t)> response_handler;
+    public:
+        typedef lib::shared_ptr<type> ptr;
 
         explicit http_connect(bool p_is_server, std::string const & ua, alog_type& alog,
                               elog_type& elog, rng_type & rng)
@@ -38,18 +38,18 @@ namespace keye{
         void async_send(const char* buf,size_t sz,response_handler h){
             transport_con_type::async_write(buf,sz,
                                             lib::bind(
-                                                      &type::handle_send_http_request,
+                                                      &type::handle_send_request,
                                                       type::get_shared(),
                                                       lib::placeholders::_1,
                                                       h
                                                       )
                                             );
         }
-        void handle_send_http_request(lib::error_code const & ec,response_handler h) {
-            m_alog.write(log::alevel::devel,"handle_send_http_request");
+        void handle_send_request(lib::error_code const & ec,response_handler h) {
+            m_alog.write(log::alevel::devel,"handle_send_request");
             if (ec) {
                 std::stringstream s;
-                s << "handle_send_http_request error: " << ec << " (" << ec.message() << ")";
+                s << "handle_send_request error: " << ec << " (" << ec.message() << ")";
                 m_elog.write(log::elevel::rerror, s.str());
                 this->terminate(ec);
                 return;
@@ -85,23 +85,15 @@ namespace keye{
     // --------------------------------------------------------
     class http_client_impl: public endpoint<http_connect,config> {
         typedef http_client_impl client_type;
-    public:
         typedef http_client_impl type;
         typedef lib::shared_ptr<type> ptr;
-        
-        typedef typename config::concurrency_type concurrency_type;
         typedef typename config::transport_type transport_type;
-        
         typedef http_connect connection_type;
         typedef typename connection_type::ptr connection_ptr;
-        
         typedef typename transport_type::transport_con_type transport_con_type;
-        typedef typename transport_con_type::ptr transport_con_ptr;
-        
         typedef endpoint<connection_type,config> endpoint_type;
+    public:
         
-        friend class connection<config>;
-
         http_client_impl(http_client& w):_handler(w),endpoint_type(false){}
 
         ~http_client_impl(){
@@ -128,7 +120,6 @@ namespace keye{
             if(ec){
                 endpoint_type::m_elog.write(log::elevel::rerror,"request error: wrong uri");
             }else{
-                endpoint_type::m_alog.write(log::alevel::connect,"start connecting ...");
                 transport_type::async_connect(
                                               lib::static_pointer_cast<transport_con_type>(con),
                                               con->get_uri(),
@@ -150,7 +141,7 @@ namespace keye{
                 con->terminate(ec);
                 endpoint_type::m_elog.write(log::elevel::rerror,"handle_connect error: "+ec.message());
             } else {
-                endpoint_type::m_alog.write(log::alevel::connect,"Successful connection");
+                endpoint_type::m_alog.write(log::alevel::http,"Successful connection");
                 
                 typedef typename config::request_type request_type;
                 typedef typename config::response_type response_type;
@@ -168,25 +159,23 @@ namespace keye{
                 //req.replace_header("Sec-WebSocket-Version","13");
                 req.replace_header("Host",uri->get_host_port());
                 
-                auto m_handshake_buffer = req.raw();
-                endpoint_type::m_alog.write(log::alevel::connect,"request sent");
-                
-                con->async_send(m_handshake_buffer.data(),
-                                m_handshake_buffer.size(),
+                auto req_buf = req.raw();
+                con->async_send(req_buf.data(),req_buf.size(),
                                 lib::bind(
                                           &type::handle_response,
                                           this,
                                           lib::placeholders::_1,
                                           lib::placeholders::_2,
                                           lib::placeholders::_3
-                                          )
-                                );
+                                          ));
             }
         }
         
-        void handle_response(lib::error_code const & ec,const char* buf,
-                                  size_t bytes_transferred){
-            std::cout<<"----handle http bytes "<<bytes_transferred<<std::endl;
+        void handle_response(lib::error_code const & ec,const char* buf,size_t bytes_transferred){
+            std::stringstream s;
+            s<<"Http response "<<bytes_transferred<<" bytes";
+            endpoint_type::m_alog.write(log::alevel::http,s.str());
+            _handler.on_response((void*)buf,bytes_transferred);
         }
         
         connection_ptr get_connection(std::string const & u, lib::error_code & ec) {
@@ -215,10 +204,45 @@ namespace keye{
     };
     
     // --------------------------------------------------------
+    // null svc_handler
+    // --------------------------------------------------------
+    class null_svc_handler:public svc_handler{
+    public:
+        virtual void	close(){
+        }
+        virtual size_t	id()const{return 0;}
+        virtual std::shared_ptr<svc_handler> operator()()const{
+            return std::shared_ptr<svc_handler>(new null_svc_handler());
+        }
+        virtual void	send(void* buf,size_t length){
+        }
+        virtual void	post_event(void* buf,size_t length){
+        }
+        virtual void	set_timer(size_t id,size_t milliseconds){
+        }
+        virtual void	unset_timer(size_t id){
+        }
+        virtual std::string	address()const{
+            return "0.0.0.0";
+        }
+        virtual unsigned short	port()const{
+            return 0;
+        }
+        virtual std::shared_ptr<void>&	sptr(){
+            return s;
+        }
+        void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
+        }
+    private:
+        std::shared_ptr<void> s;
+    };
+
+    // --------------------------------------------------------
     // http_client
     // --------------------------------------------------------
     http_client::http_client(){
         _svc.reset(new http_client_impl(*this));
+        shnull.reset(new null_svc_handler());
     }
     
     void http_client::request(const char* address,const char* content,unsigned short port){

@@ -30,6 +30,9 @@ namespace keye{
         
         //events handlers
         virtual void	on_response(void*,size_t){}
+
+        //null svc_handler
+        std::shared_ptr<svc_handler> shnull;
     private:
         std::shared_ptr<http_client_impl>	_svc;
     };

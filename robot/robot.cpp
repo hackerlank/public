@@ -115,7 +115,8 @@ bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t millisecond
 robot::http_client::http_client(){
 }
 
-void robot::http_client::on_read(svc_handler& sh, void* buf, size_t sz) {
+void robot::http_client::on_response(void* buf, size_t sz) {
+    auto& sh=*shnull;
     sRobot->handler.on_read(sh,buf,sz);
 }
 
