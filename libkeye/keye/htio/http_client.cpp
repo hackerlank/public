@@ -248,4 +248,72 @@ namespace keye{
     void http_client::request(const char* address,const char* content,unsigned short port){
         if(_svc)_svc->request(address,content,port);
     }
+    // --------------------------------------------------------
+    // http parser
+    // --------------------------------------------------------
+    class http_parser_impl{
+    public:
+        void        set_uri(const char* s){if(s)_request.set_uri(s);}
+        void        set_version(const char* s){if(s)_request.set_version(s);}
+        void        set_method(const char* s){if(s)_request.set_method(s);}
+        void        set_body(const char* s){if(s)_request.set_body(s);}
+        void        set_header(const char* key,const char* val){
+            if(key){
+                if(val)
+                    _request.append_header(key,val);
+                else
+                    _request.remove_header(key);
+            }
+        }
+        const std::string raw(){return _request.raw();}
+        
+        const char* version(){return _response.get_version().c_str();}
+        int code(){return _response.get_status_code();}
+        const char* status(){return _response.get_status_msg().c_str();}
+        const char* body(){return _response.get_body().c_str();}
+        const char* header(const char* key){
+            
+            return key?_response.get_header(key).c_str():nullptr;
+        }
+    private:
+        websocketpp::http::parser::request      _request;
+        websocketpp::http::parser::response     _response;
+    };
+
+    http_parser::http_parser(){
+        _parser.reset(new http_parser_impl());
+    }
+    void http_parser::set_uri(const char* uri){
+        _parser->set_uri(uri);
+    }
+    void http_parser::set_version(const char* ver){
+        _parser->set_version(ver);
+    }
+    const char* http_parser::version(){
+        return _parser->version();
+    }
+    void http_parser::set_method(const char* m){
+        _parser->set_method(m);
+    }
+    int http_parser::code(){
+        return _parser->code();
+    }
+    const char* http_parser::status(){
+        return _parser->status();
+    }
+    void http_parser::set_header(const char* key,const char* value){
+        _parser->set_header(key,value);
+    }
+    const char* http_parser::header(const char* key){
+        return _parser->header(key);
+    }
+    void http_parser::set_body(const char* body){
+        _parser->set_body(body);
+    }
+    const char* http_parser::body(){
+        return _parser->body();
+    }
+    const std::string http_parser::raw(){
+        return _parser->raw();
+    }
 };

@@ -15,12 +15,31 @@
 
 namespace keye{
     // --------------------------------------------------------
-    /* http_client to process io,
-     io runs on io threads,events and timer run on work threads,
-     threads are auto chosen */
+    // http parser
+    // --------------------------------------------------------
+    class http_parser_impl;
+    class KEYE_API http_parser{
+    public:
+        http_parser();
+        void                set_uri(const char*);
+        void                set_version(const char*);
+        void                set_method(const char*);
+        void                set_header(const char*,const char*);
+        void                set_body(const char*);
+        const std::string   raw();
+
+        const char*         version();
+        int                 code();
+        const char*         status();
+        const char*         header(const char*);
+        const char*         body();
+    private:
+        std::shared_ptr<http_parser_impl>	_parser;
+    };
+    // --------------------------------------------------------
+    // http client
     // --------------------------------------------------------
     class http_client_impl;
-    
     class KEYE_API http_client{
     public:
         //ios:io threads;works:work threads;rb_size:read buffer max size
