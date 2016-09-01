@@ -59,6 +59,7 @@
 		5E5C42591CEF5E32005CDF47 /* secure_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42521CEF5E32005CDF47 /* secure_hash.h */; };
 		5E5C425A1CEF5E32005CDF47 /* str_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C42531CEF5E32005CDF47 /* str_util.cpp */; };
 		5E5C425B1CEF5E32005CDF47 /* str_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42541CEF5E32005CDF47 /* str_util.h */; };
+		5E7838481D781E6500675E68 /* base64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E7838471D781E6500675E68 /* base64.hpp */; };
 		5EC0D2CC1C93E885000F3090 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CB1C93E885000F3090 /* libboost_date_time.a */; };
 		5EC0D2CE1C93E89F000F3090 /* libboost_thread-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CD1C93E89F000F3090 /* libboost_thread-mt.a */; };
 		5EC0D2D01C93E8CB000F3090 /* libboost_system-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CF1C93E8CB000F3090 /* libboost_system-mt.a */; };
@@ -117,6 +118,7 @@
 		5E5C42521CEF5E32005CDF47 /* secure_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = secure_hash.h; path = utility/secure_hash.h; sourceTree = "<group>"; };
 		5E5C42531CEF5E32005CDF47 /* str_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = str_util.cpp; path = utility/str_util.cpp; sourceTree = "<group>"; };
 		5E5C42541CEF5E32005CDF47 /* str_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = str_util.h; path = utility/str_util.h; sourceTree = "<group>"; };
+		5E7838471D781E6500675E68 /* base64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = base64.hpp; path = utility/base64.hpp; sourceTree = "<group>"; };
 		5E9AA44E1D7460AE0037FD90 /* websocketpp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = websocketpp; path = ../../../thirdpart/websocketpp/websocketpp; sourceTree = "<group>"; };
 		5E9FFF041C92F9D80069015B /* libkeye.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkeye.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC0D2CB1C93E885000F3090 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_date_time.a; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				5E3845AF1D35472600F9B096 /* md5.cpp */,
 				5E5C424E1CEF5E32005CDF47 /* buf_set.h */,
+				5E7838471D781E6500675E68 /* base64.hpp */,
 				5E5C42501CEF5E32005CDF47 /* md5.h */,
 				5E5C42511CEF5E32005CDF47 /* secure_hash.cpp */,
 				5E5C42521CEF5E32005CDF47 /* secure_hash.h */,
@@ -269,6 +272,7 @@
 				5E2DBEB91C92FAFC009FC394 /* http_client.h in Headers */,
 				5E2DBEE81C92FB43009FC394 /* conf_file.h in Headers */,
 				5E2DBEF91C92FB80009FC394 /* impl_decl.hpp in Headers */,
+				5E7838481D781E6500675E68 /* base64.hpp in Headers */,
 				5E2DBEBE1C92FAFC009FC394 /* packet.h in Headers */,
 				5E2DBEFA1C92FB80009FC394 /* keyeio_fwd.h in Headers */,
 				5E2DBEF81C92FB80009FC394 /* alloc.h in Headers */,
