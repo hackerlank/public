@@ -142,7 +142,6 @@ inline std::string request::raw_head() const {
     // TODO: validation. Make sure all required fields have been set?
     std::stringstream ret;
 
-    ret << m_method << " " << m_uri << " " << get_version() << "\r\n";
     ret << raw_headers() << "\r\n";
 
     return ret.str();

@@ -32,6 +32,7 @@ namespace keye{
         const char*         method()const;
         
         void                set_header(const char*,const char*);
+        void                set_headers(const char*);
         const char*         header(const char*)const;
         
         void                set_body(const char*);

@@ -148,20 +148,14 @@ private:
         req_parser.set_uri(req.get_uri().c_str());
         req_parser.set_version(req.get_version().c_str());
         req_parser.set_method(req.get_method().c_str());
+        req_parser.set_headers(req.raw_head().c_str());
         req_parser.set_body(req.get_body().c_str());
-        
-        auto& resp=con->get_response();
-        resp_parser.set_body(resp.get_body().c_str());
-        con->set_status(resp.get_status_code(),resp.get_status_msg());
 
         _handler.on_http(req_parser,resp_parser);
 
 		std::stringstream ss;
-		ss << "on_http code=" << resp.get_status_code();
+		ss << "on_http code=" << resp_parser.code();
         std::cout<<ss.str();
-		// response
-//		con->set_body(ss.str());
-//		con->set_status(websocketpp::http::status_code::ok);
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

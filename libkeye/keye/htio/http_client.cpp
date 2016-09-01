@@ -53,6 +53,17 @@ namespace keye{
                     _parser->remove_header(key);
             }
         }
+        void        set_headers(const char* raw){
+            if(raw){
+                if(_requests){
+                    if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser)){
+                        req->consume(raw,strlen(raw));
+                    }
+                }else if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser)){
+                    req->consume(raw,strlen(raw));
+                }
+            }
+        }
         const char* header(const char* key)const{
             return key?_parser->get_header(key).c_str():nullptr;
         }
@@ -338,6 +349,9 @@ namespace keye{
     }
     void http_parser::set_header(const char* key,const char* value){
         _parser->set_header(key,value);
+    }
+    void http_parser::set_headers(const char* raw){
+        _parser->set_headers(raw);
     }
     const char* http_parser::header(const char* key)const{
         return _parser->header(key);

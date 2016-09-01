@@ -132,6 +132,7 @@ int main(int argc, char* argv[]) {
     req.set_uri(uri);
     req.set_method("GET");
     req.set_version("HTTP/1.1");
+    req.set_header("msgid","1001");
     req.set_body("Beautiful World");
     client.http.request(req);
     
