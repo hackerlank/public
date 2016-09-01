@@ -32,9 +32,33 @@ void slogin::on_read(svc_handler& sh, void* buf, size_t sz) {
 }
 
 void slogin::on_http(const http_parser& req,http_parser& resp){
-    resp.set_header("msgid","1002");
-    resp.set_body("Nice work");
-    resp.set_status(200,"OK");
+    auto msgid=req.header("msgid");
+    auto body=req.body();
+    if(atoi(msgid)==eMsg::MSG_CN_ENTER){
+        auto str=base64_decode(body);
+        proto3::MsgCSLogin imsg;
+        proto3::MsgSCLogin omsg;
+        if(imsg.ParseFromString(str)){
+            auto mid=eMsg::MSG_SC_LOGIN;
+            omsg.set_uid("clusters");
+            omsg.set_version(imsg.version()+1);
+            omsg.set_ip("127.0.0.1");
+            omsg.set_port(8810);
+            omsg.set_result(proto3::pb_enum::SUCCEESS);
+            omsg.set_mid(mid);
+            
+            char strmid[8];
+            sprintf(strmid,"%d",mid);
+            std::string str;
+            omsg.SerializeToString(&str);
+            str=base64_encode(str);
+
+            resp.set_header("msgid",strmid);
+            resp.set_body(str.c_str());
+            resp.set_status(200,"OK");
+        }else
+            resp.set_status(500,"Internal error");
+    }
 }
 
 void slogin::on_write(svc_handler&, void*, size_t sz) {

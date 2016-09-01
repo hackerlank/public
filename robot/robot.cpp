@@ -112,11 +112,23 @@ bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t millisecond
 }
 
 // -------------------------------------------------------
-void robot::http_client::on_response(const http_parser& parser) {
+void robot::http_client::on_response(const http_parser& resp) {
+    auto msgid=resp.header("msgid");
+    auto body=resp.body();
+    int mid=0;
+    if(atoi(msgid)==eMsg::MSG_SC_LOGIN){
+        auto str=base64_decode(body);
+        proto3::MsgSCLogin imsg;
+        if(imsg.ParseFromString(str)){
+            mid=imsg.mid();
+        }
+    }
+    /*
     auto& sh=*shnull;
     auto resp=parser.body();
     auto sz=strlen(resp);
     sRobot->handler.on_read(sh,(void*)resp,sz);
+    */
 }
 // -------------------------------------------------------
 int main(int argc, char* argv[]) {
@@ -126,14 +138,26 @@ int main(int argc, char* argv[]) {
 	robot client;
 //	client.login.connect(host, port);
 //	KEYE_LOG("++++client connect to %s:%d\n",host,port);
+    auto mid=eMsg::MSG_CN_ENTER;
     char uri[128];
     sprintf(uri,"http://%s:%d",host,port);
     http_parser req(true);
     req.set_uri(uri);
     req.set_method("GET");
     req.set_version("HTTP/1.1");
-    req.set_header("msgid","1001");
-    req.set_body("Beautiful World");
+    
+    sprintf(uri,"%d",mid);
+    req.set_header("msgid",uri);
+    
+    proto3::MsgCNEnter msg;
+    msg.set_mid(mid);
+    msg.set_version(100);
+    msg.set_service(proto3::pb_enum::GAME_CARD);
+    msg.set_uid(robot::sRobot->user.uid().c_str());
+    std::string str;
+    msg.SerializeToString(&str);
+    str=base64_encode(str);
+    req.set_body(str.c_str());
     client.http.request(req);
     
     std::getchar();
