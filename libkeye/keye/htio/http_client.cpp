@@ -76,15 +76,23 @@ namespace keye{
             }else if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser))return req->raw();
             return "";
         }
-        int         code(){
-            if(_requests)
-                if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser))return req->get_status_code();
-            return 0;
+        void        set_status(int code,const char* msg){
+            if(!_requests)
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser)){
+                    auto st=(websocketpp::http::status_code::value)code;
+                    if(msg)
+                        req->set_status(st,msg);
+                    else
+                        req->set_status(st);
+                }
         }
-        const char* status(){
-            if(_requests)
-                if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser))return req->get_status_msg().c_str();
-            return nullptr;
+        int         status(char** ppmsg){
+            if(!_requests)
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser)){
+                    if(ppmsg)strcpy(*ppmsg,req->get_status_msg().c_str());
+                    return req->get_status_code();
+                }
+            return websocketpp::http::status_code::ok;
         }
     private:
         friend class http_client_impl;
@@ -362,11 +370,11 @@ namespace keye{
     const char* http_parser::body()const{
         return _parser->body();
     }
-    int http_parser::code(){
-        return _parser->code();
+    void http_parser::set_status(int code,const char* msg){
+        _parser->set_status(code,msg);
     }
-    const char* http_parser::status(){
-        return _parser->status();
+    int http_parser::status(char** ppmsg){
+        return _parser->status(ppmsg);
     }
     const std::string http_parser::raw()const{
         return _parser->raw();

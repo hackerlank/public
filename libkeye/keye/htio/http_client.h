@@ -38,8 +38,8 @@ namespace keye{
         void                set_body(const char*);
         const char*         body()const;
         
-        int                 code();
-        const char*         status();
+        void                set_status(int,const char* =nullptr);
+        int                 status(char** =nullptr);
         const std::string   raw()const;
     private:
         friend class http_client_impl;

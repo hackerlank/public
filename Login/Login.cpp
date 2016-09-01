@@ -34,6 +34,7 @@ void slogin::on_read(svc_handler& sh, void* buf, size_t sz) {
 void slogin::on_http(const http_parser& req,http_parser& resp){
     resp.set_header("msgid","1002");
     resp.set_body("Nice work");
+    resp.set_status(200,"OK");
 }
 
 void slogin::on_write(svc_handler&, void*, size_t sz) {

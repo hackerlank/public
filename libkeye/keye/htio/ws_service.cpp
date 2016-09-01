@@ -153,8 +153,11 @@ private:
 
         _handler.on_http(req_parser,resp_parser);
 
+        auto resp=(websocketpp::http::parser::response*)&con->get_response();
+        resp->consume(resp_parser.raw().c_str(),resp_parser.raw().size());
+        
 		std::stringstream ss;
-		ss << "on_http code=" << resp_parser.code();
+		ss << "on_http code=" << resp_parser.status();
         std::cout<<ss.str();
 	}
 
