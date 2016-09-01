@@ -38,7 +38,13 @@ namespace keye{
         void        set_version(const char* s){if(s)_parser->set_version(s);}
         const char* version()const{return _parser->get_version().c_str();}
         void        set_method(const char* s){
-            if(_requests&&s)if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))req->set_method(s);
+            if(_requests&&s)if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))try{
+                req->set_method(s);
+            }catch (const std::exception & e) {
+                KEYE_LOG("%s\n",e.what());
+            }catch (...) {
+                KEYE_LOG("%s\n","other exception");
+            }
         }
         const char* method()const{
             if(_requests)
@@ -46,15 +52,19 @@ namespace keye{
             return nullptr;
         }
         void        set_header(const char* key,const char* val){
-            if(key){
+            if(key)try{
                 if(val)
                     _parser->append_header(key,val);
                 else
                     _parser->remove_header(key);
+            }catch (const std::exception & e) {
+                KEYE_LOG("%s\n",e.what());
+            }catch (...) {
+                KEYE_LOG("%s\n","other exception");
             }
         }
         void        set_headers(const char* raw){
-            if(raw){
+            if(raw)try{
                 if(_requests){
                     if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser)){
                         req->consume(raw,strlen(raw));
@@ -62,6 +72,10 @@ namespace keye{
                 }else if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser)){
                     req->consume(raw,strlen(raw));
                 }
+            }catch (const std::exception & e) {
+                KEYE_LOG("%s\n",e.what());
+            }catch (...) {
+                KEYE_LOG("%s\n","other exception");
             }
         }
         const char* header(const char* key)const{
@@ -189,13 +203,19 @@ namespace keye{
         }
         
         void	request(const http_parser& parser){
-            if(!_thread){
+            if(!_thread)try{
                 set_error_channels(websocketpp::log::elevel::all);
                 set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
                 
                 // Initialize Asio
                 init_asio();
                 set_reuse_addr(true);
+            }catch (const std::exception & e) {
+                KEYE_LOG("%s\n",e.what());
+            }catch (websocketpp::lib::error_code e) {
+                KEYE_LOG("%s\n",e.message().c_str());
+            }catch (...) {
+                KEYE_LOG("%s\n","other exception");
             }
             auto uri=parser.uri();
             websocketpp::lib::error_code ec;
@@ -255,7 +275,13 @@ namespace keye{
             
             http_parser parser(false);
             if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(parser._parser->_parser)){
-                req->consume(buf,bytes_transferred);
+                try{
+                    req->consume(buf,bytes_transferred);
+                }catch (const std::exception & e) {
+                    KEYE_LOG("%s\n",e.what());
+                }catch (...) {
+                    KEYE_LOG("%s\n","other exception");
+                }
                 _handler.on_response(parser);
             }else
                 endpoint_type::m_elog.write(log::alevel::http,"Response invalid");

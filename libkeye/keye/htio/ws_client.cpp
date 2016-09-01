@@ -54,20 +54,16 @@ public:
 
 			// Register our message handler
 			_client.set_message_handler	(std::bind(&ws_client_impl::on_message, this, std::placeholders::_1, std::placeholders::_2));
-			_client.set_http_handler	(std::bind(&ws_client_impl::on_http, this, std::placeholders::_1));
 			_client.set_fail_handler	(std::bind(&ws_client_impl::on_fail, this, std::placeholders::_1));
 			_client.set_open_handler	(std::bind(&ws_client_impl::on_open, this, std::placeholders::_1));
 			_client.set_close_handler	(std::bind(&ws_client_impl::on_close, this, std::placeholders::_1));
 			_client.set_validate_handler(std::bind(&ws_client_impl::validate, this, std::placeholders::_1));
-		}
-		catch (const std::exception & e) {
-			std::cout << e.what() << std::endl;
-		}
-		catch (websocketpp::lib::error_code e) {
-			std::cout << e.message() << std::endl;
-		}
-		catch (...) {
-			std::cout << "other exception" << std::endl;
+		}catch (const std::exception & e) {
+            KEYE_LOG("%s\n",e.what());
+		}catch (websocketpp::lib::error_code e) {
+            KEYE_LOG("%s\n",e.message().c_str());
+		}catch (...) {
+            KEYE_LOG("%s\n","other exception");
 		}
 
 		char uri[128];
@@ -76,7 +72,7 @@ public:
 		for(unsigned short i=0; i<conns;++i){
 			auto con=_client.get_connection(uri,ec);
 			if(ec)
-				std::cout<<"could not create connection because: "<<ec.message()<<std::endl;
+                KEYE_LOG("could not create connection because: %s\n",ec.message().c_str());
 			// Note that connect here only requests a connection. No network messages are
 			// exchanged until the event loop starts running in the next line.
 			else
@@ -109,21 +105,19 @@ private:
 		client_type::connection_ptr con = _client.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_open(sh);
-		std::cout << "Open handler" << std::endl;
 	}
 
 	void on_close(websocketpp::connection_hdl hdl) {
 		client_type::connection_ptr con = _client.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_close(sh);
-		std::cout << "Close handler" << std::endl;
 	}
 
 	void on_fail(websocketpp::connection_hdl hdl) {
 		client_type::connection_ptr con = _client.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_close(sh);
-		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
+        KEYE_LOG("on_fail: %d %s\n",con->get_ec().value(),con->get_ec().message().c_str());
 	}
 
 	// Define a callback to handle incoming messages
@@ -132,32 +126,6 @@ private:
 		client_type::connection_ptr con = _client.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_read(sh,(void*)pl.data(),pl.length());
-
-		std::cout << "on_message called with hdl: " << hdl.lock().get()
-			<< " and message: " << msg->get_payload()
-			<< std::endl;
-		/*
-		try {
-			_server.send(hdl, msg->get_payload(), msg->get_opcode());
-		}
-		catch (const websocketpp::lib::error_code& e) {
-			std::cout << "Echo failed because: " << e
-				<< "(" << e.message() << ")" << std::endl;
-		}
-		*/
-	}
-
-	void on_http(websocketpp::connection_hdl hdl) {
-		client_type::connection_ptr con = _client.get_con_from_hdl(hdl);
-
-		std::string res = con->get_request_body();
-
-		std::stringstream ss;
-		ss << "got HTTP request with " << res.size() << " bytes of body data.";
-		/* response
-		con->set_body(ss.str());
-		con->set_status(websocketpp::http::status_code::ok);
-		*/
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

@@ -42,16 +42,13 @@ public:
 				_server.set_open_handler	(std::bind(&ws_service_impl::on_open,	this, std::placeholders::_1));
 				_server.set_close_handler	(std::bind(&ws_service_impl::on_close,	this, std::placeholders::_1));
 				_server.set_validate_handler(std::bind(&ws_service_impl::validate,	this, std::placeholders::_1));
-			}
-			catch (const std::exception & e) {
-				std::cout << e.what() << std::endl;
-			}
-			catch (websocketpp::lib::error_code e) {
-				std::cout << e.message() << std::endl;
-			}
-			catch (...) {
-				std::cout << "other exception" << std::endl;
-			}
+			}catch (const std::exception & e) {
+                KEYE_LOG("%s\n",e.what());
+            }catch (websocketpp::lib::error_code e) {
+                KEYE_LOG("%s\n",e.message().c_str());
+            }catch (...) {
+                KEYE_LOG("%s\n","other exception");
+            }
 
 			// Listen on port
 			_server.listen(port);
@@ -102,21 +99,19 @@ private:
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_open(sh);
-		std::cout << "Open handler" << std::endl;
 	}
 
 	void on_close(websocketpp::connection_hdl hdl) {
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_close(sh);
-		std::cout << "Close handler" << std::endl;
 	}
 
 	void on_fail(websocketpp::connection_hdl hdl) {
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_close(sh);
-		std::cout << "Fail handler: " << con->get_ec() << " " << con->get_ec().message() << std::endl;
+        KEYE_LOG("on_fail: %d %s\n",con->get_ec().value(),con->get_ec().message().c_str());
 	}
 
 	// Define a callback to handle incoming messages
@@ -125,19 +120,6 @@ private:
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_read(sh,(void*)pl.data(),pl.length());
-
-		std::cout << "on_message called with hdl: " << hdl.lock().get()
-			<< " and message: " << msg->get_payload()
-			<< std::endl;
-		/*
-		try {
-			_server.send(hdl, msg->get_payload(), msg->get_opcode());
-		}
-		catch (const websocketpp::lib::error_code& e) {
-			std::cout << "Echo failed because: " << e
-				<< "(" << e.message() << ")" << std::endl;
-		}
-		*/
 	}
 
 	void on_http(websocketpp::connection_hdl hdl) {
@@ -151,14 +133,13 @@ private:
         req_parser.set_headers(req.raw_head().c_str());
         req_parser.set_body(req.get_body().c_str());
 
+        //handle and fill response
         _handler.on_http(req_parser,resp_parser);
 
         auto resp=(websocketpp::http::parser::response*)&con->get_response();
         resp->consume(resp_parser.raw().c_str(),resp_parser.raw().size());
         
-		std::stringstream ss;
-		ss << "on_http code=" << resp_parser.status();
-        std::cout<<ss.str();
+        //will close connection after sending response
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

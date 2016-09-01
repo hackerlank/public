@@ -25,21 +25,21 @@ namespace keye{
         void                set_uri(const char*);
         const char*         uri()const;
 
-        void                set_version(const char*);
+        void                set_version(const char* ="HTTP/1.1");
         const char*         version()const;
         
-        void                set_method(const char*);
+        void                set_method(const char* ="GET");
         const char*         method()const;
         
-        void                set_header(const char*,const char*);
-        void                set_headers(const char*);
-        const char*         header(const char*)const;
+        void                set_header(const char* key,const char* val);
+        void                set_headers(const char* raw);
+        const char*         header(const char* key)const;
         
         void                set_body(const char*);
         const char*         body()const;
         
-        void                set_status(int,const char* =nullptr);
-        int                 status(char** =nullptr);
+        void                set_status(int code,const char* msg=nullptr);
+        int                 status(char** ppmsg=nullptr);
         const std::string   raw()const;
     private:
         friend class http_client_impl;
