@@ -21,23 +21,28 @@ namespace keye{
     class http_client_impl;
     class KEYE_API http_parser{
     public:
-        http_parser();
+                            http_parser(bool request);
         void                set_uri(const char*);
-        void                set_version(const char*);
-        void                set_method(const char*);
-        void                set_header(const char*,const char*);
-        void                set_body(const char*);
         const char*         uri()const;
-        const char*         method()const;
-        const std::string   raw()const;
 
+        void                set_version(const char*);
         const char*         version()const;
+        
+        void                set_method(const char*);
+        const char*         method()const;
+        
+        void                set_header(const char*,const char*);
+        const char*         header(const char*)const;
+        
+        void                set_body(const char*);
+        const char*         body()const;
+        
         int                 code();
         const char*         status();
-        const char*         header(const char*)const;
-        const char*         body()const;
+        const std::string   raw()const;
     private:
         friend class http_client_impl;
+        friend class ws_service_impl;
         std::shared_ptr<http_parser_impl>	_parser;
     };
     // --------------------------------------------------------

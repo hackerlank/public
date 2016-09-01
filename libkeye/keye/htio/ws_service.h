@@ -41,7 +41,8 @@ public:
 	//events handlers
 	virtual void	on_open(svc_handler&){}
 	virtual void	on_close(svc_handler&){}
-	virtual void	on_read(svc_handler&,void*,size_t){}
+    virtual void	on_read(svc_handler&,void*,size_t){}
+	virtual void	on_http(const http_parser& req,http_parser& resp){}
 	virtual void	on_write(svc_handler&,void*,size_t){}
 	virtual void	on_event(svc_handler&,void*,size_t){}
 	virtual bool	on_timer(svc_handler&,size_t id,size_t milliseconds){ return true; }

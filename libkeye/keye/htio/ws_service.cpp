@@ -142,16 +142,26 @@ private:
 
 	void on_http(websocketpp::connection_hdl hdl) {
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
+        http_parser req_parser(true),resp_parser(false);
 
-		std::string res = con->get_request_body();
+        auto& req=con->get_request();
+        req_parser.set_uri(req.get_uri().c_str());
+        req_parser.set_version(req.get_version().c_str());
+        req_parser.set_method(req.get_method().c_str());
+        req_parser.set_body(req.get_body().c_str());
         
-        std::cout<<"on_http, request="<<res<<std::endl;
+        auto& resp=con->get_response();
+        resp_parser.set_body(resp.get_body().c_str());
+        con->set_status(resp.get_status_code(),resp.get_status_msg());
+
+        _handler.on_http(req_parser,resp_parser);
 
 		std::stringstream ss;
-		ss << "got HTTP request with " << res.size() << " bytes of body data.";
+		ss << "on_http code=" << resp.get_status_code();
+        std::cout<<ss.str();
 		// response
-		con->set_body(ss.str());
-		con->set_status(websocketpp::http::status_code::ok);
+//		con->set_body(ss.str());
+//		con->set_status(websocketpp::http::status_code::ok);
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

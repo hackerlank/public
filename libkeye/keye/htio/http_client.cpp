@@ -21,36 +21,65 @@ namespace keye{
     // --------------------------------------------------------
     class http_parser_impl{
     public:
-        //request
-        void        set_uri(const char* s){if(s)_request.set_uri(s);}
-        void        set_version(const char* s){if(s)_request.set_version(s);}
-        void        set_method(const char* s){if(s)_request.set_method(s);}
-        void        set_body(const char* s){if(s)_request.set_body(s);}
+        http_parser_impl(bool request):_requests(request){
+            if(request)
+                _parser.reset(new websocketpp::http::parser::request);
+            else
+                _parser.reset(new websocketpp::http::parser::response);
+        }
+        void        set_uri(const char* s){
+            if(s&&_requests)if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))req->set_uri(s);
+        }
+        const char* uri()const{
+            if(_requests)
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))return req->get_uri().c_str();
+            return nullptr;
+        }
+        void        set_version(const char* s){if(s)_parser->set_version(s);}
+        const char* version()const{return _parser->get_version().c_str();}
+        void        set_method(const char* s){
+            if(_requests&&s)if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))req->set_method(s);
+        }
+        const char* method()const{
+            if(_requests)
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))return req->get_method().c_str();
+            return nullptr;
+        }
         void        set_header(const char* key,const char* val){
             if(key){
-                _request.get_method();
                 if(val)
-                    _request.append_header(key,val);
+                    _parser->append_header(key,val);
                 else
-                    _request.remove_header(key);
+                    _parser->remove_header(key);
             }
         }
-        const char* uri()const{return _request.get_uri().c_str();}
-        const char* method()const{return _request.get_method().c_str();}
-        const std::string raw()const{return _request.raw();}
-        
-        //response
-        const char* version()const{return _response.get_version().c_str();}
-        int         code(){return _response.get_status_code();}
-        const char* status(){return _response.get_status_msg().c_str();}
-        const char* body()const{return _response.get_body().c_str();}
         const char* header(const char* key)const{
-            return key?_response.get_header(key).c_str():nullptr;
+            return key?_parser->get_header(key).c_str():nullptr;
+        }
+        void        set_body(const char* s){if(s)_parser->set_body(s);}
+        const char* body()const{return _parser->get_body().c_str();}
+        
+        const std::string raw()const{
+            if(_requests){
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(_parser))return req->raw();
+            }else if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser))return req->raw();
+            return "";
+        }
+        int         code(){
+            if(_requests)
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser))return req->get_status_code();
+            return 0;
+        }
+        const char* status(){
+            if(_requests)
+                if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(_parser))return req->get_status_msg().c_str();
+            return nullptr;
         }
     private:
         friend class http_client_impl;
-        websocketpp::http::parser::request      _request;
-        websocketpp::http::parser::response     _response;
+        friend class ws_service_impl;
+        bool    _requests;
+        std::shared_ptr<websocketpp::http::parser::parser>  _parser;
     };
     // --------------------------------------------------------
     // connection for http
@@ -179,20 +208,24 @@ namespace keye{
             } else {
                 endpoint_type::m_alog.write(log::alevel::http,"Successful connection");
                 
-                auto uri=con->get_uri();
-                auto& req=parser._parser->_request;
-                req.set_uri(uri->get_resource());
-                req.replace_header("Host",uri->get_host_port());
-                
-                auto req_buf = parser._parser->_request.raw();
-                con->async_send(req_buf.data(),req_buf.size(),
-                                lib::bind(
-                                          &type::handle_response,
-                                          this,
-                                          lib::placeholders::_1,
-                                          lib::placeholders::_2,
-                                          lib::placeholders::_3
-                                          ));
+                if(parser._parser->_requests){
+                    if(auto req=std::static_pointer_cast<websocketpp::http::parser::request>(parser._parser->_parser)){
+                        auto uri=con->get_uri();
+                        req->set_uri(uri->get_resource());
+                        req->replace_header("Host",uri->get_host_port());
+                        
+                        auto req_buf = parser._parser->raw();
+                        con->async_send(req_buf.data(),req_buf.size(),
+                                        lib::bind(
+                                                  &type::handle_response,
+                                                  this,
+                                                  lib::placeholders::_1,
+                                                  lib::placeholders::_2,
+                                                  lib::placeholders::_3
+                                                  ));
+                    }
+                }else
+                    endpoint_type::m_elog.write(log::alevel::http,"Request invalid");
             }
         }
         
@@ -201,11 +234,12 @@ namespace keye{
             s<<"Http response "<<bytes_transferred<<" bytes";
             endpoint_type::m_alog.write(log::alevel::http,s.str());
             
-            http_parser parser;
-            auto& response=parser._parser->_response;
-            response.consume(buf,bytes_transferred);
-
-            _handler.on_response(parser);
+            http_parser parser(false);
+            if(auto req=std::static_pointer_cast<websocketpp::http::parser::response>(parser._parser->_parser)){
+                req->consume(buf,bytes_transferred);
+                _handler.on_response(parser);
+            }else
+                endpoint_type::m_elog.write(log::alevel::http,"Response invalid");
         }
         
         connection_ptr get_connection(std::string const & u, lib::error_code & ec) {
@@ -281,8 +315,8 @@ namespace keye{
     // --------------------------------------------------------
     // parser for http
     // --------------------------------------------------------
-    http_parser::http_parser(){
-        _parser.reset(new http_parser_impl());
+    http_parser::http_parser(bool request){
+        _parser.reset(new http_parser_impl(request));
     }
     const char* http_parser::uri()const{
         return _parser->uri();
@@ -302,12 +336,6 @@ namespace keye{
     const char* http_parser::method()const{
         return _parser->method();
     }
-    int http_parser::code(){
-        return _parser->code();
-    }
-    const char* http_parser::status(){
-        return _parser->status();
-    }
     void http_parser::set_header(const char* key,const char* value){
         _parser->set_header(key,value);
     }
@@ -319,6 +347,12 @@ namespace keye{
     }
     const char* http_parser::body()const{
         return _parser->body();
+    }
+    int http_parser::code(){
+        return _parser->code();
+    }
+    const char* http_parser::status(){
+        return _parser->status();
     }
     const std::string http_parser::raw()const{
         return _parser->raw();

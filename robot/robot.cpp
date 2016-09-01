@@ -128,7 +128,7 @@ int main(int argc, char* argv[]) {
 //	KEYE_LOG("++++client connect to %s:%d\n",host,port);
     char uri[128];
     sprintf(uri,"http://%s:%d",host,port);
-    http_parser req;
+    http_parser req(true);
     req.set_uri(uri);
     req.set_method("GET");
     req.set_version("HTTP/1.1");
