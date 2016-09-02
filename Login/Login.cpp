@@ -34,7 +34,7 @@ void slogin::on_read(svc_handler& sh, void* buf, size_t sz) {
 void slogin::on_http(const http_parser& req,http_parser& resp){
     auto msgid=req.header("msgid");
     auto body=req.body();
-    if(atoi(msgid)==eMsg::MSG_CN_ENTER){
+    if(atoi(msgid)==eMsg::MSG_CS_LOGIN){
         auto str=base64_decode(body);
         proto3::MsgCSLogin imsg;
         proto3::MsgSCLogin omsg;

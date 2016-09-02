@@ -14,18 +14,6 @@ public:
                     robot();
     MsgHandler      handler;
 
-    class login_client :public keye::ws_client{
-    public:
-        login_client();
-        virtual void	on_open(keye::svc_handler& sh);
-        virtual void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
-        virtual bool	on_timer(keye::svc_handler& sh, size_t id, size_t milliseconds);
-        //test
-        void login();
-        
-        std::shared_ptr<keye::svc_handler> spsh;
-    };
-
     class lobby_client :public keye::ws_client{
     public:
         lobby_client();
@@ -50,19 +38,21 @@ public:
         std::shared_ptr<keye::svc_handler> spsh;
     };
     
-    class http_client :public keye::http_client{
+    class login_client :public keye::http_client{
     public:
         void            set_uri(const char* uri);
         void            request(eMsg mid,google::protobuf::MessageLite& msg);
+        void            login();
+
         virtual void	on_response(const http_parser&);
     private:
-        std::string _uri;
+        std::string     _uri;
     };
     
     login_client    login;
     lobby_client    lobby;
     node_client     node;
-    http_client     http;
+//    http_client     http;
     
     proto3::user_t  user;
     
