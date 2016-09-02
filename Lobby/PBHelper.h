@@ -50,6 +50,22 @@ public:
         }
         assert(false);
     }
+
+    static void Request(keye::http_client& http,const char* uri,google::protobuf::MessageLite& msg,eMsg mid){
+        char smid[8];
+        sprintf(smid,"%d",mid);
+        std::string str;
+        msg.SerializeToString(&str);
+        str=base64_encode(str);
+
+        http_parser req(true);
+        req.set_uri(uri);
+        req.set_method("GET");
+        req.set_version("HTTP/1.1");
+        req.set_header("msgid",smid);
+        req.set_body(str.c_str());
+        http.request(req);
+    }
     //make compiler happy
     void	on_message(keye::svc_handler&,keye::PacketWrapper&){}
 private:

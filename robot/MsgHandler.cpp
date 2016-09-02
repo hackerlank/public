@@ -69,3 +69,17 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
     }
     KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }
+
+void MsgHandler::on_response(const http_parser& resp) {
+    auto msgid=resp.header("msgid");
+    auto body=resp.body();
+    int mid=0;
+    if(atoi(msgid)==eMsg::MSG_SC_LOGIN){
+        auto str=base64_decode(body);
+        proto3::MsgSCLogin imsg;
+        if(imsg.ParseFromString(str)){
+            mid=imsg.mid();
+        }
+    }
+    KEYE_LOG("----on_response mid=%d\n",mid);
+}

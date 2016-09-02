@@ -52,7 +52,11 @@ public:
     
     class http_client :public keye::http_client{
     public:
+        void            set_uri(const char* uri);
+        void            request(eMsg mid,google::protobuf::MessageLite& msg);
         virtual void	on_response(const http_parser&);
+    private:
+        std::string _uri;
     };
     
     login_client    login;

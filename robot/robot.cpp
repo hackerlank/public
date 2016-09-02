@@ -112,23 +112,12 @@ bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t millisecond
 }
 
 // -------------------------------------------------------
+void robot::http_client::set_uri(const char* uri){_uri=uri;}
+void robot::http_client::request(eMsg mid,google::protobuf::MessageLite& msg){
+    PBHelper::Request(*this,_uri.c_str(),msg,mid);
+}
 void robot::http_client::on_response(const http_parser& resp) {
-    auto msgid=resp.header("msgid");
-    auto body=resp.body();
-    int mid=0;
-    if(atoi(msgid)==eMsg::MSG_SC_LOGIN){
-        auto str=base64_decode(body);
-        proto3::MsgSCLogin imsg;
-        if(imsg.ParseFromString(str)){
-            mid=imsg.mid();
-        }
-    }
-    /*
-    auto& sh=*shnull;
-    auto resp=parser.body();
-    auto sz=strlen(resp);
-    sRobot->handler.on_read(sh,(void*)resp,sz);
-    */
+    sRobot->handler.on_response(resp);
 }
 // -------------------------------------------------------
 int main(int argc, char* argv[]) {
@@ -141,24 +130,13 @@ int main(int argc, char* argv[]) {
     auto mid=eMsg::MSG_CN_ENTER;
     char uri[128];
     sprintf(uri,"http://%s:%d",host,port);
-    http_parser req(true);
-    req.set_uri(uri);
-    req.set_method("GET");
-    req.set_version("HTTP/1.1");
-    
-    sprintf(uri,"%d",mid);
-    req.set_header("msgid",uri);
-    
     proto3::MsgCNEnter msg;
     msg.set_mid(mid);
     msg.set_version(100);
     msg.set_service(proto3::pb_enum::GAME_CARD);
     msg.set_uid(robot::sRobot->user.uid().c_str());
-    std::string str;
-    msg.SerializeToString(&str);
-    str=base64_encode(str);
-    req.set_body(str.c_str());
-    client.http.request(req);
+    client.http.set_uri(uri);
+    client.http.request(mid,msg);
     
     std::getchar();
     /*
