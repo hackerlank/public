@@ -10,26 +10,27 @@
 #include "LobbyFwd.h"
 using namespace proto3;
 
-void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
-    keye::PacketWrapper pw(buf,sz);
-    PBHelper pb(pw);
-    auto mid=pb.Id();
-    switch (mid) {
+void MsgHandler::on_http(const http_parser& req,http_parser& resp){
+    auto msgid=req.header("msgid");
+    auto body=req.body();
+    auto mid=(eMsg)atoi(msgid);
+    switch(mid){
         case eMsg::MSG_CL_ENTER:{
-            MsgCLEnter imsg;
-            MsgLCEnter omsg;
-            if(pb.Parse(imsg)){
+            auto str=base64_decode(body);
+            proto3::MsgCLEnter imsg;
+            proto3::MsgLCEnter omsg;
+            auto omid=eMsg::MSG_LC_ENTER;
+            omsg.set_mid(omid);
+            if(imsg.ParseFromString(str)){
+                KEYE_LOG("----client enter succeeded\n");
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                KEYE_LOG("----message error id=%zd\n",mid);
+                KEYE_LOG("----client enter failed\n");
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
-            omsg.set_mid(eMsg::MSG_LC_ENTER);
-            PBHelper::Send(sh,omsg);
-            break;
+            PBHelper::Response(resp,omsg,omid);
         }
         default:
             break;
     }
-    KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }

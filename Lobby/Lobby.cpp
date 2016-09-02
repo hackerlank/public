@@ -15,31 +15,15 @@ using namespace keye;
 #define WRITE_FREQ 1000
 #endif // WRITE_FREQ
 
-slogin::slogin(size_t ios, size_t works, size_t rb_size)
-:ws_service(ios, works, rb_size) {}
+Lobby* Lobby::sLobby=nullptr;
 
-void slogin::on_open(svc_handler&) {
-    KEYE_LOG("----on_open\n");
-    //set_timer(WRITE_TIMER, WRITE_FREQ);
+Lobby::Lobby(size_t ios, size_t works, size_t rb_size)
+:ws_service(ios, works, rb_size) {
+    sLobby=this;
 }
 
-void slogin::on_close(svc_handler&) {
-    KEYE_LOG("----on_open\n");
-}
-
-void slogin::on_read(svc_handler& sh, void* buf, size_t sz) {
-    handler.on_read(sh,buf,sz);
-}
-
-void slogin::on_write(svc_handler&, void*, size_t sz) {
-    KEYE_LOG("----on_write %zd\n",sz);
-}
-
-bool slogin::on_timer(svc_handler&, size_t id, size_t milliseconds) {
-    KEYE_LOG("----on_timer %zd\n", id);
-    if (FLOW_TIMER == id) {
-    }
-    return true;
+void Lobby::on_http(const http_parser& req,http_parser& resp){
+    handler.on_http(req,resp);
 }
 
 int main(int argc, char* argv[]) {
@@ -67,7 +51,7 @@ int main(int argc, char* argv[]) {
 	keye::PacketWrapper pw;
 	PBHelper helper(pw);
 
-    slogin server;
+    Lobby server;
 	server.run(port,"127.0.0.1");
 	KEYE_LOG("++++server start at %d\n", port);
 	std::getchar();

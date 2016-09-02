@@ -11,7 +11,7 @@
 
 class MsgHandler{
 public:
-    void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
+    void    on_http(const http_parser& req,http_parser& resp);
 };
 
 #endif /* MsgHandler_hpp */

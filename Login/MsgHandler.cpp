@@ -10,31 +10,27 @@
 #include "LoginFwd.h"
 using namespace proto3;
 
-void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
-    keye::PacketWrapper pw(buf,sz);
-    PBHelper pb(pw);
-    auto mid=pb.Id();
-    switch (mid) {
-        case eMsg::MSG_CS_LOGIN:{
-            MsgCSLogin imsg;
-            MsgSCLogin omsg;
-            if(pb.Parse(imsg)){
-                omsg.set_uid("clusters");
-                omsg.set_version(imsg.version()+1);
-                omsg.set_ip("127.0.0.1");
-                omsg.set_port(8810);
-                omsg.set_result(proto3::pb_enum::SUCCEESS);
-            }else{
-                KEYE_LOG("----message error id=%zd\n",mid);
-                omsg.set_result(proto3::pb_enum::ERR_FAILED);
-            }
-            omsg.set_mid(eMsg::MSG_SC_LOGIN);
-            PBHelper::Send(sh,omsg);
-            sh.close();
-            break;
+void MsgHandler::on_http(const http_parser& req,http_parser& resp){
+    auto msgid=req.header("msgid");
+    auto body=req.body();
+    if(atoi(msgid)==eMsg::MSG_CS_LOGIN){
+        auto str=base64_decode(body);
+        proto3::MsgCSLogin imsg;
+        proto3::MsgSCLogin omsg;
+        auto mid=eMsg::MSG_SC_LOGIN;
+        omsg.set_mid(mid);
+        if(imsg.ParseFromString(str)){
+            KEYE_LOG("----client login succeeded\n");
+            omsg.set_uid("clusters");
+            omsg.set_version(imsg.version()+1);
+            omsg.set_ip("127.0.0.1");
+            omsg.set_port(8810);
+            omsg.set_result(proto3::pb_enum::SUCCEESS);
+            
+            PBHelper::Response(resp,omsg,mid);
+        }else{
+            KEYE_LOG("----client login failed\n");
+            PBHelper::Response(resp,omsg,mid,500,"Internal error");
         }
-        default:
-            break;
     }
-    KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }

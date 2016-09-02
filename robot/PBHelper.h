@@ -66,6 +66,18 @@ public:
         req.set_body(str.c_str());
         http.request(req);
     }
+    
+    static void Response(http_parser& resp,google::protobuf::MessageLite& msg,eMsg mid,int code=200,const char* status="OK"){
+        char strmid[8];
+        sprintf(strmid,"%d",mid);
+        std::string str;
+        msg.SerializeToString(&str);
+        str=base64_encode(str);
+        
+        resp.set_header("msgid",strmid);
+        resp.set_body(str.c_str());
+        resp.set_status(code,status);
+    }
     //make compiler happy
     void	on_message(keye::svc_handler&,keye::PacketWrapper&){}
 private:
