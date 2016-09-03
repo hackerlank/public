@@ -29,7 +29,7 @@ public:
 	//run as server,we do not open accept while port was 0
 	void	run(unsigned short port=0,const char* address=nullptr);
 	//run as client and connect to server
-	void	connect(const char* address,unsigned short port,unsigned short conns=1);
+	void	connect(const char* uri,unsigned short conns=1);
 	void	close();
 	bool	closed()const;
 	//set up a timer on work thread,id is overlayable

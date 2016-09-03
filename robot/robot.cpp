@@ -82,6 +82,22 @@ void robot::http_client::enter_lobby(){
 }
 // -------------------------------------------------------
 int main(int argc, char* argv[]) {
+    int param=0;
+    for(auto i=1;i<argc;++i){
+        auto arg=argv[i];
+        if(strlen(arg)>3){
+            if(arg[0]=='-')switch(arg[1]){
+                case 'u':{
+                    auto a=&arg[2];
+                    param=atoi(a);
+                    break;
+                }
+                default:
+                    break;
+            }else{
+            }
+        }
+    }
     
 	const char* host="127.0.0.1";
     //unsigned short port = 8820;
@@ -89,7 +105,15 @@ int main(int argc, char* argv[]) {
 	robot client;
     auto skip_login=true;
     if(skip_login){
-        robot::sRobot->node.connect(host,port);
+        srand((unsigned)time(nullptr));
+        auto url=rand();
+        if(param>0)url=param;
+        //1145917110 1146875109
+        //1146270057 1146606197,
+        char uri[128];
+        sprintf(uri,"ws://%s:%d/%d",host,port,url);
+        robot::sRobot->node.connect(uri);
+        KEYE_LOG("----connect to %s\n",uri);
         //ws://host:port/path
     }else{
         char uri[64];

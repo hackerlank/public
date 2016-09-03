@@ -39,7 +39,7 @@ public:
 	bool	closed()const{
 		return _bExit;
 	}
-	void	connect(const char* address,unsigned short port,unsigned short conns=1){
+	void	connect(const char* uri,unsigned short conns=1){
 		_bExit=false;
 
 		try {
@@ -68,8 +68,6 @@ public:
             KEYE_LOG("%s\n","other exception");
 		}
 
-		char uri[128];
-		sprintf(uri,"ws://%s:%d/nodeserver123",address,port);
 		websocketpp::lib::error_code ec;
 		for(unsigned short i=0; i<conns;++i){
 			auto con=_client.get_connection(uri,ec);
@@ -154,8 +152,8 @@ ws_client::ws_client(size_t ios,size_t works,size_t rb_size){
 	_svc.reset(new ws_client_impl(*this,ios,works,rb_size));
 }
 
-void ws_client::connect(const char* address,unsigned short port,unsigned short conns){
-	if(_svc)_svc->connect(address,port,conns);
+void ws_client::connect(const char* uri,unsigned short conns){
+	if(_svc)_svc->connect(uri,conns);
 }
 void ws_client::run(unsigned short port,const char* address){
 	if(_svc)_svc->run(port,address);
