@@ -204,8 +204,10 @@ namespace keye{
         
         void	request(const http_parser& parser){
             if(!_thread)try{
-                set_error_channels(websocketpp::log::elevel::all);
-                set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
+                //set_error_channels(websocketpp::log::elevel::all);
+                //set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
+                set_error_channels(websocketpp::log::elevel::none);
+                set_access_channels(websocketpp::log::alevel::none);
                 
                 // Initialize Asio
                 init_asio();

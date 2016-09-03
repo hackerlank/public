@@ -44,8 +44,10 @@ public:
 
 		try {
 			// Set logging settings
-			_client.set_error_channels(websocketpp::log::elevel::all);
-			_client.set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
+            //_client.set_error_channels(websocketpp::log::elevel::all);
+            //_client.set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
+			_client.set_error_channels(websocketpp::log::elevel::none);
+			_client.set_access_channels(websocketpp::log::alevel::none);
 
 			// Initialize Asio
 			_client.init_asio();
@@ -67,7 +69,7 @@ public:
 		}
 
 		char uri[128];
-		sprintf(uri,"ws://%s:%d",address,port);
+		sprintf(uri,"ws://%s:%d/nodeserver123",address,port);
 		websocketpp::lib::error_code ec;
 		for(unsigned short i=0; i<conns;++i){
 			auto con=_client.get_connection(uri,ec);

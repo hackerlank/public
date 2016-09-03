@@ -30,19 +30,17 @@ int main(int argc, char* argv[]) {
     unsigned short port = 8800;
     for(auto i=1;i<argc;++i){
         auto arg=argv[i];
-        if(strlen(arg)>3&&arg[0]=='-')switch(arg[1]){
-            case 'p':{
-                auto a=&arg[2];
-                try{
+        if(strlen(arg)>3){
+            if(arg[0]=='-')switch(arg[1]){
+                case 'p':{
+                    auto a=&arg[2];
                     port=atoi(a);
-                }catch(...){}
-                break;
+                    break;
+                }
+                default:
+                    break;
+            }else{
             }
-            case 'w':
-                break;
-            case 'i':
-            default:
-                break;
         }
     }
 	redis_proxy redis;

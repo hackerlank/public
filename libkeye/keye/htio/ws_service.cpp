@@ -27,8 +27,10 @@ public:
 
 			try {
 				// Set logging settings
-				_server.set_error_channels(websocketpp::log::elevel::all);
-				_server.set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
+                _server.set_error_channels(websocketpp::log::elevel::none);
+                _server.set_access_channels(websocketpp::log::alevel::none);
+				//_server.set_error_channels(websocketpp::log::elevel::all);
+				//_server.set_access_channels(websocketpp::log::alevel::all ^ websocketpp::log::alevel::frame_payload);
 
 				// Initialize Asio
 				_server.init_asio();
@@ -111,7 +113,7 @@ private:
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
 		ws_handler_impl sh(con);
 		_handler.on_close(sh);
-        KEYE_LOG("on_fail: %d %s\n",con->get_ec().value(),con->get_ec().message().c_str());
+        //KEYE_LOG("on_fail: %d %s\n",con->get_ec().value(),con->get_ec().message().c_str());
 	}
 
 	// Define a callback to handle incoming messages

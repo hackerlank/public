@@ -19,12 +19,12 @@ slogin::slogin(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size) {}
 
 void slogin::on_open(svc_handler&) {
-    KEYE_LOG("----on_open\n");
+//    KEYE_LOG("----on_open\n");
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 
 void slogin::on_close(svc_handler&) {
-    KEYE_LOG("----on_open\n");
+//    KEYE_LOG("----on_close\n");
 }
 
 void slogin::on_read(svc_handler& sh, void* buf, size_t sz) {
@@ -32,11 +32,11 @@ void slogin::on_read(svc_handler& sh, void* buf, size_t sz) {
 }
 
 void slogin::on_write(svc_handler&, void*, size_t sz) {
-    KEYE_LOG("----on_write %zd\n",sz);
+//    KEYE_LOG("----on_write %zd\n",sz);
 }
 
 bool slogin::on_timer(svc_handler&, size_t id, size_t milliseconds) {
-    KEYE_LOG("----on_timer %zd\n", id);
+//    KEYE_LOG("----on_timer %zd\n", id);
     if (FLOW_TIMER == id) {
     }
     return true;

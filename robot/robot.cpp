@@ -84,15 +84,20 @@ void robot::http_client::enter_lobby(){
 int main(int argc, char* argv[]) {
     
 	const char* host="127.0.0.1";
-	unsigned short port = 8800;
+    //unsigned short port = 8820;
+    unsigned short port = 8080;
 	robot client;
-//	client.login.connect(host, port);
-//	KEYE_LOG("++++client connect to %s:%d\n",host,port);
-    char uri[64];
-    sprintf(uri,"http://%s:%d",host,port);
-    client.http.set_uri(uri);
-    client.http.login();
-    
+    auto skip_login=true;
+    if(skip_login){
+        robot::sRobot->node.connect(host,port);
+        //ws://host:port/path
+    }else{
+        char uri[64];
+        sprintf(uri,"http://%s:%d",host,port);
+        client.http.set_uri(uri);
+        client.http.login();
+    }
+
     std::getchar();
     /*
     bool exit=false;

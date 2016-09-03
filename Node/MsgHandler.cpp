@@ -46,5 +46,5 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
         default:
             break;
     }
-    KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
+    //KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }
