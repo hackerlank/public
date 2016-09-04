@@ -180,7 +180,7 @@ message MsgNCEnter{
 
 uint32 mid				=1;
 game_t game_info        =2;
-pb_enum result			=4;
+pb_enum result			=3;
 };
 
 message MsgCNCreate{

@@ -6794,13 +6794,13 @@ bool MsgNCEnter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_result;
+        if (input->ExpectTag(24)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 4;
-      case 4: {
-        if (tag == 32) {
+      // optional .proto3.pb_enum result = 3;
+      case 3: {
+        if (tag == 24) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -6849,10 +6849,10 @@ void MsgNCEnter::SerializeWithCachedSizes(
       2, *this->game_info_, output);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->result(), output);
+      3, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCEnter)
@@ -6876,7 +6876,7 @@ int MsgNCEnter::ByteSize() const {
         *this->game_info_);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -6996,7 +6996,7 @@ void MsgNCEnter::set_allocated_game_info(::proto3::game_t* game_info) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCEnter.game_info)
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 3;
 void MsgNCEnter::clear_result() {
   result_ = 0;
 }

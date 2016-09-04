@@ -1827,9 +1827,9 @@ class MsgNCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::game_t* release_game_info();
   void set_allocated_game_info(::proto3::game_t* game_info);
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 3;
   void clear_result();
-  static const int kResultFieldNumber = 4;
+  static const int kResultFieldNumber = 3;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -5142,7 +5142,7 @@ inline void MsgNCEnter::set_allocated_game_info(::proto3::game_t* game_info) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCEnter.game_info)
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 3;
 inline void MsgNCEnter::clear_result() {
   result_ = 0;
 }

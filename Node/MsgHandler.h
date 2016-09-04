@@ -11,7 +11,10 @@
 
 class MsgHandler{
 public:
+            MsgHandler();
     void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
+private:
+    int     _game_index;
 };
 
 #endif /* MsgHandler_hpp */

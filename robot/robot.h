@@ -40,6 +40,8 @@ public:
     
     http_client     http;
     node_client     node;
+    int             game_id;
+    int             key;
     
     proto3::user_t  user;
     

@@ -1,6 +1,11 @@
 #ifndef _protocol_h_
 #define _protocol_h_
 
+enum eDefine{
+    DEF_MAX_NODES           =1000,
+    DEF_MAX_GAMES_PER_NODE  =100000,
+};
+
 enum eMsg:unsigned short{
     MSG_BEGIN       =1000,
 	MSG_RAW,

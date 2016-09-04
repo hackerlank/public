@@ -18,13 +18,25 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
         case eMsg::MSG_NC_ENTER:{
             MsgNCEnter imsg;
             if(pb.Parse(imsg)){
+                auto& game=imsg.game_info();
+                //auto gid=game.gid();
                 KEYE_LOG("----entered node\n");
-                MsgCNCreate omsg;
-                omsg.set_mid(MSG_CN_CREATE);
-                omsg.set_rule(proto3::pb_enum::RULE_GENERIC);
-                omsg.set_category(proto3::pb_enum::CATEGORY_EASY);
-                omsg.set_robot(2);
-                PBHelper::Send(sh,omsg);
+                
+                //create or join game
+                if(robot::sRobot->game_id<0){
+                    MsgCNCreate omsg;
+                    omsg.set_mid(MSG_CN_CREATE);
+                    omsg.set_key(robot::sRobot->key);   //use connect key as game key
+                    omsg.set_rule(proto3::pb_enum::RULE_GENERIC);
+                    omsg.set_category(proto3::pb_enum::CATEGORY_EASY);
+                    omsg.set_robot(2);
+                    PBHelper::Send(sh,omsg);
+                }else{
+                    MsgCNJoin omsg;
+                    omsg.set_mid(MSG_CN_JOIN);
+                    omsg.set_game_id(robot::sRobot->game_id);
+                    PBHelper::Send(sh,omsg);
+                }
             }else{
                 KEYE_LOG("----message error id=%zd\n",mid);
             }
@@ -35,6 +47,15 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
                 KEYE_LOG("----game created id=%d\n",gid);
+            }else{
+                KEYE_LOG("----message error id=%zd\n",mid);
+            }
+            break;
+        }
+        case eMsg::MSG_NC_JOIN:{
+            MsgNCJoin imsg;
+            if(pb.Parse(imsg)){
+                KEYE_LOG("----game joined\n");
             }else{
                 KEYE_LOG("----message error id=%zd\n",mid);
             }

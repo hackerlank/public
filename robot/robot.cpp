@@ -18,7 +18,9 @@ using namespace keye;
 #endif // WRITE_FREQ
 
 robot* robot::sRobot=nullptr;
-robot::robot(){
+robot::robot()
+:key(-1)
+,game_id(-1){
     sRobot=this;
 }
 // -------------------------------------------------------
@@ -98,6 +100,7 @@ int main(int argc, char* argv[]) {
             }
         }
     }
+//    param=1000100000;
     
 	const char* host="127.0.0.1";
     //unsigned short port = 8820;
@@ -105,13 +108,23 @@ int main(int argc, char* argv[]) {
 	robot client;
     auto skip_login=true;
     if(skip_login){
-        srand((unsigned)time(nullptr));
-        auto url=rand();
-        if(param>0)url=param;
-        //1145917110 1146875109
-        //1146270057 1146606197,
+        int key=0;
+        //game id=node_id:key(xxxyyyyy)
+        if(param>0){
+            //join game,specify node id
+            client.game_id=param;
+            key=param/DEF_MAX_GAMES_PER_NODE;
+        }else{
+            //create game,rand node id
+            srand((unsigned)time(nullptr));
+            key=rand();
+            //1145917110 1146875109
+            //1146270057 1146606197,
+        }
+        key=key%DEF_MAX_NODES;
+        client.key=key;
         char uri[128];
-        sprintf(uri,"ws://%s:%d/%d",host,port,url);
+        sprintf(uri,"ws://%s:%d/%d",host,port,key);
         robot::sRobot->node.connect(uri);
         KEYE_LOG("----connect to %s\n",uri);
         //ws://host:port/path
