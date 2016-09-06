@@ -23,11 +23,11 @@ Node::Node(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size){
     sNode=this;
     
-    registerGame(std::shared_ptr<GameRule>(new DoudeZhu));
+    registerGame(std::make_shared<DoudeZhu>());
 }
 
 void Node::registerGame(std::shared_ptr<GameRule> game){
-    auto id=game->type();
+    auto id=game->Type();
     gameRules[id]=game;
 }
 
@@ -100,6 +100,13 @@ int main(int argc, char* argv[]) {
     server.set_timer(TIMER::TIMER_MIN, 1000*60);
     server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
+    
+    if(auto ddz=server.findGame(proto3::pb_enum::RULE_DDZ)){
+        proto3::user_t user;
+        auto& desk=ddz->Create(user);
+        ddz->Join(desk,user);
+        ddz->Join(desk,user);
+    }
 	KEYE_LOG("++++server start at %d\n", port);
 	std::getchar();
 

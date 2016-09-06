@@ -10,9 +10,14 @@
 #define GameUnit_hpp
 
 struct GameUnit{
-    int     id;
-    int     color;
-    int     value;
+    unit_id_t   id;
+    color_t     color;
+    value_t     value;
+    
+    GameUnit()
+    :id(0)
+    ,color(0)
+    ,value(0){}
 };
 typedef GameUnit Card;
 typedef GameUnit Chess;

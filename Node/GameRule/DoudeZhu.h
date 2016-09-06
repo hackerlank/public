@@ -11,11 +11,13 @@
 
 class DoudeZhu: public GameRule{
 public:
-    virtual int         type();
-    virtual int         maxPlayer();
-    virtual void        settle();
-    virtual bool        isGameOver();
-protected:
+    virtual int         Type();
+    virtual int         MaxPlayer();
+
+    virtual bool        Ready(Desk&);
+    virtual void        Deal(Desk&);
+    virtual void        Settle(Desk&);
+    virtual bool        IsGameOver(Desk&);
 };
 
 #endif /* DoudeZhu_h */

@@ -17,8 +17,8 @@
 #include "PBHelper.h"
 #include "MsgHandler.h"
 
-#include "GameUnit.h"
 #include "GameData.h"
+#include "GameUnit.h"
 #include "GameDesk.h"
 #include "GameRule.h"
 #include "GameRule/DoudeZhu.h"

@@ -13,11 +13,17 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     void                Tick();
+    Desk&               Create(proto3::user_t&);
+    void                Join(Desk&,proto3::user_t&);
+    void                ChangeState(Desk&,Desk::State);
     
-    virtual int         type()=0;
-    virtual int         maxPlayer()=0;
-    virtual void        settle()=0;
-    virtual bool        isGameOver()=0;
+    virtual int         Type()=0;
+    virtual int         MaxPlayer()=0;
+
+    virtual bool        Ready(Desk&)=0;
+    virtual void        Deal(Desk&)=0;
+    virtual void        Settle(Desk&)=0;
+    virtual bool        IsGameOver(Desk&)=0;
 protected:
     std::map<int,std::shared_ptr<Desk>> _desks;
 };

@@ -143,6 +143,12 @@ bool pb_enum_IsValid(int value) {
     case 5:
     case 10:
     case 11:
+    case 20:
+    case 21:
+    case 22:
+    case 50:
+    case 51:
+    case 52:
     case 100:
     case 101:
     case 102:

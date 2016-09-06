@@ -11,9 +11,6 @@
 		5E3845B21D3548FD00F9B096 /* libkeye.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3845B11D3548FD00F9B096 /* libkeye.a */; };
 		5E430E311D701CFA00B85CB8 /* MsgHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */; };
 		5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E11D7E744500465098 /* GameRule.cpp */; };
-		5E4D46E61D7E747800465098 /* GameDesk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E41D7E747800465098 /* GameDesk.cpp */; };
-		5E4D46E91D7E74D800465098 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E71D7E74D800465098 /* GameData.cpp */; };
-		5E4D46EC1D7E75C000465098 /* GameUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46EA1D7E75C000465098 /* GameUnit.cpp */; };
 		5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */; };
 		5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8A17421D71E71600CDCE1D /* Node.cpp */; };
 		5EEEA7981D67A19B00630485 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */; };
@@ -42,11 +39,8 @@
 		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
 		5E4D46E01D7E743100465098 /* GameRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRule.h; sourceTree = "<group>"; };
 		5E4D46E11D7E744500465098 /* GameRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRule.cpp; sourceTree = "<group>"; };
-		5E4D46E41D7E747800465098 /* GameDesk.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameDesk.cpp; sourceTree = "<group>"; };
 		5E4D46E51D7E747800465098 /* GameDesk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDesk.h; sourceTree = "<group>"; };
-		5E4D46E71D7E74D800465098 /* GameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameData.cpp; sourceTree = "<group>"; };
 		5E4D46E81D7E74D800465098 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
-		5E4D46EA1D7E75C000465098 /* GameUnit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameUnit.cpp; sourceTree = "<group>"; };
 		5E4D46EB1D7E75C000465098 /* GameUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameUnit.h; sourceTree = "<group>"; };
 		5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoudeZhu.cpp; sourceTree = "<group>"; };
 		5E4D46F91D7EA73800465098 /* DoudeZhu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoudeZhu.h; sourceTree = "<group>"; };
@@ -78,14 +72,11 @@
 			isa = PBXGroup;
 			children = (
 				5E4D46F71D7EA73800465098 /* GameRule */,
-				5E4D46EB1D7E75C000465098 /* GameUnit.h */,
-				5E4D46EA1D7E75C000465098 /* GameUnit.cpp */,
 				5E4D46E01D7E743100465098 /* GameRule.h */,
 				5E4D46E11D7E744500465098 /* GameRule.cpp */,
-				5E4D46E51D7E747800465098 /* GameDesk.h */,
-				5E4D46E41D7E747800465098 /* GameDesk.cpp */,
+				5E4D46EB1D7E75C000465098 /* GameUnit.h */,
 				5E4D46E81D7E74D800465098 /* GameData.h */,
-				5E4D46E71D7E74D800465098 /* GameData.cpp */,
+				5E4D46E51D7E747800465098 /* GameDesk.h */,
 				5E430E321D706F7900B85CB8 /* PBHelper.h */,
 				5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */,
 				5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */,
@@ -176,11 +167,8 @@
 			files = (
 				5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */,
 				5E430E311D701CFA00B85CB8 /* MsgHandler.cpp in Sources */,
-				5E4D46E61D7E747800465098 /* GameDesk.cpp in Sources */,
 				5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */,
 				5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */,
-				5E4D46E91D7E74D800465098 /* GameData.cpp in Sources */,
-				5E4D46EC1D7E75C000465098 /* GameUnit.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

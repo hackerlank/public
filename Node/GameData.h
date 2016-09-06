@@ -9,8 +9,19 @@
 #ifndef GameData_hpp
 #define GameData_hpp
 
+typedef short unit_id_t;
+typedef short desk_id_t;
+typedef short pos_t;
+typedef short color_t;
+typedef short value_t;
+
 struct GameData{
-    std::vector<int>    deck;
-    std::vector<int>    discards;
+    std::vector<unit_id_t>    deck;
+    std::vector<unit_id_t>    discards;
+    
+    void clear(){
+        deck.clear();
+        discards.clear();
+    }
 };
 #endif /* GameData_hpp */

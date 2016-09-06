@@ -9,7 +9,7 @@
 #ifndef GameDesk_hpp
 #define GameDesk_hpp
 
-class Desk{
+struct Desk{
 public:
     enum State{
         ST_WAIT,
@@ -20,13 +20,20 @@ public:
         ST_END,
     };
     
-    State   state;
-    int     banker;
-    int     token;
+    State       state;
+    pos_t       banker;
+    pos_t       token;
     std::vector<GameUnit>       units;
-    std::vector<int>            pile;
-    std::vector<user_time_t>    users;
+    std::vector<unit_id_t>      pile;
+    std::vector<proto3::user_t> users;
     std::vector<GameData>       gameData;
     
+    int                         ready;
+    
+    Desk()
+    :ready(0)
+    ,state(State::ST_WAIT)
+    ,banker(0)
+    ,token(0){}
 };
 #endif /* GameDesk_hpp */

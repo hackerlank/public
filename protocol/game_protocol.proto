@@ -31,12 +31,14 @@ GAME_CARD               =10;
 GAME_CHESS              =11;
 
 // game rule
-RULE_GENERIC            =0;
+RULE_DDZ                =20;
+RULE_PDK                =21;
+RULE_PHZ                =22;
 
 // game category
-CATEGORY_NORMAL         =0;
-CATEGORY_EASY           =1;
-CATEGORY_HARD           =2;
+CATEGORY_NORMAL         =50;
+CATEGORY_EASY           =51;
+CATEGORY_HARD           =52;
 
 // achievement
 ACHIEVEMENT_BEST        =10;
