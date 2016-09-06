@@ -100,8 +100,14 @@ int main(int argc, char* argv[]) {
             }
         }
     }
-//    param=1000100000;
     
+    /*
+     websocket uri format ws://host:port/path
+     game_id=game_key:game_index(xxxyyyyy),use game_key as ws path
+     client select a random number as game_key to connect to Node
+     Node create game and asign game_id with game_key:game_index
+     client B game_id to connect to same Node and join game
+     */
 	const char* host="127.0.0.1";
     //unsigned short port = 8820;
     unsigned short port = 8080;
@@ -109,7 +115,6 @@ int main(int argc, char* argv[]) {
     auto skip_login=true;
     if(skip_login){
         int key=0;
-        //game id=node_id:key(xxxyyyyy)
         if(param>0){
             //join game,specify node id
             client.game_id=param;
@@ -118,8 +123,6 @@ int main(int argc, char* argv[]) {
             //create game,rand node id
             srand((unsigned)time(nullptr));
             key=rand();
-            //1145917110 1146875109
-            //1146270057 1146606197,
         }
         key=key%DEF_MAX_NODES;
         client.key=key;
@@ -127,7 +130,6 @@ int main(int argc, char* argv[]) {
         sprintf(uri,"ws://%s:%d/%d",host,port,key);
         robot::sRobot->node.connect(uri);
         KEYE_LOG("----connect to %s\n",uri);
-        //ws://host:port/path
     }else{
         char uri[64];
         sprintf(uri,"http://%s:%d",host,port);

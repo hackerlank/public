@@ -10,10 +10,12 @@
 
 using namespace keye;
 
-#ifdef WRITE_FREQ
-#undef WRITE_FREQ
-#define WRITE_FREQ 1000
-#endif // WRITE_FREQ
+enum TIMER:size_t{
+    TIMER_SEC=100,
+    TIMER_MIN,
+    TIMER_HOUR,
+    TIMER_DAY,
+};
 
 Node* Node::sNode=nullptr;
 
@@ -40,8 +42,18 @@ void Node::on_write(svc_handler&, void*, size_t sz) {
 }
 
 bool Node::on_timer(svc_handler&, size_t id, size_t milliseconds) {
-//    KEYE_LOG("----on_timer %zd\n", id);
-    if (FLOW_TIMER == id) {
+    switch (id) {
+        case TIMER::TIMER_SEC:
+            for(auto game:gameRules)game.second->Tick();
+            break;
+        case TIMER::TIMER_MIN:
+            break;
+        case TIMER::TIMER_HOUR:
+            break;
+        case TIMER::TIMER_DAY:
+            break;
+        default:
+            break;
     }
     return true;
 }
@@ -73,6 +85,10 @@ int main(int argc, char* argv[]) {
 
     Node server;
 	server.run(port,"127.0.0.1");
+    server.set_timer(TIMER::TIMER_SEC, 1000);
+    server.set_timer(TIMER::TIMER_MIN, 1000*60);
+    server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
+    server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
 	KEYE_LOG("++++server start at %d\n", port);
 	std::getchar();
 

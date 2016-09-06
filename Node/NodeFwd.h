@@ -16,6 +16,11 @@
 
 #include "PBHelper.h"
 #include "MsgHandler.h"
+
+#include "GameUnit.h"
+#include "GameData.h"
+#include "GameDesk.h"
+#include "GameRule.h"
 #include "Node.h"
 
 #endif /* login_fwd_h */
