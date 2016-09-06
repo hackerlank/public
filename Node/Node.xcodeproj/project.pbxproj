@@ -14,6 +14,7 @@
 		5E4D46E61D7E747800465098 /* GameDesk.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E41D7E747800465098 /* GameDesk.cpp */; };
 		5E4D46E91D7E74D800465098 /* GameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E71D7E74D800465098 /* GameData.cpp */; };
 		5E4D46EC1D7E75C000465098 /* GameUnit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46EA1D7E75C000465098 /* GameUnit.cpp */; };
+		5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */; };
 		5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8A17421D71E71600CDCE1D /* Node.cpp */; };
 		5EEEA7981D67A19B00630485 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */; };
 		5EEEA79C1D67A3EC00630485 /* libhiredis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */; };
@@ -47,6 +48,8 @@
 		5E4D46E81D7E74D800465098 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
 		5E4D46EA1D7E75C000465098 /* GameUnit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameUnit.cpp; sourceTree = "<group>"; };
 		5E4D46EB1D7E75C000465098 /* GameUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameUnit.h; sourceTree = "<group>"; };
+		5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoudeZhu.cpp; sourceTree = "<group>"; };
+		5E4D46F91D7EA73800465098 /* DoudeZhu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoudeZhu.h; sourceTree = "<group>"; };
 		5E8A17421D71E71600CDCE1D /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
 		5E8A17431D71E71600CDCE1D /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		5E8A17441D71E71600CDCE1D /* NodeFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeFwd.h; sourceTree = "<group>"; };
@@ -74,6 +77,7 @@
 		5E3845981D35462A00F9B096 = {
 			isa = PBXGroup;
 			children = (
+				5E4D46F71D7EA73800465098 /* GameRule */,
 				5E4D46EB1D7E75C000465098 /* GameUnit.h */,
 				5E4D46EA1D7E75C000465098 /* GameUnit.cpp */,
 				5E4D46E01D7E743100465098 /* GameRule.h */,
@@ -103,6 +107,15 @@
 				5E3845A11D35462A00F9B096 /* Node */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		5E4D46F71D7EA73800465098 /* GameRule */ = {
+			isa = PBXGroup;
+			children = (
+				5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */,
+				5E4D46F91D7EA73800465098 /* DoudeZhu.h */,
+			);
+			path = GameRule;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -165,6 +178,7 @@
 				5E430E311D701CFA00B85CB8 /* MsgHandler.cpp in Sources */,
 				5E4D46E61D7E747800465098 /* GameDesk.cpp in Sources */,
 				5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */,
+				5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */,
 				5E4D46E91D7E74D800465098 /* GameData.cpp in Sources */,
 				5E4D46EC1D7E75C000465098 /* GameUnit.cpp in Sources */,
 			);

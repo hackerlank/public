@@ -18,10 +18,13 @@ public:
     virtual void	on_write(keye::svc_handler&, void*, size_t sz);
     virtual bool	on_timer(keye::svc_handler&, size_t id, size_t milliseconds);
     
+    void            registerGame(std::shared_ptr<GameRule>);
+    GameRule*       findGame(int);
     MsgHandler              handler;
-    std::map<int,std::shared_ptr<GameRule>> gameRules;
     
     static Node*            sNode;
+private:
+    std::map<int,std::shared_ptr<GameRule>> gameRules;
 };
 
 #endif /* Node_h */

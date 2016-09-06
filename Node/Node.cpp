@@ -22,6 +22,17 @@ Node* Node::sNode=nullptr;
 Node::Node(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size){
     sNode=this;
+    
+    registerGame(std::shared_ptr<GameRule>(new DoudeZhu));
+}
+
+void Node::registerGame(std::shared_ptr<GameRule> game){
+    auto id=game->type();
+    gameRules[id]=game;
+}
+
+GameRule* Node::findGame(int type){
+    return gameRules.count(type)>0?gameRules[type].get():nullptr;
 }
 
 void Node::on_open(svc_handler&) {
