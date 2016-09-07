@@ -45,22 +45,76 @@ void Player::on_read(PBHelper& pb){
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
                 if(auto game=Node::sNode->findGame(gid)){
-                    game->players.push_back(this);
-                    ++game->ready;
-                    omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    KEYE_LOG("----game joined,gid=%d\n",gid);
+                    auto rule=game->rule;
+                    if(game->ready<rule->MaxPlayer()){
+                        game->players.push_back(this);
+                        ++game->ready;
+                        omsg.set_result(proto3::pb_enum::SUCCEESS);
+                        KEYE_LOG("----game joined,gid=%d\n",gid);
+                    }else{
+                        omsg.set_result(proto3::pb_enum::ERR_FAILED);
+                        KEYE_LOG("----game join failed of full,gid=%d\n",gid);
+                    }
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                    KEYE_LOG("----game join failed,gid=%d\n",gid);
+                    KEYE_LOG("----game join failed of no,gid=%d\n",gid);
                 }
             }else{
-                KEYE_LOG("----message error id=%zd\n",mid);
+                KEYE_LOG("----game join failed of message error id=%zd\n",mid);
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             omsg.set_mid(eMsg::MSG_NC_JOIN);
             PBHelper::Send(sh,omsg);
             break;
         }
+        case MSG_CN_DISMISS_SYNC:{
+            MsgCNDismissSync imsg;
+            MsgNCDismissSync omsg;
+            omsg.set_mid(eMsg::MSG_NC_DISMISS_SYNC);
+            if(pb.Parse(imsg)){
+                if(game){
+                    omsg.set_result(proto3::pb_enum::SUCCEESS);
+                    for(auto p:game->players){
+                        if(p!=this){
+                            PBHelper::Send(*p->spsh,omsg);
+                        }
+                    }
+                    break;
+                }
+            }
+            KEYE_LOG("----game dismiss failed\n");
+            omsg.set_result(proto3::pb_enum::ERR_FAILED);
+            PBHelper::Send(sh,omsg);
+            break;
+        }
+        case MSG_CN_DISMISS_ACK:{
+            MsgCNDismissAck imsg;
+            MsgNCDismissAck omsg;
+            omsg.set_mid(eMsg::MSG_NC_DISMISS_ACK);
+            if(pb.Parse(imsg)){
+                if(game){
+                    omsg.set_result(proto3::pb_enum::SUCCEESS);
+                    for(auto p:game->players){
+                        if(p!=this){
+                            PBHelper::Send(*p->spsh,omsg);
+                        }
+                    }
+                    break;
+                }
+            }
+            KEYE_LOG("----game dismiss failed\n");
+            omsg.set_result(proto3::pb_enum::ERR_FAILED);
+            PBHelper::Send(sh,omsg);
+            break;
+        }
+        case MSG_CN_DISCARD:{
+            MsgCNDiscard imsg;
+            if(pb.Parse(imsg))
+                game->rule->OnDiscard(*this,imsg);
+            break;
+        }
+        case MSG_CN_MELD:
+            break;
         default:
             break;
     }

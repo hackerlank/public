@@ -67,6 +67,11 @@ void DoudeZhu::Deal(Game& game){
     std::copy(game.pile.begin()+37, game.pile.end(),        std::back_inserter(game.gameData[K].deck));
 }
 
+void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
+    //MsgNCDiscard omsg;
+    //omsg.set_mid(eMsg::MSG_NC_DISCARD);
+}
+
 void DoudeZhu::Settle(Game& game){
     
 }

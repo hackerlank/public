@@ -39,10 +39,10 @@ void protobuf_ShutdownFile_game_5fprotocol_2eproto() {
   delete MsgNCDiscard::default_instance_;
   delete MsgCNMeld::default_instance_;
   delete MsgNCMeld::default_instance_;
-  delete MsgCNDismissA::default_instance_;
-  delete MsgNCDismissA::default_instance_;
-  delete MsgCNDismissB::default_instance_;
-  delete MsgNCDismissB::default_instance_;
+  delete MsgCNDismissSync::default_instance_;
+  delete MsgNCDismissSync::default_instance_;
+  delete MsgCNDismissAck::default_instance_;
+  delete MsgNCDismissAck::default_instance_;
   delete MsgNCSettle::default_instance_;
   delete MsgNCFinish::default_instance_;
 }
@@ -82,10 +82,10 @@ void protobuf_AddDesc_game_5fprotocol_2eproto() {
   MsgNCDiscard::default_instance_ = new MsgNCDiscard();
   MsgCNMeld::default_instance_ = new MsgCNMeld();
   MsgNCMeld::default_instance_ = new MsgNCMeld();
-  MsgCNDismissA::default_instance_ = new MsgCNDismissA();
-  MsgNCDismissA::default_instance_ = new MsgNCDismissA();
-  MsgCNDismissB::default_instance_ = new MsgCNDismissB();
-  MsgNCDismissB::default_instance_ = new MsgNCDismissB();
+  MsgCNDismissSync::default_instance_ = new MsgCNDismissSync();
+  MsgNCDismissSync::default_instance_ = new MsgNCDismissSync();
+  MsgCNDismissAck::default_instance_ = new MsgCNDismissAck();
+  MsgNCDismissAck::default_instance_ = new MsgNCDismissAck();
   MsgNCSettle::default_instance_ = new MsgNCSettle();
   MsgNCFinish::default_instance_ = new MsgNCFinish();
   user_t::default_instance_->InitAsDefaultInstance();
@@ -110,10 +110,10 @@ void protobuf_AddDesc_game_5fprotocol_2eproto() {
   MsgNCDiscard::default_instance_->InitAsDefaultInstance();
   MsgCNMeld::default_instance_->InitAsDefaultInstance();
   MsgNCMeld::default_instance_->InitAsDefaultInstance();
-  MsgCNDismissA::default_instance_->InitAsDefaultInstance();
-  MsgNCDismissA::default_instance_->InitAsDefaultInstance();
-  MsgCNDismissB::default_instance_->InitAsDefaultInstance();
-  MsgNCDismissB::default_instance_->InitAsDefaultInstance();
+  MsgCNDismissSync::default_instance_->InitAsDefaultInstance();
+  MsgNCDismissSync::default_instance_->InitAsDefaultInstance();
+  MsgCNDismissAck::default_instance_->InitAsDefaultInstance();
+  MsgNCDismissAck::default_instance_->InitAsDefaultInstance();
   MsgNCSettle::default_instance_->InitAsDefaultInstance();
   MsgNCFinish::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_game_5fprotocol_2eproto);
@@ -9633,39 +9633,39 @@ void MsgNCMeld::clear_result() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgCNDismissA::kMidFieldNumber;
+const int MsgCNDismissSync::kMidFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgCNDismissA::MsgCNDismissA()
+MsgCNDismissSync::MsgCNDismissSync()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(constructor:proto3.MsgCNDismissSync)
 }
 
-void MsgCNDismissA::InitAsDefaultInstance() {
+void MsgCNDismissSync::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 }
 
-MsgCNDismissA::MsgCNDismissA(const MsgCNDismissA& from)
+MsgCNDismissSync::MsgCNDismissSync(const MsgCNDismissSync& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNDismissSync)
 }
 
-void MsgCNDismissA::SharedCtor() {
+void MsgCNDismissSync::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0u;
 }
 
-MsgCNDismissA::~MsgCNDismissA() {
-  // @@protoc_insertion_point(destructor:proto3.MsgCNDismissA)
+MsgCNDismissSync::~MsgCNDismissSync() {
+  // @@protoc_insertion_point(destructor:proto3.MsgCNDismissSync)
   SharedDtor();
 }
 
-void MsgCNDismissA::SharedDtor() {
+void MsgCNDismissSync::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -9674,12 +9674,12 @@ void MsgCNDismissA::SharedDtor() {
   }
 }
 
-void MsgCNDismissA::SetCachedSize(int size) const {
+void MsgCNDismissSync::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgCNDismissA& MsgCNDismissA::default_instance() {
+const MsgCNDismissSync& MsgCNDismissSync::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_game_5fprotocol_2eproto();
 #else
@@ -9688,26 +9688,26 @@ const MsgCNDismissA& MsgCNDismissA::default_instance() {
   return *default_instance_;
 }
 
-MsgCNDismissA* MsgCNDismissA::default_instance_ = NULL;
+MsgCNDismissSync* MsgCNDismissSync::default_instance_ = NULL;
 
-MsgCNDismissA* MsgCNDismissA::New(::google::protobuf::Arena* arena) const {
-  MsgCNDismissA* n = new MsgCNDismissA;
+MsgCNDismissSync* MsgCNDismissSync::New(::google::protobuf::Arena* arena) const {
+  MsgCNDismissSync* n = new MsgCNDismissSync;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgCNDismissA::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissA)
+void MsgCNDismissSync::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissSync)
   mid_ = 0u;
 }
 
-bool MsgCNDismissA::MergePartialFromCodedStream(
+bool MsgCNDismissSync::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(parse_start:proto3.MsgCNDismissSync)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -9740,27 +9740,27 @@ bool MsgCNDismissA::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(parse_success:proto3.MsgCNDismissSync)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgCNDismissSync)
   return false;
 #undef DO_
 }
 
-void MsgCNDismissA::SerializeWithCachedSizes(
+void MsgCNDismissSync::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgCNDismissSync)
   // optional uint32 mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissSync)
 }
 
-int MsgCNDismissA::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDismissA)
+int MsgCNDismissSync::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDismissSync)
   int total_size = 0;
 
   // optional uint32 mid = 1;
@@ -9776,13 +9776,13 @@ int MsgCNDismissA::ByteSize() const {
   return total_size;
 }
 
-void MsgCNDismissA::CheckTypeAndMergeFrom(
+void MsgCNDismissSync::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgCNDismissA*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgCNDismissSync*>(&from));
 }
 
-void MsgCNDismissA::MergeFrom(const MsgCNDismissA& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNDismissA)
+void MsgCNDismissSync::MergeFrom(const MsgCNDismissSync& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNDismissSync)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -9791,47 +9791,47 @@ void MsgCNDismissA::MergeFrom(const MsgCNDismissA& from) {
   }
 }
 
-void MsgCNDismissA::CopyFrom(const MsgCNDismissA& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNDismissA)
+void MsgCNDismissSync::CopyFrom(const MsgCNDismissSync& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNDismissSync)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgCNDismissA::IsInitialized() const {
+bool MsgCNDismissSync::IsInitialized() const {
 
   return true;
 }
 
-void MsgCNDismissA::Swap(MsgCNDismissA* other) {
+void MsgCNDismissSync::Swap(MsgCNDismissSync* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgCNDismissA::InternalSwap(MsgCNDismissA* other) {
+void MsgCNDismissSync::InternalSwap(MsgCNDismissSync* other) {
   std::swap(mid_, other->mid_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgCNDismissA::GetTypeName() const {
-  return "proto3.MsgCNDismissA";
+::std::string MsgCNDismissSync::GetTypeName() const {
+  return "proto3.MsgCNDismissSync";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgCNDismissA
+// MsgCNDismissSync
 
 // optional uint32 mid = 1;
-void MsgCNDismissA::clear_mid() {
+void MsgCNDismissSync::clear_mid() {
   mid_ = 0u;
 }
- ::google::protobuf::uint32 MsgCNDismissA::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissA.mid)
+ ::google::protobuf::uint32 MsgCNDismissSync::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissSync.mid)
   return mid_;
 }
- void MsgCNDismissA::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNDismissSync::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissA.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissSync.mid)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -9839,41 +9839,41 @@ void MsgCNDismissA::clear_mid() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgNCDismissA::kMidFieldNumber;
-const int MsgNCDismissA::kResultFieldNumber;
+const int MsgNCDismissSync::kMidFieldNumber;
+const int MsgNCDismissSync::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgNCDismissA::MsgNCDismissA()
+MsgNCDismissSync::MsgNCDismissSync()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(constructor:proto3.MsgNCDismissSync)
 }
 
-void MsgNCDismissA::InitAsDefaultInstance() {
+void MsgNCDismissSync::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 }
 
-MsgNCDismissA::MsgNCDismissA(const MsgNCDismissA& from)
+MsgNCDismissSync::MsgNCDismissSync(const MsgNCDismissSync& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCDismissSync)
 }
 
-void MsgNCDismissA::SharedCtor() {
+void MsgNCDismissSync::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0u;
   result_ = 0;
 }
 
-MsgNCDismissA::~MsgNCDismissA() {
-  // @@protoc_insertion_point(destructor:proto3.MsgNCDismissA)
+MsgNCDismissSync::~MsgNCDismissSync() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCDismissSync)
   SharedDtor();
 }
 
-void MsgNCDismissA::SharedDtor() {
+void MsgNCDismissSync::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -9882,12 +9882,12 @@ void MsgNCDismissA::SharedDtor() {
   }
 }
 
-void MsgNCDismissA::SetCachedSize(int size) const {
+void MsgNCDismissSync::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgNCDismissA& MsgNCDismissA::default_instance() {
+const MsgNCDismissSync& MsgNCDismissSync::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_game_5fprotocol_2eproto();
 #else
@@ -9896,27 +9896,27 @@ const MsgNCDismissA& MsgNCDismissA::default_instance() {
   return *default_instance_;
 }
 
-MsgNCDismissA* MsgNCDismissA::default_instance_ = NULL;
+MsgNCDismissSync* MsgNCDismissSync::default_instance_ = NULL;
 
-MsgNCDismissA* MsgNCDismissA::New(::google::protobuf::Arena* arena) const {
-  MsgNCDismissA* n = new MsgNCDismissA;
+MsgNCDismissSync* MsgNCDismissSync::New(::google::protobuf::Arena* arena) const {
+  MsgNCDismissSync* n = new MsgNCDismissSync;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgNCDismissA::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgNCDismissA)
+void MsgNCDismissSync::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCDismissSync)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgNCDismissA, f) \
+  __builtin_offsetof(MsgNCDismissSync, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgNCDismissA*>(16)->f)
+  &reinterpret_cast<MsgNCDismissSync*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -9931,11 +9931,11 @@ void MsgNCDismissA::Clear() {
 
 }
 
-bool MsgNCDismissA::MergePartialFromCodedStream(
+bool MsgNCDismissSync::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCDismissSync)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -9984,17 +9984,17 @@ bool MsgNCDismissA::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCDismissSync)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCDismissSync)
   return false;
 #undef DO_
 }
 
-void MsgNCDismissA::SerializeWithCachedSizes(
+void MsgNCDismissSync::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCDismissSync)
   // optional uint32 mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
@@ -10006,11 +10006,11 @@ void MsgNCDismissA::SerializeWithCachedSizes(
       2, this->result(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCDismissSync)
 }
 
-int MsgNCDismissA::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDismissA)
+int MsgNCDismissSync::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDismissSync)
   int total_size = 0;
 
   // optional uint32 mid = 1;
@@ -10032,13 +10032,13 @@ int MsgNCDismissA::ByteSize() const {
   return total_size;
 }
 
-void MsgNCDismissA::CheckTypeAndMergeFrom(
+void MsgNCDismissSync::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgNCDismissA*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCDismissSync*>(&from));
 }
 
-void MsgNCDismissA::MergeFrom(const MsgNCDismissA& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCDismissA)
+void MsgNCDismissSync::MergeFrom(const MsgNCDismissSync& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCDismissSync)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -10050,62 +10050,62 @@ void MsgNCDismissA::MergeFrom(const MsgNCDismissA& from) {
   }
 }
 
-void MsgNCDismissA::CopyFrom(const MsgNCDismissA& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCDismissA)
+void MsgNCDismissSync::CopyFrom(const MsgNCDismissSync& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCDismissSync)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNCDismissA::IsInitialized() const {
+bool MsgNCDismissSync::IsInitialized() const {
 
   return true;
 }
 
-void MsgNCDismissA::Swap(MsgNCDismissA* other) {
+void MsgNCDismissSync::Swap(MsgNCDismissSync* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgNCDismissA::InternalSwap(MsgNCDismissA* other) {
+void MsgNCDismissSync::InternalSwap(MsgNCDismissSync* other) {
   std::swap(mid_, other->mid_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgNCDismissA::GetTypeName() const {
-  return "proto3.MsgNCDismissA";
+::std::string MsgNCDismissSync::GetTypeName() const {
+  return "proto3.MsgNCDismissSync";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgNCDismissA
+// MsgNCDismissSync
 
 // optional uint32 mid = 1;
-void MsgNCDismissA::clear_mid() {
+void MsgNCDismissSync::clear_mid() {
   mid_ = 0u;
 }
- ::google::protobuf::uint32 MsgNCDismissA::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissA.mid)
+ ::google::protobuf::uint32 MsgNCDismissSync::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.mid)
   return mid_;
 }
- void MsgNCDismissA::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCDismissSync::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissA.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.mid)
 }
 
 // optional .proto3.pb_enum result = 2;
-void MsgNCDismissA::clear_result() {
+void MsgNCDismissSync::clear_result() {
   result_ = 0;
 }
- ::proto3::pb_enum MsgNCDismissA::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissA.result)
+ ::proto3::pb_enum MsgNCDismissSync::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
- void MsgNCDismissA::set_result(::proto3::pb_enum value) {
+ void MsgNCDismissSync::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissA.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.result)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -10113,39 +10113,39 @@ void MsgNCDismissA::clear_result() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgCNDismissB::kMidFieldNumber;
+const int MsgCNDismissAck::kMidFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgCNDismissB::MsgCNDismissB()
+MsgCNDismissAck::MsgCNDismissAck()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(constructor:proto3.MsgCNDismissAck)
 }
 
-void MsgCNDismissB::InitAsDefaultInstance() {
+void MsgCNDismissAck::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 }
 
-MsgCNDismissB::MsgCNDismissB(const MsgCNDismissB& from)
+MsgCNDismissAck::MsgCNDismissAck(const MsgCNDismissAck& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNDismissAck)
 }
 
-void MsgCNDismissB::SharedCtor() {
+void MsgCNDismissAck::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0u;
 }
 
-MsgCNDismissB::~MsgCNDismissB() {
-  // @@protoc_insertion_point(destructor:proto3.MsgCNDismissB)
+MsgCNDismissAck::~MsgCNDismissAck() {
+  // @@protoc_insertion_point(destructor:proto3.MsgCNDismissAck)
   SharedDtor();
 }
 
-void MsgCNDismissB::SharedDtor() {
+void MsgCNDismissAck::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -10154,12 +10154,12 @@ void MsgCNDismissB::SharedDtor() {
   }
 }
 
-void MsgCNDismissB::SetCachedSize(int size) const {
+void MsgCNDismissAck::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgCNDismissB& MsgCNDismissB::default_instance() {
+const MsgCNDismissAck& MsgCNDismissAck::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_game_5fprotocol_2eproto();
 #else
@@ -10168,26 +10168,26 @@ const MsgCNDismissB& MsgCNDismissB::default_instance() {
   return *default_instance_;
 }
 
-MsgCNDismissB* MsgCNDismissB::default_instance_ = NULL;
+MsgCNDismissAck* MsgCNDismissAck::default_instance_ = NULL;
 
-MsgCNDismissB* MsgCNDismissB::New(::google::protobuf::Arena* arena) const {
-  MsgCNDismissB* n = new MsgCNDismissB;
+MsgCNDismissAck* MsgCNDismissAck::New(::google::protobuf::Arena* arena) const {
+  MsgCNDismissAck* n = new MsgCNDismissAck;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgCNDismissB::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissB)
+void MsgCNDismissAck::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissAck)
   mid_ = 0u;
 }
 
-bool MsgCNDismissB::MergePartialFromCodedStream(
+bool MsgCNDismissAck::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(parse_start:proto3.MsgCNDismissAck)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -10220,27 +10220,27 @@ bool MsgCNDismissB::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(parse_success:proto3.MsgCNDismissAck)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgCNDismissAck)
   return false;
 #undef DO_
 }
 
-void MsgCNDismissB::SerializeWithCachedSizes(
+void MsgCNDismissAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgCNDismissAck)
   // optional uint32 mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissAck)
 }
 
-int MsgCNDismissB::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDismissB)
+int MsgCNDismissAck::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDismissAck)
   int total_size = 0;
 
   // optional uint32 mid = 1;
@@ -10256,13 +10256,13 @@ int MsgCNDismissB::ByteSize() const {
   return total_size;
 }
 
-void MsgCNDismissB::CheckTypeAndMergeFrom(
+void MsgCNDismissAck::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgCNDismissB*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgCNDismissAck*>(&from));
 }
 
-void MsgCNDismissB::MergeFrom(const MsgCNDismissB& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNDismissB)
+void MsgCNDismissAck::MergeFrom(const MsgCNDismissAck& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNDismissAck)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -10271,47 +10271,47 @@ void MsgCNDismissB::MergeFrom(const MsgCNDismissB& from) {
   }
 }
 
-void MsgCNDismissB::CopyFrom(const MsgCNDismissB& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNDismissB)
+void MsgCNDismissAck::CopyFrom(const MsgCNDismissAck& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNDismissAck)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgCNDismissB::IsInitialized() const {
+bool MsgCNDismissAck::IsInitialized() const {
 
   return true;
 }
 
-void MsgCNDismissB::Swap(MsgCNDismissB* other) {
+void MsgCNDismissAck::Swap(MsgCNDismissAck* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgCNDismissB::InternalSwap(MsgCNDismissB* other) {
+void MsgCNDismissAck::InternalSwap(MsgCNDismissAck* other) {
   std::swap(mid_, other->mid_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgCNDismissB::GetTypeName() const {
-  return "proto3.MsgCNDismissB";
+::std::string MsgCNDismissAck::GetTypeName() const {
+  return "proto3.MsgCNDismissAck";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgCNDismissB
+// MsgCNDismissAck
 
 // optional uint32 mid = 1;
-void MsgCNDismissB::clear_mid() {
+void MsgCNDismissAck::clear_mid() {
   mid_ = 0u;
 }
- ::google::protobuf::uint32 MsgCNDismissB::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissB.mid)
+ ::google::protobuf::uint32 MsgCNDismissAck::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissAck.mid)
   return mid_;
 }
- void MsgCNDismissB::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNDismissAck::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissB.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.mid)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -10319,41 +10319,41 @@ void MsgCNDismissB::clear_mid() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgNCDismissB::kMidFieldNumber;
-const int MsgNCDismissB::kResultFieldNumber;
+const int MsgNCDismissAck::kMidFieldNumber;
+const int MsgNCDismissAck::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgNCDismissB::MsgNCDismissB()
+MsgNCDismissAck::MsgNCDismissAck()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(constructor:proto3.MsgNCDismissAck)
 }
 
-void MsgNCDismissB::InitAsDefaultInstance() {
+void MsgNCDismissAck::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 }
 
-MsgNCDismissB::MsgNCDismissB(const MsgNCDismissB& from)
+MsgNCDismissAck::MsgNCDismissAck(const MsgNCDismissAck& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCDismissAck)
 }
 
-void MsgNCDismissB::SharedCtor() {
+void MsgNCDismissAck::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0u;
   result_ = 0;
 }
 
-MsgNCDismissB::~MsgNCDismissB() {
-  // @@protoc_insertion_point(destructor:proto3.MsgNCDismissB)
+MsgNCDismissAck::~MsgNCDismissAck() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCDismissAck)
   SharedDtor();
 }
 
-void MsgNCDismissB::SharedDtor() {
+void MsgNCDismissAck::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -10362,12 +10362,12 @@ void MsgNCDismissB::SharedDtor() {
   }
 }
 
-void MsgNCDismissB::SetCachedSize(int size) const {
+void MsgNCDismissAck::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgNCDismissB& MsgNCDismissB::default_instance() {
+const MsgNCDismissAck& MsgNCDismissAck::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_game_5fprotocol_2eproto();
 #else
@@ -10376,27 +10376,27 @@ const MsgNCDismissB& MsgNCDismissB::default_instance() {
   return *default_instance_;
 }
 
-MsgNCDismissB* MsgNCDismissB::default_instance_ = NULL;
+MsgNCDismissAck* MsgNCDismissAck::default_instance_ = NULL;
 
-MsgNCDismissB* MsgNCDismissB::New(::google::protobuf::Arena* arena) const {
-  MsgNCDismissB* n = new MsgNCDismissB;
+MsgNCDismissAck* MsgNCDismissAck::New(::google::protobuf::Arena* arena) const {
+  MsgNCDismissAck* n = new MsgNCDismissAck;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgNCDismissB::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgNCDismissB)
+void MsgNCDismissAck::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCDismissAck)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgNCDismissB, f) \
+  __builtin_offsetof(MsgNCDismissAck, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgNCDismissB*>(16)->f)
+  &reinterpret_cast<MsgNCDismissAck*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -10411,11 +10411,11 @@ void MsgNCDismissB::Clear() {
 
 }
 
-bool MsgNCDismissB::MergePartialFromCodedStream(
+bool MsgNCDismissAck::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCDismissAck)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -10464,17 +10464,17 @@ bool MsgNCDismissB::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCDismissAck)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCDismissAck)
   return false;
 #undef DO_
 }
 
-void MsgNCDismissB::SerializeWithCachedSizes(
+void MsgNCDismissAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCDismissAck)
   // optional uint32 mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
@@ -10486,11 +10486,11 @@ void MsgNCDismissB::SerializeWithCachedSizes(
       2, this->result(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCDismissAck)
 }
 
-int MsgNCDismissB::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDismissB)
+int MsgNCDismissAck::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDismissAck)
   int total_size = 0;
 
   // optional uint32 mid = 1;
@@ -10512,13 +10512,13 @@ int MsgNCDismissB::ByteSize() const {
   return total_size;
 }
 
-void MsgNCDismissB::CheckTypeAndMergeFrom(
+void MsgNCDismissAck::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgNCDismissB*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCDismissAck*>(&from));
 }
 
-void MsgNCDismissB::MergeFrom(const MsgNCDismissB& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCDismissB)
+void MsgNCDismissAck::MergeFrom(const MsgNCDismissAck& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCDismissAck)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -10530,62 +10530,62 @@ void MsgNCDismissB::MergeFrom(const MsgNCDismissB& from) {
   }
 }
 
-void MsgNCDismissB::CopyFrom(const MsgNCDismissB& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCDismissB)
+void MsgNCDismissAck::CopyFrom(const MsgNCDismissAck& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCDismissAck)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNCDismissB::IsInitialized() const {
+bool MsgNCDismissAck::IsInitialized() const {
 
   return true;
 }
 
-void MsgNCDismissB::Swap(MsgNCDismissB* other) {
+void MsgNCDismissAck::Swap(MsgNCDismissAck* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgNCDismissB::InternalSwap(MsgNCDismissB* other) {
+void MsgNCDismissAck::InternalSwap(MsgNCDismissAck* other) {
   std::swap(mid_, other->mid_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgNCDismissB::GetTypeName() const {
-  return "proto3.MsgNCDismissB";
+::std::string MsgNCDismissAck::GetTypeName() const {
+  return "proto3.MsgNCDismissAck";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgNCDismissB
+// MsgNCDismissAck
 
 // optional uint32 mid = 1;
-void MsgNCDismissB::clear_mid() {
+void MsgNCDismissAck::clear_mid() {
   mid_ = 0u;
 }
- ::google::protobuf::uint32 MsgNCDismissB::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissB.mid)
+ ::google::protobuf::uint32 MsgNCDismissAck::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.mid)
   return mid_;
 }
- void MsgNCDismissB::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCDismissAck::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissB.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.mid)
 }
 
 // optional .proto3.pb_enum result = 2;
-void MsgNCDismissB::clear_result() {
+void MsgNCDismissAck::clear_result() {
   result_ = 0;
 }
- ::proto3::pb_enum MsgNCDismissB::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissB.result)
+ ::proto3::pb_enum MsgNCDismissAck::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
- void MsgNCDismissB::set_result(::proto3::pb_enum value) {
+ void MsgNCDismissAck::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissB.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.result)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

@@ -243,23 +243,23 @@ uint32 mid				=1;
 pb_enum result			=2;
 };
 
-message MsgCNDismissA{
+message MsgCNDismissSync{
 
 uint32 mid				=1;
 };
 
-message MsgNCDismissA{
+message MsgNCDismissSync{
 
 uint32 mid				=1;
 pb_enum result			=2;
 };
 
-message MsgCNDismissB{
+message MsgCNDismissAck{
 
 uint32 mid				=1;
 };
 
-message MsgNCDismissB{
+message MsgNCDismissAck{
 
 uint32 mid				=1;
 pb_enum result			=2;

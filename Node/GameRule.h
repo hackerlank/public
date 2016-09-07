@@ -20,6 +20,8 @@ public:
 
     virtual bool        Ready(Game&)=0;
     virtual void        Deal(Game&)=0;
+    virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
+    virtual void        OnMeld(Game&)=0;
     virtual void        Settle(Game&)=0;
     virtual bool        IsGameOver(Game&)=0;
 };

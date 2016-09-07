@@ -39,8 +39,8 @@ class MsgBase;
 class MsgCLEnter;
 class MsgCNCreate;
 class MsgCNDiscard;
-class MsgCNDismissA;
-class MsgCNDismissB;
+class MsgCNDismissAck;
+class MsgCNDismissSync;
 class MsgCNEnter;
 class MsgCNJoin;
 class MsgCNMeld;
@@ -48,8 +48,8 @@ class MsgCSLogin;
 class MsgLCEnter;
 class MsgNCCreate;
 class MsgNCDiscard;
-class MsgNCDismissA;
-class MsgNCDismissB;
+class MsgNCDismissAck;
+class MsgNCDismissSync;
 class MsgNCEnter;
 class MsgNCFinish;
 class MsgNCJoin;
@@ -2778,40 +2778,40 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 };
 // -------------------------------------------------------------------
 
-class MsgCNDismissA : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCNDismissA) */ {
+class MsgCNDismissSync : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCNDismissSync) */ {
  public:
-  MsgCNDismissA();
-  virtual ~MsgCNDismissA();
+  MsgCNDismissSync();
+  virtual ~MsgCNDismissSync();
 
-  MsgCNDismissA(const MsgCNDismissA& from);
+  MsgCNDismissSync(const MsgCNDismissSync& from);
 
-  inline MsgCNDismissA& operator=(const MsgCNDismissA& from) {
+  inline MsgCNDismissSync& operator=(const MsgCNDismissSync& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgCNDismissA& default_instance();
+  static const MsgCNDismissSync& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgCNDismissA* internal_default_instance() {
+  static inline const MsgCNDismissSync* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgCNDismissA* other);
+  void Swap(MsgCNDismissSync* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgCNDismissA* New() const { return New(NULL); }
+  inline MsgCNDismissSync* New() const { return New(NULL); }
 
-  MsgCNDismissA* New(::google::protobuf::Arena* arena) const;
+  MsgCNDismissSync* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgCNDismissA& from);
-  void MergeFrom(const MsgCNDismissA& from);
+  void CopyFrom(const MsgCNDismissSync& from);
+  void MergeFrom(const MsgCNDismissSync& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -2826,7 +2826,7 @@ class MsgCNDismissA : public ::google::protobuf::MessageLite /* @@protoc_inserti
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgCNDismissA* other);
+  void InternalSwap(MsgCNDismissSync* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -2848,7 +2848,7 @@ class MsgCNDismissA : public ::google::protobuf::MessageLite /* @@protoc_inserti
   ::google::protobuf::uint32 mid() const;
   void set_mid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissA)
+  // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissSync)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -2866,44 +2866,44 @@ class MsgCNDismissA : public ::google::protobuf::MessageLite /* @@protoc_inserti
   friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgCNDismissA* default_instance_;
+  static MsgCNDismissSync* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgNCDismissA : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgNCDismissA) */ {
+class MsgNCDismissSync : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgNCDismissSync) */ {
  public:
-  MsgNCDismissA();
-  virtual ~MsgNCDismissA();
+  MsgNCDismissSync();
+  virtual ~MsgNCDismissSync();
 
-  MsgNCDismissA(const MsgNCDismissA& from);
+  MsgNCDismissSync(const MsgNCDismissSync& from);
 
-  inline MsgNCDismissA& operator=(const MsgNCDismissA& from) {
+  inline MsgNCDismissSync& operator=(const MsgNCDismissSync& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgNCDismissA& default_instance();
+  static const MsgNCDismissSync& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgNCDismissA* internal_default_instance() {
+  static inline const MsgNCDismissSync* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgNCDismissA* other);
+  void Swap(MsgNCDismissSync* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgNCDismissA* New() const { return New(NULL); }
+  inline MsgNCDismissSync* New() const { return New(NULL); }
 
-  MsgNCDismissA* New(::google::protobuf::Arena* arena) const;
+  MsgNCDismissSync* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgNCDismissA& from);
-  void MergeFrom(const MsgNCDismissA& from);
+  void CopyFrom(const MsgNCDismissSync& from);
+  void MergeFrom(const MsgNCDismissSync& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -2918,7 +2918,7 @@ class MsgNCDismissA : public ::google::protobuf::MessageLite /* @@protoc_inserti
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgNCDismissA* other);
+  void InternalSwap(MsgNCDismissSync* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -2946,7 +2946,7 @@ class MsgNCDismissA : public ::google::protobuf::MessageLite /* @@protoc_inserti
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgNCDismissA)
+  // @@protoc_insertion_point(class_scope:proto3.MsgNCDismissSync)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -2965,44 +2965,44 @@ class MsgNCDismissA : public ::google::protobuf::MessageLite /* @@protoc_inserti
   friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgNCDismissA* default_instance_;
+  static MsgNCDismissSync* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgCNDismissB : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCNDismissB) */ {
+class MsgCNDismissAck : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCNDismissAck) */ {
  public:
-  MsgCNDismissB();
-  virtual ~MsgCNDismissB();
+  MsgCNDismissAck();
+  virtual ~MsgCNDismissAck();
 
-  MsgCNDismissB(const MsgCNDismissB& from);
+  MsgCNDismissAck(const MsgCNDismissAck& from);
 
-  inline MsgCNDismissB& operator=(const MsgCNDismissB& from) {
+  inline MsgCNDismissAck& operator=(const MsgCNDismissAck& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgCNDismissB& default_instance();
+  static const MsgCNDismissAck& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgCNDismissB* internal_default_instance() {
+  static inline const MsgCNDismissAck* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgCNDismissB* other);
+  void Swap(MsgCNDismissAck* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgCNDismissB* New() const { return New(NULL); }
+  inline MsgCNDismissAck* New() const { return New(NULL); }
 
-  MsgCNDismissB* New(::google::protobuf::Arena* arena) const;
+  MsgCNDismissAck* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgCNDismissB& from);
-  void MergeFrom(const MsgCNDismissB& from);
+  void CopyFrom(const MsgCNDismissAck& from);
+  void MergeFrom(const MsgCNDismissAck& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -3017,7 +3017,7 @@ class MsgCNDismissB : public ::google::protobuf::MessageLite /* @@protoc_inserti
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgCNDismissB* other);
+  void InternalSwap(MsgCNDismissAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -3039,7 +3039,7 @@ class MsgCNDismissB : public ::google::protobuf::MessageLite /* @@protoc_inserti
   ::google::protobuf::uint32 mid() const;
   void set_mid(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissB)
+  // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissAck)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -3057,44 +3057,44 @@ class MsgCNDismissB : public ::google::protobuf::MessageLite /* @@protoc_inserti
   friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgCNDismissB* default_instance_;
+  static MsgCNDismissAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgNCDismissB : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgNCDismissB) */ {
+class MsgNCDismissAck : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgNCDismissAck) */ {
  public:
-  MsgNCDismissB();
-  virtual ~MsgNCDismissB();
+  MsgNCDismissAck();
+  virtual ~MsgNCDismissAck();
 
-  MsgNCDismissB(const MsgNCDismissB& from);
+  MsgNCDismissAck(const MsgNCDismissAck& from);
 
-  inline MsgNCDismissB& operator=(const MsgNCDismissB& from) {
+  inline MsgNCDismissAck& operator=(const MsgNCDismissAck& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgNCDismissB& default_instance();
+  static const MsgNCDismissAck& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgNCDismissB* internal_default_instance() {
+  static inline const MsgNCDismissAck* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgNCDismissB* other);
+  void Swap(MsgNCDismissAck* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgNCDismissB* New() const { return New(NULL); }
+  inline MsgNCDismissAck* New() const { return New(NULL); }
 
-  MsgNCDismissB* New(::google::protobuf::Arena* arena) const;
+  MsgNCDismissAck* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgNCDismissB& from);
-  void MergeFrom(const MsgNCDismissB& from);
+  void CopyFrom(const MsgNCDismissAck& from);
+  void MergeFrom(const MsgNCDismissAck& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -3109,7 +3109,7 @@ class MsgNCDismissB : public ::google::protobuf::MessageLite /* @@protoc_inserti
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgNCDismissB* other);
+  void InternalSwap(MsgNCDismissAck* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -3137,7 +3137,7 @@ class MsgNCDismissB : public ::google::protobuf::MessageLite /* @@protoc_inserti
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgNCDismissB)
+  // @@protoc_insertion_point(class_scope:proto3.MsgNCDismissAck)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -3156,7 +3156,7 @@ class MsgNCDismissB : public ::google::protobuf::MessageLite /* @@protoc_inserti
   friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgNCDismissB* default_instance_;
+  static MsgNCDismissAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -5504,102 +5504,102 @@ inline void MsgNCMeld::set_result(::proto3::pb_enum value) {
 
 // -------------------------------------------------------------------
 
-// MsgCNDismissA
+// MsgCNDismissSync
 
 // optional uint32 mid = 1;
-inline void MsgCNDismissA::clear_mid() {
+inline void MsgCNDismissSync::clear_mid() {
   mid_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgCNDismissA::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissA.mid)
+inline ::google::protobuf::uint32 MsgCNDismissSync::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissSync.mid)
   return mid_;
 }
-inline void MsgCNDismissA::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNDismissSync::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissA.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissSync.mid)
 }
 
 // -------------------------------------------------------------------
 
-// MsgNCDismissA
+// MsgNCDismissSync
 
 // optional uint32 mid = 1;
-inline void MsgNCDismissA::clear_mid() {
+inline void MsgNCDismissSync::clear_mid() {
   mid_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgNCDismissA::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissA.mid)
+inline ::google::protobuf::uint32 MsgNCDismissSync::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.mid)
   return mid_;
 }
-inline void MsgNCDismissA::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCDismissSync::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissA.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.mid)
 }
 
 // optional .proto3.pb_enum result = 2;
-inline void MsgNCDismissA::clear_result() {
+inline void MsgNCDismissSync::clear_result() {
   result_ = 0;
 }
-inline ::proto3::pb_enum MsgNCDismissA::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissA.result)
+inline ::proto3::pb_enum MsgNCDismissSync::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
-inline void MsgNCDismissA::set_result(::proto3::pb_enum value) {
+inline void MsgNCDismissSync::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissA.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.result)
 }
 
 // -------------------------------------------------------------------
 
-// MsgCNDismissB
+// MsgCNDismissAck
 
 // optional uint32 mid = 1;
-inline void MsgCNDismissB::clear_mid() {
+inline void MsgCNDismissAck::clear_mid() {
   mid_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgCNDismissB::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissB.mid)
+inline ::google::protobuf::uint32 MsgCNDismissAck::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissAck.mid)
   return mid_;
 }
-inline void MsgCNDismissB::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNDismissAck::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissB.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.mid)
 }
 
 // -------------------------------------------------------------------
 
-// MsgNCDismissB
+// MsgNCDismissAck
 
 // optional uint32 mid = 1;
-inline void MsgNCDismissB::clear_mid() {
+inline void MsgNCDismissAck::clear_mid() {
   mid_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgNCDismissB::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissB.mid)
+inline ::google::protobuf::uint32 MsgNCDismissAck::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.mid)
   return mid_;
 }
-inline void MsgNCDismissB::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCDismissAck::set_mid(::google::protobuf::uint32 value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissB.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.mid)
 }
 
 // optional .proto3.pb_enum result = 2;
-inline void MsgNCDismissB::clear_result() {
+inline void MsgNCDismissAck::clear_result() {
   result_ = 0;
 }
-inline ::proto3::pb_enum MsgNCDismissB::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissB.result)
+inline ::proto3::pb_enum MsgNCDismissAck::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
-inline void MsgNCDismissB::set_result(::proto3::pb_enum value) {
+inline void MsgNCDismissAck::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissB.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.result)
 }
 
 // -------------------------------------------------------------------
