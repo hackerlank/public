@@ -15,10 +15,10 @@
 #include "game_protocol.pb.h"
 
 #include "PBHelper.h"
-#include "MsgHandler.h"
 
 #include "GameData.h"
 #include "GameUnit.h"
+#include "Player.h"
 #include "GameDesk.h"
 #include "GameRule.h"
 #include "GameRule/DoudeZhu.h"

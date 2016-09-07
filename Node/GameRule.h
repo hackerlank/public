@@ -13,8 +13,8 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     void                Tick();
-    Desk&               Create(proto3::user_t&);
-    void                Join(Desk&,proto3::user_t&);
+    Desk*               Create(Player&,std::shared_ptr<Desk>);
+    void                Join(Desk&,Player&);
     void                ChangeState(Desk&,Desk::State);
     
     virtual int         Type()=0;
@@ -25,7 +25,7 @@ public:
     virtual void        Settle(Desk&)=0;
     virtual bool        IsGameOver(Desk&)=0;
 protected:
-    std::map<int,std::shared_ptr<Desk>> _desks;
+    std::map<desk_id_t,std::shared_ptr<Desk>> _desks;
 };
 
 #endif /* GameRule_h */

@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		5E1099041D6731AD00B02E6B /* liblibvic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1099031D6731AD00B02E6B /* liblibvic.a */; };
 		5E3845B21D3548FD00F9B096 /* libkeye.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3845B11D3548FD00F9B096 /* libkeye.a */; };
-		5E430E311D701CFA00B85CB8 /* MsgHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */; };
 		5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E11D7E744500465098 /* GameRule.cpp */; };
 		5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */; };
+		5E4D46FD1D7F828B00465098 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46FB1D7F828B00465098 /* Player.cpp */; };
 		5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8A17421D71E71600CDCE1D /* Node.cpp */; };
 		5EEEA7981D67A19B00630485 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */; };
 		5EEEA79C1D67A3EC00630485 /* libhiredis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */; };
@@ -34,8 +34,6 @@
 		5E1099031D6731AD00B02E6B /* liblibvic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibvic.a; path = ../libvic/build/Debug/liblibvic.a; sourceTree = "<group>"; };
 		5E3845A11D35462A00F9B096 /* Node */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Node; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E3845B11D3548FD00F9B096 /* libkeye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkeye.a; path = "../../../Library/Developer/Xcode/DerivedData/server-dwybynuuejmzmkeiqegwnxidbfhh/Build/Products/Debug/libkeye.a"; sourceTree = "<group>"; };
-		5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MsgHandler.cpp; sourceTree = "<group>"; };
-		5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandler.h; sourceTree = "<group>"; };
 		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
 		5E4D46E01D7E743100465098 /* GameRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRule.h; sourceTree = "<group>"; };
 		5E4D46E11D7E744500465098 /* GameRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRule.cpp; sourceTree = "<group>"; };
@@ -44,6 +42,8 @@
 		5E4D46EB1D7E75C000465098 /* GameUnit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameUnit.h; sourceTree = "<group>"; };
 		5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoudeZhu.cpp; sourceTree = "<group>"; };
 		5E4D46F91D7EA73800465098 /* DoudeZhu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoudeZhu.h; sourceTree = "<group>"; };
+		5E4D46FB1D7F828B00465098 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		5E4D46FC1D7F828B00465098 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		5E8A17421D71E71600CDCE1D /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
 		5E8A17431D71E71600CDCE1D /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
 		5E8A17441D71E71600CDCE1D /* NodeFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeFwd.h; sourceTree = "<group>"; };
@@ -71,6 +71,10 @@
 		5E3845981D35462A00F9B096 = {
 			isa = PBXGroup;
 			children = (
+				5E4D46FB1D7F828B00465098 /* Player.cpp */,
+				5E4D46FC1D7F828B00465098 /* Player.h */,
+				5E8A17421D71E71600CDCE1D /* Node.cpp */,
+				5E8A17431D71E71600CDCE1D /* Node.h */,
 				5E4D46F71D7EA73800465098 /* GameRule */,
 				5E4D46E01D7E743100465098 /* GameRule.h */,
 				5E4D46E11D7E744500465098 /* GameRule.cpp */,
@@ -78,10 +82,6 @@
 				5E4D46E81D7E74D800465098 /* GameData.h */,
 				5E4D46E51D7E747800465098 /* GameDesk.h */,
 				5E430E321D706F7900B85CB8 /* PBHelper.h */,
-				5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */,
-				5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */,
-				5E8A17421D71E71600CDCE1D /* Node.cpp */,
-				5E8A17431D71E71600CDCE1D /* Node.h */,
 				5E8A17441D71E71600CDCE1D /* NodeFwd.h */,
 				5EEEA7B31D67A59D00630485 /* libprotocol.a */,
 				5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */,
@@ -166,9 +166,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */,
-				5E430E311D701CFA00B85CB8 /* MsgHandler.cpp in Sources */,
 				5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */,
 				5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */,
+				5E4D46FD1D7F828B00465098 /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

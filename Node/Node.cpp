@@ -9,6 +9,7 @@
 #endif
 
 using namespace keye;
+using namespace proto3;
 
 enum TIMER:size_t{
     TIMER_SEC=100,
@@ -20,7 +21,8 @@ enum TIMER:size_t{
 Node* Node::sNode=nullptr;
 
 Node::Node(size_t ios, size_t works, size_t rb_size)
-:ws_service(ios, works, rb_size){
+:ws_service(ios, works, rb_size)
+,_game_index(0){
     sNode=this;
     
     registerGame(std::make_shared<DoudeZhu>());
@@ -35,6 +37,19 @@ GameRule* Node::findGame(int type){
     return gameRules.count(type)>0?gameRules[type].get():nullptr;
 }
 
+std::shared_ptr<Desk> Node::createGame(proto3::MsgCNCreate& msg){
+    auto sp=std::make_shared<Desk>();
+    if(findGame(msg.rule())){
+        sp->id=msg.key()*DEF_MAX_GAMES_PER_NODE+_game_index++;
+        //fill data
+    }
+    return sp;
+}
+
+void Node::removeGame(desk_id_t id){
+    
+}
+
 void Node::on_open(svc_handler&) {
 //    KEYE_LOG("----on_open\n");
     //set_timer(WRITE_TIMER, WRITE_FREQ);
@@ -45,7 +60,30 @@ void Node::on_close(svc_handler&) {
 }
 
 void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
-    handler.on_read(sh,buf,sz);
+    auto shid=sh.id();
+    keye::PacketWrapper pw(buf,sz);
+    PBHelper pb(pw);
+    auto mid=pb.Id();
+    if(mid==eMsg::MSG_CN_ENTER){
+        MsgCNEnter imsg;
+        MsgNCEnter omsg;
+        if(pb.Parse(imsg)){
+            omsg.set_result(proto3::pb_enum::SUCCEESS);
+            KEYE_LOG("----client entered\n");
+            
+            players[shid]=std::make_shared<Player>(sh);
+        }else{
+            KEYE_LOG("----message error id=%zd\n",mid);
+            omsg.set_result(proto3::pb_enum::ERR_FAILED);
+        }
+        omsg.set_mid(eMsg::MSG_NC_ENTER);
+        PBHelper::Send(sh,omsg);
+    }else{
+        auto p=players.find(shid);
+        if(p!=players.end())
+            p->second->on_read(pb);
+    }
+    //KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }
 
 void Node::on_write(svc_handler&, void*, size_t sz) {
@@ -100,13 +138,14 @@ int main(int argc, char* argv[]) {
     server.set_timer(TIMER::TIMER_MIN, 1000*60);
     server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
-    
+    /*
     if(auto ddz=server.findGame(proto3::pb_enum::RULE_DDZ)){
         proto3::user_t user;
         auto& desk=ddz->Create(user);
         ddz->Join(desk,user);
         ddz->Join(desk,user);
     }
+    */
 	KEYE_LOG("++++server start at %d\n", port);
 	std::getchar();
 

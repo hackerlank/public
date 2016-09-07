@@ -35,14 +35,15 @@ void GameRule::Tick(){
     }
 }
 
-Desk& GameRule::Create(proto3::user_t& user){
-    auto sp=std::make_shared<Desk>();
-    ++sp->ready;
-    _desks[100]=sp;
-    return *sp;
+Desk* GameRule::Create(Player& user,std::shared_ptr<Desk> deskptr){
+    if(deskptr){
+        ++deskptr->ready;
+        _desks[deskptr->id]=deskptr;
+    }
+    return deskptr.get();
 }
 
-void GameRule::Join(Desk& desk,proto3::user_t& user){
+void GameRule::Join(Desk& desk,Player& user){
     ++desk.ready;
 }
 

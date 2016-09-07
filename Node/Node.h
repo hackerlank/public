@@ -20,11 +20,15 @@ public:
     
     void            registerGame(std::shared_ptr<GameRule>);
     GameRule*       findGame(int);
-    MsgHandler              handler;
+    std::shared_ptr<Desk>   createGame(proto3::MsgCNCreate&);
+    void            removeGame(desk_id_t);
     
     static Node*            sNode;
 private:
-    std::map<int,std::shared_ptr<GameRule>> gameRules;
+    std::map<size_t,std::shared_ptr<Player>>    players;
+    std::map<int,std::shared_ptr<GameRule>>     gameRules;
+    
+    size_t                  _game_index;
 };
 
 #endif /* Node_h */

@@ -20,6 +20,7 @@ public:
         ST_END,
     };
     
+    size_t      id;
     State       state;
     pos_t       banker;
     pos_t       token;
@@ -31,7 +32,8 @@ public:
     int                         ready;
     
     Desk()
-    :ready(0)
+    :id(-1)
+    ,ready(0)
     ,state(State::ST_WAIT)
     ,banker(0)
     ,token(0){}
