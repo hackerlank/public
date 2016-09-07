@@ -18,15 +18,17 @@ public:
     virtual void	on_write(keye::svc_handler&, void*, size_t sz);
     virtual bool	on_timer(keye::svc_handler&, size_t id, size_t milliseconds);
     
-    void            registerGame(std::shared_ptr<GameRule>);
-    GameRule*       findGame(int);
-    std::shared_ptr<Game>   createGame(proto3::MsgCNCreate&);
+    void            registerRule(std::shared_ptr<GameRule>);
+    
+    bool            createGame(Player&,proto3::MsgCNCreate&);
+    Game*           findGame(game_id_t);
     void            removeGame(game_id_t);
     
-    static Node*            sNode;
+    static Node*    sNode;
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
+    std::map<size_t,std::shared_ptr<Game>>      games;
     
     size_t                  _game_index;
 };

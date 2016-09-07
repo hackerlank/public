@@ -9,6 +9,7 @@
 #ifndef Game_hpp
 #define Game_hpp
 
+class GameRule;
 struct Game{
 public:
     enum State{
@@ -26,10 +27,11 @@ public:
     pos_t       token;
     std::vector<GameUnit>       units;
     std::vector<unit_id_t>      pile;
-    std::vector<proto3::user_t> users;
+    std::vector<Player*>        players;
     std::vector<GameData>       gameData;
     
     int                         ready;
+    std::shared_ptr<GameRule>   rule;
     
     Game()
     :id(-1)

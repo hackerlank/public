@@ -12,9 +12,7 @@
 class GameRule{
 public:
     virtual             ~GameRule(){};
-    void                Tick();
-    Game*               Create(Player&,std::shared_ptr<Game>);
-    void                Join(Game&,Player&);
+    void                Tick(Game&);
     void                ChangeState(Game&,Game::State);
     
     virtual int         Type()=0;
@@ -24,8 +22,6 @@ public:
     virtual void        Deal(Game&)=0;
     virtual void        Settle(Game&)=0;
     virtual bool        IsGameOver(Game&)=0;
-protected:
-    std::map<game_id_t,std::shared_ptr<Game>> _games;
 };
 
 #endif /* GameRule_h */

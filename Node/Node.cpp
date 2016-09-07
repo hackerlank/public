@@ -25,29 +25,35 @@ Node::Node(size_t ios, size_t works, size_t rb_size)
 ,_game_index(0){
     sNode=this;
     
-    registerGame(std::make_shared<DoudeZhu>());
+    registerRule(std::make_shared<DoudeZhu>());
 }
 
-void Node::registerGame(std::shared_ptr<GameRule> game){
+void Node::registerRule(std::shared_ptr<GameRule> game){
     auto id=game->Type();
     gameRules[id]=game;
 }
 
-GameRule* Node::findGame(int type){
-    return gameRules.count(type)>0?gameRules[type].get():nullptr;
+bool Node::createGame(Player& player,proto3::MsgCNCreate& msg){
+    auto rule=gameRules.find(msg.rule());
+    if(rule!=gameRules.end()){
+        auto gameptr=std::make_shared<Game>();
+        gameptr->id=msg.key()*DEF_MAX_GAMES_PER_NODE+_game_index++;
+        gameptr->rule=rule->second;
+        gameptr->players.push_back(&player);
+        ++gameptr->ready;
+        //fill data
+        return true;
+    }else
+        KEYE_LOG("----create game error no rule %d\n",msg.rule());
+    return false;
 }
 
-std::shared_ptr<Game> Node::createGame(proto3::MsgCNCreate& msg){
-    auto sp=std::make_shared<Game>();
-    if(findGame(msg.rule())){
-        sp->id=msg.key()*DEF_MAX_GAMES_PER_NODE+_game_index++;
-        //fill data
-    }
-    return sp;
+Game* Node::findGame(game_id_t id){
+    return games.count(id)>0?games[id].get():nullptr;
 }
 
 void Node::removeGame(game_id_t id){
-    
+    gameRules.erase(id);
 }
 
 void Node::on_open(svc_handler&) {
@@ -55,7 +61,9 @@ void Node::on_open(svc_handler&) {
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 
-void Node::on_close(svc_handler&) {
+void Node::on_close(svc_handler& sh) {
+    auto shid=sh.id();
+    players.erase(shid);
 //    KEYE_LOG("----on_close\n");
 }
 
@@ -93,7 +101,7 @@ void Node::on_write(svc_handler&, void*, size_t sz) {
 bool Node::on_timer(svc_handler&, size_t id, size_t milliseconds) {
     switch (id) {
         case TIMER::TIMER_SEC:
-            for(auto game:gameRules)game.second->Tick();
+            for(auto game:games)game.second->rule->Tick(*game.second);
             break;
         case TIMER::TIMER_MIN:
             break;

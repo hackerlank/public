@@ -9,6 +9,7 @@
 #ifndef Player_hpp
 #define Player_hpp
 
+struct Game;
 class Player{
 public:
     Player(keye::svc_handler& sh);
@@ -16,5 +17,6 @@ public:
     void    on_read(PBHelper&);
 private:
     std::shared_ptr<keye::svc_handler>  spsh;
+    std::shared_ptr<Game>               game;
 };
 #endif /* Player_hpp */
