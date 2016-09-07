@@ -19,7 +19,7 @@
 #include "GameData.h"
 #include "GameUnit.h"
 #include "Player.h"
-#include "GameDesk.h"
+#include "Game.h"
 #include "GameRule.h"
 #include "GameRule/DoudeZhu.h"
 #include "Node.h"

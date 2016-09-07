@@ -20,8 +20,8 @@ public:
     
     void            registerGame(std::shared_ptr<GameRule>);
     GameRule*       findGame(int);
-    std::shared_ptr<Desk>   createGame(proto3::MsgCNCreate&);
-    void            removeGame(desk_id_t);
+    std::shared_ptr<Game>   createGame(proto3::MsgCNCreate&);
+    void            removeGame(game_id_t);
     
     static Node*            sNode;
 private:

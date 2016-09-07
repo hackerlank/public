@@ -10,24 +10,24 @@
 #include "NodeFwd.h"
 
 void GameRule::Tick(){
-    for(auto i:_desks){
-        auto& desk=*i.second;
-        switch (desk.state) {
-            case Desk::State::ST_WAIT:
-                if(Ready(desk))
-                    ChangeState(desk,Desk::State::ST_START);
+    for(auto i:_games){
+        auto& game=*i.second;
+        switch (game.state) {
+            case Game::State::ST_WAIT:
+                if(Ready(game))
+                    ChangeState(game,Game::State::ST_START);
                 break;
-            case Desk::State::ST_START:
-                Deal(desk);
-                ChangeState(desk,Desk::State::ST_DISCARD);
+            case Game::State::ST_START:
+                Deal(game);
+                ChangeState(game,Game::State::ST_DISCARD);
                 break;
-            case Desk::State::ST_DISCARD:
+            case Game::State::ST_DISCARD:
                 break;
-            case Desk::State::ST_MELD:
+            case Game::State::ST_MELD:
                 break;
-            case Desk::State::ST_SETTLE:
+            case Game::State::ST_SETTLE:
                 break;
-            case Desk::State::ST_END:
+            case Game::State::ST_END:
                 break;
             default:
                 break;
@@ -35,21 +35,21 @@ void GameRule::Tick(){
     }
 }
 
-Desk* GameRule::Create(Player& user,std::shared_ptr<Desk> deskptr){
-    if(deskptr){
-        ++deskptr->ready;
-        _desks[deskptr->id]=deskptr;
+Game* GameRule::Create(Player& user,std::shared_ptr<Game> gameptr){
+    if(gameptr){
+        ++gameptr->ready;
+        _games[gameptr->id]=gameptr;
     }
-    return deskptr.get();
+    return gameptr.get();
 }
 
-void GameRule::Join(Desk& desk,Player& user){
-    ++desk.ready;
+void GameRule::Join(Game& game,Player& user){
+    ++game.ready;
 }
 
-void GameRule::ChangeState(Desk& desk,Desk::State state){
-    if(desk.state!=state){
-        KEYE_LOG("----desk state: %d=>%d\n",desk.state,state);
-        desk.state=state;
+void GameRule::ChangeState(Game& game,Game::State state){
+    if(game.state!=state){
+        KEYE_LOG("----game state: %d=>%d\n",game.state,state);
+        game.state=state;
     }
 }

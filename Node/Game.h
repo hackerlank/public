@@ -1,15 +1,15 @@
 //
-//  GameDesk.hpp
+//  Game.hpp
 //  Node
 //
 //  Created by Vic Liu on 9/6/16.
 //  Copyright © 2016 Vic Liu. All rights reserved.
 //
 
-#ifndef GameDesk_hpp
-#define GameDesk_hpp
+#ifndef Game_hpp
+#define Game_hpp
 
-struct Desk{
+struct Game{
 public:
     enum State{
         ST_WAIT,
@@ -31,11 +31,11 @@ public:
     
     int                         ready;
     
-    Desk()
+    Game()
     :id(-1)
     ,ready(0)
     ,state(State::ST_WAIT)
     ,banker(0)
     ,token(0){}
 };
-#endif /* GameDesk_hpp */
+#endif /* Game_hpp */

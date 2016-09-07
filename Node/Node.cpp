@@ -37,8 +37,8 @@ GameRule* Node::findGame(int type){
     return gameRules.count(type)>0?gameRules[type].get():nullptr;
 }
 
-std::shared_ptr<Desk> Node::createGame(proto3::MsgCNCreate& msg){
-    auto sp=std::make_shared<Desk>();
+std::shared_ptr<Game> Node::createGame(proto3::MsgCNCreate& msg){
+    auto sp=std::make_shared<Game>();
     if(findGame(msg.rule())){
         sp->id=msg.key()*DEF_MAX_GAMES_PER_NODE+_game_index++;
         //fill data
@@ -46,7 +46,7 @@ std::shared_ptr<Desk> Node::createGame(proto3::MsgCNCreate& msg){
     return sp;
 }
 
-void Node::removeGame(desk_id_t id){
+void Node::removeGame(game_id_t id){
     
 }
 
@@ -141,9 +141,9 @@ int main(int argc, char* argv[]) {
     /*
     if(auto ddz=server.findGame(proto3::pb_enum::RULE_DDZ)){
         proto3::user_t user;
-        auto& desk=ddz->Create(user);
-        ddz->Join(desk,user);
-        ddz->Join(desk,user);
+        auto& game=ddz->Create(user);
+        ddz->Join(game,user);
+        ddz->Join(game,user);
     }
     */
 	KEYE_LOG("++++server start at %d\n", port);

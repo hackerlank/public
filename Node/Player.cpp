@@ -24,11 +24,11 @@ void Player::on_read(PBHelper& pb){
             MsgNCCreate omsg;
             if(pb.Parse(imsg)){
                 if(auto rule=Node::sNode->findGame(imsg.rule())){
-                    auto deskptr=Node::sNode->createGame(imsg);
-                    rule->Create(*this,deskptr);
-                    omsg.set_game_id(deskptr->id);
+                    auto gameptr=Node::sNode->createGame(imsg);
+                    rule->Create(*this,gameptr);
+                    omsg.set_game_id(gameptr->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    KEYE_LOG("----game created,gid=%zd\n",deskptr->id);
+                    KEYE_LOG("----game created,gid=%zd\n",gameptr->id);
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
                     KEYE_LOG("----game create failed,no rule %d\n",imsg.rule());
@@ -47,8 +47,8 @@ void Player::on_read(PBHelper& pb){
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
                 if(auto rule=Node::sNode->findGame(proto3::RULE_DDZ)){
-                    Desk desk;
-                    rule->Join(desk,*this);
+                    Game game;
+                    rule->Join(game,*this);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     KEYE_LOG("----game joined,gid=%d\n",gid);
                 }else{

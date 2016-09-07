@@ -14,10 +14,10 @@ public:
     virtual int         Type();
     virtual int         MaxPlayer();
 
-    virtual bool        Ready(Desk&);
-    virtual void        Deal(Desk&);
-    virtual void        Settle(Desk&);
-    virtual bool        IsGameOver(Desk&);
+    virtual bool        Ready(Game&);
+    virtual void        Deal(Game&);
+    virtual void        Settle(Game&);
+    virtual bool        IsGameOver(Game&);
 };
 
 #endif /* DoudeZhu_h */

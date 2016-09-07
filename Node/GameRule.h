@@ -13,19 +13,19 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     void                Tick();
-    Desk*               Create(Player&,std::shared_ptr<Desk>);
-    void                Join(Desk&,Player&);
-    void                ChangeState(Desk&,Desk::State);
+    Game*               Create(Player&,std::shared_ptr<Game>);
+    void                Join(Game&,Player&);
+    void                ChangeState(Game&,Game::State);
     
     virtual int         Type()=0;
     virtual int         MaxPlayer()=0;
 
-    virtual bool        Ready(Desk&)=0;
-    virtual void        Deal(Desk&)=0;
-    virtual void        Settle(Desk&)=0;
-    virtual bool        IsGameOver(Desk&)=0;
+    virtual bool        Ready(Game&)=0;
+    virtual void        Deal(Game&)=0;
+    virtual void        Settle(Game&)=0;
+    virtual bool        IsGameOver(Game&)=0;
 protected:
-    std::map<desk_id_t,std::shared_ptr<Desk>> _desks;
+    std::map<game_id_t,std::shared_ptr<Game>> _games;
 };
 
 #endif /* GameRule_h */
