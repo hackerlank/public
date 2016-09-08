@@ -58,9 +58,12 @@ class MsgNCSettle;
 class MsgNCStart;
 class MsgSCLogin;
 class achievement_t;
+class bunch_t;
+class game_data;
 class game_service_t;
 class game_t;
 class lobby_t;
+class pawn_t;
 class player_t;
 class user_t;
 
@@ -1019,6 +1022,344 @@ class lobby_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
 
   void InitAsDefaultInstance();
   static lobby_t* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class pawn_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.pawn_t) */ {
+ public:
+  pawn_t();
+  virtual ~pawn_t();
+
+  pawn_t(const pawn_t& from);
+
+  inline pawn_t& operator=(const pawn_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const pawn_t& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const pawn_t* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(pawn_t* other);
+
+  // implements Message ----------------------------------------------
+
+  inline pawn_t* New() const { return New(NULL); }
+
+  pawn_t* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const pawn_t& from);
+  void MergeFrom(const pawn_t& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(pawn_t* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 id = 1;
+  void clear_id();
+  static const int kIdFieldNumber = 1;
+  ::google::protobuf::int32 id() const;
+  void set_id(::google::protobuf::int32 value);
+
+  // optional int32 color = 2;
+  void clear_color();
+  static const int kColorFieldNumber = 2;
+  ::google::protobuf::int32 color() const;
+  void set_color(::google::protobuf::int32 value);
+
+  // optional int32 value = 3;
+  void clear_value();
+  static const int kValueFieldNumber = 3;
+  ::google::protobuf::int32 value() const;
+  void set_value(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:proto3.pawn_t)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::int32 id_;
+  ::google::protobuf::int32 color_;
+  ::google::protobuf::int32 value_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_game_5fprotocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_game_5fprotocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_game_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static pawn_t* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.bunch_t) */ {
+ public:
+  bunch_t();
+  virtual ~bunch_t();
+
+  bunch_t(const bunch_t& from);
+
+  inline bunch_t& operator=(const bunch_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const bunch_t& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const bunch_t* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(bunch_t* other);
+
+  // implements Message ----------------------------------------------
+
+  inline bunch_t* New() const { return New(NULL); }
+
+  bunch_t* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const bunch_t& from);
+  void MergeFrom(const bunch_t& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(bunch_t* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_enum type = 1;
+  void clear_type();
+  static const int kTypeFieldNumber = 1;
+  ::proto3::pb_enum type() const;
+  void set_type(::proto3::pb_enum value);
+
+  // repeated uint32 pawns = 2;
+  int pawns_size() const;
+  void clear_pawns();
+  static const int kPawnsFieldNumber = 2;
+  ::google::protobuf::uint32 pawns(int index) const;
+  void set_pawns(int index, ::google::protobuf::uint32 value);
+  void add_pawns(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      pawns() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_pawns();
+
+  // @@protoc_insertion_point(class_scope:proto3.bunch_t)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > pawns_;
+  mutable int _pawns_cached_byte_size_;
+  int type_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_game_5fprotocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_game_5fprotocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_game_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static bunch_t* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class game_data : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.game_data) */ {
+ public:
+  game_data();
+  virtual ~game_data();
+
+  game_data(const game_data& from);
+
+  inline game_data& operator=(const game_data& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const game_data& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const game_data* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(game_data* other);
+
+  // implements Message ----------------------------------------------
+
+  inline game_data* New() const { return New(NULL); }
+
+  game_data* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const game_data& from);
+  void MergeFrom(const game_data& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(game_data* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // repeated uint32 deck = 1;
+  int deck_size() const;
+  void clear_deck();
+  static const int kDeckFieldNumber = 1;
+  ::google::protobuf::uint32 deck(int index) const;
+  void set_deck(int index, ::google::protobuf::uint32 value);
+  void add_deck(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      deck() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_deck();
+
+  // repeated uint32 discards = 2;
+  int discards_size() const;
+  void clear_discards();
+  static const int kDiscardsFieldNumber = 2;
+  ::google::protobuf::uint32 discards(int index) const;
+  void set_discards(int index, ::google::protobuf::uint32 value);
+  void add_discards(::google::protobuf::uint32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+      discards() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+      mutable_discards();
+
+  // repeated .proto3.bunch_t bunch = 3;
+  int bunch_size() const;
+  void clear_bunch();
+  static const int kBunchFieldNumber = 3;
+  const ::proto3::bunch_t& bunch(int index) const;
+  ::proto3::bunch_t* mutable_bunch(int index);
+  ::proto3::bunch_t* add_bunch();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_bunch();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      bunch() const;
+
+  // @@protoc_insertion_point(class_scope:proto3.game_data)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > deck_;
+  mutable int _deck_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > discards_;
+  mutable int _discards_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > bunch_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_game_5fprotocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_game_5fprotocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_game_5fprotocol_2eproto();
+  friend void protobuf_ShutdownFile_game_5fprotocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static game_data* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -4480,6 +4821,194 @@ lobby_t::games() const {
 
 // -------------------------------------------------------------------
 
+// pawn_t
+
+// optional int32 id = 1;
+inline void pawn_t::clear_id() {
+  id_ = 0;
+}
+inline ::google::protobuf::int32 pawn_t::id() const {
+  // @@protoc_insertion_point(field_get:proto3.pawn_t.id)
+  return id_;
+}
+inline void pawn_t::set_id(::google::protobuf::int32 value) {
+  
+  id_ = value;
+  // @@protoc_insertion_point(field_set:proto3.pawn_t.id)
+}
+
+// optional int32 color = 2;
+inline void pawn_t::clear_color() {
+  color_ = 0;
+}
+inline ::google::protobuf::int32 pawn_t::color() const {
+  // @@protoc_insertion_point(field_get:proto3.pawn_t.color)
+  return color_;
+}
+inline void pawn_t::set_color(::google::protobuf::int32 value) {
+  
+  color_ = value;
+  // @@protoc_insertion_point(field_set:proto3.pawn_t.color)
+}
+
+// optional int32 value = 3;
+inline void pawn_t::clear_value() {
+  value_ = 0;
+}
+inline ::google::protobuf::int32 pawn_t::value() const {
+  // @@protoc_insertion_point(field_get:proto3.pawn_t.value)
+  return value_;
+}
+inline void pawn_t::set_value(::google::protobuf::int32 value) {
+  
+  value_ = value;
+  // @@protoc_insertion_point(field_set:proto3.pawn_t.value)
+}
+
+// -------------------------------------------------------------------
+
+// bunch_t
+
+// optional .proto3.pb_enum type = 1;
+inline void bunch_t::clear_type() {
+  type_ = 0;
+}
+inline ::proto3::pb_enum bunch_t::type() const {
+  // @@protoc_insertion_point(field_get:proto3.bunch_t.type)
+  return static_cast< ::proto3::pb_enum >(type_);
+}
+inline void bunch_t::set_type(::proto3::pb_enum value) {
+  
+  type_ = value;
+  // @@protoc_insertion_point(field_set:proto3.bunch_t.type)
+}
+
+// repeated uint32 pawns = 2;
+inline int bunch_t::pawns_size() const {
+  return pawns_.size();
+}
+inline void bunch_t::clear_pawns() {
+  pawns_.Clear();
+}
+inline ::google::protobuf::uint32 bunch_t::pawns(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.bunch_t.pawns)
+  return pawns_.Get(index);
+}
+inline void bunch_t::set_pawns(int index, ::google::protobuf::uint32 value) {
+  pawns_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.bunch_t.pawns)
+}
+inline void bunch_t::add_pawns(::google::protobuf::uint32 value) {
+  pawns_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.bunch_t.pawns)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+bunch_t::pawns() const {
+  // @@protoc_insertion_point(field_list:proto3.bunch_t.pawns)
+  return pawns_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+bunch_t::mutable_pawns() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.pawns)
+  return &pawns_;
+}
+
+// -------------------------------------------------------------------
+
+// game_data
+
+// repeated uint32 deck = 1;
+inline int game_data::deck_size() const {
+  return deck_.size();
+}
+inline void game_data::clear_deck() {
+  deck_.Clear();
+}
+inline ::google::protobuf::uint32 game_data::deck(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_data.deck)
+  return deck_.Get(index);
+}
+inline void game_data::set_deck(int index, ::google::protobuf::uint32 value) {
+  deck_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.game_data.deck)
+}
+inline void game_data::add_deck(::google::protobuf::uint32 value) {
+  deck_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.game_data.deck)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+game_data::deck() const {
+  // @@protoc_insertion_point(field_list:proto3.game_data.deck)
+  return deck_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+game_data::mutable_deck() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_data.deck)
+  return &deck_;
+}
+
+// repeated uint32 discards = 2;
+inline int game_data::discards_size() const {
+  return discards_.size();
+}
+inline void game_data::clear_discards() {
+  discards_.Clear();
+}
+inline ::google::protobuf::uint32 game_data::discards(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_data.discards)
+  return discards_.Get(index);
+}
+inline void game_data::set_discards(int index, ::google::protobuf::uint32 value) {
+  discards_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.game_data.discards)
+}
+inline void game_data::add_discards(::google::protobuf::uint32 value) {
+  discards_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.game_data.discards)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+game_data::discards() const {
+  // @@protoc_insertion_point(field_list:proto3.game_data.discards)
+  return discards_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+game_data::mutable_discards() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_data.discards)
+  return &discards_;
+}
+
+// repeated .proto3.bunch_t bunch = 3;
+inline int game_data::bunch_size() const {
+  return bunch_.size();
+}
+inline void game_data::clear_bunch() {
+  bunch_.Clear();
+}
+inline const ::proto3::bunch_t& game_data::bunch(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_data.bunch)
+  return bunch_.Get(index);
+}
+inline ::proto3::bunch_t* game_data::mutable_bunch(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.game_data.bunch)
+  return bunch_.Mutable(index);
+}
+inline ::proto3::bunch_t* game_data::add_bunch() {
+  // @@protoc_insertion_point(field_add:proto3.game_data.bunch)
+  return bunch_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+game_data::mutable_bunch() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_data.bunch)
+  return &bunch_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+game_data::bunch() const {
+  // @@protoc_insertion_point(field_list:proto3.game_data.bunch)
+  return bunch_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgBase
 
 // optional uint32 mid = 1;
@@ -5667,6 +6196,12 @@ inline void MsgNCFinish::set_result(::proto3::pb_enum value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

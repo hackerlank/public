@@ -124,6 +124,25 @@ uint32 time_zone        = 11;
 repeated game_service_t games  =12;
 };
 
+message pawn_t{
+
+int32 id                =1;
+int32 color             =2;
+int32 value             =3;
+};
+
+message bunch_t{
+
+pb_enum type            =1;
+repeated uint32 pawns   =2;
+};
+
+message game_data{
+
+repeated uint32 deck        =1;
+repeated uint32 discards    =2;
+repeated bunch_t bunch      =3;
+};
 // -------- messages --------
 
 message MsgBase{
