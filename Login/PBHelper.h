@@ -72,7 +72,9 @@ public:
         sprintf(strmid,"%d",mid);
         std::string str;
         msg.SerializeToString(&str);
+        KEYE_LOG("----body=%s\n",str.c_str());
         str=base64_encode(str);
+        KEYE_LOG("----encode=%s\n",str.c_str());
         
         resp.set_header("msgid",strmid);
         resp.set_body(str.c_str());

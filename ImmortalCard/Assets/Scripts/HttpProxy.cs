@@ -30,16 +30,19 @@ public class HttpProxy {
 		string data_rep="";
 		object error=null;
 		if (!string.IsNullOrEmpty(www.error)){
-			Debug.LogError("request : "+www.error+" "+www.url+" "+Name);
+			Debug.LogError("response : "+www.error+" "+www.url+" "+Name);
 		}else{
-			object msg_rep = null;
-			bytes = null;
 			try {
-				string text=www.text;
-				byte[] bbytes=www.bytes;
-				OnResponse(mid,Name,bbytes);
+				var headers=www.responseHeaders;
+				if(headers.ContainsKey("MSGID")){
+					int msgid=int.Parse(headers["MSGID"]);
+					Debug.Log("response="+www.text);
+					var content=MsgIntepreter.DecodeBytes(www.text);
+					OnResponse(msgid,Name,content);
+				}else
+					Debug.LogError("response: no msgid");
 			} catch (Exception e) {
-				Debug.LogError("request: "+e);
+				Debug.LogError("response: "+e);
 				yield break;
 			}
 		}
@@ -48,7 +51,8 @@ public class HttpProxy {
 	public void OnResponse(int mid,string Name,byte[] bytes){
 		switch(mid){
 		case 2002:
-			MsgCNEnter msg2 = MsgCNEnter.Parser.ParseFrom(bytes);
+			MsgSCLogin msg=MsgSCLogin.Parser.ParseFrom(bytes);
+			Debug.Log("response mid="+mid+",uid="+msg.Uid+",ip="+msg.Ip+",port="+msg.Port);
 			break;
 		default:
 			break;

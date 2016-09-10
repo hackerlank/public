@@ -10,11 +10,58 @@
 #include "LoginFwd.h"
 using namespace proto3;
 
+void split_line(std::vector<std::string>& o,std::string& line,char c){
+    std::string comma;
+    comma.push_back(c);
+    if(!line.empty()&&line.back()!=c)line+=comma;
+    while(true){
+        auto i=line.find(comma);
+        if(i==std::string::npos)break;
+        auto str=line.substr(0,i);
+        o.push_back(str);
+        line=line.substr(++i);
+    }
+}
+
+eMsg extractBody(std::string& body,const char* inbody){
+    if(inbody){
+        std::vector<std::string> params;
+        std::string buf(inbody);
+        split_line(params,buf,'&');
+        
+        std::map<std::string,std::string> kvs;
+        for(auto& p:params){
+            std::vector<std::string> ss;
+            split_line(ss,p,'=');
+            if(ss.size()>1)
+                kvs[ss[0]]=ss[1];
+        }
+        
+        std::string line(inbody);
+
+        if(kvs.count("body"))
+            body=kvs["body"];
+        if(kvs.count("msgid"))
+            return (eMsg)atoi(kvs["msgid"].c_str());
+    }
+    return eMsg::MSG_RAW;
+}
+
 void MsgHandler::on_http(const http_parser& req,http_parser& resp){
-    auto msgid=req.header("msgid");
+    auto strmid=req.header("msgid");
     auto body=req.body();
-    if(atoi(msgid)==eMsg::MSG_CS_LOGIN){
-        auto str=base64_decode(body);
+    
+    std::string content;
+    eMsg msgid=eMsg::MSG_RAW;
+    if(strmid&&strlen(strmid)>0)
+        msgid=(eMsg)atoi(strmid);
+    else
+        msgid=extractBody(content,body);
+    
+    if(msgid==eMsg::MSG_CS_LOGIN){
+        KEYE_LOG("----body=%s\n",content.c_str());
+        auto str=base64_decode(content);
+        KEYE_LOG("----decode=%s\n",str.c_str());
         proto3::MsgCSLogin imsg;
         proto3::MsgSCLogin omsg;
         auto mid=eMsg::MSG_SC_LOGIN;

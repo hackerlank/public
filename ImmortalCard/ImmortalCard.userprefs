@@ -1,0 +1,38 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Main.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Main.cs" Line="35" Column="24" />
+      <File FileName="Assets/Scripts/LoginPanel.cs" Line="40" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="Assembly-CSharp" expanded="True">
+            <Node name="BundleManager" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="LitJson" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="Google.Protobuf" expanded="True">
+              <Node name="Reflection" expanded="True" />
+              <Node name="WellKnownTypes" expanded="True" />
+            </Node>
+            <Node name="Scripts" expanded="True">
+              <Node name="Main.cs" selected="True" />
+            </Node>
+            <Node name="SocketIO" expanded="True">
+              <Node name="WebsocketSharp" expanded="True">
+                <Node name="Net" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
