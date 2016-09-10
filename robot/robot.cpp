@@ -84,14 +84,21 @@ void robot::http_client::enter_lobby(){
 }
 // -------------------------------------------------------
 int main(int argc, char* argv[]) {
+    const char* host="127.0.0.1";
+    //unsigned short port = 8820;
+    unsigned short port = 8080;
+
     int param=0;
     for(auto i=1;i<argc;++i){
         auto arg=argv[i];
         if(strlen(arg)>3){
             if(arg[0]=='-')switch(arg[1]){
                 case 'u':{
-                    auto a=&arg[2];
-                    param=atoi(a);
+                    param=atoi(&arg[2]);
+                    break;
+                }
+                case 'p':{
+                    port=atoi(&arg[2]);
                     break;
                 }
                 default:
@@ -108,11 +115,8 @@ int main(int argc, char* argv[]) {
      Node create game and asign game_id with game_key:game_index
      client B game_id to connect to same Node and join game
      */
-	const char* host="127.0.0.1";
-    //unsigned short port = 8820;
-    unsigned short port = 8080;
 	robot client;
-    auto skip_login=true;
+    auto skip_login=false;
     if(skip_login){
         int key=0;
         if(param>0){
