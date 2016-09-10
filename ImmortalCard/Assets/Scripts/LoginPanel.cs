@@ -17,32 +17,27 @@ public class LoginPanel : MonoBehaviour {
 	public void OnLogin(){
 		Debug.Log("----OnLogin");
 		Utils.Load<CreatePanel>(gameObject.transform.parent,delegate(Component obj){
-			TheMsg tmsg = new TheMsg();
-			tmsg.Name = "am the name";
-			tmsg.Num = 32;
+			MsgCSLogin msg=new MsgCSLogin();
+			msg.Mid=2001;
+			msg.Version=100;
+			msg.User=new user_t();
+			msg.User.Account="Unity";
+			msg.User.DevType=pb_enum.DevPc;
+			msg.User.Name="vic";
+			msg.User.Udid=SystemInfo.deviceUniqueIdentifier;
 
-			MsgCNEnter msg=new MsgCNEnter();
-			MsgCSLogin ml=new MsgCSLogin();
+			Debug.Log("----DoLogin account="+msg.User.Account);
+
+			Main.Instance.http.SetUri("http://127.0.0.1:8800");
+			Main.Instance.http.Request<MsgCSLogin>((int)msg.Mid,msg);
 			/*
+			MsgCNEnter msg=new MsgCNEnter();
 			msg.Mid=2001;
 			msg.Version=100;
 			msg.Service=Proto3.pb_enum.GameCard;
 			msg.Uid="Unity";
 			*/
-
-			Main.Instance.http.SetUri("http://127.0.0.1:8800");
-			Main.Instance.http.Request<MsgCNEnter>((int)msg.Mid,msg);
-
-			byte[] bmsg;
-			MemoryStream ms=new MemoryStream();
-			Google.Protobuf.CodedOutputStream co=new Google.Protobuf.CodedOutputStream(ms);
-			msg.WriteTo(co);
-			bmsg=ms.ToArray();
-
-			MsgCNEnter msg2 = MsgCNEnter.Parser.ParseFrom(bmsg);
-			MsgCNEnter.Parser.ToString();
-			
-			//Destroy(gameObject);
+			Destroy(gameObject);
 		});
 	}
 }

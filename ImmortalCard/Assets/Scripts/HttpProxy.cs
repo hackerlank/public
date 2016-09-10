@@ -12,16 +12,9 @@ public class HttpProxy {
 		uri=_uri;
 	}
 
-	public void Request<T>(int mid,Google.Protobuf.IMessage<T> msg) where T : IMessage<T>{
-		byte[] bytes;
-		MemoryStream ms=new MemoryStream();
-		Google.Protobuf.CodedOutputStream co=new Google.Protobuf.CodedOutputStream(ms);
-		msg.WriteTo(co);
-		bytes=ms.ToArray();
-		StreamReader sr=new StreamReader(ms);
-		//string str = Encoding.ASCII.GetString(ms3.ToArray());
-
-		Main.Instance.StartCoroutine(request(mid,msg.GetType().Name,sr.ReadToEnd()));
+	public void Request<T>(int mid,T msg) where T : IMessage<T>{
+		string str=MsgIntepreter.Encode<T>(msg);
+		Main.Instance.StartCoroutine(request(mid,msg.GetType().Name,str));
 	}
 
 	private IEnumerator request(int mid,string Name,string/*byte[]*/ bytes){

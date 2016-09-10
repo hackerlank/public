@@ -1,30 +1,30 @@
 using UnityEngine;
 using System.Collections;
 using System.IO;
+using System;
 using Google.Protobuf;
 
 public class MsgIntepreter{
+
+	public static string Encode<T>(T msg)where T:IMessage<T>{
+		MemoryStream ms=new MemoryStream();
+		Google.Protobuf.CodedOutputStream co=new Google.Protobuf.CodedOutputStream(ms);
+		msg.WriteTo(co);
+		co.Flush();
+		string str=Convert.ToBase64String(ms.ToArray());
+		Debug.Log("----encode="+str);
+		return str;
+	}
+	
+	public static byte[] DecodeBytes(string str){
+		return Convert.FromBase64String(str);
+	}
 	/*
-	static ProtocolsSerializer serializer=new ProtocolsSerializer();
-	
-	public static string Encode(object obj){
-		return Convert.ToBase64String(EncodeBytes(obj));
-	}
-	
-	public static byte[] EncodeBytes(object obj){
-		MemoryStream stream = new MemoryStream ();
-		serializer.Serialize(stream,obj);
-		return stream.ToArray();
-	}
-	
-	public static object Decode(string str,Type type){
-		byte[] bytes=Convert.FromBase64String(str);//from base64
-		return DecodeBytes(bytes,type);
-	}
-	
-	public static object DecodeBytes(byte[] bytes,Type type){
-		MemoryStream ms = new MemoryStream (bytes);//from bytes
-		return serializer.Deserialize (ms, null, type);//from stream
+	public static T Decode<T>(string str)where T:IMessage<T>{
+		//Proto3.MsgCNEnter msg2 = Proto3.MsgCNEnter.Parser.ParseFrom(ms.ToArray());
+		byte[] bytes=Convert.FromBase64String(str);
+		MessageParser<T> parser = new MessageParser<T>(() => new T());
+		return parser.ParseFrom(bytes);
 	}
 	*/
 }
