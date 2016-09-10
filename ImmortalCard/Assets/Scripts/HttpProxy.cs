@@ -27,8 +27,6 @@ public class HttpProxy {
 		WWW www = (form==null?(new WWW(uri)):(new WWW(uri,form)));
 		yield return www;
 		
-		string data_rep="";
-		object error=null;
 		if (!string.IsNullOrEmpty(www.error)){
 			Debug.LogError("response : "+www.error+" "+www.url+" "+Name);
 		}else{

@@ -12,7 +12,7 @@
 #include <keye/htio/htio_demo.h>
 
 #include "game_protocol.h"
-#include "game_protocol.pb.h"
+#include "protocol.pb.h"
 
 #include "PBHelper.h"
 
