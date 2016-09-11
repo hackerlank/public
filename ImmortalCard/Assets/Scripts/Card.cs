@@ -19,7 +19,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		if(eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
 		Debug.Log("----click on card "+eventData.clickCount);
 		if(eventData.clickCount==2)
-			DiscardTo(GamePanel.Instance.LDiscardArea,0.66666f);
+			DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
 	}
 	
 	bool dragging=false;
@@ -38,7 +38,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 
 		//restrore
 		//transform.position=dragFrom;
-		DiscardTo(GamePanel.Instance.LDiscardArea,0.66666f);
+		DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
 		//Debug.Log("----end drag");
 	}
 	
