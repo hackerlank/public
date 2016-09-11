@@ -5,6 +5,8 @@ using System.Collections;
 
 public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHandler,IEndDragHandler {
 
+	public LayoutElement le;
+
 	void Start () {
 	
 	}
@@ -15,7 +17,9 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 
 	public void OnPointerClick (PointerEventData eventData){
 		if(eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
-		Debug.Log("----click on card");
+		Debug.Log("----click on card "+eventData.clickCount);
+		if(eventData.clickCount==2)
+			DiscardTo(GamePanel.Instance.LDiscardArea,0.66666f);
 	}
 	
 	bool dragging=false;
@@ -34,7 +38,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 
 		//restrore
 		//transform.position=dragFrom;
-		DiscardTo(GamePanel.Instance.LDiscardArea);
+		DiscardTo(GamePanel.Instance.LDiscardArea,0.66666f);
 		//Debug.Log("----end drag");
 	}
 	
@@ -44,7 +48,12 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		eventData.pointerDrag.transform.position+=new Vector3(delta.x,delta.y,0);
 	}
 
-	public void DiscardTo(Transform group){
+	public void DiscardTo(Transform group,float scalar=1f){
 		transform.SetParent(group);
+		transform.localScale=Vector3.one;
+		le.minWidth*=scalar;
+		le.preferredWidth*=scalar;
+		le.minHeight*=scalar;
+		le.preferredHeight*=scalar;
 	}
 }
