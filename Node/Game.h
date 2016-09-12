@@ -25,7 +25,7 @@ public:
     State       state;
     pos_t       banker;
     pos_t       token;
-    std::vector<GameUnit>       units;
+    std::vector<Card>           units;
     std::vector<unit_id_t>      pile;
     std::vector<Player*>        players;
     std::vector<GameData>       gameData;

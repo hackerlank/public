@@ -39,17 +39,17 @@ void DoudeZhu::Deal(Game& game){
         for(int j=0;j<4;++j){
             game.pile[id]=id;
             auto& u=game.units[id];
-            u.color=j;
-            u.value=i;
-            u.id=id++;
+            u.set_color(j);
+            u.set_value(i);
+            u.set_id(id++);
         }
     }
     for(int j=0;j<=1;++j){  //Joker-16,17
         game.pile[id]=id;
         auto& u=game.units[id];
-        u.color=j;
-        u.value=16+j;
-        u.id=id++;
+        u.set_color(j);
+        u.set_value(16+j);
+        u.set_id(id++);
     }
     
     //shuffle

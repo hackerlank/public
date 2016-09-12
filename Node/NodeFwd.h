@@ -15,8 +15,10 @@
 
 #include "PBHelper.h"
 
+typedef proto3::pawn_t Card;
+typedef proto3::pawn_t Chess;
+
 #include "GameData.h"
-#include "GameUnit.h"
 #include "Player.h"
 #include "Game.h"
 #include "GameRule.h"
