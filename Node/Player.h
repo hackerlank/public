@@ -15,8 +15,9 @@ public:
     Player(keye::svc_handler& sh);
     
     void    on_read(PBHelper&);
+
+    std::shared_ptr<Game>               game;
 private:
     std::shared_ptr<keye::svc_handler>  spsh;
-    std::shared_ptr<Game>               game;
 };
 #endif /* Player_hpp */

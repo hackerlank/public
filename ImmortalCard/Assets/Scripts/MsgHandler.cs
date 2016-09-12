@@ -43,29 +43,34 @@ public class MsgHandler{
 			MsgNCEnter imsg1=MsgNCEnter.Parser.ParseFrom(bytes);
 			Debug.Log("entered game "+imsg1.GameInfo.Gid+",uid="+imsg1.GameInfo.Uid);
 			if(imsg1.Result==pb_enum.Succeess){
-				if(CreatePanel.Instance!=null)
-					CreatePanel.Instance.OnEntered();
+				Loom.QueueOnMainThread(delegate{
+					if(CreatePanel.Instance!=null)
+						CreatePanel.Instance.OnEntered();
+				});
 			}else
 				Debug.LogError("enter error: "+imsg1.Result);
 			break;
 		case pb_msg.MsgNcCreate:
-			break;
 			MsgNCCreate imsg2=MsgNCCreate.Parser.ParseFrom(bytes);
 			Debug.Log("created game "+imsg2.GameId);
 			if(imsg2.Result==pb_enum.Succeess){
-				if(CreatePanel.Instance!=null)
-					CreatePanel.Instance.OnCreated(imsg2);
+				Loom.QueueOnMainThread(delegate{
+					if(CreatePanel.Instance!=null)
+						CreatePanel.Instance.OnCreated(imsg2);
+				});
 			}else
-				Debug.LogError("enter error: "+imsg2.Result);
+				Debug.LogError("create error: "+imsg2.Result);
 			break;
 		case pb_msg.MsgNcJoin:
 			MsgNCJoin imsg3=MsgNCJoin.Parser.ParseFrom(bytes);
 			Debug.Log("joined game");
 			if(imsg3.Result==pb_enum.Succeess){
-				if(CreatePanel.Instance!=null)
-					CreatePanel.Instance.OnJoined(imsg3);
+				Loom.QueueOnMainThread(delegate{
+					if(CreatePanel.Instance!=null)
+						CreatePanel.Instance.OnJoined(imsg3);
+				});
 			}else
-				Debug.LogError("enter error: "+imsg3.Result);
+				Debug.LogError("join error: "+imsg3.Result);
 			break;
 		default:
 			break;

@@ -41,6 +41,7 @@ bool Node::createGame(Player& player,proto3::MsgCNCreate& msg){
         gameptr->rule=rule->second;
         gameptr->players.push_back(&player);
         ++gameptr->ready;
+        player.game=gameptr;
         //fill data
         return true;
     }else

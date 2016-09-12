@@ -10,6 +10,10 @@ public class Main : MonoBehaviour {
 	public bool			skipLogin=true;
 
 	void Awake(){
+		//Loom
+		gameObject.AddComponent<Loom>();
+
+		//networks
 		http=new HttpProxy();
 		http.onResponse+=MsgHandler.onMessage;
 

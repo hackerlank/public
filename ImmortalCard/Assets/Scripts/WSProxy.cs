@@ -43,16 +43,16 @@ public class WSProxy {
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
-		/*
-		MsgCNEnter msg=new MsgCNEnter();
-		msg.Mid=6001;
-		msg.Version=100;
-		msg.Key=66;
-		var bytes=MsgIntepreter.EncodeBytes<MsgCNEnter>(msg);
-		*/
-		var bytes=MsgIntepreter.EncodeBytes<T>(msg);
+		var body=MsgIntepreter.EncodeBytes<T>(msg);
+		var len=body.Length;
+
+		byte[] bytes=new byte[len+2];
+		bytes[0]=(byte)(len&0xff);
+		bytes[1]=(byte)(len>>8);
+		System.Buffer.BlockCopy(body,0,bytes,2,len);
+
 		socket.SendAsync(bytes,delegate(bool result){
-			Debug.Log("----SendAsync "+mid+" "+result);
+			Debug.Log("----SendAsync "+mid+" bytes="+bytes.Length+" "+result);
 		});
 	}
 }
