@@ -10,8 +10,7 @@
 //#include <curses.h>
 #endif
 
-#include "game_protocol.h"
-#include "game_protocol.pb.h"
+#include "protocol.pb.h"
 
 using namespace keye;
 
@@ -32,10 +31,10 @@ public:
 		return msg.ParseFromArray(_pw.data,(int)_pw.length);
 	}
 
-	eMsg Id(){
+	proto3::pb_msg Id(){
 		proto3::MsgBase mt;
 		mt.ParseFromArray(_pw.data,4);
-		return (eMsg)mt.mid();
+		return (proto3::pb_msg)mt.mid();
 	}
 
 	static void Send(keye::svc_handler& sh,google::protobuf::MessageLite& msg){

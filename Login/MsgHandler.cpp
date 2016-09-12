@@ -23,7 +23,7 @@ void split_line(std::vector<std::string>& o,std::string& line,char c){
     }
 }
 
-eMsg extractBody(std::string& body,const char* inbody){
+proto3::pb_msg extractBody(std::string& body,const char* inbody){
     if(inbody){
         std::vector<std::string> params;
         std::string buf(inbody);
@@ -42,9 +42,9 @@ eMsg extractBody(std::string& body,const char* inbody){
         if(kvs.count("body"))
             body=kvs["body"];
         if(kvs.count("msgid"))
-            return (eMsg)atoi(kvs["msgid"].c_str());
+            return (proto3::pb_msg)atoi(kvs["msgid"].c_str());
     }
-    return eMsg::MSG_RAW;
+    return proto3::pb_msg::MSG_RAW;
 }
 
 void MsgHandler::on_http(const http_parser& req,http_parser& resp){
@@ -52,19 +52,19 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     auto body=req.body();
     
     std::string content;
-    eMsg msgid=eMsg::MSG_RAW;
+    auto msgid=proto3::pb_msg::MSG_RAW;
     if(strmid&&strlen(strmid)>0)
-        msgid=(eMsg)atoi(strmid);
+        msgid=(proto3::pb_msg)atoi(strmid);
     else
         msgid=extractBody(content,body);
     
-    if(msgid==eMsg::MSG_CS_LOGIN){
+    if(msgid==proto3::pb_msg::MSG_CS_LOGIN){
         KEYE_LOG("----body=%s\n",content.c_str());
         auto str=base64_decode(content);
         KEYE_LOG("----decode=%s\n",str.c_str());
         proto3::MsgCSLogin imsg;
         proto3::MsgSCLogin omsg;
-        auto mid=eMsg::MSG_SC_LOGIN;
+        auto mid=proto3::pb_msg::MSG_SC_LOGIN;
         omsg.set_mid(mid);
         if(imsg.ParseFromString(str)){
             KEYE_LOG("----client login succeeded\n");

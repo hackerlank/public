@@ -19,7 +19,7 @@ void Player::on_read(PBHelper& pb){
     auto& sh=*spsh;
     auto mid=pb.Id();
     switch (mid) {
-        case eMsg::MSG_CN_CREATE:{
+        case proto3::pb_msg::MSG_CN_CREATE:{
             MsgCNCreate imsg;
             MsgNCCreate omsg;
             if(pb.Parse(imsg)){
@@ -35,11 +35,11 @@ void Player::on_read(PBHelper& pb){
                 KEYE_LOG("----message error id=%zd\n",mid);
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
-            omsg.set_mid(eMsg::MSG_NC_CREATE);
+            omsg.set_mid(proto3::pb_msg::MSG_NC_CREATE);
             PBHelper::Send(sh,omsg);
             break;
         }
-        case eMsg::MSG_CN_JOIN:{
+        case proto3::pb_msg::MSG_CN_JOIN:{
             MsgCNJoin imsg;
             MsgNCJoin omsg;
             if(pb.Parse(imsg)){
@@ -63,14 +63,14 @@ void Player::on_read(PBHelper& pb){
                 KEYE_LOG("----game join failed of message error id=%zd\n",mid);
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
-            omsg.set_mid(eMsg::MSG_NC_JOIN);
+            omsg.set_mid(proto3::pb_msg::MSG_NC_JOIN);
             PBHelper::Send(sh,omsg);
             break;
         }
         case MSG_CN_DISMISS_SYNC:{
             MsgCNDismissSync imsg;
             MsgNCDismissSync omsg;
-            omsg.set_mid(eMsg::MSG_NC_DISMISS_SYNC);
+            omsg.set_mid(proto3::pb_msg::MSG_NC_DISMISS_SYNC);
             if(pb.Parse(imsg)){
                 if(game){
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
@@ -90,7 +90,7 @@ void Player::on_read(PBHelper& pb){
         case MSG_CN_DISMISS_ACK:{
             MsgCNDismissAck imsg;
             MsgNCDismissAck omsg;
-            omsg.set_mid(eMsg::MSG_NC_DISMISS_ACK);
+            omsg.set_mid(proto3::pb_msg::MSG_NC_DISMISS_ACK);
             if(pb.Parse(imsg)){
                 if(game){
                     omsg.set_result(proto3::pb_enum::SUCCEESS);

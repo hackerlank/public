@@ -15,7 +15,7 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
     PBHelper pb(pw);
     auto mid=pb.Id();
     switch (mid) {
-        case eMsg::MSG_NC_ENTER:{
+        case proto3::pb_msg::MSG_NC_ENTER:{
             MsgNCEnter imsg;
             if(pb.Parse(imsg)){
                 auto& game=imsg.game_info();
@@ -42,7 +42,7 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
             }
             break;
         }
-        case eMsg::MSG_NC_CREATE:{
+        case proto3::pb_msg::MSG_NC_CREATE:{
             MsgNCCreate imsg;
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
@@ -52,7 +52,7 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
             }
             break;
         }
-        case eMsg::MSG_NC_JOIN:{
+        case proto3::pb_msg::MSG_NC_JOIN:{
             MsgNCJoin imsg;
             if(pb.Parse(imsg)){
                 KEYE_LOG("----game joined\n");
@@ -69,9 +69,9 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
 void MsgHandler::on_response(const http_parser& resp) {
     auto msgid=resp.header("msgid");
     auto body=resp.body();
-    auto mid=(eMsg)atoi(msgid);
+    auto mid=(proto3::pb_msg)atoi(msgid);
     switch(mid){
-        case eMsg::MSG_SC_LOGIN:{
+        case proto3::pb_msg::MSG_SC_LOGIN:{
             auto str=base64_decode(body);
             proto3::MsgSCLogin imsg;
             if(imsg.ParseFromString(str)){
@@ -87,7 +87,7 @@ void MsgHandler::on_response(const http_parser& resp) {
             }
             break;
         }
-        case eMsg::MSG_LC_ENTER:{
+        case proto3::pb_msg::MSG_LC_ENTER:{
             auto str=base64_decode(body);
             proto3::MsgLCEnter imsg;
             if(imsg.ParseFromString(str)){

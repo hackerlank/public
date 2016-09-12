@@ -86,6 +86,8 @@ enum pb_enum {
   CATEGORY_EASY = 51,
   CATEGORY_HARD = 52,
   ACHIEVEMENT_BEST = 10,
+  DEF_MAX_NODES = 1000,
+  DEF_MAX_GAMES_PER_NODE = 100000,
   ERR_FAILED = 100,
   ERR_CANCELLED = 101,
   ERR_PROTOCOL = 102,
@@ -97,8 +99,49 @@ enum pb_enum {
 };
 bool pb_enum_IsValid(int value);
 const pb_enum pb_enum_MIN = UNKNOWN;
-const pb_enum pb_enum_MAX = ERR_UNKNOWN;
+const pb_enum pb_enum_MAX = DEF_MAX_GAMES_PER_NODE;
 const int pb_enum_ARRAYSIZE = pb_enum_MAX + 1;
+
+enum pb_msg {
+  MSG_INVALID = 0,
+  MSG_BEGIN = 1000,
+  MSG_RAW = 1001,
+  MSG_CS_BEGIN = 2000,
+  MSG_CS_LOGIN = 2001,
+  MSG_SC_LOGIN = 2002,
+  MSG_CS_END = 3999,
+  MSG_CL_BEGIN = 4000,
+  MSG_CL_ENTER = 4001,
+  MSG_LC_ENTER = 4002,
+  MSG_LC_EXIT = 4003,
+  MSG_CL_END = 5999,
+  MSG_CN_BEGIN = 6000,
+  MSG_CN_ENTER = 6001,
+  MSG_NC_ENTER = 6002,
+  MSG_CN_CREATE = 6010,
+  MSG_NC_CREATE = 6011,
+  MSG_CN_JOIN = 6012,
+  MSG_NC_JOIN = 6013,
+  MSG_NC_START = 6020,
+  MSG_CN_DISCARD = 6021,
+  MSG_NC_DISCARD = 6022,
+  MSG_CN_MELD = 6023,
+  MSG_NC_MELD = 6024,
+  MSG_NC_SETTLE = 6025,
+  MSG_NC_FINISH = 6026,
+  MSG_CN_DISMISS_SYNC = 6030,
+  MSG_NC_DISMISS_SYNC = 6031,
+  MSG_CN_DISMISS_ACK = 6032,
+  MSG_NC_DISMISS_ACK = 6033,
+  MSG_CN_END = 6999,
+  MSG_END = 9999,
+  pb_msg_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
+  pb_msg_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
+};
+bool pb_msg_IsValid(int value);
+const pb_msg pb_msg_MIN = MSG_INVALID;
+const pb_msg pb_msg_MAX = MSG_END;
+const int pb_msg_ARRAYSIZE = pb_msg_MAX + 1;
 
 // ===================================================================
 
@@ -1427,11 +1470,11 @@ class MsgBase : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgBase)
  private:
@@ -1440,7 +1483,7 @@ class MsgBase : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -1519,11 +1562,11 @@ class MsgCSLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional uint32 version = 3;
   void clear_version();
@@ -1547,7 +1590,7 @@ class MsgCSLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   ::google::protobuf::uint32 version_;
   ::proto3::user_t* user_;
   mutable int _cached_size_;
@@ -1628,11 +1671,11 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional string uid = 2;
   void clear_uid();
@@ -1694,7 +1737,7 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
   ::google::protobuf::uint32 key_;
@@ -1779,11 +1822,11 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional string uid = 2;
   void clear_uid();
@@ -1822,7 +1865,7 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
   ::google::protobuf::uint32 key_;
@@ -1904,11 +1947,11 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.player_t player = 2;
   bool has_player() const;
@@ -1942,7 +1985,7 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   ::proto3::player_t* player_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   ::proto3::lobby_t* lobby_;
   mutable int _cached_size_;
@@ -2023,11 +2066,11 @@ class MsgCNEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional string uid = 2;
   void clear_uid();
@@ -2072,7 +2115,7 @@ class MsgCNEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
   ::google::protobuf::uint32 key_;
@@ -2155,11 +2198,11 @@ class MsgNCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.game_t game_info = 2;
   bool has_game_info() const;
@@ -2184,7 +2227,7 @@ class MsgNCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   ::proto3::game_t* game_info_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2264,11 +2307,11 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum rule = 2;
   void clear_rule();
@@ -2307,7 +2350,7 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int rule_;
   int category_;
   ::google::protobuf::uint32 key_;
@@ -2391,11 +2434,11 @@ class MsgNCCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional uint32 game_id = 2;
   void clear_game_id();
@@ -2416,7 +2459,7 @@ class MsgNCCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   ::google::protobuf::uint32 game_id_;
   int result_;
   mutable int _cached_size_;
@@ -2497,11 +2540,11 @@ class MsgCNJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional uint32 key = 2;
   void clear_key();
@@ -2522,7 +2565,7 @@ class MsgCNJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   ::google::protobuf::uint32 key_;
   ::google::protobuf::uint32 game_id_;
   mutable int _cached_size_;
@@ -2603,11 +2646,11 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -2622,7 +2665,7 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2702,11 +2745,11 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -2721,7 +2764,7 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2801,11 +2844,11 @@ class MsgCNDiscard : public ::google::protobuf::MessageLite /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNDiscard)
  private:
@@ -2814,7 +2857,7 @@ class MsgCNDiscard : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2893,11 +2936,11 @@ class MsgNCDiscard : public ::google::protobuf::MessageLite /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -2912,7 +2955,7 @@ class MsgNCDiscard : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2992,11 +3035,11 @@ class MsgCNMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNMeld)
  private:
@@ -3005,7 +3048,7 @@ class MsgCNMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -3084,11 +3127,11 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -3103,7 +3146,7 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3183,11 +3226,11 @@ class MsgCNDismissSync : public ::google::protobuf::MessageLite /* @@protoc_inse
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissSync)
  private:
@@ -3196,7 +3239,7 @@ class MsgCNDismissSync : public ::google::protobuf::MessageLite /* @@protoc_inse
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -3275,11 +3318,11 @@ class MsgNCDismissSync : public ::google::protobuf::MessageLite /* @@protoc_inse
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -3294,7 +3337,7 @@ class MsgNCDismissSync : public ::google::protobuf::MessageLite /* @@protoc_inse
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3374,11 +3417,11 @@ class MsgCNDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissAck)
  private:
@@ -3387,7 +3430,7 @@ class MsgCNDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -3466,11 +3509,11 @@ class MsgNCDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -3485,7 +3528,7 @@ class MsgNCDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3565,11 +3608,11 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -3584,7 +3627,7 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3664,11 +3707,11 @@ class MsgNCFinish : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   void clear_mid();
   static const int kMidFieldNumber = 1;
-  ::google::protobuf::uint32 mid() const;
-  void set_mid(::google::protobuf::uint32 value);
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
   // optional .proto3.pb_enum result = 2;
   void clear_result();
@@ -3683,7 +3726,7 @@ class MsgNCFinish : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 mid_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -5011,15 +5054,15 @@ game_data::bunch() const {
 
 // MsgBase
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgBase::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgBase::mid() const {
+inline ::proto3::pb_msg MsgBase::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgBase.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgBase::set_mid(::google::protobuf::uint32 value) {
+inline void MsgBase::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgBase.mid)
@@ -5029,15 +5072,15 @@ inline void MsgBase::set_mid(::google::protobuf::uint32 value) {
 
 // MsgCSLogin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCSLogin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCSLogin::mid() const {
+inline ::proto3::pb_msg MsgCSLogin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCSLogin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCSLogin::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCSLogin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCSLogin.mid)
@@ -5103,15 +5146,15 @@ inline void MsgCSLogin::set_allocated_user(::proto3::user_t* user) {
 
 // MsgSCLogin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgSCLogin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgSCLogin::mid() const {
+inline ::proto3::pb_msg MsgSCLogin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgSCLogin::set_mid(::google::protobuf::uint32 value) {
+inline void MsgSCLogin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.mid)
@@ -5279,15 +5322,15 @@ inline void MsgSCLogin::set_result(::proto3::pb_enum value) {
 
 // MsgCLEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCLEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCLEnter::mid() const {
+inline ::proto3::pb_msg MsgCLEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCLEnter::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCLEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.mid)
@@ -5383,15 +5426,15 @@ inline void MsgCLEnter::set_session(::google::protobuf::uint64 value) {
 
 // MsgLCEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgLCEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgLCEnter::mid() const {
+inline ::proto3::pb_msg MsgLCEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgLCEnter::set_mid(::google::protobuf::uint32 value) {
+inline void MsgLCEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
@@ -5499,15 +5542,15 @@ inline void MsgLCEnter::set_result(::proto3::pb_enum value) {
 
 // MsgCNEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNEnter::mid() const {
+inline ::proto3::pb_msg MsgCNEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNEnter::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.mid)
@@ -5617,15 +5660,15 @@ inline void MsgCNEnter::set_service(::proto3::pb_enum value) {
 
 // MsgNCEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCEnter::mid() const {
+inline ::proto3::pb_msg MsgNCEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCEnter::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCEnter.mid)
@@ -5691,15 +5734,15 @@ inline void MsgNCEnter::set_result(::proto3::pb_enum value) {
 
 // MsgCNCreate
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNCreate::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNCreate::mid() const {
+inline ::proto3::pb_msg MsgCNCreate::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNCreate::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNCreate::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.mid)
@@ -5779,15 +5822,15 @@ inline void MsgCNCreate::set_parameter(::google::protobuf::uint32 value) {
 
 // MsgNCCreate
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCCreate::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCCreate::mid() const {
+inline ::proto3::pb_msg MsgNCCreate::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCCreate.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCCreate::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCCreate::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCCreate.mid)
@@ -5825,15 +5868,15 @@ inline void MsgNCCreate::set_result(::proto3::pb_enum value) {
 
 // MsgCNJoin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNJoin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNJoin::mid() const {
+inline ::proto3::pb_msg MsgCNJoin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNJoin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNJoin::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNJoin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.mid)
@@ -5871,15 +5914,15 @@ inline void MsgCNJoin::set_game_id(::google::protobuf::uint32 value) {
 
 // MsgNCJoin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCJoin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCJoin::mid() const {
+inline ::proto3::pb_msg MsgNCJoin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCJoin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCJoin::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCJoin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.mid)
@@ -5903,15 +5946,15 @@ inline void MsgNCJoin::set_result(::proto3::pb_enum value) {
 
 // MsgNCStart
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCStart::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCStart::mid() const {
+inline ::proto3::pb_msg MsgNCStart::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCStart::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.mid)
@@ -5935,15 +5978,15 @@ inline void MsgNCStart::set_result(::proto3::pb_enum value) {
 
 // MsgCNDiscard
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNDiscard::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNDiscard::mid() const {
+inline ::proto3::pb_msg MsgCNDiscard::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNDiscard.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNDiscard::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNDiscard::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDiscard.mid)
@@ -5953,15 +5996,15 @@ inline void MsgCNDiscard::set_mid(::google::protobuf::uint32 value) {
 
 // MsgNCDiscard
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCDiscard::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDiscard::mid() const {
+inline ::proto3::pb_msg MsgNCDiscard::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDiscard.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCDiscard::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCDiscard::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDiscard.mid)
@@ -5985,15 +6028,15 @@ inline void MsgNCDiscard::set_result(::proto3::pb_enum value) {
 
 // MsgCNMeld
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNMeld::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNMeld::mid() const {
+inline ::proto3::pb_msg MsgCNMeld::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNMeld.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNMeld::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNMeld::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNMeld.mid)
@@ -6003,15 +6046,15 @@ inline void MsgCNMeld::set_mid(::google::protobuf::uint32 value) {
 
 // MsgNCMeld
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCMeld::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCMeld::mid() const {
+inline ::proto3::pb_msg MsgNCMeld::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCMeld.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCMeld::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCMeld::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.mid)
@@ -6035,15 +6078,15 @@ inline void MsgNCMeld::set_result(::proto3::pb_enum value) {
 
 // MsgCNDismissSync
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNDismissSync::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNDismissSync::mid() const {
+inline ::proto3::pb_msg MsgCNDismissSync::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNDismissSync.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNDismissSync::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNDismissSync::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDismissSync.mid)
@@ -6053,15 +6096,15 @@ inline void MsgCNDismissSync::set_mid(::google::protobuf::uint32 value) {
 
 // MsgNCDismissSync
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCDismissSync::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDismissSync::mid() const {
+inline ::proto3::pb_msg MsgNCDismissSync::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCDismissSync::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCDismissSync::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.mid)
@@ -6085,15 +6128,15 @@ inline void MsgNCDismissSync::set_result(::proto3::pb_enum value) {
 
 // MsgCNDismissAck
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgCNDismissAck::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNDismissAck::mid() const {
+inline ::proto3::pb_msg MsgCNDismissAck::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNDismissAck.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCNDismissAck::set_mid(::google::protobuf::uint32 value) {
+inline void MsgCNDismissAck::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.mid)
@@ -6103,15 +6146,15 @@ inline void MsgCNDismissAck::set_mid(::google::protobuf::uint32 value) {
 
 // MsgNCDismissAck
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCDismissAck::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDismissAck::mid() const {
+inline ::proto3::pb_msg MsgNCDismissAck::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCDismissAck::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCDismissAck::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.mid)
@@ -6135,15 +6178,15 @@ inline void MsgNCDismissAck::set_result(::proto3::pb_enum value) {
 
 // MsgNCSettle
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCSettle::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCSettle::mid() const {
+inline ::proto3::pb_msg MsgNCSettle::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCSettle::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCSettle::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.mid)
@@ -6167,15 +6210,15 @@ inline void MsgNCSettle::set_result(::proto3::pb_enum value) {
 
 // MsgNCFinish
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 inline void MsgNCFinish::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCFinish::mid() const {
+inline ::proto3::pb_msg MsgNCFinish::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCFinish.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgNCFinish::set_mid(::google::protobuf::uint32 value) {
+inline void MsgNCFinish::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCFinish.mid)
@@ -6266,6 +6309,7 @@ namespace google {
 namespace protobuf {
 
 template <> struct is_proto_enum< ::proto3::pb_enum> : ::google::protobuf::internal::true_type {};
+template <> struct is_proto_enum< ::proto3::pb_msg> : ::google::protobuf::internal::true_type {};
 
 }  // namespace protobuf
 }  // namespace google

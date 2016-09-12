@@ -164,6 +164,48 @@ bool pb_enum_IsValid(int value) {
     case 103:
     case 104:
     case 999:
+    case 1000:
+    case 100000:
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool pb_msg_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1000:
+    case 1001:
+    case 2000:
+    case 2001:
+    case 2002:
+    case 3999:
+    case 4000:
+    case 4001:
+    case 4002:
+    case 4003:
+    case 5999:
+    case 6000:
+    case 6001:
+    case 6002:
+    case 6010:
+    case 6011:
+    case 6012:
+    case 6013:
+    case 6020:
+    case 6021:
+    case 6022:
+    case 6023:
+    case 6024:
+    case 6025:
+    case 6026:
+    case 6030:
+    case 6031:
+    case 6032:
+    case 6033:
+    case 6999:
+    case 9999:
       return true;
     default:
       return false;
@@ -5086,7 +5128,7 @@ MsgBase::MsgBase(const MsgBase& from)
 void MsgBase::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 MsgBase::~MsgBase() {
@@ -5129,7 +5171,7 @@ MsgBase* MsgBase::New(::google::protobuf::Arena* arena) const {
 
 void MsgBase::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgBase)
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 bool MsgBase::MergePartialFromCodedStream(
@@ -5142,13 +5184,14 @@ bool MsgBase::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -5180,9 +5223,10 @@ failure:
 void MsgBase::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgBase)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgBase)
@@ -5192,11 +5236,10 @@ int MsgBase::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgBase)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -5249,15 +5292,15 @@ void MsgBase::InternalSwap(MsgBase* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgBase
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgBase::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgBase::mid() const {
+ ::proto3::pb_msg MsgBase::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgBase.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgBase::set_mid(::google::protobuf::uint32 value) {
+ void MsgBase::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgBase.mid)
@@ -5300,7 +5343,7 @@ MsgCSLogin::MsgCSLogin(const MsgCSLogin& from)
 void MsgCSLogin::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   version_ = 0u;
   user_ = NULL;
 }
@@ -5381,13 +5424,14 @@ bool MsgCSLogin::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -5447,9 +5491,10 @@ failure:
 void MsgCSLogin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCSLogin)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.user_t user = 2;
@@ -5470,11 +5515,10 @@ int MsgCSLogin::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCSLogin)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional uint32 version = 3;
@@ -5549,15 +5593,15 @@ void MsgCSLogin::InternalSwap(MsgCSLogin* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCSLogin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCSLogin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCSLogin::mid() const {
+ ::proto3::pb_msg MsgCSLogin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCSLogin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCSLogin::set_mid(::google::protobuf::uint32 value) {
+ void MsgCSLogin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCSLogin.mid)
@@ -5656,7 +5700,7 @@ void MsgSCLogin::SharedCtor() {
     _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   version_ = 0u;
   key_ = 0u;
@@ -5744,13 +5788,14 @@ bool MsgSCLogin::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -5892,9 +5937,10 @@ failure:
 void MsgSCLogin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgSCLogin)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional string uid = 2;
@@ -5950,11 +5996,10 @@ int MsgSCLogin::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgSCLogin)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional string uid = 2;
@@ -6085,15 +6130,15 @@ void MsgSCLogin::InternalSwap(MsgSCLogin* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgSCLogin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgSCLogin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgSCLogin::mid() const {
+ ::proto3::pb_msg MsgSCLogin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgSCLogin::set_mid(::google::protobuf::uint32 value) {
+ void MsgSCLogin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.mid)
@@ -6291,7 +6336,7 @@ void MsgCLEnter::SharedCtor() {
     _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   version_ = 0u;
   key_ = 0u;
@@ -6373,13 +6418,14 @@ bool MsgCLEnter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -6473,9 +6519,10 @@ failure:
 void MsgCLEnter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCLEnter)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional string uid = 2;
@@ -6510,11 +6557,10 @@ int MsgCLEnter::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCLEnter)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional string uid = 2;
@@ -6612,15 +6658,15 @@ void MsgCLEnter::InternalSwap(MsgCLEnter* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCLEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCLEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCLEnter::mid() const {
+ ::proto3::pb_msg MsgCLEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCLEnter::set_mid(::google::protobuf::uint32 value) {
+ void MsgCLEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.mid)
@@ -6756,7 +6802,7 @@ MsgLCEnter::MsgLCEnter(const MsgLCEnter& from)
 void MsgLCEnter::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   player_ = NULL;
   lobby_ = NULL;
   result_ = 0;
@@ -6841,13 +6887,14 @@ bool MsgLCEnter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -6921,9 +6968,10 @@ failure:
 void MsgLCEnter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgLCEnter)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.player_t player = 2;
@@ -6951,11 +6999,10 @@ int MsgLCEnter::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgLCEnter)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.player_t player = 2;
@@ -7040,15 +7087,15 @@ void MsgLCEnter::InternalSwap(MsgLCEnter* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgLCEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgLCEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgLCEnter::mid() const {
+ ::proto3::pb_msg MsgLCEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgLCEnter::set_mid(::google::protobuf::uint32 value) {
+ void MsgLCEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
@@ -7187,7 +7234,7 @@ void MsgCNEnter::SharedCtor() {
     _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   version_ = 0u;
   key_ = 0u;
@@ -7270,13 +7317,14 @@ bool MsgCNEnter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -7386,9 +7434,10 @@ failure:
 void MsgCNEnter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNEnter)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional string uid = 2;
@@ -7429,11 +7478,10 @@ int MsgCNEnter::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNEnter)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional string uid = 2;
@@ -7541,15 +7589,15 @@ void MsgCNEnter::InternalSwap(MsgCNEnter* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNEnter::mid() const {
+ ::proto3::pb_msg MsgCNEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNEnter::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.mid)
@@ -7692,7 +7740,7 @@ MsgNCEnter::MsgNCEnter(const MsgNCEnter& from)
 void MsgNCEnter::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   game_info_ = NULL;
   result_ = 0;
 }
@@ -7773,13 +7821,14 @@ bool MsgNCEnter::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -7840,9 +7889,10 @@ failure:
 void MsgNCEnter::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCEnter)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.game_t game_info = 2;
@@ -7864,11 +7914,10 @@ int MsgNCEnter::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCEnter)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.game_t game_info = 2;
@@ -7942,15 +7991,15 @@ void MsgNCEnter::InternalSwap(MsgNCEnter* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCEnter
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCEnter::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCEnter::mid() const {
+ ::proto3::pb_msg MsgNCEnter::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCEnter.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCEnter::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCEnter::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCEnter.mid)
@@ -8046,7 +8095,7 @@ MsgCNCreate::MsgCNCreate(const MsgCNCreate& from)
 void MsgCNCreate::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   rule_ = 0;
   category_ = 0;
   key_ = 0u;
@@ -8127,13 +8176,14 @@ bool MsgCNCreate::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -8242,9 +8292,10 @@ failure:
 void MsgCNCreate::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNCreate)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum rule = 2;
@@ -8281,11 +8332,10 @@ int MsgCNCreate::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNCreate)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum rule = 2;
@@ -8391,15 +8441,15 @@ void MsgCNCreate::InternalSwap(MsgCNCreate* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNCreate
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNCreate::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNCreate::mid() const {
+ ::proto3::pb_msg MsgCNCreate::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNCreate::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNCreate::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.mid)
@@ -8506,7 +8556,7 @@ MsgNCCreate::MsgNCCreate(const MsgNCCreate& from)
 void MsgNCCreate::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   game_id_ = 0u;
   result_ = 0;
 }
@@ -8584,13 +8634,14 @@ bool MsgNCCreate::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -8653,9 +8704,10 @@ failure:
 void MsgNCCreate::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCCreate)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional uint32 game_id = 2;
@@ -8676,11 +8728,10 @@ int MsgNCCreate::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCCreate)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional uint32 game_id = 2;
@@ -8754,15 +8805,15 @@ void MsgNCCreate::InternalSwap(MsgNCCreate* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCCreate
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCCreate::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCCreate::mid() const {
+ ::proto3::pb_msg MsgNCCreate::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCCreate.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCCreate::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCCreate::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCCreate.mid)
@@ -8827,7 +8878,7 @@ MsgCNJoin::MsgCNJoin(const MsgCNJoin& from)
 void MsgCNJoin::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   key_ = 0u;
   game_id_ = 0u;
 }
@@ -8905,13 +8956,14 @@ bool MsgCNJoin::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -8973,9 +9025,10 @@ failure:
 void MsgCNJoin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNJoin)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional uint32 key = 2;
@@ -8995,11 +9048,10 @@ int MsgCNJoin::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNJoin)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional uint32 key = 2;
@@ -9074,15 +9126,15 @@ void MsgCNJoin::InternalSwap(MsgCNJoin* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNJoin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNJoin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNJoin::mid() const {
+ ::proto3::pb_msg MsgCNJoin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNJoin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNJoin::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNJoin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.mid)
@@ -9146,7 +9198,7 @@ MsgNCJoin::MsgNCJoin(const MsgNCJoin& from)
 void MsgNCJoin::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -9223,13 +9275,14 @@ bool MsgNCJoin::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -9277,9 +9330,10 @@ failure:
 void MsgNCJoin::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCJoin)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -9295,11 +9349,10 @@ int MsgNCJoin::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCJoin)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -9362,15 +9415,15 @@ void MsgNCJoin::InternalSwap(MsgNCJoin* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCJoin
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCJoin::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCJoin::mid() const {
+ ::proto3::pb_msg MsgNCJoin::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCJoin.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCJoin::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCJoin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.mid)
@@ -9420,7 +9473,7 @@ MsgNCStart::MsgNCStart(const MsgNCStart& from)
 void MsgNCStart::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -9497,13 +9550,14 @@ bool MsgNCStart::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -9551,9 +9605,10 @@ failure:
 void MsgNCStart::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCStart)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -9569,11 +9624,10 @@ int MsgNCStart::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCStart)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -9636,15 +9690,15 @@ void MsgNCStart::InternalSwap(MsgNCStart* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCStart
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCStart::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCStart::mid() const {
+ ::proto3::pb_msg MsgNCStart::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCStart::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCStart::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.mid)
@@ -9693,7 +9747,7 @@ MsgCNDiscard::MsgCNDiscard(const MsgCNDiscard& from)
 void MsgCNDiscard::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 MsgCNDiscard::~MsgCNDiscard() {
@@ -9736,7 +9790,7 @@ MsgCNDiscard* MsgCNDiscard::New(::google::protobuf::Arena* arena) const {
 
 void MsgCNDiscard::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCNDiscard)
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 bool MsgCNDiscard::MergePartialFromCodedStream(
@@ -9749,13 +9803,14 @@ bool MsgCNDiscard::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -9787,9 +9842,10 @@ failure:
 void MsgCNDiscard::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNDiscard)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNDiscard)
@@ -9799,11 +9855,10 @@ int MsgCNDiscard::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDiscard)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -9856,15 +9911,15 @@ void MsgCNDiscard::InternalSwap(MsgCNDiscard* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNDiscard
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNDiscard::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNDiscard::mid() const {
+ ::proto3::pb_msg MsgCNDiscard::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNDiscard.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNDiscard::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNDiscard::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDiscard.mid)
@@ -9900,7 +9955,7 @@ MsgNCDiscard::MsgNCDiscard(const MsgNCDiscard& from)
 void MsgNCDiscard::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -9977,13 +10032,14 @@ bool MsgNCDiscard::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -10031,9 +10087,10 @@ failure:
 void MsgNCDiscard::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCDiscard)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -10049,11 +10106,10 @@ int MsgNCDiscard::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDiscard)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -10116,15 +10172,15 @@ void MsgNCDiscard::InternalSwap(MsgNCDiscard* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCDiscard
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCDiscard::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCDiscard::mid() const {
+ ::proto3::pb_msg MsgNCDiscard::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDiscard.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCDiscard::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCDiscard::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDiscard.mid)
@@ -10173,7 +10229,7 @@ MsgCNMeld::MsgCNMeld(const MsgCNMeld& from)
 void MsgCNMeld::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 MsgCNMeld::~MsgCNMeld() {
@@ -10216,7 +10272,7 @@ MsgCNMeld* MsgCNMeld::New(::google::protobuf::Arena* arena) const {
 
 void MsgCNMeld::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCNMeld)
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 bool MsgCNMeld::MergePartialFromCodedStream(
@@ -10229,13 +10285,14 @@ bool MsgCNMeld::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -10267,9 +10324,10 @@ failure:
 void MsgCNMeld::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNMeld)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNMeld)
@@ -10279,11 +10337,10 @@ int MsgCNMeld::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNMeld)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -10336,15 +10393,15 @@ void MsgCNMeld::InternalSwap(MsgCNMeld* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNMeld
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNMeld::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNMeld::mid() const {
+ ::proto3::pb_msg MsgCNMeld::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNMeld.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNMeld::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNMeld::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNMeld.mid)
@@ -10380,7 +10437,7 @@ MsgNCMeld::MsgNCMeld(const MsgNCMeld& from)
 void MsgNCMeld::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -10457,13 +10514,14 @@ bool MsgNCMeld::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -10511,9 +10569,10 @@ failure:
 void MsgNCMeld::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCMeld)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -10529,11 +10588,10 @@ int MsgNCMeld::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCMeld)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -10596,15 +10654,15 @@ void MsgNCMeld::InternalSwap(MsgNCMeld* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCMeld
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCMeld::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCMeld::mid() const {
+ ::proto3::pb_msg MsgNCMeld::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCMeld.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCMeld::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCMeld::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.mid)
@@ -10653,7 +10711,7 @@ MsgCNDismissSync::MsgCNDismissSync(const MsgCNDismissSync& from)
 void MsgCNDismissSync::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 MsgCNDismissSync::~MsgCNDismissSync() {
@@ -10696,7 +10754,7 @@ MsgCNDismissSync* MsgCNDismissSync::New(::google::protobuf::Arena* arena) const 
 
 void MsgCNDismissSync::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissSync)
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 bool MsgCNDismissSync::MergePartialFromCodedStream(
@@ -10709,13 +10767,14 @@ bool MsgCNDismissSync::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -10747,9 +10806,10 @@ failure:
 void MsgCNDismissSync::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNDismissSync)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissSync)
@@ -10759,11 +10819,10 @@ int MsgCNDismissSync::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDismissSync)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -10816,15 +10875,15 @@ void MsgCNDismissSync::InternalSwap(MsgCNDismissSync* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNDismissSync
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNDismissSync::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNDismissSync::mid() const {
+ ::proto3::pb_msg MsgCNDismissSync::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNDismissSync.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNDismissSync::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNDismissSync::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDismissSync.mid)
@@ -10860,7 +10919,7 @@ MsgNCDismissSync::MsgNCDismissSync(const MsgNCDismissSync& from)
 void MsgNCDismissSync::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -10937,13 +10996,14 @@ bool MsgNCDismissSync::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -10991,9 +11051,10 @@ failure:
 void MsgNCDismissSync::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCDismissSync)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -11009,11 +11070,10 @@ int MsgNCDismissSync::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDismissSync)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -11076,15 +11136,15 @@ void MsgNCDismissSync::InternalSwap(MsgNCDismissSync* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCDismissSync
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCDismissSync::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCDismissSync::mid() const {
+ ::proto3::pb_msg MsgNCDismissSync::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCDismissSync::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCDismissSync::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.mid)
@@ -11133,7 +11193,7 @@ MsgCNDismissAck::MsgCNDismissAck(const MsgCNDismissAck& from)
 void MsgCNDismissAck::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 MsgCNDismissAck::~MsgCNDismissAck() {
@@ -11176,7 +11236,7 @@ MsgCNDismissAck* MsgCNDismissAck::New(::google::protobuf::Arena* arena) const {
 
 void MsgCNDismissAck::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissAck)
-  mid_ = 0u;
+  mid_ = 0;
 }
 
 bool MsgCNDismissAck::MergePartialFromCodedStream(
@@ -11189,13 +11249,14 @@ bool MsgCNDismissAck::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -11227,9 +11288,10 @@ failure:
 void MsgCNDismissAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgCNDismissAck)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissAck)
@@ -11239,11 +11301,10 @@ int MsgCNDismissAck::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNDismissAck)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -11296,15 +11357,15 @@ void MsgCNDismissAck::InternalSwap(MsgCNDismissAck* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgCNDismissAck
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgCNDismissAck::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgCNDismissAck::mid() const {
+ ::proto3::pb_msg MsgCNDismissAck::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNDismissAck.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNDismissAck::set_mid(::google::protobuf::uint32 value) {
+ void MsgCNDismissAck::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.mid)
@@ -11340,7 +11401,7 @@ MsgNCDismissAck::MsgNCDismissAck(const MsgNCDismissAck& from)
 void MsgNCDismissAck::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -11417,13 +11478,14 @@ bool MsgNCDismissAck::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -11471,9 +11533,10 @@ failure:
 void MsgNCDismissAck::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCDismissAck)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -11489,11 +11552,10 @@ int MsgNCDismissAck::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDismissAck)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -11556,15 +11618,15 @@ void MsgNCDismissAck::InternalSwap(MsgNCDismissAck* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCDismissAck
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCDismissAck::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCDismissAck::mid() const {
+ ::proto3::pb_msg MsgNCDismissAck::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCDismissAck::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCDismissAck::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.mid)
@@ -11614,7 +11676,7 @@ MsgNCSettle::MsgNCSettle(const MsgNCSettle& from)
 void MsgNCSettle::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -11691,13 +11753,14 @@ bool MsgNCSettle::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -11745,9 +11808,10 @@ failure:
 void MsgNCSettle::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCSettle)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -11763,11 +11827,10 @@ int MsgNCSettle::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCSettle)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -11830,15 +11893,15 @@ void MsgNCSettle::InternalSwap(MsgNCSettle* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCSettle
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCSettle::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCSettle::mid() const {
+ ::proto3::pb_msg MsgNCSettle::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCSettle::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCSettle::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.mid)
@@ -11888,7 +11951,7 @@ MsgNCFinish::MsgNCFinish(const MsgNCFinish& from)
 void MsgNCFinish::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  mid_ = 0u;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -11965,13 +12028,14 @@ bool MsgNCFinish::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 mid = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &mid_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
@@ -12019,9 +12083,10 @@ failure:
 void MsgNCFinish::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgNCFinish)
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->mid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -12037,11 +12102,10 @@ int MsgNCFinish::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCFinish)
   int total_size = 0;
 
-  // optional uint32 mid = 1;
+  // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->mid());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
   // optional .proto3.pb_enum result = 2;
@@ -12104,15 +12168,15 @@ void MsgNCFinish::InternalSwap(MsgNCFinish* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgNCFinish
 
-// optional uint32 mid = 1;
+// optional .proto3.pb_msg mid = 1;
 void MsgNCFinish::clear_mid() {
-  mid_ = 0u;
+  mid_ = 0;
 }
- ::google::protobuf::uint32 MsgNCFinish::mid() const {
+ ::proto3::pb_msg MsgNCFinish::mid() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCFinish.mid)
-  return mid_;
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCFinish::set_mid(::google::protobuf::uint32 value) {
+ void MsgNCFinish::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCFinish.mid)

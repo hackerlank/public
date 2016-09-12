@@ -13,13 +13,13 @@ using namespace proto3;
 void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     auto msgid=req.header("msgid");
     auto body=req.body();
-    auto mid=(eMsg)atoi(msgid);
+    auto mid=(pb_msg)atoi(msgid);
     switch(mid){
-        case eMsg::MSG_CL_ENTER:{
+        case pb_msg::MSG_CL_ENTER:{
             auto str=base64_decode(body);
             proto3::MsgCLEnter imsg;
             proto3::MsgLCEnter omsg;
-            auto omid=eMsg::MSG_LC_ENTER;
+            auto omid=pb_msg::MSG_LC_ENTER;
             omsg.set_mid(omid);
             if(imsg.ParseFromString(str)){
                 KEYE_LOG("----client enter succeeded\n");

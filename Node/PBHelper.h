@@ -25,10 +25,10 @@ public:
         return msg.ParseFromArray(_pw.data,(int)_pw.length);
     }
     
-    eMsg Id(){
+    proto3::pb_msg Id(){
         proto3::MsgBase mt;
         mt.ParseFromArray(_pw.data,4);
-        return (eMsg)mt.mid();
+        return (proto3::pb_msg)mt.mid();
     }
     
     static void Send(keye::svc_handler& sh,google::protobuf::MessageLite& msg){
@@ -51,7 +51,7 @@ public:
         assert(false);
     }
 
-    static void Request(keye::http_client& http,const char* uri,google::protobuf::MessageLite& msg,eMsg mid){
+    static void Request(keye::http_client& http,const char* uri,google::protobuf::MessageLite& msg,proto3::pb_msg mid){
         char smid[8];
         sprintf(smid,"%d",mid);
         std::string str;
@@ -67,7 +67,7 @@ public:
         http.request(req);
     }
     
-    static void Response(http_parser& resp,google::protobuf::MessageLite& msg,eMsg mid,int code=200,const char* status="OK"){
+    static void Response(http_parser& resp,google::protobuf::MessageLite& msg,proto3::pb_msg mid,int code=200,const char* status="OK"){
         char strmid[8];
         sprintf(strmid,"%d",mid);
         std::string str;

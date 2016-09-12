@@ -11,7 +11,6 @@
 
 #include <keye/htio/htio_demo.h>
 
-#include "game_protocol.h"
 #include "protocol.pb.h"
 
 #include "PBHelper.h"

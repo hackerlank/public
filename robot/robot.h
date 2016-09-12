@@ -17,7 +17,7 @@ public:
     class http_client :public keye::http_client{
     public:
         void            set_uri(const char* uri);
-        void            request(eMsg mid,google::protobuf::MessageLite& msg);
+        void            request(proto3::pb_msg mid,google::protobuf::MessageLite& msg);
         void            login();
         void            enter_lobby();
 

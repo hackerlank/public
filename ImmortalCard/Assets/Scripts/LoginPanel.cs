@@ -21,7 +21,7 @@ public class LoginPanel : MonoBehaviour {
 
 		Utils.Load<CreatePanel>(gameObject.transform.parent,delegate(Component obj){
 			MsgCSLogin msg=new MsgCSLogin();
-			msg.Mid=2001;
+			msg.Mid=pb_msg.MsgCsLogin;
 			msg.Version=100;
 			msg.User=new user_t();
 			msg.User.Account="Unity";
@@ -32,7 +32,7 @@ public class LoginPanel : MonoBehaviour {
 			Debug.Log("----DoLogin account="+msg.User.Account);
 
 			Main.Instance.http.SetUri("http://127.0.0.1:8800");
-			Main.Instance.http.Request<MsgCSLogin>((int)msg.Mid,msg);
+			Main.Instance.http.Request<MsgCSLogin>(msg.Mid,msg);
 
 			Destroy(gameObject);
 		});

@@ -47,54 +47,77 @@ namespace Proto3 {
             "CgV2YWx1ZRgDIAEoBSI3CgdidW5jaF90Eh0KBHR5cGUYASABKA4yDy5wcm90",
             "bzMucGJfZW51bRINCgVwYXducxgCIAMoDSJLCglnYW1lX2RhdGESDAoEZGVj",
             "axgBIAMoDRIQCghkaXNjYXJkcxgCIAMoDRIeCgVidW5jaBgDIAMoCzIPLnBy",
-            "b3RvMy5idW5jaF90IhYKB01zZ0Jhc2USCwoDbWlkGAEgASgNIkgKCk1zZ0NT",
-            "TG9naW4SCwoDbWlkGAEgASgNEg8KB3ZlcnNpb24YAyABKA0SHAoEdXNlchgC",
-            "IAEoCzIOLnByb3RvMy51c2VyX3QikAEKCk1zZ1NDTG9naW4SCwoDbWlkGAEg",
-            "ASgNEgsKA3VpZBgCIAEoCRIPCgd2ZXJzaW9uGAMgASgNEgsKA2tleRgEIAEo",
-            "DRIPCgdzZXNzaW9uGAUgASgEEgoKAmlwGAYgASgJEgwKBHBvcnQYByABKA0S",
-            "HwoGcmVzdWx0GAggASgOMg8ucHJvdG8zLnBiX2VudW0iVQoKTXNnQ0xFbnRl",
-            "chILCgNtaWQYASABKA0SCwoDdWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0S",
-            "CwoDa2V5GAQgASgNEg8KB3Nlc3Npb24YBSABKAQifAoKTXNnTENFbnRlchIL",
-            "CgNtaWQYASABKA0SIAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90",
-            "Eh4KBWxvYmJ5GAMgASgLMg8ucHJvdG8zLmxvYmJ5X3QSHwoGcmVzdWx0GAQg",
-            "ASgOMg8ucHJvdG8zLnBiX2VudW0idwoKTXNnQ05FbnRlchILCgNtaWQYASAB",
-            "KA0SCwoDdWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0SCwoDa2V5GAQgASgN",
-            "Eg8KB3Nlc3Npb24YBSABKAQSIAoHc2VydmljZRgGIAEoDjIPLnByb3RvMy5w",
-            "Yl9lbnVtIl0KCk1zZ05DRW50ZXISCwoDbWlkGAEgASgNEiEKCWdhbWVfaW5m",
-            "bxgCIAEoCzIOLnByb3RvMy5nYW1lX3QSHwoGcmVzdWx0GAMgASgOMg8ucHJv",
-            "dG8zLnBiX2VudW0iiwEKC01zZ0NOQ3JlYXRlEgsKA21pZBgBIAEoDRIdCgRy",
-            "dWxlGAIgASgOMg8ucHJvdG8zLnBiX2VudW0SIQoIY2F0ZWdvcnkYAyABKA4y",
-            "Dy5wcm90bzMucGJfZW51bRILCgNrZXkYBCABKA0SDQoFcm9ib3QYBSABKA0S",
-            "EQoJcGFyYW1ldGVyGAYgASgNIkwKC01zZ05DQ3JlYXRlEgsKA21pZBgBIAEo",
-            "DRIPCgdnYW1lX2lkGAIgASgNEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5w",
-            "Yl9lbnVtIjYKCU1zZ0NOSm9pbhILCgNtaWQYASABKA0SCwoDa2V5GAIgASgN",
-            "Eg8KB2dhbWVfaWQYAyABKA0iOQoJTXNnTkNKb2luEgsKA21pZBgBIAEoDRIf",
-            "CgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSI6CgpNc2dOQ1N0YXJ0",
-            "EgsKA21pZBgBIAEoDRIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51",
-            "bSIbCgxNc2dDTkRpc2NhcmQSCwoDbWlkGAEgASgNIjwKDE1zZ05DRGlzY2Fy",
-            "ZBILCgNtaWQYASABKA0SHwoGcmVzdWx0GAIgASgOMg8ucHJvdG8zLnBiX2Vu",
-            "dW0iGAoJTXNnQ05NZWxkEgsKA21pZBgBIAEoDSI5CglNc2dOQ01lbGQSCwoD",
-            "bWlkGAEgASgNEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVtIh8K",
-            "EE1zZ0NORGlzbWlzc1N5bmMSCwoDbWlkGAEgASgNIkAKEE1zZ05DRGlzbWlz",
-            "c1N5bmMSCwoDbWlkGAEgASgNEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5w",
-            "Yl9lbnVtIh4KD01zZ0NORGlzbWlzc0FjaxILCgNtaWQYASABKA0iPwoPTXNn",
-            "TkNEaXNtaXNzQWNrEgsKA21pZBgBIAEoDRIfCgZyZXN1bHQYAiABKA4yDy5w",
-            "cm90bzMucGJfZW51bSI7CgtNc2dOQ1NldHRsZRILCgNtaWQYASABKA0SHwoG",
-            "cmVzdWx0GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iOwoLTXNnTkNGaW5pc2gS",
-            "CwoDbWlkGAEgASgNEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVt",
-            "Ko0DCgdwYl9lbnVtEgsKB1VOS05PV04QABIICgROT05FEAASDAoIU1VDQ0VF",
-            "U1MQABIKCgZERVZfUEMQABILCgdERVZfUFM0EAESDAoIREVWX1hCT1gQAhIL",
-            "CgdERVZfSU9TEAMSDwoLREVWX0FORFJPSUQQBBIQCgxERVZfV0lOUEhPTkUQ",
-            "BRINCglHQU1FX0NBUkQQChIOCgpHQU1FX0NIRVNTEAsSDAoIUlVMRV9ERFoQ",
-            "FBIMCghSVUxFX1BESxAVEgwKCFJVTEVfUEhaEBYSEwoPQ0FURUdPUllfTk9S",
-            "TUFMEDISEQoNQ0FURUdPUllfRUFTWRAzEhEKDUNBVEVHT1JZX0hBUkQQNBIU",
-            "ChBBQ0hJRVZFTUVOVF9CRVNUEAoSDgoKRVJSX0ZBSUxFRBBkEhEKDUVSUl9D",
-            "QU5DRUxMRUQQZRIQCgxFUlJfUFJPVE9DT0wQZhINCglFUlJfUEFSQU0QZxIS",
-            "Cg5FUlJfRFVQTElDQVRFRBBoEhAKC0VSUl9VTktOT1dOEOcHGgIQAUICSANi",
-            "BnByb3RvMw=="));
+            "b3RvMy5idW5jaF90IiYKB01zZ0Jhc2USGwoDbWlkGAEgASgOMg4ucHJvdG8z",
+            "LnBiX21zZyJYCgpNc2dDU0xvZ2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
+            "Yl9tc2cSDwoHdmVyc2lvbhgDIAEoDRIcCgR1c2VyGAIgASgLMg4ucHJvdG8z",
+            "LnVzZXJfdCKgAQoKTXNnU0NMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMu",
+            "cGJfbXNnEgsKA3VpZBgCIAEoCRIPCgd2ZXJzaW9uGAMgASgNEgsKA2tleRgE",
+            "IAEoDRIPCgdzZXNzaW9uGAUgASgEEgoKAmlwGAYgASgJEgwKBHBvcnQYByAB",
+            "KA0SHwoGcmVzdWx0GAggASgOMg8ucHJvdG8zLnBiX2VudW0iZQoKTXNnQ0xF",
+            "bnRlchIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3VpZBgCIAEo",
+            "CRIPCgd2ZXJzaW9uGAMgASgNEgsKA2tleRgEIAEoDRIPCgdzZXNzaW9uGAUg",
+            "ASgEIowBCgpNc2dMQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
+            "c2cSIAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90Eh4KBWxvYmJ5",
+            "GAMgASgLMg8ucHJvdG8zLmxvYmJ5X3QSHwoGcmVzdWx0GAQgASgOMg8ucHJv",
+            "dG8zLnBiX2VudW0ihwEKCk1zZ0NORW50ZXISGwoDbWlkGAEgASgOMg4ucHJv",
+            "dG8zLnBiX21zZxILCgN1aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEoDRILCgNr",
+            "ZXkYBCABKA0SDwoHc2Vzc2lvbhgFIAEoBBIgCgdzZXJ2aWNlGAYgASgOMg8u",
+            "cHJvdG8zLnBiX2VudW0ibQoKTXNnTkNFbnRlchIbCgNtaWQYASABKA4yDi5w",
+            "cm90bzMucGJfbXNnEiEKCWdhbWVfaW5mbxgCIAEoCzIOLnByb3RvMy5nYW1l",
+            "X3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0imwEKC01zZ0NO",
+            "Q3JlYXRlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHQoEcnVsZRgC",
+            "IAEoDjIPLnByb3RvMy5wYl9lbnVtEiEKCGNhdGVnb3J5GAMgASgOMg8ucHJv",
+            "dG8zLnBiX2VudW0SCwoDa2V5GAQgASgNEg0KBXJvYm90GAUgASgNEhEKCXBh",
+            "cmFtZXRlchgGIAEoDSJcCgtNc2dOQ0NyZWF0ZRIbCgNtaWQYASABKA4yDi5w",
+            "cm90bzMucGJfbXNnEg8KB2dhbWVfaWQYAiABKA0SHwoGcmVzdWx0GAMgASgO",
+            "Mg8ucHJvdG8zLnBiX2VudW0iRgoJTXNnQ05Kb2luEhsKA21pZBgBIAEoDjIO",
+            "LnByb3RvMy5wYl9tc2cSCwoDa2V5GAIgASgNEg8KB2dhbWVfaWQYAyABKA0i",
+            "SQoJTXNnTkNKb2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoG",
+            "cmVzdWx0GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iSgoKTXNnTkNTdGFydBIb",
+            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIP",
+            "LnByb3RvMy5wYl9lbnVtIisKDE1zZ0NORGlzY2FyZBIbCgNtaWQYASABKA4y",
+            "Di5wcm90bzMucGJfbXNnIkwKDE1zZ05DRGlzY2FyZBIbCgNtaWQYASABKA4y",
+            "Di5wcm90bzMucGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9l",
+            "bnVtIigKCU1zZ0NOTWVsZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNn",
+            "IkkKCU1zZ05DTWVsZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh8K",
+            "BnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVtIi8KEE1zZ0NORGlzbWlz",
+            "c1N5bmMSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJQChBNc2dOQ0Rp",
+            "c21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVz",
+            "dWx0GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iLgoPTXNnQ05EaXNtaXNzQWNr",
+            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciTwoPTXNnTkNEaXNtaXNz",
+            "QWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVzdWx0GAIg",
+            "ASgOMg8ucHJvdG8zLnBiX2VudW0iSwoLTXNnTkNTZXR0bGUSGwoDbWlkGAEg",
+            "ASgOMg4ucHJvdG8zLnBiX21zZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMu",
+            "cGJfZW51bSJLCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4yDi5wcm90bzMu",
+            "cGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVtKr8DCgdw",
+            "Yl9lbnVtEgsKB1VOS05PV04QABIICgROT05FEAASDAoIU1VDQ0VFU1MQABIK",
+            "CgZERVZfUEMQABILCgdERVZfUFM0EAESDAoIREVWX1hCT1gQAhILCgdERVZf",
+            "SU9TEAMSDwoLREVWX0FORFJPSUQQBBIQCgxERVZfV0lOUEhPTkUQBRINCglH",
+            "QU1FX0NBUkQQChIOCgpHQU1FX0NIRVNTEAsSDAoIUlVMRV9ERFoQFBIMCghS",
+            "VUxFX1BESxAVEgwKCFJVTEVfUEhaEBYSEwoPQ0FURUdPUllfTk9STUFMEDIS",
+            "EQoNQ0FURUdPUllfRUFTWRAzEhEKDUNBVEVHT1JZX0hBUkQQNBIUChBBQ0hJ",
+            "RVZFTUVOVF9CRVNUEAoSEgoNREVGX01BWF9OT0RFUxDoBxIcChZERUZfTUFY",
+            "X0dBTUVTX1BFUl9OT0RFEKCNBhIOCgpFUlJfRkFJTEVEEGQSEQoNRVJSX0NB",
+            "TkNFTExFRBBlEhAKDEVSUl9QUk9UT0NPTBBmEg0KCUVSUl9QQVJBTRBnEhIK",
+            "DkVSUl9EVVBMSUNBVEVEEGgSEAoLRVJSX1VOS05PV04Q5wcaAhABKvAECgZw",
+            "Yl9tc2cSDwoLTVNHX0lOVkFMSUQQABIOCglNU0dfQkVHSU4Q6AcSDAoHTVNH",
+            "X1JBVxDpBxIRCgxNU0dfQ1NfQkVHSU4Q0A8SEQoMTVNHX0NTX0xPR0lOENEP",
+            "EhEKDE1TR19TQ19MT0dJThDSDxIPCgpNU0dfQ1NfRU5EEJ8fEhEKDE1TR19D",
+            "TF9CRUdJThCgHxIRCgxNU0dfQ0xfRU5URVIQoR8SEQoMTVNHX0xDX0VOVEVS",
+            "EKIfEhAKC01TR19MQ19FWElUEKMfEg8KCk1TR19DTF9FTkQQ7y4SEQoMTVNH",
+            "X0NOX0JFR0lOEPAuEhEKDE1TR19DTl9FTlRFUhDxLhIRCgxNU0dfTkNfRU5U",
+            "RVIQ8i4SEgoNTVNHX0NOX0NSRUFURRD6LhISCg1NU0dfTkNfQ1JFQVRFEPsu",
+            "EhAKC01TR19DTl9KT0lOEPwuEhAKC01TR19OQ19KT0lOEP0uEhEKDE1TR19O",
+            "Q19TVEFSVBCELxITCg5NU0dfQ05fRElTQ0FSRBCFLxITCg5NU0dfTkNfRElT",
+            "Q0FSRBCGLxIQCgtNU0dfQ05fTUVMRBCHLxIQCgtNU0dfTkNfTUVMRBCILxIS",
+            "Cg1NU0dfTkNfU0VUVExFEIkvEhIKDU1TR19OQ19GSU5JU0gQii8SGAoTTVNH",
+            "X0NOX0RJU01JU1NfU1lOQxCOLxIYChNNU0dfTkNfRElTTUlTU19TWU5DEI8v",
+            "EhcKEk1TR19DTl9ESVNNSVNTX0FDSxCQLxIXChJNU0dfTkNfRElTTUlTU19B",
+            "Q0sQkS8SDwoKTVNHX0NOX0VORBDXNhIMCgdNU0dfRU5EEI9OQgJIA2IGcHJv",
+            "dG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.user_t), global::Proto3.user_t.Parser, new[]{ "Uid", "Flag", "DevType", "Account", "Name", "Pswd", "Gender", "Age", "Udid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.player_t), global::Proto3.player_t.Parser, new[]{ "Uid", "Pid", "Level", "Xp", "Currency", "Energy", "Achievements" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_t), global::Proto3.game_t.Parser, new[]{ "Uid", "Gid", "Win", "Lose", "Draw", "Score" }, null, null, null),
@@ -170,6 +193,11 @@ namespace Proto3 {
     /// </summary>
     [pbr::OriginalName("ACHIEVEMENT_BEST")] AchievementBest = 10,
     /// <summary>
+    ///  game using
+    /// </summary>
+    [pbr::OriginalName("DEF_MAX_NODES")] DefMaxNodes = 1000,
+    [pbr::OriginalName("DEF_MAX_GAMES_PER_NODE")] DefMaxGamesPerNode = 100000,
+    /// <summary>
     ///  error
     /// </summary>
     [pbr::OriginalName("ERR_FAILED")] ErrFailed = 100,
@@ -178,6 +206,53 @@ namespace Proto3 {
     [pbr::OriginalName("ERR_PARAM")] ErrParam = 103,
     [pbr::OriginalName("ERR_DUPLICATED")] ErrDuplicated = 104,
     [pbr::OriginalName("ERR_UNKNOWN")] ErrUnknown = 999,
+  }
+
+  /// <summary>
+  ///  -------- messages --------
+  /// </summary>
+  public enum pb_msg {
+    [pbr::OriginalName("MSG_INVALID")] MsgInvalid = 0,
+    [pbr::OriginalName("MSG_BEGIN")] MsgBegin = 1000,
+    [pbr::OriginalName("MSG_RAW")] MsgRaw = 1001,
+    /// <summary>
+    /// Client --  Login
+    /// </summary>
+    [pbr::OriginalName("MSG_CS_BEGIN")] MsgCsBegin = 2000,
+    [pbr::OriginalName("MSG_CS_LOGIN")] MsgCsLogin = 2001,
+    [pbr::OriginalName("MSG_SC_LOGIN")] MsgScLogin = 2002,
+    [pbr::OriginalName("MSG_CS_END")] MsgCsEnd = 3999,
+    /// <summary>
+    /// Client --  Lobby
+    /// </summary>
+    [pbr::OriginalName("MSG_CL_BEGIN")] MsgClBegin = 4000,
+    [pbr::OriginalName("MSG_CL_ENTER")] MsgClEnter = 4001,
+    [pbr::OriginalName("MSG_LC_ENTER")] MsgLcEnter = 4002,
+    [pbr::OriginalName("MSG_LC_EXIT")] MsgLcExit = 4003,
+    [pbr::OriginalName("MSG_CL_END")] MsgClEnd = 5999,
+    /// <summary>
+    /// Client --  Node
+    /// </summary>
+    [pbr::OriginalName("MSG_CN_BEGIN")] MsgCnBegin = 6000,
+    [pbr::OriginalName("MSG_CN_ENTER")] MsgCnEnter = 6001,
+    [pbr::OriginalName("MSG_NC_ENTER")] MsgNcEnter = 6002,
+    [pbr::OriginalName("MSG_CN_CREATE")] MsgCnCreate = 6010,
+    [pbr::OriginalName("MSG_NC_CREATE")] MsgNcCreate = 6011,
+    [pbr::OriginalName("MSG_CN_JOIN")] MsgCnJoin = 6012,
+    [pbr::OriginalName("MSG_NC_JOIN")] MsgNcJoin = 6013,
+    [pbr::OriginalName("MSG_NC_START")] MsgNcStart = 6020,
+    [pbr::OriginalName("MSG_CN_DISCARD")] MsgCnDiscard = 6021,
+    [pbr::OriginalName("MSG_NC_DISCARD")] MsgNcDiscard = 6022,
+    [pbr::OriginalName("MSG_CN_MELD")] MsgCnMeld = 6023,
+    [pbr::OriginalName("MSG_NC_MELD")] MsgNcMeld = 6024,
+    [pbr::OriginalName("MSG_NC_SETTLE")] MsgNcSettle = 6025,
+    [pbr::OriginalName("MSG_NC_FINISH")] MsgNcFinish = 6026,
+    [pbr::OriginalName("MSG_CN_DISMISS_SYNC")] MsgCnDismissSync = 6030,
+    [pbr::OriginalName("MSG_NC_DISMISS_SYNC")] MsgNcDismissSync = 6031,
+    [pbr::OriginalName("MSG_CN_DISMISS_ACK")] MsgCnDismissAck = 6032,
+    [pbr::OriginalName("MSG_NC_DISMISS_ACK")] MsgNcDismissAck = 6033,
+    [pbr::OriginalName("MSG_CN_END")] MsgCnEnd = 6999,
+    [pbr::OriginalName("MSG_END")] MsgEnd = 9999,
   }
 
   #endregion
@@ -2541,9 +2616,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -2583,7 +2658,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
     }
 
@@ -2591,7 +2666,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       return size;
     }
@@ -2615,7 +2690,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
         }
@@ -2625,7 +2700,7 @@ namespace Proto3 {
   }
 
   /// <summary>
-  /// 	Client	---------------- Login
+  /// 	Client	 --  Login
   /// </summary>
   public sealed partial class MsgCSLogin : pb::IMessage<MsgCSLogin> {
     private static readonly pb::MessageParser<MsgCSLogin> _parser = new pb::MessageParser<MsgCSLogin>(() => new MsgCSLogin());
@@ -2663,9 +2738,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -2731,7 +2806,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (user_ != null) {
         output.WriteRawTag(18);
@@ -2747,7 +2822,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Version != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Version);
@@ -2786,7 +2861,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 18: {
@@ -2847,9 +2922,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -2980,7 +3055,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Uid.Length != 0) {
         output.WriteRawTag(18);
@@ -3016,7 +3091,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Uid.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
@@ -3082,7 +3157,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 18: {
@@ -3120,7 +3195,7 @@ namespace Proto3 {
   }
 
   /// <summary>
-  /// 	Client	---------------- Lobby
+  /// 	Client	 --  Lobby
   /// </summary>
   public sealed partial class MsgCLEnter : pb::IMessage<MsgCLEnter> {
     private static readonly pb::MessageParser<MsgCLEnter> _parser = new pb::MessageParser<MsgCLEnter>(() => new MsgCLEnter());
@@ -3160,9 +3235,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -3254,7 +3329,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Uid.Length != 0) {
         output.WriteRawTag(18);
@@ -3278,7 +3353,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Uid.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
@@ -3326,7 +3401,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 18: {
@@ -3388,9 +3463,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -3469,7 +3544,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (player_ != null) {
         output.WriteRawTag(18);
@@ -3489,7 +3564,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (player_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Player);
@@ -3537,7 +3612,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 18: {
@@ -3565,7 +3640,7 @@ namespace Proto3 {
   }
 
   /// <summary>
-  /// 	Client	---------------- Lobby
+  /// 	Client	 --  Node
   /// </summary>
   public sealed partial class MsgCNEnter : pb::IMessage<MsgCNEnter> {
     private static readonly pb::MessageParser<MsgCNEnter> _parser = new pb::MessageParser<MsgCNEnter>(() => new MsgCNEnter());
@@ -3606,9 +3681,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -3713,7 +3788,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Uid.Length != 0) {
         output.WriteRawTag(18);
@@ -3741,7 +3816,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Uid.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
@@ -3795,7 +3870,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 18: {
@@ -3860,9 +3935,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -3928,7 +4003,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (gameInfo_ != null) {
         output.WriteRawTag(18);
@@ -3944,7 +4019,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (gameInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(GameInfo);
@@ -3983,7 +4058,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 18: {
@@ -4042,9 +4117,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -4152,7 +4227,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Rule != 0) {
         output.WriteRawTag(16);
@@ -4180,7 +4255,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Rule != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Rule);
@@ -4234,7 +4309,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -4299,9 +4374,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -4367,7 +4442,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (GameId != 0) {
         output.WriteRawTag(16);
@@ -4383,7 +4458,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (GameId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameId);
@@ -4419,7 +4494,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -4472,9 +4547,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -4540,7 +4615,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Key != 0) {
         output.WriteRawTag(16);
@@ -4556,7 +4631,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Key != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
@@ -4592,7 +4667,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -4644,9 +4719,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -4699,7 +4774,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -4711,7 +4786,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -4741,7 +4816,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -4789,9 +4864,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -4844,7 +4919,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -4856,7 +4931,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -4886,7 +4961,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -4933,9 +5008,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -4975,7 +5050,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
     }
 
@@ -4983,7 +5058,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       return size;
     }
@@ -5007,7 +5082,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
         }
@@ -5051,9 +5126,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5106,7 +5181,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -5118,7 +5193,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -5148,7 +5223,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -5195,9 +5270,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5237,7 +5312,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
     }
 
@@ -5245,7 +5320,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       return size;
     }
@@ -5269,7 +5344,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
         }
@@ -5313,9 +5388,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5368,7 +5443,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -5380,7 +5455,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -5410,7 +5485,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -5457,9 +5532,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5499,7 +5574,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
     }
 
@@ -5507,7 +5582,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       return size;
     }
@@ -5531,7 +5606,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
         }
@@ -5575,9 +5650,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5630,7 +5705,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -5642,7 +5717,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -5672,7 +5747,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -5719,9 +5794,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5761,7 +5836,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
     }
 
@@ -5769,7 +5844,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       return size;
     }
@@ -5793,7 +5868,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
         }
@@ -5837,9 +5912,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -5892,7 +5967,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -5904,7 +5979,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -5934,7 +6009,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -5982,9 +6057,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -6037,7 +6112,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -6049,7 +6124,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -6079,7 +6154,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {
@@ -6127,9 +6202,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "mid" field.</summary>
     public const int MidFieldNumber = 1;
-    private uint mid_;
+    private global::Proto3.pb_msg mid_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Mid {
+    public global::Proto3.pb_msg Mid {
       get { return mid_; }
       set {
         mid_ = value;
@@ -6182,7 +6257,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (Mid != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt32(Mid);
+        output.WriteEnum((int) Mid);
       }
       if (Result != 0) {
         output.WriteRawTag(16);
@@ -6194,7 +6269,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Mid);
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -6224,7 +6299,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            Mid = input.ReadUInt32();
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
           case 16: {

@@ -11,7 +11,7 @@ public class WSProxy {
 	public event Handler		onOpen=delegate(string error){};
 	public event Handler		onClose=delegate(string error){};
 	public event Handler		onError=delegate(string error){};
-	public event MsgHandler.MessageHandler onMessage=delegate(uint mid,byte[] bytes){};
+	public event MsgHandler.MessageHandler onMessage=delegate(pb_msg mid,byte[] bytes){};
 
 	WebSocketSharp.WebSocket socket;
 
@@ -42,7 +42,7 @@ public class WSProxy {
 		socket.Connect();
 	}
 
-	public void Send<T>(uint mid,T msg) where T : IMessage<T>{
+	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
 		/*
 		MsgCNEnter msg=new MsgCNEnter();
 		msg.Mid=6001;

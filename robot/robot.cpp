@@ -34,7 +34,7 @@ void robot::node_client::on_open(svc_handler& sh) {
 }
 void robot::node_client::login(){
     proto3::MsgCNEnter msg;
-    msg.set_mid(eMsg::MSG_CN_ENTER);
+    msg.set_mid(proto3::pb_msg::MSG_CN_ENTER);
     msg.set_version(100);
     msg.set_service(proto3::pb_enum::GAME_CARD);
     msg.set_uid(sRobot->user.uid().c_str());
@@ -55,14 +55,14 @@ bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t millisecond
 
 // -------------------------------------------------------
 void robot::http_client::set_uri(const char* uri){_uri=uri;}
-void robot::http_client::request(eMsg mid,google::protobuf::MessageLite& msg){
+void robot::http_client::request(proto3::pb_msg mid,google::protobuf::MessageLite& msg){
     PBHelper::Request(*this,_uri.c_str(),msg,mid);
 }
 void robot::http_client::on_response(const http_parser& resp) {
     sRobot->handler.on_response(resp);
 }
 void robot::http_client::login(){
-    auto mid=eMsg::MSG_CS_LOGIN;
+    auto mid=proto3::pb_msg::MSG_CS_LOGIN;
     proto3::MsgCSLogin msg;
     msg.set_mid(mid);
     msg.set_version(100);
@@ -74,7 +74,7 @@ void robot::http_client::login(){
     KEYE_LOG("----login\n");
 }
 void robot::http_client::enter_lobby(){
-    auto mid=eMsg::MSG_CL_ENTER;
+    auto mid=proto3::pb_msg::MSG_CL_ENTER;
     proto3::MsgCLEnter msg;
     msg.set_mid(mid);
     msg.set_version(100);
@@ -122,13 +122,13 @@ int main(int argc, char* argv[]) {
         if(param>0){
             //join game,specify node id
             client.game_id=param;
-            key=param/DEF_MAX_GAMES_PER_NODE;
+            key=param/proto3::pb_enum::DEF_MAX_GAMES_PER_NODE;
         }else{
             //create game,rand node id
             srand((unsigned)time(nullptr));
             key=rand();
         }
-        key=key%DEF_MAX_NODES;
+        key=key%proto3::pb_enum::DEF_MAX_NODES;
         client.key=key;
         char uri[128];
         sprintf(uri,"ws://%s:%d/%d",host,port,key);

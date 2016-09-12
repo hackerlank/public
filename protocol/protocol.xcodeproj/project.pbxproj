@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5EEEA7B01D67A54F00630485 /* game_protocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EEEA7AD1D67A54F00630485 /* game_protocol.h */; };
 		5EFB5B031D83BC79000CCE4E /* protocol.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB5B001D83BC79000CCE4E /* protocol.pb.cc */; };
 		5EFB5B041D83BC79000CCE4E /* protocol.pb.h in Headers */ = {isa = PBXBuildFile; fileRef = 5EFB5B011D83BC79000CCE4E /* protocol.pb.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		5EEEA7A61D67A51B00630485 /* libprotocol.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libprotocol.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5EEEA7AD1D67A54F00630485 /* game_protocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = game_protocol.h; sourceTree = "<group>"; };
 		5EFB5B001D83BC79000CCE4E /* protocol.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = protocol.pb.cc; sourceTree = "<group>"; };
 		5EFB5B011D83BC79000CCE4E /* protocol.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = protocol.pb.h; sourceTree = "<group>"; };
 		5EFB5B021D83BC79000CCE4E /* protocol.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = protocol.proto; sourceTree = "<group>"; };
@@ -34,7 +32,6 @@
 		5EEEA79D1D67A51B00630485 = {
 			isa = PBXGroup;
 			children = (
-				5EEEA7AD1D67A54F00630485 /* game_protocol.h */,
 				5EFB5B001D83BC79000CCE4E /* protocol.pb.cc */,
 				5EFB5B011D83BC79000CCE4E /* protocol.pb.h */,
 				5EFB5B021D83BC79000CCE4E /* protocol.proto */,
@@ -57,7 +54,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5EEEA7B01D67A54F00630485 /* game_protocol.h in Headers */,
 				5EFB5B041D83BC79000CCE4E /* protocol.pb.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

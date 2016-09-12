@@ -72,7 +72,7 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
     keye::PacketWrapper pw(buf,sz);
     PBHelper pb(pw);
     auto mid=pb.Id();
-    if(mid==eMsg::MSG_CN_ENTER){
+    if(mid==proto3::pb_msg::MSG_CN_ENTER){
         MsgCNEnter imsg;
         MsgNCEnter omsg;
         if(pb.Parse(imsg)){
@@ -87,7 +87,7 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
             KEYE_LOG("----message error id=%zd\n",mid);
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
         }
-        omsg.set_mid(eMsg::MSG_NC_ENTER);
+        omsg.set_mid(proto3::pb_msg::MSG_NC_ENTER);
         PBHelper::Send(sh,omsg);
     }else{
         auto p=players.find(shid);
