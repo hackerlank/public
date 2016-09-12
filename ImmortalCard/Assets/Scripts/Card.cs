@@ -7,12 +7,9 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 
 	public LayoutElement le;
 
-	void Start () {
-	
-	}
-	
-	void Update () {
-	
+	bool _static=true;
+	bool Static{
+		set{_static=value;}
 	}
 
 	Proto3.pawn_t _value;
@@ -26,7 +23,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 
 	public void OnPointerClick (PointerEventData eventData){
-		if(eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
+		if(_static||eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
 		Debug.Log("----click on card "+eventData.clickCount);
 		if(eventData.clickCount==2)
 			DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
@@ -41,11 +38,8 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 	
 	public void OnEndDrag (PointerEventData eventData){
+		if(_static)return;
 		//dragging=false;
-		var lg=transform.parent.GetComponent<HorizontalLayoutGroup>();
-		lg.CalculateLayoutInputVertical();
-		lg.CalculateLayoutInputHorizontal();
-
 		//restrore
 		//transform.position=dragFrom;
 		DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
@@ -53,6 +47,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 	
 	public void OnDrag(PointerEventData eventData){
+		if(_static)return;
 		//Debug.Log("----drag on card");
 		var delta=eventData.delta;
 		eventData.pointerDrag.transform.position+=new Vector3(delta.x,delta.y,0);

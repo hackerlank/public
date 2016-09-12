@@ -4,36 +4,55 @@ using Proto3;
 
 public class CreatePanel : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+	public static CreatePanel Instance=null;
+	void Awake(){Instance=this;}
+	void OnDestroy(){Instance=null;}
 	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	
+	uint Key=0;
+
 	public void OnCreate(){
-		Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj) {
+		Connect();
+	}
+
+	public void OnJoin(){
+		Utils.Load<GameKeyPopup>(gameObject.transform.parent);
+	}
+
+	public void Connect(uint key=0){
+		Key=key;
+		if(MsgHandler.Connected)
+			OnEntered();
+		else
 			Main.Instance.ws.Connect("ws://127.0.0.1:8820/100");
+	}
 
-			MsgCNEnter msg=new MsgCNEnter();
-			msg.Mid=pb_msg.MsgCnEnter;
-			msg.Version=100;
-			msg.Key=66;
-
-			Main.Instance.ws.Send<MsgCNEnter>(msg.Mid,msg);
-
+	public void OnEntered(){
+		if(Key>0){
+			MsgCNJoin msgJ=new MsgCNJoin();
+			msgJ.Mid=pb_msg.MsgCnJoin;
+			msgJ.GameId=100;
+			msgJ.Key=Key;
+			
+			Main.Instance.ws.Send<MsgCNJoin>(msgJ.Mid,msgJ);
+		}else{
+			MsgCNCreate msgC=new MsgCNCreate();
+			msgC.Mid=pb_msg.MsgCnCreate;
+			msgC.Rule=pb_enum.RuleDdz;
+			msgC.Key=Key;
+			
+			Main.Instance.ws.Send<MsgCNCreate>(msgC.Mid,msgC);
+		}
+	}
+	
+	public void OnCreated(MsgNCCreate msg){
+		Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj){
 			Destroy(gameObject);
 		});
 	}
 
-	public void OnJoin(){
-		Utils.Load<GameKeyPopup>(gameObject.transform.parent,delegate(Component obj) {
-			GameKeyPopup pop=obj as GameKeyPopup;
-			if(pop)
-				pop.goParent=gameObject;
+	public void OnJoined(MsgNCJoin msg){
+		Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj){
+			Destroy(gameObject);
 		});
 	}
 }

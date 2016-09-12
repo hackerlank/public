@@ -7,6 +7,8 @@ public class Main : MonoBehaviour {
 	public HttpProxy	http;
 	public WSProxy		ws;
 
+	public bool			skipLogin=true;
+
 	void Awake(){
 		http=new HttpProxy();
 		http.onResponse+=MsgHandler.onMessage;
