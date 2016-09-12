@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Utils {
@@ -27,5 +28,21 @@ public class Utils {
 			//go.transform.localPosition=Vector3.zero;
 			//go.transform.localScale=Vector3.one;
 		}
+	}
+
+	public static void SpriteCreate(string name,System.Action<Sprite> handler){
+		string url="Cards/"+name;
+		var obj=Resources.Load(url,typeof(Sprite));
+		if(obj){
+			Sprite sprite = MonoBehaviour.Instantiate(obj) as Sprite;
+			if(handler!=null)handler.Invoke(sprite);
+		};
+	}
+	
+	public static void ImageReset(Image img,string name,bool resize=false){
+		SpriteCreate(name,delegate(Sprite sp) {
+			img.sprite=sp;
+			if(resize)img.rectTransform.sizeDelta=new Vector2(sp.texture.width,sp.texture.height);
+		});
 	}
 }

@@ -15,6 +15,16 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	
 	}
 
+	Proto3.pawn_t _value;
+	public Proto3.pawn_t Value{
+		get{
+			return _value;
+		}set{
+			_value=value;
+			//bind image
+		}
+	}
+
 	public void OnPointerClick (PointerEventData eventData){
 		if(eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
 		Debug.Log("----click on card "+eventData.clickCount);
@@ -22,16 +32,16 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
 	}
 	
-	bool dragging=false;
-	Vector2 dragFrom=Vector2.zero;
+	//bool dragging=false;
+	//Vector2 dragFrom=Vector2.zero;
 	public void OnBeginDrag (PointerEventData eventData){
-		dragging=true;
-		dragFrom=transform.position;
+		//dragging=true;
+		//dragFrom=transform.position;
 		//Debug.Log("----begin from "+dragFrom.ToString());
 	}
 	
 	public void OnEndDrag (PointerEventData eventData){
-		dragging=false;
+		//dragging=false;
 		var lg=transform.parent.GetComponent<HorizontalLayoutGroup>();
 		lg.CalculateLayoutInputVertical();
 		lg.CalculateLayoutInputHorizontal();

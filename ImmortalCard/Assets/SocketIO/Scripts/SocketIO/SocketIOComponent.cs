@@ -307,9 +307,11 @@ namespace SocketIO
 			
 			try {
 				ws.Send(encoder.Encode(packet));
-			} catch(SocketIOException ex) {
 				#if SOCKET_IO_DEBUG
+			} catch(SocketIOException ex) {
 				debugMethod.Invoke(ex.ToString());
+				#else
+			} catch(SocketIOException) {
 				#endif
 			}
 		}
@@ -398,9 +400,11 @@ namespace SocketIO
 			foreach (Action<SocketIOEvent> handler in this.handlers[ev.name]) {
 				try{
 					handler(ev);
-				} catch(Exception ex){
 					#if SOCKET_IO_DEBUG
+				} catch(Exception ex){
 					debugMethod.Invoke(ex.ToString());
+					#else
+				} catch(Exception){
 					#endif
 				}
 			}
