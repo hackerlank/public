@@ -9,7 +9,13 @@ public class Main : MonoBehaviour {
 
 	void Awake(){
 		http=new HttpProxy();
+		http.onResponse+=MsgHandler.onMessage;
+
 		ws=new WSProxy();
+		ws.onOpen+=MsgHandler.onOpen;
+		ws.onClose+=MsgHandler.onClose;
+		ws.onError+=MsgHandler.onError;
+		ws.onMessage+=MsgHandler.onMessage;
 
 		Instance=this;
 	}

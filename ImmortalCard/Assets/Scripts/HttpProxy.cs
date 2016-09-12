@@ -7,6 +7,7 @@ using Proto3;
 
 public class HttpProxy {
 	private string uri="";
+	public event MsgHandler.MessageHandler onResponse=delegate(uint mid,byte[] bytes){};
 
 	public void SetUri(string _uri){
 		uri=_uri;
@@ -33,10 +34,10 @@ public class HttpProxy {
 			try {
 				var headers=www.responseHeaders;
 				if(headers.ContainsKey("MSGID")){
-					int msgid=int.Parse(headers["MSGID"]);
+					uint msgid=uint.Parse(headers["MSGID"]);
 					Debug.Log("response="+www.text);
 					var content=MsgIntepreter.DecodeBytes(www.text);
-					OnResponse(msgid,Name,content);
+					onResponse.Invoke(msgid,content);
 				}else
 					Debug.LogError("response: no msgid");
 			} catch (Exception e) {
@@ -44,17 +45,5 @@ public class HttpProxy {
 				yield break;
 			}
 		}
-	}
-	
-	public void OnResponse(int mid,string Name,byte[] bytes){
-		switch(mid){
-		case 2002:
-			MsgSCLogin msg=MsgSCLogin.Parser.ParseFrom(bytes);
-			Debug.Log("response mid="+mid+",uid="+msg.Uid+",ip="+msg.Ip+",port="+msg.Port);
-			break;
-		default:
-			break;
-		}
-		Debug.Log(mid.ToString());
 	}
 }

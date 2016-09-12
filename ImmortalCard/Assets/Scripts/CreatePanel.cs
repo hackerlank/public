@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Proto3;
 
 public class CreatePanel : MonoBehaviour {
 
@@ -15,6 +16,15 @@ public class CreatePanel : MonoBehaviour {
 	
 	public void OnCreate(){
 		Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj) {
+			Main.Instance.ws.Connect("ws://127.0.0.1:8820/100");
+
+			MsgCNEnter msg=new MsgCNEnter();
+			msg.Mid=6001;
+			msg.Version=100;
+			msg.Key=66;
+
+			Main.Instance.ws.Send<MsgCNEnter>(msg.Mid,msg);
+
 			Destroy(gameObject);
 		});
 	}
