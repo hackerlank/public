@@ -16,7 +16,7 @@ using namespace keye;
 class ws_handler_impl:public svc_handler{
 	typedef service_type::connection_ptr service_handler_type;
 public:
-			ws_handler_impl(service_handler_type& sh):_sh(sh){}
+                    ws_handler_impl(service_handler_type sh){_sh=sh;}
 	virtual void	close(){
 		_sh->close(0, _rc);
 	}
@@ -65,7 +65,7 @@ public:
 			set_timer(id, milliseconds);
 	}
 private:
-	service_handler_type&	_sh;
+	service_handler_type	_sh;
 	const std::string		_rc;
 	///the interface expsure
 	std::shared_ptr<void>	_s_ptr;
