@@ -50,73 +50,71 @@ namespace Proto3 {
             "b3RvMy5idW5jaF90IiYKB01zZ0Jhc2USGwoDbWlkGAEgASgOMg4ucHJvdG8z",
             "LnBiX21zZyJYCgpNc2dDU0xvZ2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
             "Yl9tc2cSDwoHdmVyc2lvbhgDIAEoDRIcCgR1c2VyGAIgASgLMg4ucHJvdG8z",
-            "LnVzZXJfdCKgAQoKTXNnU0NMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMu",
-            "cGJfbXNnEgsKA3VpZBgCIAEoCRIPCgd2ZXJzaW9uGAMgASgNEgsKA2tleRgE",
-            "IAEoDRIPCgdzZXNzaW9uGAUgASgEEgoKAmlwGAYgASgJEgwKBHBvcnQYByAB",
-            "KA0SHwoGcmVzdWx0GAggASgOMg8ucHJvdG8zLnBiX2VudW0iZQoKTXNnQ0xF",
-            "bnRlchIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3VpZBgCIAEo",
-            "CRIPCgd2ZXJzaW9uGAMgASgNEgsKA2tleRgEIAEoDRIPCgdzZXNzaW9uGAUg",
-            "ASgEIowBCgpNc2dMQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
-            "c2cSIAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90Eh4KBWxvYmJ5",
-            "GAMgASgLMg8ucHJvdG8zLmxvYmJ5X3QSHwoGcmVzdWx0GAQgASgOMg8ucHJv",
-            "dG8zLnBiX2VudW0ihwEKCk1zZ0NORW50ZXISGwoDbWlkGAEgASgOMg4ucHJv",
-            "dG8zLnBiX21zZxILCgN1aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEoDRILCgNr",
-            "ZXkYBCABKA0SDwoHc2Vzc2lvbhgFIAEoBBIgCgdzZXJ2aWNlGAYgASgOMg8u",
-            "cHJvdG8zLnBiX2VudW0ibQoKTXNnTkNFbnRlchIbCgNtaWQYASABKA4yDi5w",
-            "cm90bzMucGJfbXNnEiEKCWdhbWVfaW5mbxgCIAEoCzIOLnByb3RvMy5nYW1l",
-            "X3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0imwEKC01zZ0NO",
-            "Q3JlYXRlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHQoEcnVsZRgC",
-            "IAEoDjIPLnByb3RvMy5wYl9lbnVtEiEKCGNhdGVnb3J5GAMgASgOMg8ucHJv",
-            "dG8zLnBiX2VudW0SCwoDa2V5GAQgASgNEg0KBXJvYm90GAUgASgNEhEKCXBh",
-            "cmFtZXRlchgGIAEoDSJcCgtNc2dOQ0NyZWF0ZRIbCgNtaWQYASABKA4yDi5w",
-            "cm90bzMucGJfbXNnEg8KB2dhbWVfaWQYAiABKA0SHwoGcmVzdWx0GAMgASgO",
-            "Mg8ucHJvdG8zLnBiX2VudW0iRgoJTXNnQ05Kb2luEhsKA21pZBgBIAEoDjIO",
-            "LnByb3RvMy5wYl9tc2cSCwoDa2V5GAIgASgNEg8KB2dhbWVfaWQYAyABKA0i",
-            "SQoJTXNnTkNKb2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoG",
-            "cmVzdWx0GAIgASgOMg8ucHJvdG8zLnBiX2VudW0ipgEKCk1zZ05DU3RhcnQS",
-            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIOCgZiYW5rZXIYAiABKA0S",
-            "CwoDcG9zGAMgASgNEh0KBWNhcmRzGAQgAygLMg4ucHJvdG8zLnBhd25fdBIe",
-            "CgVoYW5kcxgFIAMoCzIPLnByb3RvMy5idW5jaF90Eh8KBnJlc3VsdBgGIAEo",
-            "DjIPLnByb3RvMy5wYl9lbnVtIisKDE1zZ0NORGlzY2FyZBIbCgNtaWQYASAB",
-            "KA4yDi5wcm90bzMucGJfbXNnIkwKDE1zZ05DRGlzY2FyZBIbCgNtaWQYASAB",
-            "KA4yDi5wcm90bzMucGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5w",
-            "Yl9lbnVtIigKCU1zZ0NOTWVsZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJf",
-            "bXNnIkkKCU1zZ05DTWVsZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNn",
-            "Eh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVtIi8KEE1zZ0NORGlz",
-            "bWlzc1N5bmMSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJQChBNc2dO",
-            "Q0Rpc21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoG",
-            "cmVzdWx0GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iLgoPTXNnQ05EaXNtaXNz",
-            "QWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciTwoPTXNnTkNEaXNt",
-            "aXNzQWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVzdWx0",
-            "GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iSwoLTXNnTkNTZXR0bGUSGwoDbWlk",
-            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90",
-            "bzMucGJfZW51bSJLCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4yDi5wcm90",
-            "bzMucGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVtKr8D",
-            "CgdwYl9lbnVtEgsKB1VOS05PV04QABIICgROT05FEAASDAoIU1VDQ0VFU1MQ",
-            "ABIKCgZERVZfUEMQABILCgdERVZfUFM0EAESDAoIREVWX1hCT1gQAhILCgdE",
-            "RVZfSU9TEAMSDwoLREVWX0FORFJPSUQQBBIQCgxERVZfV0lOUEhPTkUQBRIN",
-            "CglHQU1FX0NBUkQQChIOCgpHQU1FX0NIRVNTEAsSDAoIUlVMRV9ERFoQFBIM",
-            "CghSVUxFX1BESxAVEgwKCFJVTEVfUEhaEBYSEwoPQ0FURUdPUllfTk9STUFM",
-            "EDISEQoNQ0FURUdPUllfRUFTWRAzEhEKDUNBVEVHT1JZX0hBUkQQNBIUChBB",
-            "Q0hJRVZFTUVOVF9CRVNUEAoSEgoNREVGX01BWF9OT0RFUxDoBxIcChZERUZf",
-            "TUFYX0dBTUVTX1BFUl9OT0RFEKCNBhIOCgpFUlJfRkFJTEVEEGQSEQoNRVJS",
-            "X0NBTkNFTExFRBBlEhAKDEVSUl9QUk9UT0NPTBBmEg0KCUVSUl9QQVJBTRBn",
-            "EhIKDkVSUl9EVVBMSUNBVEVEEGgSEAoLRVJSX1VOS05PV04Q5wcaAhABKvAE",
-            "CgZwYl9tc2cSDwoLTVNHX0lOVkFMSUQQABIOCglNU0dfQkVHSU4Q6AcSDAoH",
-            "TVNHX1JBVxDpBxIRCgxNU0dfQ1NfQkVHSU4Q0A8SEQoMTVNHX0NTX0xPR0lO",
-            "ENEPEhEKDE1TR19TQ19MT0dJThDSDxIPCgpNU0dfQ1NfRU5EEJ8fEhEKDE1T",
-            "R19DTF9CRUdJThCgHxIRCgxNU0dfQ0xfRU5URVIQoR8SEQoMTVNHX0xDX0VO",
-            "VEVSEKIfEhAKC01TR19MQ19FWElUEKMfEg8KCk1TR19DTF9FTkQQ7y4SEQoM",
-            "TVNHX0NOX0JFR0lOEPAuEhEKDE1TR19DTl9FTlRFUhDxLhIRCgxNU0dfTkNf",
-            "RU5URVIQ8i4SEgoNTVNHX0NOX0NSRUFURRD6LhISCg1NU0dfTkNfQ1JFQVRF",
-            "EPsuEhAKC01TR19DTl9KT0lOEPwuEhAKC01TR19OQ19KT0lOEP0uEhEKDE1T",
-            "R19OQ19TVEFSVBCELxITCg5NU0dfQ05fRElTQ0FSRBCFLxITCg5NU0dfTkNf",
-            "RElTQ0FSRBCGLxIQCgtNU0dfQ05fTUVMRBCHLxIQCgtNU0dfTkNfTUVMRBCI",
-            "LxISCg1NU0dfTkNfU0VUVExFEIkvEhIKDU1TR19OQ19GSU5JU0gQii8SGAoT",
-            "TVNHX0NOX0RJU01JU1NfU1lOQxCOLxIYChNNU0dfTkNfRElTTUlTU19TWU5D",
-            "EI8vEhcKEk1TR19DTl9ESVNNSVNTX0FDSxCQLxIXChJNU0dfTkNfRElTTUlT",
-            "U19BQ0sQkS8SDwoKTVNHX0NOX0VORBDXNhIMCgdNU0dfRU5EEI9OQgJIA2IG",
-            "cHJvdG8z"));
+            "LnVzZXJfdCKTAQoKTXNnU0NMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMu",
+            "cGJfbXNnEgsKA3VpZBgCIAEoCRIPCgd2ZXJzaW9uGAMgASgNEg8KB3Nlc3Np",
+            "b24YBCABKAQSCgoCaXAYBSABKAkSDAoEcG9ydBgGIAEoDRIfCgZyZXN1bHQY",
+            "ByABKA4yDy5wcm90bzMucGJfZW51bSJYCgpNc2dDTEVudGVyEhsKA21pZBgB",
+            "IAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDdWlkGAIgASgJEg8KB3ZlcnNpb24Y",
+            "AyABKA0SDwoHc2Vzc2lvbhgEIAEoBCKZAQoKTXNnTENFbnRlchIbCgNtaWQY",
+            "ASABKA4yDi5wcm90bzMucGJfbXNnEgsKA2tleRgCIAEoDRIgCgZwbGF5ZXIY",
+            "AyABKAsyEC5wcm90bzMucGxheWVyX3QSHgoFbG9iYnkYBCABKAsyDy5wcm90",
+            "bzMubG9iYnlfdBIfCgZyZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51bSJ6",
+            "CgpNc2dDTkVudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoD",
+            "dWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEoBBIg",
+            "CgdzZXJ2aWNlGAUgASgOMg8ucHJvdG8zLnBiX2VudW0ibQoKTXNnTkNFbnRl",
+            "chIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEiEKCWdhbWVfaW5mbxgC",
+            "IAEoCzIOLnByb3RvMy5nYW1lX3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8z",
+            "LnBiX2VudW0ijgEKC01zZ0NOQ3JlYXRlEhsKA21pZBgBIAEoDjIOLnByb3Rv",
+            "My5wYl9tc2cSHQoEcnVsZRgCIAEoDjIPLnByb3RvMy5wYl9lbnVtEiEKCGNh",
+            "dGVnb3J5GAMgASgOMg8ucHJvdG8zLnBiX2VudW0SDQoFcm9ib3QYBCABKA0S",
+            "EQoJcGFyYW1ldGVyGAUgASgNIlwKC01zZ05DQ3JlYXRlEhsKA21pZBgBIAEo",
+            "DjIOLnByb3RvMy5wYl9tc2cSDwoHZ2FtZV9pZBgCIAEoDRIfCgZyZXN1bHQY",
+            "AyABKA4yDy5wcm90bzMucGJfZW51bSI5CglNc2dDTkpvaW4SGwoDbWlkGAEg",
+            "ASgOMg4ucHJvdG8zLnBiX21zZxIPCgdnYW1lX2lkGAIgASgNIkkKCU1zZ05D",
+            "Sm9pbhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh8KBnJlc3VsdBgC",
+            "IAEoDjIPLnByb3RvMy5wYl9lbnVtIqYBCgpNc2dOQ1N0YXJ0EhsKA21pZBgB",
+            "IAEoDjIOLnByb3RvMy5wYl9tc2cSDgoGYmFua2VyGAIgASgNEgsKA3BvcxgD",
+            "IAEoDRIdCgVjYXJkcxgEIAMoCzIOLnByb3RvMy5wYXduX3QSHgoFaGFuZHMY",
+            "BSADKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYBiABKA4yDy5wcm90",
+            "bzMucGJfZW51bSIrCgxNc2dDTkRpc2NhcmQSGwoDbWlkGAEgASgOMg4ucHJv",
+            "dG8zLnBiX21zZyJMCgxNc2dOQ0Rpc2NhcmQSGwoDbWlkGAEgASgOMg4ucHJv",
+            "dG8zLnBiX21zZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSIo",
+            "CglNc2dDTk1lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJJCglN",
+            "c2dOQ01lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIfCgZyZXN1",
+            "bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSIvChBNc2dDTkRpc21pc3NTeW5j",
+            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciUAoQTXNnTkNEaXNtaXNz",
+            "U3luYxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh8KBnJlc3VsdBgC",
+            "IAEoDjIPLnByb3RvMy5wYl9lbnVtIi4KD01zZ0NORGlzbWlzc0FjaxIbCgNt",
+            "aWQYASABKA4yDi5wcm90bzMucGJfbXNnIk8KD01zZ05DRGlzbWlzc0FjaxIb",
+            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIP",
+            "LnByb3RvMy5wYl9lbnVtIksKC01zZ05DU2V0dGxlEhsKA21pZBgBIAEoDjIO",
+            "LnByb3RvMy5wYl9tc2cSHwoGcmVzdWx0GAIgASgOMg8ucHJvdG8zLnBiX2Vu",
+            "dW0iSwoLTXNnTkNGaW5pc2gSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21z",
+            "ZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSq/AwoHcGJfZW51",
+            "bRILCgdVTktOT1dOEAASCAoETk9ORRAAEgwKCFNVQ0NFRVNTEAASCgoGREVW",
+            "X1BDEAASCwoHREVWX1BTNBABEgwKCERFVl9YQk9YEAISCwoHREVWX0lPUxAD",
+            "Eg8KC0RFVl9BTkRST0lEEAQSEAoMREVWX1dJTlBIT05FEAUSDQoJR0FNRV9D",
+            "QVJEEAoSDgoKR0FNRV9DSEVTUxALEgwKCFJVTEVfRERaEBQSDAoIUlVMRV9Q",
+            "REsQFRIMCghSVUxFX1BIWhAWEhMKD0NBVEVHT1JZX05PUk1BTBAyEhEKDUNB",
+            "VEVHT1JZX0VBU1kQMxIRCg1DQVRFR09SWV9IQVJEEDQSFAoQQUNISUVWRU1F",
+            "TlRfQkVTVBAKEhIKDURFRl9NQVhfTk9ERVMQ6AcSHAoWREVGX01BWF9HQU1F",
+            "U19QRVJfTk9ERRCgjQYSDgoKRVJSX0ZBSUxFRBBkEhEKDUVSUl9DQU5DRUxM",
+            "RUQQZRIQCgxFUlJfUFJPVE9DT0wQZhINCglFUlJfUEFSQU0QZxISCg5FUlJf",
+            "RFVQTElDQVRFRBBoEhAKC0VSUl9VTktOT1dOEOcHGgIQASrwBAoGcGJfbXNn",
+            "Eg8KC01TR19JTlZBTElEEAASDgoJTVNHX0JFR0lOEOgHEgwKB01TR19SQVcQ",
+            "6QcSEQoMTVNHX0NTX0JFR0lOENAPEhEKDE1TR19DU19MT0dJThDRDxIRCgxN",
+            "U0dfU0NfTE9HSU4Q0g8SDwoKTVNHX0NTX0VORBCfHxIRCgxNU0dfQ0xfQkVH",
+            "SU4QoB8SEQoMTVNHX0NMX0VOVEVSEKEfEhEKDE1TR19MQ19FTlRFUhCiHxIQ",
+            "CgtNU0dfTENfRVhJVBCjHxIPCgpNU0dfQ0xfRU5EEO8uEhEKDE1TR19DTl9C",
+            "RUdJThDwLhIRCgxNU0dfQ05fRU5URVIQ8S4SEQoMTVNHX05DX0VOVEVSEPIu",
+            "EhIKDU1TR19DTl9DUkVBVEUQ+i4SEgoNTVNHX05DX0NSRUFURRD7LhIQCgtN",
+            "U0dfQ05fSk9JThD8LhIQCgtNU0dfTkNfSk9JThD9LhIRCgxNU0dfTkNfU1RB",
+            "UlQQhC8SEwoOTVNHX0NOX0RJU0NBUkQQhS8SEwoOTVNHX05DX0RJU0NBUkQQ",
+            "hi8SEAoLTVNHX0NOX01FTEQQhy8SEAoLTVNHX05DX01FTEQQiC8SEgoNTVNH",
+            "X05DX1NFVFRMRRCJLxISCg1NU0dfTkNfRklOSVNIEIovEhgKE01TR19DTl9E",
+            "SVNNSVNTX1NZTkMQji8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCPLxIXChJN",
+            "U0dfQ05fRElTTUlTU19BQ0sQkC8SFwoSTVNHX05DX0RJU01JU1NfQUNLEJEv",
+            "Eg8KCk1TR19DTl9FTkQQ1zYSDAoHTVNHX0VORBCPTkICSANiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -131,14 +129,14 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_data), global::Proto3.game_data.Parser, new[]{ "Deck", "Discards", "Bunch" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgBase), global::Proto3.MsgBase.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCSLogin), global::Proto3.MsgCSLogin.Parser, new[]{ "Mid", "Version", "User" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgSCLogin), global::Proto3.MsgSCLogin.Parser, new[]{ "Mid", "Uid", "Version", "Key", "Session", "Ip", "Port", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCLEnter), global::Proto3.MsgCLEnter.Parser, new[]{ "Mid", "Uid", "Version", "Key", "Session" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgLCEnter), global::Proto3.MsgLCEnter.Parser, new[]{ "Mid", "Player", "Lobby", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNEnter), global::Proto3.MsgCNEnter.Parser, new[]{ "Mid", "Uid", "Version", "Key", "Session", "Service" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgSCLogin), global::Proto3.MsgSCLogin.Parser, new[]{ "Mid", "Uid", "Version", "Session", "Ip", "Port", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCLEnter), global::Proto3.MsgCLEnter.Parser, new[]{ "Mid", "Uid", "Version", "Session" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgLCEnter), global::Proto3.MsgLCEnter.Parser, new[]{ "Mid", "Key", "Player", "Lobby", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNEnter), global::Proto3.MsgCNEnter.Parser, new[]{ "Mid", "Uid", "Version", "Session", "Service" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCEnter), global::Proto3.MsgNCEnter.Parser, new[]{ "Mid", "GameInfo", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNCreate), global::Proto3.MsgCNCreate.Parser, new[]{ "Mid", "Rule", "Category", "Key", "Robot", "Parameter" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNCreate), global::Proto3.MsgCNCreate.Parser, new[]{ "Mid", "Rule", "Category", "Robot", "Parameter" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCCreate), global::Proto3.MsgNCCreate.Parser, new[]{ "Mid", "GameId", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNJoin), global::Proto3.MsgCNJoin.Parser, new[]{ "Mid", "Key", "GameId" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNJoin), global::Proto3.MsgCNJoin.Parser, new[]{ "Mid", "GameId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCJoin), global::Proto3.MsgNCJoin.Parser, new[]{ "Mid", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCStart), global::Proto3.MsgNCStart.Parser, new[]{ "Mid", "Banker", "Pos", "Cards", "Hands", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDiscard), global::Proto3.MsgCNDiscard.Parser, new[]{ "Mid" }, null, null, null),
@@ -2910,7 +2908,6 @@ namespace Proto3 {
       mid_ = other.mid_;
       uid_ = other.uid_;
       version_ = other.version_;
-      key_ = other.key_;
       session_ = other.session_;
       ip_ = other.ip_;
       port_ = other.port_;
@@ -2955,19 +2952,8 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "key" field.</summary>
-    public const int KeyFieldNumber = 4;
-    private uint key_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Key {
-      get { return key_; }
-      set {
-        key_ = value;
-      }
-    }
-
     /// <summary>Field number for the "session" field.</summary>
-    public const int SessionFieldNumber = 5;
+    public const int SessionFieldNumber = 4;
     private ulong session_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong Session {
@@ -2978,7 +2964,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "ip" field.</summary>
-    public const int IpFieldNumber = 6;
+    public const int IpFieldNumber = 5;
     private string ip_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public string Ip {
@@ -2989,7 +2975,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "port" field.</summary>
-    public const int PortFieldNumber = 7;
+    public const int PortFieldNumber = 6;
     private uint port_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Port {
@@ -3000,7 +2986,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "result" field.</summary>
-    public const int ResultFieldNumber = 8;
+    public const int ResultFieldNumber = 7;
     private global::Proto3.pb_enum result_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.pb_enum Result {
@@ -3026,7 +3012,6 @@ namespace Proto3 {
       if (Mid != other.Mid) return false;
       if (Uid != other.Uid) return false;
       if (Version != other.Version) return false;
-      if (Key != other.Key) return false;
       if (Session != other.Session) return false;
       if (Ip != other.Ip) return false;
       if (Port != other.Port) return false;
@@ -3040,7 +3025,6 @@ namespace Proto3 {
       if (Mid != 0) hash ^= Mid.GetHashCode();
       if (Uid.Length != 0) hash ^= Uid.GetHashCode();
       if (Version != 0) hash ^= Version.GetHashCode();
-      if (Key != 0) hash ^= Key.GetHashCode();
       if (Session != 0UL) hash ^= Session.GetHashCode();
       if (Ip.Length != 0) hash ^= Ip.GetHashCode();
       if (Port != 0) hash ^= Port.GetHashCode();
@@ -3067,24 +3051,20 @@ namespace Proto3 {
         output.WriteRawTag(24);
         output.WriteUInt32(Version);
       }
-      if (Key != 0) {
-        output.WriteRawTag(32);
-        output.WriteUInt32(Key);
-      }
       if (Session != 0UL) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt64(Session);
       }
       if (Ip.Length != 0) {
-        output.WriteRawTag(50);
+        output.WriteRawTag(42);
         output.WriteString(Ip);
       }
       if (Port != 0) {
-        output.WriteRawTag(56);
+        output.WriteRawTag(48);
         output.WriteUInt32(Port);
       }
       if (Result != 0) {
-        output.WriteRawTag(64);
+        output.WriteRawTag(56);
         output.WriteEnum((int) Result);
       }
     }
@@ -3100,9 +3080,6 @@ namespace Proto3 {
       }
       if (Version != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Version);
-      }
-      if (Key != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
       }
       if (Session != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
@@ -3132,9 +3109,6 @@ namespace Proto3 {
       }
       if (other.Version != 0) {
         Version = other.Version;
-      }
-      if (other.Key != 0) {
-        Key = other.Key;
       }
       if (other.Session != 0UL) {
         Session = other.Session;
@@ -3171,22 +3145,18 @@ namespace Proto3 {
             break;
           }
           case 32: {
-            Key = input.ReadUInt32();
-            break;
-          }
-          case 40: {
             Session = input.ReadUInt64();
             break;
           }
-          case 50: {
+          case 42: {
             Ip = input.ReadString();
             break;
           }
-          case 56: {
+          case 48: {
             Port = input.ReadUInt32();
             break;
           }
-          case 64: {
+          case 56: {
             result_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }
@@ -3226,7 +3196,6 @@ namespace Proto3 {
       mid_ = other.mid_;
       uid_ = other.uid_;
       version_ = other.version_;
-      key_ = other.key_;
       session_ = other.session_;
     }
 
@@ -3268,19 +3237,8 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "key" field.</summary>
-    public const int KeyFieldNumber = 4;
-    private uint key_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Key {
-      get { return key_; }
-      set {
-        key_ = value;
-      }
-    }
-
     /// <summary>Field number for the "session" field.</summary>
-    public const int SessionFieldNumber = 5;
+    public const int SessionFieldNumber = 4;
     private ulong session_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong Session {
@@ -3306,7 +3264,6 @@ namespace Proto3 {
       if (Mid != other.Mid) return false;
       if (Uid != other.Uid) return false;
       if (Version != other.Version) return false;
-      if (Key != other.Key) return false;
       if (Session != other.Session) return false;
       return true;
     }
@@ -3317,7 +3274,6 @@ namespace Proto3 {
       if (Mid != 0) hash ^= Mid.GetHashCode();
       if (Uid.Length != 0) hash ^= Uid.GetHashCode();
       if (Version != 0) hash ^= Version.GetHashCode();
-      if (Key != 0) hash ^= Key.GetHashCode();
       if (Session != 0UL) hash ^= Session.GetHashCode();
       return hash;
     }
@@ -3341,12 +3297,8 @@ namespace Proto3 {
         output.WriteRawTag(24);
         output.WriteUInt32(Version);
       }
-      if (Key != 0) {
-        output.WriteRawTag(32);
-        output.WriteUInt32(Key);
-      }
       if (Session != 0UL) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt64(Session);
       }
     }
@@ -3362,9 +3314,6 @@ namespace Proto3 {
       }
       if (Version != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Version);
-      }
-      if (Key != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
       }
       if (Session != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
@@ -3385,9 +3334,6 @@ namespace Proto3 {
       }
       if (other.Version != 0) {
         Version = other.Version;
-      }
-      if (other.Key != 0) {
-        Key = other.Key;
       }
       if (other.Session != 0UL) {
         Session = other.Session;
@@ -3415,10 +3361,6 @@ namespace Proto3 {
             break;
           }
           case 32: {
-            Key = input.ReadUInt32();
-            break;
-          }
-          case 40: {
             Session = input.ReadUInt64();
             break;
           }
@@ -3453,6 +3395,7 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MsgLCEnter(MsgLCEnter other) : this() {
       mid_ = other.mid_;
+      key_ = other.key_;
       Player = other.player_ != null ? other.Player.Clone() : null;
       Lobby = other.lobby_ != null ? other.Lobby.Clone() : null;
       result_ = other.result_;
@@ -3474,8 +3417,19 @@ namespace Proto3 {
       }
     }
 
+    /// <summary>Field number for the "key" field.</summary>
+    public const int KeyFieldNumber = 2;
+    private uint key_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Key {
+      get { return key_; }
+      set {
+        key_ = value;
+      }
+    }
+
     /// <summary>Field number for the "player" field.</summary>
-    public const int PlayerFieldNumber = 2;
+    public const int PlayerFieldNumber = 3;
     private global::Proto3.player_t player_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.player_t Player {
@@ -3486,7 +3440,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "lobby" field.</summary>
-    public const int LobbyFieldNumber = 3;
+    public const int LobbyFieldNumber = 4;
     private global::Proto3.lobby_t lobby_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.lobby_t Lobby {
@@ -3497,7 +3451,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "result" field.</summary>
-    public const int ResultFieldNumber = 4;
+    public const int ResultFieldNumber = 5;
     private global::Proto3.pb_enum result_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.pb_enum Result {
@@ -3521,6 +3475,7 @@ namespace Proto3 {
         return true;
       }
       if (Mid != other.Mid) return false;
+      if (Key != other.Key) return false;
       if (!object.Equals(Player, other.Player)) return false;
       if (!object.Equals(Lobby, other.Lobby)) return false;
       if (Result != other.Result) return false;
@@ -3531,6 +3486,7 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Key != 0) hash ^= Key.GetHashCode();
       if (player_ != null) hash ^= Player.GetHashCode();
       if (lobby_ != null) hash ^= Lobby.GetHashCode();
       if (Result != 0) hash ^= Result.GetHashCode();
@@ -3548,16 +3504,20 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mid);
       }
+      if (Key != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Key);
+      }
       if (player_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(Player);
       }
       if (lobby_ != null) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(34);
         output.WriteMessage(Lobby);
       }
       if (Result != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteEnum((int) Result);
       }
     }
@@ -3567,6 +3527,9 @@ namespace Proto3 {
       int size = 0;
       if (Mid != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Key != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
       }
       if (player_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Player);
@@ -3587,6 +3550,9 @@ namespace Proto3 {
       }
       if (other.Mid != 0) {
         Mid = other.Mid;
+      }
+      if (other.Key != 0) {
+        Key = other.Key;
       }
       if (other.player_ != null) {
         if (player_ == null) {
@@ -3617,21 +3583,25 @@ namespace Proto3 {
             mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
-          case 18: {
+          case 16: {
+            Key = input.ReadUInt32();
+            break;
+          }
+          case 26: {
             if (player_ == null) {
               player_ = new global::Proto3.player_t();
             }
             input.ReadMessage(player_);
             break;
           }
-          case 26: {
+          case 34: {
             if (lobby_ == null) {
               lobby_ = new global::Proto3.lobby_t();
             }
             input.ReadMessage(lobby_);
             break;
           }
-          case 32: {
+          case 40: {
             result_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }
@@ -3671,7 +3641,6 @@ namespace Proto3 {
       mid_ = other.mid_;
       uid_ = other.uid_;
       version_ = other.version_;
-      key_ = other.key_;
       session_ = other.session_;
       service_ = other.service_;
     }
@@ -3714,19 +3683,8 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "key" field.</summary>
-    public const int KeyFieldNumber = 4;
-    private uint key_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Key {
-      get { return key_; }
-      set {
-        key_ = value;
-      }
-    }
-
     /// <summary>Field number for the "session" field.</summary>
-    public const int SessionFieldNumber = 5;
+    public const int SessionFieldNumber = 4;
     private ulong session_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public ulong Session {
@@ -3737,7 +3695,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "service" field.</summary>
-    public const int ServiceFieldNumber = 6;
+    public const int ServiceFieldNumber = 5;
     private global::Proto3.pb_enum service_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.pb_enum Service {
@@ -3763,7 +3721,6 @@ namespace Proto3 {
       if (Mid != other.Mid) return false;
       if (Uid != other.Uid) return false;
       if (Version != other.Version) return false;
-      if (Key != other.Key) return false;
       if (Session != other.Session) return false;
       if (Service != other.Service) return false;
       return true;
@@ -3775,7 +3732,6 @@ namespace Proto3 {
       if (Mid != 0) hash ^= Mid.GetHashCode();
       if (Uid.Length != 0) hash ^= Uid.GetHashCode();
       if (Version != 0) hash ^= Version.GetHashCode();
-      if (Key != 0) hash ^= Key.GetHashCode();
       if (Session != 0UL) hash ^= Session.GetHashCode();
       if (Service != 0) hash ^= Service.GetHashCode();
       return hash;
@@ -3800,16 +3756,12 @@ namespace Proto3 {
         output.WriteRawTag(24);
         output.WriteUInt32(Version);
       }
-      if (Key != 0) {
-        output.WriteRawTag(32);
-        output.WriteUInt32(Key);
-      }
       if (Session != 0UL) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt64(Session);
       }
       if (Service != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(40);
         output.WriteEnum((int) Service);
       }
     }
@@ -3825,9 +3777,6 @@ namespace Proto3 {
       }
       if (Version != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Version);
-      }
-      if (Key != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
       }
       if (Session != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
@@ -3851,9 +3800,6 @@ namespace Proto3 {
       }
       if (other.Version != 0) {
         Version = other.Version;
-      }
-      if (other.Key != 0) {
-        Key = other.Key;
       }
       if (other.Session != 0UL) {
         Session = other.Session;
@@ -3884,14 +3830,10 @@ namespace Proto3 {
             break;
           }
           case 32: {
-            Key = input.ReadUInt32();
-            break;
-          }
-          case 40: {
             Session = input.ReadUInt64();
             break;
           }
-          case 48: {
+          case 40: {
             service_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }
@@ -4107,7 +4049,6 @@ namespace Proto3 {
       mid_ = other.mid_;
       rule_ = other.rule_;
       category_ = other.category_;
-      key_ = other.key_;
       robot_ = other.robot_;
       parameter_ = other.parameter_;
     }
@@ -4150,19 +4091,8 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "key" field.</summary>
-    public const int KeyFieldNumber = 4;
-    private uint key_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Key {
-      get { return key_; }
-      set {
-        key_ = value;
-      }
-    }
-
     /// <summary>Field number for the "robot" field.</summary>
-    public const int RobotFieldNumber = 5;
+    public const int RobotFieldNumber = 4;
     private uint robot_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint Robot {
@@ -4173,7 +4103,7 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "parameter" field.</summary>
-    public const int ParameterFieldNumber = 6;
+    public const int ParameterFieldNumber = 5;
     private uint parameter_;
     /// <summary>
     /// anti
@@ -4202,7 +4132,6 @@ namespace Proto3 {
       if (Mid != other.Mid) return false;
       if (Rule != other.Rule) return false;
       if (Category != other.Category) return false;
-      if (Key != other.Key) return false;
       if (Robot != other.Robot) return false;
       if (Parameter != other.Parameter) return false;
       return true;
@@ -4214,7 +4143,6 @@ namespace Proto3 {
       if (Mid != 0) hash ^= Mid.GetHashCode();
       if (Rule != 0) hash ^= Rule.GetHashCode();
       if (Category != 0) hash ^= Category.GetHashCode();
-      if (Key != 0) hash ^= Key.GetHashCode();
       if (Robot != 0) hash ^= Robot.GetHashCode();
       if (Parameter != 0) hash ^= Parameter.GetHashCode();
       return hash;
@@ -4239,16 +4167,12 @@ namespace Proto3 {
         output.WriteRawTag(24);
         output.WriteEnum((int) Category);
       }
-      if (Key != 0) {
-        output.WriteRawTag(32);
-        output.WriteUInt32(Key);
-      }
       if (Robot != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteUInt32(Robot);
       }
       if (Parameter != 0) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(40);
         output.WriteUInt32(Parameter);
       }
     }
@@ -4264,9 +4188,6 @@ namespace Proto3 {
       }
       if (Category != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Category);
-      }
-      if (Key != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
       }
       if (Robot != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Robot);
@@ -4290,9 +4211,6 @@ namespace Proto3 {
       }
       if (other.Category != 0) {
         Category = other.Category;
-      }
-      if (other.Key != 0) {
-        Key = other.Key;
       }
       if (other.Robot != 0) {
         Robot = other.Robot;
@@ -4323,14 +4241,10 @@ namespace Proto3 {
             break;
           }
           case 32: {
-            Key = input.ReadUInt32();
-            break;
-          }
-          case 40: {
             Robot = input.ReadUInt32();
             break;
           }
-          case 48: {
+          case 40: {
             Parameter = input.ReadUInt32();
             break;
           }
@@ -4538,7 +4452,6 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MsgCNJoin(MsgCNJoin other) : this() {
       mid_ = other.mid_;
-      key_ = other.key_;
       gameId_ = other.gameId_;
     }
 
@@ -4558,19 +4471,8 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "key" field.</summary>
-    public const int KeyFieldNumber = 2;
-    private uint key_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Key {
-      get { return key_; }
-      set {
-        key_ = value;
-      }
-    }
-
     /// <summary>Field number for the "game_id" field.</summary>
-    public const int GameIdFieldNumber = 3;
+    public const int GameIdFieldNumber = 2;
     private uint gameId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public uint GameId {
@@ -4594,7 +4496,6 @@ namespace Proto3 {
         return true;
       }
       if (Mid != other.Mid) return false;
-      if (Key != other.Key) return false;
       if (GameId != other.GameId) return false;
       return true;
     }
@@ -4603,7 +4504,6 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Mid != 0) hash ^= Mid.GetHashCode();
-      if (Key != 0) hash ^= Key.GetHashCode();
       if (GameId != 0) hash ^= GameId.GetHashCode();
       return hash;
     }
@@ -4619,12 +4519,8 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mid);
       }
-      if (Key != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(Key);
-      }
       if (GameId != 0) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(16);
         output.WriteUInt32(GameId);
       }
     }
@@ -4634,9 +4530,6 @@ namespace Proto3 {
       int size = 0;
       if (Mid != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
-      }
-      if (Key != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
       }
       if (GameId != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameId);
@@ -4651,9 +4544,6 @@ namespace Proto3 {
       }
       if (other.Mid != 0) {
         Mid = other.Mid;
-      }
-      if (other.Key != 0) {
-        Key = other.Key;
       }
       if (other.GameId != 0) {
         GameId = other.GameId;
@@ -4673,10 +4563,6 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Key = input.ReadUInt32();
-            break;
-          }
-          case 24: {
             GameId = input.ReadUInt32();
             break;
           }

@@ -1694,21 +1694,15 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint32 version() const;
   void set_version(::google::protobuf::uint32 value);
 
-  // optional uint32 key = 4;
-  void clear_key();
-  static const int kKeyFieldNumber = 4;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   void clear_session();
-  static const int kSessionFieldNumber = 5;
+  static const int kSessionFieldNumber = 4;
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
-  // optional string ip = 6;
+  // optional string ip = 5;
   void clear_ip();
-  static const int kIpFieldNumber = 6;
+  static const int kIpFieldNumber = 5;
   const ::std::string& ip() const;
   void set_ip(const ::std::string& value);
   void set_ip(const char* value);
@@ -1717,15 +1711,15 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::std::string* release_ip();
   void set_allocated_ip(::std::string* ip);
 
-  // optional uint32 port = 7;
+  // optional uint32 port = 6;
   void clear_port();
-  static const int kPortFieldNumber = 7;
+  static const int kPortFieldNumber = 6;
   ::google::protobuf::uint32 port() const;
   void set_port(::google::protobuf::uint32 value);
 
-  // optional .proto3.pb_enum result = 8;
+  // optional .proto3.pb_enum result = 7;
   void clear_result();
-  static const int kResultFieldNumber = 8;
+  static const int kResultFieldNumber = 7;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -1740,9 +1734,8 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
-  ::google::protobuf::uint32 key_;
-  ::google::protobuf::uint32 port_;
   ::google::protobuf::internal::ArenaStringPtr ip_;
+  ::google::protobuf::uint32 port_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1845,15 +1838,9 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint32 version() const;
   void set_version(::google::protobuf::uint32 value);
 
-  // optional uint32 key = 4;
-  void clear_key();
-  static const int kKeyFieldNumber = 4;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   void clear_session();
-  static const int kSessionFieldNumber = 5;
+  static const int kSessionFieldNumber = 4;
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
@@ -1868,7 +1855,6 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
-  ::google::protobuf::uint32 key_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -1953,27 +1939,33 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional .proto3.player_t player = 2;
+  // optional uint32 key = 2;
+  void clear_key();
+  static const int kKeyFieldNumber = 2;
+  ::google::protobuf::uint32 key() const;
+  void set_key(::google::protobuf::uint32 value);
+
+  // optional .proto3.player_t player = 3;
   bool has_player() const;
   void clear_player();
-  static const int kPlayerFieldNumber = 2;
+  static const int kPlayerFieldNumber = 3;
   const ::proto3::player_t& player() const;
   ::proto3::player_t* mutable_player();
   ::proto3::player_t* release_player();
   void set_allocated_player(::proto3::player_t* player);
 
-  // optional .proto3.lobby_t lobby = 3;
+  // optional .proto3.lobby_t lobby = 4;
   bool has_lobby() const;
   void clear_lobby();
-  static const int kLobbyFieldNumber = 3;
+  static const int kLobbyFieldNumber = 4;
   const ::proto3::lobby_t& lobby() const;
   ::proto3::lobby_t* mutable_lobby();
   ::proto3::lobby_t* release_lobby();
   void set_allocated_lobby(::proto3::lobby_t* lobby);
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 5;
   void clear_result();
-  static const int kResultFieldNumber = 4;
+  static const int kResultFieldNumber = 5;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -1984,10 +1976,11 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::proto3::player_t* player_;
   int mid_;
-  int result_;
+  ::google::protobuf::uint32 key_;
+  ::proto3::player_t* player_;
   ::proto3::lobby_t* lobby_;
+  int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2089,21 +2082,15 @@ class MsgCNEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint32 version() const;
   void set_version(::google::protobuf::uint32 value);
 
-  // optional uint32 key = 4;
-  void clear_key();
-  static const int kKeyFieldNumber = 4;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   void clear_session();
-  static const int kSessionFieldNumber = 5;
+  static const int kSessionFieldNumber = 4;
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
-  // optional .proto3.pb_enum service = 6;
+  // optional .proto3.pb_enum service = 5;
   void clear_service();
-  static const int kServiceFieldNumber = 6;
+  static const int kServiceFieldNumber = 5;
   ::proto3::pb_enum service() const;
   void set_service(::proto3::pb_enum value);
 
@@ -2118,7 +2105,6 @@ class MsgCNEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
-  ::google::protobuf::uint32 key_;
   int service_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2325,21 +2311,15 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_enum category() const;
   void set_category(::proto3::pb_enum value);
 
-  // optional uint32 key = 4;
-  void clear_key();
-  static const int kKeyFieldNumber = 4;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
-
-  // optional uint32 robot = 5;
+  // optional uint32 robot = 4;
   void clear_robot();
-  static const int kRobotFieldNumber = 5;
+  static const int kRobotFieldNumber = 4;
   ::google::protobuf::uint32 robot() const;
   void set_robot(::google::protobuf::uint32 value);
 
-  // optional uint32 parameter = 6;
+  // optional uint32 parameter = 5;
   void clear_parameter();
-  static const int kParameterFieldNumber = 6;
+  static const int kParameterFieldNumber = 5;
   ::google::protobuf::uint32 parameter() const;
   void set_parameter(::google::protobuf::uint32 value);
 
@@ -2353,7 +2333,6 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   int mid_;
   int rule_;
   int category_;
-  ::google::protobuf::uint32 key_;
   ::google::protobuf::uint32 robot_;
   ::google::protobuf::uint32 parameter_;
   mutable int _cached_size_;
@@ -2546,15 +2525,9 @@ class MsgCNJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 key = 2;
-  void clear_key();
-  static const int kKeyFieldNumber = 2;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
-
-  // optional uint32 game_id = 3;
+  // optional uint32 game_id = 2;
   void clear_game_id();
-  static const int kGameIdFieldNumber = 3;
+  static const int kGameIdFieldNumber = 2;
   ::google::protobuf::uint32 game_id() const;
   void set_game_id(::google::protobuf::uint32 value);
 
@@ -2566,7 +2539,6 @@ class MsgCNJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 key_;
   ::google::protobuf::uint32 game_id_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -5258,21 +5230,7 @@ inline void MsgSCLogin::set_version(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.version)
 }
 
-// optional uint32 key = 4;
-inline void MsgSCLogin::clear_key() {
-  key_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgSCLogin::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.key)
-  return key_;
-}
-inline void MsgSCLogin::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.key)
-}
-
-// optional uint64 session = 5;
+// optional uint64 session = 4;
 inline void MsgSCLogin::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -5286,7 +5244,7 @@ inline void MsgSCLogin::set_session(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.session)
 }
 
-// optional string ip = 6;
+// optional string ip = 5;
 inline void MsgSCLogin::clear_ip() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -5330,7 +5288,7 @@ inline void MsgSCLogin::set_allocated_ip(::std::string* ip) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgSCLogin.ip)
 }
 
-// optional uint32 port = 7;
+// optional uint32 port = 6;
 inline void MsgSCLogin::clear_port() {
   port_ = 0u;
 }
@@ -5344,7 +5302,7 @@ inline void MsgSCLogin::set_port(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.port)
 }
 
-// optional .proto3.pb_enum result = 8;
+// optional .proto3.pb_enum result = 7;
 inline void MsgSCLogin::clear_result() {
   result_ = 0;
 }
@@ -5434,21 +5392,7 @@ inline void MsgCLEnter::set_version(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.version)
 }
 
-// optional uint32 key = 4;
-inline void MsgCLEnter::clear_key() {
-  key_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCLEnter::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.key)
-  return key_;
-}
-inline void MsgCLEnter::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.key)
-}
-
-// optional uint64 session = 5;
+// optional uint64 session = 4;
 inline void MsgCLEnter::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -5480,7 +5424,21 @@ inline void MsgLCEnter::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
 }
 
-// optional .proto3.player_t player = 2;
+// optional uint32 key = 2;
+inline void MsgLCEnter::clear_key() {
+  key_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgLCEnter::key() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.key)
+  return key_;
+}
+inline void MsgLCEnter::set_key(::google::protobuf::uint32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.key)
+}
+
+// optional .proto3.player_t player = 3;
 inline bool MsgLCEnter::has_player() const {
   return !_is_default_instance_ && player_ != NULL;
 }
@@ -5522,7 +5480,7 @@ inline void MsgLCEnter::set_allocated_player(::proto3::player_t* player) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCEnter.player)
 }
 
-// optional .proto3.lobby_t lobby = 3;
+// optional .proto3.lobby_t lobby = 4;
 inline bool MsgLCEnter::has_lobby() const {
   return !_is_default_instance_ && lobby_ != NULL;
 }
@@ -5564,7 +5522,7 @@ inline void MsgLCEnter::set_allocated_lobby(::proto3::lobby_t* lobby) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCEnter.lobby)
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 5;
 inline void MsgLCEnter::clear_result() {
   result_ = 0;
 }
@@ -5654,21 +5612,7 @@ inline void MsgCNEnter::set_version(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.version)
 }
 
-// optional uint32 key = 4;
-inline void MsgCNEnter::clear_key() {
-  key_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCNEnter::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.key)
-  return key_;
-}
-inline void MsgCNEnter::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.key)
-}
-
-// optional uint64 session = 5;
+// optional uint64 session = 4;
 inline void MsgCNEnter::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -5682,7 +5626,7 @@ inline void MsgCNEnter::set_session(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.session)
 }
 
-// optional .proto3.pb_enum service = 6;
+// optional .proto3.pb_enum service = 5;
 inline void MsgCNEnter::clear_service() {
   service_ = 0;
 }
@@ -5816,21 +5760,7 @@ inline void MsgCNCreate::set_category(::proto3::pb_enum value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.category)
 }
 
-// optional uint32 key = 4;
-inline void MsgCNCreate::clear_key() {
-  key_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCNCreate::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.key)
-  return key_;
-}
-inline void MsgCNCreate::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.key)
-}
-
-// optional uint32 robot = 5;
+// optional uint32 robot = 4;
 inline void MsgCNCreate::clear_robot() {
   robot_ = 0u;
 }
@@ -5844,7 +5774,7 @@ inline void MsgCNCreate::set_robot(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.robot)
 }
 
-// optional uint32 parameter = 6;
+// optional uint32 parameter = 5;
 inline void MsgCNCreate::clear_parameter() {
   parameter_ = 0u;
 }
@@ -5922,21 +5852,7 @@ inline void MsgCNJoin::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.mid)
 }
 
-// optional uint32 key = 2;
-inline void MsgCNJoin::clear_key() {
-  key_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCNJoin::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNJoin.key)
-  return key_;
-}
-inline void MsgCNJoin::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.key)
-}
-
-// optional uint32 game_id = 3;
+// optional uint32 game_id = 2;
 inline void MsgCNJoin::clear_game_id() {
   game_id_ = 0u;
 }

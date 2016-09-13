@@ -43,8 +43,7 @@ public class CreatePanel : MonoBehaviour {
 		MsgCNEnter msg=new MsgCNEnter();
 		msg.Mid=pb_msg.MsgCnEnter;
 		msg.Version=100;
-		msg.Key=gameId%(uint)pb_enum.DefMaxNodes;
-		
+
 		Main.Instance.ws.Send<MsgCNEnter>(msg.Mid,msg);
 	}
 
@@ -53,16 +52,14 @@ public class CreatePanel : MonoBehaviour {
 			MsgCNCreate msgC=new MsgCNCreate();
 			msgC.Mid=pb_msg.MsgCnCreate;
 			msgC.Rule=pb_enum.RuleDdz;
-			msgC.Key=gameId%(uint)pb_enum.DefMaxNodes;
-			
+
 			Main.Instance.ws.Send<MsgCNCreate>(msgC.Mid,msgC);
-			Debug.Log("create game by key "+msgC.Key);
+			Debug.Log("create game by key "+gameId%(uint)pb_enum.DefMaxNodes);
 		}else{
 			MsgCNJoin msgJ=new MsgCNJoin();
 			msgJ.Mid=pb_msg.MsgCnJoin;
 			msgJ.GameId=gameId;
-			msgJ.Key=gameId%(uint)pb_enum.DefMaxNodes;
-			
+
 			Main.Instance.ws.Send<MsgCNJoin>(msgJ.Mid,msgJ);
 			Debug.Log("join game by id "+gameId);
 		}

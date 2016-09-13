@@ -207,11 +207,10 @@ message MsgSCLogin{
 pb_msg mid				=1;
 string uid				=2;
 uint32 version			=3;
-uint32 key              =4;
-uint64 session          =5;
-string ip				=6;
-uint32 port             =7;
-pb_enum result			=8;
+uint64 session          =4;
+string ip				=5;
+uint32 port             =6;
+pb_enum result			=7;
 };
 
 //	Client	 --  Lobby
@@ -220,16 +219,16 @@ message MsgCLEnter{
 pb_msg mid				=1;
 string uid				=2;
 uint32 version			=3;
-uint32 key              =4;
-uint64 session          =5;
+uint64 session          =4;
 };
 
 message MsgLCEnter{
 
 pb_msg mid				=1;
-player_t player         =2;
-lobby_t lobby           =3;
-pb_enum result			=4;
+uint32 key              =2;
+player_t player         =3;
+lobby_t lobby           =4;
+pb_enum result			=5;
 };
 
 //	Client	 --  Node
@@ -238,9 +237,8 @@ message MsgCNEnter{
 pb_msg mid				=1;
 string uid				=2;
 uint32 version			=3;
-uint32 key              =4;
-uint64 session          =5;
-pb_enum service         =6;
+uint64 session          =4;
+pb_enum service         =5;
 };
 
 message MsgNCEnter{
@@ -255,9 +253,8 @@ message MsgCNCreate{
 pb_msg mid              =1;
 pb_enum rule            =2;
 pb_enum category        =3;
-uint32 key              =4;
-uint32 robot            =5;
-uint32 parameter        =6; //anti
+uint32 robot            =4;
+uint32 parameter        =5; //anti
 };
 
 message MsgNCCreate{
@@ -270,8 +267,7 @@ pb_enum result			=3;
 message MsgCNJoin{
 
 pb_msg mid              =1;
-uint32 key              =2;
-uint32 game_id			=3;
+uint32 game_id			=2;
 };
 
 message MsgNCJoin{

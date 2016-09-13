@@ -5671,7 +5671,6 @@ void MsgCSLogin::set_allocated_user(::proto3::user_t* user) {
 const int MsgSCLogin::kMidFieldNumber;
 const int MsgSCLogin::kUidFieldNumber;
 const int MsgSCLogin::kVersionFieldNumber;
-const int MsgSCLogin::kKeyFieldNumber;
 const int MsgSCLogin::kSessionFieldNumber;
 const int MsgSCLogin::kIpFieldNumber;
 const int MsgSCLogin::kPortFieldNumber;
@@ -5703,7 +5702,6 @@ void MsgSCLogin::SharedCtor() {
   mid_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   version_ = 0u;
-  key_ = 0u;
   session_ = GOOGLE_ULONGLONG(0);
   ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   port_ = 0u;
@@ -5768,10 +5766,10 @@ void MsgSCLogin::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, port_);
+  ZR_(mid_, session_);
+  ZR_(port_, result_);
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  result_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -5831,28 +5829,13 @@ bool MsgSCLogin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_key;
+        if (input->ExpectTag(32)) goto parse_session;
         break;
       }
 
-      // optional uint32 key = 4;
+      // optional uint64 session = 4;
       case 4: {
         if (tag == 32) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(40)) goto parse_session;
-        break;
-      }
-
-      // optional uint64 session = 5;
-      case 5: {
-        if (tag == 40) {
          parse_session:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -5861,13 +5844,13 @@ bool MsgSCLogin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_ip;
+        if (input->ExpectTag(42)) goto parse_ip;
         break;
       }
 
-      // optional string ip = 6;
-      case 6: {
-        if (tag == 50) {
+      // optional string ip = 5;
+      case 5: {
+        if (tag == 42) {
          parse_ip:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_ip()));
@@ -5878,13 +5861,13 @@ bool MsgSCLogin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(56)) goto parse_port;
+        if (input->ExpectTag(48)) goto parse_port;
         break;
       }
 
-      // optional uint32 port = 7;
-      case 7: {
-        if (tag == 56) {
+      // optional uint32 port = 6;
+      case 6: {
+        if (tag == 48) {
          parse_port:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -5893,13 +5876,13 @@ bool MsgSCLogin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(64)) goto parse_result;
+        if (input->ExpectTag(56)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 8;
-      case 8: {
-        if (tag == 64) {
+      // optional .proto3.pb_enum result = 7;
+      case 7: {
+        if (tag == 56) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -5958,35 +5941,30 @@ void MsgSCLogin::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->version(), output);
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->key(), output);
-  }
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   if (this->session() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->session(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->session(), output);
   }
 
-  // optional string ip = 6;
+  // optional string ip = 5;
   if (this->ip().size() > 0) {
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->ip().data(), this->ip().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
       "proto3.MsgSCLogin.ip");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      6, this->ip(), output);
+      5, this->ip(), output);
   }
 
-  // optional uint32 port = 7;
+  // optional uint32 port = 6;
   if (this->port() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->port(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->port(), output);
   }
 
-  // optional .proto3.pb_enum result = 8;
+  // optional .proto3.pb_enum result = 7;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      8, this->result(), output);
+      7, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgSCLogin)
@@ -6016,35 +5994,28 @@ int MsgSCLogin::ByteSize() const {
         this->version());
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->key());
-  }
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   if (this->session() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->session());
   }
 
-  // optional string ip = 6;
+  // optional string ip = 5;
   if (this->ip().size() > 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::StringSize(
         this->ip());
   }
 
-  // optional uint32 port = 7;
+  // optional uint32 port = 6;
   if (this->port() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->port());
   }
 
-  // optional .proto3.pb_enum result = 8;
+  // optional .proto3.pb_enum result = 7;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -6075,9 +6046,6 @@ void MsgSCLogin::MergeFrom(const MsgSCLogin& from) {
   }
   if (from.version() != 0) {
     set_version(from.version());
-  }
-  if (from.key() != 0) {
-    set_key(from.key());
   }
   if (from.session() != 0) {
     set_session(from.session());
@@ -6114,7 +6082,6 @@ void MsgSCLogin::InternalSwap(MsgSCLogin* other) {
   std::swap(mid_, other->mid_);
   uid_.Swap(&other->uid_);
   std::swap(version_, other->version_);
-  std::swap(key_, other->key_);
   std::swap(session_, other->session_);
   ip_.Swap(&other->ip_);
   std::swap(port_, other->port_);
@@ -6202,21 +6169,7 @@ void MsgSCLogin::clear_version() {
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.version)
 }
 
-// optional uint32 key = 4;
-void MsgSCLogin::clear_key() {
-  key_ = 0u;
-}
- ::google::protobuf::uint32 MsgSCLogin::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.key)
-  return key_;
-}
- void MsgSCLogin::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.key)
-}
-
-// optional uint64 session = 5;
+// optional uint64 session = 4;
 void MsgSCLogin::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -6230,7 +6183,7 @@ void MsgSCLogin::clear_session() {
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.session)
 }
 
-// optional string ip = 6;
+// optional string ip = 5;
 void MsgSCLogin::clear_ip() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -6274,7 +6227,7 @@ void MsgSCLogin::clear_ip() {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgSCLogin.ip)
 }
 
-// optional uint32 port = 7;
+// optional uint32 port = 6;
 void MsgSCLogin::clear_port() {
   port_ = 0u;
 }
@@ -6288,7 +6241,7 @@ void MsgSCLogin::clear_port() {
   // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.port)
 }
 
-// optional .proto3.pb_enum result = 8;
+// optional .proto3.pb_enum result = 7;
 void MsgSCLogin::clear_result() {
   result_ = 0;
 }
@@ -6310,7 +6263,6 @@ void MsgSCLogin::clear_result() {
 const int MsgCLEnter::kMidFieldNumber;
 const int MsgCLEnter::kUidFieldNumber;
 const int MsgCLEnter::kVersionFieldNumber;
-const int MsgCLEnter::kKeyFieldNumber;
 const int MsgCLEnter::kSessionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -6339,7 +6291,6 @@ void MsgCLEnter::SharedCtor() {
   mid_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   version_ = 0u;
-  key_ = 0u;
   session_ = GOOGLE_ULONGLONG(0);
 }
 
@@ -6400,7 +6351,7 @@ void MsgCLEnter::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, key_);
+  ZR_(mid_, session_);
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 
 #undef ZR_HELPER_
@@ -6461,28 +6412,13 @@ bool MsgCLEnter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_key;
+        if (input->ExpectTag(32)) goto parse_session;
         break;
       }
 
-      // optional uint32 key = 4;
+      // optional uint64 session = 4;
       case 4: {
         if (tag == 32) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(40)) goto parse_session;
-        break;
-      }
-
-      // optional uint64 session = 5;
-      case 5: {
-        if (tag == 40) {
          parse_session:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -6540,14 +6476,9 @@ void MsgCLEnter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->version(), output);
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->key(), output);
-  }
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   if (this->session() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->session(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->session(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCLEnter)
@@ -6577,14 +6508,7 @@ int MsgCLEnter::ByteSize() const {
         this->version());
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->key());
-  }
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   if (this->session() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
@@ -6617,9 +6541,6 @@ void MsgCLEnter::MergeFrom(const MsgCLEnter& from) {
   if (from.version() != 0) {
     set_version(from.version());
   }
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
   if (from.session() != 0) {
     set_session(from.session());
   }
@@ -6645,7 +6566,6 @@ void MsgCLEnter::InternalSwap(MsgCLEnter* other) {
   std::swap(mid_, other->mid_);
   uid_.Swap(&other->uid_);
   std::swap(version_, other->version_);
-  std::swap(key_, other->key_);
   std::swap(session_, other->session_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -6730,21 +6650,7 @@ void MsgCLEnter::clear_version() {
   // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.version)
 }
 
-// optional uint32 key = 4;
-void MsgCLEnter::clear_key() {
-  key_ = 0u;
-}
- ::google::protobuf::uint32 MsgCLEnter::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.key)
-  return key_;
-}
- void MsgCLEnter::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.key)
-}
-
-// optional uint64 session = 5;
+// optional uint64 session = 4;
 void MsgCLEnter::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -6764,6 +6670,7 @@ void MsgCLEnter::clear_session() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgLCEnter::kMidFieldNumber;
+const int MsgLCEnter::kKeyFieldNumber;
 const int MsgLCEnter::kPlayerFieldNumber;
 const int MsgLCEnter::kLobbyFieldNumber;
 const int MsgLCEnter::kResultFieldNumber;
@@ -6803,6 +6710,7 @@ void MsgLCEnter::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
+  key_ = 0u;
   player_ = NULL;
   lobby_ = NULL;
   result_ = 0;
@@ -6866,11 +6774,12 @@ void MsgLCEnter::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, result_);
+  ZR_(mid_, key_);
   if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
   player_ = NULL;
   if (GetArenaNoVirtual() == NULL && lobby_ != NULL) delete lobby_;
   lobby_ = NULL;
+  result_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -6898,39 +6807,54 @@ bool MsgLCEnter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_player;
+        if (input->ExpectTag(16)) goto parse_key;
         break;
       }
 
-      // optional .proto3.player_t player = 2;
+      // optional uint32 key = 2;
       case 2: {
-        if (tag == 18) {
+        if (tag == 16) {
+         parse_key:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &key_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_player;
+        break;
+      }
+
+      // optional .proto3.player_t player = 3;
+      case 3: {
+        if (tag == 26) {
          parse_player:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_player()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_lobby;
+        if (input->ExpectTag(34)) goto parse_lobby;
         break;
       }
 
-      // optional .proto3.lobby_t lobby = 3;
-      case 3: {
-        if (tag == 26) {
+      // optional .proto3.lobby_t lobby = 4;
+      case 4: {
+        if (tag == 34) {
          parse_lobby:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_lobby()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_result;
+        if (input->ExpectTag(40)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 4;
-      case 4: {
-        if (tag == 32) {
+      // optional .proto3.pb_enum result = 5;
+      case 5: {
+        if (tag == 40) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -6974,22 +6898,27 @@ void MsgLCEnter::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional .proto3.player_t player = 2;
+  // optional uint32 key = 2;
+  if (this->key() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->key(), output);
+  }
+
+  // optional .proto3.player_t player = 3;
   if (this->has_player()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, *this->player_, output);
+      3, *this->player_, output);
   }
 
-  // optional .proto3.lobby_t lobby = 3;
+  // optional .proto3.lobby_t lobby = 4;
   if (this->has_lobby()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, *this->lobby_, output);
+      4, *this->lobby_, output);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 5;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->result(), output);
+      5, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgLCEnter)
@@ -7005,21 +6934,28 @@ int MsgLCEnter::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional .proto3.player_t player = 2;
+  // optional uint32 key = 2;
+  if (this->key() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->key());
+  }
+
+  // optional .proto3.player_t player = 3;
   if (this->has_player()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->player_);
   }
 
-  // optional .proto3.lobby_t lobby = 3;
+  // optional .proto3.lobby_t lobby = 4;
   if (this->has_lobby()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->lobby_);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 5;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -7043,6 +6979,9 @@ void MsgLCEnter::MergeFrom(const MsgLCEnter& from) {
   }
   if (from.mid() != 0) {
     set_mid(from.mid());
+  }
+  if (from.key() != 0) {
+    set_key(from.key());
   }
   if (from.has_player()) {
     mutable_player()->::proto3::player_t::MergeFrom(from.player());
@@ -7073,6 +7012,7 @@ void MsgLCEnter::Swap(MsgLCEnter* other) {
 }
 void MsgLCEnter::InternalSwap(MsgLCEnter* other) {
   std::swap(mid_, other->mid_);
+  std::swap(key_, other->key_);
   std::swap(player_, other->player_);
   std::swap(lobby_, other->lobby_);
   std::swap(result_, other->result_);
@@ -7101,7 +7041,21 @@ void MsgLCEnter::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
 }
 
-// optional .proto3.player_t player = 2;
+// optional uint32 key = 2;
+void MsgLCEnter::clear_key() {
+  key_ = 0u;
+}
+ ::google::protobuf::uint32 MsgLCEnter::key() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.key)
+  return key_;
+}
+ void MsgLCEnter::set_key(::google::protobuf::uint32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.key)
+}
+
+// optional .proto3.player_t player = 3;
 bool MsgLCEnter::has_player() const {
   return !_is_default_instance_ && player_ != NULL;
 }
@@ -7143,7 +7097,7 @@ void MsgLCEnter::set_allocated_player(::proto3::player_t* player) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCEnter.player)
 }
 
-// optional .proto3.lobby_t lobby = 3;
+// optional .proto3.lobby_t lobby = 4;
 bool MsgLCEnter::has_lobby() const {
   return !_is_default_instance_ && lobby_ != NULL;
 }
@@ -7185,7 +7139,7 @@ void MsgLCEnter::set_allocated_lobby(::proto3::lobby_t* lobby) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCEnter.lobby)
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 5;
 void MsgLCEnter::clear_result() {
   result_ = 0;
 }
@@ -7207,7 +7161,6 @@ void MsgLCEnter::clear_result() {
 const int MsgCNEnter::kMidFieldNumber;
 const int MsgCNEnter::kUidFieldNumber;
 const int MsgCNEnter::kVersionFieldNumber;
-const int MsgCNEnter::kKeyFieldNumber;
 const int MsgCNEnter::kSessionFieldNumber;
 const int MsgCNEnter::kServiceFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -7237,7 +7190,6 @@ void MsgCNEnter::SharedCtor() {
   mid_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   version_ = 0u;
-  key_ = 0u;
   session_ = GOOGLE_ULONGLONG(0);
   service_ = 0;
 }
@@ -7360,28 +7312,13 @@ bool MsgCNEnter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_key;
+        if (input->ExpectTag(32)) goto parse_session;
         break;
       }
 
-      // optional uint32 key = 4;
+      // optional uint64 session = 4;
       case 4: {
         if (tag == 32) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(40)) goto parse_session;
-        break;
-      }
-
-      // optional uint64 session = 5;
-      case 5: {
-        if (tag == 40) {
          parse_session:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -7390,13 +7327,13 @@ bool MsgCNEnter::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_service;
+        if (input->ExpectTag(40)) goto parse_service;
         break;
       }
 
-      // optional .proto3.pb_enum service = 6;
-      case 6: {
-        if (tag == 48) {
+      // optional .proto3.pb_enum service = 5;
+      case 5: {
+        if (tag == 40) {
          parse_service:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -7455,20 +7392,15 @@ void MsgCNEnter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->version(), output);
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->key(), output);
-  }
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   if (this->session() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->session(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->session(), output);
   }
 
-  // optional .proto3.pb_enum service = 6;
+  // optional .proto3.pb_enum service = 5;
   if (this->service() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      6, this->service(), output);
+      5, this->service(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNEnter)
@@ -7498,21 +7430,14 @@ int MsgCNEnter::ByteSize() const {
         this->version());
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->key());
-  }
-
-  // optional uint64 session = 5;
+  // optional uint64 session = 4;
   if (this->session() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
         this->session());
   }
 
-  // optional .proto3.pb_enum service = 6;
+  // optional .proto3.pb_enum service = 5;
   if (this->service() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->service());
@@ -7544,9 +7469,6 @@ void MsgCNEnter::MergeFrom(const MsgCNEnter& from) {
   if (from.version() != 0) {
     set_version(from.version());
   }
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
   if (from.session() != 0) {
     set_session(from.session());
   }
@@ -7575,7 +7497,6 @@ void MsgCNEnter::InternalSwap(MsgCNEnter* other) {
   std::swap(mid_, other->mid_);
   uid_.Swap(&other->uid_);
   std::swap(version_, other->version_);
-  std::swap(key_, other->key_);
   std::swap(session_, other->session_);
   std::swap(service_, other->service_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -7661,21 +7582,7 @@ void MsgCNEnter::clear_version() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.version)
 }
 
-// optional uint32 key = 4;
-void MsgCNEnter::clear_key() {
-  key_ = 0u;
-}
- ::google::protobuf::uint32 MsgCNEnter::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.key)
-  return key_;
-}
- void MsgCNEnter::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.key)
-}
-
-// optional uint64 session = 5;
+// optional uint64 session = 4;
 void MsgCNEnter::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -7689,7 +7596,7 @@ void MsgCNEnter::clear_session() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.session)
 }
 
-// optional .proto3.pb_enum service = 6;
+// optional .proto3.pb_enum service = 5;
 void MsgCNEnter::clear_service() {
   service_ = 0;
 }
@@ -8069,7 +7976,6 @@ void MsgNCEnter::clear_result() {
 const int MsgCNCreate::kMidFieldNumber;
 const int MsgCNCreate::kRuleFieldNumber;
 const int MsgCNCreate::kCategoryFieldNumber;
-const int MsgCNCreate::kKeyFieldNumber;
 const int MsgCNCreate::kRobotFieldNumber;
 const int MsgCNCreate::kParameterFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -8098,7 +8004,6 @@ void MsgCNCreate::SharedCtor() {
   mid_ = 0;
   rule_ = 0;
   category_ = 0;
-  key_ = 0u;
   robot_ = 0u;
   parameter_ = 0u;
 }
@@ -8219,28 +8124,13 @@ bool MsgCNCreate::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(32)) goto parse_key;
+        if (input->ExpectTag(32)) goto parse_robot;
         break;
       }
 
-      // optional uint32 key = 4;
+      // optional uint32 robot = 4;
       case 4: {
         if (tag == 32) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(40)) goto parse_robot;
-        break;
-      }
-
-      // optional uint32 robot = 5;
-      case 5: {
-        if (tag == 40) {
          parse_robot:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -8249,13 +8139,13 @@ bool MsgCNCreate::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_parameter;
+        if (input->ExpectTag(40)) goto parse_parameter;
         break;
       }
 
-      // optional uint32 parameter = 6;
-      case 6: {
-        if (tag == 48) {
+      // optional uint32 parameter = 5;
+      case 5: {
+        if (tag == 40) {
          parse_parameter:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -8310,19 +8200,14 @@ void MsgCNCreate::SerializeWithCachedSizes(
       3, this->category(), output);
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->key(), output);
-  }
-
-  // optional uint32 robot = 5;
+  // optional uint32 robot = 4;
   if (this->robot() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->robot(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->robot(), output);
   }
 
-  // optional uint32 parameter = 6;
+  // optional uint32 parameter = 5;
   if (this->parameter() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->parameter(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->parameter(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNCreate)
@@ -8350,21 +8235,14 @@ int MsgCNCreate::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->category());
   }
 
-  // optional uint32 key = 4;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->key());
-  }
-
-  // optional uint32 robot = 5;
+  // optional uint32 robot = 4;
   if (this->robot() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->robot());
   }
 
-  // optional uint32 parameter = 6;
+  // optional uint32 parameter = 5;
   if (this->parameter() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -8396,9 +8274,6 @@ void MsgCNCreate::MergeFrom(const MsgCNCreate& from) {
   if (from.category() != 0) {
     set_category(from.category());
   }
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
   if (from.robot() != 0) {
     set_robot(from.robot());
   }
@@ -8427,7 +8302,6 @@ void MsgCNCreate::InternalSwap(MsgCNCreate* other) {
   std::swap(mid_, other->mid_);
   std::swap(rule_, other->rule_);
   std::swap(category_, other->category_);
-  std::swap(key_, other->key_);
   std::swap(robot_, other->robot_);
   std::swap(parameter_, other->parameter_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -8483,21 +8357,7 @@ void MsgCNCreate::clear_category() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.category)
 }
 
-// optional uint32 key = 4;
-void MsgCNCreate::clear_key() {
-  key_ = 0u;
-}
- ::google::protobuf::uint32 MsgCNCreate::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.key)
-  return key_;
-}
- void MsgCNCreate::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.key)
-}
-
-// optional uint32 robot = 5;
+// optional uint32 robot = 4;
 void MsgCNCreate::clear_robot() {
   robot_ = 0u;
 }
@@ -8511,7 +8371,7 @@ void MsgCNCreate::clear_robot() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.robot)
 }
 
-// optional uint32 parameter = 6;
+// optional uint32 parameter = 5;
 void MsgCNCreate::clear_parameter() {
   parameter_ = 0u;
 }
@@ -8853,7 +8713,6 @@ void MsgNCCreate::clear_result() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCNJoin::kMidFieldNumber;
-const int MsgCNJoin::kKeyFieldNumber;
 const int MsgCNJoin::kGameIdFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -8879,7 +8738,6 @@ void MsgCNJoin::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  key_ = 0u;
   game_id_ = 0u;
 }
 
@@ -8967,28 +8825,13 @@ bool MsgCNJoin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_key;
+        if (input->ExpectTag(16)) goto parse_game_id;
         break;
       }
 
-      // optional uint32 key = 2;
+      // optional uint32 game_id = 2;
       case 2: {
         if (tag == 16) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_game_id;
-        break;
-      }
-
-      // optional uint32 game_id = 3;
-      case 3: {
-        if (tag == 24) {
          parse_game_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
@@ -9031,14 +8874,9 @@ void MsgCNJoin::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional uint32 key = 2;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->key(), output);
-  }
-
-  // optional uint32 game_id = 3;
+  // optional uint32 game_id = 2;
   if (this->game_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->game_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->game_id(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNJoin)
@@ -9054,14 +8892,7 @@ int MsgCNJoin::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional uint32 key = 2;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->key());
-  }
-
-  // optional uint32 game_id = 3;
+  // optional uint32 game_id = 2;
   if (this->game_id() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -9087,9 +8918,6 @@ void MsgCNJoin::MergeFrom(const MsgCNJoin& from) {
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
   if (from.game_id() != 0) {
     set_game_id(from.game_id());
   }
@@ -9113,7 +8941,6 @@ void MsgCNJoin::Swap(MsgCNJoin* other) {
 }
 void MsgCNJoin::InternalSwap(MsgCNJoin* other) {
   std::swap(mid_, other->mid_);
-  std::swap(key_, other->key_);
   std::swap(game_id_, other->game_id_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -9140,21 +8967,7 @@ void MsgCNJoin::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.mid)
 }
 
-// optional uint32 key = 2;
-void MsgCNJoin::clear_key() {
-  key_ = 0u;
-}
- ::google::protobuf::uint32 MsgCNJoin::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNJoin.key)
-  return key_;
-}
- void MsgCNJoin::set_key(::google::protobuf::uint32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.key)
-}
-
-// optional uint32 game_id = 3;
+// optional uint32 game_id = 2;
 void MsgCNJoin::clear_game_id() {
   game_id_ = 0u;
 }

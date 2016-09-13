@@ -26,7 +26,6 @@ void MsgHandler::on_read(keye::svc_handler& sh, void* buf, size_t sz){
                 if(robot::sRobot->game_id<0){
                     MsgCNCreate omsg;
                     omsg.set_mid(MSG_CN_CREATE);
-                    omsg.set_key(robot::sRobot->key);   //use connect key as game key
                     omsg.set_rule(proto3::pb_enum::RULE_DDZ);
                     omsg.set_category(proto3::pb_enum::CATEGORY_EASY);
                     omsg.set_robot(2);
