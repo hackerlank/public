@@ -32,6 +32,7 @@ public class GamePanel : MonoBehaviour {
 			Card.Create(delegate(Card card) {
 				card.transform.SetParent(HandArea);
 				card.transform.localScale=Vector3.one;
+				card.Static=false;
 			});
 		}
 	}

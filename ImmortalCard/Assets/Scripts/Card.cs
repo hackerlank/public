@@ -9,7 +9,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	public Image image;
 
 	bool _static=true;
-	bool Static{
+	public bool Static{
 		set{_static=value;}
 	}
 
@@ -55,6 +55,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 
 	public void DiscardTo(Transform group,float scalar=1f){
+		_static=true;
 		transform.SetParent(group);
 		transform.localScale=Vector3.one;
 		le.minWidth*=scalar;

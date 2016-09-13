@@ -54,7 +54,7 @@ public class Utils {
 		}
 	}
 	
-	public static float monoticks{
+	public static float nanotime{
 		get{
 			return 0.001f*(float)(System.DateTime.Now.Ticks/10000%100000000);
 		}
