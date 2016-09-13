@@ -10,17 +10,11 @@ public class MsgHandler{
 	public static void onOpen(string error){
 		if(!Connected){
 			Connected=true;
-			
 			Debug.Log("----OnOpen");
-			Random.seed=(int)Utils.time;
-			var M=(uint)pb_enum.DefMaxNodes;
-			var key=((uint)Random.value*M)%M;
-			MsgCNEnter msg=new MsgCNEnter();
-			msg.Mid=pb_msg.MsgCnEnter;
-			msg.Version=100;
-			msg.Key=key;
-			
-			Main.Instance.ws.Send<MsgCNEnter>(msg.Mid,msg);
+			Loom.QueueOnMainThread(delegate{
+				if(CreatePanel.Instance!=null)
+					CreatePanel.Instance.OnConnected();
+			});
 		}
 	}
 	public static void onClose(string error){

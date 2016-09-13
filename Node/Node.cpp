@@ -33,20 +33,23 @@ void Node::registerRule(std::shared_ptr<GameRule> game){
     gameRules[id]=game;
 }
 
-bool Node::createGame(Player& player,proto3::MsgCNCreate& msg){
+std::shared_ptr<Game> Node::createGame(Player& player,proto3::MsgCNCreate& msg){
+    std::shared_ptr<Game> gameptr;
+    auto key=player.getKey();
     auto rule=gameRules.find(msg.rule());
-    if(rule!=gameRules.end()){
-        auto gameptr=std::make_shared<Game>();
-        gameptr->id=msg.key()*DEF_MAX_GAMES_PER_NODE+_game_index++;
+    if(rule!=gameRules.end()&&key>0){
+        auto gid=key*DEF_MAX_GAMES_PER_NODE+_game_index++;
+        gameptr=std::make_shared<Game>();
+        games[gid]=gameptr;
+        gameptr->id=gid;
         gameptr->rule=rule->second;
         gameptr->players.push_back(&player);
         ++gameptr->ready;
-        player.game=gameptr;
         //fill data
-        return true;
+
     }else
         KEYE_LOG("----create game error no rule %d\n",msg.rule());
-    return false;
+    return gameptr;
 }
 
 Game* Node::findGame(game_id_t id){

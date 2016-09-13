@@ -5,7 +5,7 @@ using System.Reflection;
 public class Configs{
 
 	public static string uri="http://127.0.0.1:8800";
-	public static string ws="ws://127.0.0.1:8820/100";
+	public static string ws="ws://127.0.0.1:8820";
 		
 	public static void Load(){
 		string file="Config/config.ini";

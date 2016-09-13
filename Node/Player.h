@@ -13,6 +13,7 @@ struct Game;
 class Player{
 public:
     Player(keye::svc_handler& sh);
+    int     getKey();
     
     void    on_read(PBHelper&);
 

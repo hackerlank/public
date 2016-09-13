@@ -10,10 +10,10 @@
 #define GameData_hpp
 
 typedef short unit_id_t;
-typedef short game_id_t;
 typedef short pos_t;
 typedef short color_t;
 typedef short value_t;
+typedef unsigned game_id_t;
 
 struct GameData{
     std::vector<unit_id_t>    deck;

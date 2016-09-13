@@ -43,7 +43,8 @@ public:
 	}
 	virtual std::string	address()const{
 		try{
-			return _sh->get_host();
+            return _sh->get_uri()->str();
+			//return _sh->get_host();
 		} catch(...){
 			return "0.0.0.0";
 		}

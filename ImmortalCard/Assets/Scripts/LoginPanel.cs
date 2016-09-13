@@ -15,10 +15,11 @@ public class LoginPanel : MonoBehaviour {
 			GamePanel.Create(delegate(Component obj){
 				var gp=obj as GamePanel;
 				var data=new MsgNCStart();
+
 				gp.Data=data;
 				Destroy(gameObject);
 			});
-		}else if(Main.Instance.GameMode==Main.Mode.LOGIN)
+		}else if(Main.Instance.GameMode==Main.Mode.NODE)
 			DoLogin();
 		else{
 			MsgCSLogin msg=new MsgCSLogin();
@@ -32,7 +33,7 @@ public class LoginPanel : MonoBehaviour {
 			
 			Debug.Log("----DoLogin account="+msg.User.Account);
 			
-			Main.Instance.http.SetUri("http://127.0.0.1:8800");
+			Main.Instance.http.SetUri(Configs.uri);
 			Main.Instance.http.Request<MsgCSLogin>(msg.Mid,msg);
 		}
 	}

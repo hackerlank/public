@@ -6,14 +6,13 @@ public class Main : MonoBehaviour {
 	public static Main	Instance=null;
 	public HttpProxy	http;
 	public WSProxy		ws;
-	
+
 	public enum Mode{
-		NORMAL,
 		STANDALONE,
-		LOGIN,
-		LOBBY,
+		NODE,
+		NORMAL,
 	}
-	public Mode GameMode{get{return Mode.STANDALONE;}}
+	public Mode GameMode{get{return Mode.NODE;}}
 
 	void Awake(){
 		//Loom

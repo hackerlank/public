@@ -23,7 +23,9 @@ void Player::on_read(PBHelper& pb){
             MsgCNCreate imsg;
             MsgNCCreate omsg;
             if(pb.Parse(imsg)){
-                if(Node::sNode->createGame(*this,imsg)){
+                auto gameptr=Node::sNode->createGame(*this,imsg);
+                if(gameptr){
+                    game=gameptr;
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     KEYE_LOG("----game created,gid=%zd\n",game->id);
@@ -120,3 +122,16 @@ void Player::on_read(PBHelper& pb){
     }
     //KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
 }
+
+int Player::getKey(){
+    if(spsh){
+        auto uri=spsh->address();
+        auto i=uri.rfind("/");
+        if(i!=std::string::npos){
+            auto r=uri.substr(i+1);
+            return atoi(r.c_str());
+        }
+    }
+    return 0;
+}
+
