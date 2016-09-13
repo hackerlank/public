@@ -29,12 +29,22 @@ public class GamePanel : MonoBehaviour {
 
 	public MsgNCStart Data{
 		set{
-			Debug.Log("--------start game");
-			Card.Create(delegate(Card card) {
-				card.transform.SetParent(HandArea);
-				card.transform.localScale=Vector3.one;
-				card.Static=false;
-			});
+			Configs.Cards=new Dictionary<int, pawn_t>();
+			for(int i=0;i<value.Cards.Count;++i){
+				var card=value.Cards[i];
+				Configs.Cards[card.Id]=card;
+			}
+			string str="start game:\n";
+			for(int i=0;i<value.Hands.Count;++i){
+				var id=value.Hands[i];
+				var v=Configs.Cards[id];
+				Card.Create(v,HandArea,delegate(Card card) {
+					card.Static=false;
+				});
+				str+="("+v.Id+","+v.Color+","+v.Value+"),";
+				if((i+1)%6==0)str+="\n";
+			}
+			Debug.Log(str);
 		}
 	}
 

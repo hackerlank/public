@@ -35,20 +35,20 @@ void DoudeZhu::Deal(Game& game){
     game.units.resize(N);
     game.pile.resize(N);
     unit_id_t id=0;
-    for(int i=3;i<=15;++i){ //A-14, 2-15
+    for(int i=1;i<=13;++i){ //A-K => 1-13
         for(int j=0;j<4;++j){
             game.pile[id]=id;
             auto& u=game.units[id];
-            u.set_color(j);
+            u.set_color(j); //clubs,diamonds,hearts,spades => 0-3
             u.set_value(i);
             u.set_id(id++);
         }
     }
-    for(int j=0;j<=1;++j){  //Joker-16,17
+    for(int j=0;j<=1;++j){  //Joker(color 0,1) => 14
         game.pile[id]=id;
         auto& u=game.units[id];
         u.set_color(j);
-        u.set_value(16+j);
+        u.set_value(14);
         u.set_id(id++);
     }
     

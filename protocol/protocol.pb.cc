@@ -9434,16 +9434,16 @@ bool MsgNCStart::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 hands = 5;
+      // repeated int32 hands = 5;
       case 5: {
         if (tag == 42) {
          parse_hands:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_hands())));
         } else if (tag == 40) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 42, input, this->mutable_hands())));
         } else {
           goto handle_unusual;
@@ -9514,13 +9514,13 @@ void MsgNCStart::SerializeWithCachedSizes(
       4, this->cards(i), output);
   }
 
-  // repeated uint32 hands = 5;
+  // repeated int32 hands = 5;
   if (this->hands_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(5, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_hands_cached_byte_size_);
   }
   for (int i = 0; i < this->hands_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->hands(i), output);
   }
 
@@ -9571,12 +9571,12 @@ int MsgNCStart::ByteSize() const {
         this->cards(i));
   }
 
-  // repeated uint32 hands = 5;
+  // repeated int32 hands = 5;
   {
     int data_size = 0;
     for (int i = 0; i < this->hands_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->hands(i));
+        Int32Size(this->hands(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -9726,31 +9726,31 @@ MsgNCStart::cards() const {
   return cards_;
 }
 
-// repeated uint32 hands = 5;
+// repeated int32 hands = 5;
 int MsgNCStart::hands_size() const {
   return hands_.size();
 }
 void MsgNCStart::clear_hands() {
   hands_.Clear();
 }
- ::google::protobuf::uint32 MsgNCStart::hands(int index) const {
+ ::google::protobuf::int32 MsgNCStart::hands(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.hands)
   return hands_.Get(index);
 }
- void MsgNCStart::set_hands(int index, ::google::protobuf::uint32 value) {
+ void MsgNCStart::set_hands(int index, ::google::protobuf::int32 value) {
   hands_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.hands)
 }
- void MsgNCStart::add_hands(::google::protobuf::uint32 value) {
+ void MsgNCStart::add_hands(::google::protobuf::int32 value) {
   hands_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.hands)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::hands() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.hands)
   return hands_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_hands() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.hands)
   return &hands_;

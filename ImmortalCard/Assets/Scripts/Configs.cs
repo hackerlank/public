@@ -1,11 +1,13 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 
 public class Configs{
 
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
+	public static Dictionary<int,Proto3.pawn_t> Cards;
 		
 	public static void Load(){
 		string file="Config/config.ini";

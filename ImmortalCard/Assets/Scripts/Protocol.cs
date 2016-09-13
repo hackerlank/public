@@ -75,7 +75,7 @@ namespace Proto3 {
             "IAEoDjIPLnByb3RvMy5wYl9lbnVtIpUBCgpNc2dOQ1N0YXJ0EhsKA21pZBgB",
             "IAEoDjIOLnByb3RvMy5wYl9tc2cSDgoGYmFua2VyGAIgASgNEgsKA3BvcxgD",
             "IAEoDRIdCgVjYXJkcxgEIAMoCzIOLnByb3RvMy5wYXduX3QSDQoFaGFuZHMY",
-            "BSADKA0SHwoGcmVzdWx0GAYgASgOMg8ucHJvdG8zLnBiX2VudW0iKwoMTXNn",
+            "BSADKAUSHwoGcmVzdWx0GAYgASgOMg8ucHJvdG8zLnBiX2VudW0iKwoMTXNn",
             "Q05EaXNjYXJkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciTAoMTXNn",
             "TkNEaXNjYXJkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVz",
             "dWx0GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iKAoJTXNnQ05NZWxkEhsKA21p",
@@ -4799,11 +4799,11 @@ namespace Proto3 {
 
     /// <summary>Field number for the "hands" field.</summary>
     public const int HandsFieldNumber = 5;
-    private static readonly pb::FieldCodec<uint> _repeated_hands_codec
-        = pb::FieldCodec.ForUInt32(42);
-    private readonly pbc::RepeatedField<uint> hands_ = new pbc::RepeatedField<uint>();
+    private static readonly pb::FieldCodec<int> _repeated_hands_codec
+        = pb::FieldCodec.ForInt32(42);
+    private readonly pbc::RepeatedField<int> hands_ = new pbc::RepeatedField<int>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> Hands {
+    public pbc::RepeatedField<int> Hands {
       get { return hands_; }
     }
 
