@@ -44,14 +44,14 @@ public class CreatePanel : MonoBehaviour {
 		}
 	}
 	
-	public void OnCreated(MsgNCCreate msg){
-		Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj){
+	public void OnCreated(MsgNCCreate msgC){
+		GamePanel.Create(delegate(Component obj){
 			Destroy(gameObject);
 		});
 	}
 
-	public void OnJoined(MsgNCJoin msg){
-		Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj){
+	public void OnJoined(MsgNCJoin msgJ){
+		GamePanel.Create(delegate(Component obj){
 			Destroy(gameObject);
 		});
 	}

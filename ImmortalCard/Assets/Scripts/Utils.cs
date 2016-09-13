@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System;
 using System.Collections;
 
 public class Utils {
@@ -44,5 +45,18 @@ public class Utils {
 			img.sprite=sp;
 			if(resize)img.rectTransform.sizeDelta=new Vector2(sp.texture.width,sp.texture.height);
 		});
+	}
+
+	private static DateTime time_t_epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+	public static long time{
+		get {
+			return (long) (new DateTime(DateTime.UtcNow.Ticks) - time_t_epoch).TotalSeconds;
+		}
+	}
+	
+	public static float monoticks{
+		get{
+			return 0.001f*(float)(System.DateTime.Now.Ticks/10000%100000000);
+		}
 	}
 }

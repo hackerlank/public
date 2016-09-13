@@ -2751,9 +2751,45 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional .proto3.pb_enum result = 2;
+  // optional uint32 banker = 2;
+  void clear_banker();
+  static const int kBankerFieldNumber = 2;
+  ::google::protobuf::uint32 banker() const;
+  void set_banker(::google::protobuf::uint32 value);
+
+  // optional uint32 pos = 3;
+  void clear_pos();
+  static const int kPosFieldNumber = 3;
+  ::google::protobuf::uint32 pos() const;
+  void set_pos(::google::protobuf::uint32 value);
+
+  // repeated .proto3.pawn_t cards = 4;
+  int cards_size() const;
+  void clear_cards();
+  static const int kCardsFieldNumber = 4;
+  const ::proto3::pawn_t& cards(int index) const;
+  ::proto3::pawn_t* mutable_cards(int index);
+  ::proto3::pawn_t* add_cards();
+  ::google::protobuf::RepeatedPtrField< ::proto3::pawn_t >*
+      mutable_cards();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::pawn_t >&
+      cards() const;
+
+  // repeated .proto3.bunch_t hands = 5;
+  int hands_size() const;
+  void clear_hands();
+  static const int kHandsFieldNumber = 5;
+  const ::proto3::bunch_t& hands(int index) const;
+  ::proto3::bunch_t* mutable_hands(int index);
+  ::proto3::bunch_t* add_hands();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_hands();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      hands() const;
+
+  // optional .proto3.pb_enum result = 6;
   void clear_result();
-  static const int kResultFieldNumber = 2;
+  static const int kResultFieldNumber = 6;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -2765,7 +2801,11 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   int mid_;
+  ::google::protobuf::uint32 banker_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::pawn_t > cards_;
+  ::google::protobuf::uint32 pos_;
   int result_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hands_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -5960,7 +6000,95 @@ inline void MsgNCStart::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.mid)
 }
 
-// optional .proto3.pb_enum result = 2;
+// optional uint32 banker = 2;
+inline void MsgNCStart::clear_banker() {
+  banker_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCStart::banker() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCStart.banker)
+  return banker_;
+}
+inline void MsgNCStart::set_banker(::google::protobuf::uint32 value) {
+  
+  banker_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCStart.banker)
+}
+
+// optional uint32 pos = 3;
+inline void MsgNCStart::clear_pos() {
+  pos_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCStart::pos() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCStart.pos)
+  return pos_;
+}
+inline void MsgNCStart::set_pos(::google::protobuf::uint32 value) {
+  
+  pos_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCStart.pos)
+}
+
+// repeated .proto3.pawn_t cards = 4;
+inline int MsgNCStart::cards_size() const {
+  return cards_.size();
+}
+inline void MsgNCStart::clear_cards() {
+  cards_.Clear();
+}
+inline const ::proto3::pawn_t& MsgNCStart::cards(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCStart.cards)
+  return cards_.Get(index);
+}
+inline ::proto3::pawn_t* MsgNCStart::mutable_cards(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCStart.cards)
+  return cards_.Mutable(index);
+}
+inline ::proto3::pawn_t* MsgNCStart::add_cards() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCStart.cards)
+  return cards_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::pawn_t >*
+MsgNCStart::mutable_cards() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.cards)
+  return &cards_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::pawn_t >&
+MsgNCStart::cards() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCStart.cards)
+  return cards_;
+}
+
+// repeated .proto3.bunch_t hands = 5;
+inline int MsgNCStart::hands_size() const {
+  return hands_.size();
+}
+inline void MsgNCStart::clear_hands() {
+  hands_.Clear();
+}
+inline const ::proto3::bunch_t& MsgNCStart::hands(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCStart.hands)
+  return hands_.Get(index);
+}
+inline ::proto3::bunch_t* MsgNCStart::mutable_hands(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCStart.hands)
+  return hands_.Mutable(index);
+}
+inline ::proto3::bunch_t* MsgNCStart::add_hands() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCStart.hands)
+  return hands_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgNCStart::mutable_hands() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.hands)
+  return &hands_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgNCStart::hands() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCStart.hands)
+  return hands_;
+}
+
+// optional .proto3.pb_enum result = 6;
 inline void MsgNCStart::clear_result() {
   result_ = 0;
 }

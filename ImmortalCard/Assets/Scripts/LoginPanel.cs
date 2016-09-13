@@ -11,7 +11,14 @@ public class LoginPanel : MonoBehaviour {
 	
 	public void OnLogin(){
 		Debug.Log("----OnLogin");
-		if(Main.Instance.skipLogin)
+		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
+			GamePanel.Create(delegate(Component obj){
+				var gp=obj as GamePanel;
+				var data=new MsgNCStart();
+				gp.Data=data;
+				Destroy(gameObject);
+			});
+		}else if(Main.Instance.GameMode==Main.Mode.LOGIN)
 			DoLogin();
 		else{
 			MsgCSLogin msg=new MsgCSLogin();

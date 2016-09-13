@@ -6,8 +6,14 @@ public class Main : MonoBehaviour {
 	public static Main	Instance=null;
 	public HttpProxy	http;
 	public WSProxy		ws;
-
-	public bool			skipLogin=true;
+	
+	public enum Mode{
+		NORMAL,
+		STANDALONE,
+		LOGIN,
+		LOBBY,
+	}
+	public Mode GameMode{get{return Mode.STANDALONE;}}
 
 	void Awake(){
 		//Loom
@@ -27,7 +33,6 @@ public class Main : MonoBehaviour {
 	}
 
 	void Start () {
-
 	}
 	
 	void Update () {

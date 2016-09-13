@@ -6,6 +6,7 @@ using System.Collections;
 public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHandler,IEndDragHandler {
 
 	public LayoutElement le;
+	public Image image;
 
 	bool _static=true;
 	bool Static{
@@ -60,5 +61,15 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		le.preferredWidth*=scalar;
 		le.minHeight*=scalar;
 		le.preferredHeight*=scalar;
+	}
+
+	public static void Create(System.Action<Card> handler){
+		Utils.Load<Card>(null,delegate(Component comp) {
+			Utils.SpriteCreate("h01",delegate(Sprite sprite) {
+				var card=comp as Card;
+				card.image.sprite=sprite;
+				if(handler!=null)handler.Invoke(card);
+			});
+		});
 	}
 }
