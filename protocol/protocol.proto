@@ -282,7 +282,7 @@ pb_msg mid              =1;
 uint32 banker           =2;
 uint32 pos              =3;
 repeated pawn_t cards   =4;
-repeated bunch_t hands  =5;
+repeated uint32 hands   =5;
 pb_enum result			=6;
 };
 

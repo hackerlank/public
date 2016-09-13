@@ -65,6 +65,28 @@ void DoudeZhu::Deal(Game& game){
     std::copy(game.pile.begin(),    game.pile.begin()+20,   std::back_inserter(game.gameData[I].deck));
     std::copy(game.pile.begin()+20, game.pile.begin()+37,   std::back_inserter(game.gameData[J].deck));
     std::copy(game.pile.begin()+37, game.pile.end(),        std::back_inserter(game.gameData[K].deck));
+    
+    //broadcast
+    MsgNCStart msg;
+    msg.set_mid(pb_msg::MSG_NC_START);
+    msg.set_banker(game.banker);
+    auto cards=msg.mutable_cards();
+    for(int i=0;i<N;++i){
+        auto card=cards->Add();
+        card->CopyFrom(game.units[i]);
+    }
+    int M=1;//MaxPlayer();
+    for(int i=0;i<M;++i){
+        auto p=game.players[i];
+        msg.set_pos(i);
+        auto hands=msg.mutable_hands();
+        auto n=(int)game.gameData[i].deck.size();
+        hands->Resize(n,0);
+        for(int j=0;j<n;++j)
+            hands->Set(j,game.gameData[i].deck[j]);
+        p->send(msg);
+        hands->Clear();
+    }
 }
 
 void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){

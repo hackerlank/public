@@ -15,6 +15,7 @@ public:
     Player(keye::svc_handler& sh);
     int     getKey();
     
+    void    send(google::protobuf::MessageLite& msg);
     void    on_read(PBHelper&);
 
     std::shared_ptr<Game>               game;

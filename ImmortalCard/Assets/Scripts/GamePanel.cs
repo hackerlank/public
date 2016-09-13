@@ -29,6 +29,7 @@ public class GamePanel : MonoBehaviour {
 
 	public MsgNCStart Data{
 		set{
+			Debug.Log("--------start game");
 			Card.Create(delegate(Card card) {
 				card.transform.SetParent(HandArea);
 				card.transform.localScale=Vector3.one;

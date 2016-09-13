@@ -39,6 +39,9 @@ void Player::on_read(PBHelper& pb){
             }
             omsg.set_mid(proto3::pb_msg::MSG_NC_CREATE);
             PBHelper::Send(sh,omsg);
+            
+            //test start game
+            //game->ready=3;
             break;
         }
         case proto3::pb_msg::MSG_CN_JOIN:{
@@ -121,6 +124,10 @@ void Player::on_read(PBHelper& pb){
             break;
     }
     //KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
+}
+
+void Player::send(google::protobuf::MessageLite& msg){
+    PBHelper::Send(*spsh,msg);
 }
 
 int Player::getKey(){
