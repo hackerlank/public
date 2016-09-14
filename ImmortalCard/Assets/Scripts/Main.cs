@@ -32,6 +32,7 @@ public class Main : MonoBehaviour {
 	}
 
 	void Start () {
+		StartCoroutine(CardCache.Load());
 	}
 	
 	void Update () {

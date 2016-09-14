@@ -18,6 +18,11 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		get{
 			return _value;
 		}set{
+			var file=CardCache.Id2File(value.Color,value.Value);
+			if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
+				image.sprite=CardCache.sprites[file];
+			_value=value;
+			/*
 			string str="load card("+value.Id+","+value.Color+","+value.Value+")";
 			_value=value;
 			//bind image
@@ -29,6 +34,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			Utils.SpriteCreate(file,delegate(Sprite sprite) {
 				image.sprite=sprite;
 			});
+			*/
 		}
 	}
 
@@ -74,6 +80,23 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 
 	public static void Create(Proto3.pawn_t data=null,Transform parent=null,System.Action<Card> handler=null){
+		if(CardCache.card){
+			var go=GameObject.Instantiate(CardCache.card) as GameObject;
+			go.SetActive(true);
+			var card=go.GetComponent<Card>();
+			if(card!=null){
+				if(data!=null)
+					card.Value=data;
+				//parent
+				if(parent!=null){
+					card.transform.SetParent(parent);
+					card.transform.localScale=Vector3.one;
+				}
+			}
+			if(handler!=null)
+				handler.Invoke(card);
+		}
+		/*
 		Utils.Load<Card>(null,delegate(Component comp) {
 			var card=comp as Card;
 			if(comp!=null){
@@ -89,5 +112,6 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			if(handler!=null)
 				handler.Invoke(card);
 		});
+		*/
 	}
 }

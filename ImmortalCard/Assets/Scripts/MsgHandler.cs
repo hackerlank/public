@@ -70,7 +70,7 @@ public class MsgHandler{
 			Debug.Log("start game");
 			if(imsg4.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(GamePanel.Instance!=null)GamePanel.Instance.Data=imsg4;
+					if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg4));
 				});
 			}else
 				Debug.LogError("start error: "+imsg4.Result);

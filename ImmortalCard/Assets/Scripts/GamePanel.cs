@@ -23,29 +23,58 @@ public class GamePanel : MonoBehaviour {
 		Instance=this;
 	}
 
+	IEnumerator Start(){
+		while(!CardCache.Ready)yield return null;
+	}
+
 	void OnDestroy(){
 		Instance=null;
 	}
 
-	public MsgNCStart Data{
-		set{
-			Configs.Cards=new Dictionary<int, pawn_t>();
-			for(int i=0;i<value.Cards.Count;++i){
-				var card=value.Cards[i];
-				Configs.Cards[card.Id]=card;
-			}
-			string str="start game:\n";
-			for(int i=0;i<value.Hands.Count;++i){
-				var id=value.Hands[i];
-				var v=Configs.Cards[id];
-				Card.Create(v,HandArea,delegate(Card card) {
-					card.Static=false;
-				});
-				str+="("+v.Id+","+v.Color+","+v.Value+"),";
-				if((i+1)%6==0)str+="\n";
-			}
-			Debug.Log(str);
+	public IEnumerator Deal(MsgNCStart value){
+		//dict
+		Configs.Cards=new Dictionary<int, pawn_t>();
+		for(int i=0;i<value.Cards.Count;++i){
+			var card=value.Cards[i];
+			Configs.Cards[card.Id]=card;
 		}
+		//sort
+		var hands=new List<int>(value.Hands);
+		hands.Sort(delegate(int x, int y){
+			var cx=Configs.Cards[x];
+			var cy=Configs.Cards[y];
+			if(cx.Value==1||cx.Value==2)
+				x+=54;
+			else if(cx.Value==14)
+				x+=2;
+			if(cy.Value==1||cy.Value==2)
+				y+=54;
+			else if(cy.Value==14)
+				y+=2;
+
+			if(x>y)
+				return -1;
+			else if(x<y)
+				return 1;
+			return 0;
+		});
+		//deal
+		string str="start game:\n";
+		for(int i=0;i<hands.Count;++i){
+			var id=hands[i];
+			var v=Configs.Cards[id];
+			var fin=false;
+			Card.Create(v,HandArea,delegate(Card card) {
+				card.Static=false;
+				fin=true;
+			});
+			yield return null;
+			str+="("+v.Id+","+v.Color+","+v.Value+"),";
+			if((i+1)%6==0)str+="\n";
+			while(!fin)yield return null;
+		}
+		Debug.Log(str);
+		yield break;
 	}
 
 	public void OnExit(){

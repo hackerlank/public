@@ -41,7 +41,7 @@ void Player::on_read(PBHelper& pb){
             PBHelper::Send(sh,omsg);
             
             //test start game
-            //game->ready=3;
+            game->ready=3;
             break;
         }
         case proto3::pb_msg::MSG_CN_JOIN:{
