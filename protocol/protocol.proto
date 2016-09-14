@@ -41,7 +41,9 @@ CATEGORY_EASY           =51;
 CATEGORY_HARD           =52;
 
 // achievement
-ACHIEVEMENT_BEST        =10;
+ACHV_BOMB               =10;
+ACHV_HEAVEN             =10;
+ACHV_HELL               =10;
 
 // game using
 DEF_MAX_NODES           =1000;
@@ -77,10 +79,11 @@ uint32 level            =3;
 uint32 xp               =4;
 uint32 currency         =5;
 uint32 energy           =6;
-repeated achievement_t achievements   =7;
+repeated win_t wins     =7;
+repeated achv_t achvs   =8;
 };
 
-message game_t{
+message win_t{
 
 string uid				=1;
 uint32 gid              =2;
@@ -90,7 +93,7 @@ uint32 draw             =5;
 uint32 score            =6;
 };
 
-message achievement_t{
+message achv_t{
 
 pb_enum type            =1;
 string name             =2;
@@ -130,22 +133,15 @@ repeated game_service_t games  =12;
 
 message pawn_t{
 
-int32 id                =1;
-int32 color             =2;
-int32 value             =3;
+uint32 id               =1;
+uint32 color            =2;
+uint32 value            =3;
 };
 
 message bunch_t{
 
 pb_enum type            =1;
 repeated uint32 pawns   =2;
-};
-
-message game_data{
-
-repeated uint32 deck    =1;
-repeated uint32 discards=2;
-repeated bunch_t bunch  =3;
 };
 // -------- messages --------
 enum pb_msg{
@@ -186,6 +182,7 @@ MSG_CN_DISMISS_SYNC     =6030;
 MSG_NC_DISMISS_SYNC     =6031;
 MSG_CN_DISMISS_ACK      =6032;
 MSG_NC_DISMISS_ACK      =6033;
+MSG_CN_STATS            =6080;
 
 MSG_CN_END              =6999;
 MSG_END                 =9999;
@@ -244,7 +241,7 @@ pb_enum service         =5;
 message MsgNCEnter{
 
 pb_msg mid				=1;
-game_t game_info        =2;
+player_t player         =2;
 pb_enum result			=3;
 };
 
@@ -282,19 +279,22 @@ pb_msg mid              =1;
 uint32 banker           =2;
 uint32 pos              =3;
 repeated pawn_t cards   =4;
-repeated int32 hands    =5;
+repeated uint32 hands   =5;
 pb_enum result			=6;
 };
 
 message MsgCNDiscard{
 
 pb_msg mid				=1;
+repeated uint32 cards   =2;
 };
 
 message MsgNCDiscard{
 
 pb_msg mid				=1;
-pb_enum result			=2;
+uint32 pos              =2;
+repeated uint32 cards   =3;
+pb_enum result			=4;
 };
 
 message MsgCNMeld{
@@ -316,7 +316,8 @@ pb_msg mid				=1;
 message MsgNCDismissSync{
 
 pb_msg mid				=1;
-pb_enum result			=2;
+uint32 pos              =2;
+pb_enum result			=3;
 };
 
 message MsgCNDismissAck{
@@ -327,17 +328,29 @@ pb_msg mid				=1;
 message MsgNCDismissAck{
 
 pb_msg mid				=1;
-pb_enum result			=2;
+uint32 pos              =2;
+pb_enum result			=3;
 };
 
 message MsgNCSettle{
 
 pb_msg mid				=1;
-pb_enum result			=2;
+uint32 winner           =2;
+repeated player_t play  =3;
+repeated bunch_t hands  =4;
+pb_enum result			=5;
 };
 
 message MsgNCFinish{
 
 pb_msg mid				=1;
-pb_enum result			=2;
+repeated player_t play  =2;
+pb_enum result			=3;
+};
+
+message MsgCNStats{
+
+pb_msg mid				=1;
+string key              =2;
+string value            =3;
 };

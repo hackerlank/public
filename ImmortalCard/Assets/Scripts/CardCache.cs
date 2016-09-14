@@ -9,7 +9,7 @@ public class CardCache{
 	public static GameObject card;
 	public static bool Ready=false;
 
-	public static string Id2File(int color,int value){
+	public static string Id2File(uint color,uint value){
 		string[] Colors={"c","d","h","s"};
 		return string.Format("{0}{1:00}",Colors[color],value);
 	}
@@ -29,8 +29,8 @@ public class CardCache{
 		files.Add("back");
 		files.Add("c14");
 		files.Add("d14");
-		for(int j=0;j<4;++j)
-			for(int i=1;i<=13;++i)
+		for(uint j=0;j<4;++j)
+			for(uint i=1;i<=13;++i)
 				files.Add(Id2File(j,i));
 		foreach(var f in files){
 			yield return null;

@@ -81,10 +81,10 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
         MsgNCEnter omsg;
         if(pb.Parse(imsg)){
             omsg.set_result(proto3::pb_enum::SUCCEESS);
-            auto game=omsg.mutable_game_info();
-            game->set_gid(168);
+            auto game=omsg.mutable_player();
+            game->set_level(168);
             game->set_uid("vic-game");
-            game->set_score(1000);
+            game->set_currency(1000);
             KEYE_LOG("----client entered\n");
             
             players[shid]=std::make_shared<Player>(sh);

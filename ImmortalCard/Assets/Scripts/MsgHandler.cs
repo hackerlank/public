@@ -37,7 +37,7 @@ public class MsgHandler{
 			break;
 		case pb_msg.MsgNcEnter:
 			MsgNCEnter imsg1=MsgNCEnter.Parser.ParseFrom(bytes);
-			Debug.Log("entered game "+imsg1.GameInfo.Gid+",uid="+imsg1.GameInfo.Uid);
+			Debug.Log("entered game");
 			if(imsg1.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
 					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnEntered();
@@ -74,6 +74,61 @@ public class MsgHandler{
 				});
 			}else
 				Debug.LogError("start error: "+imsg4.Result);
+			break;
+
+		case pb_msg.MsgNcDiscard:
+			MsgNCDiscard imsg5=MsgNCDiscard.Parser.ParseFrom(bytes);
+			if(imsg5.Result==pb_enum.Succeess){
+				Loom.QueueOnMainThread(delegate{
+					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg5));
+				});
+			}else
+				Debug.LogError("discard error: "+imsg5.Result);
+			break;
+		case pb_msg.MsgNcMeld:
+			MsgNCMeld imsg6=MsgNCMeld.Parser.ParseFrom(bytes);
+			if(imsg6.Result==pb_enum.Succeess){
+				Loom.QueueOnMainThread(delegate{
+					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg6));
+				});
+			}else
+				Debug.LogError("meld error: "+imsg6.Result);
+			break;
+		case pb_msg.MsgNcSettle:
+			MsgNCSettle imsg7=MsgNCSettle.Parser.ParseFrom(bytes);
+			if(imsg7.Result==pb_enum.Succeess){
+				Loom.QueueOnMainThread(delegate{
+					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg7));
+				});
+			}else
+				Debug.LogError("settle error: "+imsg7.Result);
+			break;
+		case pb_msg.MsgNcFinish:
+			MsgNCFinish imsg8=MsgNCFinish.Parser.ParseFrom(bytes);
+			if(imsg8.Result==pb_enum.Succeess){
+				Loom.QueueOnMainThread(delegate{
+					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg8));
+				});
+			}else
+				Debug.LogError("finish error: "+imsg8.Result);
+			break;
+		case pb_msg.MsgNcDismissSync:
+			MsgNCDismissSync imsg9=MsgNCDismissSync.Parser.ParseFrom(bytes);
+			if(imsg9.Result==pb_enum.Succeess){
+				Loom.QueueOnMainThread(delegate{
+					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg9));
+				});
+			}else
+				Debug.LogError("dismiss sync error: "+imsg9.Result);
+			break;
+		case pb_msg.MsgNcDismissAck:
+			MsgNCDismissAck imsg10=MsgNCDismissAck.Parser.ParseFrom(bytes);
+			if(imsg10.Result==pb_enum.Succeess){
+				Loom.QueueOnMainThread(delegate{
+					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg10));
+				});
+			}else
+				Debug.LogError("dismiss ack error: "+imsg10.Result);
 			break;
 		default:
 			break;

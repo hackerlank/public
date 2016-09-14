@@ -33,14 +33,14 @@ public class GamePanel : MonoBehaviour {
 
 	public IEnumerator Deal(MsgNCStart value){
 		//dict
-		Configs.Cards=new Dictionary<int, pawn_t>();
+		Configs.Cards=new Dictionary<uint, pawn_t>();
 		for(int i=0;i<value.Cards.Count;++i){
 			var card=value.Cards[i];
 			Configs.Cards[card.Id]=card;
 		}
 		//sort
-		var hands=new List<int>(value.Hands);
-		hands.Sort(delegate(int x, int y){
+		var hands=new List<uint>(value.Hands);
+		hands.Sort(delegate(uint x, uint y){
 			var cx=Configs.Cards[x];
 			var cy=Configs.Cards[y];
 			if(cx.Value==1||cx.Value==2)
