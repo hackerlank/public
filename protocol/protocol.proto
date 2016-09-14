@@ -278,9 +278,13 @@ message MsgNCStart{
 pb_msg mid              =1;
 uint32 banker           =2;
 uint32 pos              =3;
-repeated pawn_t cards   =4;
-repeated uint32 hands   =5;
-pb_enum result			=6;
+uint32 ante             =4;
+uint32 multiple         =5;
+repeated pawn_t cards   =6;
+repeated uint32 hands   =7;
+repeated uint32 bottom  =8;
+repeated uint32 count   =9;
+pb_enum result			=10;
 };
 
 message MsgCNDiscard{

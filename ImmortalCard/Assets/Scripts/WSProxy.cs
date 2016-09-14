@@ -52,7 +52,7 @@ public class WSProxy {
 		System.Buffer.BlockCopy(body,0,bytes,2,len);
 
 		socket.SendAsync(bytes,delegate(bool result){
-			Debug.Log("----SendAsync "+mid+" bytes="+bytes.Length+" "+result);
+			Debug.Log("sent "+mid+" bytes="+bytes.Length+" "+result);
 		});
 	}
 }

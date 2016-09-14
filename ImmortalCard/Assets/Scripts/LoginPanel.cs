@@ -10,7 +10,6 @@ public class LoginPanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 	
 	public void OnLogin(){
-		Debug.Log("----OnLogin");
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			GamePanel.Create(delegate(Component obj){
 				var gp=obj as GamePanel;
@@ -31,8 +30,7 @@ public class LoginPanel : MonoBehaviour {
 			msg.User.Name="vic";
 			msg.User.Udid=SystemInfo.deviceUniqueIdentifier;
 			
-			Debug.Log("----DoLogin account="+msg.User.Account);
-			
+			//Debug.Log("----DoLogin account="+msg.User.Account);
 			Main.Instance.http.SetUri(Configs.uri);
 			Main.Instance.http.Request<MsgCSLogin>(msg.Mid,msg);
 		}

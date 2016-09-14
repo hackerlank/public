@@ -35,7 +35,7 @@ public class CardCache{
 		foreach(var f in files){
 			yield return null;
 			Utils.SpriteCreate(f,delegate(Sprite sprite) {
-				Debug.Log("loaded card file="+f);
+				//Debug.Log("loaded card file="+f);
 				sprites[f]=sprite;
 			});
 			while(!sprites.ContainsKey(f))yield return null;

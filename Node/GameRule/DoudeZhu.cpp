@@ -70,11 +70,19 @@ void DoudeZhu::Deal(Game& game){
     MsgNCStart msg;
     msg.set_mid(pb_msg::MSG_NC_START);
     msg.set_banker(game.banker);
+    msg.set_ante(10);
+    msg.set_multiple(1);
     auto cards=msg.mutable_cards();
     for(int i=0;i<N;++i){
         auto card=cards->Add();
         card->CopyFrom(game.units[i]);
     }
+    for(int i=0;i<MaxPlayer();++i)
+        msg.mutable_count()->Add((int)game.gameData[i].deck.size());
+    auto bankerHands=game.gameData[I].deck.size();
+    for(auto i=bankerHands-3;i<bankerHands;++i)
+        msg.mutable_bottom()->Add(game.gameData[I].deck[i]);
+    
     int M=1;//MaxPlayer();
     for(int i=0;i<M;++i){
         auto p=game.players[i];
@@ -84,6 +92,7 @@ void DoudeZhu::Deal(Game& game){
         hands->Resize(n,0);
         for(int j=0;j<n;++j)
             hands->Set(j,game.gameData[i].deck[j]);
+        
         p->send(msg);
         hands->Clear();
     }
