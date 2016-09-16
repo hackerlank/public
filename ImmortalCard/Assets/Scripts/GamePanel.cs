@@ -89,6 +89,30 @@ public class GamePanel : MonoBehaviour {
 		}
 	}
 
+	List<uint[]> _hints=null;
+	public void Hint(){
+		_hints=null;
+		_nhints=0;
+		var M=HandArea.childCount;
+		var N=DiscardAreas[2].childCount;
+		if(N>0&&M>0){
+			uint[] hands=new uint[M];
+			uint[] ids=new uint[N];
+			int i=0;
+			foreach(Transform ch in HandArea.transform){
+				var card=ch.gameObject.GetComponent<Card>();
+				if(card!=null)hands[i++]=card.Value.Id;
+			}
+			i=0;
+			foreach(Transform ch in DiscardAreas[2].transform){
+				var card=ch.gameObject.GetComponent<Card>();
+				if(card!=null)ids[i++]=card.Value.Id;
+			}
+			
+			_hints=GameRule.Hint(hands,ids);
+		}
+	}
+
 	void deselectAll(){
 		var copy=new List<Card>(_selection);
 		foreach(var c in copy)c.Tap();
@@ -101,20 +125,20 @@ public class GamePanel : MonoBehaviour {
 			_selection.Remove(card);
 	}
 
+	int _nhints=0;
 	public void OnHint(){
-		uint[] ids=new uint[3];
-		int i=0;
-		foreach(Transform ch in HandArea.transform){
-			var card=ch.gameObject.GetComponent<Card>();
-			if(card!=null&&i<3)ids[i++]=card.Value.Id;
-		}
-
 		deselectAll();
-		foreach(Transform ch in HandArea.transform){
-			var card=ch.gameObject.GetComponent<Card>();
-			if(card!=null)foreach(var id in ids)
-				if(card.Value.Id==id)
-					card.Tap();
+		if(_hints==null)Hint();
+
+		if(_hints!=null&&_hints.Count>0){
+			var hints=_hints[_nhints];
+			foreach(Transform ch in HandArea.transform){
+				var card=ch.gameObject.GetComponent<Card>();
+				if(card!=null)foreach(var id in hints)
+					if(card.Value.Id==id)
+						card.Tap();
+			}
+			_nhints=(_nhints+1)%_hints.Count;
 		}
 	}
 	
