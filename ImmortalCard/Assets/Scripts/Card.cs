@@ -8,6 +8,19 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	public LayoutElement le;
 	public Image image;
 
+	public enum State{
+		ST_NORMAL,
+		ST_SELECT,
+		ST_DISCARD,
+		ST_DEAD
+	}
+	State _state=State.ST_NORMAL;
+	public State state{
+		set{
+			_state=value;
+		}
+	}
+
 	bool _static=true;
 	public bool Static{
 		set{_static=value;}
@@ -38,27 +51,34 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		}
 	}
 
+	public void Tap(){
+		float delta=32f;
+		if(_state==State.ST_NORMAL){
+			_state=State.ST_SELECT;
+			transform.localPosition+=delta*Vector3.up;
+		}else if(_state==State.ST_SELECT){
+			_state=State.ST_NORMAL;
+			transform.localPosition-=delta*Vector3.up;
+		}
+		GamePanel.Instance.OnCard(this,_state==State.ST_SELECT);
+	}
+
 	public void OnPointerClick (PointerEventData eventData){
 		if(_static||eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
-		Debug.Log("----click on card "+eventData.clickCount);
+		//Debug.Log("----click on card "+eventData.clickCount);
 		if(eventData.clickCount==2)
-			DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
+			GamePanel.Instance.Discard(this);
+		else if(eventData.clickCount==1){
+			Tap();
+		}
 	}
 	
-	//bool dragging=false;
-	//Vector2 dragFrom=Vector2.zero;
 	public void OnBeginDrag (PointerEventData eventData){
-		//dragging=true;
-		//dragFrom=transform.position;
-		//Debug.Log("----begin from "+dragFrom.ToString());
 	}
 	
 	public void OnEndDrag (PointerEventData eventData){
 		if(_static)return;
-		//dragging=false;
-		//restrore
-		//transform.position=dragFrom;
-		DiscardTo(GamePanel.Instance.DiscardAreas[0],0.625f);
+		GamePanel.Instance.Discard(this);
 		//Debug.Log("----end drag");
 	}
 	

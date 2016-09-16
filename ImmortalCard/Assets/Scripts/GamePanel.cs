@@ -7,7 +7,6 @@ using Proto3;
 public class GamePanel : MonoBehaviour {
 	[HideInInspector]
 	public int			N=3;
-	public List<Card>[]	HandCards;
 	public Card[]		BottomCards;
 
 	public Transform	HandArea;
@@ -15,6 +14,9 @@ public class GamePanel : MonoBehaviour {
 	public PlayerIcon[]	Players;
 	public Text[]		nHandCards;
 	public Text			Ante,Multiples,Infomation;
+	public GameObject	BtnHint,BtnDiscard,BtnCall,BtnDouble,BtnPass,Buttons;
+
+	List<Card>			_selection=new List<Card>();
 
 	public static GamePanel	Instance=null;
 	void Awake(){
@@ -40,24 +42,7 @@ public class GamePanel : MonoBehaviour {
 		}
 		//sort
 		var hands=new List<uint>(msg.Hands);
-		hands.Sort(delegate(uint x, uint y){
-			var cx=Configs.Cards[x];
-			var cy=Configs.Cards[y];
-			if(cx.Value==1||cx.Value==2)
-				x+=(53-2);
-			else if(cx.Value==14)
-				x+=8;
-			if(cy.Value==1||cy.Value==2)
-				y+=(53-2);
-			else if(cy.Value==14)
-				y+=8;
-
-			if(x>y)
-				return -1;
-			else if(x<y)
-				return 1;
-			return 0;
-		});
+		hands.Sort(comparision);
 		//deal
 		string str="deal: banker="+msg.Banker+"pos="+msg.Pos+"\nhands:\n";
 		for(int i=0;i<hands.Count;++i){
@@ -84,7 +69,69 @@ public class GamePanel : MonoBehaviour {
 		Debug.Log(str);
 		yield break;
 	}
+	
+	public void Discard(Card card=null){
+		//remove discards
+		foreach(Transform ch in DiscardAreas[0].transform)
+			Destroy(ch.gameObject);
+		//discard
+		if(card!=null){
+			deselectAll();
+			card.state=Card.State.ST_DISCARD;
+			card.DiscardTo(DiscardAreas[0],.625f);
+		}else if(_selection.Count>0){
+			_selection.Sort(compare_card);
+			foreach(var c in _selection){
+				c.state=Card.State.ST_DISCARD;
+				c.DiscardTo(DiscardAreas[0],.625f);
+			}
+			_selection.Clear();
+		}
+	}
 
+	void deselectAll(){
+		var copy=new List<Card>(_selection);
+		foreach(var c in copy)c.Tap();
+	}
+
+	public void OnCard(Card card,bool select=true){
+		if(select)
+			_selection.Add(card);
+		else
+			_selection.Remove(card);
+	}
+
+	public void OnHint(){
+		uint[] ids=new uint[3];
+		int i=0;
+		foreach(Transform ch in HandArea.transform){
+			var card=ch.gameObject.GetComponent<Card>();
+			if(card!=null&&i<3)ids[i++]=card.Value.Id;
+		}
+
+		deselectAll();
+		foreach(Transform ch in HandArea.transform){
+			var card=ch.gameObject.GetComponent<Card>();
+			if(card!=null)foreach(var id in ids)
+				if(card.Value.Id==id)
+					card.Tap();
+		}
+	}
+	
+	public void OnDiscard(){
+		Discard();
+	}
+
+	public void OnPass(){
+		deselectAll();
+	}
+	
+	public void OnCall(){
+	}
+
+	public void OnDouble(){
+	}
+	
 	public void OnExit(){
 		Utils.Load<CreatePanel>(gameObject.transform.parent,delegate(Component obj) {
 			Destroy(gameObject);
@@ -95,5 +142,29 @@ public class GamePanel : MonoBehaviour {
 		Utils.Load<GamePanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		});
+	}
+
+	//System.Comparison<uint>
+	int compare_card(Card x,Card y){
+		return comparision(x.Value.Id,y.Value.Id);
+	}
+
+	int comparision(uint x,uint y){
+		var cx=Configs.Cards[x];
+		var cy=Configs.Cards[y];
+		if(cx.Value==1||cx.Value==2)
+			x+=(53-2);
+		else if(cx.Value==14)
+			x+=8;
+		if(cy.Value==1||cy.Value==2)
+			y+=(53-2);
+		else if(cy.Value==14)
+			y+=8;
+		
+		if(x>y)
+			return -1;
+		else if(x<y)
+			return 1;
+		return 0;
 	}
 }
