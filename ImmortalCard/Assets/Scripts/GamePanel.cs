@@ -72,8 +72,7 @@ public class GamePanel : MonoBehaviour {
 	
 	public void Discard(Card card=null){
 		//remove discards
-		foreach(Transform ch in DiscardAreas[0].transform)
-			Destroy(ch.gameObject);
+		foreach(Transform ch in DiscardAreas[0].transform)Destroy(ch.gameObject);
 		//discard
 		if(card!=null){
 			deselectAll();
@@ -86,6 +85,28 @@ public class GamePanel : MonoBehaviour {
 				c.DiscardTo(DiscardAreas[0],.625f);
 			}
 			_selection.Clear();
+		}
+	}
+
+	public IEnumerator DiscardAt(uint pos,uint[] cards){
+		//remove discards
+		foreach(Transform ch in DiscardAreas[1].transform)Destroy(ch.gameObject);
+		if(cards!=null){
+			string str="discard at "+pos;
+			for(int i=0;i<cards.Length;++i){
+				var id=cards[i];
+				var v=Configs.Cards[id];
+				var fin=false;
+				Card.Create(v,nHandCards[1].transform.parent,delegate(Card card) {
+					card.state=Card.State.ST_DISCARD;
+					card.DiscardTo(DiscardAreas[1],.625f);
+					fin=true;
+				});
+				yield return null;
+				str+="("+v.Id+","+v.Color+","+v.Value+"),";
+				while(!fin)yield return null;
+			}
+			//Debug.Log(str);
 		}
 	}
 
@@ -109,7 +130,7 @@ public class GamePanel : MonoBehaviour {
 				if(card!=null)ids[i++]=card.Value.Id;
 			}
 			
-			_hints=GameRule.Hint(hands,ids);
+			_hints=Main.Instance.gameRule.Hint(hands,ids);
 		}
 	}
 
@@ -148,6 +169,15 @@ public class GamePanel : MonoBehaviour {
 
 	public void OnPass(){
 		deselectAll();
+		uint[] cards=new uint[2];
+		for(int i=0;i<cards.Length;++i){
+			var hands=Main.Instance.gameRule.Hands[0];
+			if(hands.Count>0){
+				cards[i]=hands[0];
+				hands.RemoveAt(0);
+			}
+		}
+		StartCoroutine(DiscardAt(0,cards));
 	}
 	
 	public void OnCall(){

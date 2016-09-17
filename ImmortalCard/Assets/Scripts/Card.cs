@@ -26,6 +26,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		set{_static=value;}
 	}
 
+	public int Id,Clr,Val;	//only for debug
 	Proto3.pawn_t _value;
 	public Proto3.pawn_t Value{
 		get{
@@ -35,6 +36,10 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
 				image.sprite=CardCache.sprites[file];
 			_value=value;
+			//remember debug value
+			Id=(int)value.Id;
+			Clr=(int)value.Color;
+			Val=(int)value.Value;
 			/*
 			string str="load card("+value.Id+","+value.Color+","+value.Value+")";
 			_value=value;

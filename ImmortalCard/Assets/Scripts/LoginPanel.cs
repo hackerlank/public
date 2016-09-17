@@ -13,9 +13,9 @@ public class LoginPanel : MonoBehaviour {
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			GamePanel.Create(delegate(Component obj){
 				var gp=obj as GamePanel;
-				var data=new MsgNCStart();
+				var msg=Main.Instance.gameRule.Deal();
 
-				gp.StartCoroutine(gp.Deal(data));
+				gp.StartCoroutine(gp.Deal(msg));
 				Destroy(gameObject);
 			});
 		}else if(Main.Instance.GameMode==Main.Mode.NODE)

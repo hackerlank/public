@@ -7,12 +7,14 @@ public class Main : MonoBehaviour {
 	public HttpProxy	http;
 	public WSProxy		ws;
 
+	public GameRule		gameRule=new GameRule();
+
 	public enum Mode{
 		STANDALONE,
 		NODE,
 		NORMAL,
 	}
-	public Mode GameMode{get{return Mode.NODE;}}
+	public Mode GameMode{get{return Mode.STANDALONE;}}
 
 	void Awake(){
 		//Loom
