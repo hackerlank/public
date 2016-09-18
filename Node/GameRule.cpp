@@ -20,10 +20,13 @@ void GameRule::Tick(Game& game){
             ChangeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
+            if(IsGameOver(game))
+                ChangeState(game,Game::State::ST_SETTLE);
             break;
         case Game::State::ST_MELD:
             break;
         case Game::State::ST_SETTLE:
+            ChangeState(game,Game::State::ST_END);
             break;
         case Game::State::ST_END:
             break;
@@ -34,7 +37,7 @@ void GameRule::Tick(Game& game){
 
 void GameRule::ChangeState(Game& game,Game::State state){
     if(game.state!=state){
-        KEYE_LOG("----game state: %d=>%d\n",game.state,state);
+        KEYE_LOG("game state: %d=>%d\n",game.state,state);
         game.state=state;
     }
 }

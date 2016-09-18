@@ -11,6 +11,7 @@
 using namespace proto3;
 
 Player::Player(keye::svc_handler& sh){
+    pos=-1;
     spsh=sh();
 }
 
@@ -23,18 +24,24 @@ void Player::on_read(PBHelper& pb){
             MsgCNCreate imsg;
             MsgNCCreate omsg;
             if(pb.Parse(imsg)){
-                auto gameptr=Node::sNode->createGame(*this,imsg);
+                auto key=getKey();
+                auto gameptr=Node::sNode->createGame(key,imsg);
                 if(gameptr){
                     game=gameptr;
+                    game->players.push_back(this);
+                    ++game->ready;
+                    pos=game->players.size()-1;
+                    //fill data
+                    
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    KEYE_LOG("----game created,gid=%zd\n",game->id);
+                    KEYE_LOG("game created,gid=%zd\n",game->id);
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                    KEYE_LOG("----game create failed,no rule %d\n",imsg.rule());
+                    KEYE_LOG("game create failed,no rule %d\n",imsg.rule());
                 }
             }else{
-                KEYE_LOG("----message error id=%zd\n",mid);
+                KEYE_LOG("message error id=%zd\n",mid);
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             omsg.set_mid(proto3::pb_msg::MSG_NC_CREATE);
@@ -54,18 +61,19 @@ void Player::on_read(PBHelper& pb){
                     if(game->ready<rule->MaxPlayer()){
                         game->players.push_back(this);
                         ++game->ready;
+                        pos=game->players.size()-1;
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
-                        KEYE_LOG("----game joined,gid=%d\n",gid);
+                        KEYE_LOG("game joined,gid=%d\n",gid);
                     }else{
                         omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                        KEYE_LOG("----game join failed of full,gid=%d\n",gid);
+                        KEYE_LOG("game join failed of full,gid=%d\n",gid);
                     }
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                    KEYE_LOG("----game join failed of no,gid=%d\n",gid);
+                    KEYE_LOG("game join failed of no,gid=%d\n",gid);
                 }
             }else{
-                KEYE_LOG("----game join failed of message error id=%zd\n",mid);
+                KEYE_LOG("game join failed of message error id=%zd\n",mid);
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             omsg.set_mid(proto3::pb_msg::MSG_NC_JOIN);
@@ -87,7 +95,7 @@ void Player::on_read(PBHelper& pb){
                     break;
                 }
             }
-            KEYE_LOG("----game dismiss failed\n");
+            KEYE_LOG("game dismiss failed\n");
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
             PBHelper::Send(sh,omsg);
             break;
@@ -107,7 +115,7 @@ void Player::on_read(PBHelper& pb){
                     break;
                 }
             }
-            KEYE_LOG("----game dismiss failed\n");
+            KEYE_LOG("game dismiss failed\n");
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
             PBHelper::Send(sh,omsg);
             break;
@@ -123,7 +131,7 @@ void Player::on_read(PBHelper& pb){
         default:
             break;
     }
-    //KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
+    //KEYE_LOG("on_read %zd,mid=%d\n", sz,mid);
 }
 
 void Player::send(google::protobuf::MessageLite& msg){

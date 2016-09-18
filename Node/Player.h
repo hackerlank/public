@@ -17,8 +17,9 @@ public:
     
     void    send(google::protobuf::MessageLite& msg);
     void    on_read(PBHelper&);
-
-    std::shared_ptr<Game>               game;
+    
+    pos_t                   pos;
+    std::shared_ptr<Game>   game;
 private:
     std::shared_ptr<keye::svc_handler>  spsh;
 };

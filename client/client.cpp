@@ -23,18 +23,18 @@ public:
 		sprintf(_buf, "hello i am websocket client\n");
 	}
 	virtual void	on_open(svc_handler& sh) {
-		KEYE_LOG("----on_open\n");
+		KEYE_LOG("on_open\n");
 		auto len = strlen(_buf);
 		sh.send(_buf, len);
 //		set_timer(WRITE_TIMER, WRITE_FREQ);
 	}
 	virtual void	on_read(svc_handler& sh, void* buf, size_t sz) {
-		KEYE_LOG("----on_read %zd\n", sz);
+		KEYE_LOG("on_read %zd\n", sz);
 
 		KEYE_LOG("read %d:%s\n", (int)sz, (char*)buf);
 	}
 	virtual bool	on_timer(svc_handler& sh, size_t id, size_t milliseconds) {
-		KEYE_LOG("----on_timer %zd\n", id);
+		KEYE_LOG("on_timer %zd\n", id);
 		bool ret = true;
 		if (WRITE_TIMER == id) {
 			auto len = strlen(_buf);

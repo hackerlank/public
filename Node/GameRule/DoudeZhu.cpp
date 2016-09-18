@@ -103,8 +103,14 @@ void DoudeZhu::Deal(Game& game){
 }
 
 void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
-    //MsgNCDiscard omsg;
-    //omsg.set_mid(eMsg::MSG_NC_DISCARD);
+    if(auto game=player.game){
+        if(game->token==player.pos){
+            //MsgNCDiscard omsg;
+            //omsg.set_mid(eMsg::MSG_NC_DISCARD);
+        }else
+            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
+    }else
+        KEYE_LOG("OnDiscard no game\n");
 }
 
 void DoudeZhu::Settle(Game& game){

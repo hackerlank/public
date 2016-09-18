@@ -33,9 +33,8 @@ void Node::registerRule(std::shared_ptr<GameRule> game){
     gameRules[id]=game;
 }
 
-std::shared_ptr<Game> Node::createGame(Player& player,proto3::MsgCNCreate& msg){
+std::shared_ptr<Game> Node::createGame(int key,proto3::MsgCNCreate& msg){
     std::shared_ptr<Game> gameptr;
-    auto key=player.getKey();
     auto rule=gameRules.find(msg.rule());
     if(rule!=gameRules.end()&&key>0){
         auto gid=key*DEF_MAX_GAMES_PER_NODE+_game_index++;
@@ -43,12 +42,8 @@ std::shared_ptr<Game> Node::createGame(Player& player,proto3::MsgCNCreate& msg){
         games[gid]=gameptr;
         gameptr->id=gid;
         gameptr->rule=rule->second;
-        gameptr->players.push_back(&player);
-        ++gameptr->ready;
-        //fill data
-
     }else
-        KEYE_LOG("----create game error no rule %d\n",msg.rule());
+        KEYE_LOG("create game error no rule %d\n",msg.rule());
     return gameptr;
 }
 
@@ -61,14 +56,14 @@ void Node::removeGame(game_id_t id){
 }
 
 void Node::on_open(svc_handler&) {
-//    KEYE_LOG("----on_open\n");
+//    KEYE_LOG("on_open\n");
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 
 void Node::on_close(svc_handler& sh) {
     auto shid=sh.id();
     players.erase(shid);
-//    KEYE_LOG("----on_close\n");
+//    KEYE_LOG("on_close\n");
 }
 
 void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
@@ -85,11 +80,11 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
             game->set_level(168);
             game->set_uid("vic-game");
             game->set_currency(1000);
-            KEYE_LOG("----client entered\n");
+            KEYE_LOG("client entered\n");
             
             players[shid]=std::make_shared<Player>(sh);
         }else{
-            KEYE_LOG("----message error id=%zd\n",mid);
+            KEYE_LOG("message error id=%zd\n",mid);
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
         }
         omsg.set_mid(proto3::pb_msg::MSG_NC_ENTER);
@@ -99,11 +94,11 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
         if(p!=players.end())
             p->second->on_read(pb);
     }
-    //KEYE_LOG("----on_read %zd,mid=%d\n", sz,mid);
+    //KEYE_LOG("on_read %zd,mid=%d\n", sz,mid);
 }
 
 void Node::on_write(svc_handler&, void*, size_t sz) {
-//    KEYE_LOG("----on_write %zd\n",sz);
+//    KEYE_LOG("on_write %zd\n",sz);
 }
 
 bool Node::on_timer(svc_handler&, size_t id, size_t milliseconds) {

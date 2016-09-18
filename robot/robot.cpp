@@ -28,7 +28,7 @@ robot::node_client::node_client():ws_client(1, 1, 510) {
 }
 
 void robot::node_client::on_open(svc_handler& sh) {
-    KEYE_LOG("----on_open\n");
+    KEYE_LOG("on_open\n");
     spsh=sh();
     login();
 }
@@ -46,7 +46,7 @@ void robot::node_client::on_read(svc_handler& sh, void* buf, size_t sz) {
 }
 
 bool robot::node_client::on_timer(svc_handler& sh, size_t id, size_t milliseconds) {
-    KEYE_LOG("----on_timer %zd\n", id);
+    KEYE_LOG("on_timer %zd\n", id);
     bool ret = true;
     if (WRITE_TIMER == id) {
     }
@@ -71,7 +71,7 @@ void robot::http_client::login(){
     user->set_name("Robot");
     user->set_udid("vic's mac");
     request(mid,msg);
-    KEYE_LOG("----login\n");
+    KEYE_LOG("login\n");
 }
 void robot::http_client::enter_lobby(){
     auto mid=proto3::pb_msg::MSG_CL_ENTER;
@@ -80,7 +80,7 @@ void robot::http_client::enter_lobby(){
     msg.set_version(100);
     msg.set_uid(sRobot->user.uid().c_str());
     request(mid,msg);
-    KEYE_LOG("----enter_lobby\n");
+    KEYE_LOG("enter_lobby\n");
 }
 // -------------------------------------------------------
 int main(int argc, char* argv[]) {
@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
         char uri[128];
         sprintf(uri,"ws://%s:%d/%d",host,port,key);
         robot::sRobot->node.connect(uri);
-        KEYE_LOG("----connect to %s\n",uri);
+        KEYE_LOG("connect to %s\n",uri);
     }else{
         char uri[64];
         sprintf(uri,"http://%s:%d",host,port);

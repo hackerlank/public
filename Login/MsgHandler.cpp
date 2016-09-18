@@ -59,15 +59,15 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
         msgid=extractBody(content,body);
     
     if(msgid==proto3::pb_msg::MSG_CS_LOGIN){
-        KEYE_LOG("----body=%s\n",content.c_str());
+        KEYE_LOG("body=%s\n",content.c_str());
         auto str=base64_decode(content);
-        KEYE_LOG("----decode=%s\n",str.c_str());
+        KEYE_LOG("decode=%s\n",str.c_str());
         proto3::MsgCSLogin imsg;
         proto3::MsgSCLogin omsg;
         auto mid=proto3::pb_msg::MSG_SC_LOGIN;
         omsg.set_mid(mid);
         if(imsg.ParseFromString(str)){
-            KEYE_LOG("----client login succeeded\n");
+            KEYE_LOG("client login succeeded\n");
             omsg.set_uid("clusters");
             omsg.set_version(imsg.version()+1);
             omsg.set_ip("127.0.0.1");
@@ -76,7 +76,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             
             PBHelper::Response(resp,omsg,mid);
         }else{
-            KEYE_LOG("----client login failed\n");
+            KEYE_LOG("client login failed\n");
             PBHelper::Response(resp,omsg,mid,500,"Internal error");
         }
     }

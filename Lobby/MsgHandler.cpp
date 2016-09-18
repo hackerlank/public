@@ -22,10 +22,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             auto omid=pb_msg::MSG_LC_ENTER;
             omsg.set_mid(omid);
             if(imsg.ParseFromString(str)){
-                KEYE_LOG("----client enter succeeded\n");
+                KEYE_LOG("client enter succeeded\n");
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                KEYE_LOG("----client enter failed\n");
+                KEYE_LOG("client enter failed\n");
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
