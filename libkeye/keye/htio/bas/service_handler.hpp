@@ -216,7 +216,7 @@ public:
   }
 
 	///the interface expsure
-	std::shared_ptr<void>&	sptr(){
+	std::shared_ptr<void>	sptr(){
 		return _s_ptr;
 	}
 private:

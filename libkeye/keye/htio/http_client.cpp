@@ -315,40 +315,6 @@ namespace keye{
     };
     
     // --------------------------------------------------------
-    // null svc_handler
-    // --------------------------------------------------------
-    class null_svc_handler:public svc_handler{
-    public:
-        virtual void	close(){
-        }
-        virtual size_t	id()const{return 0;}
-        virtual std::shared_ptr<svc_handler> operator()()const{
-            return std::shared_ptr<svc_handler>(new null_svc_handler());
-        }
-        virtual void	send(void* buf,size_t length){
-        }
-        virtual void	post_event(void* buf,size_t length){
-        }
-        virtual void	set_timer(size_t id,size_t milliseconds){
-        }
-        virtual void	unset_timer(size_t id){
-        }
-        virtual std::string	address()const{
-            return "0.0.0.0";
-        }
-        virtual unsigned short	port()const{
-            return 0;
-        }
-        virtual std::shared_ptr<void>&	sptr(){
-            return s;
-        }
-        void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {
-        }
-    private:
-        std::shared_ptr<void> s;
-    };
-
-    // --------------------------------------------------------
     // http_client
     // --------------------------------------------------------
     http_client::http_client(){

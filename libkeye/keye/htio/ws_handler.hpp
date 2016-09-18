@@ -56,7 +56,7 @@ public:
 			return 0;
 		}
 	}
-	virtual std::shared_ptr<void>&	sptr(){
+	virtual std::shared_ptr<void>	sptr(){
 		return _s_ptr;
 	}
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

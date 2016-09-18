@@ -56,7 +56,7 @@ public:
 			return 0;
 		}
 	}
-	virtual std::shared_ptr<void>&	sptr(){
+	virtual std::shared_ptr<void>	sptr(){
 		return _sh.sptr();
 	}
 private:
