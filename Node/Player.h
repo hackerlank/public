@@ -10,7 +10,7 @@
 #define Player_hpp
 
 struct Game;
-class Player{
+class Player: public std::enable_shared_from_this<Player>{
 public:
     Player(keye::svc_handler& sh);
     int     getKey();

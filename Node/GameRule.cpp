@@ -33,6 +33,7 @@ void GameRule::Tick(Game& game){
         default:
             break;
     }
+    PostTick(game);
 }
 
 void GameRule::ChangeState(Game& game,Game::State state){

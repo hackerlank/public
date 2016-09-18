@@ -28,10 +28,22 @@ void Player::on_read(PBHelper& pb){
                 auto gameptr=Node::sNode->createGame(key,imsg);
                 if(gameptr){
                     game=gameptr;
-                    game->players.push_back(this);
+                    game->players.push_back(shared_from_this());
                     ++game->ready;
                     pos=game->players.size()-1;
                     //fill data
+                    auto irobot=imsg.robot();
+                    if(irobot>=game->rule->MaxPlayer())
+                        irobot=game->rule->MaxPlayer()-1;
+                    for(int i=0;i<irobot;++i){
+                        /*
+                        keye::null_svc_handler nullsh;
+                        auto pl=std::make_shared<Player>(nullsh);
+                        game->players.push_back(pl);
+                        ++game->ready;
+                        pl->pos=game->players.size()-1;
+                        */
+                    }
                     
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
@@ -59,7 +71,7 @@ void Player::on_read(PBHelper& pb){
                 if(auto game=Node::sNode->findGame(gid)){
                     auto rule=game->rule;
                     if(game->ready<rule->MaxPlayer()){
-                        game->players.push_back(this);
+                        game->players.push_back(shared_from_this());
                         ++game->ready;
                         pos=game->players.size()-1;
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
@@ -88,7 +100,7 @@ void Player::on_read(PBHelper& pb){
                 if(game){
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     for(auto p:game->players){
-                        if(p!=this){
+                        if(p!=shared_from_this()){
                             PBHelper::Send(*p->spsh,omsg);
                         }
                     }
@@ -108,7 +120,7 @@ void Player::on_read(PBHelper& pb){
                 if(game){
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     for(auto p:game->players){
-                        if(p!=this){
+                        if(p!=shared_from_this()){
                             PBHelper::Send(*p->spsh,omsg);
                         }
                     }

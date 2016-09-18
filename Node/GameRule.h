@@ -15,6 +15,7 @@ public:
     void                Tick(Game&);
     void                ChangeState(Game&,Game::State);
     
+    virtual void        PostTick(Game&)=0;
     virtual int         Type()=0;
     virtual int         MaxPlayer()=0;
 
