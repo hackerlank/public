@@ -25,13 +25,14 @@ public:
     State       state;
     pos_t       banker;
     pos_t       token;
-    std::vector<Card>           units;
-    std::vector<unit_id_t>      pile;
-    std::vector<Player*>        players;
-    std::vector<GameData>       gameData;
+    std::vector<Card>                   units;      //cards map
+    std::vector<unit_id_t>              pile;       //cards library
+    std::vector<Player*>                players;
+    std::vector<proto3::game_data_t>    gameData;   //player game data
+    std::vector<proto3::bunch_t>        historical; //historical game data
     
-    int                         ready;
-    std::shared_ptr<GameRule>   rule;
+    int                                 ready;
+    std::shared_ptr<GameRule>           rule;
     
     Game()
     :id(-1)

@@ -40,6 +40,10 @@ CATEGORY_NORMAL         =50;
 CATEGORY_EASY           =51;
 CATEGORY_HARD           =52;
 
+// game operation
+OP_PASS                 =0;
+OP_DISCARD              =1;
+
 // achievement
 ACHV_BOMB               =10;
 ACHV_HEAVEN             =10;
@@ -141,7 +145,15 @@ uint32 value            =3;
 message bunch_t{
 
 pb_enum type            =1;
-repeated uint32 pawns   =2;
+uint32 pos              =2;
+repeated uint32 pawns   =3;
+};
+
+message game_data_t{
+
+repeated uint32 hands   =1;
+repeated uint32 discards=2;
+repeated bunch_t bunch  =3;
 };
 // -------- messages --------
 enum pb_msg{
@@ -290,15 +302,14 @@ pb_enum result			=10;
 message MsgCNDiscard{
 
 pb_msg mid				=1;
-repeated uint32 cards   =2;
+bunch_t bunch           =2;
 };
 
 message MsgNCDiscard{
 
 pb_msg mid				=1;
-uint32 pos              =2;
-repeated uint32 cards   =3;
-pb_enum result			=4;
+bunch_t bunch           =2;
+pb_enum result			=3;
 };
 
 message MsgCNMeld{

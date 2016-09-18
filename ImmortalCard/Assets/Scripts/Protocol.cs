@@ -44,83 +44,87 @@ namespace Proto3 {
             "FgoObWFpbnRhaW5fc3RhcnQYCSABKA0SFAoMbWFpbnRhaW5fZW5kGAogASgN",
             "EhEKCXRpbWVfem9uZRgLIAEoDRIlCgVnYW1lcxgMIAMoCzIWLnByb3RvMy5n",
             "YW1lX3NlcnZpY2VfdCIyCgZwYXduX3QSCgoCaWQYASABKA0SDQoFY29sb3IY",
-            "AiABKA0SDQoFdmFsdWUYAyABKA0iNwoHYnVuY2hfdBIdCgR0eXBlGAEgASgO",
-            "Mg8ucHJvdG8zLnBiX2VudW0SDQoFcGF3bnMYAiADKA0iJgoHTXNnQmFzZRIb",
-            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnIlgKCk1zZ0NTTG9naW4SGwoD",
-            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgd2ZXJzaW9uGAMgASgNEhwK",
-            "BHVzZXIYAiABKAsyDi5wcm90bzMudXNlcl90IpMBCgpNc2dTQ0xvZ2luEhsK",
-            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDdWlkGAIgASgJEg8KB3Zl",
-            "cnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEoBBIKCgJpcBgFIAEoCRIMCgRw",
-            "b3J0GAYgASgNEh8KBnJlc3VsdBgHIAEoDjIPLnByb3RvMy5wYl9lbnVtIlgK",
-            "Ck1zZ0NMRW50ZXISGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgN1",
-            "aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEoDRIPCgdzZXNzaW9uGAQgASgEIpkB",
-            "CgpNc2dMQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoD",
-            "a2V5GAIgASgNEiAKBnBsYXllchgDIAEoCzIQLnByb3RvMy5wbGF5ZXJfdBIe",
-            "CgVsb2JieRgEIAEoCzIPLnByb3RvMy5sb2JieV90Eh8KBnJlc3VsdBgFIAEo",
-            "DjIPLnByb3RvMy5wYl9lbnVtInoKCk1zZ0NORW50ZXISGwoDbWlkGAEgASgO",
-            "Mg4ucHJvdG8zLnBiX21zZxILCgN1aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEo",
-            "DRIPCgdzZXNzaW9uGAQgASgEEiAKB3NlcnZpY2UYBSABKA4yDy5wcm90bzMu",
-            "cGJfZW51bSJsCgpNc2dOQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
-            "Yl9tc2cSIAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90Eh8KBnJl",
-            "c3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIo4BCgtNc2dDTkNyZWF0ZRIb",
-            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh0KBHJ1bGUYAiABKA4yDy5w",
-            "cm90bzMucGJfZW51bRIhCghjYXRlZ29yeRgDIAEoDjIPLnByb3RvMy5wYl9l",
-            "bnVtEg0KBXJvYm90GAQgASgNEhEKCXBhcmFtZXRlchgFIAEoDSJcCgtNc2dO",
-            "Q0NyZWF0ZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8KB2dhbWVf",
-            "aWQYAiABKA0SHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iOQoJ",
-            "TXNnQ05Kb2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDwoHZ2Ft",
-            "ZV9pZBgCIAEoDSJJCglNc2dOQ0pvaW4SGwoDbWlkGAEgASgOMg4ucHJvdG8z",
-            "LnBiX21zZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSLUAQoK",
-            "TXNnTkNTdGFydBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg4KBmJh",
-            "bmtlchgCIAEoDRILCgNwb3MYAyABKA0SDAoEYW50ZRgEIAEoDRIQCghtdWx0",
-            "aXBsZRgFIAEoDRIdCgVjYXJkcxgGIAMoCzIOLnByb3RvMy5wYXduX3QSDQoF",
-            "aGFuZHMYByADKA0SDgoGYm90dG9tGAggAygNEg0KBWNvdW50GAkgAygNEh8K",
-            "BnJlc3VsdBgKIAEoDjIPLnByb3RvMy5wYl9lbnVtIjoKDE1zZ0NORGlzY2Fy",
-            "ZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg0KBWNhcmRzGAIgAygN",
-            "ImgKDE1zZ05DRGlzY2FyZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNn",
-            "EgsKA3BvcxgCIAEoDRINCgVjYXJkcxgDIAMoDRIfCgZyZXN1bHQYBCABKA4y",
-            "Dy5wcm90bzMucGJfZW51bSIoCglNc2dDTk1lbGQSGwoDbWlkGAEgASgOMg4u",
-            "cHJvdG8zLnBiX21zZyJJCglNc2dOQ01lbGQSGwoDbWlkGAEgASgOMg4ucHJv",
-            "dG8zLnBiX21zZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSIv",
-            "ChBNc2dDTkRpc21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
-            "c2ciXQoQTXNnTkNEaXNtaXNzU3luYxIbCgNtaWQYASABKA4yDi5wcm90bzMu",
-            "cGJfbXNnEgsKA3BvcxgCIAEoDRIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMu",
-            "cGJfZW51bSIuCg9Nc2dDTkRpc21pc3NBY2sSGwoDbWlkGAEgASgOMg4ucHJv",
-            "dG8zLnBiX21zZyJcCg9Nc2dOQ0Rpc21pc3NBY2sSGwoDbWlkGAEgASgOMg4u",
-            "cHJvdG8zLnBiX21zZxILCgNwb3MYAiABKA0SHwoGcmVzdWx0GAMgASgOMg8u",
-            "cHJvdG8zLnBiX2VudW0imwEKC01zZ05DU2V0dGxlEhsKA21pZBgBIAEoDjIO",
-            "LnByb3RvMy5wYl9tc2cSDgoGd2lubmVyGAIgASgNEh4KBHBsYXkYAyADKAsy",
-            "EC5wcm90bzMucGxheWVyX3QSHgoFaGFuZHMYBCADKAsyDy5wcm90bzMuYnVu",
-            "Y2hfdBIfCgZyZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51bSJrCgtNc2dO",
-            "Q0ZpbmlzaBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBHBsYXkY",
-            "AiADKAsyEC5wcm90bzMucGxheWVyX3QSHwoGcmVzdWx0GAMgASgOMg8ucHJv",
-            "dG8zLnBiX2VudW0iRQoKTXNnQ05TdGF0cxIbCgNtaWQYASABKA4yDi5wcm90",
-            "bzMucGJfbXNnEgsKA2tleRgCIAEoCRINCgV2YWx1ZRgDIAEoCSrYAwoHcGJf",
-            "ZW51bRILCgdVTktOT1dOEAASCAoETk9ORRAAEgwKCFNVQ0NFRVNTEAASCgoG",
-            "REVWX1BDEAASCwoHREVWX1BTNBABEgwKCERFVl9YQk9YEAISCwoHREVWX0lP",
-            "UxADEg8KC0RFVl9BTkRST0lEEAQSEAoMREVWX1dJTlBIT05FEAUSDQoJR0FN",
-            "RV9DQVJEEAoSDgoKR0FNRV9DSEVTUxALEgwKCFJVTEVfRERaEBQSDAoIUlVM",
-            "RV9QREsQFRIMCghSVUxFX1BIWhAWEhMKD0NBVEVHT1JZX05PUk1BTBAyEhEK",
-            "DUNBVEVHT1JZX0VBU1kQMxIRCg1DQVRFR09SWV9IQVJEEDQSDQoJQUNIVl9C",
-            "T01CEAoSDwoLQUNIVl9IRUFWRU4QChINCglBQ0hWX0hFTEwQChISCg1ERUZf",
-            "TUFYX05PREVTEOgHEhwKFkRFRl9NQVhfR0FNRVNfUEVSX05PREUQoI0GEg4K",
-            "CkVSUl9GQUlMRUQQZBIRCg1FUlJfQ0FOQ0VMTEVEEGUSEAoMRVJSX1BST1RP",
-            "Q09MEGYSDQoJRVJSX1BBUkFNEGcSEgoORVJSX0RVUExJQ0FURUQQaBIQCgtF",
-            "UlJfVU5LTk9XThDnBxoCEAEqgwUKBnBiX21zZxIPCgtNU0dfSU5WQUxJRBAA",
-            "Eg4KCU1TR19CRUdJThDoBxIMCgdNU0dfUkFXEOkHEhEKDE1TR19DU19CRUdJ",
-            "ThDQDxIRCgxNU0dfQ1NfTE9HSU4Q0Q8SEQoMTVNHX1NDX0xPR0lOENIPEg8K",
-            "Ck1TR19DU19FTkQQnx8SEQoMTVNHX0NMX0JFR0lOEKAfEhEKDE1TR19DTF9F",
-            "TlRFUhChHxIRCgxNU0dfTENfRU5URVIQoh8SEAoLTVNHX0xDX0VYSVQQox8S",
-            "DwoKTVNHX0NMX0VORBDvLhIRCgxNU0dfQ05fQkVHSU4Q8C4SEQoMTVNHX0NO",
-            "X0VOVEVSEPEuEhEKDE1TR19OQ19FTlRFUhDyLhISCg1NU0dfQ05fQ1JFQVRF",
-            "EPouEhIKDU1TR19OQ19DUkVBVEUQ+y4SEAoLTVNHX0NOX0pPSU4Q/C4SEAoL",
-            "TVNHX05DX0pPSU4Q/S4SEQoMTVNHX05DX1NUQVJUEIQvEhMKDk1TR19DTl9E",
-            "SVNDQVJEEIUvEhMKDk1TR19OQ19ESVNDQVJEEIYvEhAKC01TR19DTl9NRUxE",
-            "EIcvEhAKC01TR19OQ19NRUxEEIgvEhIKDU1TR19OQ19TRVRUTEUQiS8SEgoN",
-            "TVNHX05DX0ZJTklTSBCKLxIYChNNU0dfQ05fRElTTUlTU19TWU5DEI4vEhgK",
-            "E01TR19OQ19ESVNNSVNTX1NZTkMQjy8SFwoSTVNHX0NOX0RJU01JU1NfQUNL",
-            "EJAvEhcKEk1TR19OQ19ESVNNSVNTX0FDSxCRLxIRCgxNU0dfQ05fU1RBVFMQ",
-            "wC8SDwoKTVNHX0NOX0VORBDXNhIMCgdNU0dfRU5EEI9OQgJIA2IGcHJvdG8z"));
+            "AiABKA0SDQoFdmFsdWUYAyABKA0iRAoHYnVuY2hfdBIdCgR0eXBlGAEgASgO",
+            "Mg8ucHJvdG8zLnBiX2VudW0SCwoDcG9zGAIgASgNEg0KBXBhd25zGAMgAygN",
+            "Ik4KC2dhbWVfZGF0YV90Eg0KBWhhbmRzGAEgAygNEhAKCGRpc2NhcmRzGAIg",
+            "AygNEh4KBWJ1bmNoGAMgAygLMg8ucHJvdG8zLmJ1bmNoX3QiJgoHTXNnQmFz",
+            "ZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnIlgKCk1zZ0NTTG9naW4S",
+            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgd2ZXJzaW9uGAMgASgN",
+            "EhwKBHVzZXIYAiABKAsyDi5wcm90bzMudXNlcl90IpMBCgpNc2dTQ0xvZ2lu",
+            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDdWlkGAIgASgJEg8K",
+            "B3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEoBBIKCgJpcBgFIAEoCRIM",
+            "CgRwb3J0GAYgASgNEh8KBnJlc3VsdBgHIAEoDjIPLnByb3RvMy5wYl9lbnVt",
+            "IlgKCk1zZ0NMRW50ZXISGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIL",
+            "CgN1aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEoDRIPCgdzZXNzaW9uGAQgASgE",
+            "IpkBCgpNc2dMQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "CwoDa2V5GAIgASgNEiAKBnBsYXllchgDIAEoCzIQLnByb3RvMy5wbGF5ZXJf",
+            "dBIeCgVsb2JieRgEIAEoCzIPLnByb3RvMy5sb2JieV90Eh8KBnJlc3VsdBgF",
+            "IAEoDjIPLnByb3RvMy5wYl9lbnVtInoKCk1zZ0NORW50ZXISGwoDbWlkGAEg",
+            "ASgOMg4ucHJvdG8zLnBiX21zZxILCgN1aWQYAiABKAkSDwoHdmVyc2lvbhgD",
+            "IAEoDRIPCgdzZXNzaW9uGAQgASgEEiAKB3NlcnZpY2UYBSABKA4yDy5wcm90",
+            "bzMucGJfZW51bSJsCgpNc2dOQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3Rv",
+            "My5wYl9tc2cSIAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90Eh8K",
+            "BnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIo4BCgtNc2dDTkNyZWF0",
+            "ZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh0KBHJ1bGUYAiABKA4y",
+            "Dy5wcm90bzMucGJfZW51bRIhCghjYXRlZ29yeRgDIAEoDjIPLnByb3RvMy5w",
+            "Yl9lbnVtEg0KBXJvYm90GAQgASgNEhEKCXBhcmFtZXRlchgFIAEoDSJcCgtN",
+            "c2dOQ0NyZWF0ZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8KB2dh",
+            "bWVfaWQYAiABKA0SHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0i",
+            "OQoJTXNnQ05Kb2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDwoH",
+            "Z2FtZV9pZBgCIAEoDSJJCglNc2dOQ0pvaW4SGwoDbWlkGAEgASgOMg4ucHJv",
+            "dG8zLnBiX21zZxIfCgZyZXN1bHQYAiABKA4yDy5wcm90bzMucGJfZW51bSLU",
+            "AQoKTXNnTkNTdGFydBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg4K",
+            "BmJhbmtlchgCIAEoDRILCgNwb3MYAyABKA0SDAoEYW50ZRgEIAEoDRIQCght",
+            "dWx0aXBsZRgFIAEoDRIdCgVjYXJkcxgGIAMoCzIOLnByb3RvMy5wYXduX3QS",
+            "DQoFaGFuZHMYByADKA0SDgoGYm90dG9tGAggAygNEg0KBWNvdW50GAkgAygN",
+            "Eh8KBnJlc3VsdBgKIAEoDjIPLnByb3RvMy5wYl9lbnVtIksKDE1zZ0NORGlz",
+            "Y2FyZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBWJ1bmNoGAIg",
+            "ASgLMg8ucHJvdG8zLmJ1bmNoX3QibAoMTXNnTkNEaXNjYXJkEhsKA21pZBgB",
+            "IAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMu",
+            "YnVuY2hfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSIoCglN",
+            "c2dDTk1lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJJCglNc2dO",
+            "Q01lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIfCgZyZXN1bHQY",
+            "AiABKA4yDy5wcm90bzMucGJfZW51bSIvChBNc2dDTkRpc21pc3NTeW5jEhsK",
+            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXQoQTXNnTkNEaXNtaXNzU3lu",
+            "YxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3BvcxgCIAEoDRIf",
+            "CgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSIuCg9Nc2dDTkRpc21p",
+            "c3NBY2sSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJcCg9Nc2dOQ0Rp",
+            "c21pc3NBY2sSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MY",
+            "AiABKA0SHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0imwEKC01z",
+            "Z05DU2V0dGxlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDgoGd2lu",
+            "bmVyGAIgASgNEh4KBHBsYXkYAyADKAsyEC5wcm90bzMucGxheWVyX3QSHgoF",
+            "aGFuZHMYBCADKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYBSABKA4y",
+            "Dy5wcm90bzMucGJfZW51bSJrCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4y",
+            "Di5wcm90bzMucGJfbXNnEh4KBHBsYXkYAiADKAsyEC5wcm90bzMucGxheWVy",
+            "X3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iRQoKTXNnQ05T",
+            "dGF0cxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA2tleRgCIAEo",
+            "CRINCgV2YWx1ZRgDIAEoCSr1AwoHcGJfZW51bRILCgdVTktOT1dOEAASCAoE",
+            "Tk9ORRAAEgwKCFNVQ0NFRVNTEAASCgoGREVWX1BDEAASCwoHREVWX1BTNBAB",
+            "EgwKCERFVl9YQk9YEAISCwoHREVWX0lPUxADEg8KC0RFVl9BTkRST0lEEAQS",
+            "EAoMREVWX1dJTlBIT05FEAUSDQoJR0FNRV9DQVJEEAoSDgoKR0FNRV9DSEVT",
+            "UxALEgwKCFJVTEVfRERaEBQSDAoIUlVMRV9QREsQFRIMCghSVUxFX1BIWhAW",
+            "EhMKD0NBVEVHT1JZX05PUk1BTBAyEhEKDUNBVEVHT1JZX0VBU1kQMxIRCg1D",
+            "QVRFR09SWV9IQVJEEDQSCwoHT1BfUEFTUxAAEg4KCk9QX0RJU0NBUkQQARIN",
+            "CglBQ0hWX0JPTUIQChIPCgtBQ0hWX0hFQVZFThAKEg0KCUFDSFZfSEVMTBAK",
+            "EhIKDURFRl9NQVhfTk9ERVMQ6AcSHAoWREVGX01BWF9HQU1FU19QRVJfTk9E",
+            "RRCgjQYSDgoKRVJSX0ZBSUxFRBBkEhEKDUVSUl9DQU5DRUxMRUQQZRIQCgxF",
+            "UlJfUFJPVE9DT0wQZhINCglFUlJfUEFSQU0QZxISCg5FUlJfRFVQTElDQVRF",
+            "RBBoEhAKC0VSUl9VTktOT1dOEOcHGgIQASqDBQoGcGJfbXNnEg8KC01TR19J",
+            "TlZBTElEEAASDgoJTVNHX0JFR0lOEOgHEgwKB01TR19SQVcQ6QcSEQoMTVNH",
+            "X0NTX0JFR0lOENAPEhEKDE1TR19DU19MT0dJThDRDxIRCgxNU0dfU0NfTE9H",
+            "SU4Q0g8SDwoKTVNHX0NTX0VORBCfHxIRCgxNU0dfQ0xfQkVHSU4QoB8SEQoM",
+            "TVNHX0NMX0VOVEVSEKEfEhEKDE1TR19MQ19FTlRFUhCiHxIQCgtNU0dfTENf",
+            "RVhJVBCjHxIPCgpNU0dfQ0xfRU5EEO8uEhEKDE1TR19DTl9CRUdJThDwLhIR",
+            "CgxNU0dfQ05fRU5URVIQ8S4SEQoMTVNHX05DX0VOVEVSEPIuEhIKDU1TR19D",
+            "Tl9DUkVBVEUQ+i4SEgoNTVNHX05DX0NSRUFURRD7LhIQCgtNU0dfQ05fSk9J",
+            "ThD8LhIQCgtNU0dfTkNfSk9JThD9LhIRCgxNU0dfTkNfU1RBUlQQhC8SEwoO",
+            "TVNHX0NOX0RJU0NBUkQQhS8SEwoOTVNHX05DX0RJU0NBUkQQhi8SEAoLTVNH",
+            "X0NOX01FTEQQhy8SEAoLTVNHX05DX01FTEQQiC8SEgoNTVNHX05DX1NFVFRM",
+            "RRCJLxISCg1NU0dfTkNfRklOSVNIEIovEhgKE01TR19DTl9ESVNNSVNTX1NZ",
+            "TkMQji8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCPLxIXChJNU0dfQ05fRElT",
+            "TUlTU19BQ0sQkC8SFwoSTVNHX05DX0RJU01JU1NfQUNLEJEvEhEKDE1TR19D",
+            "Tl9TVEFUUxDALxIPCgpNU0dfQ05fRU5EENc2EgwKB01TR19FTkQQj05CAkgD",
+            "YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -131,7 +135,8 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_service_t), global::Proto3.game_service_t.Parser, new[]{ "Id", "Version", "Ip", "Port", "Occupied", "Capacity", "Desc", "Status", "OpenningTime", "MaintainStart", "MaintainEnd" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.lobby_t), global::Proto3.lobby_t.Parser, new[]{ "Version", "Ip", "Port", "Occupied", "Capacity", "Desc", "Bulletin", "Status", "MaintainStart", "MaintainEnd", "TimeZone", "Games" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.pawn_t), global::Proto3.pawn_t.Parser, new[]{ "Id", "Color", "Value" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.bunch_t), global::Proto3.bunch_t.Parser, new[]{ "Type", "Pawns" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.bunch_t), global::Proto3.bunch_t.Parser, new[]{ "Type", "Pos", "Pawns" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_data_t), global::Proto3.game_data_t.Parser, new[]{ "Hands", "Discards", "Bunch" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgBase), global::Proto3.MsgBase.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCSLogin), global::Proto3.MsgCSLogin.Parser, new[]{ "Mid", "Version", "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgSCLogin), global::Proto3.MsgSCLogin.Parser, new[]{ "Mid", "Uid", "Version", "Session", "Ip", "Port", "Result" }, null, null, null),
@@ -144,8 +149,8 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNJoin), global::Proto3.MsgCNJoin.Parser, new[]{ "Mid", "GameId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCJoin), global::Proto3.MsgNCJoin.Parser, new[]{ "Mid", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCStart), global::Proto3.MsgNCStart.Parser, new[]{ "Mid", "Banker", "Pos", "Ante", "Multiple", "Cards", "Hands", "Bottom", "Count", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDiscard), global::Proto3.MsgCNDiscard.Parser, new[]{ "Mid", "Cards" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDiscard), global::Proto3.MsgNCDiscard.Parser, new[]{ "Mid", "Pos", "Cards", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDiscard), global::Proto3.MsgCNDiscard.Parser, new[]{ "Mid", "Bunch" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDiscard), global::Proto3.MsgNCDiscard.Parser, new[]{ "Mid", "Bunch", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNMeld), global::Proto3.MsgCNMeld.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCMeld), global::Proto3.MsgNCMeld.Parser, new[]{ "Mid", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDismissSync), global::Proto3.MsgCNDismissSync.Parser, new[]{ "Mid" }, null, null, null),
@@ -194,6 +199,11 @@ namespace Proto3 {
     [pbr::OriginalName("CATEGORY_NORMAL")] CategoryNormal = 50,
     [pbr::OriginalName("CATEGORY_EASY")] CategoryEasy = 51,
     [pbr::OriginalName("CATEGORY_HARD")] CategoryHard = 52,
+    /// <summary>
+    ///  game operation
+    /// </summary>
+    [pbr::OriginalName("OP_PASS")] OpPass = 0,
+    [pbr::OriginalName("OP_DISCARD")] OpDiscard = 1,
     /// <summary>
     ///  achievement
     /// </summary>
@@ -2347,6 +2357,7 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public bunch_t(bunch_t other) : this() {
       type_ = other.type_;
+      pos_ = other.pos_;
       pawns_ = other.pawns_.Clone();
     }
 
@@ -2366,10 +2377,21 @@ namespace Proto3 {
       }
     }
 
+    /// <summary>Field number for the "pos" field.</summary>
+    public const int PosFieldNumber = 2;
+    private uint pos_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Pos {
+      get { return pos_; }
+      set {
+        pos_ = value;
+      }
+    }
+
     /// <summary>Field number for the "pawns" field.</summary>
-    public const int PawnsFieldNumber = 2;
+    public const int PawnsFieldNumber = 3;
     private static readonly pb::FieldCodec<uint> _repeated_pawns_codec
-        = pb::FieldCodec.ForUInt32(18);
+        = pb::FieldCodec.ForUInt32(26);
     private readonly pbc::RepeatedField<uint> pawns_ = new pbc::RepeatedField<uint>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<uint> Pawns {
@@ -2390,6 +2412,7 @@ namespace Proto3 {
         return true;
       }
       if (Type != other.Type) return false;
+      if (Pos != other.Pos) return false;
       if(!pawns_.Equals(other.pawns_)) return false;
       return true;
     }
@@ -2398,6 +2421,7 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Type != 0) hash ^= Type.GetHashCode();
+      if (Pos != 0) hash ^= Pos.GetHashCode();
       hash ^= pawns_.GetHashCode();
       return hash;
     }
@@ -2413,6 +2437,10 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Type);
       }
+      if (Pos != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Pos);
+      }
       pawns_.WriteTo(output, _repeated_pawns_codec);
     }
 
@@ -2421,6 +2449,9 @@ namespace Proto3 {
       int size = 0;
       if (Type != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+      }
+      if (Pos != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
       }
       size += pawns_.CalculateSize(_repeated_pawns_codec);
       return size;
@@ -2433,6 +2464,9 @@ namespace Proto3 {
       }
       if (other.Type != 0) {
         Type = other.Type;
+      }
+      if (other.Pos != 0) {
+        Pos = other.Pos;
       }
       pawns_.Add(other.pawns_);
     }
@@ -2449,9 +2483,164 @@ namespace Proto3 {
             type_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }
+          case 16: {
+            Pos = input.ReadUInt32();
+            break;
+          }
+          case 26:
+          case 24: {
+            pawns_.AddEntriesFrom(input, _repeated_pawns_codec);
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class game_data_t : pb::IMessage<game_data_t> {
+    private static readonly pb::MessageParser<game_data_t> _parser = new pb::MessageParser<game_data_t>(() => new game_data_t());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<game_data_t> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public game_data_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public game_data_t(game_data_t other) : this() {
+      hands_ = other.hands_.Clone();
+      discards_ = other.discards_.Clone();
+      bunch_ = other.bunch_.Clone();
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public game_data_t Clone() {
+      return new game_data_t(this);
+    }
+
+    /// <summary>Field number for the "hands" field.</summary>
+    public const int HandsFieldNumber = 1;
+    private static readonly pb::FieldCodec<uint> _repeated_hands_codec
+        = pb::FieldCodec.ForUInt32(10);
+    private readonly pbc::RepeatedField<uint> hands_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Hands {
+      get { return hands_; }
+    }
+
+    /// <summary>Field number for the "discards" field.</summary>
+    public const int DiscardsFieldNumber = 2;
+    private static readonly pb::FieldCodec<uint> _repeated_discards_codec
+        = pb::FieldCodec.ForUInt32(18);
+    private readonly pbc::RepeatedField<uint> discards_ = new pbc::RepeatedField<uint>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<uint> Discards {
+      get { return discards_; }
+    }
+
+    /// <summary>Field number for the "bunch" field.</summary>
+    public const int BunchFieldNumber = 3;
+    private static readonly pb::FieldCodec<global::Proto3.bunch_t> _repeated_bunch_codec
+        = pb::FieldCodec.ForMessage(26, global::Proto3.bunch_t.Parser);
+    private readonly pbc::RepeatedField<global::Proto3.bunch_t> bunch_ = new pbc::RepeatedField<global::Proto3.bunch_t>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Proto3.bunch_t> Bunch {
+      get { return bunch_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as game_data_t);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(game_data_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!hands_.Equals(other.hands_)) return false;
+      if(!discards_.Equals(other.discards_)) return false;
+      if(!bunch_.Equals(other.bunch_)) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= hands_.GetHashCode();
+      hash ^= discards_.GetHashCode();
+      hash ^= bunch_.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      hands_.WriteTo(output, _repeated_hands_codec);
+      discards_.WriteTo(output, _repeated_discards_codec);
+      bunch_.WriteTo(output, _repeated_bunch_codec);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      size += hands_.CalculateSize(_repeated_hands_codec);
+      size += discards_.CalculateSize(_repeated_discards_codec);
+      size += bunch_.CalculateSize(_repeated_bunch_codec);
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(game_data_t other) {
+      if (other == null) {
+        return;
+      }
+      hands_.Add(other.hands_);
+      discards_.Add(other.discards_);
+      bunch_.Add(other.bunch_);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            hands_.AddEntriesFrom(input, _repeated_hands_codec);
+            break;
+          }
           case 18:
           case 16: {
-            pawns_.AddEntriesFrom(input, _repeated_pawns_codec);
+            discards_.AddEntriesFrom(input, _repeated_discards_codec);
+            break;
+          }
+          case 26: {
+            bunch_.AddEntriesFrom(input, _repeated_bunch_codec);
             break;
           }
         }
@@ -2467,7 +2656,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2587,7 +2776,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2766,7 +2955,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3054,7 +3243,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3255,7 +3444,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3499,7 +3688,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3728,7 +3917,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3907,7 +4096,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4139,7 +4328,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4312,7 +4501,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4457,7 +4646,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4602,7 +4791,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4942,7 +5131,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4960,7 +5149,7 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MsgCNDiscard(MsgCNDiscard other) : this() {
       mid_ = other.mid_;
-      cards_ = other.cards_.Clone();
+      Bunch = other.bunch_ != null ? other.Bunch.Clone() : null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4979,14 +5168,15 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "cards" field.</summary>
-    public const int CardsFieldNumber = 2;
-    private static readonly pb::FieldCodec<uint> _repeated_cards_codec
-        = pb::FieldCodec.ForUInt32(18);
-    private readonly pbc::RepeatedField<uint> cards_ = new pbc::RepeatedField<uint>();
+    /// <summary>Field number for the "bunch" field.</summary>
+    public const int BunchFieldNumber = 2;
+    private global::Proto3.bunch_t bunch_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> Cards {
-      get { return cards_; }
+    public global::Proto3.bunch_t Bunch {
+      get { return bunch_; }
+      set {
+        bunch_ = value;
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5003,7 +5193,7 @@ namespace Proto3 {
         return true;
       }
       if (Mid != other.Mid) return false;
-      if(!cards_.Equals(other.cards_)) return false;
+      if (!object.Equals(Bunch, other.Bunch)) return false;
       return true;
     }
 
@@ -5011,7 +5201,7 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Mid != 0) hash ^= Mid.GetHashCode();
-      hash ^= cards_.GetHashCode();
+      if (bunch_ != null) hash ^= Bunch.GetHashCode();
       return hash;
     }
 
@@ -5026,7 +5216,10 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mid);
       }
-      cards_.WriteTo(output, _repeated_cards_codec);
+      if (bunch_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Bunch);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5035,7 +5228,9 @@ namespace Proto3 {
       if (Mid != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
-      size += cards_.CalculateSize(_repeated_cards_codec);
+      if (bunch_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Bunch);
+      }
       return size;
     }
 
@@ -5047,7 +5242,12 @@ namespace Proto3 {
       if (other.Mid != 0) {
         Mid = other.Mid;
       }
-      cards_.Add(other.cards_);
+      if (other.bunch_ != null) {
+        if (bunch_ == null) {
+          bunch_ = new global::Proto3.bunch_t();
+        }
+        Bunch.MergeFrom(other.Bunch);
+      }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5062,9 +5262,11 @@ namespace Proto3 {
             mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
-          case 18:
-          case 16: {
-            cards_.AddEntriesFrom(input, _repeated_cards_codec);
+          case 18: {
+            if (bunch_ == null) {
+              bunch_ = new global::Proto3.bunch_t();
+            }
+            input.ReadMessage(bunch_);
             break;
           }
         }
@@ -5080,7 +5282,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[21]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5098,8 +5300,7 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MsgNCDiscard(MsgNCDiscard other) : this() {
       mid_ = other.mid_;
-      pos_ = other.pos_;
-      cards_ = other.cards_.Clone();
+      Bunch = other.bunch_ != null ? other.Bunch.Clone() : null;
       result_ = other.result_;
     }
 
@@ -5119,29 +5320,19 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "pos" field.</summary>
-    public const int PosFieldNumber = 2;
-    private uint pos_;
+    /// <summary>Field number for the "bunch" field.</summary>
+    public const int BunchFieldNumber = 2;
+    private global::Proto3.bunch_t bunch_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
-      get { return pos_; }
+    public global::Proto3.bunch_t Bunch {
+      get { return bunch_; }
       set {
-        pos_ = value;
+        bunch_ = value;
       }
     }
 
-    /// <summary>Field number for the "cards" field.</summary>
-    public const int CardsFieldNumber = 3;
-    private static readonly pb::FieldCodec<uint> _repeated_cards_codec
-        = pb::FieldCodec.ForUInt32(26);
-    private readonly pbc::RepeatedField<uint> cards_ = new pbc::RepeatedField<uint>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<uint> Cards {
-      get { return cards_; }
-    }
-
     /// <summary>Field number for the "result" field.</summary>
-    public const int ResultFieldNumber = 4;
+    public const int ResultFieldNumber = 3;
     private global::Proto3.pb_enum result_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.pb_enum Result {
@@ -5165,8 +5356,7 @@ namespace Proto3 {
         return true;
       }
       if (Mid != other.Mid) return false;
-      if (Pos != other.Pos) return false;
-      if(!cards_.Equals(other.cards_)) return false;
+      if (!object.Equals(Bunch, other.Bunch)) return false;
       if (Result != other.Result) return false;
       return true;
     }
@@ -5175,8 +5365,7 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Mid != 0) hash ^= Mid.GetHashCode();
-      if (Pos != 0) hash ^= Pos.GetHashCode();
-      hash ^= cards_.GetHashCode();
+      if (bunch_ != null) hash ^= Bunch.GetHashCode();
       if (Result != 0) hash ^= Result.GetHashCode();
       return hash;
     }
@@ -5192,13 +5381,12 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mid);
       }
-      if (Pos != 0) {
-        output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+      if (bunch_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Bunch);
       }
-      cards_.WriteTo(output, _repeated_cards_codec);
       if (Result != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(24);
         output.WriteEnum((int) Result);
       }
     }
@@ -5209,10 +5397,9 @@ namespace Proto3 {
       if (Mid != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
-      if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+      if (bunch_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Bunch);
       }
-      size += cards_.CalculateSize(_repeated_cards_codec);
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
@@ -5227,10 +5414,12 @@ namespace Proto3 {
       if (other.Mid != 0) {
         Mid = other.Mid;
       }
-      if (other.Pos != 0) {
-        Pos = other.Pos;
+      if (other.bunch_ != null) {
+        if (bunch_ == null) {
+          bunch_ = new global::Proto3.bunch_t();
+        }
+        Bunch.MergeFrom(other.Bunch);
       }
-      cards_.Add(other.cards_);
       if (other.Result != 0) {
         Result = other.Result;
       }
@@ -5248,16 +5437,14 @@ namespace Proto3 {
             mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
-          case 16: {
-            Pos = input.ReadUInt32();
+          case 18: {
+            if (bunch_ == null) {
+              bunch_ = new global::Proto3.bunch_t();
+            }
+            input.ReadMessage(bunch_);
             break;
           }
-          case 26:
           case 24: {
-            cards_.AddEntriesFrom(input, _repeated_cards_codec);
-            break;
-          }
-          case 32: {
             result_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }
@@ -5274,7 +5461,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[22]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5391,7 +5578,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[23]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5536,7 +5723,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[24]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5653,7 +5840,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[25]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5826,7 +6013,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5943,7 +6130,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6116,7 +6303,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6329,7 +6516,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6494,7 +6681,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

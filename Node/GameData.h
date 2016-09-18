@@ -16,11 +16,11 @@ typedef short value_t;
 typedef unsigned game_id_t;
 
 struct GameData{
-    std::vector<unit_id_t>    deck;
+    std::vector<unit_id_t>    hands;
     std::vector<unit_id_t>    discards;
     
     void clear(){
-        deck.clear();
+        hands.clear();
         discards.clear();
     }
 };

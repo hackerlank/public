@@ -29,7 +29,7 @@ void DoudeZhu::Deal(Game& game){
     game.units.clear();
     game.pile.clear();
     game.gameData.resize(MaxPlayer());
-    for(auto& gd:game.gameData)gd.clear();
+    for(auto& gd:game.gameData)gd.Clear();
     //init cards
     size_t N=54;
     game.units.resize(N);
@@ -62,10 +62,14 @@ void DoudeZhu::Deal(Game& game){
     size_t I=game.banker,
     J=(game.banker+1)%MaxPlayer(),
     K=(game.banker+2)%MaxPlayer();
-    std::copy(game.pile.begin(),    game.pile.begin()+20,   std::back_inserter(game.gameData[I].deck));
-    std::copy(game.pile.begin()+20, game.pile.begin()+37,   std::back_inserter(game.gameData[J].deck));
-    std::copy(game.pile.begin()+37, game.pile.end(),        std::back_inserter(game.gameData[K].deck));
-    
+    /*
+    std::copy(game.pile.begin(),    game.pile.begin()+20,   std::back_inserter(game.gameData[I].hands()));
+    std::copy(game.pile.begin()+20, game.pile.begin()+37,   std::back_inserter(game.gameData[J].hands()));
+    std::copy(game.pile.begin()+37, game.pile.end(),        std::back_inserter(game.gameData[K].hands()));
+    */
+    for(auto x=game.pile.begin(),       xx=game.pile.begin()+20;    x!=xx;++x)game.gameData[I].mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin()+20,    xx=game.pile.begin()+20+17; x!=xx;++x)game.gameData[J].mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin()+20+17, xx=game.pile.end();         x!=xx;++x)game.gameData[K].mutable_hands()->Add(*x);
     //broadcast
     MsgNCStart msg;
     msg.set_mid(pb_msg::MSG_NC_START);
@@ -78,20 +82,20 @@ void DoudeZhu::Deal(Game& game){
         card->CopyFrom(game.units[i]);
     }
     for(int i=0;i<MaxPlayer();++i)
-        msg.mutable_count()->Add((int)game.gameData[i].deck.size());
-    auto bankerHands=game.gameData[I].deck.size();
+        msg.mutable_count()->Add((int)game.gameData[i].hands().size());
+    auto bankerHands=game.gameData[I].hands().size();
     for(auto i=bankerHands-3;i<bankerHands;++i)
-        msg.mutable_bottom()->Add(game.gameData[I].deck[i]);
+        msg.mutable_bottom()->Add(game.gameData[I].hands(i));
     
     int M=1;//MaxPlayer();
     for(int i=0;i<M;++i){
         auto p=game.players[i];
         msg.set_pos(i);
         auto hands=msg.mutable_hands();
-        auto n=(int)game.gameData[i].deck.size();
+        auto n=(int)game.gameData[i].hands().size();
         hands->Resize(n,0);
         for(int j=0;j<n;++j)
-            hands->Set(j,game.gameData[i].deck[j]);
+            hands->Set(j,game.gameData[i].hands(j));
         
         p->send(msg);
         hands->Clear();
