@@ -36,6 +36,19 @@ void GameRule::Tick(Game& game){
     PostTick(game);
 }
 
+void GameRule::PostTick(Game& game){
+    for(auto robot:game.robots){
+        switch (game.state) {
+            case Game::State::ST_DISCARD:
+                if(IsGameOver(game))
+                    ChangeState(game,Game::State::ST_SETTLE);
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 void GameRule::ChangeState(Game& game,Game::State state){
     if(game.state!=state){
         KEYE_LOG("game state: %d=>%d\n",game.state,state);

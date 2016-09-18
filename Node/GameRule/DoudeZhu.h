@@ -11,7 +11,6 @@
 
 class DoudeZhu: public GameRule{
 public:
-    virtual void        PostTick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
 

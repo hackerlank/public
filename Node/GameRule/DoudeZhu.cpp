@@ -228,10 +228,6 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
     player.send(omsg);
 }
 
-void DoudeZhu::PostTick(Game& game){
-    
-}
-
 void DoudeZhu::Settle(Game& game){
     
 }

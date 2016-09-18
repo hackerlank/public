@@ -30,19 +30,17 @@ void Player::on_read(PBHelper& pb){
                     game=gameptr;
                     game->players.push_back(shared_from_this());
                     ++game->ready;
-                    pos=game->players.size()-1;
+                    pos=game->players.size()+game->robots.size()-1;
                     //fill data
                     auto irobot=imsg.robot();
                     if(irobot>=game->rule->MaxPlayer())
                         irobot=game->rule->MaxPlayer()-1;
                     for(int i=0;i<irobot;++i){
-                        /*
                         keye::null_svc_handler nullsh;
-                        auto pl=std::make_shared<Player>(nullsh);
-                        game->players.push_back(pl);
+                        auto robot=std::make_shared<Player>(nullsh);
+                        game->robots.push_back(robot);
                         ++game->ready;
-                        pl->pos=game->players.size()-1;
-                        */
+                        robot->pos=game->players.size()+game->robots.size()-1;
                     }
                     
                     omsg.set_game_id((int)game->id);
@@ -73,7 +71,7 @@ void Player::on_read(PBHelper& pb){
                     if(game->ready<rule->MaxPlayer()){
                         game->players.push_back(shared_from_this());
                         ++game->ready;
-                        pos=game->players.size()-1;
+                        pos=game->players.size()+game->robots.size()-1;
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
                         KEYE_LOG("game joined,gid=%d\n",gid);
                     }else{
