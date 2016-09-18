@@ -62,11 +62,6 @@ void DoudeZhu::Deal(Game& game){
     size_t I=game.banker,
     J=(game.banker+1)%MaxPlayer(),
     K=(game.banker+2)%MaxPlayer();
-    /*
-    std::copy(game.pile.begin(),    game.pile.begin()+20,   std::back_inserter(game.gameData[I].hands()));
-    std::copy(game.pile.begin()+20, game.pile.begin()+37,   std::back_inserter(game.gameData[J].hands()));
-    std::copy(game.pile.begin()+37, game.pile.end(),        std::back_inserter(game.gameData[K].hands()));
-    */
     for(auto x=game.pile.begin(),       xx=game.pile.begin()+20;    x!=xx;++x)game.gameData[I].mutable_hands()->Add(*x);
     for(auto x=game.pile.begin()+20,    xx=game.pile.begin()+20+17; x!=xx;++x)game.gameData[J].mutable_hands()->Add(*x);
     for(auto x=game.pile.begin()+20+17, xx=game.pile.end();         x!=xx;++x)game.gameData[K].mutable_hands()->Add(*x);
@@ -102,7 +97,7 @@ void DoudeZhu::Deal(Game& game){
     }
 }
 
-void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
+void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
     MsgNCDiscard omsg;
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
     omsg.set_result(pb_enum::ERR_FAILED);
@@ -110,6 +105,11 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
         if(game->token==player.pos){
             //verify
             while(true){
+                //just pass
+                if(msg.bunch().type()==pb_enum::OP_PASS){
+                    omsg.set_result(pb_enum::SUCCEESS);
+                    break;
+                }
                 auto& cards=msg.bunch().pawns();
                 //cards check
                 auto check=true;
@@ -117,6 +117,7 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
                     //boundary check
                     if(c>=game->units.size()){
                         check=false;
+                        KEYE_LOG("OnDiscard invalid cards %d\n",c);
                         break;
                     }
                     //duplicated id check
@@ -124,6 +125,7 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
                     for(auto d:cards)if(c==d)dup++;
                     if(dup>1){
                         check=false;
+                        KEYE_LOG("OnDiscard duplicated cards %d\n",c);
                         break;
                     }
                     //exists check
@@ -136,13 +138,12 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
                     }
                     if(!exist){
                         check=false;
+                        KEYE_LOG("OnDiscard cards not exists %d\n",c);
                         break;
                     }
                 }
-                if(!check){
-                    KEYE_LOG("OnDiscard invalid cards\n");
+                if(!check)
                     break;
-                }
                 
                 //bunch check
                 auto bt=pb_enum::BUNCH_INVALID;
@@ -208,19 +209,34 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
                     }
                 }
                 if(!check){
-                    KEYE_LOG("OnDiscard invalid cards\n");
+                    KEYE_LOG("OnDiscard invalid rule\n");
                     break;
                 }
                 
+                KEYE_LOG("OnDiscard pos=%d,cards=%d\n",player.pos,cards.Get(0));
                 //historic
                 game->historical.push_back(msg.bunch());
+                //remove hands
+                auto& hands=*game->gameData[player.pos].mutable_hands();
+                for(auto i=hands.begin();i!=hands.end();){
+                    for(auto j:msg.bunch().pawns()){
+                        if(j==*i)
+                            i=hands.erase(i);
+                        else
+                            ++i;
+                    }
+                }
                 
                 omsg.set_result(pb_enum::SUCCEESS);
                 omsg.mutable_bunch()->CopyFrom(msg.bunch());
-                omsg.mutable_bunch()->set_pos(player.pos);
-                for(auto& p:game->players)p->send(omsg);
-                return;
+                break;
             }
+            //pass token
+            Next(*game);
+            
+            omsg.mutable_bunch()->set_pos(player.pos);
+            for(auto& p:game->players)p->send(omsg);
+            return;
         }else
             KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
     }else
@@ -228,10 +244,69 @@ void DoudeZhu::OnDiscard(Player& player,proto3::MsgCNDiscard& msg){
     player.send(omsg);
 }
 
+void DoudeZhu::PostTick(Game& game){
+    GameRule::PostTick(game);
+    for(auto robot:game.robots){
+        switch (game.state) {
+            case Game::State::ST_DISCARD:
+                if(game.token==robot->pos){
+                    if(game.delay--<0){
+                        KEYE_LOG("tick robot %d\n",robot->pos);
+
+                        MsgCNDiscard msg;
+                        bunch_t bunch;
+                        if(Hint(game,robot->pos,bunch))
+                            msg.mutable_bunch()->CopyFrom(bunch);
+                        else
+                            msg.mutable_bunch()->set_type(pb_enum::OP_PASS);
+                        OnDiscard(*robot,msg);
+                        game.delay=0;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+
 void DoudeZhu::Settle(Game& game){
     
 }
 
 bool DoudeZhu::IsGameOver(Game& game){
+    return false;
+}
+
+bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
+    auto& hands=game.gameData[pos].hands();
+    int i=-1;
+    auto H=game.historical.size();
+    if(H>0){
+        proto3::bunch_t* hist=&game.historical.back();
+        if(hist->type()==pb_enum::OP_PASS&&H>1)
+            hist=&game.historical[H-2];
+        if(hist->type()==pb_enum::OP_PASS)
+            i=0;
+        else{
+            auto& HC=game.units[hist->pawns(0)];
+            for(int j=0;j<hands.size();++j){
+                auto hand=hands.Get(j);
+                if(game.units[hand].value()>HC.value()){
+                    i=j;
+                    break;
+                }
+            }
+        }
+    }else{
+        i=0;
+    }
+    if(i!=-1){
+        bunch.set_pos(pos);
+        bunch.set_type(pb_enum::BUNCH_A);
+        bunch.mutable_pawns()->Add(hands.Get(i));
+        return true;
+    }
+    
     return false;
 }

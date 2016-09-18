@@ -11,6 +11,7 @@
 
 class DoudeZhu: public GameRule{
 public:
+    virtual void        PostTick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
 
@@ -20,6 +21,8 @@ public:
     virtual void        OnMeld(Game&){};
     virtual void        Settle(Game&);
     virtual bool        IsGameOver(Game&);
+    
+    virtual bool        Hint(Game&,pos_t,proto3::bunch_t&);
 };
 
 #endif /* DoudeZhu_h */

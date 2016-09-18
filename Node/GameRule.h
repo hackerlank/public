@@ -13,6 +13,7 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     void                Tick(Game&);
+    void                Next(Game&);
     void                ChangeState(Game&,Game::State);
     
     virtual void        PostTick(Game&);

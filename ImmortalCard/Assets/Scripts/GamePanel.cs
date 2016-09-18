@@ -74,18 +74,26 @@ public class GamePanel : MonoBehaviour {
 		//remove discards
 		foreach(Transform ch in DiscardAreas[0].transform)Destroy(ch.gameObject);
 		//discard
+		MsgCNDiscard msg=new MsgCNDiscard();
+		msg.Mid=pb_msg.MsgCnDiscard;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=0;
+		msg.Bunch.Type=pb_enum.BunchA;
 		if(card!=null){
 			deselectAll();
 			card.state=Card.State.ST_DISCARD;
 			card.DiscardTo(DiscardAreas[0],.625f);
+			msg.Bunch.Pawns.Add(card.Value.Id);
 		}else if(_selection.Count>0){
 			_selection.Sort(compare_card);
 			foreach(var c in _selection){
 				c.state=Card.State.ST_DISCARD;
 				c.DiscardTo(DiscardAreas[0],.625f);
+				msg.Bunch.Pawns.Add(c.Value.Id);
 			}
 			_selection.Clear();
 		}
+		Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 
 	public IEnumerator DiscardAt(uint pos,uint[] cards){

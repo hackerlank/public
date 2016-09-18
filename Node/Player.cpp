@@ -32,20 +32,25 @@ void Player::on_read(PBHelper& pb){
                     ++game->ready;
                     pos=game->players.size()+game->robots.size()-1;
                     //fill data
-                    auto irobot=imsg.robot();
-                    if(irobot>=game->rule->MaxPlayer())
-                        irobot=game->rule->MaxPlayer()-1;
-                    for(int i=0;i<irobot;++i){
-                        keye::null_svc_handler nullsh;
-                        auto robot=std::make_shared<Player>(nullsh);
-                        game->robots.push_back(robot);
-                        ++game->ready;
-                        robot->pos=game->players.size()+game->robots.size()-1;
-                    }
                     
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     KEYE_LOG("game created,gid=%zd\n",game->id);
+                    
+                    auto irobot=imsg.robot();
+                    if(irobot>=game->rule->MaxPlayer())
+                        irobot=game->rule->MaxPlayer()-1;
+                    if(irobot>0){
+                        for(int i=0;i<irobot;++i){
+                            keye::null_svc_handler nullsh;
+                            auto robot=std::make_shared<Player>(nullsh);
+                            robot->game=gameptr;
+                            game->robots.push_back(robot);
+                            ++game->ready;
+                            robot->pos=game->players.size()+game->robots.size()-1;
+                            KEYE_LOG("add robots %d\n",robot->pos);
+                        }
+                    }
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
                     KEYE_LOG("game create failed,no rule %d\n",imsg.rule());
@@ -57,8 +62,6 @@ void Player::on_read(PBHelper& pb){
             omsg.set_mid(proto3::pb_msg::MSG_NC_CREATE);
             PBHelper::Send(sh,omsg);
             
-            //test start game
-            game->ready=3;
             break;
         }
         case proto3::pb_msg::MSG_CN_JOIN:{

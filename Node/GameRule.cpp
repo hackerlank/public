@@ -37,16 +37,12 @@ void GameRule::Tick(Game& game){
 }
 
 void GameRule::PostTick(Game& game){
-    for(auto robot:game.robots){
-        switch (game.state) {
-            case Game::State::ST_DISCARD:
-                if(IsGameOver(game))
-                    ChangeState(game,Game::State::ST_SETTLE);
-                break;
-            default:
-                break;
-        }
-    }
+}
+
+void GameRule::Next(Game& game){
+    auto old=game.token;
+    if(++game.token>=game.rule->MaxPlayer())game.token=0;
+    KEYE_LOG("game token: %d=>%d\n",old,game.token);
 }
 
 void GameRule::ChangeState(Game& game,Game::State state){

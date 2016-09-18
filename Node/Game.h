@@ -32,11 +32,13 @@ public:
     std::vector<proto3::bunch_t>        historical; //historical game data
     
     int                                 ready;
+    int                                 delay;
     std::shared_ptr<GameRule>           rule;
     
     Game()
     :id(-1)
     ,ready(0)
+    ,delay(0)
     ,state(State::ST_WAIT)
     ,banker(0)
     ,token(0){}
