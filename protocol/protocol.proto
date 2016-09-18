@@ -44,6 +44,17 @@ CATEGORY_HARD           =52;
 OP_PASS                 =0;
 OP_DISCARD              =1;
 
+// bunch type
+BUNCH_INVALID           =0;
+BUNCH_A                 =1;
+BUNCH_AA                =2;
+BUNCH_AAA               =3;
+BUNCH_AAAB              =4;
+BUNCH_ABC               =5;
+BUNCH_AABBCC            =6;
+BUNCH_AAAABC            =7;
+BUNCH_AAAA              =8;
+
 // achievement
 ACHV_BOMB               =10;
 ACHV_HEAVEN             =10;
