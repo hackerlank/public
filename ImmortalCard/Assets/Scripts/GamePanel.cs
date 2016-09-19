@@ -6,7 +6,7 @@ using Proto3;
 
 public class GamePanel : MonoBehaviour {
 	[HideInInspector]
-	public int			N=3;
+	public uint			N=3;
 	public Card[]		BottomCards;
 
 	public Transform	HandArea;
@@ -16,8 +16,9 @@ public class GamePanel : MonoBehaviour {
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnHint,BtnDiscard,BtnCall,BtnDouble,BtnPass,Buttons;
 
-	List<Card>			_selection=new List<Card>();
+	List<Card>			_selection;
 	uint				_pos,_banker;
+	List<bunch_t>		_historical;
 
 	public static GamePanel	Instance=null;
 	void Awake(){
@@ -37,7 +38,12 @@ public class GamePanel : MonoBehaviour {
 	public IEnumerator Deal(MsgNCStart msg){
 		_pos=msg.Pos;
 		_banker=msg.Banker;
-		//position transform
+		_historical=new List<uint>();
+		_selection=new List<Card>();
+		/* position transform
+		(R)          (L)
+			(M=_pos)
+		*/
 		var M=_pos;
 		var R=(M+1)%N;
 		var L=(M+2)%N;
@@ -89,37 +95,42 @@ public class GamePanel : MonoBehaviour {
 			var v=Configs.Cards[msg.Bottom[i]];
 			BottomCards[i].Value=v;
 		}
+		if(Players[_banker].gameTimer!=null)
+			Players[_banker].gameTimer.On();
 		Debug.Log(str);
 		yield break;
 	}
 	
 	public void Discard(Card card=null){
+		//discard my card
 		//remove discards
-		foreach(Transform ch in DiscardAreas[0].transform)Destroy(ch.gameObject);
+		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
 		MsgCNDiscard msg=new MsgCNDiscard();
 		msg.Mid=pb_msg.MsgCnDiscard;
 		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=0;
+		msg.Bunch.Pos=_pos;
 		msg.Bunch.Type=pb_enum.BunchA;
 		if(card!=null){
 			deselectAll();
 			card.state=Card.State.ST_DISCARD;
-			card.DiscardTo(DiscardAreas[0],.625f);
+			card.DiscardTo(DiscardAreas[_pos],.625f);
 			msg.Bunch.Pawns.Add(card.Value.Id);
 		}else if(_selection.Count>0){
 			_selection.Sort(compare_card);
 			foreach(var c in _selection){
 				c.state=Card.State.ST_DISCARD;
-				c.DiscardTo(DiscardAreas[0],.625f);
+				c.DiscardTo(DiscardAreas[_pos],.625f);
 				msg.Bunch.Pawns.Add(c.Value.Id);
 			}
 			_selection.Clear();
 		}
 		Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
+		next((_banker+2)%N);
 	}
 
-	public IEnumerator DiscardAt(uint pos,uint[] cards,string error=""){
+	public IEnumerator OnDiscardAt(uint pos,uint[] cards,string error=""){
+		//discard any body's card
 		if(error.Length!=0){
 			yield break;
 		}
@@ -127,19 +138,25 @@ public class GamePanel : MonoBehaviour {
 		foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
 		if(cards!=null){
 			string str="discard at "+pos;
-			for(int i=0;i<cards.Length;++i){
-				var id=cards[i];
-				var v=Configs.Cards[id];
-				var fin=false;
-				Card.Create(v,nHandCards[1].transform.parent,delegate(Card card) {
-					card.state=Card.State.ST_DISCARD;
-					card.DiscardTo(DiscardAreas[1],.625f);
-					fin=true;
-				});
-				yield return null;
-				str+="("+v.Id+","+v.Color+","+v.Value+"),";
-				while(!fin)yield return null;
+			if(pos==_pos){
+				//adjust by feedback
+			}else{
+				for(int i=0;i<cards.Length;++i){
+					var id=cards[i];
+					var v=Configs.Cards[id];
+					var fin=false;
+					Card.Create(v,nHandCards[pos].transform.parent,delegate(Card card) {
+						card.state=Card.State.ST_DISCARD;
+						card.DiscardTo(DiscardAreas[pos],.625f);
+						fin=true;
+					});
+					yield return null;
+					str+="("+v.Id+","+v.Color+","+v.Value+"),";
+					while(!fin)yield return null;
+				}
+				next(pos);
 			}
+			//_historical.Add(bunch);
 			//Debug.Log(str);
 		}
 	}
@@ -203,15 +220,12 @@ public class GamePanel : MonoBehaviour {
 
 	public void OnPass(){
 		deselectAll();
-		uint[] cards=new uint[2];
-		for(int i=0;i<cards.Length;++i){
-			var hands=Main.Instance.gameRule.Hands[0];
-			if(hands.Count>0){
-				cards[i]=hands[0];
-				hands.RemoveAt(0);
-			}
-		}
-		StartCoroutine(DiscardAt(0,cards));
+		MsgCNDiscard msg=new MsgCNDiscard();
+		msg.Mid=pb_msg.MsgCnDiscard;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=_pos;
+		msg.Bunch.Type=pb_enum.OpPass;
+		Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 	
 	public void OnCall(){
@@ -254,5 +268,13 @@ public class GamePanel : MonoBehaviour {
 		else if(x<y)
 			return 1;
 		return 0;
+	}
+
+	void next(uint pos){
+		var R=(pos+1)%N;
+		if(Players[pos].gameTimer!=null)
+			Players[pos].gameTimer.On(false);
+		if(Players[R].gameTimer!=null)
+			Players[R].gameTimer.On();
 	}
 }

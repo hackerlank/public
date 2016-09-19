@@ -316,6 +316,19 @@ pb_enum DoudeZhu::bunchCheck(Game& game,proto3::bunch_t& bunch){
             }
             break;
         default:
+            //BUNCH_AAAB,BUNCH_ABC,BUNCH_AABBCC,BUNCH_AAAABC
+            std::map<uint32,int> valCount;
+            int maxval=0;
+            for(auto vcard:V){
+                auto val=vcard->value();
+                if(valCount.count(val))
+                    valCount[val]++;
+                else
+                    valCount[val]=1;
+                if(valCount[val]>maxval)
+                    maxval=valCount[val];
+            }
+
             break;
     }
     if(bt==pb_enum::BUNCH_INVALID)

@@ -83,7 +83,7 @@ public class MsgHandler{
 				imsg5.Bunch.Pawns.CopyTo(cards,0);
 				Loom.QueueOnMainThread(delegate{
 					if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(
-						GamePanel.Instance.DiscardAt(pos,cards));
+						GamePanel.Instance.OnDiscardAt(pos,cards));
 				});
 			}else
 				Debug.LogError("discard error: "+imsg5.Result);
