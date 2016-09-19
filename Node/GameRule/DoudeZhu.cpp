@@ -53,10 +53,15 @@ void DoudeZhu::Deal(Game& game){
     }
     
     //shuffle
+    srand(unsigned(time(nullptr)));
+    auto r=rand();
     std::random_shuffle(game.pile.begin(),game.pile.end());
+    srand(unsigned(time(nullptr)+r));
     std::random_shuffle(game.pile.begin(),game.pile.end());
-    if(rand()>RAND_MAX/2)
+    if(r>RAND_MAX/2){
+        srand(unsigned(time(nullptr)+2016));
         std::random_shuffle(game.pile.begin(),game.pile.end());
+    }
     
     //deal: fixed position,movable banker
     size_t I=game.banker,
@@ -65,6 +70,7 @@ void DoudeZhu::Deal(Game& game){
     for(auto x=game.pile.begin(),       xx=game.pile.begin()+20;    x!=xx;++x)game.gameData[I].mutable_hands()->Add(*x);
     for(auto x=game.pile.begin()+20,    xx=game.pile.begin()+20+17; x!=xx;++x)game.gameData[J].mutable_hands()->Add(*x);
     for(auto x=game.pile.begin()+20+17, xx=game.pile.end();         x!=xx;++x)game.gameData[K].mutable_hands()->Add(*x);
+    for(int i=0;i<MaxPlayer();++i)logHands(game,i);
     //broadcast
     MsgNCStart msg;
     msg.set_mid(pb_msg::MSG_NC_START);
@@ -102,7 +108,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
     if(auto game=player.game){
         if(game->token==player.pos){
             //verify
-            while(true){
+            do{
                 //just pass
                 if(msg.bunch().type()==pb_enum::OP_PASS){
                     omsg.set_result(pb_enum::SUCCEESS);
@@ -156,8 +162,10 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
                     else if(verifyDiscard(*game,*msg.mutable_bunch(),*hist))
                         check=true;
                 }
+                if(!check)
+                    break;
                 
-                KEYE_LOG("OnDiscard pos=%d,cards=%d\n",player.pos,cards[0]);
+                KEYE_LOG("OnDiscard pos=%d,cards(%d:%d)\n",player.pos,cards[0],game->units[cards[0]].value());
                 //historic
                 game->historical.push_back(msg.bunch());
                 //remove hands
@@ -173,8 +181,8 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
                 
                 omsg.set_result(pb_enum::SUCCEESS);
                 omsg.mutable_bunch()->CopyFrom(msg.bunch());
-                break;
-            }
+            }while(false);
+
             //pass token
             Next(*game);
             
@@ -331,4 +339,15 @@ bool DoudeZhu::verifyDiscard(Game& game,bunch_t& bunch,bunch_t& hist){
         KEYE_LOG("OnDiscard invalid rule\n");
     return check;
 }
+
+void DoudeZhu::logHands(Game& game,uint32 pos){
+    char buf[32];
+    std::string str;
+    for(auto c:game.gameData[pos].hands()){
+        sprintf(buf,"(%d:%d),",c,game.units[c].value());
+        str+=buf;
+    }
+    KEYE_LOG("hand of %d: %s\n",pos,str.c_str());
+}
+
 

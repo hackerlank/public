@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameTimer : MonoBehaviour
-{
+public class GameTimer : MonoBehaviour{
 
 	// Use this for initialization
 	void Start ()
@@ -17,7 +16,7 @@ public class GameTimer : MonoBehaviour
 	}
 
 	public void On(bool on=true){
-
+		gameObject.SetActive(on);
 	}
 }
 

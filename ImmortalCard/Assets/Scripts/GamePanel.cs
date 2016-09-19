@@ -22,8 +22,6 @@ public class GamePanel : MonoBehaviour {
 
 	public static GamePanel	Instance=null;
 	void Awake(){
-		Players=new PlayerIcon[N];
-
 		Instance=this;
 	}
 
@@ -37,7 +35,7 @@ public class GamePanel : MonoBehaviour {
 
 	public IEnumerator Deal(MsgNCStart msg){
 		_pos=msg.Pos;
-		_token=msg.Banker;
+		_token=(msg.Banker+N-1)%N;	//set to the previous position
 		_banker=msg.Banker;
 		_historical=new List<bunch_t>();
 		_selection=new List<Card>();
