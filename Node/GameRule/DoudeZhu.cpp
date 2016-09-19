@@ -145,40 +145,16 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
                 if(!check)
                     break;
                 
-                //bunch check
-                auto bt=bunchCheck(*game,*msg.mutable_bunch());
-                if(pb_enum::BUNCH_INVALID==bt){
-                    KEYE_LOG("OnDiscard invalid bunch\n");
-                    break;
-                }
-                
-                //rule check
                 auto H=game->historical.size();
-                if(H>0){
-                    check=false;
-                    proto3::bunch_t* hist=&game->historical.back();
+                check=H<1;
+                if(!check){
+                    auto hist=&game->historical.back();
                     if(hist->type()==pb_enum::OP_PASS)
                         hist=&game->historical[H-2];
-                    auto& HC=game->units[hist->pawns(0)];
-                    std::vector<Card*> V;
-                    for(auto c:msg.bunch().pawns())V.push_back(&game->units[c]);
-                    if(bt==pb_enum::BUNCH_AAAA){
-                        if(hist->type()==pb_enum::BUNCH_AAAA){
-                            if(HC.value()<V[0]->value())
-                                check=true;
-                        }else
-                            check=true;
-                    }else if(bt==hist->type()){
-                        if(HC.value()<V[0]->value())
-                            check=true;
-                        else if(HC.value()==V[0]->value()){
-                            check=true;
-                        }
-                    }
-                }
-                if(!check){
-                    KEYE_LOG("OnDiscard invalid rule\n");
-                    break;
+                    if(hist->type()==pb_enum::OP_PASS)
+                        check=true;
+                    else if(verifyDiscard(*game,*msg.mutable_bunch(),*hist))
+                        check=true;
                 }
                 
                 KEYE_LOG("OnDiscard pos=%d,cards=%d\n",player.pos,cards[0]);
@@ -257,10 +233,10 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
         if(hist->type()==pb_enum::OP_PASS)
             i=0;
         else{
-            auto& HC=game.units[hist->pawns(0)];
+            auto& histCard=game.units[hist->pawns(0)];
             for(int j=0;j<hands.size();++j){
                 auto hand=hands.Get(j);
-                if(game.units[hand].value()>HC.value()){
+                if(game.units[hand].value()>histCard.value()){
                     i=j;
                     break;
                 }
@@ -279,37 +255,37 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
     return false;
 }
 
-pb_enum DoudeZhu::bunchCheck(Game& game,proto3::bunch_t& bunch){
+bool DoudeZhu::verifyDiscard(Game& game,bunch_t& bunch,bunch_t& hist){
     std::vector<uint32> cards(bunch.pawns().begin(),bunch.pawns().end());
     std::sort(cards.begin(),cards.end());
 
     auto bt=pb_enum::BUNCH_INVALID;
-    std::vector<Card*> V;
-    for(auto c:cards)V.push_back(&game.units[c]);
+    std::vector<Card*> bunchCard;
+    for(auto c:cards)bunchCard.push_back(&game.units[c]);
     switch (cards.size()) {
         case 1:
             bt=pb_enum::BUNCH_A;
             break;
         case 2:
-            if(V[0]->value()==V[1]->value())
+            if(bunchCard[0]->value()==bunchCard[1]->value())
                 bt=pb_enum::BUNCH_AA;
             break;
         case 3:
-            if(V[0]->value()==V[1]->value()&&V[0]->value()==V[2]->value())
+            if(bunchCard[0]->value()==bunchCard[1]->value()&&bunchCard[0]->value()==bunchCard[2]->value())
                 bt=pb_enum::BUNCH_AAA;
             break;
         case 4:
-            if(V[0]->value()==V[1]->value()&&V[0]->value()==V[2]->value()&&V[0]->value()==V[3]->value())
+            if(bunchCard[0]->value()==bunchCard[1]->value()&&bunchCard[0]->value()==bunchCard[2]->value()&&bunchCard[0]->value()==bunchCard[3]->value())
                 bt=pb_enum::BUNCH_AAAA;
             else{
                 for(int i=0;i<4;++i){
-                    auto v=V[i];
+                    auto v=bunchCard[i];
                     int dup=0;
-                    for(auto u:V)if(v->value()==u->value())++dup;
+                    for(auto u:bunchCard)if(v->value()==u->value())++dup;
                     if(dup==1){
                         //the different one,move to end
-                        if(i!=3)std::swap(V[i],V[3]);
-                        if(V[0]->value()==V[1]->value()&&V[0]->value()==V[2]->value())
+                        if(i!=3)std::swap(bunchCard[i],bunchCard[3]);
+                        if(bunchCard[0]->value()==bunchCard[1]->value()&&bunchCard[0]->value()==bunchCard[2]->value())
                             bt=pb_enum::BUNCH_AAAB;
                     }
                 }
@@ -319,7 +295,7 @@ pb_enum DoudeZhu::bunchCheck(Game& game,proto3::bunch_t& bunch){
             //BUNCH_AAAB,BUNCH_ABC,BUNCH_AABBCC,BUNCH_AAAABC
             std::map<uint32,int> valCount;
             int maxval=0;
-            for(auto vcard:V){
+            for(auto vcard:bunchCard){
                 auto val=vcard->value();
                 if(valCount.count(val))
                     valCount[val]++;
@@ -333,6 +309,26 @@ pb_enum DoudeZhu::bunchCheck(Game& game,proto3::bunch_t& bunch){
     }
     if(bt==pb_enum::BUNCH_INVALID)
         KEYE_LOG("OnDiscard invalid bunch\n");
-    return bt;
+    
+    //rule check
+    auto check=false;
+    auto& histCard=game.units[hist.pawns(0)];
+    if(bt==pb_enum::BUNCH_AAAA){
+        //bomb
+        if(hist.type()==pb_enum::BUNCH_AAAA){
+            if(histCard.value()<bunchCard[0]->value())
+                check=true;
+        }else
+            check=true;
+    }else if(bt==hist.type()){
+        if(histCard.value()<bunchCard[0]->value())
+            check=true;
+        else if(histCard.value()==bunchCard[0]->value()){
+            check=true;
+        }
+    }
+    if(!check)
+        KEYE_LOG("OnDiscard invalid rule\n");
+    return check;
 }
 

@@ -16,6 +16,10 @@ public class GameRule {
 		return hints;
 	}
 
+	public bool Verify(bunch_t curr,bunch_t last){
+		return true;
+	}
+
 	public MsgNCStart Deal(){
 		Pile=new uint[N];
 

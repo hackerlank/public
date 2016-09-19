@@ -17,7 +17,7 @@ public class GamePanel : MonoBehaviour {
 	public GameObject	BtnHint,BtnDiscard,BtnCall,BtnDouble,BtnPass,Buttons;
 
 	List<Card>			_selection;
-	uint				_pos,_banker;
+	uint				_pos,_token,_banker;
 	List<bunch_t>		_historical;
 
 	public static GamePanel	Instance=null;
@@ -37,8 +37,9 @@ public class GamePanel : MonoBehaviour {
 
 	public IEnumerator Deal(MsgNCStart msg){
 		_pos=msg.Pos;
+		_token=msg.Banker;
 		_banker=msg.Banker;
-		_historical=new List<uint>();
+		_historical=new List<bunch_t>();
 		_selection=new List<Card>();
 		/* position transform
 		(R)          (L)
@@ -103,60 +104,102 @@ public class GamePanel : MonoBehaviour {
 	
 	public void Discard(Card card=null){
 		//discard my card
-		//remove discards
-		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
-		//discard
-		MsgCNDiscard msg=new MsgCNDiscard();
-		msg.Mid=pb_msg.MsgCnDiscard;
-		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=_pos;
-		msg.Bunch.Type=pb_enum.BunchA;
-		if(card!=null){
-			deselectAll();
-			card.state=Card.State.ST_DISCARD;
-			card.DiscardTo(DiscardAreas[_pos],.625f);
-			msg.Bunch.Pawns.Add(card.Value.Id);
-		}else if(_selection.Count>0){
-			_selection.Sort(compare_card);
-			foreach(var c in _selection){
-				c.state=Card.State.ST_DISCARD;
-				c.DiscardTo(DiscardAreas[_pos],.625f);
-				msg.Bunch.Pawns.Add(c.Value.Id);
+		while(true){
+			var token=(_token+1)%N;
+			if(token!=_pos){
+				Debug.Log("Discard invalid turn");
+				break;
 			}
-			_selection.Clear();
+			if(null==card&&_selection.Count<=0){
+				Debug.Log("Discard invalid card");
+				break;
+			}
+			var check=_historical.Count<1;
+			if(!check){
+				var hist=_historical[_historical.Count-1];
+				if(hist.Type==pb_enum.OpPass&&_historical.Count>=2)
+					hist=_historical[_historical.Count-2];
+				if(hist.Type==pb_enum.OpPass)
+					check=true;
+				else{
+					bunch_t curr=new bunch_t();
+					curr.Pos=_pos;
+					if(card!=null)
+						curr.Pawns.Add(card.Value.Id);
+					else{
+						foreach(var c in _selection)
+							curr.Pawns.Add(c.Value.Id);
+					}
+					if(Main.Instance.gameRule.Verify(curr,hist))
+						check=true;
+				}
+			}
+			if(!check){
+				Debug.Log("Discard invalid bunch");
+				break;
+			}
+			//remove discards
+			foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
+			//discard
+			MsgCNDiscard msg=new MsgCNDiscard();
+			msg.Mid=pb_msg.MsgCnDiscard;
+			msg.Bunch=new bunch_t();
+			msg.Bunch.Pos=_pos;
+			msg.Bunch.Type=pb_enum.BunchA;
+			if(card!=null){
+				deselectAll();
+				card.state=Card.State.ST_DISCARD;
+				card.DiscardTo(DiscardAreas[_pos],.625f);
+				msg.Bunch.Pawns.Add(card.Value.Id);
+			}else if(_selection.Count>0){
+				_selection.Sort(compare_card);
+				foreach(var c in _selection){
+					c.state=Card.State.ST_DISCARD;
+					c.DiscardTo(DiscardAreas[_pos],.625f);
+					msg.Bunch.Pawns.Add(c.Value.Id);
+				}
+				_selection.Clear();
+			}
+			Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
+			break;
 		}
-		Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
-		next((_banker+2)%N);
 	}
 
-	public IEnumerator OnDiscardAt(uint pos,uint[] cards,string error=""){
+	public IEnumerator OnDiscardAt(MsgNCDiscard msg){
 		//discard any body's card
-		if(error.Length!=0){
+		if(msg.Result!=pb_enum.Succeess){
 			yield break;
 		}
+
+		_token=msg.Bunch.Pos;
+		var cards=new uint[msg.Bunch.Pawns.Count];
+		msg.Bunch.Pawns.CopyTo(cards,0);
 		//remove discards
-		foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
+		foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
 		if(cards!=null){
-			string str="discard at "+pos;
-			if(pos==_pos){
+			string str="discard at "+_token;
+			if(_token==_pos){
 				//adjust by feedback
 			}else{
 				for(int i=0;i<cards.Length;++i){
 					var id=cards[i];
 					var v=Configs.Cards[id];
 					var fin=false;
-					Card.Create(v,nHandCards[pos].transform.parent,delegate(Card card) {
+					Card.Create(v,nHandCards[_token].transform.parent,delegate(Card card) {
 						card.state=Card.State.ST_DISCARD;
-						card.DiscardTo(DiscardAreas[pos],.625f);
+						card.DiscardTo(DiscardAreas[_token],.625f);
 						fin=true;
 					});
 					yield return null;
 					str+="("+v.Id+","+v.Color+","+v.Value+"),";
 					while(!fin)yield return null;
 				}
-				next(pos);
 			}
-			//_historical.Add(bunch);
+			//record
+			var nCards=int.Parse(nHandCards[_token].text)-1;
+			nHandCards[_token].text=nCards.ToString();
+			_historical.Add(msg.Bunch);
+			next(_token);
 			//Debug.Log(str);
 		}
 	}
@@ -200,6 +243,7 @@ public class GamePanel : MonoBehaviour {
 	int _nhints=0;
 	public void OnHint(){
 		deselectAll();
+		/*
 		if(_hints==null)Hint();
 
 		if(_hints!=null&&_hints.Count>0){
@@ -212,6 +256,7 @@ public class GamePanel : MonoBehaviour {
 			}
 			_nhints=(_nhints+1)%_hints.Count;
 		}
+		*/
 	}
 	
 	public void OnDiscard(){
