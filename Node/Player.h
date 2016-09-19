@@ -18,6 +18,7 @@ public:
     void    send(google::protobuf::MessageLite& msg);
     void    on_read(PBHelper&);
     
+    bool                    isRobot;
     pos_t                   pos;
     std::shared_ptr<Game>   game;
 private:

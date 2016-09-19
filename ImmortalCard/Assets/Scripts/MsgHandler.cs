@@ -78,8 +78,12 @@ public class MsgHandler{
 		case pb_msg.MsgNcDiscard:
 			MsgNCDiscard imsg5=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(imsg5.Result==pb_enum.Succeess){
+				var pos=imsg5.Bunch.Pos;
+				var cards=new uint[imsg5.Bunch.Pawns.Count];
+				imsg5.Bunch.Pawns.CopyTo(cards,0);
 				Loom.QueueOnMainThread(delegate{
-					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg5));
+					if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(
+						GamePanel.Instance.DiscardAt(pos,cards));
 				});
 			}else
 				Debug.LogError("discard error: "+imsg5.Result);

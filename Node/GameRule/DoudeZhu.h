@@ -23,6 +23,8 @@ public:
     virtual bool        IsGameOver(Game&);
     
     virtual bool        Hint(Game&,pos_t,proto3::bunch_t&);
+private:
+    proto3::pb_enum     bunchCheck(Game&,proto3::bunch_t&);
 };
 
 #endif /* DoudeZhu_h */

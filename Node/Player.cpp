@@ -13,6 +13,7 @@ using namespace proto3;
 Player::Player(keye::svc_handler& sh){
     pos=-1;
     spsh=sh();
+    isRobot=false;
 }
 
 void Player::on_read(PBHelper& pb){
@@ -30,7 +31,7 @@ void Player::on_read(PBHelper& pb){
                     game=gameptr;
                     game->players.push_back(shared_from_this());
                     ++game->ready;
-                    pos=game->players.size()+game->robots.size()-1;
+                    pos=game->players.size()-1;
                     //fill data
                     
                     omsg.set_game_id((int)game->id);
@@ -45,9 +46,10 @@ void Player::on_read(PBHelper& pb){
                             keye::null_svc_handler nullsh;
                             auto robot=std::make_shared<Player>(nullsh);
                             robot->game=gameptr;
-                            game->robots.push_back(robot);
+                            game->players.push_back(robot);
                             ++game->ready;
-                            robot->pos=game->players.size()+game->robots.size()-1;
+                            robot->pos=game->players.size()-1;
+                            robot->isRobot=true;
                             KEYE_LOG("add robots %d\n",robot->pos);
                         }
                     }
@@ -74,7 +76,7 @@ void Player::on_read(PBHelper& pb){
                     if(game->ready<rule->MaxPlayer()){
                         game->players.push_back(shared_from_this());
                         ++game->ready;
-                        pos=game->players.size()+game->robots.size()-1;
+                        pos=game->players.size()-1;
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
                         KEYE_LOG("game joined,gid=%d\n",gid);
                     }else{

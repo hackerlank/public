@@ -1,19 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MsgHandler.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GamePanel.cs">
     <Files>
-      <File FileName="Assets/Scripts/GamePanel.cs" Line="91" Column="54" />
-      <File FileName="Assets/Scripts/GameRule.cs" Line="58" Column="1" />
-      <File FileName="Assets/Scripts/Main.cs" Line="10" Column="42" />
-      <File FileName="Assets/Scripts/Card.cs" Line="39" Column="26" />
-      <File FileName="Assets/Scripts/MsgHandler.cs" Line="100" Column="89" />
+      <File FileName="Assets/Scripts/GamePanel.cs" Line="40" Column="22" />
+      <File FileName="Assets/Scripts/MsgHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/Google.Protobuf/Collections/RepeatedField.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="Scripts" expanded="True">
-              <Node name="MsgHandler.cs" selected="True" />
+              <Node name="GamePanel.cs" selected="True" />
             </Node>
           </Node>
         </State>

@@ -17,6 +17,7 @@ public class GamePanel : MonoBehaviour {
 	public GameObject	BtnHint,BtnDiscard,BtnCall,BtnDouble,BtnPass,Buttons;
 
 	List<Card>			_selection=new List<Card>();
+	uint				_pos,_banker;
 
 	public static GamePanel	Instance=null;
 	void Awake(){
@@ -34,6 +35,28 @@ public class GamePanel : MonoBehaviour {
 	}
 
 	public IEnumerator Deal(MsgNCStart msg){
+		_pos=msg.Pos;
+		_banker=msg.Banker;
+		//position transform
+		var M=_pos;
+		var R=(M+1)%N;
+		var L=(M+2)%N;
+		Transform[] tempD=new Transform[DiscardAreas.Length];	//MRL
+		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
+		Text[] tempH=new Text[nHandCards.Length];
+		DiscardAreas.CopyTo(tempD,0);
+		Players.CopyTo(tempP,0);
+		nHandCards.CopyTo(tempH,0);
+		DiscardAreas[0]=tempD[M];
+		DiscardAreas[1]=tempD[R];
+		DiscardAreas[2]=tempD[L];
+		Players[0]=tempP[M];
+		Players[1]=tempP[R];
+		Players[2]=tempP[L];
+		nHandCards[0]=tempH[M];
+		nHandCards[1]=tempH[R];
+		nHandCards[2]=tempH[L];
+
 		//dict
 		Configs.Cards=new Dictionary<uint, pawn_t>();
 		for(int i=0;i<msg.Cards.Count;++i){
@@ -96,9 +119,12 @@ public class GamePanel : MonoBehaviour {
 		Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 
-	public IEnumerator DiscardAt(uint pos,uint[] cards){
+	public IEnumerator DiscardAt(uint pos,uint[] cards,string error=""){
+		if(error.Length!=0){
+			yield break;
+		}
 		//remove discards
-		foreach(Transform ch in DiscardAreas[1].transform)Destroy(ch.gameObject);
+		foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
 		if(cards!=null){
 			string str="discard at "+pos;
 			for(int i=0;i<cards.Length;++i){
