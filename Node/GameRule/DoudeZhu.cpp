@@ -354,9 +354,9 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                             counts.push_back(imap.second);
                     };
                     auto lcounts=counts.size();
-                    if(lcounts==1&&counts.front()==2){                  //AA
+                    if(lcounts==1&&counts[0]==2){                  //AA
                         bt=pb_enum::BUNCH_AAAAB;
-                    }else if(lcounts==2&&counts.front()==counts.back()){//AB,AABB,AAABBB
+                    }else if(lcounts==2&&counts[0]==counts[1]){//AB,AABB,AAABBB
                         bt=pb_enum::BUNCH_AAAAB;
                     }
                     break;
