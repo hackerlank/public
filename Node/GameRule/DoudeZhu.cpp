@@ -49,6 +49,7 @@ void DoudeZhu::Deal(Game& game){
     game.units.resize(N);
     game.pile.resize(N);
     unit_id_t id=0;
+    //ids => AAAA22223333...
     for(int i=1;i<=13;++i){ //A-K => 1-13
         for(int j=0;j<4;++j){
             game.pile[id]=id;
@@ -293,8 +294,13 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
             bt=pb_enum::BUNCH_A;
             break;
         case 2:
-            if(cards[0]->value()==cards[1]->value())
-                bt=pb_enum::BUNCH_AA;
+            if(cards[0]->value()==cards[1]->value()){
+                if(cards[0]->value()==transformValue(14))
+                    // 2 Jokers
+                    bt=pb_enum::BUNCH_AAAA;
+                else
+                    bt=pb_enum::BUNCH_AA;
+            }
             break;
         case 3:
             if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value())
@@ -304,10 +310,11 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
             if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value()
                &&cards[0]->value()==cards[3]->value())
                 bt=pb_enum::BUNCH_AAAA;
+            /*
             else if(cards[0]->value()==cards[1]->value()&&cards[2]->value()==cards[3]->value()
                &&cards[0]->value()+1==cards[2]->value())
-                //AABB
-                bt=pb_enum::BUNCH_ABC;
+                bt=pb_enum::BUNCH_ABC;  //AABB
+            */
             else{
                 //collect all counts
                 std::map<uint32,int> valCount;  //[value,count]
@@ -355,7 +362,7 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                     break;
                 }
                 case 3:
-                    if(valCount.size()==2)
+                    if(valCount.size()==2&&len<6)
                         bt=pb_enum::BUNCH_AAAB;
                     else{
                         //AAABBBCD,AAABBBCCCDEF
@@ -389,22 +396,23 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                     if(len%2!=0){
                         bt=pb_enum::BUNCH_INVALID;
                     }else for(size_t i=0;i<len-2;){
-                        if(cards[i]!=cards[i+1])
+                        if(cards[i]->value()!=cards[i+1]->value())
                             bt=pb_enum::BUNCH_INVALID;
-                        else if(i+2<len&&cards[i]+1!=cards[i+2])
+                        else if(i+2<len&&cards[i]->value()+1!=cards[i+2]->value())
                             bt=pb_enum::BUNCH_INVALID;
                         i+=2;
                     }
                     break;
                 case 1:
-                default:
                     bt=pb_enum::BUNCH_ABC;
                     for(size_t i=0;i<len-1;++i){
-                        if(cards[i]+1!=cards[i+1]){
+                        if(cards[i]->value()+1!=cards[i+1]->value()){
                             bt=pb_enum::BUNCH_INVALID;
                             break;
                         }
                     }
+                    break;
+                default:
                     break;
             }//switch
             break;
@@ -484,7 +492,7 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
     return win;
 }
 
-int DoudeZhu::comparision(Game& game,uint x,uint y){
+bool DoudeZhu::comparision(Game& game,uint x,uint y){
     auto cx=game.units[x];
     auto cy=game.units[y];
     /*
@@ -496,14 +504,9 @@ int DoudeZhu::comparision(Game& game,uint x,uint y){
         y+=(53-2);
     else if(cy.value()==14)
         y+=8;
+    return x<y;
     */
-    x=cx.value();
-    y=cy.value();
-    if(x>y)
-        return -1;
-    else if(x<y)
-        return 1;
-    return 0;
+    return cx.value()<cy.value();
 }
 
 void DoudeZhu::logHands(Game& game,uint32 pos,std::string msg){
@@ -520,3 +523,33 @@ void DoudeZhu::cards2str(Game& game,std::string& str,const google::protobuf::Rep
         str+=buf;
     }
 }
+
+void DoudeZhu::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
+    bunch.mutable_pawns()->Clear();
+    for(auto n:vals){
+        uint color=n/100;
+        uint val=transformValue(n%100);
+        uint id=0;
+        for(auto card:game.units)if(card.value()==val&&card.color()==color)id=card.id();
+        bunch.mutable_pawns()->Add(id);
+    }
+}
+
+void DoudeZhu::test(){
+    DoudeZhu ddz;
+    Game game;
+    ddz.Deal(game);
+    proto3::bunch_t A,B;
+    A.set_pos(0);
+    B.set_pos(1);
+    std::vector<uint> va{9,10,11,12,13,1};
+    std::vector<uint> vb{12,13,12,13};
+    ddz.make_bunch(game,A,va);
+    ddz.make_bunch(game,B,vb);
+    
+    ddz.verifyBunch(game,A);
+    ddz.verifyBunch(game,B);
+    ddz.compareBunch(game,A,B);
+}
+
+

@@ -149,15 +149,10 @@ int main(int argc, char* argv[]) {
     server.set_timer(TIMER::TIMER_MIN, 1000*60);
     server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
-    /*
-    if(auto ddz=server.findGame(proto3::pb_enum::RULE_DDZ)){
-        proto3::user_t user;
-        auto& game=ddz->Create(user);
-        ddz->Join(game,user);
-        ddz->Join(game,user);
-    }
-    */
-	KEYE_LOG("++++server start at %d\n", port);
+
+    DoudeZhu::test();
+    
+    KEYE_LOG("++++server start at %d\n", port);
 	std::getchar();
 
 	return 0;
