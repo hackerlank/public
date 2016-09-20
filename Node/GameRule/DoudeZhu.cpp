@@ -198,12 +198,14 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
                 omsg.set_result(pb_enum::SUCCEESS);
                 omsg.mutable_bunch()->CopyFrom(msg.bunch());
             }while(false);
-
-            //pass token
-            Next(*game);
             
             omsg.mutable_bunch()->set_pos(player.pos);
             for(auto& p:game->players)p->send(omsg);
+            
+            if(game->gameData[player.pos].hands().size()>0)
+                //pass token
+                Next(*game);
+
             return;
         }else
             KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
@@ -239,14 +241,36 @@ void DoudeZhu::PostTick(Game& game){
 }
 
 void DoudeZhu::Settle(Game& game){
+    pos_t pos=-1;
+    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
+        auto& gd=game.gameData[i];
+        if(gd.hands().size()<=0)
+            pos=i;
+    }
+
+    //broadcast
+    MsgNCSettle msg;
+    msg.set_mid(pb_msg::MSG_NC_SETTLE);
+    msg.set_winner(pos);
+    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
+        auto hand=msg.add_hands();
+        hand->mutable_pawns()->CopyFrom(game.gameData[i].hands());
+        //auto player=msg.add_play();
+    }
     
+    for(auto p:game.players)p->send(msg);
 }
 
 bool DoudeZhu::IsGameOver(Game& game){
+    for(auto gd:game.gameData){
+        if(gd.hands().size()<=0)
+            return true;
+    }
     return false;
 }
 
 bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
+    //C(17,8) = 24310; C(17,2) = 136
     auto& hands=game.gameData[pos].hands();
     int i=-1;
     auto H=game.historical.size();
@@ -254,29 +278,39 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
         proto3::bunch_t* hist=&game.historical.back();
         if(hist->type()==pb_enum::OP_PASS&&H>1)
             hist=&game.historical[H-2];
-        if(hist->type()==pb_enum::OP_PASS)
-            i=0;
-        else{
-            auto& histCard=game.units[hist->pawns(0)];
-            for(int j=0;j<hands.size();++j){
-                auto hand=hands.Get(j);
-                if(game.units[hand].value()>histCard.value()){
-                    i=j;
-                    break;
+        switch(hist->type()){
+            case pb_enum::OP_PASS:
+                i=0;
+                break;
+            case pb_enum::BUNCH_A:{
+                auto& histCard=game.units[hist->pawns(0)];
+                //sort cards
+                std::vector<uint32> ids(hands.begin(),hands.end());
+                std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
+                for(int j=0;j<hands.size();++j){
+                    auto hand=hands.Get(j);
+                    if(game.units[hand].value()>histCard.value()){
+                        i=j;
+                        break;
+                    }
                 }
             }
+            default:
+                break;
         }
     }else{
         i=0;
     }
+
+    bunch.set_pos(pos);
     if(i!=-1){
-        bunch.set_pos(pos);
         bunch.set_type(pb_enum::BUNCH_A);
         bunch.mutable_pawns()->Add(hands.Get(i));
         return true;
+    }else{
+        bunch.set_type(pb_enum::OP_PASS);
+        return false;
     }
-    
-    return false;
 }
 
 pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){

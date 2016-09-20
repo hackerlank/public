@@ -35,7 +35,7 @@ public class GameRule {
 				Pile[id]=id;
 				pawn_t card=new pawn_t();
 				card.Color=j; //clubs,diamonds,hearts,spades => 0-3
-				card.Value=i;
+				card.Value=transformValue(i);
 				card.Id=id++;
 				msg.Cards.Add(card);
 			}
@@ -44,7 +44,7 @@ public class GameRule {
 			Pile[id]=id;
 			pawn_t card=new pawn_t();
 			card.Color=j;
-			card.Value=14;
+			card.Value=transformValue(14);
 			card.Id=id++;
 			msg.Cards.Add(card);
 		}
@@ -296,20 +296,20 @@ public class GameRule {
 		return win;
 	}
 	
-	int comparision(uint x,uint y){
+	public int comparision(uint x,uint y){
 		var cx=Configs.Cards[x];
 		var cy=Configs.Cards[y];
 		return ((int)cx.Value)-((int)cy.Value);
 	}
 
-	uint transformValue(uint val){
+	public uint transformValue(uint val){
 		if      (val==1) return 14;
 		else if (val==2) return 16;
 		else if (val==14)return 18;
 		else             return val;
 	}
 	
-	uint inverseTransformValue(uint val){
+	public uint inverseTransformValue(uint val){
 		if      (val==14)return 1;
 		else if (val==16)return 2;
 		else if (val==18)return 14;

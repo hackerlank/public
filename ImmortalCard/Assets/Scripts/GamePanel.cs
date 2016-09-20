@@ -70,7 +70,7 @@ public class GamePanel : MonoBehaviour {
 		}
 		//sort
 		var hands=new List<uint>(msg.Hands);
-		hands.Sort(comparision);
+		hands.Sort(Main.Instance.gameRule.comparision);
 		//deal
 		string str="deal: banker="+msg.Banker+"pos="+msg.Pos+"\nhands:\n";
 		for(int i=0;i<hands.Count;++i){
@@ -291,26 +291,7 @@ public class GamePanel : MonoBehaviour {
 
 	//System.Comparison<uint>
 	int compare_card(Card x,Card y){
-		return comparision(x.Value.Id,y.Value.Id);
-	}
-
-	int comparision(uint x,uint y){
-		var cx=Configs.Cards[x];
-		var cy=Configs.Cards[y];
-		if(cx.Value==1||cx.Value==2)
-			x+=(53-2);
-		else if(cx.Value==14)
-			x+=8;
-		if(cy.Value==1||cy.Value==2)
-			y+=(53-2);
-		else if(cy.Value==14)
-			y+=8;
-		
-		if(x>y)
-			return -1;
-		else if(x<y)
-			return 1;
-		return 0;
+		return Main.Instance.gameRule.comparision(x.Value.Id,y.Value.Id);
 	}
 
 	void next(uint pos){

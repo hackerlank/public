@@ -11,6 +11,7 @@ public class CardCache{
 
 	public static string Id2File(uint color,uint value){
 		string[] Colors={"c","d","h","s"};
+		value=Main.Instance.gameRule.inverseTransformValue(value);
 		return string.Format("{0}{1:00}",Colors[color],value);
 	}
 
