@@ -264,57 +264,132 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
 }
 
 bool DoudeZhu::verifyDiscard(Game& game,bunch_t& bunch,bunch_t& hist){
-    std::vector<uint32> cards(bunch.pawns().begin(),bunch.pawns().end());
-    std::sort(cards.begin(),cards.end());
+    //sort cards
+    std::vector<uint32> ids(bunch.pawns().begin(),bunch.pawns().end());
+    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
 
+    auto len=ids.size();
     auto bt=pb_enum::BUNCH_INVALID;
-    std::vector<Card*> bunchCard;
-    for(auto c:cards)bunchCard.push_back(&game.units[c]);
-    switch (cards.size()) {
+    std::vector<Card*> cards;
+    for(auto c:ids)cards.push_back(&game.units[c]);
+    //verify by length
+    switch (len) {
         case 1:
             bt=pb_enum::BUNCH_A;
             break;
         case 2:
-            if(bunchCard[0]->value()==bunchCard[1]->value())
+            if(cards[0]->value()==cards[1]->value())
                 bt=pb_enum::BUNCH_AA;
             break;
         case 3:
-            if(bunchCard[0]->value()==bunchCard[1]->value()&&bunchCard[0]->value()==bunchCard[2]->value())
+            if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value())
                 bt=pb_enum::BUNCH_AAA;
             break;
         case 4:
-            if(bunchCard[0]->value()==bunchCard[1]->value()&&bunchCard[0]->value()==bunchCard[2]->value()&&bunchCard[0]->value()==bunchCard[3]->value())
+            if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value()
+               &&cards[0]->value()==cards[3]->value())
                 bt=pb_enum::BUNCH_AAAA;
+            else if(cards[0]->value()==cards[1]->value()&&cards[2]->value()==cards[3]->value()
+               &&cards[0]->value()+1==cards[2]->value())
+                //AABB
+                bt=pb_enum::BUNCH_ABC;
             else{
                 for(int i=0;i<4;++i){
-                    auto v=bunchCard[i];
+                    auto v=cards[i];
                     int dup=0;
-                    for(auto u:bunchCard)if(v->value()==u->value())++dup;
+                    for(auto u:cards)if(v->value()==u->value())++dup;
                     if(dup==1){
                         //the different one,move to end
-                        if(i!=3)std::swap(bunchCard[i],bunchCard[3]);
-                        if(bunchCard[0]->value()==bunchCard[1]->value()&&bunchCard[0]->value()==bunchCard[2]->value())
+                        if(i!=3)std::swap(cards[i],cards[3]);
+                        if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value())
                             bt=pb_enum::BUNCH_AAAB;
                     }
                 }
             }
             break;
-        default:
-            //BUNCH_AAAB,BUNCH_ABC,BUNCH_AABBCC,BUNCH_AAAABC
-            std::map<uint32,int> valCount;
-            int maxval=0;
-            for(auto vcard:bunchCard){
-                auto val=vcard->value();
+        default:{
+            //more than 5: BUNCH_AAAB,BUNCH_ABC,BUNCH_AAAAB
+            std::map<uint32,int> valCount;  //[value,count]
+            //collect all counts
+            int maxSame=0;
+            for(auto card:cards){
+                auto val=card->value();
                 if(valCount.count(val))
                     valCount[val]++;
                 else
                     valCount[val]=1;
-                if(valCount[val]>maxval)
-                    maxval=valCount[val];
+                if(valCount[val]>maxSame)
+                    maxSame=valCount[val];
             }
-
+            switch (maxSame) {
+                case 4:{
+                    std::vector<int> counts;
+                    for(auto imap:valCount){
+                        if(imap.second!=4)
+                            counts.push_back(imap.second);
+                    };
+                    auto lcounts=counts.size();
+                    if((lcounts==1&&counts.front()==2)||            //AA
+                       (lcounts==2&&counts.front()==counts.back())) //AB,AABB,AAABBB
+                        bt=pb_enum::BUNCH_AAAAB;
+                    break;
+                }
+                case 3:
+                    if(valCount.size()==2)
+                        bt=pb_enum::BUNCH_AAAB;
+                    else{
+                        //AAABBBCD,AAABBBCCCDEF
+                        std::vector<int> counts;
+                        int AAA=0;
+                        for(auto imap:valCount){
+                            if(imap.second!=3)
+                                counts.push_back(imap.second);
+                            else AAA++;
+                        };
+                        if(len-AAA*3==AAA)
+                            bt=pb_enum::BUNCH_AAAB;
+                        else if(AAA==counts.size()){
+                            bt=pb_enum::BUNCH_AAAB;
+                            for(auto m:counts){
+                                for(auto n:counts){
+                                    if(m!=n){
+                                        //count A,B in AB not match
+                                        bt=pb_enum::BUNCH_INVALID;
+                                        break;
+                                    }
+                                }
+                                if(bt==pb_enum::BUNCH_INVALID)
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    bt=pb_enum::BUNCH_ABC;
+                    if(len%2!=0){
+                        bt=pb_enum::BUNCH_INVALID;
+                    }else for(size_t i=0;i<len-2;){
+                        if(cards[i]!=cards[i+1])
+                            bt=pb_enum::BUNCH_INVALID;
+                        else if(i+2<len&&cards[i]+1!=cards[i+2])
+                            bt=pb_enum::BUNCH_INVALID;
+                        i+=2;
+                    }
+                    break;
+                case 1:
+                default:
+                    bt=pb_enum::BUNCH_ABC;
+                    for(size_t i=0;i<len-1;++i){
+                        if(cards[i]+1!=cards[i+1]){
+                            bt=pb_enum::BUNCH_INVALID;
+                            break;
+                        }
+                    }
+                    break;
+            }//switch
             break;
-    }
+        }//default
+    }//switch
     if(bt==pb_enum::BUNCH_INVALID)
         KEYE_LOG("OnDiscard invalid bunch\n");
     
@@ -324,20 +399,39 @@ bool DoudeZhu::verifyDiscard(Game& game,bunch_t& bunch,bunch_t& hist){
     if(bt==pb_enum::BUNCH_AAAA){
         //bomb
         if(hist.type()==pb_enum::BUNCH_AAAA){
-            if(histCard.value()<bunchCard[0]->value())
+            if(histCard.value()<cards[0]->value())
                 check=true;
         }else
             check=true;
     }else if(bt==hist.type()){
-        if(histCard.value()<bunchCard[0]->value())
+        if(histCard.value()<cards[0]->value())
             check=true;
-        else if(histCard.value()==bunchCard[0]->value()){
+        else if(histCard.value()==cards[0]->value()){
             check=true;
         }
     }
     if(!check)
         KEYE_LOG("OnDiscard invalid rule\n");
     return check;
+}
+
+int DoudeZhu::comparision(Game& game,uint x,uint y){
+    auto cx=game.units[x];
+    auto cy=game.units[y];
+    if(cx.value()==1||cx.value()==2)
+        x+=(53-2);
+    else if(cx.value()==14)
+        x+=8;
+    if(cy.value()==1||cy.value()==2)
+        y+=(53-2);
+    else if(cy.value()==14)
+        y+=8;
+    
+    if(x>y)
+        return -1;
+    else if(x<y)
+        return 1;
+    return 0;
 }
 
 void DoudeZhu::logHands(Game& game,uint32 pos){

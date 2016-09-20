@@ -45,20 +45,19 @@ OP_PASS                 =0;
 OP_DISCARD              =1;
 
 // bunch type
-BUNCH_INVALID           =0;
-BUNCH_A                 =1;
-BUNCH_AA                =2;
-BUNCH_AAA               =3;
-BUNCH_AAAB              =4;
-BUNCH_ABC               =5;
-BUNCH_AABBCC            =6;
-BUNCH_AAAABC            =7;
-BUNCH_AAAA              =8;
+BUNCH_INVALID           =10;
+BUNCH_A                 =11;
+BUNCH_AA                =12;
+BUNCH_AAA               =13;
+BUNCH_AAAA              =14;
+BUNCH_AAAAB             =15;
+BUNCH_AAAB              =16;
+BUNCH_ABC               =17;
 
 // achievement
 ACHV_BOMB               =10;
-ACHV_HEAVEN             =10;
-ACHV_HELL               =10;
+ACHV_HEAVEN             =11;
+ACHV_HELL               =12;
 
 // game using
 DEF_MAX_NODES           =1000;

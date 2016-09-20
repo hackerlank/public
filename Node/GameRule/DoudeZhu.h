@@ -25,6 +25,7 @@ public:
     virtual bool        Hint(Game&,pos_t,proto3::bunch_t&);
 private:
     bool                verifyDiscard(Game&,proto3::bunch_t&,proto3::bunch_t&);
+    int                 comparision(Game&,uint x,uint y);
     void                log(Game&){}
     void                logHands(Game&,uint32);
 };
