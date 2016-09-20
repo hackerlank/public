@@ -363,30 +363,43 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                 }
                 case 3:
                     if(valCount.size()==2&&len<6)
+                        //only 1 AAA
                         bt=pb_enum::BUNCH_AAAB;
                     else{
-                        //AAABBBCD,AAABBBCCCDEF
-                        std::vector<int> counts;
-                        int AAA=0;
+                        //more than 1: AAABBBCD,AAABBBCCCDEF
+                        std::vector<int> B;
+                        std::vector<uint> vAAA;
                         for(auto imap:valCount){
                             if(imap.second!=3)
-                                counts.push_back(imap.second);
-                            else AAA++;
+                                B.push_back(imap.second);
+                            else
+                                vAAA.push_back(imap.first);
                         };
-                        if(len-AAA*3==AAA)
-                            bt=pb_enum::BUNCH_AAAB;
-                        else if(AAA==counts.size()){
-                            bt=pb_enum::BUNCH_AAAB;
-                            for(auto m:counts){
-                                for(auto n:counts){
-                                    if(m!=n){
-                                        //count A,B in AB not match
-                                        bt=pb_enum::BUNCH_INVALID;
-                                        break;
+                        //adjacent check
+                        auto AAA=vAAA.size();
+                        auto adjacent=true;
+                        for(size_t i=0;i<AAA-1;++i){
+                            if(vAAA[i]+1!=vAAA[i+1]){
+                                adjacent=false;
+                                break;
+                            }
+                        }
+                        if(adjacent){
+                            if(len-AAA==AAA*3||len==AAA*3)
+                                bt=pb_enum::BUNCH_AAAB;
+                            else if(AAA==B.size()){
+                                bt=pb_enum::BUNCH_AAAB;
+                                for(auto m:B){
+                                    for(auto n:B){
+                                        if(m!=n){
+                                            //count A,B in AB not match
+                                            bt=pb_enum::BUNCH_INVALID;
+                                            break;
+                                        }
                                     }
+                                    if(bt==pb_enum::BUNCH_INVALID)
+                                        break;
                                 }
-                                if(bt==pb_enum::BUNCH_INVALID)
-                                    break;
                             }
                         }
                     }
@@ -439,6 +452,7 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
         if(hist.type()!=pb_enum::BUNCH_AAAA||histCard.value()<bunchCard.value())
             win=true;
     }else if(bt==hist.type()&&bunch.pawns().size()==hist.pawns().size()){
+        //same type and length
         switch (bt) {
             case pb_enum::BUNCH_AAAB:
             case pb_enum::BUNCH_AAAAB:{
@@ -487,7 +501,7 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
     std::string str,str1;
     cards2str(game,str,bunch.pawns());
     cards2str(game,str1,hist.pawns());
-    KEYE_LOG("compare win=%d [pos=%d,type=%d: %s]\n[pos=%d,type=%d: %s]\n",win,
+    KEYE_LOG("compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,
              bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
     return win;
 }
@@ -542,8 +556,8 @@ void DoudeZhu::test(){
     proto3::bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);
-    std::vector<uint> va{9,10,11,12,13,1};
-    std::vector<uint> vb{12,13,12,13};
+    std::vector<uint> va{5,6,7,8,9};
+    std::vector<uint> vb{4,5,6,7,8};
     ddz.make_bunch(game,A,va);
     ddz.make_bunch(game,B,vb);
     
