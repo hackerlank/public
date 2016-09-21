@@ -16,6 +16,9 @@ public class GamePanel : MonoBehaviour {
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnHint,BtnDiscard,BtnCall,BtnDouble,BtnPass,Buttons;
 
+	public uint			Round=0;
+	public MsgNCFinish	Summary=null;
+
 	List<Card>			_selection;
 	uint				_pos,_token,_banker;
 	List<bunch_t>		_historical;
@@ -34,6 +37,7 @@ public class GamePanel : MonoBehaviour {
 	}
 
 	public IEnumerator Deal(MsgNCStart msg){
+		++Round;
 		_pos=msg.Pos;
 		_token=(msg.Banker+N-1)%N;	//set to the previous position
 		_banker=msg.Banker;
@@ -200,13 +204,13 @@ public class GamePanel : MonoBehaviour {
 	}
 
 	public void OnSettle(MsgNCSettle msg){
+		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
+		foreach(Transform ch in HandArea.transform)Destroy(ch.gameObject);
 		Utils.Load<SettlePopup>(Main.Instance.transform);
 	}
 
 	public void OnFinish(MsgNCFinish msg){
-		Utils.Load<SummaryPanel>(Main.Instance.transform,delegate(Component obj){
-			Destroy(gameObject);
-		});
+		Summary=msg;
 	}
 	
 	List<uint[]> _hints=null;

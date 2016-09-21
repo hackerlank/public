@@ -191,29 +191,35 @@ MSG_CS_END              =3999;
 MSG_CL_BEGIN            =4000;
 MSG_CL_ENTER            =4001;
 MSG_LC_ENTER            =4002;
-MSG_LC_EXIT             =4003;
+MSG_LC_EXIT             =4004;
 
 MSG_CL_END              =5999;
 //Client --  Node
 MSG_CN_BEGIN            =6000;
 MSG_CN_ENTER            =6001;
 MSG_NC_ENTER            =6002;
-MSG_CN_CREATE           =6010;
-MSG_NC_CREATE           =6011;
-MSG_CN_JOIN             =6012;
-MSG_NC_JOIN             =6013;
-MSG_NC_START            =6020;
-MSG_CN_DISCARD          =6021;
-MSG_NC_DISCARD          =6022;
-MSG_CN_MELD             =6023;
-MSG_NC_MELD             =6024;
-MSG_NC_SETTLE           =6025;
-MSG_NC_FINISH           =6026;
-MSG_CN_DISMISS_SYNC     =6030;
-MSG_NC_DISMISS_SYNC     =6031;
-MSG_CN_DISMISS_ACK      =6032;
-MSG_NC_DISMISS_ACK      =6033;
-MSG_CN_STATS            =6080;
+
+MSG_CN_CREATE           =6011;
+MSG_NC_CREATE           =6012;
+MSG_CN_JOIN             =6013;
+MSG_NC_JOIN             =6014;
+MSG_CN_DISMISS_SYNC     =6021;
+MSG_NC_DISMISS_SYNC     =6022;
+MSG_CN_DISMISS_ACK      =6023;
+MSG_NC_DISMISS_ACK      =6024;
+
+MSG_CN_READY            =6031;
+MSG_NC_READY            =6032;
+MSG_NC_START            =6034;
+MSG_NC_SETTLE           =6036;
+MSG_NC_FINISH           =6038;
+
+MSG_CN_DISCARD          =6051;
+MSG_NC_DISCARD          =6052;
+MSG_CN_MELD             =6053;
+MSG_NC_MELD             =6054;
+
+MSG_CN_STATS            =6081;
 
 MSG_CN_END              =6999;
 MSG_END                 =9999;
@@ -297,9 +303,22 @@ uint32 game_id			=2;
 
 message MsgNCJoin{
 
-pb_msg mid				=1;
-pb_enum result			=2;
+pb_msg mid                  =1;
+repeated player_t players   =2;
+pb_enum result              =3;
 };
+
+message MsgCNReady{
+
+pb_msg mid              =1;
+}
+
+message MsgNCReady{
+
+pb_msg mid              =1;
+uint32 pos              =2;
+pb_enum result          =3;
+}
 
 message MsgNCStart{
 

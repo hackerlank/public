@@ -7,6 +7,7 @@ public class Main : MonoBehaviour {
 	public HttpProxy	http;
 	public WSProxy		ws;
 
+	public uint			Round=4;
 	public GameRule		gameRule=new GameRule();
 
 	public enum Mode{

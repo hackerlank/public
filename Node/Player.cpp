@@ -10,10 +10,10 @@
 #include "NodeFwd.h"
 using namespace proto3;
 
-Player::Player(keye::svc_handler& sh){
-    pos=-1;
+Player::Player(keye::svc_handler& sh)
+:pos(-1)
+,isRobot(false){
     spsh=sh();
-    isRobot=false;
 }
 
 void Player::on_read(PBHelper& pb){
@@ -45,7 +45,7 @@ void Player::on_read(PBHelper& pb){
 
                     game=gameptr;
                     game->players.push_back(shared_from_this());
-                    game->maxRound=maxRound;
+                    game->Round=maxRound;
                     ++game->ready;
                     pos=game->players.size()-1;
                     //fill data
@@ -148,6 +148,10 @@ void Player::on_read(PBHelper& pb){
             KEYE_LOG("game dismiss failed\n");
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
             PBHelper::Send(sh,omsg);
+            break;
+        }
+        case MSG_CN_READY:{
+            game->rule->OnReady(*this);
             break;
         }
         case MSG_CN_DISCARD:{

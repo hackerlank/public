@@ -17,9 +17,10 @@ public:
 
     virtual bool        Ready(Game&);
     virtual void        Deal(Game&);
+    virtual void        OnReady(Player&);
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void        OnMeld(Game&){};
-    virtual void        Settle(Game&);
+    virtual bool        Settle(Game&);
     virtual bool        IsGameOver(Game&);
     
     virtual bool        Hint(Game&,pos_t,proto3::bunch_t&);

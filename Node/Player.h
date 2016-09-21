@@ -12,7 +12,7 @@
 struct Game;
 class Player: public std::enable_shared_from_this<Player>{
 public:
-    Player(keye::svc_handler& sh);
+            Player(keye::svc_handler& sh);
     int     getKey();
     
     void    send(google::protobuf::MessageLite& msg);

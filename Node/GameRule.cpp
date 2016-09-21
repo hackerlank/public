@@ -26,8 +26,10 @@ void GameRule::Tick(Game& game){
         case Game::State::ST_MELD:
             break;
         case Game::State::ST_SETTLE:
-            Settle(game);
-            ChangeState(game,Game::State::ST_END);
+            if(Settle(game))
+                ChangeState(game,Game::State::ST_END);
+            else
+                ChangeState(game,Game::State::ST_WAIT);
             break;
         case Game::State::ST_END:
             break;

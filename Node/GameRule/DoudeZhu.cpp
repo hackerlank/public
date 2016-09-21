@@ -124,6 +124,19 @@ void DoudeZhu::Deal(Game& game){
     }
 }
 
+void DoudeZhu::OnReady(Player& player){
+    if(auto game=player.game){
+        if(player.isRobot&&game->ready>=MaxPlayer()-1)return;
+
+        ++game->ready;
+        MsgNCReady omsg;
+        omsg.set_mid(pb_msg::MSG_NC_READY);
+        omsg.set_pos(player.pos);
+        omsg.set_result(pb_enum::SUCCEESS);
+        for(auto& p:game->players)p->send(omsg);
+    }
+}
+
 void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
     MsgNCDiscard omsg;
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
@@ -244,6 +257,9 @@ void DoudeZhu::PostTick(Game& game){
     GameRule::PostTick(game);
     for(auto robot:game.players){
         switch (game.state) {
+            case Game::State::ST_WAIT:
+                if(robot->isRobot)OnReady(*robot);
+                break;
             case Game::State::ST_DISCARD:
                 if(game.token==robot->pos&&robot->isRobot){
                     if(game.delay--<0){
@@ -266,7 +282,7 @@ void DoudeZhu::PostTick(Game& game){
     }
 }
 
-void DoudeZhu::Settle(Game& game){
+bool DoudeZhu::Settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto& gd=game.gameData[i];
@@ -285,11 +301,21 @@ void DoudeZhu::Settle(Game& game){
     }
     
     for(auto p:game.players)p->send(msg);
+    
+    game.ready=0;
+    if(++game.round>=game.Round){
+        MsgNCFinish fin;
+        fin.set_mid(pb_msg::MSG_NC_FINISH);
+        fin.set_result(pb_enum::SUCCEESS);
+        for(auto p:game.players)p->send(msg);
+        return true;
+    }
+    return false;
 }
 
 bool DoudeZhu::IsGameOver(Game& game){
     for(auto gd:game.gameData){
-        if(gd.hands().size()<=0)
+        if(gd.hands().size()<=16)
             return true;
     }
     return false;
