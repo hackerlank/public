@@ -49,11 +49,18 @@ public class CreatePanel : MonoBehaviour {
 
 	public void OnEntered(){
 		if(create){
+			var opRobot=new key_value();
+			opRobot.Ikey=pb_enum.OptionRobot;
+			opRobot.Ivalue=2;
+			var opRound=new key_value();
+			opRound.Ikey=pb_enum.OptionRound;
+			opRound.Ivalue=4;
+
 			MsgCNCreate msgC=new MsgCNCreate();
 			msgC.Mid=pb_msg.MsgCnCreate;
 			msgC.Game=pb_enum.GameDdz;
-			msgC.Option.Add((uint)pb_enum.OptionRobot,2);
-			msgC.Option.Add((uint)pb_enum.OptionRound,4);
+			msgC.Option.Add(opRobot);
+			msgC.Option.Add(opRound);
 
 			Main.Instance.ws.Send<MsgCNCreate>(msgC.Mid,msgC);
 			Debug.Log("create game by key "+gameId%(uint)pb_enum.DefMaxNodes);

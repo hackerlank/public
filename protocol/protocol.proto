@@ -74,6 +74,13 @@ ERR_DUPLICATED          =104;
 ERR_UNKNOWN             =999;
 };
 
+message key_value{
+string key				=1;
+string value            =2;
+pb_enum ikey            =3;
+uint32 ivalue           =4;
+}
+
 message user_t{
 
 string uid				=1;
@@ -272,7 +279,7 @@ message MsgCNCreate{
 
 pb_msg mid                  =1;
 pb_enum game                =2;
-map<uint32,uint32> option   =3; //anti,rounds
+repeated key_value option   =3; //anti,rounds
 };
 
 message MsgNCCreate{

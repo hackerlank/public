@@ -25,8 +25,6 @@
 #include <google/protobuf/message_lite.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
-#include <google/protobuf/map.h>
-#include <google/protobuf/map_field_lite.h>
 #include <google/protobuf/generated_enum_util.h>
 // @@protoc_insertion_point(includes)
 
@@ -64,6 +62,7 @@ class achv_t;
 class bunch_t;
 class game_data_t;
 class game_t;
+class key_value;
 class lobby_t;
 class pawn_t;
 class player_t;
@@ -162,6 +161,129 @@ const pb_msg pb_msg_MAX = MSG_END;
 const int pb_msg_ARRAYSIZE = pb_msg_MAX + 1;
 
 // ===================================================================
+
+class key_value : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.key_value) */ {
+ public:
+  key_value();
+  virtual ~key_value();
+
+  key_value(const key_value& from);
+
+  inline key_value& operator=(const key_value& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const key_value& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const key_value* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(key_value* other);
+
+  // implements Message ----------------------------------------------
+
+  inline key_value* New() const { return New(NULL); }
+
+  key_value* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const key_value& from);
+  void MergeFrom(const key_value& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(key_value* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string key = 1;
+  void clear_key();
+  static const int kKeyFieldNumber = 1;
+  const ::std::string& key() const;
+  void set_key(const ::std::string& value);
+  void set_key(const char* value);
+  void set_key(const char* value, size_t size);
+  ::std::string* mutable_key();
+  ::std::string* release_key();
+  void set_allocated_key(::std::string* key);
+
+  // optional string value = 2;
+  void clear_value();
+  static const int kValueFieldNumber = 2;
+  const ::std::string& value() const;
+  void set_value(const ::std::string& value);
+  void set_value(const char* value);
+  void set_value(const char* value, size_t size);
+  ::std::string* mutable_value();
+  ::std::string* release_value();
+  void set_allocated_value(::std::string* value);
+
+  // optional .proto3.pb_enum ikey = 3;
+  void clear_ikey();
+  static const int kIkeyFieldNumber = 3;
+  ::proto3::pb_enum ikey() const;
+  void set_ikey(::proto3::pb_enum value);
+
+  // optional uint32 ivalue = 4;
+  void clear_ivalue();
+  static const int kIvalueFieldNumber = 4;
+  ::google::protobuf::uint32 ivalue() const;
+  void set_ivalue(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:proto3.key_value)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr key_;
+  ::google::protobuf::internal::ArenaStringPtr value_;
+  int ikey_;
+  ::google::protobuf::uint32 ivalue_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static key_value* default_instance_;
+};
+// -------------------------------------------------------------------
 
 class user_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.user_t) */ {
  public:
@@ -2322,7 +2444,6 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // nested types ----------------------------------------------------
 
-
   // accessors -------------------------------------------------------
 
   // optional .proto3.pb_msg mid = 1;
@@ -2337,14 +2458,17 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_enum game() const;
   void set_game(::proto3::pb_enum value);
 
-  // map<uint32, uint32> option = 3;
+  // repeated .proto3.key_value option = 3;
   int option_size() const;
   void clear_option();
   static const int kOptionFieldNumber = 3;
-  const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >&
-      option() const;
-  ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >*
+  const ::proto3::key_value& option(int index) const;
+  ::proto3::key_value* mutable_option(int index);
+  ::proto3::key_value* add_option();
+  ::google::protobuf::RepeatedPtrField< ::proto3::key_value >*
       mutable_option();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::key_value >&
+      option() const;
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNCreate)
  private:
@@ -2355,17 +2479,7 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   bool _is_default_instance_;
   int mid_;
   int game_;
-  typedef ::google::protobuf::internal::MapEntryLite<
-      ::google::protobuf::uint32, ::google::protobuf::uint32,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-      0 >
-      MsgCNCreate_OptionEntry;
-  ::google::protobuf::internal::MapFieldLite<
-      ::google::protobuf::uint32, ::google::protobuf::uint32,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
-      0 > option_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::key_value > option_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -4028,6 +4142,126 @@ class MsgCNStats : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 // ===================================================================
 
 #if !PROTOBUF_INLINE_NOT_IN_HEADERS
+// key_value
+
+// optional string key = 1;
+inline void key_value::clear_key() {
+  key_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& key_value::key() const {
+  // @@protoc_insertion_point(field_get:proto3.key_value.key)
+  return key_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void key_value::set_key(const ::std::string& value) {
+  
+  key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.key_value.key)
+}
+inline void key_value::set_key(const char* value) {
+  
+  key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.key_value.key)
+}
+inline void key_value::set_key(const char* value, size_t size) {
+  
+  key_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.key_value.key)
+}
+inline ::std::string* key_value::mutable_key() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.key_value.key)
+  return key_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* key_value::release_key() {
+  // @@protoc_insertion_point(field_release:proto3.key_value.key)
+  
+  return key_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void key_value::set_allocated_key(::std::string* key) {
+  if (key != NULL) {
+    
+  } else {
+    
+  }
+  key_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), key);
+  // @@protoc_insertion_point(field_set_allocated:proto3.key_value.key)
+}
+
+// optional string value = 2;
+inline void key_value::clear_value() {
+  value_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& key_value::value() const {
+  // @@protoc_insertion_point(field_get:proto3.key_value.value)
+  return value_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void key_value::set_value(const ::std::string& value) {
+  
+  value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.key_value.value)
+}
+inline void key_value::set_value(const char* value) {
+  
+  value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.key_value.value)
+}
+inline void key_value::set_value(const char* value, size_t size) {
+  
+  value_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.key_value.value)
+}
+inline ::std::string* key_value::mutable_value() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.key_value.value)
+  return value_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* key_value::release_value() {
+  // @@protoc_insertion_point(field_release:proto3.key_value.value)
+  
+  return value_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void key_value::set_allocated_value(::std::string* value) {
+  if (value != NULL) {
+    
+  } else {
+    
+  }
+  value_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set_allocated:proto3.key_value.value)
+}
+
+// optional .proto3.pb_enum ikey = 3;
+inline void key_value::clear_ikey() {
+  ikey_ = 0;
+}
+inline ::proto3::pb_enum key_value::ikey() const {
+  // @@protoc_insertion_point(field_get:proto3.key_value.ikey)
+  return static_cast< ::proto3::pb_enum >(ikey_);
+}
+inline void key_value::set_ikey(::proto3::pb_enum value) {
+  
+  ikey_ = value;
+  // @@protoc_insertion_point(field_set:proto3.key_value.ikey)
+}
+
+// optional uint32 ivalue = 4;
+inline void key_value::clear_ivalue() {
+  ivalue_ = 0u;
+}
+inline ::google::protobuf::uint32 key_value::ivalue() const {
+  // @@protoc_insertion_point(field_get:proto3.key_value.ivalue)
+  return ivalue_;
+}
+inline void key_value::set_ivalue(::google::protobuf::uint32 value) {
+  
+  ivalue_ = value;
+  // @@protoc_insertion_point(field_set:proto3.key_value.ivalue)
+}
+
+// -------------------------------------------------------------------
+
 // user_t
 
 // optional string uid = 1;
@@ -6046,22 +6280,34 @@ inline void MsgCNCreate::set_game(::proto3::pb_enum value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.game)
 }
 
-// map<uint32, uint32> option = 3;
+// repeated .proto3.key_value option = 3;
 inline int MsgCNCreate::option_size() const {
   return option_.size();
 }
 inline void MsgCNCreate::clear_option() {
   option_.Clear();
 }
-inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >&
-MsgCNCreate::option() const {
-  // @@protoc_insertion_point(field_map:proto3.MsgCNCreate.option)
-  return option_.GetMap();
+inline const ::proto3::key_value& MsgCNCreate::option(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.option)
+  return option_.Get(index);
 }
-inline ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >*
+inline ::proto3::key_value* MsgCNCreate::mutable_option(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNCreate.option)
+  return option_.Mutable(index);
+}
+inline ::proto3::key_value* MsgCNCreate::add_option() {
+  // @@protoc_insertion_point(field_add:proto3.MsgCNCreate.option)
+  return option_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::key_value >*
 MsgCNCreate::mutable_option() {
-  // @@protoc_insertion_point(field_mutable_map:proto3.MsgCNCreate.option)
-  return option_.MutableMap();
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNCreate.option)
+  return &option_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::key_value >&
+MsgCNCreate::option() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgCNCreate.option)
+  return option_;
 }
 
 // -------------------------------------------------------------------
@@ -6969,6 +7215,8 @@ inline void MsgCNStats::set_allocated_value(::std::string* value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

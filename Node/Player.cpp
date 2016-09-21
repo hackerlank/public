@@ -28,17 +28,28 @@ void Player::on_read(PBHelper& pb){
                 auto key=getKey();
                 auto gameptr=Node::sNode->createGame(key,imsg);
                 if(gameptr){
+                    int irobot=0;
+                    int maxRound=1;
+                    for(auto kv:imsg.option()){
+                        switch (kv.ikey()) {
+                            case pb_enum::OPTION_ROBOT:
+                                irobot=kv.ivalue();
+                                break;
+                            case pb_enum::OPTION_ROUND:
+                                maxRound=kv.ivalue();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
                     game=gameptr;
                     game->players.push_back(shared_from_this());
+                    game->maxRound=maxRound;
                     ++game->ready;
                     pos=game->players.size()-1;
                     //fill data
-                    auto& opt=*imsg.mutable_option();
-                    int irobot=0;
-                    if(opt.count(pb_enum::OPTION_ROBOT))irobot=opt[(uint32)pb_enum::OPTION_ROBOT];
-                    if(opt.count(pb_enum::OPTION_ROUND))
-                        game->maxRound=opt[(uint32)pb_enum::OPTION_ROUND];
-                    
+                
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     KEYE_LOG("game created,gid=%zd\n",game->id);
