@@ -33,12 +33,16 @@ void Player::on_read(PBHelper& pb){
                     ++game->ready;
                     pos=game->players.size()-1;
                     //fill data
+                    auto& opt=*imsg.mutable_option();
+                    int irobot=0;
+                    if(opt.count(pb_enum::OPTION_ROBOT))irobot=opt[(uint32)pb_enum::OPTION_ROBOT];
+                    if(opt.count(pb_enum::OPTION_ROUND))
+                        game->maxRound=opt[(uint32)pb_enum::OPTION_ROUND];
                     
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     KEYE_LOG("game created,gid=%zd\n",game->id);
                     
-                    auto irobot=imsg.robot();
                     if(irobot>=game->rule->MaxPlayer())
                         irobot=game->rule->MaxPlayer()-1;
                     if(irobot>0){
@@ -55,7 +59,7 @@ void Player::on_read(PBHelper& pb){
                     }
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                    KEYE_LOG("game create failed,no rule %d\n",imsg.rule());
+                    KEYE_LOG("game create failed,no rule %d\n",imsg.game());
                 }
             }else{
                 KEYE_LOG("message error id=%zd\n",mid);

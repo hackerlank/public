@@ -25,6 +25,8 @@
 #include <google/protobuf/message_lite.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
+#include <google/protobuf/map.h>
+#include <google/protobuf/map_field_lite.h>
 #include <google/protobuf/generated_enum_util.h>
 // @@protoc_insertion_point(includes)
 
@@ -61,7 +63,7 @@ class MsgSCLogin;
 class achv_t;
 class bunch_t;
 class game_data_t;
-class game_service_t;
+class game_t;
 class lobby_t;
 class pawn_t;
 class player_t;
@@ -78,14 +80,16 @@ enum pb_enum {
   DEV_IOS = 3,
   DEV_ANDROID = 4,
   DEV_WINPHONE = 5,
-  GAME_CARD = 10,
-  GAME_CHESS = 11,
-  RULE_DDZ = 20,
-  RULE_PDK = 21,
-  RULE_PHZ = 22,
-  CATEGORY_NORMAL = 50,
-  CATEGORY_EASY = 51,
-  CATEGORY_HARD = 52,
+  GAME_DDZ = 20,
+  GAME_PDK = 21,
+  GAME_PHZ = 22,
+  OPTION_ROUND = 10,
+  OPTION_ANTI = 11,
+  OPTION_CATEGORY = 12,
+  OPTION_ROBOT = 13,
+  CATEGORY_EASY = 10,
+  CATEGORY_NORMAL = 11,
+  CATEGORY_HARD = 12,
   OP_PASS = 0,
   OP_DISCARD = 1,
   BUNCH_INVALID = 10,
@@ -733,40 +737,40 @@ class achv_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
-class game_service_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.game_service_t) */ {
+class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.game_t) */ {
  public:
-  game_service_t();
-  virtual ~game_service_t();
+  game_t();
+  virtual ~game_t();
 
-  game_service_t(const game_service_t& from);
+  game_t(const game_t& from);
 
-  inline game_service_t& operator=(const game_service_t& from) {
+  inline game_t& operator=(const game_t& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const game_service_t& default_instance();
+  static const game_t& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const game_service_t* internal_default_instance() {
+  static inline const game_t* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(game_service_t* other);
+  void Swap(game_t* other);
 
   // implements Message ----------------------------------------------
 
-  inline game_service_t* New() const { return New(NULL); }
+  inline game_t* New() const { return New(NULL); }
 
-  game_service_t* New(::google::protobuf::Arena* arena) const;
+  game_t* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const game_service_t& from);
-  void MergeFrom(const game_service_t& from);
+  void CopyFrom(const game_t& from);
+  void MergeFrom(const game_t& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -781,7 +785,7 @@ class game_service_t : public ::google::protobuf::MessageLite /* @@protoc_insert
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(game_service_t* other);
+  void InternalSwap(game_t* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -873,7 +877,7 @@ class game_service_t : public ::google::protobuf::MessageLite /* @@protoc_insert
   ::google::protobuf::uint32 maintain_end() const;
   void set_maintain_end(::google::protobuf::uint32 value);
 
-  // @@protoc_insertion_point(class_scope:proto3.game_service_t)
+  // @@protoc_insertion_point(class_scope:proto3.game_t)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -901,7 +905,7 @@ class game_service_t : public ::google::protobuf::MessageLite /* @@protoc_insert
   friend void protobuf_ShutdownFile_protocol_2eproto();
 
   void InitAsDefaultInstance();
-  static game_service_t* default_instance_;
+  static game_t* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1050,16 +1054,16 @@ class lobby_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::uint32 time_zone() const;
   void set_time_zone(::google::protobuf::uint32 value);
 
-  // repeated .proto3.game_service_t games = 12;
+  // repeated .proto3.game_t games = 12;
   int games_size() const;
   void clear_games();
   static const int kGamesFieldNumber = 12;
-  const ::proto3::game_service_t& games(int index) const;
-  ::proto3::game_service_t* mutable_games(int index);
-  ::proto3::game_service_t* add_games();
-  ::google::protobuf::RepeatedPtrField< ::proto3::game_service_t >*
+  const ::proto3::game_t& games(int index) const;
+  ::proto3::game_t* mutable_games(int index);
+  ::proto3::game_t* add_games();
+  ::google::protobuf::RepeatedPtrField< ::proto3::game_t >*
       mutable_games();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::game_service_t >&
+  const ::google::protobuf::RepeatedPtrField< ::proto3::game_t >&
       games() const;
 
   // @@protoc_insertion_point(class_scope:proto3.lobby_t)
@@ -1080,7 +1084,7 @@ class lobby_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::uint32 maintain_start_;
   ::google::protobuf::uint32 maintain_end_;
   ::google::protobuf::uint32 time_zone_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::game_service_t > games_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::game_t > games_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2122,12 +2126,6 @@ class MsgCNEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
-  // optional .proto3.pb_enum service = 5;
-  void clear_service();
-  static const int kServiceFieldNumber = 5;
-  ::proto3::pb_enum service() const;
-  void set_service(::proto3::pb_enum value);
-
   // @@protoc_insertion_point(class_scope:proto3.MsgCNEnter)
  private:
 
@@ -2139,7 +2137,6 @@ class MsgCNEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
-  int service_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2325,6 +2322,7 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // nested types ----------------------------------------------------
 
+
   // accessors -------------------------------------------------------
 
   // optional .proto3.pb_msg mid = 1;
@@ -2333,29 +2331,20 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional .proto3.pb_enum rule = 2;
-  void clear_rule();
-  static const int kRuleFieldNumber = 2;
-  ::proto3::pb_enum rule() const;
-  void set_rule(::proto3::pb_enum value);
+  // optional .proto3.pb_enum game = 2;
+  void clear_game();
+  static const int kGameFieldNumber = 2;
+  ::proto3::pb_enum game() const;
+  void set_game(::proto3::pb_enum value);
 
-  // optional .proto3.pb_enum category = 3;
-  void clear_category();
-  static const int kCategoryFieldNumber = 3;
-  ::proto3::pb_enum category() const;
-  void set_category(::proto3::pb_enum value);
-
-  // optional uint32 robot = 4;
-  void clear_robot();
-  static const int kRobotFieldNumber = 4;
-  ::google::protobuf::uint32 robot() const;
-  void set_robot(::google::protobuf::uint32 value);
-
-  // optional uint32 parameter = 5;
-  void clear_parameter();
-  static const int kParameterFieldNumber = 5;
-  ::google::protobuf::uint32 parameter() const;
-  void set_parameter(::google::protobuf::uint32 value);
+  // map<uint32, uint32> option = 3;
+  int option_size() const;
+  void clear_option();
+  static const int kOptionFieldNumber = 3;
+  const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >&
+      option() const;
+  ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >*
+      mutable_option();
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNCreate)
  private:
@@ -2365,10 +2354,18 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   bool _is_default_instance_;
   int mid_;
-  int rule_;
-  int category_;
-  ::google::protobuf::uint32 robot_;
-  ::google::protobuf::uint32 parameter_;
+  int game_;
+  typedef ::google::protobuf::internal::MapEntryLite<
+      ::google::protobuf::uint32, ::google::protobuf::uint32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      0 >
+      MsgCNCreate_OptionEntry;
+  ::google::protobuf::internal::MapFieldLite<
+      ::google::protobuf::uint32, ::google::protobuf::uint32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      ::google::protobuf::internal::WireFormatLite::TYPE_UINT32,
+      0 > option_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -4683,220 +4680,220 @@ inline void achv_t::set_value(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// game_service_t
+// game_t
 
 // optional uint32 id = 1;
-inline void game_service_t::clear_id() {
+inline void game_t::clear_id() {
   id_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::id() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.id)
+inline ::google::protobuf::uint32 game_t::id() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.id)
   return id_;
 }
-inline void game_service_t::set_id(::google::protobuf::uint32 value) {
+inline void game_t::set_id(::google::protobuf::uint32 value) {
   
   id_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.id)
+  // @@protoc_insertion_point(field_set:proto3.game_t.id)
 }
 
 // optional uint32 version = 2;
-inline void game_service_t::clear_version() {
+inline void game_t::clear_version() {
   version_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::version() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.version)
+inline ::google::protobuf::uint32 game_t::version() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.version)
   return version_;
 }
-inline void game_service_t::set_version(::google::protobuf::uint32 value) {
+inline void game_t::set_version(::google::protobuf::uint32 value) {
   
   version_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.version)
+  // @@protoc_insertion_point(field_set:proto3.game_t.version)
 }
 
 // optional string ip = 3;
-inline void game_service_t::clear_ip() {
+inline void game_t::clear_ip() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& game_service_t::ip() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.ip)
+inline const ::std::string& game_t::ip() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.ip)
   return ip_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void game_service_t::set_ip(const ::std::string& value) {
+inline void game_t::set_ip(const ::std::string& value) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.ip)
+  // @@protoc_insertion_point(field_set:proto3.game_t.ip)
 }
-inline void game_service_t::set_ip(const char* value) {
+inline void game_t::set_ip(const char* value) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.game_service_t.ip)
+  // @@protoc_insertion_point(field_set_char:proto3.game_t.ip)
 }
-inline void game_service_t::set_ip(const char* value, size_t size) {
+inline void game_t::set_ip(const char* value, size_t size) {
   
   ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.game_service_t.ip)
+  // @@protoc_insertion_point(field_set_pointer:proto3.game_t.ip)
 }
-inline ::std::string* game_service_t::mutable_ip() {
+inline ::std::string* game_t::mutable_ip() {
   
-  // @@protoc_insertion_point(field_mutable:proto3.game_service_t.ip)
+  // @@protoc_insertion_point(field_mutable:proto3.game_t.ip)
   return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* game_service_t::release_ip() {
-  // @@protoc_insertion_point(field_release:proto3.game_service_t.ip)
+inline ::std::string* game_t::release_ip() {
+  // @@protoc_insertion_point(field_release:proto3.game_t.ip)
   
   return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void game_service_t::set_allocated_ip(::std::string* ip) {
+inline void game_t::set_allocated_ip(::std::string* ip) {
   if (ip != NULL) {
     
   } else {
     
   }
   ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:proto3.game_service_t.ip)
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_t.ip)
 }
 
 // optional uint32 port = 4;
-inline void game_service_t::clear_port() {
+inline void game_t::clear_port() {
   port_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::port() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.port)
+inline ::google::protobuf::uint32 game_t::port() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.port)
   return port_;
 }
-inline void game_service_t::set_port(::google::protobuf::uint32 value) {
+inline void game_t::set_port(::google::protobuf::uint32 value) {
   
   port_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.port)
+  // @@protoc_insertion_point(field_set:proto3.game_t.port)
 }
 
 // optional uint32 occupied = 5;
-inline void game_service_t::clear_occupied() {
+inline void game_t::clear_occupied() {
   occupied_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::occupied() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.occupied)
+inline ::google::protobuf::uint32 game_t::occupied() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.occupied)
   return occupied_;
 }
-inline void game_service_t::set_occupied(::google::protobuf::uint32 value) {
+inline void game_t::set_occupied(::google::protobuf::uint32 value) {
   
   occupied_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.occupied)
+  // @@protoc_insertion_point(field_set:proto3.game_t.occupied)
 }
 
 // optional uint32 capacity = 6;
-inline void game_service_t::clear_capacity() {
+inline void game_t::clear_capacity() {
   capacity_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::capacity() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.capacity)
+inline ::google::protobuf::uint32 game_t::capacity() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.capacity)
   return capacity_;
 }
-inline void game_service_t::set_capacity(::google::protobuf::uint32 value) {
+inline void game_t::set_capacity(::google::protobuf::uint32 value) {
   
   capacity_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.capacity)
+  // @@protoc_insertion_point(field_set:proto3.game_t.capacity)
 }
 
 // optional string desc = 7;
-inline void game_service_t::clear_desc() {
+inline void game_t::clear_desc() {
   desc_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& game_service_t::desc() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.desc)
+inline const ::std::string& game_t::desc() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.desc)
   return desc_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void game_service_t::set_desc(const ::std::string& value) {
+inline void game_t::set_desc(const ::std::string& value) {
   
   desc_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.desc)
+  // @@protoc_insertion_point(field_set:proto3.game_t.desc)
 }
-inline void game_service_t::set_desc(const char* value) {
+inline void game_t::set_desc(const char* value) {
   
   desc_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.game_service_t.desc)
+  // @@protoc_insertion_point(field_set_char:proto3.game_t.desc)
 }
-inline void game_service_t::set_desc(const char* value, size_t size) {
+inline void game_t::set_desc(const char* value, size_t size) {
   
   desc_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.game_service_t.desc)
+  // @@protoc_insertion_point(field_set_pointer:proto3.game_t.desc)
 }
-inline ::std::string* game_service_t::mutable_desc() {
+inline ::std::string* game_t::mutable_desc() {
   
-  // @@protoc_insertion_point(field_mutable:proto3.game_service_t.desc)
+  // @@protoc_insertion_point(field_mutable:proto3.game_t.desc)
   return desc_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* game_service_t::release_desc() {
-  // @@protoc_insertion_point(field_release:proto3.game_service_t.desc)
+inline ::std::string* game_t::release_desc() {
+  // @@protoc_insertion_point(field_release:proto3.game_t.desc)
   
   return desc_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void game_service_t::set_allocated_desc(::std::string* desc) {
+inline void game_t::set_allocated_desc(::std::string* desc) {
   if (desc != NULL) {
     
   } else {
     
   }
   desc_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), desc);
-  // @@protoc_insertion_point(field_set_allocated:proto3.game_service_t.desc)
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_t.desc)
 }
 
 // optional uint32 status = 8;
-inline void game_service_t::clear_status() {
+inline void game_t::clear_status() {
   status_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::status() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.status)
+inline ::google::protobuf::uint32 game_t::status() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.status)
   return status_;
 }
-inline void game_service_t::set_status(::google::protobuf::uint32 value) {
+inline void game_t::set_status(::google::protobuf::uint32 value) {
   
   status_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.status)
+  // @@protoc_insertion_point(field_set:proto3.game_t.status)
 }
 
 // optional uint32 openning_time = 9;
-inline void game_service_t::clear_openning_time() {
+inline void game_t::clear_openning_time() {
   openning_time_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::openning_time() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.openning_time)
+inline ::google::protobuf::uint32 game_t::openning_time() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.openning_time)
   return openning_time_;
 }
-inline void game_service_t::set_openning_time(::google::protobuf::uint32 value) {
+inline void game_t::set_openning_time(::google::protobuf::uint32 value) {
   
   openning_time_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.openning_time)
+  // @@protoc_insertion_point(field_set:proto3.game_t.openning_time)
 }
 
 // optional uint32 maintain_start = 10;
-inline void game_service_t::clear_maintain_start() {
+inline void game_t::clear_maintain_start() {
   maintain_start_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::maintain_start() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.maintain_start)
+inline ::google::protobuf::uint32 game_t::maintain_start() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.maintain_start)
   return maintain_start_;
 }
-inline void game_service_t::set_maintain_start(::google::protobuf::uint32 value) {
+inline void game_t::set_maintain_start(::google::protobuf::uint32 value) {
   
   maintain_start_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.maintain_start)
+  // @@protoc_insertion_point(field_set:proto3.game_t.maintain_start)
 }
 
 // optional uint32 maintain_end = 11;
-inline void game_service_t::clear_maintain_end() {
+inline void game_t::clear_maintain_end() {
   maintain_end_ = 0u;
 }
-inline ::google::protobuf::uint32 game_service_t::maintain_end() const {
-  // @@protoc_insertion_point(field_get:proto3.game_service_t.maintain_end)
+inline ::google::protobuf::uint32 game_t::maintain_end() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.maintain_end)
   return maintain_end_;
 }
-inline void game_service_t::set_maintain_end(::google::protobuf::uint32 value) {
+inline void game_t::set_maintain_end(::google::protobuf::uint32 value) {
   
   maintain_end_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_service_t.maintain_end)
+  // @@protoc_insertion_point(field_set:proto3.game_t.maintain_end)
 }
 
 // -------------------------------------------------------------------
@@ -5147,31 +5144,31 @@ inline void lobby_t::set_time_zone(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.lobby_t.time_zone)
 }
 
-// repeated .proto3.game_service_t games = 12;
+// repeated .proto3.game_t games = 12;
 inline int lobby_t::games_size() const {
   return games_.size();
 }
 inline void lobby_t::clear_games() {
   games_.Clear();
 }
-inline const ::proto3::game_service_t& lobby_t::games(int index) const {
+inline const ::proto3::game_t& lobby_t::games(int index) const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.games)
   return games_.Get(index);
 }
-inline ::proto3::game_service_t* lobby_t::mutable_games(int index) {
+inline ::proto3::game_t* lobby_t::mutable_games(int index) {
   // @@protoc_insertion_point(field_mutable:proto3.lobby_t.games)
   return games_.Mutable(index);
 }
-inline ::proto3::game_service_t* lobby_t::add_games() {
+inline ::proto3::game_t* lobby_t::add_games() {
   // @@protoc_insertion_point(field_add:proto3.lobby_t.games)
   return games_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::proto3::game_service_t >*
+inline ::google::protobuf::RepeatedPtrField< ::proto3::game_t >*
 lobby_t::mutable_games() {
   // @@protoc_insertion_point(field_mutable_list:proto3.lobby_t.games)
   return &games_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::game_service_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::game_t >&
 lobby_t::games() const {
   // @@protoc_insertion_point(field_list:proto3.lobby_t.games)
   return games_;
@@ -5943,20 +5940,6 @@ inline void MsgCNEnter::set_session(::google::protobuf::uint64 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.session)
 }
 
-// optional .proto3.pb_enum service = 5;
-inline void MsgCNEnter::clear_service() {
-  service_ = 0;
-}
-inline ::proto3::pb_enum MsgCNEnter::service() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.service)
-  return static_cast< ::proto3::pb_enum >(service_);
-}
-inline void MsgCNEnter::set_service(::proto3::pb_enum value) {
-  
-  service_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.service)
-}
-
 // -------------------------------------------------------------------
 
 // MsgNCEnter
@@ -6049,60 +6032,36 @@ inline void MsgCNCreate::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.mid)
 }
 
-// optional .proto3.pb_enum rule = 2;
-inline void MsgCNCreate::clear_rule() {
-  rule_ = 0;
+// optional .proto3.pb_enum game = 2;
+inline void MsgCNCreate::clear_game() {
+  game_ = 0;
 }
-inline ::proto3::pb_enum MsgCNCreate::rule() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.rule)
-  return static_cast< ::proto3::pb_enum >(rule_);
+inline ::proto3::pb_enum MsgCNCreate::game() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.game)
+  return static_cast< ::proto3::pb_enum >(game_);
 }
-inline void MsgCNCreate::set_rule(::proto3::pb_enum value) {
+inline void MsgCNCreate::set_game(::proto3::pb_enum value) {
   
-  rule_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.rule)
+  game_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.game)
 }
 
-// optional .proto3.pb_enum category = 3;
-inline void MsgCNCreate::clear_category() {
-  category_ = 0;
+// map<uint32, uint32> option = 3;
+inline int MsgCNCreate::option_size() const {
+  return option_.size();
 }
-inline ::proto3::pb_enum MsgCNCreate::category() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.category)
-  return static_cast< ::proto3::pb_enum >(category_);
+inline void MsgCNCreate::clear_option() {
+  option_.Clear();
 }
-inline void MsgCNCreate::set_category(::proto3::pb_enum value) {
-  
-  category_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.category)
+inline const ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >&
+MsgCNCreate::option() const {
+  // @@protoc_insertion_point(field_map:proto3.MsgCNCreate.option)
+  return option_.GetMap();
 }
-
-// optional uint32 robot = 4;
-inline void MsgCNCreate::clear_robot() {
-  robot_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCNCreate::robot() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.robot)
-  return robot_;
-}
-inline void MsgCNCreate::set_robot(::google::protobuf::uint32 value) {
-  
-  robot_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.robot)
-}
-
-// optional uint32 parameter = 5;
-inline void MsgCNCreate::clear_parameter() {
-  parameter_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCNCreate::parameter() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.parameter)
-  return parameter_;
-}
-inline void MsgCNCreate::set_parameter(::google::protobuf::uint32 value) {
-  
-  parameter_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.parameter)
+inline ::google::protobuf::Map< ::google::protobuf::uint32, ::google::protobuf::uint32 >*
+MsgCNCreate::mutable_option() {
+  // @@protoc_insertion_point(field_mutable_map:proto3.MsgCNCreate.option)
+  return option_.MutableMap();
 }
 
 // -------------------------------------------------------------------

@@ -51,8 +51,9 @@ public class CreatePanel : MonoBehaviour {
 		if(create){
 			MsgCNCreate msgC=new MsgCNCreate();
 			msgC.Mid=pb_msg.MsgCnCreate;
-			msgC.Rule=pb_enum.RuleDdz;
-			msgC.Robot=2;
+			msgC.Game=pb_enum.GameDdz;
+			msgC.Option.Add((uint)pb_enum.OptionRobot,2);
+			msgC.Option.Add((uint)pb_enum.OptionRound,4);
 
 			Main.Instance.ws.Send<MsgCNCreate>(msgC.Mid,msgC);
 			Debug.Log("create game by key "+gameId%(uint)pb_enum.DefMaxNodes);

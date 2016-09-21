@@ -35,7 +35,7 @@ void Node::registerRule(std::shared_ptr<GameRule> game){
 
 std::shared_ptr<Game> Node::createGame(int key,proto3::MsgCNCreate& msg){
     std::shared_ptr<Game> gameptr;
-    auto rule=gameRules.find(msg.rule());
+    auto rule=gameRules.find(msg.game());
     if(rule!=gameRules.end()&&key>0){
         auto gid=key*DEF_MAX_GAMES_PER_NODE+_game_index++;
         gameptr=std::make_shared<Game>();
@@ -43,7 +43,7 @@ std::shared_ptr<Game> Node::createGame(int key,proto3::MsgCNCreate& msg){
         gameptr->id=gid;
         gameptr->rule=rule->second;
     }else
-        KEYE_LOG("create game error no rule %d\n",msg.rule());
+        KEYE_LOG("create game error no rule %d\n",msg.game());
     return gameptr;
 }
 

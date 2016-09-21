@@ -29,7 +29,7 @@ inline uint32 inverseTransformValue(uint32 val){
 }
 
 int DoudeZhu::Type(){
-    return pb_enum::RULE_DDZ;
+    return pb_enum::GAME_DDZ;
 }
 
 int DoudeZhu::MaxPlayer(){

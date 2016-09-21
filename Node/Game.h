@@ -25,6 +25,7 @@ public:
     State       state;
     pos_t       banker;
     pos_t       token;
+    size_t      currRound,maxRound;
     std::vector<Card>                   units;      //cards map
     std::vector<unit_id_t>              pile;       //cards library
     std::vector<std::shared_ptr<Player>> players;
@@ -41,6 +42,8 @@ public:
     ,delay(0)
     ,state(State::ST_WAIT)
     ,banker(0)
-    ,token(0){}
+    ,token(0)
+    ,currRound(0)
+    ,maxRound(0){}
 };
 #endif /* Game_hpp */
