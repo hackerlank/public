@@ -150,7 +150,7 @@ int main(int argc, char* argv[]) {
     server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
 
-    DoudeZhu::test();
+    //DoudeZhu::test();
     
     KEYE_LOG("++++server start at %d\n", port);
 	std::getchar();

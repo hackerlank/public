@@ -102,7 +102,7 @@ public class GamePanel : MonoBehaviour {
 	
 	public void Discard(Card card=null){
 		//discard my card
-		while(true){
+		do{
 			var token=(_token+1)%N;
 			if(token!=_pos){
 				Debug.Log("Discard invalid turn");
@@ -159,8 +159,7 @@ public class GamePanel : MonoBehaviour {
 				_selection.Clear();
 			}
 			Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
-			break;
-		}
+		}while(false);
 	}
 
 	public IEnumerator OnDiscardAt(MsgNCDiscard msg){
@@ -170,36 +169,34 @@ public class GamePanel : MonoBehaviour {
 		}
 
 		_token=msg.Bunch.Pos;
+		string str="discard at "+_token;
 		var cards=new uint[msg.Bunch.Pawns.Count];
 		msg.Bunch.Pawns.CopyTo(cards,0);
-		//remove discards
-		foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
-		if(cards!=null){
-			string str="discard at "+_token;
-			if(_token==_pos){
-				//adjust by feedback
-			}else{
-				for(int i=0;i<cards.Length;++i){
-					var id=cards[i];
-					var v=Configs.Cards[id];
-					var fin=false;
-					Card.Create(v,nHandCards[_token].transform.parent,delegate(Card card) {
-						card.state=Card.State.ST_DISCARD;
-						card.DiscardTo(DiscardAreas[_token],.625f);
-						fin=true;
-					});
-					yield return null;
-					str+="("+v.Id+","+v.Color+","+v.Value+"),";
-					while(!fin)yield return null;
-				}
+		if(_token==_pos){
+			//adjust by feedback
+		}else{
+			//remove discards
+			foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
+			for(int i=0;i<cards.Length;++i){
+				var id=cards[i];
+				var v=Configs.Cards[id];
+				var fin=false;
+				Card.Create(v,nHandCards[_token].transform.parent,delegate(Card card) {
+					card.state=Card.State.ST_DISCARD;
+					card.DiscardTo(DiscardAreas[_token],.625f);
+					fin=true;
+				});
+				yield return null;
+				str+="("+v.Id+","+v.Color+","+v.Value+"),";
+				while(!fin)yield return null;
 			}
-			//record
-			var nCards=int.Parse(nHandCards[_token].text)-1;
-			nHandCards[_token].text=nCards.ToString();
-			_historical.Add(msg.Bunch);
-			next(_token);
-			//Debug.Log(str);
 		}
+		//record
+		var nCards=int.Parse(nHandCards[_token].text)-1;
+		nHandCards[_token].text=nCards.ToString();
+		_historical.Add(msg.Bunch);
+		next(_token);
+		//Debug.Log(str);
 	}
 
 	List<uint[]> _hints=null;

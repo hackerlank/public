@@ -29,7 +29,7 @@ public class CardCache{
 		var files=new List<string>();
 		files.Add("back");
 		files.Add("c14");
-		files.Add("d14");
+		files.Add("d15");
 		for(uint j=0;j<4;++j)
 			for(uint i=1;i<=13;++i)
 				files.Add(Id2File(j,i));

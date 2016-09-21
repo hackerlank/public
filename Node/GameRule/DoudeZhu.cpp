@@ -8,6 +8,7 @@
 
 #include "../stdafx.h"
 #include "NodeFwd.h"
+#include <random>
 #include <algorithm>
 using namespace proto3;
 
@@ -15,6 +16,7 @@ inline uint32 transformValue(uint32 val){
     if      (val==1) return 14;
     else if (val==2) return 16;
     else if (val==14)return 18;
+    else if (val==15)return 19;
     else             return val;
 }
 
@@ -22,6 +24,7 @@ inline uint32 inverseTransformValue(uint32 val){
     if      (val==14)return 1;
     else if (val==16)return 2;
     else if (val==18)return 14;
+    else if (val==19)return 15;
     else             return val;
 }
 
@@ -59,15 +62,20 @@ void DoudeZhu::Deal(Game& game){
             u.set_id(id++);
         }
     }
-    for(int j=0;j<=1;++j){  //Joker(color 0,1) => 14
+    for(int j=0;j<=1;++j){  //Joker(color 0,1) => 14,15
         game.pile[id]=id;
         auto& u=game.units[id];
         u.set_color(j);
-        u.set_value(transformValue(14));
+        u.set_value(transformValue(14+j));
         u.set_id(id++);
     }
     
     //shuffle
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(game.pile.begin(),game.pile.end(),gen);
+    std::shuffle(game.pile.begin(),game.pile.end(),gen);
+/*
     srand(unsigned(time(nullptr)));
     auto r=rand();
     std::random_shuffle(game.pile.begin(),game.pile.end());
@@ -77,7 +85,7 @@ void DoudeZhu::Deal(Game& game){
         srand(unsigned(time(nullptr)+2016));
         std::random_shuffle(game.pile.begin(),game.pile.end());
     }
-    
+*/
     //deal: fixed position,movable banker
     size_t I=game.banker,
     J=(game.banker+1)%MaxPlayer(),
@@ -120,98 +128,116 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
     MsgNCDiscard omsg;
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
     omsg.set_result(pb_enum::ERR_FAILED);
-    if(auto game=player.game){
-        if(game->token==player.pos){
-            //verify
-            do{
-                //just pass
-                if(msg.bunch().type()==pb_enum::OP_PASS){
-                    omsg.set_result(pb_enum::SUCCEESS);
-                    break;
-                }
-                auto& pawns=msg.bunch().pawns();
-                std::vector<uint32> cards(pawns.begin(),pawns.end());
-                std::sort(cards.begin(),cards.end());
-                //cards check
-                auto check=true;
-                for(auto c:cards){
-                    //boundary check
-                    if(c>=game->units.size()){
-                        check=false;
-                        KEYE_LOG("OnDiscard invalid cards %d\n",c);
-                        break;
-                    }
-                    //duplicated id check
-                    int dup=0;
-                    for(auto d:cards)if(c==d)dup++;
-                    if(dup>1){
-                        check=false;
-                        KEYE_LOG("OnDiscard duplicated cards %d\n",c);
-                        break;
-                    }
-                    //exists check
-                    auto exist=false;
-                    for(auto h:game->gameData[player.pos].hands()){
-                        if(h==c){
-                            exist=true;
-                            break;
-                        }
-                    }
-                    if(!exist){
-                        check=false;
-                        KEYE_LOG("OnDiscard cards not exists %d\n",c);
-                        break;
-                    }
-                }
-                if(!check)
-                    break;
-                
-                auto H=game->historical.size();
-                check=H<1;
-                if(!check){
-                    auto hist=&game->historical.back();
-                    if(hist->type()==pb_enum::OP_PASS)
-                        hist=&game->historical[H-2];
-                    if(hist->type()==pb_enum::OP_PASS)
-                        check=true;
-                    else if(pb_enum::BUNCH_INVALID!=verifyBunch(*game,*msg.mutable_bunch())&&
-                        compareBunch(*game,*msg.mutable_bunch(),*hist))
-                        check=true;
-                }
-                if(!check)
-                    break;
-                
-                KEYE_LOG("OnDiscard pos=%d,cards(%d:%d)\n",player.pos,cards[0],game->units[cards[0]].value());
-                //historic
-                game->historical.push_back(msg.bunch());
-                //remove hands
-                auto& hands=*game->gameData[player.pos].mutable_hands();
-                for(auto i=hands.begin();i!=hands.end();){
-                    for(auto j:msg.bunch().pawns()){
-                        if(j==*i)
-                            i=hands.erase(i);
-                        else
-                            ++i;
-                    }
-                }
-                
-                omsg.set_result(pb_enum::SUCCEESS);
-                omsg.mutable_bunch()->CopyFrom(msg.bunch());
-            }while(false);
-            
-            omsg.mutable_bunch()->set_pos(player.pos);
-            for(auto& p:game->players)p->send(omsg);
-            
-            if(game->gameData[player.pos].hands().size()>0)
-                //pass token
-                Next(*game);
-
-            return;
-        }else
+    
+    do{
+        auto game=player.game;
+        if(!game){
+            KEYE_LOG("OnDiscard no game\n");
+            break;
+        }
+        if(game->token!=player.pos){
             KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
+            break;
+        }
+        //just pass
+        if(msg.bunch().type()==pb_enum::OP_PASS){
+            omsg.set_result(pb_enum::SUCCEESS);
+            KEYE_LOG("OnDiscard pos=%d pass\n",player.pos);
+            break;
+        }
+
+        auto bt=verifyBunch(*game,*msg.mutable_bunch());
+        if(pb_enum::BUNCH_INVALID==bt){
+            KEYE_LOG("OnDiscard invalid bunch\n");
+            break;
+        }
+        
+        //verify
+        auto& pawns=msg.bunch().pawns();
+        std::vector<uint32> cards(pawns.begin(),pawns.end());
+        std::sort(cards.begin(),cards.end());
+        //cards check
+        auto check=true;
+        for(auto c:cards){
+            //boundary check
+            if(c>=game->units.size()){
+                check=false;
+                KEYE_LOG("OnDiscard invalid cards %d\n",c);
+                break;
+            }
+            //duplicated id check
+            int dup=0;
+            for(auto d:cards)if(c==d)dup++;
+            if(dup>1){
+                check=false;
+                KEYE_LOG("OnDiscard duplicated cards %d\n",c);
+                break;
+            }
+            //exists check
+            auto exist=false;
+            for(auto h:game->gameData[player.pos].hands()){
+                if(h==c){
+                    exist=true;
+                    break;
+                }
+            }
+            if(!exist){
+                check=false;
+                KEYE_LOG("OnDiscard cards not exists %d\n",c);
+                break;
+            }
+        }
+        if(!check)
+            break;
+        
+        auto H=game->historical.size();
+        check=H<1;
+        if(!check){
+            auto hist=&game->historical.back();
+            if(hist->type()==pb_enum::OP_PASS)
+                hist=&game->historical[H-2];
+            if(hist->type()==pb_enum::OP_PASS)
+                check=true;
+            else if(compareBunch(*game,*msg.mutable_bunch(),*hist))
+                check=true;
+        }
+        if(!check){
+            KEYE_LOG("OnDiscard compare failed\n");
+            break;
+        }
+        
+        std::string str;
+        cards2str(*game,str,msg.bunch().pawns());
+        KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
+        //remove hands
+        auto& hands=*game->gameData[player.pos].mutable_hands();
+        for(auto j:msg.bunch().pawns()){
+            for(auto i=hands.begin();i!=hands.end();++i){
+                if(j==*i){
+                    KEYE_LOG("OnDiscard pos=%d, erase card(%d:%d)\n",player.pos,*i,game->units[*i].value());
+                    hands.erase(i);
+                    break;
+                }
+            }
+        }
+        logHands(*game,player.pos);
+        omsg.set_result(pb_enum::SUCCEESS);
+        omsg.mutable_bunch()->CopyFrom(msg.bunch());
+    }while(false);
+    
+    if(pb_enum::SUCCEESS==omsg.result()){
+        auto game=player.game;
+        omsg.mutable_bunch()->set_pos(player.pos);
+        for(auto& p:game->players)p->send(omsg);
+        
+        //historic
+        game->historical.push_back(msg.bunch());
+
+        //pass token
+        if(game->gameData[player.pos].hands().size()>0)
+            Next(*game);
     }else
-        KEYE_LOG("OnDiscard no game\n");
-    player.send(omsg);
+        player.send(omsg);
 }
 
 void DoudeZhu::PostTick(Game& game){
@@ -221,7 +247,7 @@ void DoudeZhu::PostTick(Game& game){
             case Game::State::ST_DISCARD:
                 if(game.token==robot->pos&&robot->isRobot){
                     if(game.delay--<0){
-                        KEYE_LOG("tick robot %d\n",robot->pos);
+                        //KEYE_LOG("tick robot %d\n",robot->pos);
 
                         MsgCNDiscard msg;
                         bunch_t bunch;
@@ -272,6 +298,10 @@ bool DoudeZhu::IsGameOver(Game& game){
 bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
     //C(17,8) = 24310; C(17,2) = 136
     auto& hands=game.gameData[pos].hands();
+    //sort cards
+    std::vector<uint32> ids(hands.begin(),hands.end());
+    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
+
     int i=-1;
     auto H=game.historical.size();
     if(H>0){
@@ -284,11 +314,8 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
                 break;
             case pb_enum::BUNCH_A:{
                 auto& histCard=game.units[hist->pawns(0)];
-                //sort cards
-                std::vector<uint32> ids(hands.begin(),hands.end());
-                std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
-                for(int j=0;j<hands.size();++j){
-                    auto hand=hands.Get(j);
+                for(int j=0;j<ids.size();++j){
+                    auto hand=ids[j];
                     if(game.units[hand].value()>histCard.value()){
                         i=j;
                         break;
@@ -305,7 +332,7 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
     bunch.set_pos(pos);
     if(i!=-1){
         bunch.set_type(pb_enum::BUNCH_A);
-        bunch.mutable_pawns()->Add(hands.Get(i));
+        bunch.mutable_pawns()->Add(ids[i]);
         return true;
     }else{
         bunch.set_type(pb_enum::OP_PASS);
@@ -328,13 +355,11 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
             bt=pb_enum::BUNCH_A;
             break;
         case 2:
-            if(cards[0]->value()==cards[1]->value()){
-                if(cards[0]->value()==transformValue(14))
-                    // 2 Jokers
-                    bt=pb_enum::BUNCH_AAAA;
-                else
+            if(cards[0]->value()==cards[1]->value())
                     bt=pb_enum::BUNCH_AA;
-            }
+            else if(cards[0]->value()>=transformValue(14)&&cards[1]->value()>=transformValue(14))
+                // 2 Jokers
+                bt=pb_enum::BUNCH_AAAA;
             break;
         case 3:
             if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value())
@@ -469,7 +494,7 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
     
     std::string str;
     cards2str(game,str,bunch.pawns());
-    KEYE_LOG("verifyBunch pos=%d,type=%d: %s\n",bunch.pos(),bunch.type(),str.c_str());
+    //KEYE_LOG("verifyBunch pos=%d,type=%d: %s\n",bunch.pos(),bunch.type(),str.c_str());
     return bt;
 }
 
@@ -535,8 +560,7 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
     std::string str,str1;
     cards2str(game,str,bunch.pawns());
     cards2str(game,str1,hist.pawns());
-    KEYE_LOG("compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,
-             bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
+    //KEYE_LOG("compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
     return win;
 }
 
@@ -559,8 +583,9 @@ bool DoudeZhu::comparision(Game& game,uint x,uint y){
 
 void DoudeZhu::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
-    cards2str(game,str,game.gameData[pos].hands());
-    KEYE_LOG("%s hand of %d: %s\n",msg.c_str(),pos,str.c_str());
+    auto& hands=game.gameData[pos].hands();
+    cards2str(game,str,hands);
+    KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
 }
 
 void DoudeZhu::cards2str(Game& game,std::string& str,const google::protobuf::RepeatedField<uint32>& ids){

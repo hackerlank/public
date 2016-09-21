@@ -1,21 +1,43 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameRule.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/CardCache.cs">
     <Files>
-      <File FileName="Assets/Scripts/GamePanel.cs" Line="131" Column="38" />
-      <File FileName="Assets/Scripts/MsgHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/GamePanel.cs" Line="255" Column="3" />
       <File FileName="Assets/Google.Protobuf/Collections/RepeatedField.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Main.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameRule.cs" Line="19" Column="2" />
-      <File FileName="Assets/Scripts/PlayerIcon.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameTimer.cs" Line="19" Column="28" />
+      <File FileName="Assets/Scripts/GameRule.cs" Line="46" Column="17" />
+      <File FileName="Assets/Scripts/Protocol.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MsgHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Card.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/CardCache.cs" Line="32" Column="17" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
+            <Node name="Google.Protobuf" expanded="True">
+              <Node name="Collections" expanded="True" />
+            </Node>
+            <Node name="PrefabEvolution" expanded="True">
+              <Node name="Sources" expanded="True" />
+            </Node>
             <Node name="Scripts" expanded="True">
-              <Node name="GameRule.cs" selected="True" />
+              <Node name="CardCache.cs" selected="True" />
+            </Node>
+          </Node>
+          <Node name="Assembly-CSharp-Editor" expanded="True">
+            <Node name="BundleManager" expanded="True">
+              <Node name="Src" expanded="True">
+                <Node name="Editor" expanded="True">
+                  <Node name="Core" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+            <Node name="PrefabEvolution" expanded="True">
+              <Node name="Sources" expanded="True">
+                <Node name="Editor" expanded="True">
+                  <Node name="PropertyExposure" expanded="True" />
+                </Node>
+              </Node>
             </Node>
           </Node>
         </State>

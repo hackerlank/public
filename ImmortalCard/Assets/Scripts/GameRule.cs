@@ -40,11 +40,11 @@ public class GameRule {
 				msg.Cards.Add(card);
 			}
 		}
-		for(uint j=0;j<=1;++j){  //Joker(color 0,1) => 14
+		for(uint j=0;j<=1;++j){  //Joker(color 0,1) => 14,15
 			Pile[id]=id;
 			pawn_t card=new pawn_t();
 			card.Color=j;
-			card.Value=transformValue(14);
+			card.Value=transformValue(14+j);
 			card.Id=id++;
 			msg.Cards.Add(card);
 		}
@@ -91,13 +91,11 @@ public class GameRule {
 		bt=pb_enum.BunchA;
 			break;
 		case 2:
-			if(cards[0].Value==cards[1].Value){
-				if(cards[0].Value==transformValue(14))
-					// 2 Jokers
-					bt=pb_enum.BunchAaaa;
-				else
-					bt=pb_enum.BunchAa;
-			}
+			if(cards[0].Value==cards[1].Value)
+				bt=pb_enum.BunchAa;
+			else if(cards[0].Value>=transformValue(14)&&cards[1].Value>=transformValue(14))
+				// 2 Jokers
+				bt=pb_enum.BunchAaaa;
 			break;
 		case 3:
 			if(cards[0].Value==cards[1].Value&&cards[0].Value==cards[2].Value)
@@ -306,6 +304,7 @@ public class GameRule {
 		if      (val==1) return 14;
 		else if (val==2) return 16;
 		else if (val==14)return 18;
+		else if (val==15)return 19;
 		else             return val;
 	}
 	
@@ -313,6 +312,7 @@ public class GameRule {
 		if      (val==14)return 1;
 		else if (val==16)return 2;
 		else if (val==18)return 14;
+		else if (val==19)return 15;
 		else             return val;
 	}
 }
