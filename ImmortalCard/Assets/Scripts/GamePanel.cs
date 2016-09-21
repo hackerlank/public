@@ -199,6 +199,16 @@ public class GamePanel : MonoBehaviour {
 		//Debug.Log(str);
 	}
 
+	public void OnSettle(MsgNCSettle msg){
+		Utils.Load<SettlePopup>(Main.Instance.transform);
+	}
+
+	public void OnFinish(MsgNCFinish msg){
+		Utils.Load<SummaryPanel>(Main.Instance.transform,delegate(Component obj){
+			Destroy(gameObject);
+		});
+	}
+	
 	List<uint[]> _hints=null;
 	public void Hint(){
 		_hints=null;

@@ -98,7 +98,7 @@ public class MsgHandler{
 			MsgNCSettle imsg7=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(imsg7.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg7));
+					if(GamePanel.Instance!=null)GamePanel.Instance.OnSettle(imsg7);
 				});
 			}else
 				Debug.LogError("settle error: "+imsg7.Result);
@@ -107,7 +107,7 @@ public class MsgHandler{
 			MsgNCFinish imsg8=MsgNCFinish.Parser.ParseFrom(bytes);
 			if(imsg8.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg8));
+					if(GamePanel.Instance!=null)GamePanel.Instance.OnFinish(imsg8);
 				});
 			}else
 				Debug.LogError("finish error: "+imsg8.Result);
