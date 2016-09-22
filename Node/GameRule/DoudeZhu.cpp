@@ -346,21 +346,17 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
 
             auto& histCard=game.units[hist->pawns(0)];
             if(type==pb_enum::BUNCH_ABC){
-                int x=-1;
-                for(int i=0,ii=(int)cards.size();i!=ii;++i){
-                    auto card=cards[i];
-                    if(card->value()>histCard.value()){
-                        x=i;
-                        break;
-                    }
-                }
-                if(x>=0){
+                //make a queue without duplicated
+                cards.clear();
+                for(auto& v:sortByVal)if(!v.empty()&&v[0]->value()>histCard.value())cards.push_back(v[0]);
+                if(!cards.empty()){
                     int len=(int)hist->pawns_size();
                     int y=(int)cards.size()-len;
-                    for(int i=x;i<y&&ids_.empty();++i){
+                    for(int i=0;i<y&&ids_.empty();++i){
                         bunch_t bunch;
                         for(int j=i,jj=i+len;j!=jj;++j)bunch.add_pawns(cards[j]->id());
-                        if(compareBunch(game,bunch,*hist)){
+                        auto bt=verifyBunch(game,bunch);
+                        if(bt==type&&compareBunch(game,bunch,*hist)){
                             for(auto card:bunch.pawns())ids_.push_back(card);
                             break;
                         }
@@ -403,7 +399,8 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
                                 bunch.add_pawns(id0);
                                 bunch.add_pawns(id1);
                                 for(auto card:*sorted)bunch.add_pawns(card->id());
-                                if(compareBunch(game,bunch,*hist)){
+                                auto bt=verifyBunch(game,bunch);
+                                if(bt==type&&compareBunch(game,bunch,*hist)){
                                     for(auto card:bunch.pawns())ids_.push_back(card);
                                     break;
                                 }
@@ -418,7 +415,8 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
                                 bunch.mutable_pawns()->Clear();
                                 bunch.add_pawns(id);
                                 for(auto card:*sorted)bunch.add_pawns(card->id());
-                                if(compareBunch(game,bunch,*hist)){
+                                auto bt=verifyBunch(game,bunch);
+                                if(bt==type&&compareBunch(game,bunch,*hist)){
                                     for(auto card:bunch.pawns())ids_.push_back(card);
                                     break;
                                 }
