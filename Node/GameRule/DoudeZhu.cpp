@@ -45,8 +45,10 @@ void DoudeZhu::Deal(Game& game){
     game.token=game.banker;
     game.units.clear();
     game.pile.clear();
+    game.historical.clear();
     game.gameData.resize(MaxPlayer());
     for(auto& gd:game.gameData)gd.Clear();
+    
     //init cards
     size_t N=54;
     game.units.resize(N);
@@ -75,17 +77,7 @@ void DoudeZhu::Deal(Game& game){
     std::mt19937 gen(rd());
     std::shuffle(game.pile.begin(),game.pile.end(),gen);
     std::shuffle(game.pile.begin(),game.pile.end(),gen);
-/*
-    srand(unsigned(time(nullptr)));
-    auto r=rand();
-    std::random_shuffle(game.pile.begin(),game.pile.end());
-    srand(unsigned(time(nullptr)+r));
-    std::random_shuffle(game.pile.begin(),game.pile.end());
-    if(r>RAND_MAX/2){
-        srand(unsigned(time(nullptr)+2016));
-        std::random_shuffle(game.pile.begin(),game.pile.end());
-    }
-*/
+
     //deal: fixed position,movable banker
     size_t I=game.banker,
     J=(game.banker+1)%MaxPlayer(),
