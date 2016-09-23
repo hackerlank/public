@@ -84,6 +84,7 @@ enum pb_enum {
   GAME_DDZ = 20,
   GAME_PDK = 21,
   GAME_PHZ = 22,
+  GAME_MJ = 23,
   OPTION_ROUND = 10,
   OPTION_ANTI = 11,
   OPTION_CATEGORY = 12,

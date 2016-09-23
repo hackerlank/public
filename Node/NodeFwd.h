@@ -23,6 +23,7 @@ typedef proto3::pawn_t Chess;
 #include "Game.h"
 #include "GameRule.h"
 #include "GameRule/DoudeZhu.h"
+#include "GameRule/Mahjong.h"
 #include "Node.h"
 
 #endif /* login_fwd_h */

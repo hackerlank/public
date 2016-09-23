@@ -141,7 +141,6 @@ template<typename S>
 inline int myclient(const char* host,unsigned short port,size_t ios=1,size_t works=1){
 	RawClient<S> rc;
 	rc.client=true;
-	size_t rb_size=1460;
 	_host=host;
 	_port=port;
 	wait_for(rc);
@@ -151,7 +150,6 @@ inline int myclient(const char* host,unsigned short port,size_t ios=1,size_t wor
 template<typename S>
 inline int myserver(unsigned short port,size_t ios=1,size_t works=1){
 	RawServer<S> rs;
-	size_t rb_size=1460;
 	_port=port;
 	rs.run(port);
 	rs.set_timer(FLOW_TIMER,5000);

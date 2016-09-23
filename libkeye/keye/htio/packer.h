@@ -101,7 +101,7 @@ public:
 		_ptr=_data;
 
 		auto length=*(header_type*)_ptr;
-		if(length==(std::size_t)0||length>(std::size_t)0x40000000){
+		if(length==(header_type)0||length>(header_type)0x7fff){ //[0,32k]
 			//wrong packet!
 			o.length=0;
 			return *this;

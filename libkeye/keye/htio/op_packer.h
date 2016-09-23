@@ -66,7 +66,7 @@ public:
 
 		size_t used=_tail-_data;
 		auto length=*(header_type*)_ptr;
-		if(used==0||length==(std::size_t)0||length>(std::size_t)0x40000000){
+        if(used==(header_type)0||length>(header_type)0x7fff){ //[0,32k]
 			//wrong packet!
 			o.length=0;
 			_tail=_data; 

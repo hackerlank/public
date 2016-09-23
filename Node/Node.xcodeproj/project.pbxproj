@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5E1099041D6731AD00B02E6B /* liblibvic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E1099031D6731AD00B02E6B /* liblibvic.a */; };
 		5E3845B21D3548FD00F9B096 /* libkeye.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E3845B11D3548FD00F9B096 /* libkeye.a */; };
+		5E3DF6B51D953034009DE89A /* Mahjong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E3DF6B41D953034009DE89A /* Mahjong.cpp */; };
 		5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E11D7E744500465098 /* GameRule.cpp */; };
 		5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */; };
 		5E4D46FD1D7F828B00465098 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46FB1D7F828B00465098 /* Player.cpp */; };
@@ -34,6 +35,8 @@
 		5E1099031D6731AD00B02E6B /* liblibvic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibvic.a; path = ../libvic/build/Debug/liblibvic.a; sourceTree = "<group>"; };
 		5E3845A11D35462A00F9B096 /* Node */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Node; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E3845B11D3548FD00F9B096 /* libkeye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkeye.a; path = "../../../Library/Developer/Xcode/DerivedData/server-dwybynuuejmzmkeiqegwnxidbfhh/Build/Products/Debug/libkeye.a"; sourceTree = "<group>"; };
+		5E3DF6B31D953019009DE89A /* Mahjong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mahjong.h; sourceTree = "<group>"; };
+		5E3DF6B41D953034009DE89A /* Mahjong.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mahjong.cpp; sourceTree = "<group>"; };
 		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
 		5E4D46E01D7E743100465098 /* GameRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRule.h; sourceTree = "<group>"; };
 		5E4D46E11D7E744500465098 /* GameRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRule.cpp; sourceTree = "<group>"; };
@@ -103,6 +106,8 @@
 			children = (
 				5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */,
 				5E4D46F91D7EA73800465098 /* DoudeZhu.h */,
+				5E3DF6B41D953034009DE89A /* Mahjong.cpp */,
+				5E3DF6B31D953019009DE89A /* Mahjong.h */,
 			);
 			path = GameRule;
 			sourceTree = "<group>";
@@ -166,6 +171,7 @@
 				5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */,
 				5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */,
 				5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */,
+				5E3DF6B51D953034009DE89A /* Mahjong.cpp in Sources */,
 				5E4D46FD1D7F828B00465098 /* Player.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

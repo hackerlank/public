@@ -30,6 +30,7 @@ DEV_WINPHONE            =5;
 GAME_DDZ                =20;
 GAME_PDK                =21;
 GAME_PHZ                =22;
+GAME_MJ                 =23;
 
 // game options
 OPTION_ROUND            =10;
