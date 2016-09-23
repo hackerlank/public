@@ -15,7 +15,7 @@ public class Main : MonoBehaviour {
 		NODE,
 		NORMAL,
 	}
-	public Mode GameMode{get{return Mode.STANDALONE;}}
+	public Mode GameMode{get{return Mode.NODE;}}
 
 	void Awake(){
 		//Loom

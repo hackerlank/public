@@ -8,8 +8,6 @@
 
 #include "../stdafx.h"
 #include "NodeFwd.h"
-#include <random>
-#include <algorithm>
 using namespace proto3;
 
 inline uint32 transformValue(uint32 val){
@@ -33,26 +31,26 @@ int Mahjong::Type(){
 }
 
 int Mahjong::MaxPlayer(){
-    return 3;
+    return 4;
+}
+
+int Mahjong::MaxCards(){
+    return 108;
+}
+
+int Mahjong::MaxHands(){
+    return 17;
+}
+
+int Mahjong::Bottom(){
+    return 1;
 }
 
 bool Mahjong::Ready(Game& game){
     return game.ready>=MaxPlayer();
 }
 
-void Mahjong::Deal(Game& game){
-    //clear
-    game.token=game.banker;
-    game.units.clear();
-    game.pile.clear();
-    game.historical.clear();
-    game.gameData.resize(MaxPlayer());
-    for(auto& gd:game.gameData)gd.Clear();
-    
-    //init cards
-    size_t N=54;
-    game.units.resize(N);
-    game.pile.resize(N);
+void Mahjong::initCard(Game& game){
     unit_id_t id=0;
     //ids => AAAA22223333...
     for(int i=1;i<=13;++i){ //A-K => 1-13
@@ -70,54 +68,6 @@ void Mahjong::Deal(Game& game){
         u.set_color(j);
         u.set_value(transformValue(14+j));
         u.set_id(id++);
-    }
-    
-    //shuffle
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::shuffle(game.pile.begin(),game.pile.end(),gen);
-    std::shuffle(game.pile.begin(),game.pile.end(),gen);
-
-    //deal: fixed position,movable banker
-    size_t I=game.banker,
-    J=(game.banker+1)%MaxPlayer(),
-    K=(game.banker+2)%MaxPlayer();
-    bunch_t bottom;
-    auto sorter=std::bind(&Mahjong::comparision,this,game,std::placeholders::_1,std::placeholders::_2);
-    for(auto x=game.pile.begin()+17,    xx=game.pile.begin()+20;    x!=xx;++x)bottom.add_pawns(*x);
-    std::sort(game.pile.begin(),           game.pile.begin()+20,    sorter);
-    std::sort(game.pile.begin()+20,        game.pile.begin()+20+17, sorter);
-    std::sort(game.pile.begin()+20+17,     game.pile.end(),         sorter);
-    
-    for(auto x=game.pile.begin(),       xx=game.pile.begin()+20;    x!=xx;++x)game.gameData[I].mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+20,    xx=game.pile.begin()+20+17; x!=xx;++x)game.gameData[J].mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+20+17, xx=game.pile.end();         x!=xx;++x)game.gameData[K].mutable_hands()->Add(*x);
-    for(int i=0;i<MaxPlayer();++i)logHands(game,i);
-    //broadcast
-    MsgNCStart msg;
-    msg.set_mid(pb_msg::MSG_NC_START);
-    msg.set_banker(game.banker);
-    msg.set_ante(10);
-    msg.set_multiple(1);
-    auto cards=msg.mutable_cards();
-    for(int i=0;i<N;++i){
-        auto card=cards->Add();
-        card->CopyFrom(game.units[i]);
-    }
-    for(int i=0;i<MaxPlayer();++i)
-        msg.mutable_count()->Add((int)game.gameData[i].hands().size());
-    msg.mutable_bottom()->CopyFrom(bottom.pawns());
-    
-    for(auto p:game.players){
-        msg.set_pos(p->pos);
-        auto hands=msg.mutable_hands();
-        auto n=(int)game.gameData[p->pos].hands().size();
-        hands->Resize(n,0);
-        for(int j=0;j<n;++j)
-            hands->Set(j,game.gameData[p->pos].hands(j));
-        
-        p->send(msg);
-        hands->Clear();
     }
 }
 

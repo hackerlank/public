@@ -14,9 +14,11 @@ public:
     virtual void        PostTick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
+    virtual int         MaxCards();
+    virtual int         MaxHands();
+    virtual int         Bottom();
 
     virtual bool        Ready(Game&);
-    virtual void        Deal(Game&);
     virtual void        OnReady(Player&);
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void        OnMeld(Game&){};
@@ -26,6 +28,8 @@ public:
     virtual bool        Hint(Game&,pos_t,proto3::bunch_t&);
     
     static void         test();
+protected:
+    virtual void        initCard(Game&);
 private:
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
