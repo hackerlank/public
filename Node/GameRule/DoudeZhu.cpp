@@ -204,9 +204,9 @@ void DoudeZhu::PostTick(Game& game){
                         //KEYE_LOG("tick robot %d\n",robot->pos);
 
                         MsgCNDiscard msg;
-                        bunch_t bunch;
-                        if(Hint(game,robot->pos,bunch))
-                            msg.mutable_bunch()->CopyFrom(bunch);
+                        google::protobuf::RepeatedField<proto3::bunch_t> bunches;
+                        if(Hint(bunches,game,robot->pos,*msg.mutable_bunch()))
+                            msg.mutable_bunch()->CopyFrom(bunches.Get(0));
                         else
                             msg.mutable_bunch()->set_type(pb_enum::OP_PASS);
                         OnDiscard(*robot,msg);
@@ -259,9 +259,12 @@ bool DoudeZhu::IsGameOver(Game& game){
     return false;
 }
 
-bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
+bool DoudeZhu::Hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
     //C(17,8) = 24310; C(17,2) = 136
     auto& hands=game.gameData[pos].hands();
+    auto& bunch=*bunches.Add();
+    bunch.CopyFrom(src_bunch);
+    
     //sort cards
     std::vector<uint32> ids(hands.begin(),hands.end());
     std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
@@ -294,11 +297,11 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
                     int len=(int)hist->pawns_size();
                     int y=(int)cards.size()-len;
                     for(int i=0;i<y&&ids_.empty();++i){
-                        bunch_t bunch;
-                        for(int j=i,jj=i+len;j!=jj;++j)bunch.add_pawns(cards[j]->id());
-                        auto bt=verifyBunch(game,bunch);
-                        if(bt==type&&compareBunch(game,bunch,*hist)){
-                            for(auto card:bunch.pawns())ids_.push_back(card);
+                        bunch_t bunch_;
+                        for(int j=i,jj=i+len;j!=jj;++j)bunch_.add_pawns(cards[j]->id());
+                        auto bt=verifyBunch(game,bunch_);
+                        if(bt==type&&compareBunch(game,bunch_,*hist)){
+                            for(auto card:bunch_.pawns())ids_.push_back(card);
                             break;
                         }
                     }
@@ -334,15 +337,15 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
                         if(!sortByWidth[4].empty()&&sortByWidth[1].size()>=2){
                             auto id0=sortByWidth[1][0]->front()->id();
                             auto id1=sortByWidth[1][1]->front()->id();
-                            bunch_t bunch;
+                            bunch_t bunch_;
                             for(auto sorted:sortByWidth[4]){
-                                bunch.mutable_pawns()->Clear();
-                                bunch.add_pawns(id0);
-                                bunch.add_pawns(id1);
-                                for(auto card:*sorted)bunch.add_pawns(card->id());
-                                auto bt=verifyBunch(game,bunch);
-                                if(bt==type&&compareBunch(game,bunch,*hist)){
-                                    for(auto card:bunch.pawns())ids_.push_back(card);
+                                bunch_.mutable_pawns()->Clear();
+                                bunch_.add_pawns(id0);
+                                bunch_.add_pawns(id1);
+                                for(auto card:*sorted)bunch_.add_pawns(card->id());
+                                auto bt=verifyBunch(game,bunch_);
+                                if(bt==type&&compareBunch(game,bunch_,*hist)){
+                                    for(auto card:bunch_.pawns())ids_.push_back(card);
                                     break;
                                 }
                             }
@@ -351,14 +354,14 @@ bool DoudeZhu::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
                     case pb_enum::BUNCH_AAAB:
                         if(!sortByWidth[3].empty()&&!sortByWidth[1].empty()){
                             auto id=sortByWidth[1][0]->front()->id();
-                            bunch_t bunch;
+                            bunch_t bunch_;
                             for(auto sorted:sortByWidth[3]){
-                                bunch.mutable_pawns()->Clear();
-                                bunch.add_pawns(id);
-                                for(auto card:*sorted)bunch.add_pawns(card->id());
-                                auto bt=verifyBunch(game,bunch);
-                                if(bt==type&&compareBunch(game,bunch,*hist)){
-                                    for(auto card:bunch.pawns())ids_.push_back(card);
+                                bunch_.mutable_pawns()->Clear();
+                                bunch_.add_pawns(id);
+                                for(auto card:*sorted)bunch_.add_pawns(card->id());
+                                auto bt=verifyBunch(game,bunch_);
+                                if(bt==type&&compareBunch(game,bunch_,*hist)){
+                                    for(auto card:bunch_.pawns())ids_.push_back(card);
                                     break;
                                 }
                             }

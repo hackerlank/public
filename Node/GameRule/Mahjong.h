@@ -24,7 +24,7 @@ public:
     virtual bool        Settle(Game&);
     virtual bool        IsGameOver(Game&);
     
-    virtual bool        Hint(Game&,pos_t,proto3::bunch_t&);
+    virtual bool        Hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
     
     static void         test();
 protected:

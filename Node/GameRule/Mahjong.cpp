@@ -135,22 +135,23 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
     }while(false);
     
     if(pb_enum::SUCCEESS==omsg.result()){
-        //hints
-        for(int i=0;i<MaxPlayer();++i){
-            if(i==player.pos)continue;
-            
-        }
-
         auto game=player.game;
         omsg.mutable_bunch()->set_pos(player.pos);
-        for(auto& p:game->players)p->send(omsg);
+        //hints
+        for(int i=0;i<MaxPlayer();++i){
+            auto p=game->players[i];
+            auto hints=omsg.mutable_hints();
+            hints->Clear();
+            if(i!=player.pos){
+                google::protobuf::RepeatedField<proto3::bunch_t> bunches;
+                if(Hint(bunches,*game,i,*msg.mutable_bunch()))
+                    for(auto& b:bunches)hints->Add()->CopyFrom(b);
+            }
+            p->send(omsg);
+        }
         
         //historic
         game->historical.push_back(msg.bunch());
-
-        //pass token
-        if(game->gameData[player.pos].hands().size()>0)
-            Next(*game);
     }else
         player.send(omsg);
 }
@@ -168,12 +169,11 @@ void Mahjong::PostTick(Game& game){
                         //KEYE_LOG("tick robot %d\n",robot->pos);
 
                         MsgCNDiscard msg;
-                        bunch_t bunch;
-                        if(Hint(game,robot->pos,bunch))
-                            msg.mutable_bunch()->CopyFrom(bunch);
-                        else
-                            msg.mutable_bunch()->set_type(pb_enum::OP_PASS);
-                        OnDiscard(*robot,msg);
+                        google::protobuf::RepeatedField<proto3::bunch_t> bunches;
+                        if(Hint(bunches,game,robot->pos,*msg.mutable_bunch())){
+                            
+                        }
+//                        OnDiscard(*robot,msg);
                         game.delay=0;
                     }
                 }
@@ -223,133 +223,9 @@ bool Mahjong::IsGameOver(Game& game){
     return false;
 }
 
-bool Mahjong::Hint(Game& game,pos_t pos,proto3::bunch_t& bunch){
-    //C(17,8) = 24310; C(17,2) = 136
+bool Mahjong::Hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& bunch){
     auto& hands=game.gameData[pos].hands();
-    //sort cards
-    std::vector<uint32> ids(hands.begin(),hands.end());
-    std::sort(ids.begin(),ids.end(),std::bind(&Mahjong::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
-
-    std::vector<uint> ids_;
-    auto H=game.historical.size();
-    if(H<=0)
-        ids_.push_back(ids[0]);
-    else{
-        proto3::bunch_t* hist=&game.historical.back();
-        if(hist->type()==pb_enum::OP_PASS&&H>1)
-            hist=&game.historical[H-2];
-        auto type=(pb_enum)hist->type();
-        if(type==pb_enum::OP_PASS)
-            ids_.push_back(ids[0]);
-        else{
-            std::vector<Card*> cards;
-            for(auto c:ids)cards.push_back(&game.units[c]);     //cards vector
-            std::vector<Card*> sortByVal[28];                   //redundant vector
-            for(auto card:cards)sortByVal[card->value()].push_back(card);
-            std::vector<std::vector<Card*>*> sortByWidth[5];    //null,A,AA,AAA,AAAA
-            for(auto& sorted:sortByVal)sortByWidth[sorted.size()].push_back(&sorted);
-
-            auto& histCard=game.units[hist->pawns(0)];
-            if(type==pb_enum::BUNCH_ABC){
-                //make a queue without duplicated
-                cards.clear();
-                for(auto& v:sortByVal)if(!v.empty()&&v[0]->value()>histCard.value())cards.push_back(v[0]);
-                if(!cards.empty()){
-                    int len=(int)hist->pawns_size();
-                    int y=(int)cards.size()-len;
-                    for(int i=0;i<y&&ids_.empty();++i){
-                        bunch_t bunch;
-                        for(int j=i,jj=i+len;j!=jj;++j)bunch.add_pawns(cards[j]->id());
-                        auto bt=verifyBunch(game,bunch);
-                        if(bt==type&&compareBunch(game,bunch,*hist)){
-                            for(auto card:bunch.pawns())ids_.push_back(card);
-                            break;
-                        }
-                    }
-                }
-            }else{
-                switch(hist->type()){
-                    case pb_enum::BUNCH_A:
-                    case pb_enum::BUNCH_AA:
-                    case pb_enum::BUNCH_AAA:
-                    case pb_enum::BUNCH_AAAA:{
-                        int idx=1;
-                        switch(hist->type()){
-                            case pb_enum::BUNCH_AAAA:   idx=4;break;
-                            case pb_enum::BUNCH_AAA:    idx=3;break;
-                            case pb_enum::BUNCH_AA:     idx=2;break;
-                            case pb_enum::BUNCH_A:
-                            default:                    idx=1;break;
-                        }
-                        
-                        for(int j=idx;j<5&&ids_.empty();++j){
-                            auto& vv=sortByWidth[j];
-                            for(auto& v:vv){
-                                auto card=v->front();
-                                if(card->value()>histCard.value()){
-                                    for(auto c:*v)if(ids_.size()<idx)ids_.push_back(c->id());
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    }
-                    case pb_enum::BUNCH_AAAAB:
-                        if(!sortByWidth[4].empty()&&sortByWidth[1].size()>=2){
-                            auto id0=sortByWidth[1][0]->front()->id();
-                            auto id1=sortByWidth[1][1]->front()->id();
-                            bunch_t bunch;
-                            for(auto sorted:sortByWidth[4]){
-                                bunch.mutable_pawns()->Clear();
-                                bunch.add_pawns(id0);
-                                bunch.add_pawns(id1);
-                                for(auto card:*sorted)bunch.add_pawns(card->id());
-                                auto bt=verifyBunch(game,bunch);
-                                if(bt==type&&compareBunch(game,bunch,*hist)){
-                                    for(auto card:bunch.pawns())ids_.push_back(card);
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    case pb_enum::BUNCH_AAAB:
-                        if(!sortByWidth[3].empty()&&!sortByWidth[1].empty()){
-                            auto id=sortByWidth[1][0]->front()->id();
-                            bunch_t bunch;
-                            for(auto sorted:sortByWidth[3]){
-                                bunch.mutable_pawns()->Clear();
-                                bunch.add_pawns(id);
-                                for(auto card:*sorted)bunch.add_pawns(card->id());
-                                auto bt=verifyBunch(game,bunch);
-                                if(bt==type&&compareBunch(game,bunch,*hist)){
-                                    for(auto card:bunch.pawns())ids_.push_back(card);
-                                    break;
-                                }
-                            }
-                        }
-                        break;
-                    default:
-                        break;
-                }//switch
-            }//else if(type==pb_enum::BUNCH_ABC)
-            if(hist->type()!=pb_enum::BUNCH_AAAA&&!sortByWidth[4].empty()){
-                //boom!
-                auto& sorted=sortByWidth[4][0];
-                for(auto card:*sorted)bunch.add_pawns(card->id());
-            }
-        }//else if(type==pb_enum::OP_PASS)
-    }
-
-
-    bunch.set_pos(pos);
-    if(!ids_.empty()){
-        bunch.set_type(pb_enum::BUNCH_A);
-        for(auto id:ids_)bunch.mutable_pawns()->Add(id);
-        return true;
-    }else{
-        bunch.set_type(pb_enum::OP_PASS);
-        return false;
-    }
+    return bunches.size()>0;
 }
 
 pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
