@@ -1545,6 +1545,12 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
       bunch() const;
 
+  // optional uint32 selected_card = 4;
+  void clear_selected_card();
+  static const int kSelectedCardFieldNumber = 4;
+  ::google::protobuf::uint32 selected_card() const;
+  void set_selected_card(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:proto3.game_data_t)
  private:
 
@@ -1557,6 +1563,7 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > discards_;
   mutable int _discards_cached_byte_size_;
   ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > bunch_;
+  ::google::protobuf::uint32 selected_card_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -3377,9 +3384,21 @@ class MsgNCDiscard : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::proto3::bunch_t* release_bunch();
   void set_allocated_bunch(::proto3::bunch_t* bunch);
 
-  // optional .proto3.pb_enum result = 3;
+  // repeated .proto3.bunch_t hints = 3;
+  int hints_size() const;
+  void clear_hints();
+  static const int kHintsFieldNumber = 3;
+  const ::proto3::bunch_t& hints(int index) const;
+  ::proto3::bunch_t* mutable_hints(int index);
+  ::proto3::bunch_t* add_hints();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_hints();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      hints() const;
+
+  // optional .proto3.pb_enum result = 4;
   void clear_result();
-  static const int kResultFieldNumber = 3;
+  static const int kResultFieldNumber = 4;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -3393,6 +3412,7 @@ class MsgNCDiscard : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::proto3::bunch_t* bunch_;
   int mid_;
   int result_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hints_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -5826,6 +5846,20 @@ game_data_t::bunch() const {
   return bunch_;
 }
 
+// optional uint32 selected_card = 4;
+inline void game_data_t::clear_selected_card() {
+  selected_card_ = 0u;
+}
+inline ::google::protobuf::uint32 game_data_t::selected_card() const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.selected_card)
+  return selected_card_;
+}
+inline void game_data_t::set_selected_card(::google::protobuf::uint32 value) {
+  
+  selected_card_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_data_t.selected_card)
+}
+
 // -------------------------------------------------------------------
 
 // MsgBase
@@ -7058,7 +7092,37 @@ inline void MsgNCDiscard::set_allocated_bunch(::proto3::bunch_t* bunch) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCDiscard.bunch)
 }
 
-// optional .proto3.pb_enum result = 3;
+// repeated .proto3.bunch_t hints = 3;
+inline int MsgNCDiscard::hints_size() const {
+  return hints_.size();
+}
+inline void MsgNCDiscard::clear_hints() {
+  hints_.Clear();
+}
+inline const ::proto3::bunch_t& MsgNCDiscard::hints(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDiscard.hints)
+  return hints_.Get(index);
+}
+inline ::proto3::bunch_t* MsgNCDiscard::mutable_hints(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCDiscard.hints)
+  return hints_.Mutable(index);
+}
+inline ::proto3::bunch_t* MsgNCDiscard::add_hints() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCDiscard.hints)
+  return hints_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgNCDiscard::mutable_hints() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCDiscard.hints)
+  return &hints_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgNCDiscard::hints() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCDiscard.hints)
+  return hints_;
+}
+
+// optional .proto3.pb_enum result = 4;
 inline void MsgNCDiscard::clear_result() {
   result_ = 0;
 }

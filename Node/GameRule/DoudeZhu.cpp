@@ -71,19 +71,6 @@ void DoudeZhu::initCard(Game& game){
     }
 }
 
-void DoudeZhu::OnReady(Player& player){
-    if(auto game=player.game){
-        if(player.isRobot&&game->ready>=MaxPlayer()-1)return;
-
-        ++game->ready;
-        MsgNCReady omsg;
-        omsg.set_mid(pb_msg::MSG_NC_READY);
-        omsg.set_pos(player.pos);
-        omsg.set_result(pb_enum::SUCCEESS);
-        for(auto& p:game->players)p->send(omsg);
-    }
-}
-
 void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
     MsgNCDiscard omsg;
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
@@ -93,6 +80,10 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         auto game=player.game;
         if(!game){
             KEYE_LOG("OnDiscard no game\n");
+            break;
+        }
+        if(game->state!=Game::State::ST_DISCARD){
+            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
             break;
         }
         if(game->token!=player.pos){

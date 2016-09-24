@@ -5325,6 +5325,7 @@ bunch_t::mutable_pawns() {
 const int game_data_t::kHandsFieldNumber;
 const int game_data_t::kDiscardsFieldNumber;
 const int game_data_t::kBunchFieldNumber;
+const int game_data_t::kSelectedCardFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 game_data_t::game_data_t()
@@ -5348,6 +5349,7 @@ game_data_t::game_data_t(const game_data_t& from)
 void game_data_t::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
+  selected_card_ = 0u;
 }
 
 game_data_t::~game_data_t() {
@@ -5390,6 +5392,7 @@ game_data_t* game_data_t::New(::google::protobuf::Arena* arena) const {
 
 void game_data_t::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.game_data_t)
+  selected_card_ = 0u;
   hands_.Clear();
   discards_.Clear();
   bunch_.Clear();
@@ -5453,6 +5456,21 @@ bool game_data_t::MergePartialFromCodedStream(
         }
         if (input->ExpectTag(26)) goto parse_loop_bunch;
         input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(32)) goto parse_selected_card;
+        break;
+      }
+
+      // optional uint32 selected_card = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_selected_card:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &selected_card_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5507,12 +5525,24 @@ void game_data_t::SerializeWithCachedSizes(
       3, this->bunch(i), output);
   }
 
+  // optional uint32 selected_card = 4;
+  if (this->selected_card() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->selected_card(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.game_data_t)
 }
 
 int game_data_t::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.game_data_t)
   int total_size = 0;
+
+  // optional uint32 selected_card = 4;
+  if (this->selected_card() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->selected_card());
+  }
 
   // repeated uint32 hands = 1;
   {
@@ -5575,6 +5605,9 @@ void game_data_t::MergeFrom(const game_data_t& from) {
   hands_.MergeFrom(from.hands_);
   discards_.MergeFrom(from.discards_);
   bunch_.MergeFrom(from.bunch_);
+  if (from.selected_card() != 0) {
+    set_selected_card(from.selected_card());
+  }
 }
 
 void game_data_t::CopyFrom(const game_data_t& from) {
@@ -5597,6 +5630,7 @@ void game_data_t::InternalSwap(game_data_t* other) {
   hands_.UnsafeArenaSwap(&other->hands_);
   discards_.UnsafeArenaSwap(&other->discards_);
   bunch_.UnsafeArenaSwap(&other->bunch_);
+  std::swap(selected_card_, other->selected_card_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -5696,6 +5730,20 @@ const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
 game_data_t::bunch() const {
   // @@protoc_insertion_point(field_list:proto3.game_data_t.bunch)
   return bunch_;
+}
+
+// optional uint32 selected_card = 4;
+void game_data_t::clear_selected_card() {
+  selected_card_ = 0u;
+}
+ ::google::protobuf::uint32 game_data_t::selected_card() const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.selected_card)
+  return selected_card_;
+}
+ void game_data_t::set_selected_card(::google::protobuf::uint32 value) {
+  
+  selected_card_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_data_t.selected_card)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -11388,6 +11436,7 @@ void MsgCNDiscard::set_allocated_bunch(::proto3::bunch_t* bunch) {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCDiscard::kMidFieldNumber;
 const int MsgNCDiscard::kBunchFieldNumber;
+const int MsgNCDiscard::kHintsFieldNumber;
 const int MsgNCDiscard::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -11487,6 +11536,7 @@ void MsgNCDiscard::Clear() {
 #undef ZR_HELPER_
 #undef ZR_
 
+  hints_.Clear();
 }
 
 bool MsgNCDiscard::MergePartialFromCodedStream(
@@ -11523,13 +11573,30 @@ bool MsgNCDiscard::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_result;
+        if (input->ExpectTag(26)) goto parse_hints;
         break;
       }
 
-      // optional .proto3.pb_enum result = 3;
+      // repeated .proto3.bunch_t hints = 3;
       case 3: {
-        if (tag == 24) {
+        if (tag == 26) {
+         parse_hints:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_hints:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_hints()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_hints;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(32)) goto parse_result;
+        break;
+      }
+
+      // optional .proto3.pb_enum result = 4;
+      case 4: {
+        if (tag == 32) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -11579,10 +11646,16 @@ void MsgNCDiscard::SerializeWithCachedSizes(
       2, *this->bunch_, output);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // repeated .proto3.bunch_t hints = 3;
+  for (unsigned int i = 0, n = this->hints_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, this->hints(i), output);
+  }
+
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->result(), output);
+      4, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCDiscard)
@@ -11605,10 +11678,18 @@ int MsgNCDiscard::ByteSize() const {
         *this->bunch_);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+  }
+
+  // repeated .proto3.bunch_t hints = 3;
+  total_size += 1 * this->hints_size();
+  for (int i = 0; i < this->hints_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->hints(i));
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -11627,6 +11708,7 @@ void MsgNCDiscard::MergeFrom(const MsgNCDiscard& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
+  hints_.MergeFrom(from.hints_);
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
@@ -11657,6 +11739,7 @@ void MsgNCDiscard::Swap(MsgNCDiscard* other) {
 void MsgNCDiscard::InternalSwap(MsgNCDiscard* other) {
   std::swap(mid_, other->mid_);
   std::swap(bunch_, other->bunch_);
+  hints_.UnsafeArenaSwap(&other->hints_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -11725,7 +11808,37 @@ void MsgNCDiscard::set_allocated_bunch(::proto3::bunch_t* bunch) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCDiscard.bunch)
 }
 
-// optional .proto3.pb_enum result = 3;
+// repeated .proto3.bunch_t hints = 3;
+int MsgNCDiscard::hints_size() const {
+  return hints_.size();
+}
+void MsgNCDiscard::clear_hints() {
+  hints_.Clear();
+}
+const ::proto3::bunch_t& MsgNCDiscard::hints(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDiscard.hints)
+  return hints_.Get(index);
+}
+::proto3::bunch_t* MsgNCDiscard::mutable_hints(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCDiscard.hints)
+  return hints_.Mutable(index);
+}
+::proto3::bunch_t* MsgNCDiscard::add_hints() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCDiscard.hints)
+  return hints_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgNCDiscard::mutable_hints() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCDiscard.hints)
+  return &hints_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgNCDiscard::hints() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCDiscard.hints)
+  return hints_;
+}
+
+// optional .proto3.pb_enum result = 4;
 void MsgNCDiscard::clear_result() {
   result_ = 0;
 }

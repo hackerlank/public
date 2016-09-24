@@ -19,7 +19,6 @@ public:
     virtual int         Bottom();
 
     virtual bool        Ready(Game&);
-    virtual void        OnReady(Player&);
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void        OnMeld(Game&){};
     virtual bool        Settle(Game&);

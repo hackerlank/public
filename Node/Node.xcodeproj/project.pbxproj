@@ -41,7 +41,6 @@
 		5E4D46E01D7E743100465098 /* GameRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRule.h; sourceTree = "<group>"; };
 		5E4D46E11D7E744500465098 /* GameRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRule.cpp; sourceTree = "<group>"; };
 		5E4D46E51D7E747800465098 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
-		5E4D46E81D7E74D800465098 /* GameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameData.h; sourceTree = "<group>"; };
 		5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoudeZhu.cpp; sourceTree = "<group>"; };
 		5E4D46F91D7EA73800465098 /* DoudeZhu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoudeZhu.h; sourceTree = "<group>"; };
 		5E4D46FB1D7F828B00465098 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
@@ -80,7 +79,6 @@
 				5E4D46F71D7EA73800465098 /* GameRule */,
 				5E4D46E01D7E743100465098 /* GameRule.h */,
 				5E4D46E11D7E744500465098 /* GameRule.cpp */,
-				5E4D46E81D7E74D800465098 /* GameData.h */,
 				5E4D46E51D7E747800465098 /* Game.h */,
 				5E430E321D706F7900B85CB8 /* PBHelper.h */,
 				5E8A17441D71E71600CDCE1D /* NodeFwd.h */,
