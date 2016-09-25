@@ -69,7 +69,8 @@ public class MsgHandler{
 			Debug.Log("start game");
 			if(imsg4.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg4));
+					if(Main.Instance.gameController!=null)
+						Main.Instance.StartCoroutine(Main.Instance.gameController.Deal(imsg4));
 				});
 			}else
 				Debug.LogError("start error: "+imsg4.Result);
@@ -79,8 +80,8 @@ public class MsgHandler{
 			MsgNCDiscard imsg5=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(imsg5.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(
-						GamePanel.Instance.OnDiscardAt(imsg5));
+					if(Main.Instance.gameController!=null)
+						Main.Instance.StartCoroutine(Main.Instance.gameController.OnDiscardAt(imsg5));
 				});
 			}else
 				Debug.LogError("discard error: "+imsg5.Result);
@@ -89,7 +90,6 @@ public class MsgHandler{
 			MsgNCMeld imsg6=MsgNCMeld.Parser.ParseFrom(bytes);
 			if(imsg6.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg6));
 				});
 			}else
 				Debug.LogError("meld error: "+imsg6.Result);
@@ -98,7 +98,7 @@ public class MsgHandler{
 			MsgNCSettle imsg7=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(imsg7.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(GamePanel.Instance!=null)GamePanel.Instance.OnSettle(imsg7);
+					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnSettle(imsg7);
 				});
 			}else
 				Debug.LogError("settle error: "+imsg7.Result);
@@ -107,7 +107,7 @@ public class MsgHandler{
 			MsgNCFinish imsg8=MsgNCFinish.Parser.ParseFrom(bytes);
 			if(imsg8.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(GamePanel.Instance!=null)GamePanel.Instance.OnFinish(imsg8);
+					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnFinish(imsg8);
 				});
 			}else
 				Debug.LogError("finish error: "+imsg8.Result);
@@ -116,7 +116,6 @@ public class MsgHandler{
 			MsgNCDismissSync imsg9=MsgNCDismissSync.Parser.ParseFrom(bytes);
 			if(imsg9.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg9));
 				});
 			}else
 				Debug.LogError("dismiss sync error: "+imsg9.Result);
@@ -125,7 +124,6 @@ public class MsgHandler{
 			MsgNCDismissAck imsg10=MsgNCDismissAck.Parser.ParseFrom(bytes);
 			if(imsg10.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					//if(GamePanel.Instance!=null)GamePanel.Instance.StartCoroutine(GamePanel.Instance.Deal(imsg10));
 				});
 			}else
 				Debug.LogError("dismiss ack error: "+imsg10.Result);

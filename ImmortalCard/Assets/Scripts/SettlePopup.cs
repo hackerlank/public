@@ -10,7 +10,7 @@ public class SettlePopup : MonoBehaviour {
 	
 	public void OnClose(){
 		Destroy(gameObject);
-		if(GamePanel.Instance.Round>=Main.Instance.Round){
+		if(Main.Instance.gameController.Round>=Main.Instance.Round){
 			Utils.Load<SummaryPanel>(Main.Instance.transform);
 		}else{
 			MsgCNReady msg=new MsgCNReady();

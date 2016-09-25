@@ -65,14 +65,14 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			_state=State.ST_NORMAL;
 			transform.localPosition-=delta*Vector3.up;
 		}
-		GamePanel.Instance.OnCard(this,_state==State.ST_SELECT);
+		Main.Instance.gameController.OnCard(this,_state==State.ST_SELECT);
 	}
 
 	public void OnPointerClick (PointerEventData eventData){
 		if(_static||eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
 		//Debug.Log("----click on card "+eventData.clickCount);
 		if(eventData.clickCount==2)
-			GamePanel.Instance.Discard(this);
+			Main.Instance.gameController.Discard(this);
 		else if(eventData.clickCount==1){
 			Tap();
 		}
@@ -83,7 +83,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	
 	public void OnEndDrag (PointerEventData eventData){
 		if(_static)return;
-		GamePanel.Instance.Discard(this);
+		Main.Instance.gameController.Discard(this);
 		//Debug.Log("----end drag");
 	}
 	

@@ -9,6 +9,6 @@ public class SummaryPanel : MonoBehaviour {
 	
 	public void OnClose(){
 		Destroy(gameObject);
-		if(GamePanel.Instance!=null)GamePanel.Instance.OnExit();
+		if(Main.Instance.gameController!=null)Main.Instance.gameController.OnExit();
 	}
 }

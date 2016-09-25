@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class GamePanel : MonoBehaviour {
+public class GamePanel : MonoBehaviour,GameController {
 	[HideInInspector]
 	public uint			N=3;
 	public Card[]		BottomCards;
@@ -16,25 +16,27 @@ public class GamePanel : MonoBehaviour {
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnHint,BtnDiscard,BtnCall,BtnDouble,BtnPass,Buttons;
 
-	public uint			Round=0;
+	uint				round=0;
 	public MsgNCFinish	Summary=null;
 
 	List<Card>			_selection;
 	uint				_pos,_token,_banker;
 	List<bunch_t>		_historical;
 
-	public static GamePanel	Instance=null;
 	void Awake(){
-		Instance=this;
+		Main.Instance.gameController=this;
 	}
 
 	IEnumerator Start(){
 		while(!CardCache.Ready)yield return null;
+		N=Main.Instance.gameRule.MaxPlayer;
 	}
 
 	void OnDestroy(){
-		Instance=null;
+		Main.Instance.gameController=null;
 	}
+
+	public uint Round{get{return round;}set{round=value;}}
 
 	public IEnumerator Deal(MsgNCStart msg){
 		++Round;

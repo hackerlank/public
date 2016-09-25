@@ -8,6 +8,10 @@ public class GameRule {
 	public uint[] Pile;
 	public List<uint>[] Hands;
 
+	public uint MaxPlayer{
+		get{return 3;}
+	}
+
 	public List<uint[]> Hint(uint[] hands,uint[] ids){
 		var hints=new List<uint[]>();
 		if(hands!=null&&ids!=null&&hands.Length>0&&ids.Length>0){
