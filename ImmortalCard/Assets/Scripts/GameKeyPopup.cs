@@ -9,7 +9,7 @@ public class GameKeyPopup : MonoBehaviour {
 		Debug.Log("----game id="+textKey.text);
 		try{
 			var gameId=uint.Parse(textKey.text);
-			Utils.Load<GamePanel>(gameObject.transform.parent,delegate(Component obj){
+			Utils.Load<DoudeZhuPanel>(gameObject.transform.parent,delegate(Component obj){
 				if(CreatePanel.Instance)
 					CreatePanel.Instance.Connect(gameId);
 				Destroy(gameObject);

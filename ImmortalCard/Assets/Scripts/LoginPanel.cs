@@ -11,8 +11,8 @@ public class LoginPanel : MonoBehaviour {
 	
 	public void OnLogin(){
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
-			GamePanel.Create(delegate(Component obj){
-				var gp=obj as GamePanel;
+			DoudeZhuPanel.Create(delegate(Component obj){
+				var gp=obj as DoudeZhuPanel;
 				var msg=Main.Instance.gameRule.Deal();
 
 				gp.StartCoroutine(gp.Deal(msg));

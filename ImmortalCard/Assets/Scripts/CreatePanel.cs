@@ -75,13 +75,13 @@ public class CreatePanel : MonoBehaviour {
 	}
 	
 	public void OnCreated(MsgNCCreate msgC){
-		GamePanel.Create(delegate(Component obj){
+		DoudeZhuPanel.Create(delegate(Component obj){
 			Destroy(gameObject);
 		});
 	}
 
 	public void OnJoined(MsgNCJoin msgJ){
-		GamePanel.Create(delegate(Component obj){
+		DoudeZhuPanel.Create(delegate(Component obj){
 			Destroy(gameObject);
 		});
 	}

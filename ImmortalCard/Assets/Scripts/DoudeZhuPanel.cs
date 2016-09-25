@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class GamePanel : MonoBehaviour,GameController {
+public class DoudeZhuPanel : MonoBehaviour,GameController {
 	[HideInInspector]
 	public uint			N=3;
 	public Card[]		BottomCards;
@@ -215,10 +215,10 @@ public class GamePanel : MonoBehaviour,GameController {
 		Summary=msg;
 	}
 	
-	List<uint[]> _hints=null;
+	//List<uint[]> _hints=null;
 	public void Hint(){
-		_hints=null;
-		_nhints=0;
+		//_hints=null;
+		//_nhints=0;
 		var M=HandArea.childCount;
 		var N=DiscardAreas[2].childCount;
 		if(N>0&&M>0){
@@ -235,7 +235,7 @@ public class GamePanel : MonoBehaviour,GameController {
 				if(card!=null)ids[i++]=card.Value.Id;
 			}
 			
-			_hints=Main.Instance.gameRule.Hint(hands,ids);
+			//_hints=Main.Instance.gameRule.Hint(hands,ids);
 		}
 	}
 
@@ -251,7 +251,7 @@ public class GamePanel : MonoBehaviour,GameController {
 			_selection.Remove(card);
 	}
 
-	int _nhints=0;
+	//int _nhints=0;
 	public void OnHint(){
 		deselectAll();
 		/*
@@ -297,7 +297,7 @@ public class GamePanel : MonoBehaviour,GameController {
 	}
 
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<GamePanel>(Main.Instance.transform,delegate(Component obj){
+		Utils.Load<DoudeZhuPanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		});
 	}
