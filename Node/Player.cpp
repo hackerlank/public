@@ -184,3 +184,7 @@ int Player::getKey(){
     return 0;
 }
 
+void Player::clear(){
+    gameData.Clear();
+    lastMsg.reset();
+}

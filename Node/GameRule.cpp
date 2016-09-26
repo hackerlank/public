@@ -53,8 +53,7 @@ void GameRule::Deal(Game& game){
     game.historical.clear();
     game.pendingMeld.clear();
     game.pendingDiscard.reset();
-    game.gameData.resize(MaxPlayer());
-    for(auto& gd:game.gameData)gd.Clear();
+    for(auto& player:game.players)if(player)player->clear();
     
     //init cards
     auto N=MaxCards();
@@ -82,9 +81,9 @@ void GameRule::Deal(Game& game){
     std::sort(game.pile.begin()+BK,        game.pile.begin()+BK+MH, sorter);
     std::sort(game.pile.begin()+BK+MH,     game.pile.end(),         sorter);
     
-    for(auto x=game.pile.begin(),       xx=game.pile.begin()+BK;    x!=xx;++x)game.gameData[I].mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+BK,    xx=game.pile.begin()+BK+MH; x!=xx;++x)game.gameData[J].mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+BK+MH, xx=game.pile.end();         x!=xx;++x)game.gameData[K].mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin(),       xx=game.pile.begin()+BK;    x!=xx;++x)game.players[I]->gameData.mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin()+BK,    xx=game.pile.begin()+BK+MH; x!=xx;++x)game.players[J]->gameData.mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin()+BK+MH, xx=game.pile.end();         x!=xx;++x)game.players[K]->gameData.mutable_hands()->Add(*x);
 
     //broadcast
     MsgNCStart msg;
@@ -98,16 +97,16 @@ void GameRule::Deal(Game& game){
         card->CopyFrom(game.units[i]);
     }
     for(int i=0;i<MP;++i)
-        msg.mutable_count()->Add((int)game.gameData[i].hands().size());
+        msg.mutable_count()->Add((int)game.players[i]->gameData.hands().size());
     msg.mutable_bottom()->CopyFrom(bottom.pawns());
     
     for(auto p:game.players){
         msg.set_pos(p->pos);
         auto hands=msg.mutable_hands();
-        auto n=(int)game.gameData[p->pos].hands().size();
+        auto n=(int)game.players[p->pos]->gameData.hands().size();
         hands->Resize(n,0);
         for(int j=0;j<n;++j)
-            hands->Set(j,game.gameData[p->pos].hands(j));
+            hands->Set(j,game.players[p->pos]->gameData.hands(j));
         
         p->send(msg);
         hands->Clear();

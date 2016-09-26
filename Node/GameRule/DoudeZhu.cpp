@@ -126,7 +126,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
             //exists check
             auto exist=false;
-            for(auto h:game->gameData[player.pos].hands()){
+            for(auto h:game->players[player.pos]->gameData.hands()){
                 if(h==c){
                     exist=true;
                     break;
@@ -161,7 +161,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         cards2str(*game,str,msg.bunch().pawns());
         KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
         //remove hands
-        auto& hands=*game->gameData[player.pos].mutable_hands();
+        auto& hands=*game->players[player.pos]->gameData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
@@ -185,7 +185,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         game->historical.push_back(msg.bunch());
 
         //pass token
-        if(game->gameData[player.pos].hands().size()>0)
+        if(game->players[player.pos]->gameData.hands().size()>0)
             Next(*game);
     }else
         player.send(omsg);
@@ -223,7 +223,7 @@ void DoudeZhu::PostTick(Game& game){
 bool DoudeZhu::Settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.gameData[i];
+        auto& gd=game.players[i]->gameData;
         if(gd.hands().size()<=0)
             pos=i;
     }
@@ -234,7 +234,7 @@ bool DoudeZhu::Settle(Game& game){
     msg.set_winner(pos);
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto hand=msg.add_hands();
-        hand->mutable_pawns()->CopyFrom(game.gameData[i].hands());
+        hand->mutable_pawns()->CopyFrom(game.players[i]->gameData.hands());
         //auto player=msg.add_play();
     }
     
@@ -252,8 +252,8 @@ bool DoudeZhu::Settle(Game& game){
 }
 
 bool DoudeZhu::IsGameOver(Game& game){
-    for(auto gd:game.gameData){
-        if(gd.hands().size()<=0)
+    for(auto player:game.players){
+        if(player->gameData.hands().size()<=0)
             return true;
     }
     return false;
@@ -261,7 +261,7 @@ bool DoudeZhu::IsGameOver(Game& game){
 
 bool DoudeZhu::Hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
     //C(17,8) = 24310; C(17,2) = 136
-    auto& hands=game.gameData[pos].hands();
+    auto& hands=game.players[pos]->gameData.hands();
     auto& bunch=*bunches.Add();
     bunch.CopyFrom(src_bunch);
     
@@ -634,7 +634,7 @@ bool DoudeZhu::comparision(Game& game,uint x,uint y){
 
 void DoudeZhu::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
-    auto& hands=game.gameData[pos].hands();
+    auto& hands=game.players[pos]->gameData.hands();
     cards2str(game,str,hands);
     KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
 }

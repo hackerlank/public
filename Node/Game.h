@@ -37,12 +37,9 @@ public:
     std::vector<Card>                   units;      //cards map
     std::vector<unit_id_t>              pile;       //cards library
     std::vector<std::shared_ptr<Player>> players;
-    std::vector<proto3::game_data_t>    gameData;   //player game data
     std::vector<proto3::bunch_t>        historical; //historical game data
     std::vector<pending_t>              pendingMeld;    //pending meld
     std::shared_ptr<pending_t>          pendingDiscard; //pending discard
-    std::vector<std::shared_ptr<google::protobuf::MessageLite>>
-                                        spLastMsg;
     int                                 ready;
     int                                 delay;
     std::shared_ptr<GameRule>           rule;

@@ -100,7 +100,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
             //exists check
             auto exist=false;
-            for(auto h:game->gameData[player.pos].hands()){
+            for(auto h:player.gameData.hands()){
                 if(h==c){
                     exist=true;
                     break;
@@ -119,7 +119,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         cards2str(*game,str,msg.bunch().pawns());
         KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
         //remove hands
-        auto& hands=*game->gameData[player.pos].mutable_hands();
+        auto& hands=*player.gameData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
@@ -169,7 +169,7 @@ void Mahjong::PostTick(Game& game){
                         //KEYE_LOG("tick robot %d\n",robot->pos);
 
                         MsgCNDiscard msg;
-                        auto& gdata=game.gameData[robot->pos];
+                        auto& gdata=robot->gameData;
                         auto& hands=gdata.hands();
                         if(hands.empty()){
                             break;
@@ -199,7 +199,7 @@ void Mahjong::PostTick(Game& game){
                             if(i->arrived)
                                 //already processed
                                 break;
-                            auto pmsg=game.spLastMsg[robot->pos].get();
+                            auto pmsg=robot->lastMsg.get();
                             if(auto msg=dynamic_cast<MsgNCDiscard*>(pmsg)){
                                 auto& hints=msg->hints();
                                 if(!hints.empty()){
@@ -223,7 +223,7 @@ void Mahjong::PostTick(Game& game){
 bool Mahjong::Settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.gameData[i];
+        auto& gd=game.players[i]->gameData;
         if(gd.hands().size()<=0)
             pos=i;
     }
@@ -234,7 +234,7 @@ bool Mahjong::Settle(Game& game){
     msg.set_winner(pos);
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto hand=msg.add_hands();
-        hand->mutable_pawns()->CopyFrom(game.gameData[i].hands());
+        hand->mutable_pawns()->CopyFrom(game.players[i]->gameData.hands());
         //auto player=msg.add_play();
     }
     
@@ -252,15 +252,15 @@ bool Mahjong::Settle(Game& game){
 }
 
 bool Mahjong::IsGameOver(Game& game){
-    for(auto gd:game.gameData){
-        if(gd.hands().size()<=0)
+    for(auto player:game.players){
+        if(player->gameData.hands().size()<=0)
             return true;
     }
     return false;
 }
 
 bool Mahjong::Hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& bunch){
-    auto& hands=game.gameData[pos].hands();
+    auto& hands=game.players[pos]->gameData.hands();
     return bunches.size()>0;
 }
 
@@ -271,7 +271,7 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
             bt=pb_enum::BUNCH_INVALID;
             break;
         }
-        auto& gdata=game.gameData[bunch.pos()];
+        auto& gdata=game.players[bunch.pos()]->gameData;
         auto& A=game.units[bunch.pawns(0)];
         if(gdata.selected_card()!=i_invalid){
             //huazhu
@@ -298,7 +298,7 @@ bool Mahjong::comparision(Game& game,uint x,uint y){
 
 void Mahjong::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
-    auto& hands=game.gameData[pos].hands();
+    auto& hands=game.players[pos]->gameData.hands();
     cards2str(game,str,hands);
     KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
 }
