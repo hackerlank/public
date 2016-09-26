@@ -19,7 +19,7 @@ public:
     virtual int         Bottom();
 
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
-    virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&){};
+    virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&);
     virtual bool        Settle(Game&);
     virtual bool        IsGameOver(Game&);
     
@@ -33,9 +33,10 @@ private:
     bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
     bool                comparision(Game&,uint x,uint y);
     void                log(Game&){}
-    void                cards2str(Game&,std::string&,const google::protobuf::RepeatedField<uint32>&);
-    void                logHands(Game&,uint32,std::string="");
     void                make_bunch(Game&,proto3::bunch_t&,const std::vector<uint>&);
+    bool				isNaturalWin(Game&,pos_t);
+    void				draw(Game& game);
+    void				meld(Game&,unit_id_t,pos_t);
 };
 
 #endif /* Mahjong_h */

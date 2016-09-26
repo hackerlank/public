@@ -33,8 +33,6 @@ private:
     bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
     bool                comparision(Game&,uint x,uint y);
     void                log(Game&){}
-    void                cards2str(Game&,std::string&,const google::protobuf::RepeatedField<uint32>&);
-    void                logHands(Game&,uint32,std::string="");
     void                make_bunch(Game&,proto3::bunch_t&,const std::vector<uint>&);
 };
 

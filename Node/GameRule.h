@@ -35,6 +35,10 @@ public:
 protected:
     virtual void        initCard(Game&)=0;
     virtual bool        comparision(Game&,uint x,uint y)=0;
+    
+    const char*         bunch2str(Game&,std::string&,const proto3::bunch_t&);
+    const char*         cards2str(Game&,std::string&,const google::protobuf::RepeatedField<uint32>&);
+    void                logHands(Game&,uint32,std::string="");
 };
 
 #endif /* GameRule_h */

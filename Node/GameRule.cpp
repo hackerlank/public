@@ -144,3 +144,28 @@ void GameRule::ChangeState(Game& game,Game::State state){
         game.state=state;
     }
 }
+
+void GameRule::logHands(Game& game,uint32 pos,std::string msg){
+    std::string str;
+    auto& hands=game.players[pos]->gameData.hands();
+    cards2str(game,str,hands);
+    KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
+}
+
+const char* GameRule::bunch2str(Game& game,std::string& str,const proto3::bunch_t& bunch){
+    char buf[32];
+    sprintf(buf,"ops=%d",(int)bunch.type());
+    cards2str(game,str,bunch.pawns());
+    str=buf+str;
+    return str.c_str();
+}
+
+const char* GameRule::cards2str(Game& game,std::string& str,const google::protobuf::RepeatedField<uint32>& ids){
+    str.clear();
+    char buf[32];
+    for(auto id:ids){
+        sprintf(buf,"(%d:%d),",id,game.units[id].value());
+        str+=buf;
+    }
+    return str.c_str();
+}

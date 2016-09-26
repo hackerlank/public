@@ -87,54 +87,55 @@ namespace Proto3 {
             "c2NhcmQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIeCgVidW5jaBgC",
             "IAEoCzIPLnByb3RvMy5idW5jaF90Eh4KBWhpbnRzGAMgAygLMg8ucHJvdG8z",
             "LmJ1bmNoX3QSHwoGcmVzdWx0GAQgASgOMg8ucHJvdG8zLnBiX2VudW0iKAoJ",
-            "TXNnQ05NZWxkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciSQoJTXNn",
-            "TkNNZWxkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVzdWx0",
-            "GAIgASgOMg8ucHJvdG8zLnBiX2VudW0iLwoQTXNnQ05EaXNtaXNzU3luYxIb",
-            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnIl0KEE1zZ05DRGlzbWlzc1N5",
-            "bmMSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKA0S",
-            "HwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iLgoPTXNnQ05EaXNt",
-            "aXNzQWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXAoPTXNnTkNE",
-            "aXNtaXNzQWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9z",
-            "GAIgASgNEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIpsBCgtN",
-            "c2dOQ1NldHRsZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg4KBndp",
-            "bm5lchgCIAEoDRIeCgRwbGF5GAMgAygLMhAucHJvdG8zLnBsYXllcl90Eh4K",
-            "BWhhbmRzGAQgAygLMg8ucHJvdG8zLmJ1bmNoX3QSHwoGcmVzdWx0GAUgASgO",
-            "Mg8ucHJvdG8zLnBiX2VudW0iawoLTXNnTkNGaW5pc2gSGwoDbWlkGAEgASgO",
-            "Mg4ucHJvdG8zLnBiX21zZxIeCgRwbGF5GAIgAygLMhAucHJvdG8zLnBsYXll",
-            "cl90Eh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIkUKCk1zZ0NO",
-            "U3RhdHMSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiAB",
-            "KAkSDQoFdmFsdWUYAyABKAkqqgUKB3BiX2VudW0SCwoHVU5LTk9XThAAEggK",
-            "BE5PTkUQABIMCghTVUNDRUVTUxAAEgoKBkRFVl9QQxAAEgsKB0RFVl9QUzQQ",
-            "ARIMCghERVZfWEJPWBACEgsKB0RFVl9JT1MQAxIPCgtERVZfQU5EUk9JRBAE",
-            "EhAKDERFVl9XSU5QSE9ORRAFEgwKCEdBTUVfRERaEBQSDAoIR0FNRV9QREsQ",
-            "FRIMCghHQU1FX1BIWhAWEgsKB0dBTUVfTUoQFxIQCgxPUFRJT05fUk9VTkQQ",
-            "ChIPCgtPUFRJT05fQU5USRALEhMKD09QVElPTl9DQVRFR09SWRAMEhAKDE9Q",
-            "VElPTl9ST0JPVBANEhEKDUNBVEVHT1JZX0VBU1kQChITCg9DQVRFR09SWV9O",
-            "T1JNQUwQCxIRCg1DQVRFR09SWV9IQVJEEAwSCwoHT1BfUEFTUxAAEg4KCk9Q",
-            "X0RJU0NBUkQQARIRCg1CVU5DSF9JTlZBTElEEAoSCwoHQlVOQ0hfQRALEgwK",
-            "CEJVTkNIX0FBEAwSDQoJQlVOQ0hfQUFBEA0SDgoKQlVOQ0hfQUFBQRAOEg8K",
-            "C0JVTkNIX0FBQUFCEA8SDgoKQlVOQ0hfQUFBQhAQEg0KCUJVTkNIX0FCQxAR",
-            "Eg0KCUFDSFZfQk9NQhAKEg8KC0FDSFZfSEVBVkVOEAsSDQoJQUNIVl9IRUxM",
-            "EAwSEgoNREVGX01BWF9OT0RFUxDoBxIcChZERUZfTUFYX0dBTUVTX1BFUl9O",
-            "T0RFEKCNBhIOCgpFUlJfRkFJTEVEEGQSEQoNRVJSX0NBTkNFTExFRBBlEhAK",
-            "DEVSUl9QUk9UT0NPTBBmEg0KCUVSUl9QQVJBTRBnEhIKDkVSUl9EVVBMSUNB",
-            "VEVEEGgSEAoLRVJSX1VOS05PV04Q5wcaAhABKqkFCgZwYl9tc2cSDwoLTVNH",
-            "X0lOVkFMSUQQABIOCglNU0dfQkVHSU4Q6AcSDAoHTVNHX1JBVxDpBxIRCgxN",
-            "U0dfQ1NfQkVHSU4Q0A8SEQoMTVNHX0NTX0xPR0lOENEPEhEKDE1TR19TQ19M",
-            "T0dJThDSDxIPCgpNU0dfQ1NfRU5EEJ8fEhEKDE1TR19DTF9CRUdJThCgHxIR",
-            "CgxNU0dfQ0xfRU5URVIQoR8SEQoMTVNHX0xDX0VOVEVSEKIfEhAKC01TR19M",
-            "Q19FWElUEKQfEg8KCk1TR19DTF9FTkQQ7y4SEQoMTVNHX0NOX0JFR0lOEPAu",
-            "EhEKDE1TR19DTl9FTlRFUhDxLhIRCgxNU0dfTkNfRU5URVIQ8i4SEgoNTVNH",
-            "X0NOX0NSRUFURRD7LhISCg1NU0dfTkNfQ1JFQVRFEPwuEhAKC01TR19DTl9K",
-            "T0lOEP0uEhAKC01TR19OQ19KT0lOEP4uEhgKE01TR19DTl9ESVNNSVNTX1NZ",
-            "TkMQhS8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCGLxIXChJNU0dfQ05fRElT",
-            "TUlTU19BQ0sQhy8SFwoSTVNHX05DX0RJU01JU1NfQUNLEIgvEhEKDE1TR19D",
-            "Tl9SRUFEWRCPLxIRCgxNU0dfTkNfUkVBRFkQkC8SEQoMTVNHX05DX1NUQVJU",
-            "EJIvEhIKDU1TR19OQ19TRVRUTEUQlC8SEgoNTVNHX05DX0ZJTklTSBCWLxIT",
-            "Cg5NU0dfQ05fRElTQ0FSRBCjLxITCg5NU0dfTkNfRElTQ0FSRBCkLxIQCgtN",
-            "U0dfQ05fTUVMRBClLxIQCgtNU0dfTkNfTUVMRBCmLxIRCgxNU0dfQ05fU1RB",
-            "VFMQwS8SDwoKTVNHX0NOX0VORBDXNhIMCgdNU0dfRU5EEI9OQgJIA2IGcHJv",
-            "dG8z"));
+            "TXNnQ05NZWxkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciaQoJTXNn",
+            "TkNNZWxkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gY",
+            "AiABKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90",
+            "bzMucGJfZW51bSIvChBNc2dDTkRpc21pc3NTeW5jEhsKA21pZBgBIAEoDjIO",
+            "LnByb3RvMy5wYl9tc2ciXQoQTXNnTkNEaXNtaXNzU3luYxIbCgNtaWQYASAB",
+            "KA4yDi5wcm90bzMucGJfbXNnEgsKA3BvcxgCIAEoDRIfCgZyZXN1bHQYAyAB",
+            "KA4yDy5wcm90bzMucGJfZW51bSIuCg9Nc2dDTkRpc21pc3NBY2sSGwoDbWlk",
+            "GAEgASgOMg4ucHJvdG8zLnBiX21zZyJcCg9Nc2dOQ0Rpc21pc3NBY2sSGwoD",
+            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKA0SHwoGcmVz",
+            "dWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0imwEKC01zZ05DU2V0dGxlEhsK",
+            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDgoGd2lubmVyGAIgASgNEh4K",
+            "BHBsYXkYAyADKAsyEC5wcm90bzMucGxheWVyX3QSHgoFaGFuZHMYBCADKAsy",
+            "Dy5wcm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYBSABKA4yDy5wcm90bzMucGJf",
+            "ZW51bSJrCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJf",
+            "bXNnEh4KBHBsYXkYAiADKAsyEC5wcm90bzMucGxheWVyX3QSHwoGcmVzdWx0",
+            "GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iRQoKTXNnQ05TdGF0cxIbCgNtaWQY",
+            "ASABKA4yDi5wcm90bzMucGJfbXNnEgsKA2tleRgCIAEoCRINCgV2YWx1ZRgD",
+            "IAEoCSq5BQoHcGJfZW51bRILCgdVTktOT1dOEAASCAoETk9ORRAAEgwKCFNV",
+            "Q0NFRVNTEAASCgoGREVWX1BDEAASCwoHREVWX1BTNBABEgwKCERFVl9YQk9Y",
+            "EAISCwoHREVWX0lPUxADEg8KC0RFVl9BTkRST0lEEAQSEAoMREVWX1dJTlBI",
+            "T05FEAUSDAoIR0FNRV9ERFoQFBIMCghHQU1FX1BESxAVEgwKCEdBTUVfUEha",
+            "EBYSCwoHR0FNRV9NShAXEhAKDE9QVElPTl9ST1VORBAKEg8KC09QVElPTl9B",
+            "TlRJEAsSEwoPT1BUSU9OX0NBVEVHT1JZEAwSEAoMT1BUSU9OX1JPQk9UEA0S",
+            "EQoNQ0FURUdPUllfRUFTWRAKEhMKD0NBVEVHT1JZX05PUk1BTBALEhEKDUNB",
+            "VEVHT1JZX0hBUkQQDBILCgdPUF9QQVNTEAASDgoKT1BfRElTQ0FSRBABEhEK",
+            "DUJVTkNIX0lOVkFMSUQQChILCgdCVU5DSF9BEAsSDAoIQlVOQ0hfQUEQDBIN",
+            "CglCVU5DSF9BQUEQDRIOCgpCVU5DSF9BQUFBEA4SDwoLQlVOQ0hfQUFBQUIQ",
+            "DxIOCgpCVU5DSF9BQUFCEBASDQoJQlVOQ0hfQUJDEBESDQoJQlVOQ0hfV0lO",
+            "EGQSDQoJQUNIVl9CT01CEAoSDwoLQUNIVl9IRUFWRU4QCxINCglBQ0hWX0hF",
+            "TEwQDBISCg1ERUZfTUFYX05PREVTEOgHEhwKFkRFRl9NQVhfR0FNRVNfUEVS",
+            "X05PREUQoI0GEg4KCkVSUl9GQUlMRUQQZBIRCg1FUlJfQ0FOQ0VMTEVEEGUS",
+            "EAoMRVJSX1BST1RPQ09MEGYSDQoJRVJSX1BBUkFNEGcSEgoORVJSX0RVUExJ",
+            "Q0FURUQQaBIQCgtFUlJfVU5LTk9XThDnBxoCEAEqqQUKBnBiX21zZxIPCgtN",
+            "U0dfSU5WQUxJRBAAEg4KCU1TR19CRUdJThDoBxIMCgdNU0dfUkFXEOkHEhEK",
+            "DE1TR19DU19CRUdJThDQDxIRCgxNU0dfQ1NfTE9HSU4Q0Q8SEQoMTVNHX1ND",
+            "X0xPR0lOENIPEg8KCk1TR19DU19FTkQQnx8SEQoMTVNHX0NMX0JFR0lOEKAf",
+            "EhEKDE1TR19DTF9FTlRFUhChHxIRCgxNU0dfTENfRU5URVIQoh8SEAoLTVNH",
+            "X0xDX0VYSVQQpB8SDwoKTVNHX0NMX0VORBDvLhIRCgxNU0dfQ05fQkVHSU4Q",
+            "8C4SEQoMTVNHX0NOX0VOVEVSEPEuEhEKDE1TR19OQ19FTlRFUhDyLhISCg1N",
+            "U0dfQ05fQ1JFQVRFEPsuEhIKDU1TR19OQ19DUkVBVEUQ/C4SEAoLTVNHX0NO",
+            "X0pPSU4Q/S4SEAoLTVNHX05DX0pPSU4Q/i4SGAoTTVNHX0NOX0RJU01JU1Nf",
+            "U1lOQxCFLxIYChNNU0dfTkNfRElTTUlTU19TWU5DEIYvEhcKEk1TR19DTl9E",
+            "SVNNSVNTX0FDSxCHLxIXChJNU0dfTkNfRElTTUlTU19BQ0sQiC8SEQoMTVNH",
+            "X0NOX1JFQURZEI8vEhEKDE1TR19OQ19SRUFEWRCQLxIRCgxNU0dfTkNfU1RB",
+            "UlQQki8SEgoNTVNHX05DX1NFVFRMRRCULxISCg1NU0dfTkNfRklOSVNIEJYv",
+            "EhMKDk1TR19DTl9ESVNDQVJEEKMvEhMKDk1TR19OQ19ESVNDQVJEEKQvEhAK",
+            "C01TR19DTl9NRUxEEKUvEhAKC01TR19OQ19NRUxEEKYvEhEKDE1TR19DTl9T",
+            "VEFUUxDBLxIPCgpNU0dfQ05fRU5EENc2EgwKB01TR19FTkQQj05CAkgDYgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -165,7 +166,7 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDiscard), global::Proto3.MsgCNDiscard.Parser, new[]{ "Mid", "Bunch" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDiscard), global::Proto3.MsgNCDiscard.Parser, new[]{ "Mid", "Bunch", "Hints", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNMeld), global::Proto3.MsgCNMeld.Parser, new[]{ "Mid" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCMeld), global::Proto3.MsgNCMeld.Parser, new[]{ "Mid", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCMeld), global::Proto3.MsgNCMeld.Parser, new[]{ "Mid", "Bunch", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDismissSync), global::Proto3.MsgCNDismissSync.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDismissSync), global::Proto3.MsgNCDismissSync.Parser, new[]{ "Mid", "Pos", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDismissAck), global::Proto3.MsgCNDismissAck.Parser, new[]{ "Mid" }, null, null, null),
@@ -231,6 +232,7 @@ namespace Proto3 {
     [pbr::OriginalName("BUNCH_AAAAB")] BunchAaaab = 15,
     [pbr::OriginalName("BUNCH_AAAB")] BunchAaab = 16,
     [pbr::OriginalName("BUNCH_ABC")] BunchAbc = 17,
+    [pbr::OriginalName("BUNCH_WIN")] BunchWin = 100,
     /// <summary>
     ///  achievement
     /// </summary>
@@ -6092,6 +6094,7 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MsgNCMeld(MsgNCMeld other) : this() {
       mid_ = other.mid_;
+      Bunch = other.bunch_ != null ? other.Bunch.Clone() : null;
       result_ = other.result_;
     }
 
@@ -6111,8 +6114,19 @@ namespace Proto3 {
       }
     }
 
+    /// <summary>Field number for the "bunch" field.</summary>
+    public const int BunchFieldNumber = 2;
+    private global::Proto3.bunch_t bunch_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.bunch_t Bunch {
+      get { return bunch_; }
+      set {
+        bunch_ = value;
+      }
+    }
+
     /// <summary>Field number for the "result" field.</summary>
-    public const int ResultFieldNumber = 2;
+    public const int ResultFieldNumber = 3;
     private global::Proto3.pb_enum result_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.pb_enum Result {
@@ -6136,6 +6150,7 @@ namespace Proto3 {
         return true;
       }
       if (Mid != other.Mid) return false;
+      if (!object.Equals(Bunch, other.Bunch)) return false;
       if (Result != other.Result) return false;
       return true;
     }
@@ -6144,6 +6159,7 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (bunch_ != null) hash ^= Bunch.GetHashCode();
       if (Result != 0) hash ^= Result.GetHashCode();
       return hash;
     }
@@ -6159,8 +6175,12 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mid);
       }
+      if (bunch_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Bunch);
+      }
       if (Result != 0) {
-        output.WriteRawTag(16);
+        output.WriteRawTag(24);
         output.WriteEnum((int) Result);
       }
     }
@@ -6170,6 +6190,9 @@ namespace Proto3 {
       int size = 0;
       if (Mid != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (bunch_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Bunch);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -6184,6 +6207,12 @@ namespace Proto3 {
       }
       if (other.Mid != 0) {
         Mid = other.Mid;
+      }
+      if (other.bunch_ != null) {
+        if (bunch_ == null) {
+          bunch_ = new global::Proto3.bunch_t();
+        }
+        Bunch.MergeFrom(other.Bunch);
       }
       if (other.Result != 0) {
         Result = other.Result;
@@ -6202,7 +6231,14 @@ namespace Proto3 {
             mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
-          case 16: {
+          case 18: {
+            if (bunch_ == null) {
+              bunch_ = new global::Proto3.bunch_t();
+            }
+            input.ReadMessage(bunch_);
+            break;
+          }
+          case 24: {
             result_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }

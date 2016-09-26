@@ -630,22 +630,6 @@ bool DoudeZhu::comparision(Game& game,uint x,uint y){
     return cx.value()<cy.value();
 }
 
-void DoudeZhu::logHands(Game& game,uint32 pos,std::string msg){
-    std::string str;
-    auto& hands=game.players[pos]->gameData.hands();
-    cards2str(game,str,hands);
-    KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
-}
-
-void DoudeZhu::cards2str(Game& game,std::string& str,const google::protobuf::RepeatedField<uint32>& ids){
-    str.clear();
-    char buf[32];
-    for(auto id:ids){
-        sprintf(buf,"(%d:%d),",id,game.units[id].value());
-        str+=buf;
-    }
-}
-
 void DoudeZhu::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
     bunch.mutable_pawns()->Clear();
     for(auto n:vals){

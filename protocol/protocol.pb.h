@@ -102,6 +102,7 @@ enum pb_enum {
   BUNCH_AAAAB = 15,
   BUNCH_AAAB = 16,
   BUNCH_ABC = 17,
+  BUNCH_WIN = 100,
   ACHV_BOMB = 10,
   ACHV_HEAVEN = 11,
   ACHV_HELL = 12,
@@ -3589,9 +3590,18 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional .proto3.pb_enum result = 2;
+  // optional .proto3.bunch_t bunch = 2;
+  bool has_bunch() const;
+  void clear_bunch();
+  static const int kBunchFieldNumber = 2;
+  const ::proto3::bunch_t& bunch() const;
+  ::proto3::bunch_t* mutable_bunch();
+  ::proto3::bunch_t* release_bunch();
+  void set_allocated_bunch(::proto3::bunch_t* bunch);
+
+  // optional .proto3.pb_enum result = 3;
   void clear_result();
-  static const int kResultFieldNumber = 2;
+  static const int kResultFieldNumber = 3;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -3602,6 +3612,7 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::proto3::bunch_t* bunch_;
   int mid_;
   int result_;
   mutable int _cached_size_;
@@ -7172,7 +7183,49 @@ inline void MsgNCMeld::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.mid)
 }
 
-// optional .proto3.pb_enum result = 2;
+// optional .proto3.bunch_t bunch = 2;
+inline bool MsgNCMeld::has_bunch() const {
+  return !_is_default_instance_ && bunch_ != NULL;
+}
+inline void MsgNCMeld::clear_bunch() {
+  if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
+  bunch_ = NULL;
+}
+inline const ::proto3::bunch_t& MsgNCMeld::bunch() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCMeld.bunch)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return bunch_ != NULL ? *bunch_ : *default_instance().bunch_;
+#else
+  return bunch_ != NULL ? *bunch_ : *default_instance_->bunch_;
+#endif
+}
+inline ::proto3::bunch_t* MsgNCMeld::mutable_bunch() {
+  
+  if (bunch_ == NULL) {
+    bunch_ = new ::proto3::bunch_t;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCMeld.bunch)
+  return bunch_;
+}
+inline ::proto3::bunch_t* MsgNCMeld::release_bunch() {
+  // @@protoc_insertion_point(field_release:proto3.MsgNCMeld.bunch)
+  
+  ::proto3::bunch_t* temp = bunch_;
+  bunch_ = NULL;
+  return temp;
+}
+inline void MsgNCMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
+  delete bunch_;
+  bunch_ = bunch;
+  if (bunch) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCMeld.bunch)
+}
+
+// optional .proto3.pb_enum result = 3;
 inline void MsgNCMeld::clear_result() {
   result_ = 0;
 }

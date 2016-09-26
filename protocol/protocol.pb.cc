@@ -12065,6 +12065,7 @@ void MsgCNMeld::clear_mid() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCMeld::kMidFieldNumber;
+const int MsgNCMeld::kBunchFieldNumber;
 const int MsgNCMeld::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -12076,6 +12077,12 @@ MsgNCMeld::MsgNCMeld()
 
 void MsgNCMeld::InitAsDefaultInstance() {
   _is_default_instance_ = true;
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  bunch_ = const_cast< ::proto3::bunch_t*>(
+      ::proto3::bunch_t::internal_default_instance());
+#else
+  bunch_ = const_cast< ::proto3::bunch_t*>(&::proto3::bunch_t::default_instance());
+#endif
 }
 
 MsgNCMeld::MsgNCMeld(const MsgNCMeld& from)
@@ -12090,6 +12097,7 @@ void MsgNCMeld::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
+  bunch_ = NULL;
   result_ = 0;
 }
 
@@ -12104,6 +12112,7 @@ void MsgNCMeld::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete bunch_;
   }
 }
 
@@ -12150,6 +12159,8 @@ void MsgNCMeld::Clear() {
 } while (0)
 
   ZR_(mid_, result_);
+  if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
+  bunch_ = NULL;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -12177,13 +12188,26 @@ bool MsgNCMeld::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_result;
+        if (input->ExpectTag(18)) goto parse_bunch;
         break;
       }
 
-      // optional .proto3.pb_enum result = 2;
+      // optional .proto3.bunch_t bunch = 2;
       case 2: {
-        if (tag == 16) {
+        if (tag == 18) {
+         parse_bunch:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_bunch()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_result;
+        break;
+      }
+
+      // optional .proto3.pb_enum result = 3;
+      case 3: {
+        if (tag == 24) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -12227,10 +12251,16 @@ void MsgNCMeld::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional .proto3.pb_enum result = 2;
+  // optional .proto3.bunch_t bunch = 2;
+  if (this->has_bunch()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, *this->bunch_, output);
+  }
+
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      2, this->result(), output);
+      3, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCMeld)
@@ -12246,7 +12276,14 @@ int MsgNCMeld::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional .proto3.pb_enum result = 2;
+  // optional .proto3.bunch_t bunch = 2;
+  if (this->has_bunch()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->bunch_);
+  }
+
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -12271,6 +12308,9 @@ void MsgNCMeld::MergeFrom(const MsgNCMeld& from) {
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
+  if (from.has_bunch()) {
+    mutable_bunch()->::proto3::bunch_t::MergeFrom(from.bunch());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -12294,6 +12334,7 @@ void MsgNCMeld::Swap(MsgNCMeld* other) {
 }
 void MsgNCMeld::InternalSwap(MsgNCMeld* other) {
   std::swap(mid_, other->mid_);
+  std::swap(bunch_, other->bunch_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -12320,7 +12361,49 @@ void MsgNCMeld::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.mid)
 }
 
-// optional .proto3.pb_enum result = 2;
+// optional .proto3.bunch_t bunch = 2;
+bool MsgNCMeld::has_bunch() const {
+  return !_is_default_instance_ && bunch_ != NULL;
+}
+void MsgNCMeld::clear_bunch() {
+  if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
+  bunch_ = NULL;
+}
+const ::proto3::bunch_t& MsgNCMeld::bunch() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCMeld.bunch)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return bunch_ != NULL ? *bunch_ : *default_instance().bunch_;
+#else
+  return bunch_ != NULL ? *bunch_ : *default_instance_->bunch_;
+#endif
+}
+::proto3::bunch_t* MsgNCMeld::mutable_bunch() {
+  
+  if (bunch_ == NULL) {
+    bunch_ = new ::proto3::bunch_t;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCMeld.bunch)
+  return bunch_;
+}
+::proto3::bunch_t* MsgNCMeld::release_bunch() {
+  // @@protoc_insertion_point(field_release:proto3.MsgNCMeld.bunch)
+  
+  ::proto3::bunch_t* temp = bunch_;
+  bunch_ = NULL;
+  return temp;
+}
+void MsgNCMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
+  delete bunch_;
+  bunch_ = bunch;
+  if (bunch) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCMeld.bunch)
+}
+
+// optional .proto3.pb_enum result = 3;
 void MsgNCMeld::clear_result() {
   result_ = 0;
 }

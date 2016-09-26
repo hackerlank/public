@@ -56,6 +56,7 @@ BUNCH_AAAA              =14;
 BUNCH_AAAAB             =15;
 BUNCH_AAAB              =16;
 BUNCH_ABC               =17;
+BUNCH_WIN               =100;
 
 // achievement
 ACHV_BOMB               =10;
@@ -358,7 +359,8 @@ pb_msg mid				=1;
 message MsgNCMeld{
 
 pb_msg mid				=1;
-pb_enum result			=2;
+bunch_t bunch           =2;
+pb_enum result			=3;
 };
 
 message MsgCNDismissSync{
