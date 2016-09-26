@@ -51,6 +51,8 @@ void GameRule::Deal(Game& game){
     game.units.clear();
     game.pile.clear();
     game.historical.clear();
+    game.pendingMeld.clear();
+    game.pendingDiscard.reset();
     game.gameData.resize(MaxPlayer());
     for(auto& gd:game.gameData)gd.Clear();
     

@@ -20,6 +20,14 @@ public:
         ST_SETTLE,
         ST_END,
     };
+    struct pending_t{
+        //operation in oper queue
+        pos_t           pos;
+        proto3::pb_enum ops;
+        unit_id_t       card;
+        bool            arrived;
+                        pending_t():pos(i_invalid),ops(proto3::pb_enum::BUNCH_INVALID),card(i_invalid),arrived(false){}
+    };
     
     size_t      id;
     State       state;
@@ -31,7 +39,10 @@ public:
     std::vector<std::shared_ptr<Player>> players;
     std::vector<proto3::game_data_t>    gameData;   //player game data
     std::vector<proto3::bunch_t>        historical; //historical game data
-    
+    std::vector<pending_t>              pendingMeld;    //pending meld
+    std::shared_ptr<pending_t>          pendingDiscard; //pending discard
+    std::vector<std::shared_ptr<google::protobuf::MessageLite>>
+                                        spLastMsg;
     int                                 ready;
     int                                 delay;
     std::shared_ptr<GameRule>           rule;

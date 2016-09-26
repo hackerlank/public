@@ -28,7 +28,7 @@ public:
 
     virtual bool        Ready(Game&)=0;
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
-    virtual void        OnMeld(Game&)=0;
+    virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&)=0;
     virtual bool        Hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;
     virtual bool        Settle(Game&)=0;
     virtual bool        IsGameOver(Game&)=0;

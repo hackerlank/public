@@ -169,13 +169,49 @@ void Mahjong::PostTick(Game& game){
                         //KEYE_LOG("tick robot %d\n",robot->pos);
 
                         MsgCNDiscard msg;
-                        google::protobuf::RepeatedField<proto3::bunch_t> bunches;
-                        if(Hint(bunches,game,robot->pos,*msg.mutable_bunch())){
-                            
+                        auto& gdata=game.gameData[robot->pos];
+                        auto& hands=gdata.hands();
+                        if(hands.empty()){
+                            break;
+                        }else{
+                            auto& B=game.units[gdata.selected_card()];
+                            auto it=hands.rbegin();
+                            //find huazhu if exists
+                            for(auto iter=hands.rbegin(),iend=hands.rend();iter!=iend;++iter){
+                                auto& A=game.units[*iter];
+                                if(A.color()==B.color()){
+                                    it=iter;
+                                    break;
+                                }
+                            }
+                            msg.mutable_bunch()->add_pawns(*it);
+                            OnDiscard(*robot,msg);
                         }
-//                        OnDiscard(*robot,msg);
                         game.delay=0;
                     }
+                }
+                break;
+            case Game::State::ST_MELD:
+                //show card and wait for accept
+                if(!game.pendingMeld.empty()){
+                    for(auto i=game.pendingMeld.begin(),ii=game.pendingMeld.end(); i!=ii; ++i)
+                        if(i->pos==robot->pos){
+                            if(i->arrived)
+                                //already processed
+                                break;
+                            auto pmsg=game.spLastMsg[robot->pos].get();
+                            if(auto msg=dynamic_cast<MsgNCDiscard*>(pmsg)){
+                                auto& hints=msg->hints();
+                                if(!hints.empty()){
+                                    auto& bunch=hints.Get(0);
+                                    OnMeld(game,*robot,bunch);
+                                    //log("ProcessRobot st=%s, pos=%d, suite=%s",st2String(st).c_str(),pos,suite2String(suite).c_str());
+                                } else {
+                                    //log("ProcessRobot st=%s, pos=%d, no suite found",st2String(st).c_str(),pos);
+                                }
+                            }
+                            break;
+                        }
                 }
                 break;
             default:
