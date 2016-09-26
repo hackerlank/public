@@ -53,7 +53,7 @@ void GameRule::Deal(Game& game){
     game.historical.clear();
     game.pendingMeld.clear();
     game.pendingDiscard.reset();
-    for(auto& player:game.players)if(player)player->clear();
+    for(auto& player:game.players)if(player)player->reset();
     
     //init cards
     auto N=MaxCards();
@@ -115,15 +115,21 @@ void GameRule::Deal(Game& game){
 
 void GameRule::OnReady(Player& player){
     if(auto game=player.game){
-        if(player.isRobot&&game->ready>=MaxPlayer()-1)return;
+        if(player.ready)return;
         
-        ++game->ready;
+        player.ready=true;
         MsgNCReady omsg;
         omsg.set_mid(pb_msg::MSG_NC_READY);
         omsg.set_pos(player.pos);
         omsg.set_result(pb_enum::SUCCEESS);
         for(auto& p:game->players)p->send(omsg);
     }
+}
+
+bool GameRule::Ready(Game& game){
+    int n=0;
+    for(auto p:game.players)if(p&&p->ready)++n;
+    return n>=MaxPlayer();
 }
 
 void GameRule::Next(Game& game){

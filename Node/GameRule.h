@@ -14,6 +14,7 @@ public:
     virtual             ~GameRule(){};
     void                Deal(Game&);
     void                Tick(Game&);
+    bool                Ready(Game&);
     void                Next(Game&);
     void                ChangeState(Game&,Game::State);
     
@@ -26,7 +27,6 @@ public:
     virtual int         MaxHands()=0;
     virtual int         Bottom()=0;
 
-    virtual bool        Ready(Game&)=0;
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
     virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&)=0;
     virtual bool        Hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;

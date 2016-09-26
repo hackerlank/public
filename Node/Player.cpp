@@ -12,6 +12,7 @@ using namespace proto3;
 
 Player::Player(keye::svc_handler& sh)
 :pos(-1)
+,ready(false)
 ,isRobot(false){
     spsh=sh();
 }
@@ -46,7 +47,7 @@ void Player::on_read(PBHelper& pb){
                     game=gameptr;
                     game->players.push_back(shared_from_this());
                     game->Round=maxRound;
-                    ++game->ready;
+                    ready=true;
                     pos=game->players.size()-1;
                     //fill data
                 
@@ -62,7 +63,7 @@ void Player::on_read(PBHelper& pb){
                             auto robot=std::make_shared<Player>(nullsh);
                             robot->game=gameptr;
                             game->players.push_back(robot);
-                            ++game->ready;
+                            robot->ready=true;
                             robot->pos=game->players.size()-1;
                             robot->isRobot=true;
                             KEYE_LOG("add robots %d\n",robot->pos);
@@ -88,9 +89,9 @@ void Player::on_read(PBHelper& pb){
                 auto gid=imsg.game_id();
                 if(auto game=Node::sNode->findGame(gid)){
                     auto rule=game->rule;
-                    if(game->ready<rule->MaxPlayer()){
+                    if(!rule->Ready(*game)){
                         game->players.push_back(shared_from_this());
-                        ++game->ready;
+                        ready=true;
                         pos=game->players.size()-1;
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
                         KEYE_LOG("game joined,gid=%d\n",gid);
@@ -184,7 +185,7 @@ int Player::getKey(){
     return 0;
 }
 
-void Player::clear(){
+void Player::reset(){
     gameData.Clear();
     lastMsg.reset();
 }

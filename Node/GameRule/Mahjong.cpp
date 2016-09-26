@@ -30,10 +30,6 @@ int Mahjong::Bottom(){
     return 1;
 }
 
-bool Mahjong::Ready(Game& game){
-    return game.ready>=MaxPlayer();
-}
-
 void Mahjong::initCard(Game& game){
     unit_id_t id=0;
     //ids => 1111...9999aaaa...iiiiAAAA...III
@@ -238,9 +234,11 @@ bool Mahjong::Settle(Game& game){
         //auto player=msg.add_play();
     }
     
-    for(auto p:game.players)p->send(msg);
+    for(auto p:game.players){
+        p->send(msg);
+        p->ready=false;
+    }
     
-    game.ready=0;
     if(++game.round>=game.Round){
         MsgNCFinish fin;
         fin.set_mid(pb_msg::MSG_NC_FINISH);

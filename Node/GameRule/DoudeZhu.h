@@ -18,7 +18,6 @@ public:
     virtual int         MaxHands();
     virtual int         Bottom();
 
-    virtual bool        Ready(Game&);
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&){};
     virtual bool        Settle(Game&);

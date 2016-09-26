@@ -14,13 +14,14 @@ class Player: public std::enable_shared_from_this<Player>{
 public:
                             Player(keye::svc_handler& sh);
     int                     getKey();
-    void                    clear();
+    void                    reset();
     
     void                    send(google::protobuf::MessageLite& msg);
     void                    on_read(PBHelper&);
     
     bool                    isRobot;
     pos_t                   pos;
+    bool                    ready;
     std::shared_ptr<Game>   game;
     proto3::game_data_t                            gameData;   //player game data
     std::shared_ptr<google::protobuf::MessageLite> lastMsg;

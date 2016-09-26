@@ -46,10 +46,6 @@ int DoudeZhu::Bottom(){
     return 3;
 }
 
-bool DoudeZhu::Ready(Game& game){
-    return game.ready>=MaxPlayer();
-}
-
 void DoudeZhu::initCard(Game& game){
     unit_id_t id=0;
     //ids => AAAA22223333...
@@ -238,9 +234,11 @@ bool DoudeZhu::Settle(Game& game){
         //auto player=msg.add_play();
     }
     
-    for(auto p:game.players)p->send(msg);
-    
-    game.ready=0;
+    for(auto p:game.players){
+        p->send(msg);
+        p->ready=false;
+    }
+
     if(++game.round>=game.Round){
         MsgNCFinish fin;
         fin.set_mid(pb_msg::MSG_NC_FINISH);
