@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class GamePanel : MonoBehaviour,GameController {
+public abstract class GamePanel : MonoBehaviour,GameController {
 	public Card[]		BottomCards;
 	public Transform	HandArea;
 	public Transform[]	DiscardAreas;	//MROL(Me,Right,Opposite,Left)
@@ -25,7 +25,7 @@ public class GamePanel : MonoBehaviour,GameController {
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
-	void Awake(){
+	virtual public void Awake(){
 		Main.Instance.gameController=this;
 	}
 
@@ -41,7 +41,10 @@ public class GamePanel : MonoBehaviour,GameController {
 	public void OnDiscard(){
 		Discard();
 	}
-	
+
+	public void OnDraw(MsgNCDraw msg){
+	}
+
 	//int _nhints=0;
 	public void OnHint(){
 		deselectAll();
@@ -137,6 +140,7 @@ public class GamePanel : MonoBehaviour,GameController {
 	// ----------------------------------------------
 	public uint Round{get{return round;}set{round=value;}}
 	public GameRule Rule{get{return rule;}set{rule=value;}}
+	abstract public string Id2File(uint color,uint value);
 
 	public IEnumerator Deal(MsgNCStart msg){
 		++Round;
@@ -160,18 +164,18 @@ public class GamePanel : MonoBehaviour,GameController {
 		DiscardAreas.CopyTo(tempD,0);
 		Players.CopyTo(tempP,0);
 		nHandCards.CopyTo(tempH,0);
-		if(DiscardAreas.Length>=0)DiscardAreas[0]=tempD[M];
-		if(DiscardAreas.Length>=1)DiscardAreas[1]=tempD[R];
-		if(DiscardAreas.Length>=2)DiscardAreas[2]=tempD[L];
-		if(DiscardAreas.Length>=3)DiscardAreas[3]=tempD[O];
-		if(Players.Length>=0)Players[0]=tempP[M];
-		if(Players.Length>=1)Players[1]=tempP[R];
-		if(Players.Length>=2)Players[2]=tempP[L];
-		if(Players.Length>=3)Players[3]=tempP[O];
-		if(nHandCards.Length>=0)nHandCards[0]=tempH[M];
-		if(nHandCards.Length>=1)nHandCards[1]=tempH[R];
-		if(nHandCards.Length>=2)nHandCards[2]=tempH[L];
-		if(nHandCards.Length>=3)nHandCards[3]=tempH[O];
+		if(DiscardAreas.Length>0)DiscardAreas[0]=tempD[M];
+		if(DiscardAreas.Length>1)DiscardAreas[1]=tempD[R];
+		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[L];
+		if(DiscardAreas.Length>3)DiscardAreas[3]=tempD[O];
+		if(Players.Length>0)Players[0]=tempP[M];
+		if(Players.Length>1)Players[1]=tempP[R];
+		if(Players.Length>2)Players[2]=tempP[L];
+		if(Players.Length>3)Players[3]=tempP[O];
+		if(nHandCards.Length>0)nHandCards[0]=tempH[M];
+		if(nHandCards.Length>1)nHandCards[1]=tempH[R];
+		if(nHandCards.Length>2)nHandCards[2]=tempH[L];
+		if(nHandCards.Length>3)nHandCards[3]=tempH[O];
 		
 		//dict
 		Configs.Cards=new Dictionary<uint, pawn_t>();
@@ -183,6 +187,8 @@ public class GamePanel : MonoBehaviour,GameController {
 		var hands=new List<uint>(msg.Hands);
 		hands.Sort(rule.comparision);
 		//deal
+		while(!CardCache.Ready)yield return null;
+
 		string str="deal: banker="+msg.Banker+"pos="+msg.Pos+"\nhands:\n";
 		for(int i=0;i<hands.Count;++i){
 			var id=hands[i];

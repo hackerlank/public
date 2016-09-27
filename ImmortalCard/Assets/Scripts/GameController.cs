@@ -6,6 +6,7 @@ public interface GameController {
 	//message handler
 	IEnumerator	Deal(MsgNCStart msg);
 	IEnumerator	OnDiscardAt(MsgNCDiscard msg);
+	void		OnDraw(MsgNCDraw msg);
 	void		OnSettle(MsgNCSettle msg);
 	void		OnFinish(MsgNCFinish msg);
 
@@ -19,4 +20,5 @@ public interface GameController {
 
 	//ui
 	void OnExit();
+	string Id2File(uint color,uint value);
 }

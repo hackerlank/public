@@ -32,15 +32,16 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		get{
 			return _value;
 		}set{
-			var file=CardCache.Id2File(value.Color,value.Value);
-			if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
-				image.sprite=CardCache.sprites[file];
-			_value=value;
-			//remember debug value
-			Id=(int)value.Id;
-			Clr=(int)value.Color;
-			Val=(int)value.Value;
-			/*
+			if(Main.Instance.gameController!=null){
+				var file=Main.Instance.gameController.Id2File(value.Color,value.Value);
+				if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
+					image.sprite=CardCache.sprites[file];
+				_value=value;
+				//remember debug value
+				Id=(int)value.Id;
+				Clr=(int)value.Color;
+				Val=(int)value.Value;
+				/*
 			string str="load card("+value.Id+","+value.Color+","+value.Value+")";
 			_value=value;
 			//bind image
@@ -53,6 +54,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 				image.sprite=sprite;
 			});
 			*/
+			}
 		}
 	}
 

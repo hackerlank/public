@@ -8,17 +8,11 @@ public class CardCache{
 	public static Dictionary<string,Sprite> sprites=new Dictionary<string, Sprite>();
 	public static GameObject card;
 	public static bool Ready=false;
-
-	public static string Id2File(uint color,uint value){
-		if(Main.Instance.gameController!=null&&Main.Instance.gameController.Rule!=null){
-			string[] Colors={"c","d","h","s"};
-			value=Main.Instance.gameController.Rule.inverseTransformValue(value);
-			return string.Format("{0}{1:00}",Colors[color],value);
-		}
-		return "";
-	}
-
+	
 	public static IEnumerator Load(){
+		while(Main.Instance.gameController==null)
+			yield return null;
+
 		Ready=false;
 		//load Card.prefab
 		if(card==null)
@@ -35,7 +29,7 @@ public class CardCache{
 		files.Add("d15");
 		for(uint j=0;j<4;++j)
 			for(uint i=1;i<=13;++i)
-				files.Add(Id2File(j,i));
+				files.Add(Main.Instance.gameController.Id2File(j,i));
 		foreach(var f in files){
 			yield return null;
 			Utils.SpriteCreate(f,delegate(Sprite sprite) {

@@ -94,6 +94,12 @@ public class MsgHandler{
 			}else
 				Debug.LogError("meld error: "+imsg6.Result);
 			break;
+		case pb_msg.MsgNcDraw:
+			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
+			Loom.QueueOnMainThread(delegate{
+				if(Main.Instance.gameController!=null)Main.Instance.gameController.OnDraw(msgDraw);
+			});
+			break;
 		case pb_msg.MsgNcSettle:
 			MsgNCSettle imsg7=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(imsg7.Result==pb_enum.Succeess){

@@ -43,6 +43,10 @@ public class WSProxy {
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
+		if(socket==null){
+			Debug.LogError("WebSocket not been created");
+			return;
+		}
 		var body=MsgIntepreter.EncodeBytes<T>(msg);
 		var len=body.Length;
 

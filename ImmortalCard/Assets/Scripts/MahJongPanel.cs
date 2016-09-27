@@ -10,6 +10,15 @@ public class MahJong : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
+	override public string Id2File(uint color,uint value){
+		if(Rule!=null){
+			string[] Colors={"c","d","h","s"};
+			value=Rule.inverseTransformValue(value);
+			return string.Format("{0}{1:00}",Colors[color],value);
+		}
+		return "";
+	}
+
 	override protected bool checkDiscard(Card card=null){
 		//discard my card
 		var check=false;
@@ -76,7 +85,8 @@ public class MahJong : GamePanel {
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
-	void Awake(){
+	override public void Awake(){
+		base.Awake();
 		Rule=new DoudeZhuRule();
 	}
 
