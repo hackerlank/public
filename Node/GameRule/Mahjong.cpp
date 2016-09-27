@@ -10,6 +10,42 @@
 #include "NodeFwd.h"
 using namespace proto3;
 
+void Mahjong::Tick(Game& game){
+    switch (game.state) {
+        case Game::State::ST_WAIT:
+            if(Ready(game))
+                ChangeState(game,Game::State::ST_START);
+            break;
+        case Game::State::ST_START:
+            Deal(game);
+            ChangeState(game,Game::State::ST_DISCARD);
+            break;
+        case Game::State::ST_DISCARD:
+            ChangeState(game,Game::State::ST_MELD);
+            break;
+        case Game::State::ST_MELD:
+            if(IsGameOver(game))
+                ChangeState(game,Game::State::ST_SETTLE);
+            break;
+        case Game::State::ST_DRAW:
+            draw(game);
+            ChangeState(game,Game::State::ST_DISCARD);
+            break;
+        case Game::State::ST_SETTLE:
+            if(Settle(game))
+                ChangeState(game,Game::State::ST_END);
+            else
+                ChangeState(game,Game::State::ST_WAIT);
+            break;
+        case Game::State::ST_END:
+            break;
+        default:
+            break;
+    }
+    if(game.state<Game::State::ST_SETTLE)
+        tickRobot(game);
+}
+
 int Mahjong::Type(){
     return pb_enum::GAME_MJ;
 }
@@ -378,21 +414,18 @@ void Mahjong::draw(Game& game){
     auto player=game.players[game.token];
     auto card=game.pile.back();
     game.pile.pop_back();
-    ChangeState(game,Game::State::ST_DISCARD);
-    game.pendingDiscard=std::make_shared<Game::pending_t>();
-    game.pendingDiscard->card=card;
-    game.pendingDiscard->pos=game.token;
-    MsgCNDiscard msg;
-    msg.mutable_bunch()->add_pawns(card);
-    OnDiscard(*player,msg);
+    
+    MsgNCDraw msg;
+    msg.set_mid(pb_msg::MSG_NC_DRAW);
+    msg.set_card(card);
+    msg.set_pos(game.token);
 }
 
 bool Mahjong::isNaturalWin(Game& game,pos_t pos){
     return false;
 }
 
-void Mahjong::PostTick(Game& game){
-    GameRule::PostTick(game);
+void Mahjong::tickRobot(Game& game){
     for(auto robot:game.players){
         switch (game.state) {
             case Game::State::ST_WAIT:

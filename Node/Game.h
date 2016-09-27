@@ -15,6 +15,7 @@ public:
     enum State{
         ST_WAIT,
         ST_START,
+        ST_DRAW,
         ST_DISCARD,
         ST_MELD,
         ST_SETTLE,

@@ -13,14 +13,13 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     void                Deal(Game&);
-    void                Tick(Game&);
     bool                Ready(Game&);
     void                Next(Game&);
     void                ChangeState(Game&,Game::State);
     
     void                OnReady(Player&);
 
-    virtual void        PostTick(Game&);
+    virtual void        Tick(Game&)=0;
     virtual int         Type()=0;
     virtual int         MaxPlayer()=0;
     virtual int         MaxCards()=0;

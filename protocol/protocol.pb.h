@@ -52,6 +52,7 @@ class MsgNCCreate;
 class MsgNCDiscard;
 class MsgNCDismissAck;
 class MsgNCDismissSync;
+class MsgNCDraw;
 class MsgNCEnter;
 class MsgNCFinish;
 class MsgNCJoin;
@@ -155,6 +156,7 @@ enum pb_msg {
   MSG_NC_DISCARD = 6052,
   MSG_CN_MELD = 6053,
   MSG_NC_MELD = 6054,
+  MSG_NC_DRAW = 6055,
   MSG_CN_STATS = 6081,
   MSG_CN_END = 6999,
   MSG_END = 9999,
@@ -3633,6 +3635,112 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   void InitAsDefaultInstance();
   static MsgNCMeld* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgNCDraw) */ {
+ public:
+  MsgNCDraw();
+  virtual ~MsgNCDraw();
+
+  MsgNCDraw(const MsgNCDraw& from);
+
+  inline MsgNCDraw& operator=(const MsgNCDraw& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgNCDraw& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgNCDraw* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgNCDraw* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgNCDraw* New() const { return New(NULL); }
+
+  MsgNCDraw* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgNCDraw& from);
+  void MergeFrom(const MsgNCDraw& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgNCDraw* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional uint32 pos = 2;
+  void clear_pos();
+  static const int kPosFieldNumber = 2;
+  ::google::protobuf::uint32 pos() const;
+  void set_pos(::google::protobuf::uint32 value);
+
+  // optional uint32 card = 3;
+  void clear_card();
+  static const int kCardFieldNumber = 3;
+  ::google::protobuf::uint32 card() const;
+  void set_card(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgNCDraw)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::uint32 card_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgNCDraw* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -7262,6 +7370,52 @@ inline void MsgNCMeld::set_result(::proto3::pb_enum value) {
 
 // -------------------------------------------------------------------
 
+// MsgNCDraw
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgNCDraw::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgNCDraw::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgNCDraw::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.mid)
+}
+
+// optional uint32 pos = 2;
+inline void MsgNCDraw::clear_pos() {
+  pos_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCDraw::pos() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.pos)
+  return pos_;
+}
+inline void MsgNCDraw::set_pos(::google::protobuf::uint32 value) {
+  
+  pos_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.pos)
+}
+
+// optional uint32 card = 3;
+inline void MsgNCDraw::clear_card() {
+  card_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCDraw::card() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.card)
+  return card_;
+}
+inline void MsgNCDraw::set_card(::google::protobuf::uint32 value) {
+  
+  card_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.card)
+}
+
+// -------------------------------------------------------------------
+
 // MsgCNDismissSync
 
 // optional .proto3.pb_msg mid = 1;
@@ -7663,6 +7817,8 @@ inline void MsgCNStats::set_allocated_value(::std::string* value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

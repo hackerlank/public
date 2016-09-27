@@ -11,7 +11,7 @@
 
 class DoudeZhu: public GameRule{
 public:
-    virtual void        PostTick(Game&);
+    virtual void        Tick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
     virtual int         MaxCards();
@@ -29,6 +29,7 @@ public:
 protected:
     virtual void        initCard(Game&);
 private:
+    void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
     bool                comparision(Game&,uint x,uint y);

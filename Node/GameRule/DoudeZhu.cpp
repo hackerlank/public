@@ -26,6 +26,37 @@ inline uint32 inverseTransformValue(uint32 val){
     else             return val;
 }
 
+void DoudeZhu::Tick(Game& game){
+    switch (game.state) {
+        case Game::State::ST_WAIT:
+            if(Ready(game))
+                ChangeState(game,Game::State::ST_START);
+            break;
+        case Game::State::ST_START:
+            Deal(game);
+            ChangeState(game,Game::State::ST_DISCARD);
+            break;
+        case Game::State::ST_DISCARD:
+            if(IsGameOver(game))
+                ChangeState(game,Game::State::ST_SETTLE);
+            break;
+        case Game::State::ST_MELD:
+            break;
+        case Game::State::ST_SETTLE:
+            if(Settle(game))
+                ChangeState(game,Game::State::ST_END);
+            else
+                ChangeState(game,Game::State::ST_WAIT);
+            break;
+        case Game::State::ST_END:
+            break;
+        default:
+            break;
+    }
+    if(game.state<Game::State::ST_SETTLE)
+        tickRobot(game);
+}
+
 int DoudeZhu::Type(){
     return pb_enum::GAME_DDZ;
 }
@@ -187,8 +218,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         player.send(omsg);
 }
 
-void DoudeZhu::PostTick(Game& game){
-    GameRule::PostTick(game);
+void DoudeZhu::tickRobot(Game& game){
     for(auto robot:game.players){
         switch (game.state) {
             case Game::State::ST_WAIT:

@@ -12,39 +12,6 @@
 #include <algorithm>
 using namespace proto3;
 
-void GameRule::Tick(Game& game){
-    switch (game.state) {
-        case Game::State::ST_WAIT:
-            if(Ready(game))
-                ChangeState(game,Game::State::ST_START);
-            break;
-        case Game::State::ST_START:
-            Deal(game);
-            ChangeState(game,Game::State::ST_DISCARD);
-            break;
-        case Game::State::ST_DISCARD:
-            if(IsGameOver(game))
-                ChangeState(game,Game::State::ST_SETTLE);
-            break;
-        case Game::State::ST_MELD:
-            break;
-        case Game::State::ST_SETTLE:
-            if(Settle(game))
-                ChangeState(game,Game::State::ST_END);
-            else
-                ChangeState(game,Game::State::ST_WAIT);
-            break;
-        case Game::State::ST_END:
-            break;
-        default:
-            break;
-    }
-    PostTick(game);
-}
-
-void GameRule::PostTick(Game& game){
-}
-
 void GameRule::Deal(Game& game){
     //clear
     game.token=game.banker;

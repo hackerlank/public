@@ -221,6 +221,7 @@ MSG_CN_DISCARD          =6051;
 MSG_NC_DISCARD          =6052;
 MSG_CN_MELD             =6053;
 MSG_NC_MELD             =6054;
+MSG_NC_DRAW             =6055;
 
 MSG_CN_STATS            =6081;
 
@@ -362,6 +363,13 @@ message MsgNCMeld{
 pb_msg mid				=1;
 bunch_t bunch           =2;
 pb_enum result			=3;
+};
+
+message MsgNCDraw{
+
+pb_msg mid				=1;
+uint32 pos              =2;
+uint32 card             =3;
 };
 
 message MsgCNDismissSync{

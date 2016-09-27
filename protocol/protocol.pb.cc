@@ -45,6 +45,7 @@ void protobuf_ShutdownFile_protocol_2eproto() {
   delete MsgNCDiscard::default_instance_;
   delete MsgCNMeld::default_instance_;
   delete MsgNCMeld::default_instance_;
+  delete MsgNCDraw::default_instance_;
   delete MsgCNDismissSync::default_instance_;
   delete MsgNCDismissSync::default_instance_;
   delete MsgCNDismissAck::default_instance_;
@@ -95,6 +96,7 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgNCDiscard::default_instance_ = new MsgNCDiscard();
   MsgCNMeld::default_instance_ = new MsgCNMeld();
   MsgNCMeld::default_instance_ = new MsgNCMeld();
+  MsgNCDraw::default_instance_ = new MsgNCDraw();
   MsgCNDismissSync::default_instance_ = new MsgCNDismissSync();
   MsgNCDismissSync::default_instance_ = new MsgNCDismissSync();
   MsgCNDismissAck::default_instance_ = new MsgCNDismissAck();
@@ -130,6 +132,7 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgNCDiscard::default_instance_->InitAsDefaultInstance();
   MsgCNMeld::default_instance_->InitAsDefaultInstance();
   MsgNCMeld::default_instance_->InitAsDefaultInstance();
+  MsgNCDraw::default_instance_->InitAsDefaultInstance();
   MsgCNDismissSync::default_instance_->InitAsDefaultInstance();
   MsgNCDismissSync::default_instance_->InitAsDefaultInstance();
   MsgCNDismissAck::default_instance_->InitAsDefaultInstance();
@@ -222,6 +225,7 @@ bool pb_msg_IsValid(int value) {
     case 6052:
     case 6053:
     case 6054:
+    case 6055:
     case 6081:
     case 6999:
     case 9999:
@@ -12464,6 +12468,327 @@ void MsgNCMeld::clear_result() {
   
   result_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.result)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgNCDraw::kMidFieldNumber;
+const int MsgNCDraw::kPosFieldNumber;
+const int MsgNCDraw::kCardFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgNCDraw::MsgNCDraw()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.MsgNCDraw)
+}
+
+void MsgNCDraw::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+MsgNCDraw::MsgNCDraw(const MsgNCDraw& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCDraw)
+}
+
+void MsgNCDraw::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  mid_ = 0;
+  pos_ = 0u;
+  card_ = 0u;
+}
+
+MsgNCDraw::~MsgNCDraw() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCDraw)
+  SharedDtor();
+}
+
+void MsgNCDraw::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void MsgNCDraw::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const MsgNCDraw& MsgNCDraw::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+MsgNCDraw* MsgNCDraw::default_instance_ = NULL;
+
+MsgNCDraw* MsgNCDraw::New(::google::protobuf::Arena* arena) const {
+  MsgNCDraw* n = new MsgNCDraw;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void MsgNCDraw::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCDraw)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgNCDraw, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgNCDraw*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, card_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool MsgNCDraw::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCDraw)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .proto3.pb_msg mid = 1;
+      case 1: {
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_pos;
+        break;
+      }
+
+      // optional uint32 pos = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_pos:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &pos_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_card;
+        break;
+      }
+
+      // optional uint32 card = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_card:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &card_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCDraw)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCDraw)
+  return false;
+#undef DO_
+}
+
+void MsgNCDraw::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCDraw)
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
+  }
+
+  // optional uint32 pos = 2;
+  if (this->pos() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->pos(), output);
+  }
+
+  // optional uint32 card = 3;
+  if (this->card() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->card(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCDraw)
+}
+
+int MsgNCDraw::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCDraw)
+  int total_size = 0;
+
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional uint32 pos = 2;
+  if (this->pos() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->pos());
+  }
+
+  // optional uint32 card = 3;
+  if (this->card() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->card());
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgNCDraw::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCDraw*>(&from));
+}
+
+void MsgNCDraw::MergeFrom(const MsgNCDraw& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCDraw)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  if (from.mid() != 0) {
+    set_mid(from.mid());
+  }
+  if (from.pos() != 0) {
+    set_pos(from.pos());
+  }
+  if (from.card() != 0) {
+    set_card(from.card());
+  }
+}
+
+void MsgNCDraw::CopyFrom(const MsgNCDraw& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCDraw)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgNCDraw::IsInitialized() const {
+
+  return true;
+}
+
+void MsgNCDraw::Swap(MsgNCDraw* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgNCDraw::InternalSwap(MsgNCDraw* other) {
+  std::swap(mid_, other->mid_);
+  std::swap(pos_, other->pos_);
+  std::swap(card_, other->card_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string MsgNCDraw::GetTypeName() const {
+  return "proto3.MsgNCDraw";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MsgNCDraw
+
+// optional .proto3.pb_msg mid = 1;
+void MsgNCDraw::clear_mid() {
+  mid_ = 0;
+}
+ ::proto3::pb_msg MsgNCDraw::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+ void MsgNCDraw::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.mid)
+}
+
+// optional uint32 pos = 2;
+void MsgNCDraw::clear_pos() {
+  pos_ = 0u;
+}
+ ::google::protobuf::uint32 MsgNCDraw::pos() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.pos)
+  return pos_;
+}
+ void MsgNCDraw::set_pos(::google::protobuf::uint32 value) {
+  
+  pos_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.pos)
+}
+
+// optional uint32 card = 3;
+void MsgNCDraw::clear_card() {
+  card_ = 0u;
+}
+ ::google::protobuf::uint32 MsgNCDraw::card() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.card)
+  return card_;
+}
+ void MsgNCDraw::set_card(::google::protobuf::uint32 value) {
+  
+  card_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.card)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
