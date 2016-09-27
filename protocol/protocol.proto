@@ -307,8 +307,9 @@ uint32 game_id			=2;
 message MsgNCJoin{
 
 pb_msg mid                  =1;
-repeated player_t players   =2;
-pb_enum result              =3;
+pb_enum game                =2;
+repeated player_t players   =3;
+pb_enum result              =4;
 };
 
 message MsgCNReady{

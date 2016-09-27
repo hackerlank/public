@@ -2782,10 +2782,16 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // repeated .proto3.player_t players = 2;
+  // optional .proto3.pb_enum game = 2;
+  void clear_game();
+  static const int kGameFieldNumber = 2;
+  ::proto3::pb_enum game() const;
+  void set_game(::proto3::pb_enum value);
+
+  // repeated .proto3.player_t players = 3;
   int players_size() const;
   void clear_players();
-  static const int kPlayersFieldNumber = 2;
+  static const int kPlayersFieldNumber = 3;
   const ::proto3::player_t& players(int index) const;
   ::proto3::player_t* mutable_players(int index);
   ::proto3::player_t* add_players();
@@ -2794,9 +2800,9 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
       players() const;
 
-  // optional .proto3.pb_enum result = 3;
+  // optional .proto3.pb_enum result = 4;
   void clear_result();
-  static const int kResultFieldNumber = 3;
+  static const int kResultFieldNumber = 4;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -2807,8 +2813,9 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::player_t > players_;
   int mid_;
+  int game_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::player_t > players_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -6667,7 +6674,21 @@ inline void MsgNCJoin::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.mid)
 }
 
-// repeated .proto3.player_t players = 2;
+// optional .proto3.pb_enum game = 2;
+inline void MsgNCJoin::clear_game() {
+  game_ = 0;
+}
+inline ::proto3::pb_enum MsgNCJoin::game() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCJoin.game)
+  return static_cast< ::proto3::pb_enum >(game_);
+}
+inline void MsgNCJoin::set_game(::proto3::pb_enum value) {
+  
+  game_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.game)
+}
+
+// repeated .proto3.player_t players = 3;
 inline int MsgNCJoin::players_size() const {
   return players_.size();
 }
@@ -6697,7 +6718,7 @@ MsgNCJoin::players() const {
   return players_;
 }
 
-// optional .proto3.pb_enum result = 3;
+// optional .proto3.pb_enum result = 4;
 inline void MsgNCJoin::clear_result() {
   result_ = 0;
 }

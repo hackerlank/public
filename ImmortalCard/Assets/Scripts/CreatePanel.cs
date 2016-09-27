@@ -56,9 +56,12 @@ public class CreatePanel : MonoBehaviour {
 			opRound.Ikey=pb_enum.OptionRound;
 			opRound.Ivalue=Main.Instance.Round;
 
+			//select game
+			Main.Instance.game=pb_enum.GameDdz;
+
 			MsgCNCreate msgC=new MsgCNCreate();
 			msgC.Mid=pb_msg.MsgCnCreate;
-			msgC.Game=pb_enum.GameDdz;
+			msgC.Game=Main.Instance.game;
 			msgC.Option.Add(opRobot);
 			msgC.Option.Add(opRound);
 
@@ -75,14 +78,27 @@ public class CreatePanel : MonoBehaviour {
 	}
 	
 	public void OnCreated(MsgNCCreate msgC){
-		DoudeZhuPanel.Create(delegate(Component obj){
-			Destroy(gameObject);
-		});
+		createGame();
 	}
 
 	public void OnJoined(MsgNCJoin msgJ){
-		DoudeZhuPanel.Create(delegate(Component obj){
+		Main.Instance.game=msgJ.Game;
+		createGame();
+	}
+
+	void createGame(){
+		System.Action<Component> handler=delegate(Component obj){
 			Destroy(gameObject);
-		});
+		};
+
+		switch(Main.Instance.game){
+		case pb_enum.GameMj:
+			MahJong.Create(handler);
+			break;
+		case pb_enum.GameDdz:
+		default:
+			DoudeZhuPanel.Create(handler);
+			break;
+		}
 	}
 }
