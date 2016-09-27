@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public class MahJong : GamePanel {
 		//discard my card
 		var check=false;
 		do{
-			var token=(_token+1)%N;
+			var token=(_token+1)%maxPlayer;
 			if(token!=_pos){
 				Debug.Log("Discard invalid turn");
 				break;
@@ -39,7 +39,7 @@ public class MahJong : GamePanel {
 						foreach(var c in _selection)
 							curr.Pawns.Add(c.Value.Id);
 					}
-					if(Main.Instance.gameRule.Verify(curr,hist))
+					if(rule.Verify(curr,hist))
 						check=true;
 				}
 			}
@@ -76,6 +76,10 @@ public class MahJong : GamePanel {
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
+	void Awake(){
+		Rule=new DoudeZhuRule();
+	}
+
 	public void OnCall(){
 	}
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 using Proto3;
@@ -13,7 +13,7 @@ public class LoginPanel : MonoBehaviour {
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			DoudeZhuPanel.Create(delegate(Component obj){
 				var gp=obj as DoudeZhuPanel;
-				var msg=Main.Instance.gameRule.Deal();
+				var msg=gp.Rule.Deal();
 
 				gp.StartCoroutine(gp.Deal(msg));
 				Destroy(gameObject);

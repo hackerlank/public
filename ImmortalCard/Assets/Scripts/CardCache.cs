@@ -10,9 +10,12 @@ public class CardCache{
 	public static bool Ready=false;
 
 	public static string Id2File(uint color,uint value){
-		string[] Colors={"c","d","h","s"};
-		value=Main.Instance.gameRule.inverseTransformValue(value);
-		return string.Format("{0}{1:00}",Colors[color],value);
+		if(Main.Instance.gameController!=null&&Main.Instance.gameController.Rule!=null){
+			string[] Colors={"c","d","h","s"};
+			value=Main.Instance.gameController.Rule.inverseTransformValue(value);
+			return string.Format("{0}{1:00}",Colors[color],value);
+		}
+		return "";
 	}
 
 	public static IEnumerator Load(){

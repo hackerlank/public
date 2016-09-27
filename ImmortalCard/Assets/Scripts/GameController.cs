@@ -11,6 +11,7 @@ public interface GameController {
 
 	//game rule
 	uint Round{get;set;}
+	GameRule Rule{get;set;}
 
 	//card operation
 	void OnCard(Card card,bool select=true);

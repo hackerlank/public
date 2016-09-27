@@ -5,24 +5,23 @@ using System.Collections.Generic;
 using Proto3;
 
 public class GamePanel : MonoBehaviour,GameController {
-	[HideInInspector]
-	public uint			N=3;
 	public Card[]		BottomCards;
-
 	public Transform	HandArea;
-	public Transform[]	DiscardAreas;	//MRL
+	public Transform[]	DiscardAreas;	//MROL(Me,Right,Opposite,Left)
 	public PlayerIcon[]	Players;
 	public Text[]		nHandCards;
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnHint,BtnDiscard,BtnPass,Buttons;
 
+	protected uint		maxPlayer=3;
 	protected uint		round=0;
+	protected GameRule	rule=null;
+
+	protected List<Card>	_selection;
+	protected uint			_pos,_token,_banker;
+	protected List<bunch_t>	_historical;
+
 	public MsgNCFinish	Summary=null;
-
-	protected List<Card>		_selection;
-	protected uint				_pos,_token,_banker;
-	protected List<bunch_t>		_historical;
-
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
@@ -32,7 +31,7 @@ public class GamePanel : MonoBehaviour,GameController {
 
 	IEnumerator Start(){
 		while(!CardCache.Ready)yield return null;
-		N=Main.Instance.gameRule.MaxPlayer;
+		maxPlayer=rule.MaxPlayer;
 	}
 
 	void OnDestroy(){
@@ -137,11 +136,12 @@ public class GamePanel : MonoBehaviour,GameController {
 	// logic
 	// ----------------------------------------------
 	public uint Round{get{return round;}set{round=value;}}
+	public GameRule Rule{get{return rule;}set{rule=value;}}
 
 	public IEnumerator Deal(MsgNCStart msg){
 		++Round;
 		_pos=msg.Pos;
-		_token=(msg.Banker+N-1)%N;	//set to the previous position
+		_token=(msg.Banker+maxPlayer-1)%maxPlayer;	//set to the previous position
 		_banker=msg.Banker;
 		_historical=new List<bunch_t>();
 		_selection=new List<Card>();
@@ -151,9 +151,9 @@ public class GamePanel : MonoBehaviour,GameController {
 			(M=_pos)
 		*/
 		var M=_pos;
-		var R=(M+1)%N;
-		var L=(M+2)%N;
-		var O=(M+3)%N;
+		var R=(M+1)%maxPlayer;
+		var L=(M+2)%maxPlayer;
+		var O=(M+3)%maxPlayer;
 		Transform[] tempD=new Transform[DiscardAreas.Length];	//MRL
 		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
 		Text[] tempH=new Text[nHandCards.Length];
@@ -181,7 +181,7 @@ public class GamePanel : MonoBehaviour,GameController {
 		}
 		//sort
 		var hands=new List<uint>(msg.Hands);
-		hands.Sort(Main.Instance.gameRule.comparision);
+		hands.Sort(rule.comparision);
 		//deal
 		string str="deal: banker="+msg.Banker+"pos="+msg.Pos+"\nhands:\n";
 		for(int i=0;i<hands.Count;++i){
@@ -256,11 +256,11 @@ public class GamePanel : MonoBehaviour,GameController {
 
 	//System.Comparison<uint>
 	int compare_card(Card x,Card y){
-		return Main.Instance.gameRule.comparision(x.Value.Id,y.Value.Id);
+		return rule.comparision(x.Value.Id,y.Value.Id);
 	}
 
 	void next(uint pos){
-		var R=(pos+1)%N;
+		var R=(pos+1)%maxPlayer;
 		if(Players[pos].gameTimer!=null)
 			Players[pos].gameTimer.On(false);
 		if(Players[R].gameTimer!=null)

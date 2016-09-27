@@ -8,7 +8,6 @@ public class Main : MonoBehaviour {
 	public WSProxy			ws;
 
 	public uint				Round=4;
-	public GameRule			gameRule=new GameRule();
 	public GameController	gameController=null;
 
 	public enum Mode{
