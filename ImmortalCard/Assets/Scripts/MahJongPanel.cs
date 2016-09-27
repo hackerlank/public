@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class DoudeZhuPanel : GamePanel {
+public class MahJong : GamePanel {
 	public GameObject	BtnCall,BtnDouble;
 
 	// ----------------------------------------------
@@ -83,7 +83,7 @@ public class DoudeZhuPanel : GamePanel {
 	}
 	
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<DoudeZhuPanel>(Main.Instance.transform,delegate(Component obj){
+		Utils.Load<MahJong>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		});
 	}
