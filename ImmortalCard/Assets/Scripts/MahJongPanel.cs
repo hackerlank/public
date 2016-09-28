@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class MahJong : GamePanel {
+public class MahJongPanel : GamePanel {
 	public GameObject	BtnCall,BtnDouble;
 
 	// ----------------------------------------------
@@ -87,7 +87,7 @@ public class MahJong : GamePanel {
 	// ----------------------------------------------
 	override public void Awake(){
 		base.Awake();
-		Rule=new DoudeZhuRule();
+		Rule=new MahJongRule();
 	}
 
 	public void OnCall(){
@@ -97,7 +97,7 @@ public class MahJong : GamePanel {
 	}
 	
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<MahJong>(Main.Instance.transform,delegate(Component obj){
+		Utils.Load<MahJongPanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		});
 	}

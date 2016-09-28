@@ -9,6 +9,36 @@ public class MahJongRule: GameRule {
 	public override uint MaxPlayer{get{return 4;}}
 
 	protected override void deal(MsgNCStart msg){
+		uint id=0;
+		for(uint i=1;i<=13;++i){ //A-K => 1-13
+			for(uint j=0;j<4;++j){
+				Pile[id]=id;
+				pawn_t card=new pawn_t();
+				card.Color=j; //clubs,diamonds,hearts,spades => 0-3
+				card.Value=transformValue(i);
+				card.Id=id++;
+				msg.Cards.Add(card);
+			}
+		}
+		for(uint j=0;j<=1;++j){  //Joker(color 0,1) => 14,15
+			Pile[id]=id;
+			pawn_t card=new pawn_t();
+			card.Color=j;
+			card.Value=transformValue(14+j);
+			card.Id=id++;
+			msg.Cards.Add(card);
+		}
+		//shuffle
+		Pile=shuffle(Pile);
+		//deal
+		for(uint i=0;i<20;++i)
+			msg.Hands.Add(Pile[i]);
+		//other hands
+		Hands=new List<uint>[2]{new List<uint>(),new List<uint>()};
+		for(uint i=20;i<20+17;++i)
+			Hands[0].Add(Pile[i]);
+		for(uint i=20+17;i<20+17*2;++i)
+			Hands[1].Add(Pile[i]);
 	}
 
 	protected override pb_enum verifyBunch(bunch_t bunch){

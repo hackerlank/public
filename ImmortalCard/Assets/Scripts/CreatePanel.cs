@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Proto3;
 
@@ -93,7 +93,7 @@ public class CreatePanel : MonoBehaviour {
 
 		switch(Main.Instance.game){
 		case pb_enum.GameMj:
-			MahJong.Create(handler);
+			MahJongPanel.Create(handler);
 			break;
 		case pb_enum.GameDdz:
 		default:

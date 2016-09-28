@@ -189,7 +189,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		//deal
 		while(!CardCache.Ready)yield return null;
 
-		string str="deal: banker="+msg.Banker+"pos="+msg.Pos+"\nhands:\n";
+		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
 		for(int i=0;i<hands.Count;++i){
 			var id=hands[i];
 			var v=Configs.Cards[id];
