@@ -6,7 +6,7 @@ using Proto3;
 
 public abstract class GamePanel : MonoBehaviour,GameController {
 	public Card[]		BottomCards;
-	public Transform	HandArea;
+	public Transform[]	HandAreas;
 	public Transform[]	DiscardAreas;	//MROL(Me,Right,Opposite,Left)
 	public PlayerIcon[]	Players;
 	public Text[]		nHandCards;
@@ -128,7 +128,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	
 	public void OnSettle(MsgNCSettle msg){
 		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
-		foreach(Transform ch in HandArea.transform)Destroy(ch.gameObject);
+		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
 		Utils.Load<SettlePopup>(Main.Instance.transform);
 	}
 	
@@ -194,7 +194,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			var id=hands[i];
 			var v=Configs.Cards[id];
 			var fin=false;
-			Card.Create(v,HandArea,delegate(Card card) {
+			Card.Create(v,HandAreas[0],delegate(Card card) {
 				card.Static=false;
 				fin=true;
 			});
