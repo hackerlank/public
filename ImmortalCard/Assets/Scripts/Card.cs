@@ -96,7 +96,8 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		eventData.pointerDrag.transform.position+=new Vector3(delta.x,delta.y,0);
 	}
 
-	public void DiscardTo(Transform group,float scalar=1f){
+	public void DiscardTo(Transform group){
+		float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
 		_static=true;
 		transform.SetParent(group);
 		transform.localScale=Vector3.one;

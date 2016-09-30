@@ -21,4 +21,5 @@ public interface GameController {
 	//ui
 	void OnExit();
 	string Id2File(uint color,uint value);
+	float DiscardScalar{get;}
 }

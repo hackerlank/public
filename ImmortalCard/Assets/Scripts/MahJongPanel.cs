@@ -22,6 +22,8 @@ public class MahJongPanel : GamePanel {
 		return "";
 	}
 
+	override public float DiscardScalar{get{return .7f;}}
+
 	override protected bool checkDiscard(Card card=null){
 		//discard my card
 		var check=false;
