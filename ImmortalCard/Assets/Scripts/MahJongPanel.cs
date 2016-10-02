@@ -13,6 +13,7 @@ public class MahJongPanel : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
+	override public string CardPrefab{get{return "Mahjong";}}
 	override public string Id2File(uint color,uint value){
 		if(Rule!=null){
 			string[] Colors={"tong","tiao","wan"};
@@ -94,6 +95,18 @@ public class MahJongPanel : GamePanel {
 	override public void Awake(){
 		base.Awake();
 		Rule=new MahJongRule();
+
+		var files=new List<string>();
+		files.Add("dong");
+		files.Add("nan");
+		files.Add("xi");
+		files.Add("bei");
+		files.Add("zhong");
+		files.Add("fa");
+		files.Add("bai");
+		for(uint k=0;k<3;++k)for(uint i=1;i<=9;++i)
+			files.Add(Id2File(k,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
 	}
 
 	public void OnCall(){

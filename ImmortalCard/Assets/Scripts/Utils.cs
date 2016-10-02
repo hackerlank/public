@@ -5,8 +5,8 @@ using System.Collections;
 
 public class Utils {
 
-	public static void Load<T>(Transform parent=null,System.Action<Component> action=null){
-		string url="Prefabs/"+typeof(T).ToString();
+	public static void Load<T>(Transform parent=null,System.Action<Component> action=null,string path=null){
+		string url="Prefabs/"+(path==null?typeof(T).ToString():path);
 		GameObject go=Resources.Load(url,typeof(GameObject)) as GameObject;
 		if(go){
 			go=GameObject.Instantiate(go) as GameObject;
@@ -18,8 +18,8 @@ public class Utils {
 		}
 	}
 
-	public static IEnumerator LoadAsync<T>(Transform parent=null){
-		string url="Prefabs/"+typeof(T).ToString();
+	public static IEnumerator LoadAsync<T>(Transform parent=null,string path=null){
+		string url="Prefabs/"+(path==null?typeof(T).ToString():path);
 		ResourceRequest req = Resources.LoadAsync(url,typeof(GameObject));
 		yield return req;
 		GameObject go=req.asset as GameObject;
@@ -31,16 +31,16 @@ public class Utils {
 		}
 	}
 
-	public static void SpriteCreate(string name,System.Action<Sprite> handler=null,string path="Cards/"){
-		string url=path+name;
+	public static void SpriteCreate(string path,string name,System.Action<Sprite> handler=null){
+		string url=path+"/"+name;
 		var obj=Resources.Load(url,typeof(Sprite));
 		Sprite sprite=null;
 		if(obj)sprite=MonoBehaviour.Instantiate(obj) as Sprite;
 		if(handler!=null)handler.Invoke(sprite);
 	}
 	
-	public static void ImageReset(Image img,string name,bool resize=false){
-		SpriteCreate(name,delegate(Sprite sp) {
+	public static void ImageReset(Image img,string path,string name,bool resize=false){
+		SpriteCreate(path,name,delegate(Sprite sp) {
 			img.sprite=sp;
 			if(resize)img.rectTransform.sizeDelta=new Vector2(sp.texture.width,sp.texture.height);
 		});

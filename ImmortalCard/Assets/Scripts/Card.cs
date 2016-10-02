@@ -107,9 +107,9 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		le.preferredHeight*=scalar;
 	}
 
-	public static void Create(Proto3.pawn_t data=null,Transform parent=null,System.Action<Card> handler=null){
-		if(CardCache.card){
-			var go=GameObject.Instantiate(CardCache.card) as GameObject;
+	public static void Create(string path,Proto3.pawn_t data=null,Transform parent=null,System.Action<Card> handler=null){
+		if(CardCache.cards[path]){
+			var go=GameObject.Instantiate(CardCache.cards[path]) as GameObject;
 			go.SetActive(true);
 			var card=go.GetComponent<Card>();
 			if(card!=null){
@@ -124,22 +124,5 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			if(handler!=null)
 				handler.Invoke(card);
 		}
-		/*
-		Utils.Load<Card>(null,delegate(Component comp) {
-			var card=comp as Card;
-			if(comp!=null){
-				//value
-				if(data!=null)
-					card.Value=data;
-				//parent
-				if(parent!=null){
-					comp.transform.SetParent(parent);
-					comp.transform.localScale=Vector3.one;
-				}
-			}
-			if(handler!=null)
-				handler.Invoke(card);
-		});
-		*/
 	}
 }

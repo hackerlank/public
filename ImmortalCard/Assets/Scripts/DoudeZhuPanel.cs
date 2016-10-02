@@ -10,6 +10,7 @@ public class DoudeZhuPanel : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
+	override public string CardPrefab{get{return "Card";}}
 	override public string Id2File(uint color,uint value){
 		if(Rule!=null){
 			string[] Colors={"c","d","h","s"};
@@ -90,6 +91,15 @@ public class DoudeZhuPanel : GamePanel {
 	override public void Awake(){
 		base.Awake();
 		Rule=new DoudeZhuRule();
+
+		var files=new List<string>();
+		files.Add("back");
+		files.Add("c14");
+		files.Add("d15");
+		for(uint j=0;j<4;++j)
+			for(uint i=1;i<=13;++i)
+				files.Add(Id2File(j,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
 	}
 
 	public void OnCall(){

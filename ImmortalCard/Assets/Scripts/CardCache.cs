@@ -6,39 +6,38 @@ using System.Collections.Generic;
 public class CardCache{
 
 	public static Dictionary<string,Sprite> sprites=new Dictionary<string, Sprite>();
-	public static GameObject card;
+	public static Dictionary<string,GameObject> cards=new Dictionary<string, GameObject>();
 	public static bool Ready=false;
-	
-	public static IEnumerator Load(){
+
+	public static IEnumerator Load(string[] files,string path){
 		while(Main.Instance.gameController==null)
 			yield return null;
-
+		
+		//Debug.Log("----caching "+path);
 		Ready=false;
 		//load Card.prefab
-		if(card==null)
+		if(!cards.ContainsKey(path)||cards[path]==null){
 			Utils.Load<Card>(null,delegate(Component comp){
-				card=comp.gameObject;
-				card.SetActive(false);
-			});
-		yield return null;
-
-		//load all cards Sprite
-		var files=new List<string>();
-		files.Add("back");
-		files.Add("c14");
-		files.Add("d15");
-		for(uint j=0;j<4;++j)
-			for(uint i=1;i<=13;++i)
-				files.Add(Main.Instance.gameController.Id2File(j,i));
-		foreach(var f in files){
+				cards[path]=comp.gameObject;
+				cards[path].SetActive(false);
+			},path);
 			yield return null;
-			Utils.SpriteCreate(f,delegate(Sprite sprite) {
-				//Debug.Log("loaded card file="+f);
-				sprites[f]=sprite;
-			});
-			while(!sprites.ContainsKey(f))yield return null;
 		}
-		while(card==null)yield return null;
+		
+		//load all cards Sprite
+		foreach(var f in files){
+			if(!sprites.ContainsKey(f)){
+				yield return null;
+				Utils.SpriteCreate(path,f,delegate(Sprite sprite) {
+					//Debug.Log("loaded card file="+f+(sprite==null?" failed":" succeed"));
+					sprites[f]=sprite;
+				});
+			}
+		}
+		//waiting
+		foreach(var f in files)while(!sprites.ContainsKey(f))yield return null;
+		while(!cards.ContainsKey(path)||cards[path]==null)yield return null;
+		//Debug.Log("----cached "+path);
 		Ready=true;
 	}
 }

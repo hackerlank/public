@@ -108,7 +108,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 				var id=cards[i];
 				var v=Configs.Cards[id];
 				var fin=false;
-				Card.Create(v,nHandCards[_token].transform.parent,delegate(Card card) {
+				Card.Create(CardPrefab,v,nHandCards[_token].transform.parent,delegate(Card card) {
 					card.state=Card.State.ST_DISCARD;
 					card.DiscardTo(DiscardAreas[_token]);
 					fin=true;
@@ -142,6 +142,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public GameRule Rule{get{return rule;}set{rule=value;}}
 	abstract public string Id2File(uint color,uint value);
 	abstract public float DiscardScalar{get;}
+	abstract public string CardPrefab{get;}
 
 	public IEnumerator Deal(MsgNCStart msg){
 		++Round;
@@ -195,7 +196,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			var id=hands[i];
 			var v=Configs.Cards[id];
 			var fin=false;
-			Card.Create(v,HandAreas[0],delegate(Card card) {
+			Card.Create(CardPrefab,v,HandAreas[0],delegate(Card card) {
 				card.Static=false;
 				fin=true;
 			});
