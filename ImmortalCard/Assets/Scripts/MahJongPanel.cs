@@ -15,9 +15,10 @@ public class MahJongPanel : GamePanel {
 	// ----------------------------------------------
 	override public string Id2File(uint color,uint value){
 		if(Rule!=null){
-			string[] Colors={"c","d","h","s"};
+			string[] Colors={"tong","tiao","wan"};
 			value=Rule.inverseTransformValue(value);
-			return string.Format("{0}{1:00}",Colors[color],value);
+			if(color<Colors.Length)
+				return string.Format("{0}{1:0}",Colors[color],value);
 		}
 		return "";
 	}

@@ -31,13 +31,12 @@ public class Utils {
 		}
 	}
 
-	public static void SpriteCreate(string name,System.Action<Sprite> handler){
-		string url="Cards/"+name;
+	public static void SpriteCreate(string name,System.Action<Sprite> handler=null,string path="Cards/"){
+		string url=path+name;
 		var obj=Resources.Load(url,typeof(Sprite));
-		if(obj){
-			Sprite sprite = MonoBehaviour.Instantiate(obj) as Sprite;
-			if(handler!=null)handler.Invoke(sprite);
-		};
+		Sprite sprite=null;
+		if(obj)sprite=MonoBehaviour.Instantiate(obj) as Sprite;
+		if(handler!=null)handler.Invoke(sprite);
 	}
 	
 	public static void ImageReset(Image img,string name,bool resize=false){
