@@ -31,16 +31,15 @@ public class Utils {
 		}
 	}
 
-	public static void SpriteCreate(string path,string name,System.Action<Sprite> handler=null){
-		string url=path+"/"+name;
+	public static void SpriteCreate(string url,System.Action<Sprite> handler=null){
 		var obj=Resources.Load(url,typeof(Sprite));
 		Sprite sprite=null;
 		if(obj)sprite=MonoBehaviour.Instantiate(obj) as Sprite;
 		if(handler!=null)handler.Invoke(sprite);
 	}
 	
-	public static void ImageReset(Image img,string path,string name,bool resize=false){
-		SpriteCreate(path,name,delegate(Sprite sp) {
+	public static void ImageReset(Image img,string url,bool resize=false){
+		SpriteCreate(url,delegate(Sprite sp) {
 			img.sprite=sp;
 			if(resize)img.rectTransform.sizeDelta=new Vector2(sp.texture.width,sp.texture.height);
 		});

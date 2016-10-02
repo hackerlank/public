@@ -67,7 +67,6 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			_state=State.ST_NORMAL;
 			transform.localPosition-=delta*Vector3.up;
 		}
-		Main.Instance.gameController.OnCard(this,_state==State.ST_SELECT);
 	}
 
 	public void OnPointerClick (PointerEventData eventData){
@@ -77,6 +76,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			Main.Instance.gameController.Discard(this);
 		else if(eventData.clickCount==1){
 			Tap();
+			Main.Instance.gameController.OnCard(this,_state==State.ST_SELECT);
 		}
 	}
 	

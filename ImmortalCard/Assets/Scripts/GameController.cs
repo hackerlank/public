@@ -15,7 +15,7 @@ public interface GameController {
 	GameRule Rule{get;set;}
 
 	//card operation
-	void OnCard(Card card,bool select=true);
+	bool OnCard(Card card,bool select=true);
 	void Discard(Card card=null);
 
 	//ui

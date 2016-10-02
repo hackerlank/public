@@ -55,7 +55,7 @@ public class MahJongPanel : GamePanel {
 						foreach(var c in _selection)
 							curr.Pawns.Add(c.Value.Id);
 					}
-					if(rule.Verify(curr,hist))
+					if(Rule.Verify(curr,hist))
 						check=true;
 				}
 			}
@@ -107,6 +107,12 @@ public class MahJongPanel : GamePanel {
 		for(uint k=0;k<3;++k)for(uint i=1;i<=9;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
+	}
+
+	public override bool OnCard(Card card,bool select=true){
+		deselectAll();
+		base.OnCard(card,select);
+		return true;
 	}
 
 	public void OnCall(){

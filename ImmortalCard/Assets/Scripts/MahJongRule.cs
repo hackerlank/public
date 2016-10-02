@@ -47,9 +47,7 @@ public class MahJongRule: GameRule {
 	}
 	
 	public override int comparision(uint x,uint y){
-		var cx=Configs.Cards[x];
-		var cy=Configs.Cards[y];
-		return ((int)cx.Value)-((int)cy.Value);
+		return ((int)y)-((int)x);
 	}
 
 	public override uint transformValue(uint val){

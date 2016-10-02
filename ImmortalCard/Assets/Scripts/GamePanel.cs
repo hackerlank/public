@@ -13,7 +13,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnHint,BtnDiscard,BtnPass,Buttons;
 
-	protected uint		maxPlayer=3;
+	protected uint		maxPlayer=0;
 	protected uint		round=0;
 	protected GameRule	rule=null;
 
@@ -30,8 +30,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 
 	IEnumerator Start(){
-		while(!CardCache.Ready)yield return null;
 		maxPlayer=rule.MaxPlayer;
+		while(!CardCache.Ready)yield return null;
 	}
 
 	void OnDestroy(){
@@ -80,11 +80,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		});
 	}
 
-	public void OnCard(Card card,bool select=true){
+	virtual public bool OnCard(Card card,bool select=true){
 		if(select)
 			_selection.Add(card);
 		else
 			_selection.Remove(card);
+		return true;
 	}
 	// ----------------------------------------------
 	// messages
@@ -145,6 +146,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	abstract public string CardPrefab{get;}
 
 	public IEnumerator Deal(MsgNCStart msg){
+		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;
 		_pos=msg.Pos;
 		_token=(msg.Banker+maxPlayer-1)%maxPlayer;	//set to the previous position
@@ -189,7 +191,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		var hands=new List<uint>(msg.Hands);
 		hands.Sort(rule.comparision);
 		//deal
-		while(!CardCache.Ready)yield return null;
 
 		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
 		for(int i=0;i<hands.Count;++i){
