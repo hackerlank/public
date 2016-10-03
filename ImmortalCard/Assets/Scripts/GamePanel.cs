@@ -80,12 +80,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		});
 	}
 
-	virtual public bool OnCard(Card card,bool select=true){
+	virtual public void OnCard(Card card,bool select=true){
 		if(select)
 			_selection.Add(card);
 		else
 			_selection.Remove(card);
-		return true;
+		card.Tap();
 	}
 	// ----------------------------------------------
 	// messages
@@ -259,7 +259,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	protected void deselectAll(){
 		var copy=new List<Card>(_selection);
-		foreach(var c in copy)c.Tap();
+		foreach(var c in copy)c.Tap();	//avoid crash
+		_selection.Clear();
 	}
 
 

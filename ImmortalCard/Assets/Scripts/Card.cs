@@ -59,6 +59,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 
 	public void Tap(){
+		//animation only
 		float delta=32f;
 		if(_state==State.ST_NORMAL){
 			_state=State.ST_SELECT;
@@ -75,8 +76,8 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		if(eventData.clickCount==2)
 			Main.Instance.gameController.Discard(this);
 		else if(eventData.clickCount==1){
-			Tap();
-			Main.Instance.gameController.OnCard(this,_state==State.ST_SELECT);
+			if(_state==State.ST_NORMAL||_state==State.ST_SELECT)
+				Main.Instance.gameController.OnCard(this,_state==State.ST_NORMAL);
 		}
 	}
 	

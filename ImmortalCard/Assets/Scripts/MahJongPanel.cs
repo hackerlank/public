@@ -109,10 +109,11 @@ public class MahJongPanel : GamePanel {
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
 	}
 
-	public override bool OnCard(Card card,bool select=true){
+	public override void OnCard(Card card,bool select=true){
+		var selected=false;
+		foreach(var old in _selection)if(old==card)selected=true;
 		deselectAll();
-		base.OnCard(card,select);
-		return true;
+		if(!selected)base.OnCard(card,select);
 	}
 
 	public void OnCall(){
