@@ -33,17 +33,17 @@ void DoudeZhu::Tick(Game& game){
                 ChangeState(game,Game::State::ST_START);
             break;
         case Game::State::ST_START:
-            Deal(game);
+            deal(game);
             ChangeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
-            if(IsGameOver(game))
+            if(isGameOver(game))
                 ChangeState(game,Game::State::ST_SETTLE);
             break;
         case Game::State::ST_MELD:
             break;
         case Game::State::ST_SETTLE:
-            if(Settle(game))
+            if(settle(game))
                 ChangeState(game,Game::State::ST_END);
             else
                 ChangeState(game,Game::State::ST_WAIT);
@@ -65,15 +65,15 @@ int DoudeZhu::MaxPlayer(){
     return 3;
 }
 
-int DoudeZhu::MaxCards(){
+int DoudeZhu::maxCards(){
     return 54;
 }
 
-int DoudeZhu::MaxHands(){
+int DoudeZhu::maxHands(){
     return 17;
 }
 
-int DoudeZhu::Bottom(){
+int DoudeZhu::bottom(){
     return 3;
 }
 
@@ -213,7 +213,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
 
         //pass token
         if(game->players[player.pos]->gameData.hands().size()>0)
-            Next(*game);
+            next(*game);
     }else
         player.send(omsg);
 }
@@ -231,7 +231,7 @@ void DoudeZhu::tickRobot(Game& game){
 
                         MsgCNDiscard msg;
                         google::protobuf::RepeatedField<proto3::bunch_t> bunches;
-                        if(Hint(bunches,game,robot->pos,*msg.mutable_bunch()))
+                        if(hint(bunches,game,robot->pos,*msg.mutable_bunch()))
                             msg.mutable_bunch()->CopyFrom(bunches.Get(0));
                         else
                             msg.mutable_bunch()->set_type(pb_enum::OP_PASS);
@@ -246,7 +246,7 @@ void DoudeZhu::tickRobot(Game& game){
     }
 }
 
-bool DoudeZhu::Settle(Game& game){
+bool DoudeZhu::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto& gd=game.players[i]->gameData;
@@ -279,7 +279,7 @@ bool DoudeZhu::Settle(Game& game){
     return false;
 }
 
-bool DoudeZhu::IsGameOver(Game& game){
+bool DoudeZhu::isGameOver(Game& game){
     for(auto player:game.players){
         if(player->gameData.hands().size()<=0)
             return true;
@@ -287,7 +287,7 @@ bool DoudeZhu::IsGameOver(Game& game){
     return false;
 }
 
-bool DoudeZhu::Hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
+bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
     //C(17,8) = 24310; C(17,2) = 136
     auto& hands=game.players[pos]->gameData.hands();
     auto& bunch=*bunches.Add();
@@ -674,7 +674,7 @@ void DoudeZhu::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<ui
 void DoudeZhu::test(){
     DoudeZhu ddz;
     Game game;
-    ddz.Deal(game);
+    ddz.deal(game);
     proto3::bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);

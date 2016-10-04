@@ -12,7 +12,7 @@
 #include <algorithm>
 using namespace proto3;
 
-void GameRule::Deal(Game& game){
+void GameRule::deal(Game& game){
     //clear
     game.token=game.banker;
     game.units.clear();
@@ -23,7 +23,7 @@ void GameRule::Deal(Game& game){
     for(auto& player:game.players)if(player)player->reset();
     
     //init cards
-    auto N=MaxCards();
+    auto N=maxCards();
     game.units.resize(N);
     game.pile.resize(N);
     initCard(game);
@@ -36,8 +36,8 @@ void GameRule::Deal(Game& game){
     
     //deal: fixed position,movable banker
     auto MP=MaxPlayer();
-    auto MH=MaxHands();
-    auto BK=MH+Bottom();
+    auto MH=maxHands();
+    auto BK=MH+bottom();
     size_t I=game.banker,
     J=(game.banker+1)%MP,
     K=(game.banker+2)%MP;
@@ -99,7 +99,7 @@ bool GameRule::Ready(Game& game){
     return n>=MaxPlayer();
 }
 
-void GameRule::Next(Game& game){
+void GameRule::next(Game& game){
     auto old=game.token;
     if(++game.token>=game.rule->MaxPlayer())game.token=0;
     KEYE_LOG("game token: %d=>%d\n",old,game.token);

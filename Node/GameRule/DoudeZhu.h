@@ -14,20 +14,20 @@ public:
     virtual void        Tick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
-    virtual int         MaxCards();
-    virtual int         MaxHands();
-    virtual int         Bottom();
 
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&){};
-    virtual bool        Settle(Game&);
-    virtual bool        IsGameOver(Game&);
-    
-    virtual bool        Hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
     
     static void         test();
 protected:
     virtual void        initCard(Game&);
+    virtual int         maxCards();
+    virtual int         maxHands();
+    virtual int         bottom();
+    
+    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
+    virtual bool        settle(Game&);
+    virtual bool        isGameOver(Game&);
 private:
     void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);

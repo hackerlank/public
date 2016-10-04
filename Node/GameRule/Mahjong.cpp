@@ -17,22 +17,30 @@ void Mahjong::Tick(Game& game){
                 ChangeState(game,Game::State::ST_START);
             break;
         case Game::State::ST_START:
-            Deal(game);
+            deal(game);
             ChangeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
-            ChangeState(game,Game::State::ST_MELD);
+            if(game.pendingDiscard&&game.pendingDiscard->arrived)
+                ChangeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_MELD:
-            if(IsGameOver(game))
-                ChangeState(game,Game::State::ST_SETTLE);
+            if(game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
+                if(isGameOver(game))
+                    ChangeState(game,Game::State::ST_SETTLE);
+                else
+                    ChangeState(game,Game::State::ST_DRAW);
+            }
             break;
         case Game::State::ST_DRAW:
             draw(game);
-            ChangeState(game,Game::State::ST_DISCARD);
+            if(isGameOver(game))
+                ChangeState(game,Game::State::ST_SETTLE);
+            else
+                ChangeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_SETTLE:
-            if(Settle(game))
+            if(settle(game))
                 ChangeState(game,Game::State::ST_END);
             else
                 ChangeState(game,Game::State::ST_WAIT);
@@ -54,15 +62,15 @@ int Mahjong::MaxPlayer(){
     return 4;
 }
 
-int Mahjong::MaxCards(){
+int Mahjong::maxCards(){
     return 108;
 }
 
-int Mahjong::MaxHands(){
+int Mahjong::maxHands(){
     return 17;
 }
 
-int Mahjong::Bottom(){
+int Mahjong::bottom(){
     return 1;
 }
 
@@ -176,7 +184,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             hints->Clear();
             if(i!=player.pos){
                 google::protobuf::RepeatedField<proto3::bunch_t> bunches;
-                if(Hint(bunches,*game,i,*msg.mutable_bunch()))
+                if(hint(bunches,*game,i,*msg.mutable_bunch()))
                     for(auto& b:bunches)hints->Add()->CopyFrom(b);
             }
             p->send(omsg);
@@ -300,7 +308,7 @@ void Mahjong::meld(Game& game,unit_id_t card,pos_t pos){
             }
             if(res!=suite_t::eOps::UNKNOWN){
                 std::vector<suite_t> outSuites;
-                if(IsGameOver(pos,outSuites,card)){
+                if(isGameOver(pos,outSuites,card)){
                     settle(pos,outSuites,card);
                     PassToken(pos);
                     ChangeState(State::ST_SETTLE);
@@ -410,7 +418,7 @@ void Mahjong::meld(Game& game,unit_id_t card,pos_t pos){
 }
 
 void Mahjong::draw(Game& game){
-    Next(game);
+    next(game);
     auto player=game.players[game.token];
     auto card=game.pile.back();
     game.pile.pop_back();
@@ -488,7 +496,7 @@ void Mahjong::tickRobot(Game& game){
     }
 }
 
-bool Mahjong::Settle(Game& game){
+bool Mahjong::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto& gd=game.players[i]->gameData;
@@ -521,7 +529,7 @@ bool Mahjong::Settle(Game& game){
     return false;
 }
 
-bool Mahjong::IsGameOver(Game& game){
+bool Mahjong::isGameOver(Game& game){
     for(auto player:game.players){
         if(player->gameData.hands().size()<=0)
             return true;
@@ -529,7 +537,7 @@ bool Mahjong::IsGameOver(Game& game){
     return false;
 }
 
-bool Mahjong::Hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& bunch){
+bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& bunch){
     auto& hands=game.players[pos]->gameData.hands();
     return bunches.size()>0;
 }
@@ -580,7 +588,7 @@ void Mahjong::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uin
 void Mahjong::test(){
     Mahjong ddz;
     Game game;
-    ddz.Deal(game);
+    ddz.deal(game);
     proto3::bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);

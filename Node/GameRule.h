@@ -12,9 +12,7 @@
 class GameRule{
 public:
     virtual             ~GameRule(){};
-    void                Deal(Game&);
     bool                Ready(Game&);
-    void                Next(Game&);
     void                ChangeState(Game&,Game::State);
     
     void                OnReady(Player&);
@@ -22,19 +20,23 @@ public:
     virtual void        Tick(Game&)=0;
     virtual int         Type()=0;
     virtual int         MaxPlayer()=0;
-    virtual int         MaxCards()=0;
-    virtual int         MaxHands()=0;
-    virtual int         Bottom()=0;
 
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
     virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&)=0;
-    virtual bool        Hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;
-    virtual bool        Settle(Game&)=0;
-    virtual bool        IsGameOver(Game&)=0;
 protected:
     virtual void        initCard(Game&)=0;
     virtual bool        comparision(Game&,uint x,uint y)=0;
+    virtual int         maxCards()=0;
+    virtual int         maxHands()=0;
+    virtual int         bottom()=0;
     
+    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;
+    virtual bool        settle(Game&)=0;
+    virtual bool        isGameOver(Game&)=0;
+    
+    void                deal(Game&);
+    void                next(Game&);
+
     const char*         bunch2str(Game&,std::string&,const proto3::bunch_t&);
     const char*         cards2str(Game&,std::string&,const google::protobuf::RepeatedField<uint32>&);
     void                logHands(Game&,uint32,std::string="");
