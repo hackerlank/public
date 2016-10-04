@@ -78,6 +78,10 @@ void GameRule::deal(Game& game){
         p->send(msg);
         hands->Clear();
     }
+    
+    //first discard
+    game.pendingDiscard=std::make_shared<Game::pending_t>();
+    game.pendingDiscard->pos=game.token;
 }
 
 void GameRule::OnReady(Player& player){

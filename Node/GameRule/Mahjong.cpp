@@ -25,19 +25,19 @@ void Mahjong::Tick(Game& game){
                 ChangeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_MELD:
-            if(game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
-                if(isGameOver(game))
+            if(!game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
+                auto& pending=game.pendingMeld.front();
+                if(pending.ops==pb_enum::OP_PASS)
+                    ChangeState(game,Game::State::ST_DRAW);
+                else if(isGameOver(game))
                     ChangeState(game,Game::State::ST_SETTLE);
                 else
-                    ChangeState(game,Game::State::ST_DRAW);
+                    ChangeState(game,Game::State::ST_DISCARD);
             }
             break;
         case Game::State::ST_DRAW:
             draw(game);
-            if(isGameOver(game))
-                ChangeState(game,Game::State::ST_SETTLE);
-            else
-                ChangeState(game,Game::State::ST_DISCARD);
+            ChangeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_SETTLE:
             if(settle(game))
@@ -101,12 +101,13 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             KEYE_LOG("OnDiscard no game\n");
             break;
         }
-        if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
-            break;
-        }
         if(game->token!=player.pos){
             KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
+            break;
+        }
+        
+        if(game->state!=Game::State::ST_DISCARD){
+            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
             break;
         }
         msg.mutable_bunch()->set_pos(player.pos);
@@ -154,7 +155,14 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         }
         if(!check)
             break;
-        
+
+        //shut discard after verify
+        if(!game->pendingDiscard){
+            KEYE_LOG("OnDiscard not on pending");
+            break;
+        }else
+            player.game->pendingDiscard.reset();
+
         std::string str;
         cards2str(*game,str,msg.bunch().pawns());
         KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
@@ -418,6 +426,10 @@ void Mahjong::meld(Game& game,unit_id_t card,pos_t pos){
 }
 
 void Mahjong::draw(Game& game){
+    if(game.state!=Game::ST_DRAW){
+        KEYE_LOG("OnMeld wrong st=%d",game.state);
+        return;
+    }
     next(game);
     auto player=game.players[game.token];
     auto card=game.pile.back();
@@ -425,8 +437,21 @@ void Mahjong::draw(Game& game){
     
     MsgNCDraw msg;
     msg.set_mid(pb_msg::MSG_NC_DRAW);
-    msg.set_card(card);
     msg.set_pos(game.token);
+    for(int i=0;i<MaxPlayer();++i){
+        auto p=game.players[i];
+        if(i==game.token){
+            msg.set_card(card);
+            //hint for player
+            game.pendingMeld.clear();
+            game.pendingMeld.push_back(Game::pending_t());
+            auto& pending=game.pendingMeld.back();
+            pending.pos=game.token;
+            //pending.ops=;
+        }else
+            msg.set_card(i_invalid);
+        p->send(msg);
+    }
 }
 
 bool Mahjong::isNaturalWin(Game& game,pos_t pos){
