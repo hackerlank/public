@@ -29,6 +29,11 @@ protected:
     virtual bool        settle(Game&);
     virtual bool        isGameOver(Game&);
 private:
+    //is game over with melt card
+    bool                isGameOver(Game&,pos_t,unit_id_t,std::vector<proto3::bunch_t>&);
+    //is game over against cards without AA
+    bool                isGameOverWithoutAA(Game&,std::vector<unit_id_t>&);
+
     void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                comparision(Game&,uint x,uint y);

@@ -370,6 +370,7 @@ message MsgNCDraw{
 pb_msg mid				=1;
 uint32 pos              =2;
 uint32 card             =3;
+repeated bunch_t hints  =4;
 };
 
 message MsgCNDismissSync{

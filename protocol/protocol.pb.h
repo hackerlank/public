@@ -3720,6 +3720,18 @@ class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::uint32 card() const;
   void set_card(::google::protobuf::uint32 value);
 
+  // repeated .proto3.bunch_t hints = 4;
+  int hints_size() const;
+  void clear_hints();
+  static const int kHintsFieldNumber = 4;
+  const ::proto3::bunch_t& hints(int index) const;
+  ::proto3::bunch_t* mutable_hints(int index);
+  ::proto3::bunch_t* add_hints();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_hints();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      hints() const;
+
   // @@protoc_insertion_point(class_scope:proto3.MsgNCDraw)
  private:
 
@@ -3729,6 +3741,7 @@ class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   bool _is_default_instance_;
   int mid_;
   ::google::protobuf::uint32 pos_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hints_;
   ::google::protobuf::uint32 card_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -7412,6 +7425,36 @@ inline void MsgNCDraw::set_card(::google::protobuf::uint32 value) {
   
   card_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.card)
+}
+
+// repeated .proto3.bunch_t hints = 4;
+inline int MsgNCDraw::hints_size() const {
+  return hints_.size();
+}
+inline void MsgNCDraw::clear_hints() {
+  hints_.Clear();
+}
+inline const ::proto3::bunch_t& MsgNCDraw::hints(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.hints)
+  return hints_.Get(index);
+}
+inline ::proto3::bunch_t* MsgNCDraw::mutable_hints(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCDraw.hints)
+  return hints_.Mutable(index);
+}
+inline ::proto3::bunch_t* MsgNCDraw::add_hints() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCDraw.hints)
+  return hints_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgNCDraw::mutable_hints() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCDraw.hints)
+  return &hints_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgNCDraw::hints() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCDraw.hints)
+  return hints_;
 }
 
 // -------------------------------------------------------------------
