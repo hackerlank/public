@@ -33,11 +33,12 @@ private:
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
     bool                comparision(Game&,uint x,uint y);
+    bool                opsPred(Game&,Game::pending_t& x,Game::pending_t& y);
     void                log(Game&){}
     void                make_bunch(Game&,proto3::bunch_t&,const std::vector<uint>&);
     bool				isNaturalWin(Game&,pos_t);
     void				draw(Game& game);
-    void				meld(Game&,unit_id_t,pos_t);
+    //void				meld(Game&,unit_id_t,pos_t);
 };
 
 #endif /* Mahjong_h */

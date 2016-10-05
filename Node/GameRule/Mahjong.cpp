@@ -33,6 +33,7 @@ void Mahjong::Tick(Game& game){
                     ChangeState(game,Game::State::ST_SETTLE);
                 else
                     ChangeState(game,Game::State::ST_DISCARD);
+                game.pendingMeld.clear();
             }
             break;
         case Game::State::ST_DRAW:
@@ -184,6 +185,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
     
     if(pb_enum::SUCCEESS==omsg.result()){
         auto game=player.game;
+        game->pendingMeld.clear();
         omsg.mutable_bunch()->set_pos(player.pos);
         //hints
         for(int i=0;i<MaxPlayer();++i){
@@ -192,237 +194,137 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             hints->Clear();
             if(i!=player.pos){
                 google::protobuf::RepeatedField<proto3::bunch_t> bunches;
-                if(hint(bunches,*game,i,*msg.mutable_bunch()))
+                if(hint(bunches,*game,i,*msg.mutable_bunch())){
                     for(auto& b:bunches)hints->Add()->CopyFrom(b);
+                    game->pendingMeld.push_back(Game::pending_t());
+                    auto& pending=game->pendingMeld.back();
+                }
             }
             p->send(omsg);
         }
         
         //historic
         game->historical.push_back(msg.bunch());
+        //pass pending if necessary
+        if(game->pendingMeld.empty()){
+            game->pendingMeld.push_back(Game::pending_t());
+            auto& pending=game->pendingMeld.back();
+            pending.ops=pb_enum::OP_PASS;
+            pending.arrived=true;
+            
+            bunch_t bunch;
+            bunch.add_pawns(msg.bunch().pawns().Get(0));
+            bunch.set_type(pb_enum::OP_PASS);
+            OnMeld(*game,player,bunch);
+        }
     }else
         player.send(omsg);
 }
 
 void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
+    auto pos=player.pos;
+    //state
     if(game.state!=Game::State::ST_MELD){
-        KEYE_LOG("OnMeld wrong st=%d",game.state);
+        KEYE_LOG("OnMeld wrong st=%d,pos=%d",game.state,pos);
         return;
     }
     
-    auto pos=player.pos;
+    //pending queue
+    auto& queue=game.pendingMeld;
+    if(queue.empty()){
+        KEYE_LOG("OnMeld with queue empty,pos=%d",pos);
+        return;
+    }
+
+    //card
     if(bunch.pawns().empty()){
         KEYE_LOG("OnMeld empty cards,pos=%d",pos);
         return;
     }
-    
     auto card=*bunch.pawns().rbegin();
-    auto& queue=game.pendingMeld;
-    if(queue.empty()){
-        meld(game,card,game.token);
-        KEYE_LOG("OnMeld with queue empty");
-        return;
-    }
     
+    //pos
     bool found=false;
     int i=0;
     for(;i<queue.size();++i)
         if(pos==queue[i].pos){
             found=true;
             if(card!=queue[i].card){
-                KEYE_LOG("OnMeld wrong card=%d,need=%d",queue[i].card,card);
+                KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d",queue[i].card,card,pos);
                 return;
             }
             break;
         }
     if(!found){
-        KEYE_LOG("OnMeld failed: pos=%d, wrong player",pos);
+        KEYE_LOG("OnMeld wrong player pos=%d",pos);
         return;
     }
+    
+    //arrived and duplicated
+    auto& pending=queue[i];
+    if(pending.arrived){
+        KEYE_LOG("OnMeld already arrived, pos=%d",pos);
+        return;
+    }
+    pending.arrived=true;
+    
+    //queue in
     std::string str;
-    KEYE_LOG("OnMeld pos=%d, ops=%s",pos,bunch2str(game,str,bunch));
+    KEYE_LOG("OnMeld queue in, pos=%d, ops=%s",pos,bunch2str(game,str,bunch));
+    pending.bunch.CopyFrom(bunch);
     
-    bool finish=false;
-    bool valid=false;
-    if(bunch.type() >= pb_enum::BUNCH_WIN){
-        valid=true;
-    } else if(bunch.type()==pb_enum::BUNCH_INVALID){
-        //invalid
-        KEYE_LOG("OnMeld error: unknown ops, pos=%d",pos);
-    } else if(bunch.type()==pb_enum::OP_PASS){
-        //handle pass
-        if(!bunch.pawns().empty()){
-        }
-    } else{
-        //有操作，校验
-        auto old_ops=bunch.type();
-        /*
-        auto res=PreSuit(user,suite).ops;
-        if(res!=suite_t::eOps::UNKNOWN&&res!=suite_t::eOps::PASS)
-            valid=true;
-        else
-            KEYE_LOG("OnMeld valid failed: unknown suit=%s, old_ops=%s, pos=%d",suite2String(suite).c_str(),ops2String(old_ops).c_str(),pos);
-        */
-        valid=true;
-    }
+    //sort
+    std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::opsPred,this,game,std::placeholders::_1,std::placeholders::_2));
     
-    //数据放入队列
-    queue[i].arrived=true;
-    /*
-    queue[i].suite=suite;
-    
-    std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::OpsPred,this,std::placeholders::_1,std::placeholders::_2));
-    */
-    //依优先级检查玩家操作
-    auto& q=queue.front();
-    if(q.arrived){
-        //clear to avoid duplicated meld
-        for(auto w=queue.begin(),ww=queue.end();w!=ww;++w)w->card=-1;
-        q.card=card;
-        meld(game,card,pos);
-    }
-}
+    //priority
+    auto& front=queue.front();
+    if(front.arrived){
+        //ok,verify
+        MsgNCMeld msg;
+        msg.set_mid(pb_msg::MSG_NC_MELD);
+        msg.set_result(pb_enum::SUCCEESS);
 
-void Mahjong::meld(Game& game,unit_id_t card,pos_t pos){
-    auto& queue=game.pendingMeld;
-    //可以返回操作了, GO
-    MsgNCMeld msg;
-    auto passToken=false;
-    auto pass=false;
-    auto bunch=msg.mutable_bunch();
-    bunch->set_pos(pos);			//当前玩家
-    bunch->set_type(pb_enum::BUNCH_INVALID);
-    //use test
-    /*
-    bool bDraw=_desk->deskCardsMap.find(card)!=_desk->deskCardsMap.end();
-    if(!queue.empty()){
-        //有操作: 偎提碰跑吃胡
-        auto& pr=queue.front();
-        auto& suite=pr.suite;
-        pos=pr.pos;
-        auto user=_desk->m_user[pos];
-        
-        KEYE_LOG("DoAccept pos=%d, ops=%s, card=%d",pos,ops2String(suite.ops).c_str(),msg.m_card);
-        
-        auto res=suite_t::eOps::UNKNOWN;
-        if(suite.ops>=suite_t::eOps::WIN){
-            res=suite.ops;
-            if(user->handCards.size()==1)
-                user->lastHand=true;
-            if(suite_t::eOps::AA==fixOps(suite.ops)){
-                user->handCards.push_back(suite.cards.back());
-            } else{
-                res=Suit(user,suite).ops;
-            }
-            if(res!=suite_t::eOps::UNKNOWN){
-                std::vector<suite_t> outSuites;
-                if(isGameOver(pos,outSuites,card)){
-                    settle(pos,outSuites,card);
-                    PassToken(pos);
-                    ChangeState(State::ST_SETTLE);
-                }
-            } else{
-                //诈和
-            }
-            //进张
-            if(_desk->_state!=State::ST_SETTLE)++user->inputCount;
-        } else if(suite.ops==suite_t::eOps::PASS){
-            //use test
-            KEYE_LOG("Pass 2 pos=%d card=%d:%d bDraw=%d",_desk->_token,card,_desk->allCards[card].value,bDraw?1:0);
-            //所有人都过
-            pass=true;
-            //弃牌
-            auto owner=_desk->m_user[_desk->_token];
-            owner->discardedCards.push_back(card);
-            ChangeState(State::ST_DRAW);
-            //客户端要求位置为抓牌打牌人的位置
-            msg.m_token=_desk->_token;
-        } else if(suite.ops==suite_t::eOps::UNKNOWN){
-            KEYE_LOG("accept error: unknown ops from pos %d",pos);
-            _desk->deskCards.clear();
-            Dismiss();
-        } else{
-            res=Suit(user,suite).ops;
-            res=fixOps(res);
-            
-            //有吃碰，进张
-            ++user->inputCount;
-            PassToken(pos);	//给吃牌的人
-            msg.m_token=_desk->_token;
-            //if(res==suite_t::eOps::BBB_B||suite_t::eOps::AAA_A==res||suite_t::eOps::AAAA==res
-            //||(user->inputCount==1&&pos!=_desk->_banker)){
-            if(res==suite_t::eOps::BBB_B||suite_t::eOps::AAA_A==res||suite_t::eOps::_AAAA==res||suite_t::eOps::AAAA==res
-               ||(user->inputCount==1&&pos!=_desk->_banker)){
-                //重跑检测
-                msg.m_foakDouble=FoakDouble(user);
-                if(msg.m_foakDouble){
-                    //下一家抓牌
-                    KEYE_LOG("accept: foakDouble at %d",pos);
-                }
-            }
-            if(res==suite_t::eOps::ABC||res==suite_t::eOps::AaA){
-                //摆火
-                for(auto i=user->baihuo.begin(),ii=user->baihuo.end();i!=ii;++i){
-                    Suit(user,*i);
-                    msg.m_extra.push_back(CardSuite());
-                    auto& ex=msg.m_extra.back();
-                    ex.type=i->ops;
-                    ex.cards.resize(i->cards.size());
-                    std::copy(i->cards.begin(),i->cards.end(),ex.cards.begin());
-                    KEYE_LOG("accept: sent baihuo pos=%d, ops=%s",pos,suite2String(*i).c_str());
-                }
-            };
-        }
-        
-        if(!suite.cards.empty())
-            msg.m_card=suite.cards.back();
-        msg.m_ops.type=suite.ops;
-        std::copy(suite.cards.begin(),suite.cards.end(),std::back_inserter(msg.m_ops.cards));
-        //video
-        if(!suite.cards.empty()){
-            auto& m_video=_desk->m_video;
-            std::vector<CardValue> cards;
-            for(auto it=suite.cards.begin(),iend=suite.cards.end(); it!=iend; ++it){
-                cards.push_back(CardValue());
-                auto& cvt=_desk->allCards[*it];
-                auto& cv=cards.back();
-                cv.m_id=cvt.id;
-                cv.m_color=cvt.small;
-                cv.m_number=cvt.value;
-            }
-            //use ops as operation
-            m_video.AddOper(suite.ops,msg.m_token,cards);
-        }
-        KEYE_LOG("DoAccept after pos=%d, ops=%s, card=%d",pos,ops2String(suite.ops).c_str(),msg.m_card);
-    }else if(pos!=pos_n){
-        KEYE_LOG("Pass 0 pos=%d card=%d:%d bDraw=%d",pos,card,_desk->allCards[card].value,bDraw?1:0);
-        //弃牌
-        auto owner=_desk->m_user[pos];
-        owner->discardedCards.push_back(card);
-    }
-    
-    //broadcast
-    auto M=Mahjong::maxPlayers(_desk->_gameRule);
-    for(Lint i=0; i < M; ++i){
-        auto useri=_desk->m_user[i];
-        useri->Send(msg);
-        useri->spLastMsg.reset(LMsg::Clone(msg));
-    }
-    
-    //结算了不用再抓牌打牌
-    if(_desk->_state!=State::ST_SETTLE){
-        //八快，PASS,要不起都抓牌
-        if(pass||queue.empty()||msg.m_foakDouble){
-            if(_desk->deskCards.empty()){
-                //荒庄
-                KEYE_LOG("IsGameOver no cards on desk");
-                Dismiss();
-            } else
-                draw();
-        } else
-            checkAndDiscsard(_desk->_token,pos_n);
-    }
-    */
+        bool valid=false;
+        switch(bunch.type()){
+            case pb_enum::BUNCH_WIN:
+                valid=true;
+            case pb_enum::BUNCH_INVALID:
+                //invalid
+                KEYE_LOG("OnMeld error, unknown ops, pos=%d",pos);
+                msg.set_result(pb_enum::BUNCH_INVALID);
+            case pb_enum::OP_PASS:
+                //handle pass
+                valid=true;
+            default:{
+                //verify
+                auto old_ops=bunch.type();
+                auto result=verifyBunch(game,*(bunch_t*)&bunch);
+                if(result==pb_enum::BUNCH_INVALID){
+                    std::string str;
+                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d",bunch2str(game,str,bunch),old_ops,pos);
+                    msg.set_result(pb_enum::BUNCH_INVALID);
+                }else{
+                    //erase from hands
+                    auto& hands=*player.gameData.mutable_hands();
+                    for(auto j:bunch.pawns()){
+                        for(auto i=hands.begin();i!=hands.end();++i){
+                            if(j==*i){
+                                KEYE_LOG("OnMeld pos=%d, erase card(%d:%d)\n",player.pos,*i,game.units[*i].value());
+                                hands.erase(i);
+                                break;
+                            }
+                        }
+                    }
+                    //then meld
+                    auto h=player.gameData.add_bunch();
+                    h->CopyFrom(bunch);
+                 }//meld
+            }//default
+        }//switch
+
+        msg.mutable_bunch()->CopyFrom(bunch);
+        for(auto p:game.players)p->send(msg);
+    }//if front
 }
 
 void Mahjong::draw(Game& game){
@@ -443,6 +345,7 @@ void Mahjong::draw(Game& game){
         if(i==game.token){
             msg.set_card(card);
             //hint for player
+            
             game.pendingMeld.clear();
             game.pendingMeld.push_back(Game::pending_t());
             auto& pending=game.pendingMeld.back();
@@ -597,6 +500,10 @@ bool Mahjong::comparision(Game& game,uint x,uint y){
     auto cx=game.units[x];
     auto cy=game.units[y];
     return cx.value()<cy.value();
+}
+
+bool Mahjong::opsPred(Game& game,Game::pending_t& x,Game::pending_t& y){
+    return true;
 }
 
 void Mahjong::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
