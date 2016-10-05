@@ -23,12 +23,8 @@ public:
     };
     struct pending_t{
         //operation in oper queue
-        pos_t           pos;
-        proto3::pb_enum ops;
-        unit_id_t       card;
         proto3::bunch_t bunch;
         bool            arrived;
-                        pending_t():pos(i_invalid),ops(proto3::pb_enum::BUNCH_INVALID),card(i_invalid),arrived(false){}
     };
     
     size_t      id;

@@ -27,7 +27,7 @@ void Mahjong::Tick(Game& game){
         case Game::State::ST_MELD:
             if(!game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
                 auto& pending=game.pendingMeld.front();
-                if(pending.ops==pb_enum::OP_PASS)
+                if(pending.bunch.type()==pb_enum::OP_PASS)
                     ChangeState(game,Game::State::ST_DRAW);
                 else if(isGameOver(game))
                     ChangeState(game,Game::State::ST_SETTLE);
@@ -209,7 +209,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         if(game->pendingMeld.empty()){
             game->pendingMeld.push_back(Game::pending_t());
             auto& pending=game->pendingMeld.back();
-            pending.ops=pb_enum::OP_PASS;
+            pending.bunch.set_type(pb_enum::OP_PASS);
             pending.arrived=true;
             
             bunch_t bunch;
@@ -247,12 +247,8 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
     bool found=false;
     int i=0;
     for(;i<queue.size();++i)
-        if(pos==queue[i].pos){
+        if(pos==queue[i].bunch.pos()){
             found=true;
-            if(card!=queue[i].card){
-                KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d",queue[i].card,card,pos);
-                return;
-            }
             break;
         }
     if(!found){
@@ -267,7 +263,17 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
         return;
     }
     pending.arrived=true;
-    
+
+    if(pending.bunch.pawns().empty()){
+        KEYE_LOG("OnMeld empty cards,pos=%d",pos);
+        return;
+    }
+    auto pcard=*pending.bunch.pawns().rbegin();
+    if(card!=pcard){
+        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d",pcard,card,pos);
+        return;
+    }
+
     //queue in
     std::string str;
     KEYE_LOG("OnMeld queue in, pos=%d, ops=%s",pos,bunch2str(game,str,bunch));
@@ -349,7 +355,7 @@ void Mahjong::draw(Game& game){
             game.pendingMeld.clear();
             game.pendingMeld.push_back(Game::pending_t());
             auto& pending=game.pendingMeld.back();
-            pending.pos=game.token;
+            pending.bunch.set_pos(game.token);
             //pending.ops=;
         }else
             msg.set_card(i_invalid);
@@ -399,7 +405,7 @@ void Mahjong::tickRobot(Game& game){
                 //show card and wait for accept
                 if(!game.pendingMeld.empty()){
                     for(auto i=game.pendingMeld.begin(),ii=game.pendingMeld.end(); i!=ii; ++i)
-                        if(i->pos==robot->pos){
+                        if(i->bunch.pos()==robot->pos){
                             if(i->arrived)
                                 //already processed
                                 break;

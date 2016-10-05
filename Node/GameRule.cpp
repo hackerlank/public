@@ -81,7 +81,7 @@ void GameRule::deal(Game& game){
     
     //first discard
     game.pendingDiscard=std::make_shared<Game::pending_t>();
-    game.pendingDiscard->pos=game.token;
+    game.pendingDiscard->bunch.set_pos(game.token);
 }
 
 void GameRule::OnReady(Player& player){
