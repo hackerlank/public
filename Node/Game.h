@@ -34,6 +34,7 @@ public:
     size_t      round,Round;
     std::vector<Card>                   units;      //cards map
     std::vector<unit_id_t>              pile;       //cards library
+    std::map<unit_id_t,int>             pileMap;    //cards map
     std::vector<std::shared_ptr<Player>> players;
     std::vector<proto3::bunch_t>        historical; //historical game data
     std::vector<pending_t>              pendingMeld;    //pending meld

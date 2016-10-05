@@ -48,9 +48,12 @@ void GameRule::deal(Game& game){
     std::sort(game.pile.begin()+BK,        game.pile.begin()+BK+MH, sorter);
     std::sort(game.pile.begin()+BK+MH,     game.pile.end(),         sorter);
     
-    for(auto x=game.pile.begin(),       xx=game.pile.begin()+BK;    x!=xx;++x)game.players[I]->gameData.mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+BK,    xx=game.pile.begin()+BK+MH; x!=xx;++x)game.players[J]->gameData.mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+BK+MH, xx=game.pile.end();         x!=xx;++x)game.players[K]->gameData.mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin(),       xx=game.pile.begin()+BK;      x!=xx;++x)game.players[I]->gameData.mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin()+BK,    xx=game.pile.begin()+BK+MH*1; x!=xx;++x)game.players[J]->gameData.mutable_hands()->Add(*x);
+    for(auto x=game.pile.begin()+BK+MH, xx=game.pile.begin()+BK+MH*2; x!=xx;++x)game.players[K]->gameData.mutable_hands()->Add(*x);
+    
+    game.pile.erase(game.pile.begin(),game.pile.begin()+BK+MH*2);
+    for(auto x=game.pile.begin(),xx=game.pile.end();x!=xx;++x)game.pileMap[*x]=0;    
 
     //broadcast
     MsgNCStart msg;

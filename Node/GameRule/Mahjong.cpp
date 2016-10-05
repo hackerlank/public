@@ -280,7 +280,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
     pending.bunch.CopyFrom(bunch);
     
     //sort
-    std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::opsPred,this,game,std::placeholders::_1,std::placeholders::_2));
+    std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::comparePending,this,game,std::placeholders::_1,std::placeholders::_2));
     
     //priority
     auto& front=queue.front();
@@ -471,8 +471,62 @@ bool Mahjong::isGameOver(Game& game){
     return false;
 }
 
-bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& bunch){
-    auto& hands=game.players[pos]->gameData.hands();
+bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
+    //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC
+    if(src_bunch.pawns_size()!=1){
+        KEYE_LOG("hint wrong cards len=%d,pos=%d",src_bunch.pawns_size(),pos);
+        return false;
+    }
+    auto id=src_bunch.pawns(0);
+    auto A=game.units[id];
+    auto& player=*game.players[pos];
+    auto& hands=player.gameData.hands();
+    
+    //default color check
+    if(A.color()==player.gameData.selected_card()){
+        KEYE_LOG("hint default color,pos=%d",pos);
+        return false;
+    }
+    
+    //select color
+    std::vector<unit_id_t> sel;
+    for(auto hand:hands){
+        auto& B=game.units[hand];
+        if(B.color()==A.color()&&B.value()==A.value())
+            sel.push_back(hand);
+    }
+    auto len=sel.size();
+    if(len>=3){
+        //BUNCH_AAAA
+        auto bunch=bunches.Add();
+        bunch->set_pos(pos);
+        bunch->set_type(pb_enum::BUNCH_AAAA);
+        for(int i=0;i<3;++i)bunch->add_pawns(sel[i]);
+        bunch->add_pawns(id);
+    }else if(len>=2){
+        //BUNCH_AAA
+        auto bunch=bunches.Add();
+        bunch->set_pos(pos);
+        bunch->set_type(pb_enum::BUNCH_AAA);
+        for(int i=0;i<2;++i)bunch->add_pawns(sel[i]);
+        bunch->add_pawns(id);
+    }else{
+        for(auto melt:player.gameData.bunch()){
+            if(melt.type()==pb_enum::BUNCH_AAA){
+                auto& C=game.units[melt.pawns(0)];
+                if(C.color()==A.color()&&C.value()==A.value()){
+                    //BUNCH_AAAA
+                    auto bunch=bunches.Add();
+                    bunch->set_pos(pos);
+                    bunch->set_type(pb_enum::BUNCH_AAAA);
+                    bunch->mutable_pawns()->CopyFrom(melt.pawns());
+                    bunch->add_pawns(id);
+                    break;
+                }
+            }
+        }
+    }
+    
     return bunches.size()>0;
 }
 
@@ -498,18 +552,16 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
     return bt;
 }
 
-bool Mahjong::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
-    return true;
-}
-
 bool Mahjong::comparision(Game& game,uint x,uint y){
     auto cx=game.units[x];
     auto cy=game.units[y];
     return cx.value()<cy.value();
 }
 
-bool Mahjong::opsPred(Game& game,Game::pending_t& x,Game::pending_t& y){
-    return true;
+bool Mahjong::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
+    auto a=(int)x.bunch.type();
+    auto b=(int)y.bunch.type();
+    return a>b;
 }
 
 void Mahjong::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
@@ -537,7 +589,6 @@ void Mahjong::test(){
     
     ddz.verifyBunch(game,A);
     ddz.verifyBunch(game,B);
-    ddz.compareBunch(game,A,B);
 }
 
 
