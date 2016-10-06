@@ -130,7 +130,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             player.game->pendingDiscard.reset();
 
         std::string str;
-        cards2str(*game,str,msg.bunch().pawns());
+        cards2str(str,msg.bunch().pawns());
         KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
         //remove hands
         auto& hands=*player.gameData.mutable_hands();
@@ -244,11 +244,11 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
 
     //queue in
     std::string str;
-    KEYE_LOG("OnMeld queue in, pos=%d, ops=%s",pos,bunch2str(game,str,bunch));
+    KEYE_LOG("OnMeld queue in, pos=%d, ops=%s",pos,bunch2str(str,bunch));
     pending.bunch.CopyFrom(bunch);
     
     //sort
-    std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::comparePending,this,game,std::placeholders::_1,std::placeholders::_2));
+    std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::comparePending,this,std::placeholders::_1,std::placeholders::_2));
     
     //priority
     auto& front=queue.front();
@@ -280,7 +280,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                 auto result=verifyBunch(game,*(bunch_t*)&bunch);
                 if(result==pb_enum::BUNCH_INVALID){
                     std::string str;
-                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d",bunch2str(game,str,bunch),old_ops,pos);
+                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d",bunch2str(str,bunch),old_ops,pos);
                     msg.set_result(pb_enum::BUNCH_INVALID);
                 }else{
                     //erase from hands
@@ -473,7 +473,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
     std::vector<unit_id_t> cards;
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
     cards.push_back(id);
-    auto sorter=std::bind(&Mahjong::comparision,this,game,std::placeholders::_1,std::placeholders::_2);
+    auto sorter=std::bind(&Mahjong::comparision,this,std::placeholders::_1,std::placeholders::_2);
     std::sort(cards.begin(),cards.end(),sorter);
     
     auto len=cards.size()-1;
@@ -483,7 +483,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
         if(A/1000==B/1000&&A%100==B%100){
             std::vector<unit_id_t> tmp;
             for(size_t j=0;j!=len;++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
-            if(isGameOverWithoutAA(game,tmp)){
+            if(isGameOverWithoutAA(tmp)){
                 return true;
             }
         }
@@ -491,7 +491,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
     return false;
 }
 
-bool Mahjong::isGameOverWithoutAA(Game& game,std::vector<unit_id_t>& cards){
+bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     auto len=cards.size();
     if(len%3!=0){
         KEYE_LOG("isGameOverWithoutAA failed: len=%lu",len);
@@ -621,13 +621,21 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     return true;
 }
 
-bool Mahjong::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
+bool Mahjong::comparision(uint x,uint y){
+    auto cx=x/1000;
+    auto cy=y/1000;
+    if(cx<cy)return true;
+    else if(cx==cy)return x%100<y%100;
+    else return false;
+}
+
+bool Mahjong::comparePending(Game::pending_t& x,Game::pending_t& y){
     auto a=(int)x.bunch.type();
     auto b=(int)y.bunch.type();
     return a>b;
 }
 
-void Mahjong::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
+void Mahjong::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
     bunch.mutable_pawns()->Clear();
     for(auto id:vals){
         bunch.mutable_pawns()->Add(id);
@@ -643,8 +651,8 @@ void Mahjong::test(){
     B.set_pos(1);
     std::vector<uint> va{5,6,7,8,9};
     std::vector<uint> vb{4,5,6,7,8};
-    ddz.make_bunch(game,A,va);
-    ddz.make_bunch(game,B,vb);
+    ddz.make_bunch(A,va);
+    ddz.make_bunch(B,vb);
     
     ddz.verifyBunch(game,A);
     ddz.verifyBunch(game,B);

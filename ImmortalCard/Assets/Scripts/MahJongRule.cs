@@ -44,6 +44,14 @@ public class MahJongRule: GameRule {
 		return win;
 	}
 	
+	public override int comparision(uint x,uint y){
+		var cx=(int)x/1000;
+		var cy=(int)y/1000;
+		if(cx<cy)return 1;
+		else if(cx==cy)return (int)y%100-(int)x%100;
+		else return -1;
+	}
+
 	public override uint transformValue(uint val){
 		return val;
 	}

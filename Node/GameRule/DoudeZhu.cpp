@@ -117,7 +117,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
             break;
         }
 
-        auto bt=verifyBunch(*game,*msg.mutable_bunch());
+        auto bt=verifyBunch(*msg.mutable_bunch());
         if(pb_enum::BUNCH_INVALID==bt){
             KEYE_LOG("OnDiscard invalid bunch\n");
             break;
@@ -169,7 +169,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
                 hist=&game->historical[H-2];
             if(hist->type()==pb_enum::OP_PASS)
                 check=true;
-            else if(compareBunch(*game,*msg.mutable_bunch(),*hist))
+            else if(compareBunch(*msg.mutable_bunch(),*hist))
                 check=true;
         }
         if(!check){
@@ -178,7 +178,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         }
         
         std::string str;
-        cards2str(*game,str,msg.bunch().pawns());
+        cards2str(str,msg.bunch().pawns());
         KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
         //remove hands
         auto& hands=*game->players[player.pos]->gameData.mutable_hands();
@@ -288,7 +288,7 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
     
     //sort cards
     std::vector<uint32> ids(hands.begin(),hands.end());
-    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
+    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,std::placeholders::_1,std::placeholders::_2));
 
     std::vector<uint> ids_;
     auto H=game.historical.size();
@@ -320,8 +320,8 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
                     for(int i=0;i<y&&ids_.empty();++i){
                         bunch_t bunch_;
                         for(int j=i,jj=i+len;j!=jj;++j)bunch_.add_pawns(cards[j]);
-                        auto bt=verifyBunch(game,bunch_);
-                        if(bt==type&&compareBunch(game,bunch_,*hist)){
+                        auto bt=verifyBunch(bunch_);
+                        if(bt==type&&compareBunch(bunch_,*hist)){
                             for(auto card:bunch_.pawns())ids_.push_back(card);
                             break;
                         }
@@ -364,8 +364,8 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
                                 bunch_.add_pawns(id0);
                                 bunch_.add_pawns(id1);
                                 for(auto card:*sorted)bunch_.add_pawns(card);
-                                auto bt=verifyBunch(game,bunch_);
-                                if(bt==type&&compareBunch(game,bunch_,*hist)){
+                                auto bt=verifyBunch(bunch_);
+                                if(bt==type&&compareBunch(bunch_,*hist)){
                                     for(auto card:bunch_.pawns())ids_.push_back(card);
                                     break;
                                 }
@@ -380,8 +380,8 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
                                 bunch_.mutable_pawns()->Clear();
                                 bunch_.add_pawns(id);
                                 for(auto card:*sorted)bunch_.add_pawns(card);
-                                auto bt=verifyBunch(game,bunch_);
-                                if(bt==type&&compareBunch(game,bunch_,*hist)){
+                                auto bt=verifyBunch(bunch_);
+                                if(bt==type&&compareBunch(bunch_,*hist)){
                                     for(auto card:bunch_.pawns())ids_.push_back(card);
                                     break;
                                 }
@@ -412,10 +412,10 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
     }
 }
 
-pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
+pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     //sort cards
     std::vector<uint32> ids(bunch.pawns().begin(),bunch.pawns().end());
-    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,game,std::placeholders::_1,std::placeholders::_2));
+    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,std::placeholders::_1,std::placeholders::_2));
 
     auto len=ids.size();
     auto bt=pb_enum::BUNCH_INVALID;
@@ -565,12 +565,16 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
     bunch.set_type(bt);
     
     std::string str;
-    cards2str(game,str,bunch.pawns());
+    cards2str(str,bunch.pawns());
     //KEYE_LOG("verifyBunch pos=%d,type=%d: %s\n",bunch.pos(),bunch.type(),str.c_str());
     return bt;
 }
 
-bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
+bool DoudeZhu::comparision(uint x,uint y){
+    return x%100<y%100;
+}
+
+bool DoudeZhu::compareBunch(bunch_t& bunch,bunch_t& hist){
     //rule win
     auto win=false;
     auto bt=bunch.type();
@@ -630,13 +634,13 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
         }
     }
     std::string str,str1;
-    cards2str(game,str,bunch.pawns());
-    cards2str(game,str1,hist.pawns());
+    cards2str(str,bunch.pawns());
+    cards2str(str1,hist.pawns());
     //KEYE_LOG("compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
     return win;
 }
 
-void DoudeZhu::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
+void DoudeZhu::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
     bunch.mutable_pawns()->Clear();
     for(auto id:vals){
         bunch.mutable_pawns()->Add(id);
@@ -652,12 +656,12 @@ void DoudeZhu::test(){
     B.set_pos(1);
     std::vector<uint> va{5,6,7,8,9};
     std::vector<uint> vb{4,5,6,7,8};
-    ddz.make_bunch(game,A,va);
-    ddz.make_bunch(game,B,vb);
+    ddz.make_bunch(A,va);
+    ddz.make_bunch(B,vb);
     
-    ddz.verifyBunch(game,A);
-    ddz.verifyBunch(game,B);
-    ddz.compareBunch(game,A,B);
+    ddz.verifyBunch(A);
+    ddz.verifyBunch(B);
+    ddz.compareBunch(A,B);
 }
 
 

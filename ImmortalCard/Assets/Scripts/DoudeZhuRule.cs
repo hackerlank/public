@@ -251,6 +251,10 @@ public class DoudeZhuRule: GameRule {
 		return win;
 	}
 	
+	public override int comparision(uint x,uint y){
+		return (int)y%100-(int)x%100;
+	}
+
 	public override uint transformValue(uint val){
 		if      (val==1) return 14;
 		else if (val==2) return 16;

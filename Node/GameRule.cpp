@@ -35,7 +35,7 @@ void GameRule::deal(Game& game){
     auto MH=maxHands();
     auto BK=MH+bottom();
     bunch_t bottom;
-    auto sorter=std::bind(&GameRule::comparision,this,game,std::placeholders::_1,std::placeholders::_2);
+    auto sorter=std::bind(&GameRule::comparision,this,std::placeholders::_1,std::placeholders::_2);
     for(auto x=game.pile.begin()+MH,xx=game.pile.begin()+BK;x!=xx;++x)bottom.add_pawns(*x);
     for(int i=0;i<MP;++i){
         size_t pos=(game.banker+i)%MP;
@@ -100,14 +100,6 @@ void GameRule::next(Game& game){
     KEYE_LOG("game token: %d=>%d\n",old,game.token);
 }
 
-bool GameRule::comparision(Game& game,uint x,uint y){
-    auto cx=x/1000;
-    auto cy=y/1000;
-    if(cx<cy)return true;
-    else if(cx==cy)return x%100<y%100;
-    else return false;
-}
-
 void GameRule::ChangeState(Game& game,Game::State state){
     if(game.state!=state){
         KEYE_LOG("game state: %d=>%d\n",game.state,state);
@@ -118,19 +110,19 @@ void GameRule::ChangeState(Game& game,Game::State state){
 void GameRule::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
     auto& hands=game.players[pos]->gameData.hands();
-    cards2str(game,str,hands);
+    cards2str(str,hands);
     KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
 }
 
-const char* GameRule::bunch2str(Game& game,std::string& str,const proto3::bunch_t& bunch){
+const char* GameRule::bunch2str(std::string& str,const proto3::bunch_t& bunch){
     char buf[32];
     sprintf(buf,"ops=%d",(int)bunch.type());
-    cards2str(game,str,bunch.pawns());
+    cards2str(str,bunch.pawns());
     str=buf+str;
     return str.c_str();
 }
 
-const char* GameRule::cards2str(Game& game,std::string& str,const google::protobuf::RepeatedField<uint32>& ids){
+const char* GameRule::cards2str(std::string& str,const google::protobuf::RepeatedField<uint32>& ids){
     str.clear();
     char buf[32];
     for(auto id:ids){

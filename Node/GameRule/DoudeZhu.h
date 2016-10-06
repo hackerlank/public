@@ -21,6 +21,7 @@ public:
     static void         test();
 protected:
     virtual void        initCard(Game&);
+    virtual bool        comparision(uint x,uint y);
     virtual int         maxCards();
     virtual int         maxHands();
     virtual int         bottom();
@@ -30,10 +31,10 @@ protected:
     virtual bool        isGameOver(Game&);
 private:
     void                tickRobot(Game&);
-    proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
-    bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
+    proto3::pb_enum     verifyBunch(proto3::bunch_t&);
+    bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
     void                log(Game&){}
-    void                make_bunch(Game&,proto3::bunch_t&,const std::vector<uint>&);
+    void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
 };
 
 #endif /* DoudeZhu_h */

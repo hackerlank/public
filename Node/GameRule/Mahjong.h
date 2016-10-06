@@ -21,6 +21,7 @@ public:
     static void         test();
 protected:
     virtual void        initCard(Game&);
+    virtual bool        comparision(uint x,uint y);
     virtual int         maxCards();
     virtual int         maxHands();
     virtual int         bottom();
@@ -32,14 +33,14 @@ private:
     //is game over with melt card
     bool                isGameOver(Game&,pos_t,unit_id_t,std::vector<proto3::bunch_t>&);
     //is game over against cards without AA
-    bool                isGameOverWithoutAA(Game&,std::vector<unit_id_t>&);
+    bool                isGameOverWithoutAA(std::vector<unit_id_t>&);
 
     void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                verifyDiscard(Game&,proto3::bunch_t&);
-    bool                comparePending(Game&,Game::pending_t& x,Game::pending_t& y);
+    bool                comparePending(Game::pending_t& x,Game::pending_t& y);
     void                log(Game&){}
-    void                make_bunch(Game&,proto3::bunch_t&,const std::vector<uint>&);
+    void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
     bool				isNaturalWin(Game&,pos_t);
     void				draw(Game& game);
     //void				meld(Game&,unit_id_t,pos_t);

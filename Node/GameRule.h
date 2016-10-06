@@ -25,6 +25,7 @@ public:
     virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&)=0;
 protected:
     virtual void        initCard(Game&)=0;
+    virtual bool        comparision(uint x,uint y)=0;
     virtual int         maxCards()=0;
     virtual int         maxHands()=0;
     virtual int         bottom()=0;
@@ -33,12 +34,11 @@ protected:
     virtual bool        settle(Game&)=0;
     virtual bool        isGameOver(Game&)=0;
     
-    virtual bool        comparision(Game&,uint x,uint y);
     void                deal(Game&);
     void                next(Game&);
 
-    const char*         bunch2str(Game&,std::string&,const proto3::bunch_t&);
-    const char*         cards2str(Game&,std::string&,const google::protobuf::RepeatedField<uint32>&);
+    const char*         bunch2str(std::string&,const proto3::bunch_t&);
+    const char*         cards2str(std::string&,const google::protobuf::RepeatedField<uint32>&);
     void                logHands(Game&,uint32,std::string="");
 };
 
