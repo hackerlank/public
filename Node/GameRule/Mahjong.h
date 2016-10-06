@@ -21,6 +21,7 @@ public:
     static void         test();
 protected:
     virtual void        initCard(Game&);
+    virtual bool        validId(uint);
     virtual bool        comparision(uint x,uint y);
     virtual int         maxCards();
     virtual int         maxHands();

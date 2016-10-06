@@ -117,7 +117,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         //cards check
         auto card=(unit_id_t)msg.bunch().pawns(0);
         //boundary check
-        if(card<=1000||card>=2000){
+        if(!validId(card)){
             KEYE_LOG("OnDiscard invalid cards %d\n",card);
             break;
         }
@@ -593,14 +593,12 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
             break;
         }
         auto& gdata=game.players[bunch.pos()]->gameData;
+        //huazhu
         auto A=bunch.pawns(0);
-        if(gdata.selected_card()!=i_invalid){
-            //huazhu
-            auto B=gdata.selected_card();
-            if(A/1000!=B/1000){
-                bt=pb_enum::BUNCH_INVALID;
-                break;
-            }
+        auto B=gdata.selected_card();
+        if(A/1000==B/1000){
+            bt=pb_enum::BUNCH_INVALID;
+            break;
         }
     }while (false);
     bunch.set_type(bt);
@@ -611,13 +609,23 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     if(bunch.pawns_size()!=1)
         return false;
     auto& gdata=game.players[bunch.pos()]->gameData;
+    //huazhu
+    auto B=gdata.selected_card();
     auto A=bunch.pawns(0);
-    if(gdata.selected_card()!=i_invalid){
-        //huazhu
-        auto B=gdata.selected_card();
-        if(A/1000!=B/1000)
-            return false;
+    if(A/1000!=B/1000){
+        for(auto card:gdata.hands()){
+            if(card/1000==B/1000)
+                return false;
+        }
     }
+    return true;
+}
+
+bool Mahjong::validId(uint id){
+    auto color=id/1000;
+    if(color<1||color>4)return false;
+    auto value=id%100;
+    if(value<1||value>9)return false;
     return true;
 }
 

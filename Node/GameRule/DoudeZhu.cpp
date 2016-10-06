@@ -86,7 +86,7 @@ void DoudeZhu::initCard(Game& game){
         }
     }
     for(int j=1;j<=2;++j){      //Joker(color 1,2) => 14,15
-        unit_id_t id=j*1000+transformValue(14+j);
+        unit_id_t id=j*1000+transformValue(13+j);
         game.pile.push_back(id);
     }
 }
@@ -131,7 +131,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         auto check=true;
         for(auto c:cards){
             //boundary check
-            if(c<=1000||c>=2000){
+            if(!validId(c)){
                 check=false;
                 KEYE_LOG("OnDiscard invalid cards %d\n",c);
                 break;
@@ -568,6 +568,14 @@ pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     cards2str(str,bunch.pawns());
     //KEYE_LOG("verifyBunch pos=%d,type=%d: %s\n",bunch.pos(),bunch.type(),str.c_str());
     return bt;
+}
+
+bool DoudeZhu::validId(uint id){
+    auto color=id/1000;
+    if(color<1||color>4)return false;
+    auto value=id%100;
+    if(value<1||value>transformValue(15))return false;
+    return true;
 }
 
 bool DoudeZhu::comparision(uint x,uint y){

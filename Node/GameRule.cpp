@@ -68,6 +68,8 @@ void GameRule::deal(Game& game){
         
         p->send(msg);
         hands->Clear();
+        //default card
+        p->gameData.set_selected_card(1001);
     }
     
     //first discard

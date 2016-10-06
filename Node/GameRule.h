@@ -25,6 +25,7 @@ public:
     virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&)=0;
 protected:
     virtual void        initCard(Game&)=0;
+    virtual bool        validId(uint)=0;
     virtual bool        comparision(uint x,uint y)=0;
     virtual int         maxCards()=0;
     virtual int         maxHands()=0;
