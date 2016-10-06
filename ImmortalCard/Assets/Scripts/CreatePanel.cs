@@ -7,6 +7,8 @@ public class CreatePanel : MonoBehaviour {
 	public static CreatePanel Instance=null;
 	void Awake(){Instance=this;}
 	void OnDestroy(){Instance=null;}
+	[HideInInspector]
+	public GameIcon	Icon;
 
 	bool create=true;
 	uint gameId=0;
@@ -19,6 +21,10 @@ public class CreatePanel : MonoBehaviour {
 	public void OnJoin(){
 		create=false;
 		Utils.Load<GameKeyPopup>(gameObject.transform.parent);
+	}
+
+	public void OnClose(){
+		Destroy(gameObject);
 	}
 
 	public void Connect(uint id=0){
@@ -51,17 +57,14 @@ public class CreatePanel : MonoBehaviour {
 		if(create){
 			var opRobot=new key_value();
 			opRobot.Ikey=pb_enum.OptionRobot;
-			opRobot.Ivalue=2;
+			opRobot.Ivalue=4;
 			var opRound=new key_value();
 			opRound.Ikey=pb_enum.OptionRound;
 			opRound.Ivalue=Main.Instance.Round;
 
-			//select game
-			Main.Instance.game=pb_enum.GameDdz;
-
 			MsgCNCreate msgC=new MsgCNCreate();
 			msgC.Mid=pb_msg.MsgCnCreate;
-			msgC.Game=Main.Instance.game;
+			msgC.Game=Icon.GameId;
 			msgC.Option.Add(opRobot);
 			msgC.Option.Add(opRound);
 
@@ -82,16 +85,22 @@ public class CreatePanel : MonoBehaviour {
 	}
 
 	public void OnJoined(MsgNCJoin msgJ){
-		Main.Instance.game=msgJ.Game;
+		if(Icon==null){
+			Icon=new GameIcon();
+			Icon.GameId=msgJ.Game;
+		}
 		createGame();
 	}
 
 	void createGame(){
 		System.Action<Component> handler=delegate(Component obj){
 			Destroy(gameObject);
+			if(LobbyPanel.Instance!=null)
+				Destroy(LobbyPanel.Instance.gameObject);
 		};
 
-		switch(Main.Instance.game){
+		if(Icon!=null)
+		switch(Icon.GameId){
 		case pb_enum.GameMj:
 			MahJongPanel.Create(handler);
 			break;

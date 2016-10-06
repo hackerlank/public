@@ -15,4 +15,8 @@ public class GameKeyPopup : MonoBehaviour {
 			Debug.LogError("Invalid key");
 		}
 	}
+
+	public void OnClose(){
+		Destroy(gameObject);
+	}
 }

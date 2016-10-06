@@ -26,6 +26,7 @@ Node::Node(size_t ios, size_t works, size_t rb_size)
     sNode=this;
     
     registerRule(std::make_shared<DoudeZhu>());
+    registerRule(std::make_shared<Mahjong>());
 }
 
 void Node::registerRule(std::shared_ptr<GameRule> game){

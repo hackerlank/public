@@ -17,9 +17,9 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	protected uint		round=0;
 	protected GameRule	rule=null;
 
-	protected List<Card>	_selection;
 	protected uint			_pos,_token,_banker;
-	protected List<bunch_t>	_historical;
+	protected List<Card>	_selection=new List<Card>();
+	protected List<bunch_t>	_historical=new List<bunch_t>();
 
 	public MsgNCFinish	Summary=null;
 	// ----------------------------------------------
@@ -75,7 +75,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 	
 	public void OnExit(){
-		Utils.Load<CreatePanel>(gameObject.transform.parent,delegate(Component obj) {
+		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj) {
 			Destroy(gameObject);
 		});
 	}
@@ -151,8 +151,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		_pos=msg.Pos;
 		_token=(msg.Banker+maxPlayer-1)%maxPlayer;	//set to the previous position
 		_banker=msg.Banker;
-		_historical=new List<bunch_t>();
-		_selection=new List<Card>();
+		_historical.Clear();
+		_selection.Clear();
 		/* position transform
 			  (O)
 		(R)          (L)
@@ -209,10 +209,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		Ante.text=string.Format("Ante: {0}",msg.Ante);
 		Multiples.text=string.Format("Multiple: {0}",msg.Multiple);
 		for(int i=0;i<msg.Count.Count;++i)
-			nHandCards[i].text=msg.Count[i].ToString();
+			if(i<nHandCards.Length&&nHandCards[i]!=null)nHandCards[i].text=msg.Count[i].ToString();
 		for(int i=0;i<msg.Bottom.Count;++i){
-			var v=Configs.Cards[msg.Bottom[i]];
-			BottomCards[i].Value=v;
+			if(i<BottomCards.Length&&BottomCards[i]!=null){
+				var v=Configs.Cards[msg.Bottom[i]];
+				BottomCards[i].Value=v;
+			}
 		}
 		if(Players[_banker].gameTimer!=null)
 			Players[_banker].gameTimer.On();

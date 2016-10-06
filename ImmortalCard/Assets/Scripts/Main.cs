@@ -6,7 +6,6 @@ public class Main : MonoBehaviour {
 	public static Main		Instance=null;
 	public HttpProxy		http;
 	public WSProxy			ws;
-	public Proto3.pb_enum	game=Proto3.pb_enum.GameDdz;
 
 	public uint				Round=4;
 	public GameController	gameController=null;
@@ -16,7 +15,7 @@ public class Main : MonoBehaviour {
 		NODE,
 		NORMAL,
 	}
-	public Mode GameMode{get{return Mode.STANDALONE;}}
+	public Mode GameMode{get{return Mode.NODE;}}
 
 	void Awake(){
 		//Loom

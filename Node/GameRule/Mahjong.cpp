@@ -113,8 +113,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         }
         msg.mutable_bunch()->set_pos(player.pos);
         
-        auto bt=verifyBunch(*game,*msg.mutable_bunch());
-        if(pb_enum::BUNCH_INVALID==bt){
+        if(!verifyDiscard(*game,*msg.mutable_bunch())){
             KEYE_LOG("OnDiscard invalid bunch\n");
             break;
         }
@@ -610,6 +609,20 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
     }while (false);
     bunch.set_type(bt);
     return bt;
+}
+
+bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
+    if(bunch.pawns_size()!=1)
+        return false;
+    auto& gdata=game.players[bunch.pos()]->gameData;
+    auto& A=game.units[bunch.pawns(0)];
+    if(gdata.selected_card()!=i_invalid){
+        //huazhu
+        auto& B=game.units[gdata.selected_card()];
+        if(A.color()!=B.color())
+            return false;
+    }
+    return true;
 }
 
 bool Mahjong::comparision(Game& game,uint x,uint y){
