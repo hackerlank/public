@@ -38,22 +38,19 @@ void GameRule::deal(Game& game){
     auto MP=MaxPlayer();
     auto MH=maxHands();
     auto BK=MH+bottom();
-    size_t I=game.banker,
-    J=(game.banker+1)%MP,
-    K=(game.banker+2)%MP;
     bunch_t bottom;
     auto sorter=std::bind(&GameRule::comparision,this,game,std::placeholders::_1,std::placeholders::_2);
-    for(auto x=game.pile.begin()+MH,    xx=game.pile.begin()+BK;    x!=xx;++x)bottom.add_pawns(*x);
-    std::sort(game.pile.begin(),           game.pile.begin()+BK,    sorter);
-    std::sort(game.pile.begin()+BK,        game.pile.begin()+BK+MH, sorter);
-    std::sort(game.pile.begin()+BK+MH,     game.pile.end(),         sorter);
-    
-    for(auto x=game.pile.begin(),       xx=game.pile.begin()+BK;      x!=xx;++x)game.players[I]->gameData.mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+BK,    xx=game.pile.begin()+BK+MH*1; x!=xx;++x)game.players[J]->gameData.mutable_hands()->Add(*x);
-    for(auto x=game.pile.begin()+BK+MH, xx=game.pile.begin()+BK+MH*2; x!=xx;++x)game.players[K]->gameData.mutable_hands()->Add(*x);
-    
-    game.pile.erase(game.pile.begin(),game.pile.begin()+BK+MH*2);
-    for(auto x=game.pile.begin(),xx=game.pile.end();x!=xx;++x)game.pileMap[*x]=0;    
+    for(auto x=game.pile.begin()+MH,xx=game.pile.begin()+BK;x!=xx;++x)bottom.add_pawns(*x);
+    for(int i=0;i<MP;++i){
+        size_t pos=(game.banker+i)%MP;
+        size_t ibeg=(i==0?0:BK+MH*(i-1));
+        size_t iend=+BK+MH*i;
+        std::sort( game.pile.begin()+ibeg,    game.pile.begin()+iend, sorter);
+        for(auto x=game.pile.begin()+ibeg, xx=game.pile.begin()+iend; x!=xx;++x)game.players[pos]->gameData.mutable_hands()->Add(*x);
+    }
+    game.pile.erase(game.pile.begin(),game.pile.begin()+BK+MH*(MP-1));
+    for(auto x=game.pile.begin(),xx=game.pile.end();x!=xx;++x)game.pileMap[*x]=0;
+    for(auto i=0;i<MP;++i)logHands(game,i,"deal");
 
     //broadcast
     MsgNCStart msg;

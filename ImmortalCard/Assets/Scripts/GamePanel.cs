@@ -120,8 +120,10 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			}
 		}
 		//record
-		var nCards=int.Parse(nHandCards[_token].text)-1;
-		nHandCards[_token].text=nCards.ToString();
+		if(_token<nHandCards.Length&&nHandCards[_token]!=null){
+			var nCards=int.Parse(nHandCards[_token].text)-1;
+			nHandCards[_token].text=nCards.ToString();
+		}
 		_historical.Add(msg.Bunch);
 		next(_token);
 		//Debug.Log(str);

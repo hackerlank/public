@@ -68,7 +68,7 @@ int Mahjong::maxCards(){
 }
 
 int Mahjong::maxHands(){
-    return 17;
+    return 13;
 }
 
 int Mahjong::bottom(){
@@ -84,7 +84,7 @@ void Mahjong::initCard(Game& game){
                 game.pile[id]=id;
                 auto& u=game.units[id];
                 u.set_color(i);     //Tong,Suo,Wan => 0-3
-                u.set_value(i);
+                u.set_value(j);
                 u.set_id(id++);
             }
         }
