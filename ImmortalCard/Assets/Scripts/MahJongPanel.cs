@@ -16,6 +16,7 @@ public class MahJongPanel : GamePanel {
 	override public string CardPrefab{get{return "Mahjong";}}
 	override public string Id2File(uint color,uint value){
 		if(Rule!=null){
+			color-=1;
 			string[] Colors={"tong","tiao","wan"};
 			value=Rule.inverseTransformValue(value);
 			if(color<Colors.Length)
@@ -50,10 +51,10 @@ public class MahJongPanel : GamePanel {
 					bunch_t curr=new bunch_t();
 					curr.Pos=_pos;
 					if(card!=null)
-						curr.Pawns.Add(card.Value.Id);
+						curr.Pawns.Add(card.Value);
 					else{
 						foreach(var c in _selection)
-							curr.Pawns.Add(c.Value.Id);
+							curr.Pawns.Add(c.Value);
 					}
 					if(Rule.Verify(curr,hist))
 						check=true;
@@ -77,12 +78,12 @@ public class MahJongPanel : GamePanel {
 			int i=0;
 			foreach(Transform ch in HandAreas[0].transform){
 				var card=ch.gameObject.GetComponent<Card>();
-				if(card!=null)hands[i++]=card.Value.Id;
+				if(card!=null)hands[i++]=card.Value;
 			}
 			i=0;
 			foreach(Transform ch in DiscardAreas[2].transform){
 				var card=ch.gameObject.GetComponent<Card>();
-				if(card!=null)ids[i++]=card.Value.Id;
+				if(card!=null)ids[i++]=card.Value;
 			}
 			
 			//_hints=Main.Instance.gameRule.hint(hands,ids);
@@ -104,7 +105,7 @@ public class MahJongPanel : GamePanel {
 		files.Add("zhong");
 		files.Add("fa");
 		files.Add("bai");
-		for(uint k=0;k<3;++k)for(uint i=1;i<=9;++i)
+		for(uint k=1;k<=3;++k)for(uint i=1;i<=9;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
 	}

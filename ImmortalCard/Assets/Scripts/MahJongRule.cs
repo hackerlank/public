@@ -10,20 +10,17 @@ public class MahJongRule: GameRule {
 
 	protected override void deal(MsgNCStart msg){
 		uint id=0;
-		for(uint k=0;k<3;++k){
+		for(uint k=1;k<=3;++k){
 			for(uint i=1;i<=9;++i){
 				for(uint j=0;j<4;++j){
-					Pile[id]=id;
-					pawn_t card=new pawn_t();
-					card.Color=k; //wan,tiao,tong
-					card.Value=transformValue(i);
-					card.Id=id++;
-					msg.Cards.Add(card);
+					id=k*1000+j*100+i;
+					Pile.Add(id);
 				}
 			}
 		}
 		//shuffle
 		Pile=shuffle(Pile);
+		/*
 		//deal
 		for(uint i=0;i<14;++i)
 			msg.Hands.Add(Pile[i]);
@@ -33,6 +30,7 @@ public class MahJongRule: GameRule {
 			Hands[0].Add(Pile[i]);
 		for(uint i=14+13;i<14+13*2;++i)
 			Hands[1].Add(Pile[i]);
+		*/
 	}
 
 	protected override pb_enum verifyBunch(bunch_t bunch){
@@ -46,10 +44,6 @@ public class MahJongRule: GameRule {
 		return win;
 	}
 	
-	public override int comparision(uint x,uint y){
-		return ((int)y)-((int)x);
-	}
-
 	public override uint transformValue(uint val){
 		return val;
 	}

@@ -76,16 +76,12 @@ int Mahjong::bottom(){
 }
 
 void Mahjong::initCard(Game& game){
-    unit_id_t id=0;
-    //ids => 1111...9999aaaa...iiiiAAAA...III
-    for(int i=0;i<3;++i){           //Tong,Suo,Wan
-        for(int j=1;j<=9;++j){      //1-9
+    //id: [color-index-value]
+    for(int j=1;j<=3;++j){           //Tong,Suo,Wan => 1-3
+        for(int i=1;i<=9;++i){      //1-9
             for(int k=0;k<4;++k){   //xxxx
-                game.pile[id]=id;
-                auto& u=game.units[id];
-                u.set_color(i);     //Tong,Suo,Wan => 0-3
-                u.set_value(j);
-                u.set_id(id++);
+                unit_id_t id=j*1000+k*100+i;
+                game.pile.push_back(id);
             }
         }
     }
@@ -121,7 +117,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         //cards check
         auto card=(unit_id_t)msg.bunch().pawns(0);
         //boundary check
-        if(card>=game->units.size()){
+        if(card<=1000||card>=2000){
             KEYE_LOG("OnDiscard invalid cards %d\n",card);
             break;
         }
@@ -141,7 +137,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    KEYE_LOG("OnDiscard pos=%d, erase card(%d:%d)\n",player.pos,*i,game->units[*i].value());
+                    KEYE_LOG("OnDiscard pos=%d, erase card %d\n",player.pos,*i);
                     hands.erase(i);
                     break;
                 }
@@ -292,7 +288,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                     for(auto j:bunch.pawns()){
                         for(auto i=hands.begin();i!=hands.end();++i){
                             if(j==*i){
-                                KEYE_LOG("OnMeld pos=%d, erase card(%d:%d)\n",player.pos,*i,game.units[*i].value());
+                                KEYE_LOG("OnMeld pos=%d, erase card %d\n",player.pos,*i);
                                 hands.erase(i);
                                 break;
                             }
@@ -380,12 +376,12 @@ void Mahjong::tickRobot(Game& game){
                         if(hands.empty()){
                             break;
                         }else{
-                            auto& B=game.units[gdata.selected_card()];
+                            auto B=gdata.selected_card();
                             auto it=hands.rbegin();
                             //find huazhu if exists
                             for(auto iter=hands.rbegin(),iend=hands.rend();iter!=iend;++iter){
-                                auto& A=game.units[*iter];
-                                if(A.color()==B.color()){
+                                auto A=*iter;
+                                if(A/1000==B/1000){
                                     it=iter;
                                     break;
                                 }
@@ -482,9 +478,9 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
     
     auto len=cards.size()-1;
     for(size_t i=0;i!=len;++i){
-        auto& A=game.units[cards[i+0]];
-        auto& B=game.units[cards[i+1]];
-        if(A.color()==B.color()&&A.value()==B.value()){
+        auto A=cards[i+0];
+        auto B=cards[i+1];
+        if(A/1000==B/1000&&A%100==B%100){
             std::vector<unit_id_t> tmp;
             for(size_t j=0;j!=len;++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
             if(isGameOverWithoutAA(game,tmp)){
@@ -503,15 +499,15 @@ bool Mahjong::isGameOverWithoutAA(Game& game,std::vector<unit_id_t>& cards){
     }
     
     for(size_t i=0,ii=len/3;i!=ii;++i){
-        auto& A=game.units[cards[i+0]];
-        auto& B=game.units[cards[i+1]];
-        auto& C=game.units[cards[i+2]];
-        if(A.color()!=B.color()||A.color()!=C.color()){
+        auto A=cards[i+0];
+        auto B=cards[i+1];
+        auto C=cards[i+2];
+        if(A/1000!=B/1000||A/1000!=C/1000){
             KEYE_LOG("isGameOverWithoutAA failed: color");
             return false;
         }
-        if(!(A.value()+1==B.value()&&A.value()+2==C.value())&&
-           !(A.value()==B.value()&&A.value()==C.value())){
+        if(!(A%100+1==B%100&&A%100+2==C%100)&&
+           !(A%100==B%100&&A%100==C%100)){
             KEYE_LOG("isGameOverWithoutAA failed: invalid pattern");
             return false;
         }
@@ -527,12 +523,12 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
         return false;
     }
     auto id=src_bunch.pawns(0);
-    auto A=game.units[id];
+    auto A=id;
     auto& player=*game.players[pos];
     auto& hands=player.gameData.hands();
     
     //default color check
-    if(A.color()==player.gameData.selected_card()){
+    if(A/1000==player.gameData.selected_card()){
         KEYE_LOG("hint default color,pos=%d",pos);
         return false;
     }
@@ -549,8 +545,8 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     //select color
     std::vector<unit_id_t> sel;
     for(auto hand:hands){
-        auto& B=game.units[hand];
-        if(B.color()==A.color()&&B.value()==A.value())
+        auto B=hand;
+        if(B/1000==A/1000&&B%100==A%100)
             sel.push_back(hand);
     }
     auto len=sel.size();
@@ -572,8 +568,8 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     }else if(game.pileMap.find(id)!=game.pileMap.end()){
         for(auto melt:player.gameData.bunch()){
             if(melt.type()==pb_enum::BUNCH_AAA){
-                auto& C=game.units[melt.pawns(0)];
-                if(C.color()==A.color()&&C.value()==A.value()){
+                auto C=melt.pawns(0);
+                if(C/1000==A/1000&&C%100==A%100){
                     //BUNCH_AAAA
                     auto bunch=bunches.Add();
                     bunch->set_pos(pos);
@@ -597,11 +593,11 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
             break;
         }
         auto& gdata=game.players[bunch.pos()]->gameData;
-        auto& A=game.units[bunch.pawns(0)];
+        auto A=bunch.pawns(0);
         if(gdata.selected_card()!=i_invalid){
             //huazhu
-            auto& B=game.units[gdata.selected_card()];
-            if(A.color()!=B.color()){
+            auto B=gdata.selected_card();
+            if(A/1000!=B/1000){
                 bt=pb_enum::BUNCH_INVALID;
                 break;
             }
@@ -615,20 +611,14 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     if(bunch.pawns_size()!=1)
         return false;
     auto& gdata=game.players[bunch.pos()]->gameData;
-    auto& A=game.units[bunch.pawns(0)];
+    auto A=bunch.pawns(0);
     if(gdata.selected_card()!=i_invalid){
         //huazhu
-        auto& B=game.units[gdata.selected_card()];
-        if(A.color()!=B.color())
+        auto B=gdata.selected_card();
+        if(A/1000!=B/1000)
             return false;
     }
     return true;
-}
-
-bool Mahjong::comparision(Game& game,uint x,uint y){
-    auto cx=game.units[x];
-    auto cy=game.units[y];
-    return cx.value()<cy.value();
 }
 
 bool Mahjong::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
@@ -639,11 +629,7 @@ bool Mahjong::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
 
 void Mahjong::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
     bunch.mutable_pawns()->Clear();
-    for(auto n:vals){
-        uint color=n/100;
-        uint val=n%100;
-        uint id=0;
-        for(auto card:game.units)if(card.value()==val&&card.color()==color)id=card.id();
+    for(auto id:vals){
         bunch.mutable_pawns()->Add(id);
     }
 }

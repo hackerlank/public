@@ -78,23 +78,16 @@ int DoudeZhu::bottom(){
 }
 
 void DoudeZhu::initCard(Game& game){
-    unit_id_t id=0;
-    //ids => AAAA22223333...
-    for(int i=1;i<=13;++i){ //A-K => 1-13
-        for(int j=0;j<4;++j){
-            game.pile[id]=id;
-            auto& u=game.units[id];
-            u.set_color(j); //clubs,diamonds,hearts,spades => 0-3
-            u.set_value(transformValue(i));
-            u.set_id(id++);
+    //id: [color-index-value]
+    for(int i=1;i<=13;++i){     //value: A-K => 1-13
+        for(int j=1;j<=4;++j){  //color: clubs,diamonds,hearts,spades => 1-4
+            unit_id_t id=j*1000+transformValue(i);
+            game.pile.push_back(id);
         }
     }
-    for(int j=0;j<=1;++j){  //Joker(color 0,1) => 14,15
-        game.pile[id]=id;
-        auto& u=game.units[id];
-        u.set_color(j);
-        u.set_value(transformValue(14+j));
-        u.set_id(id++);
+    for(int j=1;j<=2;++j){      //Joker(color 1,2) => 14,15
+        unit_id_t id=j*1000+transformValue(14+j);
+        game.pile.push_back(id);
     }
 }
 
@@ -138,7 +131,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         auto check=true;
         for(auto c:cards){
             //boundary check
-            if(c>=game->units.size()){
+            if(c<=1000||c>=2000){
                 check=false;
                 KEYE_LOG("OnDiscard invalid cards %d\n",c);
                 break;
@@ -192,7 +185,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    KEYE_LOG("OnDiscard pos=%d, erase card(%d:%d)\n",player.pos,*i,game->units[*i].value());
+                    KEYE_LOG("OnDiscard pos=%d, erase card %d\n",player.pos,*i);
                     hands.erase(i);
                     break;
                 }
@@ -309,24 +302,24 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
         if(type==pb_enum::OP_PASS)
             ids_.push_back(ids[0]);
         else{
-            std::vector<Card*> cards;
-            for(auto c:ids)cards.push_back(&game.units[c]);     //cards vector
-            std::vector<Card*> sortByVal[28];                   //redundant vector
-            for(auto card:cards)sortByVal[card->value()].push_back(card);
-            std::vector<std::vector<Card*>*> sortByWidth[5];    //null,A,AA,AAA,AAAA
+            std::vector<unit_id_t> cards;
+            for(auto c:ids)cards.push_back(c);     //cards vector
+            std::vector<unit_id_t> sortByVal[28];                   //redundant vector
+            for(auto card:cards)sortByVal[card%100].push_back(card);
+            std::vector<std::vector<unit_id_t>*> sortByWidth[5];    //null,A,AA,AAA,AAAA
             for(auto& sorted:sortByVal)sortByWidth[sorted.size()].push_back(&sorted);
 
-            auto& histCard=game.units[hist->pawns(0)];
+            auto histCard=hist->pawns(0);
             if(type==pb_enum::BUNCH_ABC){
                 //make a queue without duplicated
                 cards.clear();
-                for(auto& v:sortByVal)if(!v.empty()&&v[0]->value()>histCard.value())cards.push_back(v[0]);
+                for(auto& v:sortByVal)if(!v.empty()&&v[0]%100>histCard%100)cards.push_back(v[0]);
                 if(!cards.empty()){
                     int len=(int)hist->pawns_size();
                     int y=(int)cards.size()-len;
                     for(int i=0;i<y&&ids_.empty();++i){
                         bunch_t bunch_;
-                        for(int j=i,jj=i+len;j!=jj;++j)bunch_.add_pawns(cards[j]->id());
+                        for(int j=i,jj=i+len;j!=jj;++j)bunch_.add_pawns(cards[j]);
                         auto bt=verifyBunch(game,bunch_);
                         if(bt==type&&compareBunch(game,bunch_,*hist)){
                             for(auto card:bunch_.pawns())ids_.push_back(card);
@@ -353,8 +346,8 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
                             auto& vv=sortByWidth[j];
                             for(auto& v:vv){
                                 auto card=v->front();
-                                if(card->value()>histCard.value()){
-                                    for(auto c:*v)if(ids_.size()<idx)ids_.push_back(c->id());
+                                if(card%100>histCard%100){
+                                    for(auto c:*v)if(ids_.size()<idx)ids_.push_back(c);
                                     break;
                                 }
                             }
@@ -363,14 +356,14 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
                     }
                     case pb_enum::BUNCH_AAAAB:
                         if(!sortByWidth[4].empty()&&sortByWidth[1].size()>=2){
-                            auto id0=sortByWidth[1][0]->front()->id();
-                            auto id1=sortByWidth[1][1]->front()->id();
+                            auto id0=sortByWidth[1][0]->front();
+                            auto id1=sortByWidth[1][1]->front();
                             bunch_t bunch_;
                             for(auto sorted:sortByWidth[4]){
                                 bunch_.mutable_pawns()->Clear();
                                 bunch_.add_pawns(id0);
                                 bunch_.add_pawns(id1);
-                                for(auto card:*sorted)bunch_.add_pawns(card->id());
+                                for(auto card:*sorted)bunch_.add_pawns(card);
                                 auto bt=verifyBunch(game,bunch_);
                                 if(bt==type&&compareBunch(game,bunch_,*hist)){
                                     for(auto card:bunch_.pawns())ids_.push_back(card);
@@ -381,12 +374,12 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
                         break;
                     case pb_enum::BUNCH_AAAB:
                         if(!sortByWidth[3].empty()&&!sortByWidth[1].empty()){
-                            auto id=sortByWidth[1][0]->front()->id();
+                            auto id=sortByWidth[1][0]->front();
                             bunch_t bunch_;
                             for(auto sorted:sortByWidth[3]){
                                 bunch_.mutable_pawns()->Clear();
                                 bunch_.add_pawns(id);
-                                for(auto card:*sorted)bunch_.add_pawns(card->id());
+                                for(auto card:*sorted)bunch_.add_pawns(card);
                                 auto bt=verifyBunch(game,bunch_);
                                 if(bt==type&&compareBunch(game,bunch_,*hist)){
                                     for(auto card:bunch_.pawns())ids_.push_back(card);
@@ -402,7 +395,7 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
             if(hist->type()!=pb_enum::BUNCH_AAAA&&!sortByWidth[4].empty()){
                 //boom!
                 auto& sorted=sortByWidth[4][0];
-                for(auto card:*sorted)bunch.add_pawns(card->id());
+                for(auto card:*sorted)bunch.add_pawns(card);
             }
         }//else if(type==pb_enum::OP_PASS)
     }
@@ -426,31 +419,31 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
 
     auto len=ids.size();
     auto bt=pb_enum::BUNCH_INVALID;
-    std::vector<Card*> cards;
-    for(auto c:ids)cards.push_back(&game.units[c]);
+    std::vector<unit_id_t> cards;
+    for(auto c:ids)cards.push_back(c);
     //verify by length
     switch (len) {
         case 1:
             bt=pb_enum::BUNCH_A;
             break;
         case 2:
-            if(cards[0]->value()==cards[1]->value())
+            if(cards[0]%100==cards[1]%100)
                     bt=pb_enum::BUNCH_AA;
-            else if(cards[0]->value()>=transformValue(14)&&cards[1]->value()>=transformValue(14))
+            else if(cards[0]%100>=transformValue(14)&&cards[1]%100>=transformValue(14))
                 // 2 Jokers
                 bt=pb_enum::BUNCH_AAAA;
             break;
         case 3:
-            if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value())
+            if(cards[0]%100==cards[1]%100&&cards[0]%100==cards[2]%100)
                 bt=pb_enum::BUNCH_AAA;
             break;
         case 4:
-            if(cards[0]->value()==cards[1]->value()&&cards[0]->value()==cards[2]->value()
-               &&cards[0]->value()==cards[3]->value())
+            if(cards[0]%100==cards[1]%100&&cards[0]%100==cards[2]%100
+               &&cards[0]%100==cards[3]%100)
                 bt=pb_enum::BUNCH_AAAA;
             /*
-            else if(cards[0]->value()==cards[1]->value()&&cards[2]->value()==cards[3]->value()
-               &&cards[0]->value()+1==cards[2]->value())
+            else if(cards[0]%100==cards[1]%100&&cards[2]%100==cards[3]%100
+               &&cards[0]%100+1==cards[2]%100)
                 bt=pb_enum::BUNCH_ABC;  //AABB
             */
             else{
@@ -458,7 +451,7 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                 std::map<uint32,int> valCount;  //[value,count]
                 int maxSame=0;
                 for(auto card:cards){
-                    auto val=card->value();
+                    auto val=card%100;
                     if(valCount.count(val))
                         valCount[val]++;
                     else
@@ -476,7 +469,7 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
             //collect all counts
             int maxSame=0;
             for(auto card:cards){
-                auto val=card->value();
+                auto val=card%100;
                 if(valCount.count(val))
                     valCount[val]++;
                 else
@@ -547,9 +540,9 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                     if(len%2!=0){
                         bt=pb_enum::BUNCH_INVALID;
                     }else for(size_t i=0;i<len-2;){
-                        if(cards[i]->value()!=cards[i+1]->value())
+                        if(cards[i]%100!=cards[i+1]%100)
                             bt=pb_enum::BUNCH_INVALID;
-                        else if(i+2<len&&cards[i]->value()+1!=cards[i+2]->value())
+                        else if(i+2<len&&cards[i]%100+1!=cards[i+2]%100)
                             bt=pb_enum::BUNCH_INVALID;
                         i+=2;
                     }
@@ -557,7 +550,7 @@ pb_enum DoudeZhu::verifyBunch(Game& game,bunch_t& bunch){
                 case 1:
                     bt=pb_enum::BUNCH_ABC;
                     for(size_t i=0;i<len-1;++i){
-                        if(cards[i]->value()+1!=cards[i+1]->value()){
+                        if(cards[i]%100+1!=cards[i+1]%100){
                             bt=pb_enum::BUNCH_INVALID;
                             break;
                         }
@@ -585,39 +578,39 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
         win=false;
     }else if(bt==pb_enum::BUNCH_AAAA){
         //bomb
-        auto& histCard=game.units[hist.pawns(0)];
-        auto& bunchCard=game.units[bunch.pawns(0)];
-        if(hist.type()!=pb_enum::BUNCH_AAAA||histCard.value()<bunchCard.value())
+        auto histCard=hist.pawns(0);
+        auto bunchCard=bunch.pawns(0);
+        if(hist.type()!=pb_enum::BUNCH_AAAA||histCard%100<bunchCard%100)
             win=true;
     }else if(bt==hist.type()&&bunch.pawns().size()==hist.pawns().size()){
         //same type and length
         switch (bt) {
             case pb_enum::BUNCH_AAAB:
             case pb_enum::BUNCH_AAAAB:{
-                std::vector<Card*> bunchCards,histCards;
-                for(auto c:bunch.pawns())bunchCards.push_back(&game.units[c]);
-                for(auto c:hist.pawns())histCards.push_back(&game.units[c]);
+                std::vector<unit_id_t> bunchCards,histCards;
+                for(auto c:bunch.pawns())bunchCards.push_back(c);
+                for(auto c:hist.pawns())histCards.push_back(c);
                 //find value of the same cards
                 uint32 bunchVal=0,histVal=0;
                 if(pb_enum::BUNCH_AAAB==bt){
                     for(size_t i=0,ii=bunchCards.size()-2;i<ii;++i){
-                        if(bunchCards[i]->value()==bunchCards[i+1]->value()&&bunchCards[i]->value()==bunchCards[i+2]->value())
-                            bunchVal=bunchCards[i]->value();
+                        if(bunchCards[i]%100==bunchCards[i+1]%100&&bunchCards[i]%100==bunchCards[i+2]%100)
+                            bunchVal=bunchCards[i]%100;
                     }
                     for(size_t i=0,ii=histCards.size()-2;i<ii;++i){
-                        if(histCards[i]->value()==histCards[i+1]->value()&&histCards[i]->value()==histCards[i+2]->value())
-                            histVal=histCards[i]->value();
+                        if(histCards[i]%100==histCards[i+1]%100&&histCards[i]%100==histCards[i+2]%100)
+                            histVal=histCards[i]%100;
                     }
                 }else{
                     for(size_t i=0,ii=bunchCards.size()-3;i<ii;++i){
-                        if(bunchCards[i]->value()==bunchCards[i+1]->value()&&bunchCards[i]->value()==bunchCards[i+2]->value()
-                           &&bunchCards[i]->value()==bunchCards[i+3]->value())
-                            bunchVal=bunchCards[i]->value();
+                        if(bunchCards[i]%100==bunchCards[i+1]%100&&bunchCards[i]%100==bunchCards[i+2]%100
+                           &&bunchCards[i]%100==bunchCards[i+3]%100)
+                            bunchVal=bunchCards[i]%100;
                     }
                     for(size_t i=0,ii=histCards.size()-3;i<ii;++i){
-                        if(histCards[i]->value()==histCards[i+1]->value()&&histCards[i]->value()==histCards[i+2]->value()
-                           &&histCards[i]->value()==histCards[i+3]->value())
-                            histVal=histCards[i]->value();
+                        if(histCards[i]%100==histCards[i+1]%100&&histCards[i]%100==histCards[i+2]%100
+                           &&histCards[i]%100==histCards[i+3]%100)
+                            histVal=histCards[i]%100;
                     }
                 }
                 win=bunchVal>histVal;
@@ -628,9 +621,9 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
             case pb_enum::BUNCH_AAA:
             case pb_enum::BUNCH_ABC:
             default:{
-                auto& histCard=game.units[hist.pawns(0)];
-                auto& bunchCard=game.units[bunch.pawns(0)];
-                if(histCard.value()<bunchCard.value())
+                auto histCard=hist.pawns(0);
+                auto bunchCard=bunch.pawns(0);
+                if(histCard%100<bunchCard%100)
                     win=true;
                 break;
             }
@@ -643,30 +636,9 @@ bool DoudeZhu::compareBunch(Game& game,bunch_t& bunch,bunch_t& hist){
     return win;
 }
 
-bool DoudeZhu::comparision(Game& game,uint x,uint y){
-    auto cx=game.units[x];
-    auto cy=game.units[y];
-    /*
-    if(cx.value()==1||cx.value()==2)
-        x+=(53-2);
-    else if(cx.value()==14)
-        x+=8;
-    if(cy.value()==1||cy.value()==2)
-        y+=(53-2);
-    else if(cy.value()==14)
-        y+=8;
-    return x<y;
-    */
-    return cx.value()<cy.value();
-}
-
 void DoudeZhu::make_bunch(Game& game,proto3::bunch_t& bunch,const std::vector<uint>& vals){
     bunch.mutable_pawns()->Clear();
-    for(auto n:vals){
-        uint color=n/100;
-        uint val=transformValue(n%100);
-        uint id=0;
-        for(auto card:game.units)if(card.value()==val&&card.color()==color)id=card.id();
+    for(auto id:vals){
         bunch.mutable_pawns()->Add(id);
     }
 }

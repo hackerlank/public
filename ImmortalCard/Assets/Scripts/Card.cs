@@ -27,20 +27,21 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 
 	public int Id,Clr,Val;	//only for debug
-	Proto3.pawn_t _value;
-	public Proto3.pawn_t Value{
+	uint _value;
+	public uint Value{
 		get{
 			return _value;
 		}set{
 			if(Main.Instance.gameController!=null){
-				var file=Main.Instance.gameController.Id2File(value.Color,value.Value);
+				//remember debug value
+				Id=(int)value;
+				Clr=(int)value/1000;
+				Val=(int)value%100;
+
+				var file=Main.Instance.gameController.Id2File((uint)Clr,(uint)Val);
 				if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
 					image.sprite=CardCache.sprites[file];
 				_value=value;
-				//remember debug value
-				Id=(int)value.Id;
-				Clr=(int)value.Color;
-				Val=(int)value.Value;
 				/*
 			string str="load card("+value.Id+","+value.Color+","+value.Value+")";
 			_value=value;
@@ -108,13 +109,13 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		le.preferredHeight*=scalar;
 	}
 
-	public static void Create(string path,Proto3.pawn_t data=null,Transform parent=null,System.Action<Card> handler=null){
+	public static void Create(string path,uint data=0,Transform parent=null,System.Action<Card> handler=null){
 		if(CardCache.cards[path]){
 			var go=GameObject.Instantiate(CardCache.cards[path]) as GameObject;
 			go.SetActive(true);
 			var card=go.GetComponent<Card>();
 			if(card!=null){
-				if(data!=null)
+				if(data>1000)
 					card.Value=data;
 				//parent
 				if(parent!=null){

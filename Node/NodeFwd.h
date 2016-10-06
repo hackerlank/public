@@ -15,9 +15,6 @@
 
 #include "PBHelper.h"
 
-typedef proto3::pawn_t Card;
-typedef proto3::pawn_t Chess;
-
 typedef short unit_id_t;
 typedef short pos_t;
 typedef short color_t;

@@ -11,33 +11,25 @@ public class DoudeZhuRule: GameRule {
 	protected override void deal(MsgNCStart msg){
 		uint id=0;
 		for(uint i=1;i<=13;++i){ //A-K => 1-13
-			for(uint j=0;j<4;++j){
-				Pile[id]=id;
-				pawn_t card=new pawn_t();
-				card.Color=j; //clubs,diamonds,hearts,spades => 0-3
-				card.Value=transformValue(i);
-				card.Id=id++;
-				msg.Cards.Add(card);
+			for(uint j=1;j<=4;++j){
+				id=j*1000+transformValue(i);
+				Pile.Add(id);
 			}
 		}
-		for(uint j=0;j<=1;++j){  //Joker(color 0,1) => 14,15
-			Pile[id]=id;
-			pawn_t card=new pawn_t();
-			card.Color=j;
-			card.Value=transformValue(14+j);
-			card.Id=id++;
-			msg.Cards.Add(card);
+		for(uint j=1;j<=2;++j){  //Joker(color 0,1) => 14,15
+			id=j*1000+transformValue(14+j);
+			Pile.Add(id);
 		}
 		//shuffle
 		Pile=shuffle(Pile);
 		//deal
-		for(uint i=0;i<20;++i)
+		for(int i=0;i<20;++i)
 			msg.Hands.Add(Pile[i]);
 		//other hands
 		Hands=new List<uint>[2]{new List<uint>(),new List<uint>()};
-		for(uint i=20;i<20+17;++i)
+		for(int i=20;i<20+17;++i)
 			Hands[0].Add(Pile[i]);
-		for(uint i=20+17;i<20+17*2;++i)
+		for(int i=20+17;i<20+17*2;++i)
 			Hands[1].Add(Pile[i]);
 	}
 
@@ -48,31 +40,31 @@ public class DoudeZhuRule: GameRule {
 
 		var len=ids.Count;
 		var bt=pb_enum.BunchInvalid;
-		List<pawn_t> cards=new List<pawn_t>();
-		foreach(var c in ids)cards.Add(Configs.Cards[c]);
+		List<uint> cards=new List<uint>();
+		foreach(var c in ids)cards.Add(c);
 		//verify by length
 		switch (len) {
 		case 1:
 		bt=pb_enum.BunchA;
 			break;
 		case 2:
-			if(cards[0].Value==cards[1].Value)
+			if(cards[0]%100==cards[1]%100)
 				bt=pb_enum.BunchAa;
-			else if(cards[0].Value>=transformValue(14)&&cards[1].Value>=transformValue(14))
+			else if(cards[0]%100>=transformValue(14)&&cards[1]%100>=transformValue(14))
 				// 2 Jokers
 				bt=pb_enum.BunchAaaa;
 			break;
 		case 3:
-			if(cards[0].Value==cards[1].Value&&cards[0].Value==cards[2].Value)
+			if(cards[0]%100==cards[1]%100&&cards[0]%100==cards[2]%100)
 				bt=pb_enum.BunchAaa;
 			break;
 		case 4:
-			if(cards[0].Value==cards[1].Value&&cards[0].Value==cards[2].Value
-			   &&cards[0].Value==cards[3].Value)
+			if(cards[0]%100==cards[1]%100&&cards[0]%100==cards[2]%100
+			   &&cards[0]%100==cards[3]%100)
 				bt=pb_enum.BunchAaaa;
 			/*
-            else if(cards[0].Value==cards[1].Value&&cards[2].Value==cards[3].Value
-               &&cards[0].Value+1==cards[2].Value)
+            else if(cards[0]%100==cards[1]%100&&cards[2]%100==cards[3]%100
+               &&cards[0]%100+1==cards[2]%100)
                 bt=pb_enum.BunchAbc;  //AABB
             */
 			else{
@@ -80,7 +72,7 @@ public class DoudeZhuRule: GameRule {
 				Dictionary<uint,int> valCount=new Dictionary<uint, int>();  //[value,count]
 				int maxSame=0;
 				foreach(var card in cards){
-					var val=card.Value;
+					var val=card%100;
 					if(valCount.ContainsKey(val))
 						valCount[val]++;
 					else
@@ -98,7 +90,7 @@ public class DoudeZhuRule: GameRule {
 			//collect all counts
 			int maxSame=0;
 			foreach(var card in cards){
-				var val=card.Value;
+				var val=card%100;
 				if(valCount.ContainsKey(val))
 					valCount[val]++;
 				else
@@ -169,9 +161,9 @@ public class DoudeZhuRule: GameRule {
 				if(len%2!=0){
 					bt=pb_enum.BunchInvalid;
 				}else for(int i=0;i<len-2;){
-					if(cards[i].Value!=cards[i+1].Value)
+					if(cards[i]%100!=cards[i+1]%100)
 						bt=pb_enum.BunchInvalid;
-					else if(i+2<len&&cards[i].Value+1!=cards[i+2].Value)
+					else if(i+2<len&&cards[i]%100+1!=cards[i+2]%100)
 						bt=pb_enum.BunchInvalid;
 					i+=2;
 				}
@@ -179,7 +171,7 @@ public class DoudeZhuRule: GameRule {
 			case 1:
 				bt=pb_enum.BunchAbc;
 				for(int i=0;i<len-1;++i){
-					if(cards[i].Value+1!=cards[i+1].Value){
+					if(cards[i]%100+1!=cards[i+1]%100){
 						bt=pb_enum.BunchInvalid;
 						break;
 					}
@@ -204,40 +196,40 @@ public class DoudeZhuRule: GameRule {
 			win=false;
 		}else if(bt==pb_enum.BunchAaaa){
 			//bomb
-			var histCard=Configs.Cards[hist.Pawns[0]];
-			var bunchCard=Configs.Cards[bunch.Pawns[0]];
-			if(hist.Type!=pb_enum.BunchAaaa||histCard.Value<bunchCard.Value)
+			var histCard=hist.Pawns[0];
+			var bunchCard=bunch.Pawns[0];
+			if(hist.Type!=pb_enum.BunchAaaa||histCard%100<bunchCard%100)
 				win=true;
 		}else if(bt==hist.Type&&bunch.Pawns.Count==hist.Pawns.Count){
 			//same type and length
 			switch (bt) {
 			case pb_enum.BunchAaab:
 			case pb_enum.BunchAaaab:{
-				List<pawn_t> bunchCards=new List<pawn_t>();
-				List<pawn_t> histCards=new List<pawn_t>();
-				foreach(var c in bunch.Pawns)bunchCards.Add(Configs.Cards[c]);
-				foreach(var c in hist.Pawns)histCards.Add(Configs.Cards[c]);
+				List<uint> bunchCards=new List<uint>();
+				List<uint> histCards=new List<uint>();
+				foreach(var c in bunch.Pawns)bunchCards.Add(c);
+				foreach(var c in hist.Pawns)histCards.Add(c);
 				//find value of the same cards
 				uint bunchVal=0,histVal=0;
 				if(pb_enum.BunchAaab==bt){
 					for(int i=0,ii=bunchCards.Count-2;i<ii;++i){
-						if(bunchCards[i].Value==bunchCards[i+1].Value&&bunchCards[i].Value==bunchCards[i+2].Value)
-							bunchVal=bunchCards[i].Value;
+						if(bunchCards[i]%100==bunchCards[i+1]%100&&bunchCards[i]%100==bunchCards[i+2]%100)
+							bunchVal=bunchCards[i]%100;
 					}
 					for(int i=0,ii=histCards.Count-2;i<ii;++i){
-						if(histCards[i].Value==histCards[i+1].Value&&histCards[i].Value==histCards[i+2].Value)
-							histVal=histCards[i].Value;
+						if(histCards[i]%100==histCards[i+1]%100&&histCards[i]%100==histCards[i+2]%100)
+							histVal=histCards[i]%100;
 					}
 				}else{
 					for(int i=0,ii=bunchCards.Count-3;i<ii;++i){
-						if(bunchCards[i].Value==bunchCards[i+1].Value&&bunchCards[i].Value==bunchCards[i+2].Value
-						   &&bunchCards[i].Value==bunchCards[i+3].Value)
-							bunchVal=bunchCards[i].Value;
+						if(bunchCards[i]%100==bunchCards[i+1]%100&&bunchCards[i]%100==bunchCards[i+2]%100
+						   &&bunchCards[i]%100==bunchCards[i+3]%100)
+							bunchVal=bunchCards[i]%100;
 					}
 					for(int i=0,ii=histCards.Count-3;i<ii;++i){
-						if(histCards[i].Value==histCards[i+1].Value&&histCards[i].Value==histCards[i+2].Value
-						   &&histCards[i].Value==histCards[i+3].Value)
-							histVal=histCards[i].Value;
+						if(histCards[i]%100==histCards[i+1]%100&&histCards[i]%100==histCards[i+2]%100
+						   &&histCards[i]%100==histCards[i+3]%100)
+							histVal=histCards[i]%100;
 					}
 				}
 				win=bunchVal>histVal;
@@ -248,9 +240,9 @@ public class DoudeZhuRule: GameRule {
 			case pb_enum.BunchAaa:
 			case pb_enum.BunchAbc:
 			default:{
-				var histCard=Configs.Cards[hist.Pawns[0]];
-				var bunchCard=Configs.Cards[bunch.Pawns[0]];
-				if(histCard.Value<bunchCard.Value)
+				var histCard=hist.Pawns[0];
+				var bunchCard=bunch.Pawns[0];
+				if(histCard%100<bunchCard%100)
 					win=true;
 				break;
 			}
@@ -259,12 +251,6 @@ public class DoudeZhuRule: GameRule {
 		return win;
 	}
 	
-	public override int comparision(uint x,uint y){
-		var cx=Configs.Cards[x];
-		var cy=Configs.Cards[y];
-		return ((int)cx.Value)-((int)cy.Value);
-	}
-
 	public override uint transformValue(uint val){
 		if      (val==1) return 14;
 		else if (val==2) return 16;

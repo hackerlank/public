@@ -30,7 +30,8 @@ public class CardCache{
 				yield return null;
 				var url=path+"/"+f;
 				Utils.SpriteCreate(url,delegate(Sprite sprite) {
-					if(sprite==null)Debug.LogError("load card failed "+url);
+					if(sprite==null)
+						Debug.LogError("load card failed "+url);
 					sprites[f]=sprite;
 				});
 			}

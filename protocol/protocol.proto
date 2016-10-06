@@ -156,13 +156,6 @@ uint32 time_zone        = 11;
 repeated game_t games   =12;
 };
 
-message pawn_t{
-
-uint32 id               =1;
-uint32 color            =2;
-uint32 value            =3;
-};
-
 message bunch_t{
 
 pb_enum type            =1;
@@ -332,11 +325,10 @@ uint32 banker           =2;
 uint32 pos              =3;
 uint32 ante             =4;
 uint32 multiple         =5;
-repeated pawn_t cards   =6;
-repeated uint32 hands   =7;
-repeated uint32 bottom  =8;
-repeated uint32 count   =9;
-pb_enum result			=10;
+repeated uint32 hands   =6;
+repeated uint32 bottom  =7;
+repeated uint32 count   =8;
+pb_enum result			=9;
 };
 
 message MsgCNDiscard{

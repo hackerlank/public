@@ -107,15 +107,14 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
 			for(int i=0;i<cards.Length;++i){
 				var id=cards[i];
-				var v=Configs.Cards[id];
 				var fin=false;
-				Card.Create(CardPrefab,v,nHandCards[_token].transform.parent,delegate(Card card) {
+				Card.Create(CardPrefab,id,nHandCards[_token].transform.parent,delegate(Card card) {
 					card.state=Card.State.ST_DISCARD;
 					card.DiscardTo(DiscardAreas[_token]);
 					fin=true;
 				});
 				yield return null;
-				str+="("+v.Id+","+v.Color+","+v.Value+"),";
+				str+=id.ToString()+",";
 				while(!fin)yield return null;
 			}
 		}
@@ -183,12 +182,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(nHandCards.Length>2)nHandCards[2]=tempH[L];
 		if(nHandCards.Length>3)nHandCards[3]=tempH[O];
 		
-		//dict
-		Configs.Cards=new Dictionary<uint, pawn_t>();
-		for(int i=0;i<msg.Cards.Count;++i){
-			var card=msg.Cards[i];
-			Configs.Cards[card.Id]=card;
-		}
 		//sort
 		var hands=new List<uint>(msg.Hands);
 		hands.Sort(rule.comparision);
@@ -197,14 +190,13 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
 		for(int i=0;i<hands.Count;++i){
 			var id=hands[i];
-			var v=Configs.Cards[id];
 			var fin=false;
-			Card.Create(CardPrefab,v,HandAreas[0],delegate(Card card) {
+			Card.Create(CardPrefab,id,HandAreas[0],delegate(Card card) {
 				card.Static=false;
 				fin=true;
 			});
 			yield return null;
-			str+="("+v.Id+","+v.Color+","+v.Value+"),";
+			str+=id.ToString()+",";
 			if((i+1)%6==0)str+="\n";
 			while(!fin)yield return null;
 		}
@@ -213,10 +205,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		for(int i=0;i<msg.Count.Count;++i)
 			if(i<nHandCards.Length&&nHandCards[i]!=null)nHandCards[i].text=msg.Count[i].ToString();
 		for(int i=0;i<msg.Bottom.Count;++i){
-			if(i<BottomCards.Length&&BottomCards[i]!=null){
-				var v=Configs.Cards[msg.Bottom[i]];
-				BottomCards[i].Value=v;
-			}
+			if(i<BottomCards.Length&&BottomCards[i]!=null)
+				BottomCards[i].Value=msg.Bottom[i];
 		}
 		if(Players[_banker].gameTimer!=null)
 			Players[_banker].gameTimer.On();
@@ -241,13 +231,13 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 				deselectAll();
 				card.state=Card.State.ST_DISCARD;
 				card.DiscardTo(DiscardAreas[_pos]);
-				msg.Bunch.Pawns.Add(card.Value.Id);
+				msg.Bunch.Pawns.Add(card.Value);
 			}else if(_selection.Count>0){
 				_selection.Sort(compare_card);
 				foreach(var c in _selection){
 					c.state=Card.State.ST_DISCARD;
 					c.DiscardTo(DiscardAreas[_pos]);
-					msg.Bunch.Pawns.Add(c.Value.Id);
+					msg.Bunch.Pawns.Add(c.Value);
 				}
 				_selection.Clear();
 			}
@@ -270,7 +260,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	//System.Comparison<uint>
 	int compare_card(Card x,Card y){
-		return rule.comparision(x.Value.Id,y.Value.Id);
+		return rule.comparision(x.Value,y.Value);
 	}
 
 	void next(uint pos){

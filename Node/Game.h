@@ -32,7 +32,6 @@ public:
     pos_t       banker;
     pos_t       token;
     size_t      round,Round;
-    std::vector<Card>                   units;      //cards map
     std::vector<unit_id_t>              pile;       //cards library
     std::map<unit_id_t,int>             pileMap;    //cards map
     std::vector<std::shared_ptr<Player>> players;

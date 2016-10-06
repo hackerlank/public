@@ -15,7 +15,6 @@ using namespace proto3;
 void GameRule::deal(Game& game){
     //clear
     game.token=game.banker;
-    game.units.clear();
     game.pile.clear();
     game.historical.clear();
     game.pendingMeld.clear();
@@ -23,9 +22,6 @@ void GameRule::deal(Game& game){
     for(auto& player:game.players)if(player)player->reset();
     
     //init cards
-    auto N=maxCards();
-    game.units.resize(N);
-    game.pile.resize(N);
     initCard(game);
     
     //shuffle
@@ -58,11 +54,6 @@ void GameRule::deal(Game& game){
     msg.set_banker(game.banker);
     msg.set_ante(10);
     msg.set_multiple(1);
-    auto cards=msg.mutable_cards();
-    for(int i=0;i<N;++i){
-        auto card=cards->Add();
-        card->CopyFrom(game.units[i]);
-    }
     for(int i=0;i<MP;++i)
         msg.mutable_count()->Add((int)game.players[i]->gameData.hands().size());
     msg.mutable_bottom()->CopyFrom(bottom.pawns());
@@ -109,6 +100,14 @@ void GameRule::next(Game& game){
     KEYE_LOG("game token: %d=>%d\n",old,game.token);
 }
 
+bool GameRule::comparision(Game& game,uint x,uint y){
+    auto cx=x/1000;
+    auto cy=y/1000;
+    if(cx<cy)return true;
+    else if(cx==cy)return x%100<y%100;
+    else return false;
+}
+
 void GameRule::ChangeState(Game& game,Game::State state){
     if(game.state!=state){
         KEYE_LOG("game state: %d=>%d\n",game.state,state);
@@ -135,7 +134,7 @@ const char* GameRule::cards2str(Game& game,std::string& str,const google::protob
     str.clear();
     char buf[32];
     for(auto id:ids){
-        sprintf(buf,"(%d:%d),",id,game.units[id].value());
+        sprintf(buf,"%d,",id);
         str+=buf;
     }
     return str.c_str();

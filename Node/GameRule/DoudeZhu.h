@@ -32,7 +32,6 @@ private:
     void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                compareBunch(Game&,proto3::bunch_t&,proto3::bunch_t&);
-    bool                comparision(Game&,uint x,uint y);
     void                log(Game&){}
     void                make_bunch(Game&,proto3::bunch_t&,const std::vector<uint>&);
 };
