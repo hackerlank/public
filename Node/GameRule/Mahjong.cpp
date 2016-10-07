@@ -27,11 +27,18 @@ void Mahjong::Tick(Game& game){
         case Game::State::ST_MELD:
             if(!game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
                 auto& pending=game.pendingMeld.front();
-                if(pending.bunch.type()==pb_enum::OP_PASS)
-                    ChangeState(game,Game::State::ST_DRAW);
-                else if(isGameOver(game))
+                if(pending.bunch.type()==pb_enum::OP_PASS){
+                    if(game.pileMap.find(pending.bunch.pawns(0))!=game.pileMap.end()){
+                        //after draw
+                        game.pendingDiscard=std::make_shared<Game::pending_t>();
+                        game.pendingDiscard->bunch.set_pos(game.token);
+                        ChangeState(game,Game::State::ST_DISCARD);
+                    }else
+                        ChangeState(game,Game::State::ST_DRAW);
+                }else if(isGameOver(game))
                     ChangeState(game,Game::State::ST_SETTLE);
                 else
+                    //AAA or AAAA
                     ChangeState(game,Game::State::ST_DISCARD);
                 game.pendingMeld.clear();
             }
@@ -137,13 +144,13 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    KEYE_LOG("OnDiscard pos=%d, erase card %d\n",player.pos,*i);
+                    //KEYE_LOG("OnDiscard pos=%d,erase card %d\n",player.pos,*i);
                     hands.erase(i);
                     break;
                 }
             }
         }
-        logHands(*game,player.pos);
+        //logHands(*game,player.pos,"OnDiscard");
         omsg.set_result(pb_enum::SUCCEESS);
         omsg.mutable_bunch()->CopyFrom(msg.bunch());
 
@@ -244,7 +251,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
 
     //queue in
     std::string str;
-    KEYE_LOG("OnMeld queue in, pos=%d,%s\n",pos,bunch2str(str,bunch));
+    KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,bunch));
     pending.bunch.CopyFrom(bunch);
     
     //sort
@@ -257,6 +264,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(pb_enum::SUCCEESS);
+        KEYE_LOG("OnMeld,pos=%d,%s\n",pos,bunch2str(str,bunch));
 
         switch(bunch.type()){
             case pb_enum::BUNCH_WIN:{
@@ -288,7 +296,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                     for(auto j:bunch.pawns()){
                         for(auto i=hands.begin();i!=hands.end();++i){
                             if(j==*i){
-                                KEYE_LOG("OnMeld pos=%d, erase card %d\n",player.pos,*i);
+                                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",player.pos,*i);
                                 hands.erase(i);
                                 break;
                             }
@@ -308,14 +316,15 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
 
 void Mahjong::draw(Game& game){
     if(game.state!=Game::ST_DRAW){
-        KEYE_LOG("OnMeld wrong st=%d\n",game.state);
+        KEYE_LOG("draw wrong st=%d\n",game.state);
         return;
     }
     next(game);
     auto player=game.players[game.token];
     auto card=game.pile.back();
     game.pile.pop_back();
-    
+    KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
+
     MsgNCDraw msg;
     msg.set_mid(pb_msg::MSG_NC_DRAW);
     msg.set_pos(game.token);
@@ -362,14 +371,15 @@ bool Mahjong::isNaturalWin(Game& game,pos_t pos){
 
 void Mahjong::tickRobot(Game& game){
     for(auto robot:game.players){
+        if(!robot->isRobot)continue;
         switch (game.state) {
             case Game::State::ST_WAIT:
-                if(robot->isRobot)OnReady(*robot);
+                OnReady(*robot);
                 break;
             case Game::State::ST_DISCARD:
-                if(game.token==robot->pos&&robot->isRobot){
+                if(game.token==robot->pos){
                     if(game.delay--<0){
-                        //KEYE_LOG("tick robot %d\n",robot->pos);
+                        KEYE_LOG("tick discard robot %d\n",robot->pos);
 
                         MsgCNDiscard msg;
                         auto& gdata=robot->gameData;
@@ -402,6 +412,8 @@ void Mahjong::tickRobot(Game& game){
                             if(i->arrived)
                                 //already processed
                                 break;
+                            i->arrived=true;
+                            KEYE_LOG("tick meld robot %d\n",robot->pos);
                             auto pmsg=robot->lastMsg.get();
                             if(auto msg=dynamic_cast<MsgNCDiscard*>(pmsg)){
                                 auto& hints=msg->hints();
@@ -495,7 +507,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
 bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     auto len=cards.size();
     if(len%3!=0){
-        KEYE_LOG("isGameOverWithoutAA failed: len=%lu\n",len);
+        //KEYE_LOG("isGameOverWithoutAA failed: len=%lu\n",len);
         return false;
     }
     
@@ -504,12 +516,11 @@ bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
         auto B=cards[i+1];
         auto C=cards[i+2];
         if(A/1000!=B/1000||A/1000!=C/1000){
-            KEYE_LOG("isGameOverWithoutAA failed: color\n");
+            //KEYE_LOG("isGameOverWithoutAA failed: color\n");
             return false;
         }
-        if(!(A%100+1==B%100&&A%100+2==C%100)&&
-           !(A%100==B%100&&A%100==C%100)){
-            KEYE_LOG("isGameOverWithoutAA failed: invalid pattern\n");
+        if(!((A%100+1==B%100&&A%100+2==C%100)||(A%100==B%100&&A%100==C%100))){
+            //KEYE_LOG("isGameOverWithoutAA failed: invalid pattern\n");
             return false;
         }
     }
@@ -583,7 +594,16 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
         }
     }
     
-    return bunches.size()>0;
+    auto count=bunches.size();
+    if(count>0){
+        std::string str,ss;
+        for(auto& bunch:bunches){
+            bunch2str(ss,bunch);
+            str+=ss;
+        }
+        KEYE_LOG("hint %d,pos=%d,%s\n",count,pos,str.c_str());
+    }
+    return count>0;
 }
 
 pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){

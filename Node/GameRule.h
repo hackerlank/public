@@ -38,6 +38,7 @@ protected:
     void                deal(Game&);
     void                next(Game&);
 
+    const char*         state2str(std::string&,Game::State);
     const char*         bunch2str(std::string&,const proto3::bunch_t&);
     const char*         cards2str(std::string&,const google::protobuf::RepeatedField<uint32>&);
     void                logHands(Game&,uint32,std::string="");

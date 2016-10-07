@@ -99,12 +99,13 @@ bool GameRule::Ready(Game& game){
 void GameRule::next(Game& game){
     auto old=game.token;
     if(++game.token>=game.rule->MaxPlayer())game.token=0;
-    KEYE_LOG("game token: %d=>%d\n",old,game.token);
+    KEYE_LOG("token: %d=>%d\n",old,game.token);
 }
 
 void GameRule::ChangeState(Game& game,Game::State state){
     if(game.state!=state){
-        KEYE_LOG("game state: %d=>%d\n",game.state,state);
+        std::string str0,str1;
+        KEYE_LOG("game state: %s=>%s\n",state2str(str0,game.state),state2str(str1,state));
         game.state=state;
     }
 }
@@ -114,6 +115,36 @@ void GameRule::logHands(Game& game,uint32 pos,std::string msg){
     auto& hands=game.players[pos]->gameData.hands();
     cards2str(str,hands);
     KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
+}
+
+const char* GameRule::state2str(std::string& str,Game::State st){
+    switch (st) {
+        case Game::State::ST_WAIT:
+            str="ST_WAIT";
+            break;
+        case Game::State::ST_START:
+            str="ST_START";
+            break;
+        case Game::State::ST_DRAW:
+            str="ST_DRAW";
+            break;
+        case Game::State::ST_DISCARD:
+            str="ST_DISCARD";
+            break;
+        case Game::State::ST_MELD:
+            str="ST_MELD";
+            break;
+        case Game::State::ST_SETTLE:
+            str="ST_SETTLE";
+            break;
+        case Game::State::ST_END:
+            str="ST_END";
+            break;
+        default:
+            str="UNKNOWN";
+            break;
+    }
+    return str.c_str();
 }
 
 const char* GameRule::bunch2str(std::string& str,const proto3::bunch_t& bunch){

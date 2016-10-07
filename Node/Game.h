@@ -14,11 +14,11 @@ struct Game{
 public:
     enum State{
         ST_WAIT,
-        ST_START,
+        ST_START,   //1
         ST_DRAW,
-        ST_DISCARD,
+        ST_DISCARD, //3
         ST_MELD,
-        ST_SETTLE,
+        ST_SETTLE,  //5
         ST_END,
     };
     struct pending_t{
