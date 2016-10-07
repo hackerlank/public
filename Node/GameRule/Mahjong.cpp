@@ -21,7 +21,7 @@ void Mahjong::Tick(Game& game){
             ChangeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
-            if(game.pendingDiscard&&game.pendingDiscard->arrived)
+            if(!game.pendingDiscard||game.pendingDiscard->arrived)
                 ChangeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_MELD:
@@ -37,8 +37,8 @@ void Mahjong::Tick(Game& game){
             }
             break;
         case Game::State::ST_DRAW:
-            ChangeState(game,Game::State::ST_MELD);
             draw(game);
+            ChangeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_SETTLE:
             if(settle(game))
@@ -124,7 +124,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
 
         //shut discard after verify
         if(!game->pendingDiscard){
-            KEYE_LOG("OnDiscard not on pending");
+            KEYE_LOG("OnDiscard not on pending\n");
             break;
         }else
             player.game->pendingDiscard.reset();
@@ -177,11 +177,11 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             game->pendingMeld.push_back(Game::pending_t());
             auto& pending=game->pendingMeld.back();
             pending.bunch.set_type(pb_enum::OP_PASS);
-            pending.arrived=true;
+            pending.bunch.add_pawns(msg.bunch().pawns().Get(0));
             
             bunch_t bunch;
-            bunch.add_pawns(msg.bunch().pawns().Get(0));
-            bunch.set_type(pb_enum::OP_PASS);
+            bunch.CopyFrom(pending.bunch);
+            ChangeState(*game,Game::State::ST_MELD);
             OnMeld(*game,player,bunch);
         }
         return;
@@ -193,20 +193,20 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
     auto pos=player.pos;
     //state
     if(game.state!=Game::State::ST_MELD){
-        KEYE_LOG("OnMeld wrong st=%d,pos=%d",game.state,pos);
+        KEYE_LOG("OnMeld wrong st=%d,pos=%d\n",game.state,pos);
         return;
     }
     
     //pending queue
     auto& queue=game.pendingMeld;
     if(queue.empty()){
-        KEYE_LOG("OnMeld with queue empty,pos=%d",pos);
+        KEYE_LOG("OnMeld with queue empty,pos=%d\n",pos);
         return;
     }
 
     //card
     if(bunch.pawns().empty()){
-        KEYE_LOG("OnMeld empty cards,pos=%d",pos);
+        KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
         return;
     }
     auto card=*bunch.pawns().rbegin();
@@ -220,31 +220,31 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
             break;
         }
     if(!found){
-        KEYE_LOG("OnMeld wrong player pos=%d",pos);
+        KEYE_LOG("OnMeld wrong player pos=%d\n",pos);
         return;
     }
     
     //arrived and duplicated
     auto& pending=queue[i];
     if(pending.arrived){
-        KEYE_LOG("OnMeld already arrived, pos=%d",pos);
+        KEYE_LOG("OnMeld already arrived, pos=%d\n",pos);
         return;
     }
     pending.arrived=true;
 
-    if(pending.bunch.pawns().empty()){
-        KEYE_LOG("OnMeld empty cards,pos=%d",pos);
+    if(pending.bunch.pawns_size()<=0){
+        KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
         return;
     }
     auto pcard=*pending.bunch.pawns().rbegin();
     if(card!=pcard){
-        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d",pcard,card,pos);
+        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
         return;
     }
 
     //queue in
     std::string str;
-    KEYE_LOG("OnMeld queue in, pos=%d, ops=%s",pos,bunch2str(str,bunch));
+    KEYE_LOG("OnMeld queue in, pos=%d,%s\n",pos,bunch2str(str,bunch));
     pending.bunch.CopyFrom(bunch);
     
     //sort
@@ -268,7 +268,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
             }
             case pb_enum::BUNCH_INVALID:
                 //invalid
-                KEYE_LOG("OnMeld error, unknown ops, pos=%d",pos);
+                KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",pos);
                 msg.set_result(pb_enum::BUNCH_INVALID);
                 break;
             case pb_enum::OP_PASS:
@@ -280,7 +280,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                 auto result=verifyBunch(game,*(bunch_t*)&bunch);
                 if(result==pb_enum::BUNCH_INVALID){
                     std::string str;
-                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d",bunch2str(str,bunch),old_ops,pos);
+                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,pos);
                     msg.set_result(pb_enum::BUNCH_INVALID);
                 }else{
                     //erase from hands
@@ -308,7 +308,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
 
 void Mahjong::draw(Game& game){
     if(game.state!=Game::ST_DRAW){
-        KEYE_LOG("OnMeld wrong st=%d",game.state);
+        KEYE_LOG("OnMeld wrong st=%d\n",game.state);
         return;
     }
     next(game);
@@ -330,12 +330,12 @@ void Mahjong::draw(Game& game){
             game.pendingMeld.push_back(Game::pending_t());
             auto& pending=game.pendingMeld.back();
             pending.bunch.set_pos(game.token);
+            pending.bunch.add_pawns(card);
 
             //hint for the drawer
             google::protobuf::RepeatedField<proto3::bunch_t> bunches;
             bunch_t bunch;
-            bunch.set_pos(game.token);
-            bunch.mutable_pawns()->Add(card);
+            bunch.CopyFrom(pending.bunch);
             if(hint(bunches,game,i,bunch)){
                 pending.bunch.CopyFrom(bunches.Get(0));
                 for(auto& b:bunches)if(b.type()!=pb_enum::OP_PASS)msg.add_hints()->CopyFrom(b);
@@ -351,6 +351,7 @@ void Mahjong::draw(Game& game){
         p->send(msg);
     }
     if(pass){
+        ChangeState(game,Game::State::ST_MELD);
         OnMeld(game,*player,game.pendingMeld.back().bunch);
     }
 }
@@ -467,7 +468,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
     auto player=game.players[pos];
     auto& hands=player->gameData.hands();
     if(hands.size()<2){
-        KEYE_LOG("isGameOver failed: len=%d",hands.size());
+        KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
         return false;
     }
     std::vector<unit_id_t> cards;
@@ -482,7 +483,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
         auto B=cards[i+1];
         if(A/1000==B/1000&&A%100==B%100){
             std::vector<unit_id_t> tmp;
-            for(size_t j=0;j!=len;++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
+            for(size_t j=0;j!=cards.size();++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
             if(isGameOverWithoutAA(tmp)){
                 return true;
             }
@@ -494,7 +495,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
 bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     auto len=cards.size();
     if(len%3!=0){
-        KEYE_LOG("isGameOverWithoutAA failed: len=%lu",len);
+        KEYE_LOG("isGameOverWithoutAA failed: len=%lu\n",len);
         return false;
     }
     
@@ -503,12 +504,12 @@ bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
         auto B=cards[i+1];
         auto C=cards[i+2];
         if(A/1000!=B/1000||A/1000!=C/1000){
-            KEYE_LOG("isGameOverWithoutAA failed: color");
+            KEYE_LOG("isGameOverWithoutAA failed: color\n");
             return false;
         }
         if(!(A%100+1==B%100&&A%100+2==C%100)&&
            !(A%100==B%100&&A%100==C%100)){
-            KEYE_LOG("isGameOverWithoutAA failed: invalid pattern");
+            KEYE_LOG("isGameOverWithoutAA failed: invalid pattern\n");
             return false;
         }
     }
@@ -519,7 +520,7 @@ bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
 bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
     //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
     if(src_bunch.pawns_size()!=1){
-        KEYE_LOG("hint wrong cards len=%d,pos=%d",src_bunch.pawns_size(),pos);
+        KEYE_LOG("hint wrong cards len=%d,pos=%d\n",src_bunch.pawns_size(),pos);
         return false;
     }
     auto id=src_bunch.pawns(0);
@@ -529,7 +530,7 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     
     //default color check
     if(A/1000==player.gameData.selected_card()){
-        KEYE_LOG("hint default color,pos=%d",pos);
+        KEYE_LOG("hint default color,pos=%d\n",pos);
         return false;
     }
     

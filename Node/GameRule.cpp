@@ -118,7 +118,7 @@ void GameRule::logHands(Game& game,uint32 pos,std::string msg){
 
 const char* GameRule::bunch2str(std::string& str,const proto3::bunch_t& bunch){
     char buf[32];
-    sprintf(buf,"ops=%d",(int)bunch.type());
+    sprintf(buf,"ops=%d,card=",(int)bunch.type());
     cards2str(str,bunch.pawns());
     str=buf+str;
     return str.c_str();
