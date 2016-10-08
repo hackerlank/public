@@ -13,8 +13,6 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     bool                Ready(Game&);
-    void                ChangeState(Game&,Game::State);
-    
     void                OnReady(Player&);
 
     virtual void        Tick(Game&)=0;
@@ -36,7 +34,8 @@ protected:
     virtual bool        isGameOver(Game&)=0;
     
     void                deal(Game&);
-    void                next(Game&);
+    void                changeState(Game&,Game::State);
+    void                changePos(Game&,pos_t);
 
     const char*         state2str(std::string&,Game::State);
     const char*         bunch2str(std::string&,const proto3::bunch_t&);

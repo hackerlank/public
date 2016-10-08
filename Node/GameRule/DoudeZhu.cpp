@@ -30,23 +30,23 @@ void DoudeZhu::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
             if(Ready(game))
-                ChangeState(game,Game::State::ST_START);
+                changeState(game,Game::State::ST_START);
             break;
         case Game::State::ST_START:
             deal(game);
-            ChangeState(game,Game::State::ST_DISCARD);
+            changeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
             if(isGameOver(game))
-                ChangeState(game,Game::State::ST_SETTLE);
+                changeState(game,Game::State::ST_SETTLE);
             break;
         case Game::State::ST_MELD:
             break;
         case Game::State::ST_SETTLE:
             if(settle(game))
-                ChangeState(game,Game::State::ST_END);
+                changeState(game,Game::State::ST_END);
             else
-                ChangeState(game,Game::State::ST_WAIT);
+                changeState(game,Game::State::ST_WAIT);
             break;
         case Game::State::ST_END:
             break;
@@ -206,7 +206,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
 
         //pass token
         if(game->players[player.pos]->gameData.hands().size()>0)
-            next(*game);
+            changePos(*game,game->token+1);
     }else
         player.send(omsg);
 }

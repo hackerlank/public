@@ -14,38 +14,38 @@ void Mahjong::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
             if(Ready(game))
-                ChangeState(game,Game::State::ST_START);
+                changeState(game,Game::State::ST_START);
             break;
         case Game::State::ST_START:
             deal(game);
-            ChangeState(game,Game::State::ST_DISCARD);
+            changeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
             if(!game.pendingDiscard||game.pendingDiscard->arrived)
-                ChangeState(game,Game::State::ST_MELD);
+                changeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_MELD:
             if(!game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
                 auto& pending=game.pendingMeld.front();
                 if(pending.bunch.type()==pb_enum::OP_PASS)
-                    ChangeState(game,Game::State::ST_DRAW);
+                    changeState(game,Game::State::ST_DRAW);
                 else if(isGameOver(game))
-                    ChangeState(game,Game::State::ST_SETTLE);
+                    changeState(game,Game::State::ST_SETTLE);
                 else
                     //A,AAA,AAAA
-                    ChangeState(game,Game::State::ST_DISCARD);
+                    changeState(game,Game::State::ST_DISCARD);
                 game.pendingMeld.clear();
             }
             break;
         case Game::State::ST_DRAW:
             draw(game);
-            ChangeState(game,Game::State::ST_MELD);
+            changeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_SETTLE:
             if(settle(game))
-                ChangeState(game,Game::State::ST_END);
+                changeState(game,Game::State::ST_END);
             else
-                ChangeState(game,Game::State::ST_WAIT);
+                changeState(game,Game::State::ST_WAIT);
             break;
         case Game::State::ST_END:
             break;
@@ -169,6 +169,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
                 }
             }
             p->send(omsg);
+            p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
         }
         
         //historic
@@ -183,7 +184,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             
             bunch_t bunch;
             bunch.CopyFrom(pending.bunch);
-            ChangeState(*game,Game::State::ST_MELD);
+            changeState(*game,Game::State::ST_MELD);
             OnMeld(*game,player,bunch);
         }
         return;
@@ -310,12 +311,16 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                     //pending discard
                     game.pendingDiscard=std::make_shared<Game::pending_t>();
                     game.pendingDiscard->bunch.set_pos(player.pos);
+                    changePos(game,player.pos);
                  }//meld
             }//default
         }//switch
 
         msg.mutable_bunch()->CopyFrom(bunch);
-        for(auto p:game.players)p->send(msg);
+        for(auto p:game.players){
+            p->send(msg);
+            p->lastMsg=std::make_shared<MsgNCMeld>(msg);
+        }
     }//if front
 }
 
@@ -324,7 +329,7 @@ void Mahjong::draw(Game& game){
         KEYE_LOG("draw wrong st=%d\n",game.state);
         return;
     }
-    next(game);
+    changePos(game,game.token+1);
     auto player=game.players[game.token];
     auto card=game.pile.back();
     game.pile.pop_back();
@@ -363,9 +368,10 @@ void Mahjong::draw(Game& game){
             msg.clear_hints();
         }
         p->send(msg);
+        p->lastMsg=std::make_shared<MsgNCDraw>(msg);
     }
     if(pass){
-        ChangeState(game,Game::State::ST_MELD);
+        changeState(game,Game::State::ST_MELD);
         OnMeld(game,*player,game.pendingMeld.back().bunch);
     }
 }
@@ -417,7 +423,6 @@ void Mahjong::tickRobot(Game& game){
                             if(i->arrived)
                                 //already processed
                                 break;
-                            i->arrived=true;
                             KEYE_LOG("tick meld robot %d\n",robot->pos);
                             auto pmsg=robot->lastMsg.get();
                             if(auto msg=dynamic_cast<MsgNCDiscard*>(pmsg)){
@@ -430,6 +435,7 @@ void Mahjong::tickRobot(Game& game){
                                     //KEYE_LOG("ProcessRobot st=%s, pos=%d, no suite found",st2String(st).c_str(),pos);
                                 }
                             }
+                            i->arrived=true;
                             break;
                         }
                 }
@@ -460,6 +466,7 @@ bool Mahjong::settle(Game& game){
     
     for(auto p:game.players){
         p->send(msg);
+        p->lastMsg=std::make_shared<MsgNCSettle>(msg);
         p->ready=false;
     }
     
@@ -467,7 +474,10 @@ bool Mahjong::settle(Game& game){
         MsgNCFinish fin;
         fin.set_mid(pb_msg::MSG_NC_FINISH);
         fin.set_result(pb_enum::SUCCEESS);
-        for(auto p:game.players)p->send(msg);
+        for(auto p:game.players){
+            p->send(msg);
+            p->lastMsg=std::make_shared<MsgNCFinish>(fin);
+        }
         return true;
     }
     return false;
@@ -612,21 +622,36 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
 }
 
 pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
-    auto bt=pb_enum::BUNCH_A;
-    do{
-        if(bunch.pawns_size()!=1){
-            bt=pb_enum::BUNCH_INVALID;
+    auto bt=pb_enum::BUNCH_INVALID;
+    switch (bunch.type()) {
+        case pb_enum::BUNCH_A:
+            if(bunch.pawns_size()==1)
+                bt=bunch.type();
             break;
-        }
-        auto& gdata=game.players[bunch.pos()]->gameData;
-        //huazhu
-        auto A=bunch.pawns(0);
-        auto B=gdata.selected_card();
-        if(A/1000==B/1000){
-            bt=pb_enum::BUNCH_INVALID;
+        case pb_enum::BUNCH_AAA:
+            if(bunch.pawns_size()==3){
+                auto A=bunch.pawns(0);
+                auto B=bunch.pawns(1);
+                auto C=bunch.pawns(2);
+                if(A/1000==B/1000&&A/1000==C/1000&&
+                   A%100==B%100&&A%100==C%100)
+                    bt=bunch.type();
+            }
             break;
-        }
-    }while (false);
+        case pb_enum::BUNCH_AAAA:
+            if(bunch.pawns_size()==4){
+                auto A=bunch.pawns(0);
+                auto B=bunch.pawns(1);
+                auto C=bunch.pawns(2);
+                auto D=bunch.pawns(3);
+                if(A/1000==B/1000&&A/1000==C/1000&&A/1000==D/1000&&
+                   A%100==B%100&&A%100==C%100&&A%100==D%100)
+                    bt=bunch.type();
+            }
+            break;
+        default:
+            break;
+    }
     bunch.set_type(bt);
     return bt;
 }

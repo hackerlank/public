@@ -14,7 +14,8 @@ using namespace proto3;
 
 void GameRule::deal(Game& game){
     //clear
-    game.token=game.banker;
+    changePos(game,game.banker);
+    game.banker=game.token;
     game.pile.clear();
     game.historical.clear();
     game.pendingMeld.clear();
@@ -96,13 +97,13 @@ bool GameRule::Ready(Game& game){
     return n>=MaxPlayer();
 }
 
-void GameRule::next(Game& game){
+void GameRule::changePos(Game& game,pos_t pos){
     auto old=game.token;
-    if(++game.token>=game.rule->MaxPlayer())game.token=0;
+    game.token=(pos>=game.rule->MaxPlayer()?0:pos);
     KEYE_LOG("token: %d=>%d\n",old,game.token);
 }
 
-void GameRule::ChangeState(Game& game,Game::State state){
+void GameRule::changeState(Game& game,Game::State state){
     if(game.state!=state){
         std::string str0,str1;
         KEYE_LOG("game state: %s=>%s\n",state2str(str0,game.state),state2str(str1,state));
