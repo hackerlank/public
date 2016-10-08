@@ -3387,6 +3387,15 @@ class MsgCNMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
+  // optional .proto3.bunch_t bunch = 2;
+  bool has_bunch() const;
+  void clear_bunch();
+  static const int kBunchFieldNumber = 2;
+  const ::proto3::bunch_t& bunch() const;
+  ::proto3::bunch_t* mutable_bunch();
+  ::proto3::bunch_t* release_bunch();
+  void set_allocated_bunch(::proto3::bunch_t* bunch);
+
   // @@protoc_insertion_point(class_scope:proto3.MsgCNMeld)
  private:
 
@@ -3394,6 +3403,7 @@ class MsgCNMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::proto3::bunch_t* bunch_;
   int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -7109,6 +7119,48 @@ inline void MsgCNMeld::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNMeld.mid)
+}
+
+// optional .proto3.bunch_t bunch = 2;
+inline bool MsgCNMeld::has_bunch() const {
+  return !_is_default_instance_ && bunch_ != NULL;
+}
+inline void MsgCNMeld::clear_bunch() {
+  if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
+  bunch_ = NULL;
+}
+inline const ::proto3::bunch_t& MsgCNMeld::bunch() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNMeld.bunch)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return bunch_ != NULL ? *bunch_ : *default_instance().bunch_;
+#else
+  return bunch_ != NULL ? *bunch_ : *default_instance_->bunch_;
+#endif
+}
+inline ::proto3::bunch_t* MsgCNMeld::mutable_bunch() {
+  
+  if (bunch_ == NULL) {
+    bunch_ = new ::proto3::bunch_t;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNMeld.bunch)
+  return bunch_;
+}
+inline ::proto3::bunch_t* MsgCNMeld::release_bunch() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCNMeld.bunch)
+  
+  ::proto3::bunch_t* temp = bunch_;
+  bunch_ = NULL;
+  return temp;
+}
+inline void MsgCNMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
+  delete bunch_;
+  bunch_ = bunch;
+  if (bunch) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNMeld.bunch)
 }
 
 // -------------------------------------------------------------------

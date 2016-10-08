@@ -185,15 +185,21 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             bunch_t bunch;
             bunch.CopyFrom(pending.bunch);
             changeState(*game,Game::State::ST_MELD);
-            OnMeld(*game,player,bunch);
+            OnMeld(player,bunch);
         }
         return;
     }while(false);
     player.send(omsg);
 }
 
-void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
+void Mahjong::OnMeld(Player& player,const proto3::bunch_t& bunch){
     auto pos=player.pos;
+    auto spgame=player.game;
+    if(!spgame){
+        KEYE_LOG("OnMeld no game\n");
+        return;
+    }
+    auto& game=*spgame;
     //state
     if(game.state!=Game::State::ST_MELD){
         KEYE_LOG("OnMeld wrong st=%d,pos=%d\n",game.state,pos);
@@ -338,7 +344,7 @@ void Mahjong::draw(Game& game){
     MsgNCDraw msg;
     msg.set_mid(pb_msg::MSG_NC_DRAW);
     msg.set_pos(game.token);
-    auto pass=false;
+    auto autoPass=false;
     for(int i=0;i<MaxPlayer();++i){
         auto p=game.players[i];
         if(i==game.token){
@@ -351,17 +357,22 @@ void Mahjong::draw(Game& game){
             pending.bunch.set_pos(game.token);
             pending.bunch.add_pawns(card);
 
-            //hint for the drawer
+            //hint for the drawer,should be:A,AAAA or WIN
             google::protobuf::RepeatedField<proto3::bunch_t> bunches;
-            bunch_t bunch;
-            bunch.CopyFrom(pending.bunch);
-            if(hint(bunches,game,i,bunch)){
+            bunch_t tmp;
+            tmp.CopyFrom(pending.bunch);
+            if(hint(bunches,game,i,tmp)){
                 pending.bunch.CopyFrom(bunches.Get(0));
-                for(auto& b:bunches)if(b.type()!=pb_enum::OP_PASS)msg.add_hints()->CopyFrom(b);
+                for(auto& b:bunches){
+//                    if(b.type()==pb_enum::BUNCH_AAAA||b.type()==pb_enum::BUNCH_WIN)
+                        msg.add_hints()->CopyFrom(b);
+                }
             }
-            if(msg.hints_size()<=0){
+            if(msg.hints_size()>0)
+                pending.bunch.CopyFrom(msg.hints(0));
+            else{
                 pending.bunch.set_type(pb_enum::BUNCH_A);
-                pass=true;
+                autoPass=true;
             }
         }else{
             msg.set_card(i_invalid);
@@ -370,9 +381,9 @@ void Mahjong::draw(Game& game){
         p->send(msg);
         p->lastMsg=std::make_shared<MsgNCDraw>(msg);
     }
-    if(pass){
+    if(autoPass){
         changeState(game,Game::State::ST_MELD);
-        OnMeld(game,*player,game.pendingMeld.back().bunch);
+        OnMeld(*player,game.pendingMeld.back().bunch);
     }
 }
 
@@ -423,18 +434,22 @@ void Mahjong::tickRobot(Game& game){
                             if(i->arrived)
                                 //already processed
                                 break;
-                            KEYE_LOG("tick meld robot %d\n",robot->pos);
+                            std::string str;
+                            KEYE_LOG("tick meld robot %d,%s\n",robot->pos,bunch2str(str,i->bunch));
+                            OnMeld(*robot,i->bunch);
+                            /*
                             auto pmsg=robot->lastMsg.get();
                             if(auto msg=dynamic_cast<MsgNCDiscard*>(pmsg)){
                                 auto& hints=msg->hints();
                                 if(!hints.empty()){
                                     auto& bunch=hints.Get(0);
                                     OnMeld(game,*robot,bunch);
-                                    //KEYE_LOG("ProcessRobot st=%s, pos=%d, suite=%s",st2String(st).c_str(),pos,suite2String(suite).c_str());
                                 } else {
-                                    //KEYE_LOG("ProcessRobot st=%s, pos=%d, no suite found",st2String(st).c_str(),pos);
+                                    KEYE_LOG("tick meld robot %d,no hints",robot->pos);
                                 }
-                            }
+                            }else
+                                KEYE_LOG("tick meld robot %d no historical\n",robot->pos);
+                            */
                             i->arrived=true;
                             break;
                         }

@@ -16,7 +16,7 @@ public:
     virtual int         MaxPlayer();
 
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
-    virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&){};
+    virtual void        OnMeld(Player&,const proto3::bunch_t&){};
     
     static void         test();
 protected:

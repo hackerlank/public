@@ -103,6 +103,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		_static=true;
 		transform.SetParent(group);
 		transform.localScale=Vector3.one;
+		transform.localEulerAngles=Vector3.zero;
 		le.minWidth*=scalar;
 		le.preferredWidth*=scalar;
 		le.minHeight*=scalar;

@@ -348,6 +348,7 @@ pb_enum result			=4;
 message MsgCNMeld{
 
 pb_msg mid				=1;
+bunch_t bunch           =2;
 };
 
 message MsgNCMeld{

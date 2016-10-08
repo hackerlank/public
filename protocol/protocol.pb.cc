@@ -11523,6 +11523,7 @@ void MsgNCDiscard::clear_result() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCNMeld::kMidFieldNumber;
+const int MsgCNMeld::kBunchFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MsgCNMeld::MsgCNMeld()
@@ -11533,6 +11534,12 @@ MsgCNMeld::MsgCNMeld()
 
 void MsgCNMeld::InitAsDefaultInstance() {
   _is_default_instance_ = true;
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  bunch_ = const_cast< ::proto3::bunch_t*>(
+      ::proto3::bunch_t::internal_default_instance());
+#else
+  bunch_ = const_cast< ::proto3::bunch_t*>(&::proto3::bunch_t::default_instance());
+#endif
 }
 
 MsgCNMeld::MsgCNMeld(const MsgCNMeld& from)
@@ -11547,6 +11554,7 @@ void MsgCNMeld::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
+  bunch_ = NULL;
 }
 
 MsgCNMeld::~MsgCNMeld() {
@@ -11560,6 +11568,7 @@ void MsgCNMeld::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete bunch_;
   }
 }
 
@@ -11590,6 +11599,8 @@ MsgCNMeld* MsgCNMeld::New(::google::protobuf::Arena* arena) const {
 void MsgCNMeld::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCNMeld)
   mid_ = 0;
+  if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
+  bunch_ = NULL;
 }
 
 bool MsgCNMeld::MergePartialFromCodedStream(
@@ -11610,6 +11621,19 @@ bool MsgCNMeld::MergePartialFromCodedStream(
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
           set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_bunch;
+        break;
+      }
+
+      // optional .proto3.bunch_t bunch = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_bunch:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_bunch()));
         } else {
           goto handle_unusual;
         }
@@ -11647,6 +11671,12 @@ void MsgCNMeld::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
+  // optional .proto3.bunch_t bunch = 2;
+  if (this->has_bunch()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, *this->bunch_, output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNMeld)
 }
 
@@ -11658,6 +11688,13 @@ int MsgCNMeld::ByteSize() const {
   if (this->mid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional .proto3.bunch_t bunch = 2;
+  if (this->has_bunch()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->bunch_);
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -11679,6 +11716,9 @@ void MsgCNMeld::MergeFrom(const MsgCNMeld& from) {
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
+  if (from.has_bunch()) {
+    mutable_bunch()->::proto3::bunch_t::MergeFrom(from.bunch());
+  }
 }
 
 void MsgCNMeld::CopyFrom(const MsgCNMeld& from) {
@@ -11699,6 +11739,7 @@ void MsgCNMeld::Swap(MsgCNMeld* other) {
 }
 void MsgCNMeld::InternalSwap(MsgCNMeld* other) {
   std::swap(mid_, other->mid_);
+  std::swap(bunch_, other->bunch_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -11722,6 +11763,48 @@ void MsgCNMeld::clear_mid() {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNMeld.mid)
+}
+
+// optional .proto3.bunch_t bunch = 2;
+bool MsgCNMeld::has_bunch() const {
+  return !_is_default_instance_ && bunch_ != NULL;
+}
+void MsgCNMeld::clear_bunch() {
+  if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
+  bunch_ = NULL;
+}
+const ::proto3::bunch_t& MsgCNMeld::bunch() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNMeld.bunch)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return bunch_ != NULL ? *bunch_ : *default_instance().bunch_;
+#else
+  return bunch_ != NULL ? *bunch_ : *default_instance_->bunch_;
+#endif
+}
+::proto3::bunch_t* MsgCNMeld::mutable_bunch() {
+  
+  if (bunch_ == NULL) {
+    bunch_ = new ::proto3::bunch_t;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNMeld.bunch)
+  return bunch_;
+}
+::proto3::bunch_t* MsgCNMeld::release_bunch() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCNMeld.bunch)
+  
+  ::proto3::bunch_t* temp = bunch_;
+  bunch_ = NULL;
+  return temp;
+}
+void MsgCNMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
+  delete bunch_;
+  bunch_ = bunch;
+  if (bunch) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNMeld.bunch)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

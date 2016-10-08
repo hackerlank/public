@@ -19,6 +19,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	protected uint			_pos,_token,_banker;
 	protected List<Card>	_selection=new List<Card>();
+	protected List<bunch_t>	_hints=new List<bunch_t>();
 	protected List<bunch_t>	_historical=new List<bunch_t>();
 
 	public MsgNCFinish	Summary=null;
@@ -43,6 +44,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 
 	public void OnDraw(MsgNCDraw msg){
+		_hints.Clear();
+		_hints.AddRange(msg.Hints);
 	}
 
 	//int _nhints=0;
@@ -64,7 +67,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		*/
 	}
 	
-	public void OnPass(){
+	virtual public void OnPass(){
 		deselectAll();
 		MsgCNDiscard msg=new MsgCNDiscard();
 		msg.Mid=pb_msg.MsgCnDiscard;
@@ -97,6 +100,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		}
 		
 		_token=msg.Bunch.Pos;
+		_hints.Clear();
+		_hints.AddRange(msg.Hints);
 		string str="discard at "+_token;
 		var cards=new uint[msg.Bunch.Pawns.Count];
 		msg.Bunch.Pawns.CopyTo(cards,0);
@@ -104,7 +109,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			//adjust by feedback
 		}else{
 			//remove discards
-			foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
+			if(Rule.removeDiscard)foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
 			for(int i=0;i<cards.Length;++i){
 				var id=cards[i];
 				var fin=false;
@@ -221,7 +226,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		//discard my card
 		if(checkDiscard(card)){
 			//remove discards
-			foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
+			if(Rule.removeDiscard)foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 			//discard
 			MsgCNDiscard msg=new MsgCNDiscard();
 			msg.Mid=pb_msg.MsgCnDiscard;

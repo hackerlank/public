@@ -20,7 +20,7 @@ public:
     virtual int         MaxPlayer()=0;
 
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
-    virtual void        OnMeld(Game&,Player&,const proto3::bunch_t&)=0;
+    virtual void        OnMeld(Player&,const proto3::bunch_t&)=0;
 protected:
     virtual void        initCard(Game&)=0;
     virtual bool        validId(uint)=0;

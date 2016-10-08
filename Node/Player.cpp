@@ -161,8 +161,12 @@ void Player::on_read(PBHelper& pb){
                 game->rule->OnDiscard(*this,imsg);
             break;
         }
-        case MSG_CN_MELD:
+        case MSG_CN_MELD:{
+            MsgCNMeld imsg;
+            if(pb.Parse(imsg))
+                game->rule->OnMeld(*this,imsg.bunch());
             break;
+        }
         default:
             break;
     }

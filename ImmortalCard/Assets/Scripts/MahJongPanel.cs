@@ -123,6 +123,50 @@ public class MahJongPanel : GamePanel {
 	public void OnDouble(){
 	}
 	
+	public void OnAAA(){
+		MsgCNMeld msg=new MsgCNMeld();
+		msg.Mid=pb_msg.MsgCnMeld;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=_pos;
+		msg.Bunch.Type=pb_enum.BunchAaa;
+		if(_hints.Count>0)
+			msg.Bunch.MergeFrom(_hints[0]);
+		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+	}
+	
+	public void OnAAAA(){
+		MsgCNMeld msg=new MsgCNMeld();
+		msg.Mid=pb_msg.MsgCnMeld;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=_pos;
+		msg.Bunch.Type=pb_enum.BunchAaaa;
+		if(_hints.Count>0)
+			msg.Bunch.MergeFrom(_hints[0]);
+		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+	}
+	
+	public void OnWin(){
+		MsgCNMeld msg=new MsgCNMeld();
+		msg.Mid=pb_msg.MsgCnMeld;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=_pos;
+		msg.Bunch.Type=pb_enum.BunchWin;
+		if(_hints.Count>0)
+			msg.Bunch.MergeFrom(_hints[0]);
+		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+	}
+	
+	override public void OnPass(){
+		MsgCNMeld msg=new MsgCNMeld();
+		msg.Mid=pb_msg.MsgCnMeld;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=_pos;
+		msg.Bunch.Type=pb_enum.OpPass;
+		if(_hints.Count>0)
+			msg.Bunch.MergeFrom(_hints[0]);
+		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+	}
+	
 	public static void Create(System.Action<Component> handler=null){
 		Utils.Load<MahJongPanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
