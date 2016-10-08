@@ -108,7 +108,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			for(int i=0;i<cards.Length;++i){
 				var id=cards[i];
 				var fin=false;
-				Card.Create(CardPrefab,id,nHandCards[_token].transform.parent,delegate(Card card) {
+				var from=(_token<nHandCards.Length&&nHandCards[_token]!=null?nHandCards[_token].transform.parent:HandAreas[_token]);
+				Card.Create(CardPrefab,id,from,delegate(Card card) {
 					card.state=Card.State.ST_DISCARD;
 					card.DiscardTo(DiscardAreas[_token]);
 					fin=true;

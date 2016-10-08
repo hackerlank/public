@@ -27,18 +27,12 @@ void Mahjong::Tick(Game& game){
         case Game::State::ST_MELD:
             if(!game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
                 auto& pending=game.pendingMeld.front();
-                if(pending.bunch.type()==pb_enum::OP_PASS){
-                    if(game.pileMap.find(pending.bunch.pawns(0))!=game.pileMap.end()){
-                        //after draw
-                        game.pendingDiscard=std::make_shared<Game::pending_t>();
-                        game.pendingDiscard->bunch.set_pos(game.token);
-                        ChangeState(game,Game::State::ST_DISCARD);
-                    }else
-                        ChangeState(game,Game::State::ST_DRAW);
-                }else if(isGameOver(game))
+                if(pending.bunch.type()==pb_enum::OP_PASS)
+                    ChangeState(game,Game::State::ST_DRAW);
+                else if(isGameOver(game))
                     ChangeState(game,Game::State::ST_SETTLE);
                 else
-                    //AAA or AAAA
+                    //A,AAA,AAAA
                     ChangeState(game,Game::State::ST_DISCARD);
                 game.pendingMeld.clear();
             }
@@ -183,6 +177,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         if(game->pendingMeld.empty()){
             game->pendingMeld.push_back(Game::pending_t());
             auto& pending=game->pendingMeld.back();
+            pending.bunch.set_pos(game->token);
             pending.bunch.set_type(pb_enum::OP_PASS);
             pending.bunch.add_pawns(msg.bunch().pawns().Get(0));
             
@@ -251,7 +246,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
 
     //queue in
     std::string str;
-    KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,bunch));
+    //KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,bunch));
     pending.bunch.CopyFrom(bunch);
     
     //sort
@@ -264,7 +259,7 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(pb_enum::SUCCEESS);
-        KEYE_LOG("OnMeld,pos=%d,%s\n",pos,bunch2str(str,bunch));
+        KEYE_LOG("OnMeld pos=%d,%s\n",pos,bunch2str(str,bunch));
 
         switch(bunch.type()){
             case pb_enum::BUNCH_WIN:{
@@ -274,13 +269,20 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                 }
                 break;
             }
+            case pb_enum::OP_PASS:
+                //handle pass
+                break;
             case pb_enum::BUNCH_INVALID:
                 //invalid
                 KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",pos);
                 msg.set_result(pb_enum::BUNCH_INVALID);
                 break;
-            case pb_enum::OP_PASS:
-                //handle pass
+            case pb_enum::BUNCH_A:
+                //collect
+                player.gameData.mutable_hands()->Add(card);
+                //pending discard
+                game.pendingDiscard=std::make_shared<Game::pending_t>();
+                game.pendingDiscard->bunch.set_pos(player.pos);
                 break;
             default:{
                 //verify
@@ -305,6 +307,9 @@ void Mahjong::OnMeld(Game& game,Player& player,const proto3::bunch_t& bunch){
                     //then meld
                     auto h=player.gameData.add_bunch();
                     h->CopyFrom(bunch);
+                    //pending discard
+                    game.pendingDiscard=std::make_shared<Game::pending_t>();
+                    game.pendingDiscard->bunch.set_pos(player.pos);
                  }//meld
             }//default
         }//switch
@@ -350,7 +355,7 @@ void Mahjong::draw(Game& game){
                 for(auto& b:bunches)if(b.type()!=pb_enum::OP_PASS)msg.add_hints()->CopyFrom(b);
             }
             if(msg.hints_size()<=0){
-                pending.bunch.set_type(pb_enum::OP_PASS);
+                pending.bunch.set_type(pb_enum::BUNCH_A);
                 pass=true;
             }
         }else{
