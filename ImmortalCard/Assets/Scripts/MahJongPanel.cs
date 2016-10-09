@@ -66,8 +66,27 @@ public class MahJongPanel : GamePanel {
 		return check;
 	}
 	
+	public override void TapCard(Card card,bool select=true){
+		var selected=false;
+		foreach(var old in _selection)if(old==card)selected=true;
+		deselectAll();
+		if(!selected)base.TapCard(card,select);
+	}
+
+	override protected void meld(bunch_t bunch){
+		switch(bunch.Type){
+		case pb_enum.BunchA:
+			break;
+		case pb_enum.BunchAaa:
+		case pb_enum.BunchAaaa:
+			break;
+		default:
+			break;
+		}
+	}
+
 	//List<uint[]> _hints=null;
-	override protected void hint(){
+	override protected void genHints(){
 		//_hints=null;
 		//_nhints=0;
 		var M=HandAreas[0].childCount;
@@ -90,6 +109,20 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
+	override protected void showHints(){
+		foreach(var bunch in _hints){
+			switch(bunch.Type){
+			case pb_enum.BunchAaa:
+				break;
+			case pb_enum.BunchAaaa:
+				break;
+			case pb_enum.BunchWin:
+				break;
+			default:
+				break;
+			}
+		}
+	}
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
@@ -108,13 +141,6 @@ public class MahJongPanel : GamePanel {
 		for(uint k=1;k<=3;++k)for(uint i=1;i<=9;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
-	}
-
-	public override void OnCard(Card card,bool select=true){
-		var selected=false;
-		foreach(var old in _selection)if(old==card)selected=true;
-		deselectAll();
-		if(!selected)base.OnCard(card,select);
 	}
 
 	public void OnCall(){

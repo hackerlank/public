@@ -78,7 +78,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 			Main.Instance.gameController.Discard(this);
 		else if(eventData.clickCount==1){
 			if(_state==State.ST_NORMAL||_state==State.ST_SELECT)
-				Main.Instance.gameController.OnCard(this,_state==State.ST_NORMAL);
+				Main.Instance.gameController.TapCard(this,_state==State.ST_NORMAL);
 		}
 	}
 	

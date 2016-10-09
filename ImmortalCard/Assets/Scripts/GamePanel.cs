@@ -42,17 +42,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public void OnDiscard(){
 		Discard();
 	}
-
-	public void OnDraw(MsgNCDraw msg){
-		_hints.Clear();
-		_hints.AddRange(msg.Hints);
-	}
-
+	
 	//int _nhints=0;
 	public void OnHint(){
 		deselectAll();
 		/*
-		if(_hints==null)hint();
+		if(_hints==null)genHints();
 
 		if(_hints!=null&&_hints.Count>0){
 			var hints=_hints[_nhints];
@@ -82,18 +77,78 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			Destroy(gameObject);
 		});
 	}
-
-	virtual public void OnCard(Card card,bool select=true){
-		if(select)
-			_selection.Add(card);
-		else
-			_selection.Remove(card);
-		card.Tap();
-	}
 	// ----------------------------------------------
 	// messages
 	// ----------------------------------------------
-	public IEnumerator OnDiscardAt(MsgNCDiscard msg){
+	public IEnumerator OnMsgStart(MsgNCStart msg){
+		while(!CardCache.Ready||maxPlayer<=0)yield return null;
+		++Round;
+		_pos=msg.Pos;
+		_token=(msg.Banker+maxPlayer-1)%maxPlayer;	//set to the previous position
+		_banker=msg.Banker;
+		_historical.Clear();
+		_selection.Clear();
+		/* position transform
+		*	  (O)
+		(R)          (L)
+		*	(M=_pos)
+		*/
+		var M=_pos;
+		var R=(M+1)%maxPlayer;
+		var L=(M+2)%maxPlayer;
+		var O=(M+3)%maxPlayer;
+		Transform[] tempD=new Transform[DiscardAreas.Length];	//MRL
+		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
+		Text[] tempH=new Text[nHandCards.Length];
+		DiscardAreas.CopyTo(tempD,0);
+		Players.CopyTo(tempP,0);
+		nHandCards.CopyTo(tempH,0);
+		if(DiscardAreas.Length>0)DiscardAreas[0]=tempD[M];
+		if(DiscardAreas.Length>1)DiscardAreas[1]=tempD[R];
+		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[L];
+		if(DiscardAreas.Length>3)DiscardAreas[3]=tempD[O];
+		if(Players.Length>0)Players[0]=tempP[M];
+		if(Players.Length>1)Players[1]=tempP[R];
+		if(Players.Length>2)Players[2]=tempP[L];
+		if(Players.Length>3)Players[3]=tempP[O];
+		if(nHandCards.Length>0)nHandCards[0]=tempH[M];
+		if(nHandCards.Length>1)nHandCards[1]=tempH[R];
+		if(nHandCards.Length>2)nHandCards[2]=tempH[L];
+		if(nHandCards.Length>3)nHandCards[3]=tempH[O];
+		
+		//sort
+		var hands=new List<uint>(msg.Hands);
+		hands.Sort(rule.comparision);
+		//deal
+		
+		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
+		for(int i=0;i<hands.Count;++i){
+			var id=hands[i];
+			var fin=false;
+			Card.Create(CardPrefab,id,HandAreas[0],delegate(Card card) {
+				card.Static=false;
+				fin=true;
+			});
+			yield return null;
+			str+=id.ToString()+",";
+			if((i+1)%6==0)str+="\n";
+			while(!fin)yield return null;
+		}
+		Ante.text=string.Format("Ante: {0}",msg.Ante);
+		Multiples.text=string.Format("Multiple: {0}",msg.Multiple);
+		for(int i=0;i<msg.Count.Count;++i)
+			if(i<nHandCards.Length&&nHandCards[i]!=null)nHandCards[i].text=msg.Count[i].ToString();
+		for(int i=0;i<msg.Bottom.Count;++i){
+			if(i<BottomCards.Length&&BottomCards[i]!=null)
+				BottomCards[i].Value=msg.Bottom[i];
+		}
+		if(Players[_banker].gameTimer!=null)
+			Players[_banker].gameTimer.On();
+		Debug.Log(str);
+		yield break;
+	}
+
+	public IEnumerator OnMsgDiscard(MsgNCDiscard msg){
 		//discard any body's card
 		if(msg.Result!=pb_enum.Succeess){
 			yield break;
@@ -134,13 +189,23 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		//Debug.Log(str);
 	}
 	
-	public void OnSettle(MsgNCSettle msg){
+	public void OnMsgDraw(MsgNCDraw msg){
+		_hints.Clear();
+		_hints.AddRange(msg.Hints);
+		if(_hints.Count>0)
+			showHints();
+	}
+	public void OnMsgMeld(MsgNCMeld msg){
+		if(msg.Result==pb_enum.Succeess)meld(msg.Bunch);
+	}
+
+	public void OnMsgSettle(MsgNCSettle msg){
 		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
 		Utils.Load<SettlePopup>(Main.Instance.transform);
 	}
-	
-	public void OnFinish(MsgNCFinish msg){
+
+	public void OnMsgFinish(MsgNCFinish msg){
 		Summary=msg;
 	}
 	// ----------------------------------------------
@@ -151,76 +216,16 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	abstract public string Id2File(uint color,uint value);
 	abstract public float DiscardScalar{get;}
 	abstract public string CardPrefab{get;}
-
-	public IEnumerator Deal(MsgNCStart msg){
-		while(!CardCache.Ready||maxPlayer<=0)yield return null;
-		++Round;
-		_pos=msg.Pos;
-		_token=(msg.Banker+maxPlayer-1)%maxPlayer;	//set to the previous position
-		_banker=msg.Banker;
-		_historical.Clear();
-		_selection.Clear();
-		/* position transform
-			  (O)
-		(R)          (L)
-			(M=_pos)
-		*/
-		var M=_pos;
-		var R=(M+1)%maxPlayer;
-		var L=(M+2)%maxPlayer;
-		var O=(M+3)%maxPlayer;
-		Transform[] tempD=new Transform[DiscardAreas.Length];	//MRL
-		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
-		Text[] tempH=new Text[nHandCards.Length];
-		DiscardAreas.CopyTo(tempD,0);
-		Players.CopyTo(tempP,0);
-		nHandCards.CopyTo(tempH,0);
-		if(DiscardAreas.Length>0)DiscardAreas[0]=tempD[M];
-		if(DiscardAreas.Length>1)DiscardAreas[1]=tempD[R];
-		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[L];
-		if(DiscardAreas.Length>3)DiscardAreas[3]=tempD[O];
-		if(Players.Length>0)Players[0]=tempP[M];
-		if(Players.Length>1)Players[1]=tempP[R];
-		if(Players.Length>2)Players[2]=tempP[L];
-		if(Players.Length>3)Players[3]=tempP[O];
-		if(nHandCards.Length>0)nHandCards[0]=tempH[M];
-		if(nHandCards.Length>1)nHandCards[1]=tempH[R];
-		if(nHandCards.Length>2)nHandCards[2]=tempH[L];
-		if(nHandCards.Length>3)nHandCards[3]=tempH[O];
-		
-		//sort
-		var hands=new List<uint>(msg.Hands);
-		hands.Sort(rule.comparision);
-		//deal
-
-		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
-		for(int i=0;i<hands.Count;++i){
-			var id=hands[i];
-			var fin=false;
-			Card.Create(CardPrefab,id,HandAreas[0],delegate(Card card) {
-				card.Static=false;
-				fin=true;
-			});
-			yield return null;
-			str+=id.ToString()+",";
-			if((i+1)%6==0)str+="\n";
-			while(!fin)yield return null;
-		}
-		Ante.text=string.Format("Ante: {0}",msg.Ante);
-		Multiples.text=string.Format("Multiple: {0}",msg.Multiple);
-		for(int i=0;i<msg.Count.Count;++i)
-			if(i<nHandCards.Length&&nHandCards[i]!=null)nHandCards[i].text=msg.Count[i].ToString();
-		for(int i=0;i<msg.Bottom.Count;++i){
-			if(i<BottomCards.Length&&BottomCards[i]!=null)
-				BottomCards[i].Value=msg.Bottom[i];
-		}
-		if(Players[_banker].gameTimer!=null)
-			Players[_banker].gameTimer.On();
-		Debug.Log(str);
-		yield break;
-	}
-
+	
 	virtual protected bool checkDiscard(Card card=null){return true;}
+	
+	virtual public void TapCard(Card card,bool select=true){
+		if(select)
+			_selection.Add(card);
+		else
+			_selection.Remove(card);
+		card.Tap();
+	}
 
 	public void Discard(Card card=null){
 		//discard my card
@@ -250,12 +255,11 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
 		}
 	}
-	
-	//List<uint[]> _hints=null;
-	virtual protected void hint(){
-		//_hints=null;
-		//_nhints=0;
-	}
+
+	virtual protected void meld(bunch_t bunch){}
+
+	virtual protected void genHints(){}
+	virtual protected void showHints(){}
 
 	protected void deselectAll(){
 		var copy=new List<Card>(_selection);

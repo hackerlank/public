@@ -27,112 +27,113 @@ public class MsgHandler{
 		Debug.Log("OnMessage "+mid);
 		switch(mid){
 		case pb_msg.MsgScLogin:
-			MsgSCLogin imsg0=MsgSCLogin.Parser.ParseFrom(bytes);
-			Debug.Log("response mid="+mid+",uid="+imsg0.Uid+",ip="+imsg0.Ip+",port="+imsg0.Port);
-			if(imsg0.Result==pb_enum.Succeess){
+			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
+			Debug.Log("response mid="+mid+",uid="+msgLogin.Uid+",ip="+msgLogin.Ip+",port="+msgLogin.Port);
+			if(msgLogin.Result==pb_enum.Succeess){
 				if(LoginPanel.Instance!=null)LoginPanel.Instance.DoLogin();
 			}else
-				Debug.LogError("login error: "+imsg0.Result);
+				Debug.LogError("login error: "+msgLogin.Result);
 			break;
 		case pb_msg.MsgNcEnter:
-			MsgNCEnter imsg1=MsgNCEnter.Parser.ParseFrom(bytes);
+			MsgNCEnter msgEnter=MsgNCEnter.Parser.ParseFrom(bytes);
 			Debug.Log("entered");
-			if(imsg1.Result==pb_enum.Succeess){
+			if(msgEnter.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
 					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnEntered();
 				});
 			}else
-				Debug.LogError("enter error: "+imsg1.Result);
+				Debug.LogError("enter error: "+msgEnter.Result);
 			break;
 		case pb_msg.MsgNcCreate:
-			MsgNCCreate imsg2=MsgNCCreate.Parser.ParseFrom(bytes);
-			Debug.Log("created game "+imsg2.GameId);
-			if(imsg2.Result==pb_enum.Succeess){
+			MsgNCCreate msgCreate=MsgNCCreate.Parser.ParseFrom(bytes);
+			Debug.Log("created game "+msgCreate.GameId);
+			if(msgCreate.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnCreated(imsg2);
+					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnCreated(msgCreate);
 				});
 			}else
-				Debug.LogError("create error: "+imsg2.Result);
+				Debug.LogError("create error: "+msgCreate.Result);
 			break;
 		case pb_msg.MsgNcJoin:
-			MsgNCJoin imsg3=MsgNCJoin.Parser.ParseFrom(bytes);
+			MsgNCJoin msgJoin=MsgNCJoin.Parser.ParseFrom(bytes);
 			Debug.Log("joined game");
-			if(imsg3.Result==pb_enum.Succeess){
+			if(msgJoin.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnJoined(imsg3);
+					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnJoined(msgJoin);
 				});
 			}else
-				Debug.LogError("join error: "+imsg3.Result);
+				Debug.LogError("join error: "+msgJoin.Result);
 			break;
 		case pb_msg.MsgNcStart:
-			MsgNCStart imsg4=MsgNCStart.Parser.ParseFrom(bytes);
+			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			Debug.Log("start game");
-			if(imsg4.Result==pb_enum.Succeess){
+			if(msgStart.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
 					if(Main.Instance.gameController!=null)
-						Main.Instance.StartCoroutine(Main.Instance.gameController.Deal(imsg4));
+						Main.Instance.StartCoroutine(Main.Instance.gameController.OnMsgStart(msgStart));
 				});
 			}else
-				Debug.LogError("start error: "+imsg4.Result);
+				Debug.LogError("start error: "+msgStart.Result);
 			break;
 
 		case pb_msg.MsgNcDiscard:
-			MsgNCDiscard imsg5=MsgNCDiscard.Parser.ParseFrom(bytes);
-			if(imsg5.Result==pb_enum.Succeess){
+			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
+			if(msgDiscard.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
 					if(Main.Instance.gameController!=null)
-						Main.Instance.StartCoroutine(Main.Instance.gameController.OnDiscardAt(imsg5));
+						Main.Instance.StartCoroutine(Main.Instance.gameController.OnMsgDiscard(msgDiscard));
 				});
 			}else
-				Debug.LogError("discard error: "+imsg5.Result);
+				Debug.LogError("discard error: "+msgDiscard.Result);
 			break;
 		case pb_msg.MsgNcMeld:
-			MsgNCMeld imsg6=MsgNCMeld.Parser.ParseFrom(bytes);
-			if(imsg6.Result==pb_enum.Succeess){
+			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
+			if(msgMeld.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
+					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgMeld(msgMeld);
 				});
 			}else
-				Debug.LogError("meld error: "+imsg6.Result);
+				Debug.LogError("meld error: "+msgMeld.Result);
 			break;
 		case pb_msg.MsgNcDraw:
 			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
 			Loom.QueueOnMainThread(delegate{
-				if(Main.Instance.gameController!=null)Main.Instance.gameController.OnDraw(msgDraw);
+				if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgDraw(msgDraw);
 			});
 			break;
 		case pb_msg.MsgNcSettle:
-			MsgNCSettle imsg7=MsgNCSettle.Parser.ParseFrom(bytes);
-			if(imsg7.Result==pb_enum.Succeess){
+			MsgNCSettle msgSettle=MsgNCSettle.Parser.ParseFrom(bytes);
+			if(msgSettle.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnSettle(imsg7);
+					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgSettle(msgSettle);
 				});
 			}else
-				Debug.LogError("settle error: "+imsg7.Result);
+				Debug.LogError("settle error: "+msgSettle.Result);
 			break;
 		case pb_msg.MsgNcFinish:
-			MsgNCFinish imsg8=MsgNCFinish.Parser.ParseFrom(bytes);
-			if(imsg8.Result==pb_enum.Succeess){
+			MsgNCFinish msgFinish=MsgNCFinish.Parser.ParseFrom(bytes);
+			if(msgFinish.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnFinish(imsg8);
+					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgFinish(msgFinish);
 				});
 			}else
-				Debug.LogError("finish error: "+imsg8.Result);
+				Debug.LogError("finish error: "+msgFinish.Result);
 			break;
 		case pb_msg.MsgNcDismissSync:
-			MsgNCDismissSync imsg9=MsgNCDismissSync.Parser.ParseFrom(bytes);
-			if(imsg9.Result==pb_enum.Succeess){
+			MsgNCDismissSync msgDismissSync=MsgNCDismissSync.Parser.ParseFrom(bytes);
+			if(msgDismissSync.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
 				});
 			}else
-				Debug.LogError("dismiss sync error: "+imsg9.Result);
+				Debug.LogError("dismiss sync error: "+msgDismissSync.Result);
 			break;
 		case pb_msg.MsgNcDismissAck:
-			MsgNCDismissAck imsg10=MsgNCDismissAck.Parser.ParseFrom(bytes);
-			if(imsg10.Result==pb_enum.Succeess){
+			MsgNCDismissAck msgDismissAck=MsgNCDismissAck.Parser.ParseFrom(bytes);
+			if(msgDismissAck.Result==pb_enum.Succeess){
 				Loom.QueueOnMainThread(delegate{
 				});
 			}else
-				Debug.LogError("dismiss ack error: "+imsg10.Result);
+				Debug.LogError("dismiss ack error: "+msgDismissAck.Result);
 			break;
 		default:
 			break;

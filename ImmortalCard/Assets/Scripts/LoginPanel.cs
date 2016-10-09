@@ -16,7 +16,7 @@ public class LoginPanel : MonoBehaviour {
 				var gp=obj as GamePanel;
 				var msg=gp.Rule.Deal();
 
-				gp.StartCoroutine(gp.Deal(msg));
+				gp.StartCoroutine(gp.OnMsgStart(msg));
 				Destroy(gameObject);
 			});
 		}else if(Main.Instance.GameMode==Main.Mode.NODE)

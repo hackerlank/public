@@ -63,7 +63,7 @@ public class DoudeZhuPanel : GamePanel {
 	}
 	
 	//List<uint[]> _hints=null;
-	override protected void hint(){
+	override protected void genHints(){
 		//_hints=null;
 		//_nhints=0;
 		var M=HandAreas[0].childCount;
@@ -86,6 +86,14 @@ public class DoudeZhuPanel : GamePanel {
 		}
 	}
 
+	override protected void showHints(){
+		foreach(var bunch in _hints){
+			switch(bunch.Type){
+			default:
+				break;
+			}
+		}
+	}
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
