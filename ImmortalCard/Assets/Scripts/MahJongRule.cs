@@ -52,8 +52,6 @@ public class MahJongRule: GameRule {
 		else return -1;
 	}
 
-	public override bool removeDiscard{get{return false;}}
-
 	public override uint transformValue(uint val){
 		return val;
 	}

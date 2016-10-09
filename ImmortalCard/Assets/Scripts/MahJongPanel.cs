@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using Proto3;
 
 public class MahJongPanel : GamePanel {
-	public Transform[]	MeldAreas;	//MROL(Me,Right,Opposite,Left)
-	public Transform[]	PlayAreas;	//MROL(Me,Right,Opposite,Left)
+	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
+	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
 
 	public GameObject	BtnCall,BtnDouble;
 
@@ -25,7 +25,8 @@ public class MahJongPanel : GamePanel {
 		return "";
 	}
 
-	override public float DiscardScalar{get{return .7f;}}
+	public float AbandonScalar{get{return .7f;}}
+	override public float DiscardScalar{get{return 1f;}}
 
 	override protected bool checkDiscard(Card card=null){
 		//discard my card
@@ -73,14 +74,61 @@ public class MahJongPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
+	override protected void draw(uint id,uint pos){
+		//remove discards
+		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
+		//discard
+		float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
+		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
+			card.state=Card.State.ST_DISCARD;
+			card.DiscardTo(DiscardAreas[pos],scalar);
+		});
+	}
+
+	override protected void start(){
+		var M=_pos;
+		var m=maxPlayer-1;
+		var R=(M+1)%maxPlayer;
+		var O=(M+2)%maxPlayer;
+		var L=(M+m)%maxPlayer;
+		Transform[] tempM=new Transform[MeldAreas.Length];
+		Transform[] tempA=new Transform[AbandonAreas.Length];
+		MeldAreas.CopyTo(tempM,0);
+		AbandonAreas.CopyTo(tempA,0);
+		if(MeldAreas.Length>0)MeldAreas[0]=tempM[M];
+		if(MeldAreas.Length>1)MeldAreas[1]=tempM[R];
+		if(MeldAreas.Length>2)MeldAreas[2]=tempM[O];
+		if(MeldAreas.Length>m)MeldAreas[m]=tempM[L];
+		if(AbandonAreas.Length>0)AbandonAreas[0]=tempA[M];
+		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
+		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
+		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
+	}
+
 	override protected void meld(bunch_t bunch){
+		var from=_token;
+		var to=bunch.Pos;
+		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
+		if(A!=null)
 		switch(bunch.Type){
 		case pb_enum.BunchA:
+			//collect
+			A.DiscardTo(HandAreas[to],DiscardScalar);
 			break;
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
+			//meld
+			A.DiscardTo(MeldAreas[to],DiscardScalar);
+			var hands=HandAreas[to].GetComponentsInChildren<Card>();
+			foreach(var id in bunch.Pawns)
+			foreach(var card in hands){
+				if(card.Value==id)
+					card.DiscardTo(MeldAreas[to],DiscardScalar);
+			}
 			break;
 		default:
+			//abandon
+			A.DiscardTo(AbandonAreas[to],AbandonScalar);
 			break;
 		}
 	}

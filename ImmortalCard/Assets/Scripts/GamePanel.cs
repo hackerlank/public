@@ -6,6 +6,7 @@ using Proto3;
 
 public abstract class GamePanel : MonoBehaviour,GameController {
 	public Card[]		BottomCards;
+	public Transform	Pile;
 	public Transform[]	HandAreas;
 	public Transform[]	DiscardAreas;	//MROL(Me,Right,Opposite,Left)
 	public PlayerIcon[]	Players;
@@ -93,29 +94,36 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		(R)          (L)
 		*	(M=_pos)
 		*/
+		var m=maxPlayer-1;
 		var M=_pos;
 		var R=(M+1)%maxPlayer;
 		var L=(M+2)%maxPlayer;
 		var O=(M+3)%maxPlayer;
-		Transform[] tempD=new Transform[DiscardAreas.Length];	//MRL
+		Transform[] tempD=new Transform[DiscardAreas.Length];	//MROL
+		Transform[] tempH=new Transform[HandAreas.Length];
 		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
-		Text[] tempH=new Text[nHandCards.Length];
+		Text[] tempN=new Text[nHandCards.Length];
 		DiscardAreas.CopyTo(tempD,0);
+		HandAreas.CopyTo(tempH,0);
 		Players.CopyTo(tempP,0);
-		nHandCards.CopyTo(tempH,0);
+		nHandCards.CopyTo(tempN,0);
 		if(DiscardAreas.Length>0)DiscardAreas[0]=tempD[M];
 		if(DiscardAreas.Length>1)DiscardAreas[1]=tempD[R];
-		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[L];
-		if(DiscardAreas.Length>3)DiscardAreas[3]=tempD[O];
+		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[O];
+		if(DiscardAreas.Length>m)DiscardAreas[m]=tempD[L];
+		if(HandAreas.Length>0)HandAreas[0]=tempD[M];
+		if(HandAreas.Length>1)HandAreas[1]=tempD[R];
+		if(HandAreas.Length>2)HandAreas[2]=tempD[O];
+		if(HandAreas.Length>m)HandAreas[m]=tempD[L];
 		if(Players.Length>0)Players[0]=tempP[M];
 		if(Players.Length>1)Players[1]=tempP[R];
-		if(Players.Length>2)Players[2]=tempP[L];
-		if(Players.Length>3)Players[3]=tempP[O];
-		if(nHandCards.Length>0)nHandCards[0]=tempH[M];
-		if(nHandCards.Length>1)nHandCards[1]=tempH[R];
-		if(nHandCards.Length>2)nHandCards[2]=tempH[L];
-		if(nHandCards.Length>3)nHandCards[3]=tempH[O];
-		
+		if(Players.Length>2)Players[2]=tempP[O];
+		if(Players.Length>m)Players[m]=tempP[L];
+		if(nHandCards.Length>0)nHandCards[0]=tempN[M];
+		if(nHandCards.Length>1)nHandCards[1]=tempN[R];
+		if(nHandCards.Length>2)nHandCards[2]=tempN[O];
+		if(nHandCards.Length>m)nHandCards[m]=tempN[L];
+
 		//sort
 		var hands=new List<uint>(msg.Hands);
 		hands.Sort(rule.comparision);
@@ -164,14 +172,15 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			//adjust by feedback
 		}else{
 			//remove discards
-			if(Rule.removeDiscard)foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
+			foreach(Transform ch in DiscardAreas[_token].transform)Destroy(ch.gameObject);
 			for(int i=0;i<cards.Length;++i){
 				var id=cards[i];
 				var fin=false;
 				var from=(_token<nHandCards.Length&&nHandCards[_token]!=null?nHandCards[_token].transform.parent:HandAreas[_token]);
 				Card.Create(CardPrefab,id,from,delegate(Card card) {
+					float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
 					card.state=Card.State.ST_DISCARD;
-					card.DiscardTo(DiscardAreas[_token]);
+					card.DiscardTo(DiscardAreas[_token],scalar);
 					fin=true;
 				});
 				yield return null;
@@ -194,6 +203,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		_hints.AddRange(msg.Hints);
 		if(_hints.Count>0)
 			showHints();
+		draw(msg.Card,msg.Pos);
 	}
 	public void OnMsgMeld(MsgNCMeld msg){
 		if(msg.Result==pb_enum.Succeess)meld(msg.Bunch);
@@ -231,8 +241,9 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		//discard my card
 		if(checkDiscard(card)){
 			//remove discards
-			if(Rule.removeDiscard)foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
+			foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 			//discard
+			float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
 			MsgCNDiscard msg=new MsgCNDiscard();
 			msg.Mid=pb_msg.MsgCnDiscard;
 			msg.Bunch=new bunch_t();
@@ -241,13 +252,13 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			if(card!=null){
 				deselectAll();
 				card.state=Card.State.ST_DISCARD;
-				card.DiscardTo(DiscardAreas[_pos]);
+				card.DiscardTo(DiscardAreas[_pos],scalar);
 				msg.Bunch.Pawns.Add(card.Value);
 			}else if(_selection.Count>0){
 				_selection.Sort(compare_card);
 				foreach(var c in _selection){
 					c.state=Card.State.ST_DISCARD;
-					c.DiscardTo(DiscardAreas[_pos]);
+					c.DiscardTo(DiscardAreas[_pos],scalar);
 					msg.Bunch.Pawns.Add(c.Value);
 				}
 				_selection.Clear();
@@ -256,6 +267,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		}
 	}
 
+	virtual protected void start(){}
+	virtual protected void draw(uint card,uint pos){}
 	virtual protected void meld(bunch_t bunch){}
 
 	virtual protected void genHints(){}
