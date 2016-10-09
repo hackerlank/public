@@ -72,6 +72,7 @@ public class MahJongPanel : GamePanel {
 	}
 
 	override protected void start(){
+		//transform position
 		var m=maxPlayer-1;
 		var M=_pos;
 		var R=(M+1)%maxPlayer;
@@ -89,6 +90,8 @@ public class MahJongPanel : GamePanel {
 		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
 		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
 		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
+
+		OnCall();
 	}
 
 	override protected void draw(uint id,uint pos){
@@ -206,6 +209,25 @@ public class MahJongPanel : GamePanel {
 	}
 
 	public void OnCall(){
+		//set default color
+		int key=0;
+		int I=20;
+		int[] count=new int[3];
+		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
+		foreach(var card in hands)count[card.Value/1000-1]++;
+		for(int i=0;i<3;++i){
+			if(key>count[i]){
+				key=count[i];
+				I=i;
+			}
+		}
+		key=1000*(I+1)+1;
+
+		var msg=new MsgCNEngage();
+		msg.Mid=pb_msg.MsgCnEngage;
+		msg.Key=(uint)key;
+		Main.Instance.ws.Send<MsgCNEngage>(msg.Mid,msg);
+		Debug.Log("Set default card "+key.ToString());
 	}
 
 	public void OnDouble(){

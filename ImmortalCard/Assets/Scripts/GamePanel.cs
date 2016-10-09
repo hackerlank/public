@@ -123,7 +123,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(nHandCards.Length>1)nHandCards[1]=tempN[R];
 		if(nHandCards.Length>2)nHandCards[2]=tempN[O];
 		if(nHandCards.Length>m)nHandCards[m]=tempN[L];
-		start();
 
 		//sort
 		var hands=new List<uint>(msg.Hands);
@@ -154,6 +153,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(Players[_banker].gameTimer!=null)
 			Players[_banker].gameTimer.On();
 		Debug.Log(str);
+
+		start();
 		yield break;
 	}
 

@@ -21,7 +21,7 @@ public:
     
     bool                    isRobot;
     pos_t                   pos;
-    bool                    ready;
+    bool                    ready,engaged;
     std::shared_ptr<Game>   game;
     proto3::game_data_t                            gameData;   //player game data
     std::shared_ptr<google::protobuf::MessageLite> lastMsg;

@@ -13,6 +13,7 @@ using namespace proto3;
 Player::Player(keye::svc_handler& sh)
 :pos(-1)
 ,ready(false)
+,engaged(true)
 ,isRobot(false){
     spsh=sh();
 }
@@ -153,6 +154,12 @@ void Player::on_read(PBHelper& pb){
         }
         case MSG_CN_READY:{
             game->rule->OnReady(*this);
+            break;
+        }
+        case proto3::pb_msg::MSG_CN_ENGAGE:{
+            MsgCNEngage imsg;
+            if(pb.Parse(imsg))
+                game->rule->OnEngage(*this,imsg.key());
             break;
         }
         case MSG_CN_DISCARD:{

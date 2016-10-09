@@ -206,7 +206,9 @@ MSG_NC_DISMISS_ACK      =6024;
 
 MSG_CN_READY            =6031;
 MSG_NC_READY            =6032;
-MSG_NC_START            =6034;
+MSG_CN_ENGAGE           =6033;
+MSG_NC_ENGAGE           =6034;
+MSG_NC_START            =6035;
 MSG_NC_SETTLE           =6036;
 MSG_NC_FINISH           =6038;
 
@@ -316,6 +318,20 @@ message MsgNCReady{
 pb_msg mid              =1;
 uint32 pos              =2;
 pb_enum result          =3;
+}
+
+message MsgCNEngage{
+
+pb_msg mid              =1;
+uint32 key              =2;
+}
+
+message MsgNCEngage{
+
+pb_msg mid              =1;
+uint32 pos              =2;
+uint32 key              =3;
+pb_enum result          =4;
 }
 
 message MsgNCStart{

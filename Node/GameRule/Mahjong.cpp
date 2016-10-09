@@ -13,12 +13,14 @@ using namespace proto3;
 void Mahjong::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
-            if(Ready(game))
-                changeState(game,Game::State::ST_START);
+            if(Ready(game)){
+                changeState(game,Game::State::ST_ENGAGE);
+                deal(game);
+            }
             break;
-        case Game::State::ST_START:
-            deal(game);
-            changeState(game,Game::State::ST_DISCARD);
+        case Game::State::ST_ENGAGE:
+            if(Engaged(game))
+                changeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
             if(!game.pendingDiscard||game.pendingDiscard->arrived)
@@ -397,6 +399,9 @@ void Mahjong::tickRobot(Game& game){
         switch (game.state) {
             case Game::State::ST_WAIT:
                 OnReady(*robot);
+                break;
+            case Game::State::ST_ENGAGE:
+                OnEngage(*robot,1001);
                 break;
             case Game::State::ST_DISCARD:
                 if(game.token==robot->pos){

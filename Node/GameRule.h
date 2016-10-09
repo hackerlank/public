@@ -13,12 +13,14 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     bool                Ready(Game&);
-    void                OnReady(Player&);
+    bool                Engaged(Game&);
 
     virtual void        Tick(Game&)=0;
     virtual int         Type()=0;
     virtual int         MaxPlayer()=0;
 
+    void                OnEngage(Player&,uint);
+    void                OnReady(Player&);
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
     virtual void        OnMeld(Player&,const proto3::bunch_t&)=0;
 protected:

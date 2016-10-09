@@ -29,12 +29,14 @@ inline uint32 inverseTransformValue(uint32 val){
 void DoudeZhu::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
-            if(Ready(game))
-                changeState(game,Game::State::ST_START);
+            if(Ready(game)){
+                changeState(game,Game::State::ST_ENGAGE);
+                deal(game);
+            }
             break;
-        case Game::State::ST_START:
-            deal(game);
-            changeState(game,Game::State::ST_DISCARD);
+        case Game::State::ST_ENGAGE:
+            if(Engaged(game))
+                changeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
             if(isGameOver(game))

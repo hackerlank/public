@@ -41,6 +41,7 @@ class MsgCNCreate;
 class MsgCNDiscard;
 class MsgCNDismissAck;
 class MsgCNDismissSync;
+class MsgCNEngage;
 class MsgCNEnter;
 class MsgCNJoin;
 class MsgCNMeld;
@@ -53,6 +54,7 @@ class MsgNCDiscard;
 class MsgNCDismissAck;
 class MsgNCDismissSync;
 class MsgNCDraw;
+class MsgNCEngage;
 class MsgNCEnter;
 class MsgNCFinish;
 class MsgNCJoin;
@@ -148,7 +150,9 @@ enum pb_msg {
   MSG_NC_DISMISS_ACK = 6024,
   MSG_CN_READY = 6031,
   MSG_NC_READY = 6032,
-  MSG_NC_START = 6034,
+  MSG_CN_ENGAGE = 6033,
+  MSG_NC_ENGAGE = 6034,
+  MSG_NC_START = 6035,
   MSG_NC_SETTLE = 6036,
   MSG_NC_FINISH = 6038,
   MSG_CN_DISCARD = 6051,
@@ -2921,6 +2925,218 @@ class MsgNCReady : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   void InitAsDefaultInstance();
   static MsgNCReady* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgCNEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCNEngage) */ {
+ public:
+  MsgCNEngage();
+  virtual ~MsgCNEngage();
+
+  MsgCNEngage(const MsgCNEngage& from);
+
+  inline MsgCNEngage& operator=(const MsgCNEngage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgCNEngage& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgCNEngage* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgCNEngage* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgCNEngage* New() const { return New(NULL); }
+
+  MsgCNEngage* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgCNEngage& from);
+  void MergeFrom(const MsgCNEngage& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgCNEngage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional uint32 key = 2;
+  void clear_key();
+  static const int kKeyFieldNumber = 2;
+  ::google::protobuf::uint32 key() const;
+  void set_key(::google::protobuf::uint32 value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgCNEngage)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  ::google::protobuf::uint32 key_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgCNEngage* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgNCEngage) */ {
+ public:
+  MsgNCEngage();
+  virtual ~MsgNCEngage();
+
+  MsgNCEngage(const MsgNCEngage& from);
+
+  inline MsgNCEngage& operator=(const MsgNCEngage& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgNCEngage& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgNCEngage* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgNCEngage* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgNCEngage* New() const { return New(NULL); }
+
+  MsgNCEngage* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgNCEngage& from);
+  void MergeFrom(const MsgNCEngage& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgNCEngage* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional uint32 pos = 2;
+  void clear_pos();
+  static const int kPosFieldNumber = 2;
+  ::google::protobuf::uint32 pos() const;
+  void set_pos(::google::protobuf::uint32 value);
+
+  // optional uint32 key = 3;
+  void clear_key();
+  static const int kKeyFieldNumber = 3;
+  ::google::protobuf::uint32 key() const;
+  void set_key(::google::protobuf::uint32 value);
+
+  // optional .proto3.pb_enum result = 4;
+  void clear_result();
+  static const int kResultFieldNumber = 4;
+  ::proto3::pb_enum result() const;
+  void set_result(::proto3::pb_enum value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgNCEngage)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::uint32 key_;
+  int result_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgNCEngage* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -6763,6 +6979,98 @@ inline void MsgNCReady::set_result(::proto3::pb_enum value) {
 
 // -------------------------------------------------------------------
 
+// MsgCNEngage
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgCNEngage::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgCNEngage::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgCNEngage::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.mid)
+}
+
+// optional uint32 key = 2;
+inline void MsgCNEngage::clear_key() {
+  key_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgCNEngage::key() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.key)
+  return key_;
+}
+inline void MsgCNEngage::set_key(::google::protobuf::uint32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.key)
+}
+
+// -------------------------------------------------------------------
+
+// MsgNCEngage
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgNCEngage::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgNCEngage::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgNCEngage::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.mid)
+}
+
+// optional uint32 pos = 2;
+inline void MsgNCEngage::clear_pos() {
+  pos_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCEngage::pos() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.pos)
+  return pos_;
+}
+inline void MsgNCEngage::set_pos(::google::protobuf::uint32 value) {
+  
+  pos_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.pos)
+}
+
+// optional uint32 key = 3;
+inline void MsgNCEngage::clear_key() {
+  key_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCEngage::key() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.key)
+  return key_;
+}
+inline void MsgNCEngage::set_key(::google::protobuf::uint32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.key)
+}
+
+// optional .proto3.pb_enum result = 4;
+inline void MsgNCEngage::clear_result() {
+  result_ = 0;
+}
+inline ::proto3::pb_enum MsgNCEngage::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+inline void MsgNCEngage::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.result)
+}
+
+// -------------------------------------------------------------------
+
 // MsgNCStart
 
 // optional .proto3.pb_msg mid = 1;
@@ -7716,6 +8024,10 @@ inline void MsgCNStats::set_allocated_value(::std::string* value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

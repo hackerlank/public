@@ -91,6 +91,28 @@ void GameRule::OnReady(Player& player){
     }
 }
 
+void GameRule::OnEngage(Player& player,uint key){
+    if(auto game=player.game){
+        if(player.engaged)return;
+        
+        player.engaged=true;
+        player.gameData.set_selected_card(key);
+        
+        MsgNCEngage omsg;
+        omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
+        omsg.set_pos(player.pos);
+        omsg.set_key(key);
+        omsg.set_result(pb_enum::SUCCEESS);
+        for(auto& p:game->players)p->send(omsg);
+    }
+}
+
+bool GameRule::Engaged(Game& game){
+    int n=0;
+    for(auto p:game.players)if(p&&p->engaged)++n;
+    return n>=MaxPlayer();
+}
+
 bool GameRule::Ready(Game& game){
     int n=0;
     for(auto p:game.players)if(p&&p->ready)++n;
@@ -123,8 +145,8 @@ const char* GameRule::state2str(std::string& str,Game::State st){
         case Game::State::ST_WAIT:
             str="ST_WAIT";
             break;
-        case Game::State::ST_START:
-            str="ST_START";
+        case Game::State::ST_ENGAGE:
+            str="ST_ENGAGE";
             break;
         case Game::State::ST_DRAW:
             str="ST_DRAW";
