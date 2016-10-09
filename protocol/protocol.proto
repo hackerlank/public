@@ -10,7 +10,9 @@ package proto3;
 // option optimize_for = SPEED;
 option optimize_for = LITE_RUNTIME;
 
-// -------- data structures --------
+// ----------------------------------------------------------------
+// enum
+// ----------------------------------------------------------------
 enum pb_enum{
 option allow_alias      =true;
 
@@ -82,7 +84,9 @@ string value            =2;
 pb_enum ikey            =3;
 uint32 ivalue           =4;
 }
-
+// ----------------------------------------------------------------
+// struct
+// ----------------------------------------------------------------
 message user_t{
 
 string uid				=1;
@@ -170,7 +174,9 @@ repeated uint32 discards=2;
 repeated bunch_t bunch  =3;
 uint32 selected_card    =4;
 };
-// -------- messages --------
+// ----------------------------------------------------------------
+// messages
+// ----------------------------------------------------------------
 enum pb_msg{
 
 MSG_INVALID             =0;
@@ -227,7 +233,8 @@ MSG_END                 =9999;
 message MsgBase{
 pb_msg mid              =1;
 };
-//	Client	 --  Login
+// ----------------------------------------------------------------
+// Login
 message MsgCSLogin{
 
 pb_msg mid				=1;
@@ -245,8 +252,8 @@ string ip				=5;
 uint32 port             =6;
 pb_enum result			=7;
 };
-
-//	Client	 --  Lobby
+// ----------------------------------------------------------------
+// Lobby
 message MsgCLEnter{
 
 pb_msg mid				=1;
@@ -263,8 +270,8 @@ player_t player         =3;
 lobby_t lobby           =4;
 pb_enum result			=5;
 };
-
-//	Client	 --  Node
+// ----------------------------------------------------------------
+// Node
 message MsgCNEnter{
 
 pb_msg mid				=1;

@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
 
     Node server;
 	server.run(port,"127.0.0.1");
-    server.set_timer(TIMER::TIMER_SEC, 100);
+    server.set_timer(TIMER::TIMER_SEC, 1000);
     server.set_timer(TIMER::TIMER_MIN, 1000*60);
     server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);

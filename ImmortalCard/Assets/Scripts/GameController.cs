@@ -17,7 +17,7 @@ public interface GameController {
 
 	//card operation
 	void TapCard(Card card,bool select=true);
-	void Discard(Card card=null);
+	IEnumerator Discard(Card card=null);
 
 	//ui
 	void OnExit();

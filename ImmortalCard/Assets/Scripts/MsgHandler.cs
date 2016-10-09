@@ -24,7 +24,7 @@ public class MsgHandler{
 		Debug.Log("OnError: "+error);
 	}
 	public static void onMessage(pb_msg mid,byte[] bytes){
-		Debug.Log("OnMessage "+mid);
+		//Debug.Log("OnMessage "+mid);
 		switch(mid){
 		case pb_msg.MsgScLogin:
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);

@@ -98,22 +98,22 @@ public class MahJongPanel : GamePanel {
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
-		float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
 		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
 			card.state=Card.State.ST_DISCARD;
-			card.DiscardTo(DiscardAreas[pos],scalar);
+			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
 		});
 	}
 	
 	override protected void meld(bunch_t bunch){
 		var from=_token;
 		var to=bunch.Pos;
+		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(A!=null)
 		switch(bunch.Type){
 		case pb_enum.BunchA:
 			//collect
-			A.DiscardTo(HandAreas[to],DiscardScalar);
+			A.DiscardTo(HandAreas[to],scalar);
 			A.Static=false;
 			A.state=Card.State.ST_NORMAL;
 			if(to==_pos)sortHands();
@@ -121,12 +121,12 @@ public class MahJongPanel : GamePanel {
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
 			//meld
-			A.DiscardTo(MeldAreas[to],DiscardScalar);
+			A.DiscardTo(MeldAreas[to],scalar);
 			var hands=HandAreas[to].GetComponentsInChildren<Card>();
 			foreach(var id in bunch.Pawns)
 			foreach(var card in hands){
 				if(card.Value==id)
-					card.DiscardTo(MeldAreas[to],DiscardScalar);
+					card.DiscardTo(MeldAreas[to],scalar);
 			}
 			break;
 		default:
@@ -210,8 +210,8 @@ public class MahJongPanel : GamePanel {
 
 	public void OnCall(){
 		//set default color
-		int key=0;
-		int I=20;
+		int key=20;
+		int I=0;
 		int[] count=new int[3];
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		foreach(var card in hands)count[card.Value/1000-1]++;

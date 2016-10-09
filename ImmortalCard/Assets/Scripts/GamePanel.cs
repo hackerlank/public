@@ -41,7 +41,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 
 	public void OnDiscard(){
-		Discard();
+		StartCoroutine(Discard());
 	}
 	
 	//int _nhints=0;
@@ -168,11 +168,15 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		changeToken(pos);
 		_hints.Clear();
 		_hints.AddRange(msg.Hints);
-		string str="discard at "+pos;
+		string str=pos+" discard ";
 		var cards=new uint[msg.Bunch.Pawns.Count];
 		msg.Bunch.Pawns.CopyTo(cards,0);
 		if(pos==_pos){
 			//adjust by feedback
+			for(int i=0;i<cards.Length;++i){
+				var id=(int)cards[i];
+				str+=id+",";
+			}
 		}else{
 			//remove discards
 			foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
@@ -181,15 +185,15 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 				var fin=false;
 				var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
 				Card.Create(CardPrefab,id,from,delegate(Card card) {
-					float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
 					card.state=Card.State.ST_DISCARD;
-					card.DiscardTo(DiscardAreas[pos],scalar);
+					card.DiscardTo(DiscardAreas[pos],DiscardScalar);
 					fin=true;
 				});
 				yield return null;
-				str+=id.ToString()+",";
+				str+=(int)id+",";
 				while(!fin)yield return null;
 			}
+			//yield return new WaitForSeconds(1);
 		}
 		//record
 		if(pos<nHandCards.Length&&nHandCards[pos]!=null){
@@ -198,7 +202,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		}
 		_historical.Add(msg.Bunch);
 		discard(pos);
-		//Debug.Log(str);
+		Debug.Log(str);
 	}
 	
 	public void OnMsgDraw(MsgNCDraw msg){
@@ -208,10 +212,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(_hints.Count>0)
 			showHints();
 		draw(msg.Card,msg.Pos);
+		Debug.Log(msg.Pos+" draw "+(int)msg.Card);
 	}
 	public void OnMsgMeld(MsgNCMeld msg){
 		changeToken(msg.Bunch.Pos);
 		meld(msg.Bunch);
+		Debug.Log(msg.Bunch.Pos+" meld "+(int)msg.Bunch.Type);
 	}
 
 	public void OnMsgSettle(MsgNCSettle msg){
@@ -242,13 +248,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		card.Tap();
 	}
 
-	public void Discard(Card card=null){
+	public IEnumerator Discard(Card card=null){
 		//discard my card
 		if(checkDiscard(card)){
 			//remove discards
 			foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 			//discard
-			float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
 			MsgCNDiscard msg=new MsgCNDiscard();
 			msg.Mid=pb_msg.MsgCnDiscard;
 			msg.Bunch=new bunch_t();
@@ -257,17 +262,18 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			if(card!=null){
 				deselectAll();
 				card.state=Card.State.ST_DISCARD;
-				card.DiscardTo(DiscardAreas[_pos],scalar);
+				card.DiscardTo(DiscardAreas[_pos],DiscardScalar);
 				msg.Bunch.Pawns.Add(card.Value);
 			}else if(_selection.Count>0){
 				_selection.Sort(compare_card);
 				foreach(var c in _selection){
 					c.state=Card.State.ST_DISCARD;
-					c.DiscardTo(DiscardAreas[_pos],scalar);
+					c.DiscardTo(DiscardAreas[_pos],DiscardScalar);
 					msg.Bunch.Pawns.Add(c.Value);
 				}
 				_selection.Clear();
 			}
+			yield return new WaitForSeconds(1);
 			Main.Instance.ws.Send<MsgCNDiscard>(msg.Mid,msg);
 		}
 	}

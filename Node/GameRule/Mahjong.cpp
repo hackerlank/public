@@ -606,12 +606,14 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
             for(int i=0;i<3;++i)bunch->add_pawns(sel[i]);
             bunch->add_pawns(id);
         }
-        //BUNCH_AAA
-        auto bunch=bunches.Add();
-        bunch->set_pos(pos);
-        bunch->set_type(pb_enum::BUNCH_AAA);
-        for(int i=0;i<2;++i)bunch->add_pawns(sel[i]);
-        bunch->add_pawns(id);
+        if(src_bunch.pos()!=pos){
+            //BUNCH_AAA, not for self
+            auto bunch=bunches.Add();
+            bunch->set_pos(pos);
+            bunch->set_type(pb_enum::BUNCH_AAA);
+            for(int i=0;i<2;++i)bunch->add_pawns(sel[i]);
+            bunch->add_pawns(id);
+        }
     }else if(game.pileMap.find(id)!=game.pileMap.end()){
         for(auto melt:player.gameData.bunch()){
             if(melt.type()==pb_enum::BUNCH_AAA){

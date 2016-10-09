@@ -189,7 +189,9 @@ namespace Proto3 {
   }
   #region Enums
   /// <summary>
-  ///  -------- data structures --------
+  ///  ----------------------------------------------------------------
+  ///  enum
+  ///  ----------------------------------------------------------------
   /// </summary>
   public enum pb_enum {
     [pbr::OriginalName("UNKNOWN")] Unknown = 0,
@@ -264,7 +266,9 @@ namespace Proto3 {
   }
 
   /// <summary>
-  ///  -------- messages --------
+  ///  ----------------------------------------------------------------
+  ///  messages
+  ///  ----------------------------------------------------------------
   /// </summary>
   public enum pb_msg {
     [pbr::OriginalName("MSG_INVALID")] MsgInvalid = 0,
@@ -520,6 +524,11 @@ namespace Proto3 {
 
   }
 
+  /// <summary>
+  ///  ----------------------------------------------------------------
+  ///  struct
+  ///  ----------------------------------------------------------------
+  /// </summary>
   public sealed partial class user_t : pb::IMessage<user_t> {
     private static readonly pb::MessageParser<user_t> _parser = new pb::MessageParser<user_t>(() => new user_t());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2865,7 +2874,8 @@ namespace Proto3 {
   }
 
   /// <summary>
-  /// 	Client	 --  Login
+  ///  ----------------------------------------------------------------
+  ///  Login
   /// </summary>
   public sealed partial class MsgCSLogin : pb::IMessage<MsgCSLogin> {
     private static readonly pb::MessageParser<MsgCSLogin> _parser = new pb::MessageParser<MsgCSLogin>(() => new MsgCSLogin());
@@ -3332,7 +3342,8 @@ namespace Proto3 {
   }
 
   /// <summary>
-  /// 	Client	 --  Lobby
+  ///  ----------------------------------------------------------------
+  ///  Lobby
   /// </summary>
   public sealed partial class MsgCLEnter : pb::IMessage<MsgCLEnter> {
     private static readonly pb::MessageParser<MsgCLEnter> _parser = new pb::MessageParser<MsgCLEnter>(() => new MsgCLEnter());
@@ -3777,7 +3788,8 @@ namespace Proto3 {
   }
 
   /// <summary>
-  /// 	Client	 --  Node
+  ///  ----------------------------------------------------------------
+  ///  Node
   /// </summary>
   public sealed partial class MsgCNEnter : pb::IMessage<MsgCNEnter> {
     private static readonly pb::MessageParser<MsgCNEnter> _parser = new pb::MessageParser<MsgCNEnter>(() => new MsgCNEnter());
