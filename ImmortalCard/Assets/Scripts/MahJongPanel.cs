@@ -7,9 +7,6 @@ using Proto3;
 public class MahJongPanel : GamePanel {
 	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
-
-	public GameObject	BtnCall,BtnDouble;
-
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
@@ -25,7 +22,7 @@ public class MahJongPanel : GamePanel {
 		return "";
 	}
 
-	public float AbandonScalar{get{return .7f;}}
+	float AbandonScalar{get{return .7f;}}
 	override public float DiscardScalar{get{return 1f;}}
 
 	override protected bool checkDiscard(Card card=null){
@@ -74,20 +71,9 @@ public class MahJongPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
-	override protected void draw(uint id,uint pos){
-		//remove discards
-		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
-		//discard
-		float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
-		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
-			card.state=Card.State.ST_DISCARD;
-			card.DiscardTo(DiscardAreas[pos],scalar);
-		});
-	}
-
 	override protected void start(){
-		var M=_pos;
 		var m=maxPlayer-1;
+		var M=_pos;
 		var R=(M+1)%maxPlayer;
 		var O=(M+2)%maxPlayer;
 		var L=(M+m)%maxPlayer;
@@ -105,6 +91,17 @@ public class MahJongPanel : GamePanel {
 		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
 	}
 
+	override protected void draw(uint id,uint pos){
+		//remove discards
+		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
+		//discard
+		float scalar=(Main.Instance.gameController==null?1f:Main.Instance.gameController.DiscardScalar);
+		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
+			card.state=Card.State.ST_DISCARD;
+			card.DiscardTo(DiscardAreas[pos],scalar);
+		});
+	}
+	
 	override protected void meld(bunch_t bunch){
 		var from=_token;
 		var to=bunch.Pos;
@@ -114,6 +111,9 @@ public class MahJongPanel : GamePanel {
 		case pb_enum.BunchA:
 			//collect
 			A.DiscardTo(HandAreas[to],DiscardScalar);
+			A.Static=false;
+			A.state=Card.State.ST_NORMAL;
+			if(to==_pos)sortHands();
 			break;
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
@@ -133,6 +133,20 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
+	override protected void sortHands(){
+		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
+		var ids=new List<uint>();
+		foreach(var card in hands)ids.Add(card.Value);
+		ids.Sort(Rule.comparision);
+		foreach(var card in hands){
+			for(int i=0;i<ids.Count;++i)
+				if(card.Value==ids[i]){
+				card.transform.SetSiblingIndex(i);
+				break;
+			}
+		}
+	}
+	
 	//List<uint[]> _hints=null;
 	override protected void genHints(){
 		//_hints=null;

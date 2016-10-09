@@ -97,8 +97,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		var m=maxPlayer-1;
 		var M=_pos;
 		var R=(M+1)%maxPlayer;
-		var L=(M+2)%maxPlayer;
-		var O=(M+3)%maxPlayer;
+		var O=(M+2)%maxPlayer;
+		var L=(M+m)%maxPlayer;
 		Transform[] tempD=new Transform[DiscardAreas.Length];	//MROL
 		Transform[] tempH=new Transform[HandAreas.Length];
 		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
@@ -111,10 +111,10 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(DiscardAreas.Length>1)DiscardAreas[1]=tempD[R];
 		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[O];
 		if(DiscardAreas.Length>m)DiscardAreas[m]=tempD[L];
-		if(HandAreas.Length>0)HandAreas[0]=tempD[M];
-		if(HandAreas.Length>1)HandAreas[1]=tempD[R];
-		if(HandAreas.Length>2)HandAreas[2]=tempD[O];
-		if(HandAreas.Length>m)HandAreas[m]=tempD[L];
+		if(HandAreas.Length>0)HandAreas[0]=tempH[M];
+		if(HandAreas.Length>1)HandAreas[1]=tempH[R];
+		if(HandAreas.Length>2)HandAreas[2]=tempH[O];
+		if(HandAreas.Length>m)HandAreas[m]=tempH[L];
 		if(Players.Length>0)Players[0]=tempP[M];
 		if(Players.Length>1)Players[1]=tempP[R];
 		if(Players.Length>2)Players[2]=tempP[O];
@@ -123,10 +123,11 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(nHandCards.Length>1)nHandCards[1]=tempN[R];
 		if(nHandCards.Length>2)nHandCards[2]=tempN[O];
 		if(nHandCards.Length>m)nHandCards[m]=tempN[L];
+		start();
 
 		//sort
 		var hands=new List<uint>(msg.Hands);
-		hands.Sort(rule.comparision);
+		hands.Sort(Rule.comparision);
 		//deal
 		
 		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
@@ -270,6 +271,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	virtual protected void start(){}
 	virtual protected void draw(uint card,uint pos){}
 	virtual protected void meld(bunch_t bunch){}
+	virtual protected void sortHands(){}
 
 	virtual protected void genHints(){}
 	virtual protected void showHints(){}
