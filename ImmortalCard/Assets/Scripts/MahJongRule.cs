@@ -34,13 +34,13 @@ public class MahJongRule: GameRule {
 	}
 
 	protected override pb_enum verifyBunch(bunch_t bunch){
-		var bt=pb_enum.BunchInvalid;
+		var bt=pb_enum.BunchA;
 		return bt;
 	}
 	
 	protected override bool compareBunch(bunch_t bunch,bunch_t hist){
 		//rule win
-		var win=false;
+		var win=true;
 		return win;
 	}
 	

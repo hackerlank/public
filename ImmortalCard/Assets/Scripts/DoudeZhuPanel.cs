@@ -27,8 +27,7 @@ public class DoudeZhuPanel : GamePanel {
 		//discard my card
 		var check=false;
 		do{
-			var token=(_token+1)%maxPlayer;
-			if(token!=_pos){
+			if(_pos!=_token%maxPlayer){
 				Debug.Log("Discard invalid turn");
 				break;
 			}
@@ -61,7 +60,12 @@ public class DoudeZhuPanel : GamePanel {
 		}while(false);
 		return check;
 	}
-	
+
+	override protected void discard(uint pos){
+		//set to next after discard
+		changeToken(pos+1);
+	}
+
 	//List<uint[]> _hints=null;
 	override protected void genHints(){
 		//_hints=null;

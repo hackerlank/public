@@ -29,7 +29,7 @@ public class MahJongPanel : GamePanel {
 		//discard my card
 		var check=false;
 		do{
-			var token=(_token+1)%maxPlayer;
+			var token=_token%maxPlayer;
 			if(token!=_pos){
 				Debug.Log("Discard invalid turn");
 				break;

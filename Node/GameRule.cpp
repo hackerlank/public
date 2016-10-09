@@ -99,7 +99,7 @@ bool GameRule::Ready(Game& game){
 
 void GameRule::changePos(Game& game,pos_t pos){
     auto old=game.token;
-    game.token=(pos>=game.rule->MaxPlayer()?0:pos);
+    game.token=pos%game.rule->MaxPlayer();
     KEYE_LOG("token: %d=>%d\n",old,game.token);
 }
 
