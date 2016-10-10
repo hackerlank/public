@@ -226,7 +226,7 @@ public class MahJongPanel : GamePanel {
 		var msg=new MsgCNEngage();
 		msg.Mid=pb_msg.MsgCnEngage;
 		msg.Key=(uint)key;
-		Main.Instance.ws.Send<MsgCNEngage>(msg.Mid,msg);
+		Main.Instance.player.ws.Send<MsgCNEngage>(msg.Mid,msg);
 		Debug.Log("Set default card "+key.ToString());
 	}
 
@@ -241,7 +241,7 @@ public class MahJongPanel : GamePanel {
 		msg.Bunch.Type=pb_enum.BunchAaa;
 		if(_hints.Count>0)
 			msg.Bunch.MergeFrom(_hints[0]);
-		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+		Main.Instance.player.ws.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	
 	public void OnAAAA(){
@@ -252,7 +252,7 @@ public class MahJongPanel : GamePanel {
 		msg.Bunch.Type=pb_enum.BunchAaaa;
 		if(_hints.Count>0)
 			msg.Bunch.MergeFrom(_hints[0]);
-		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+		Main.Instance.player.ws.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	
 	public void OnWin(){
@@ -263,7 +263,7 @@ public class MahJongPanel : GamePanel {
 		msg.Bunch.Type=pb_enum.BunchWin;
 		if(_hints.Count>0)
 			msg.Bunch.MergeFrom(_hints[0]);
-		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+		Main.Instance.player.ws.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	
 	override public void OnPass(){
@@ -274,7 +274,7 @@ public class MahJongPanel : GamePanel {
 		msg.Bunch.Type=pb_enum.OpPass;
 		if(_hints.Count>0)
 			msg.Bunch.MergeFrom(_hints[0]);
-		Main.Instance.ws.Send<MsgCNMeld>(msg.Mid,msg);
+		Main.Instance.player.ws.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	
 	public static void Create(System.Action<Component> handler=null){

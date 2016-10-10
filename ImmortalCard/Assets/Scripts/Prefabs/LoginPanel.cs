@@ -32,8 +32,8 @@ public class LoginPanel : MonoBehaviour {
 			msg.User.Udid=SystemInfo.deviceUniqueIdentifier;
 			
 			//Debug.Log("----DoLogin account="+msg.User.Account);
-			Main.Instance.http.SetUri(Configs.uri);
-			Main.Instance.http.Request<MsgCSLogin>(msg.Mid,msg);
+			Main.Instance.player.http.SetUri(Configs.uri);
+			Main.Instance.player.http.Request<MsgCSLogin>(msg.Mid,msg);
 		}
 	}
 
