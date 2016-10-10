@@ -7,7 +7,7 @@ using Proto3;
 
 public class HttpProxy {
 	private string uri="";
-	public event MsgHandler.MessageHandler onResponse=delegate(pb_msg mid,byte[] bytes){};
+	public event Player.MessageHandler onResponse=delegate(pb_msg mid,byte[] bytes){};
 
 	public void SetUri(string _uri){
 		uri=_uri;
