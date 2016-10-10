@@ -35,7 +35,7 @@ public class CreatePanel : MonoBehaviour {
 			Random.seed=(int)Utils.time;
 			gameId=(uint)(Random.value*M);
 		}
-		if(MsgHandler.Connected)
+		if(Main.Instance.msgHandler.Connected)
 			OnConnected();
 		else{
 			//connect by key

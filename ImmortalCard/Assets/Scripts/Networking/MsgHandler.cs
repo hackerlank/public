@@ -5,9 +5,9 @@ using Proto3;
 public class MsgHandler{
 	public delegate void MessageHandler(pb_msg mid,byte[] bytes);
 
-	public static bool Connected=false;
+	public bool Connected=false;
 
-	public static void onOpen(string error){
+	public void onOpen(string error){
 		if(!Connected){
 			Connected=true;
 			Loom.QueueOnMainThread(delegate{
@@ -16,14 +16,14 @@ public class MsgHandler{
 			});
 		}
 	}
-	public static void onClose(string error){
+	public void onClose(string error){
 		Connected=false;
 		Debug.Log("OnClose "+error);
 	}
-	public static void onError(string error){
+	public void onError(string error){
 		Debug.Log("OnError: "+error);
 	}
-	public static void onMessage(pb_msg mid,byte[] bytes){
+	public void onMessage(pb_msg mid,byte[] bytes){
 		//Debug.Log("OnMessage "+mid);
 		switch(mid){
 		case pb_msg.MsgScLogin:
