@@ -5,7 +5,7 @@ using Google.Protobuf;
 
 public class Player {
 	//networking
-	public delegate void	MessageHandler(IMessage msg);
+	public delegate void	MessageHandler(Player player,IMessage msg);
 	public delegate void	ProtobufHandler(pb_msg mid,byte[] bytes);
 	public bool				Entered=false;
 	public HttpProxy		http;
@@ -14,7 +14,7 @@ public class Player {
 	bool					connected=false;
 	//ui controller,keep null for robot
 	public PlayerController	controller;
-	public MessageHandler	msgHandler=delegate(IMessage msg){};
+	public MessageHandler	msgHandler=delegate(Player player,IMessage msg){};
 
 	public uint				gameId=0;
 	public uint				pos=0;
@@ -99,6 +99,7 @@ public class Player {
 	}
 	public void onMessage(pb_msg mid,byte[] bytes){
 		//Debug.Log("OnMessage "+mid);
+		IMessage msg=null;
 		switch(mid){
 		case pb_msg.MsgScLogin:
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
@@ -151,12 +152,7 @@ public class Player {
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			Debug.Log("start game");
 			if(msgStart.Result==pb_enum.Succeess){
-				pos=msgStart.Pos;
-				gameData.Hands.AddRange(msgStart.Hands);
-				if(!bRobot)Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)
-						Main.Instance.StartCoroutine(Main.Instance.gameController.OnMsgStart(msgStart));
-				});
+				msg=msgStart;
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			break;
@@ -164,43 +160,32 @@ public class Player {
 		case pb_msg.MsgNcDiscard:
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(msgDiscard.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)
-						Main.Instance.StartCoroutine(Main.Instance.gameController.OnMsgDiscard(msgDiscard));
-				});
+				msg=msgDiscard;
 			}else
 				Debug.LogError("discard error: "+msgDiscard.Result);
 			break;
 		case pb_msg.MsgNcMeld:
 			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
 			if(msgMeld.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgMeld(msgMeld);
-				});
+				msg=msgMeld;
 			}else
 				Debug.LogError("meld error: "+msgMeld.Result);
 			break;
 		case pb_msg.MsgNcDraw:
 			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
-			Loom.QueueOnMainThread(delegate{
-				if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgDraw(msgDraw);
-			});
+			msg=msgDraw;
 			break;
 		case pb_msg.MsgNcSettle:
 			MsgNCSettle msgSettle=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(msgSettle.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgSettle(msgSettle);
-				});
+				msg=msgSettle;
 			}else
 				Debug.LogError("settle error: "+msgSettle.Result);
 			break;
 		case pb_msg.MsgNcFinish:
 			MsgNCFinish msgFinish=MsgNCFinish.Parser.ParseFrom(bytes);
 			if(msgFinish.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
-					if(Main.Instance.gameController!=null)Main.Instance.gameController.OnMsgFinish(msgFinish);
-				});
+				msg=msgFinish;
 			}else
 				Debug.LogError("finish error: "+msgFinish.Result);
 			break;
@@ -223,5 +208,6 @@ public class Player {
 		default:
 			break;
 		}
+		if(msg!=null)msgHandler.Invoke(this,msg);
 	}
 }
