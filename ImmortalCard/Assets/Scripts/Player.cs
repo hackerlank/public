@@ -7,6 +7,7 @@ public class Player {
 	//networking
 	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
 	public bool				Connected=false;
+	public bool				Entered=false;
 	public HttpProxy		http;
 	WSProxy					ws;
 
@@ -14,6 +15,9 @@ public class Player {
 	public PlayerController	controller;
 
 	bool					bRobot=false;
+
+	public MsgNCCreate	msgNCCreate;
+	public MsgNCJoin	msgNCJoin;
 
 	public Player(bool robot=false){
 		bRobot=robot;
@@ -29,6 +33,23 @@ public class Player {
 		ws.onMessage+=onMessage;
 	}
 
+	uint gameId=0;
+	public void Connect(uint id=0){
+		gameId=id;
+		var M=(uint)pb_enum.DefMaxNodes;
+		if(id==0){
+			//re-generate key
+			Random.seed=(int)Utils.time;
+			gameId=(uint)(Random.value*M);
+		}
+		if(!Connected){
+			//connect by key
+			var key=gameId%M;
+			ws.Connect(Configs.ws+"/"+key);
+			Debug.Log("connecting by key "+key);
+		}
+	}
+
 	public void Connect(string uri){
 		ws.Connect(uri);
 	}
@@ -40,10 +61,16 @@ public class Player {
 	public void onOpen(string error){
 		if(!Connected){
 			Connected=true;
+			/*
 			Loom.QueueOnMainThread(delegate{
 				if(CreatePanel.Instance!=null)
 					CreatePanel.Instance.OnConnected();
 			});
+			*/
+			MsgCNEnter msg=new MsgCNEnter();
+			msg.Mid=pb_msg.MsgCnEnter;
+			msg.Version=100;
+			Send<MsgCNEnter>(msg.Mid,msg);
 		}
 	}
 	public void onClose(string error){
@@ -68,9 +95,12 @@ public class Player {
 			MsgNCEnter msgEnter=MsgNCEnter.Parser.ParseFrom(bytes);
 			Debug.Log("entered");
 			if(msgEnter.Result==pb_enum.Succeess){
+				Entered=true;
+				/*
 				Loom.QueueOnMainThread(delegate{
-					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnEntered();
+					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnMsgCNEnter();
 				});
+				*/
 			}else
 				Debug.LogError("enter error: "+msgEnter.Result);
 			break;
@@ -78,9 +108,12 @@ public class Player {
 			MsgNCCreate msgCreate=MsgNCCreate.Parser.ParseFrom(bytes);
 			Debug.Log("created game "+msgCreate.GameId);
 			if(msgCreate.Result==pb_enum.Succeess){
+				msgNCCreate=msgCreate;
+				/*
 				Loom.QueueOnMainThread(delegate{
 					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnCreated(msgCreate);
 				});
+				*/
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
 			break;
@@ -88,9 +121,12 @@ public class Player {
 			MsgNCJoin msgJoin=MsgNCJoin.Parser.ParseFrom(bytes);
 			Debug.Log("joined game");
 			if(msgJoin.Result==pb_enum.Succeess){
+				msgNCJoin=msgJoin;
+				/*
 				Loom.QueueOnMainThread(delegate{
 					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnJoined(msgJoin);
 				});
+				*/
 			}else
 				Debug.LogError("join error: "+msgJoin.Result);
 			break;
