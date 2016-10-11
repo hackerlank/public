@@ -15,7 +15,7 @@ public class SettlePopup : MonoBehaviour {
 		}else{
 			MsgCNReady msg=new MsgCNReady();
 			msg.Mid=pb_msg.MsgCnReady;
-			Main.Instance.MainPlayer.ws.Send<MsgCNReady>(msg.Mid,msg);
+			Main.Instance.MainPlayer.Send<MsgCNReady>(msg.Mid,msg);
 		}
 	}
 }

@@ -70,7 +70,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		msg.Bunch=new bunch_t();
 		msg.Bunch.Pos=_pos;
 		msg.Bunch.Type=pb_enum.OpPass;
-		Main.Instance.MainPlayer.ws.Send<MsgCNDiscard>(msg.Mid,msg);
+		Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 	
 	public void OnExit(){
@@ -274,7 +274,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 				_selection.Clear();
 			}
 			yield return new WaitForSeconds(1);
-			Main.Instance.MainPlayer.ws.Send<MsgCNDiscard>(msg.Mid,msg);
+			Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
 		}
 	}
 

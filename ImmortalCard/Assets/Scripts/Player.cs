@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Proto3;
+using Google.Protobuf;
 
 public class Player {
 	//networking
 	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
 	public bool				Connected=false;
 	public HttpProxy		http;
-	public WSProxy			ws;
+	WSProxy					ws;
 
 	//ui controller,keep null for robot
 	public PlayerController	controller;
@@ -28,6 +29,14 @@ public class Player {
 		ws.onMessage+=onMessage;
 	}
 
+	public void Connect(string uri){
+		ws.Connect(uri);
+	}
+
+	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
+		ws.Send<T>(mid,msg);
+	}
+		
 	public void onOpen(string error){
 		if(!Connected){
 			Connected=true;
