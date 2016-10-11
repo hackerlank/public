@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Main : MonoBehaviour {
 
 	public static Main		Instance=null;
-	public Player			player=new Player();
 
 	public uint				Round=4;
 	public GameController	gameController=null;
@@ -19,7 +19,7 @@ public class Main : MonoBehaviour {
 	void Awake(){
 		//Loom
 		gameObject.AddComponent<Loom>();
-		player=new Player();
+		MainPlayer=new Player();
 		Instance=this;
 	}
 
@@ -27,5 +27,11 @@ public class Main : MonoBehaviour {
 	}
 	
 	void Update () {
+	}
+
+	public Player MainPlayer=new Player();
+	public List<Player> players=new List<Player>();
+	public Player GetPlayer(int index){
+		return (index<players.Count?players[index]:null);
 	}
 }

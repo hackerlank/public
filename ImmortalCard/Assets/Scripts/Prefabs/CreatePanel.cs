@@ -35,12 +35,12 @@ public class CreatePanel : MonoBehaviour {
 			Random.seed=(int)Utils.time;
 			gameId=(uint)(Random.value*M);
 		}
-		if(Main.Instance.player.Connected)
+		if(Main.Instance.MainPlayer.Connected)
 			OnConnected();
 		else{
 			//connect by key
 			var key=gameId%M;
-			Main.Instance.player.ws.Connect(Configs.ws+"/"+key);
+			Main.Instance.MainPlayer.ws.Connect(Configs.ws+"/"+key);
 			Debug.Log("connecting by key "+key);
 		}
 	}
@@ -50,7 +50,7 @@ public class CreatePanel : MonoBehaviour {
 		msg.Mid=pb_msg.MsgCnEnter;
 		msg.Version=100;
 
-		Main.Instance.player.ws.Send<MsgCNEnter>(msg.Mid,msg);
+		Main.Instance.MainPlayer.ws.Send<MsgCNEnter>(msg.Mid,msg);
 	}
 
 	public void OnEntered(){
@@ -68,14 +68,14 @@ public class CreatePanel : MonoBehaviour {
 			msgC.Option.Add(opRobot);
 			msgC.Option.Add(opRound);
 
-			Main.Instance.player.ws.Send<MsgCNCreate>(msgC.Mid,msgC);
+			Main.Instance.MainPlayer.ws.Send<MsgCNCreate>(msgC.Mid,msgC);
 			Debug.Log("create game by key "+gameId%(uint)pb_enum.DefMaxNodes);
 		}else{
 			MsgCNJoin msgJ=new MsgCNJoin();
 			msgJ.Mid=pb_msg.MsgCnJoin;
 			msgJ.GameId=gameId;
 
-			Main.Instance.player.ws.Send<MsgCNJoin>(msgJ.Mid,msgJ);
+			Main.Instance.MainPlayer.ws.Send<MsgCNJoin>(msgJ.Mid,msgJ);
 			Debug.Log("join game by id "+gameId);
 		}
 	}

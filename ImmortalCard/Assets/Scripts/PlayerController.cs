@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerController {
-	//ui
+	//UI Controller for Player
 	public Transform	HandAreas;
 	public Transform	DiscardAreas;	//MROL(Me,Right,Opposite,Left)
 	public PlayerIcon	Players;

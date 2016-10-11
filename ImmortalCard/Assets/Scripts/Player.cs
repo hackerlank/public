@@ -8,6 +8,8 @@ public class Player {
 	public bool				Connected=false;
 	public HttpProxy		http;
 	public WSProxy			ws;
+
+	//ui controller,keep null for robot
 	public PlayerController	controller;
 
 	bool					bRobot=false;
