@@ -5,7 +5,8 @@ using Google.Protobuf;
 
 public class Player {
 	//networking
-	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
+	public delegate void	MessageHandler(IMessage msg);
+	public delegate void	ProtobufHandler(pb_msg mid,byte[] bytes);
 	public bool				Entered=false;
 	public HttpProxy		http;
 	WSProxy					ws;
@@ -13,8 +14,11 @@ public class Player {
 	bool					connected=false;
 	//ui controller,keep null for robot
 	public PlayerController	controller;
+	public MessageHandler	msgHandler=delegate(IMessage msg){};
 
 	public uint				gameId=0;
+	public uint				pos=0;
+	public game_data_t		gameData=new game_data_t();
 
 	bool					bRobot=false;
 
@@ -33,6 +37,7 @@ public class Player {
 		ws.onClose+=onClose;
 		ws.onError+=onError;
 		ws.onMessage+=onMessage;
+		if(bRobot)msgHandler+=PlayerAIController.onMessage;
 	}
 
 	public void Connect(uint id=0){
@@ -56,6 +61,20 @@ public class Player {
 		ws.Send<T>(mid,msg);
 	}
 		
+	public IEnumerator JoinGame(uint id){
+		Connect(id);
+		while(!Entered)yield return null;
+		
+		MsgCNJoin msgJ=new MsgCNJoin();
+		msgJ.Mid=pb_msg.MsgCnJoin;
+		msgJ.GameId=gameId;
+		
+		Send<MsgCNJoin>(msgJ.Mid,msgJ);
+		Debug.Log("join game by id "+gameId);
+		
+		while(msgNCJoin==null)yield return null;
+	}
+
 	public void onOpen(string error){
 		if(!connected){
 			connected=true;
@@ -132,7 +151,9 @@ public class Player {
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			Debug.Log("start game");
 			if(msgStart.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
+				pos=msgStart.Pos;
+				gameData.Hands.AddRange(msgStart.Hands);
+				if(!bRobot)Loom.QueueOnMainThread(delegate{
 					if(Main.Instance.gameController!=null)
 						Main.Instance.StartCoroutine(Main.Instance.gameController.OnMsgStart(msgStart));
 				});

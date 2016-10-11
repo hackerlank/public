@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 using Proto3;
@@ -11,7 +11,7 @@ public class WSProxy {
 	public event Handler		onOpen=delegate(string error){};
 	public event Handler		onClose=delegate(string error){};
 	public event Handler		onError=delegate(string error){};
-	public event Player.MessageHandler onMessage=delegate(pb_msg mid,byte[] bytes){};
+	public event Player.ProtobufHandler onMessage=delegate(pb_msg mid,byte[] bytes){};
 
 	WebSocketSharp.WebSocket socket;
 

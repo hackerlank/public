@@ -9,6 +9,8 @@ public class CreatePanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 	[HideInInspector]
 	public GameIcon	Icon;
+
+	int nRobots=0;
 	
 	public void OnCreate(){
 		StartCoroutine(createCo());
@@ -26,9 +28,10 @@ public class CreatePanel : MonoBehaviour {
 		Main.Instance.MainPlayer.Connect();
 		while(!Main.Instance.MainPlayer.Entered)yield return null;
 
+		nRobots=4;
 		var opRobot=new key_value();
 		opRobot.Ikey=pb_enum.OptionRobot;
-		opRobot.Ivalue=4;
+		opRobot.Ivalue=(uint)nRobots;
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
 		opRound.Ivalue=Main.Instance.Round;
@@ -48,16 +51,7 @@ public class CreatePanel : MonoBehaviour {
 
 	IEnumerator joinCo(){
 		Utils.Load<GameKeyPopup>(gameObject.transform.parent);
-		while(!Main.Instance.MainPlayer.Entered)yield return null;
-
-		MsgCNJoin msgJ=new MsgCNJoin();
-		msgJ.Mid=pb_msg.MsgCnJoin;
-		msgJ.GameId=Main.Instance.MainPlayer.gameId;
-		
-		Main.Instance.MainPlayer.Send<MsgCNJoin>(msgJ.Mid,msgJ);
-		Debug.Log("join game by id "+Main.Instance.MainPlayer.gameId);
-
-		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
+		yield return StartCoroutine(Main.Instance.MainPlayer.JoinGame(Main.Instance.MainPlayer.gameId));
 		if(Icon==null){
 			Icon=new GameIcon();
 			Icon.GameId=Main.Instance.MainPlayer.msgNCJoin.Game;
@@ -66,6 +60,16 @@ public class CreatePanel : MonoBehaviour {
 	}
 
 	void createGame(){
+		if(nRobots>0){
+			//add robots demand
+			Main.Instance.players.Add(Main.Instance.MainPlayer);
+			for(int i=0;i<nRobots;++i){
+				var robot=new Player(true);
+				Main.Instance.players.Add(robot);
+				StartCoroutine(robot.JoinGame(Main.Instance.MainPlayer.gameId));
+			}
+		}
+
 		System.Action<Component> handler=delegate(Component obj){
 			Destroy(gameObject);
 			if(LobbyPanel.Instance!=null)
