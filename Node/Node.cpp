@@ -48,8 +48,8 @@ std::shared_ptr<Game> Node::createGame(int key,proto3::MsgCNCreate& msg){
     return gameptr;
 }
 
-Game* Node::findGame(game_id_t id){
-    return games.count(id)>0?games[id].get():nullptr;
+std::shared_ptr<Game> Node::findGame(game_id_t id){
+    return games.count(id)>0?games[id]:std::shared_ptr<Game>();
 }
 
 void Node::removeGame(game_id_t id){

@@ -88,9 +88,10 @@ void Player::on_read(PBHelper& pb){
             MsgNCJoin omsg;
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
-                if(auto game=Node::sNode->findGame(gid)){
-                    auto rule=game->rule;
-                    if(!rule->Ready(*game)){
+                if(auto gameptr=Node::sNode->findGame(gid)){
+                    auto rule=gameptr->rule;
+                    if(!rule->Ready(*gameptr)){
+                        game=gameptr;
                         game->players.push_back(shared_from_this());
                         ready=true;
                         pos=game->players.size()-1;

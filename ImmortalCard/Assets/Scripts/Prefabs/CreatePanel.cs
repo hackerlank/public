@@ -10,7 +10,7 @@ public class CreatePanel : MonoBehaviour {
 	[HideInInspector]
 	public GameIcon	Icon;
 
-	int nRobots=0;
+	uint nRobots=0;
 	
 	public void OnCreate(){
 		StartCoroutine(createCo());
@@ -31,7 +31,7 @@ public class CreatePanel : MonoBehaviour {
 		nRobots=4;
 		var opRobot=new key_value();
 		opRobot.Ikey=pb_enum.OptionRobot;
-		opRobot.Ivalue=(uint)nRobots;
+		opRobot.Ivalue=0;//nRobots;
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
 		opRound.Ivalue=Main.Instance.Round;
@@ -60,16 +60,6 @@ public class CreatePanel : MonoBehaviour {
 	}
 
 	void createGame(){
-		if(nRobots>0){
-			//add robots demand
-			Main.Instance.players.Add(Main.Instance.MainPlayer);
-			for(int i=0;i<nRobots;++i){
-				var robot=new Player(true);
-				Main.Instance.players.Add(robot);
-				StartCoroutine(robot.JoinGame(Main.Instance.MainPlayer.gameId));
-			}
-		}
-
 		System.Action<Component> handler=delegate(Component obj){
 			Destroy(gameObject);
 			if(LobbyPanel.Instance!=null)
@@ -85,6 +75,17 @@ public class CreatePanel : MonoBehaviour {
 		default:
 			DoudeZhuPanel.Create(handler);
 			break;
+		}
+
+		if(nRobots>0){
+			//add robots demand
+			var MP=Main.Instance.gameController.Rule.MaxPlayer;
+			if(nRobots>=MP)nRobots=MP-1;
+			for(uint i=0;i<nRobots;++i){
+				var robot=new Player(true);
+				Main.Instance.players.Add(robot);
+				Main.Instance.StartCoroutine(robot.JoinGame(Main.Instance.MainPlayer.msgNCCreate.GameId));
+			}
 		}
 	}
 }

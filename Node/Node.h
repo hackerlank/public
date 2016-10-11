@@ -21,7 +21,7 @@ public:
     void            registerRule(std::shared_ptr<GameRule>);
     
     std::shared_ptr<Game>   createGame(int,proto3::MsgCNCreate&);
-    Game*           findGame(game_id_t);
+    std::shared_ptr<Game>   findGame(game_id_t);
     void            removeGame(game_id_t);
     
     static Node*    sNode;
