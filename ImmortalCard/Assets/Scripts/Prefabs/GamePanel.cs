@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using Proto3;
+using Google.Protobuf;
 
 public abstract class GamePanel : MonoBehaviour,GameController {
 	public Card[]		BottomCards;
@@ -81,6 +82,32 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	// ----------------------------------------------
 	// messages
 	// ----------------------------------------------
+	public void onMessage(Player player,IMessage msg){
+		Loom.QueueOnMainThread(delegate{
+			if(msg is MsgNCStart){
+				var msgStart=msg as MsgNCStart;
+				StartCoroutine(OnMsgStart(msgStart));
+			}else if(msg is MsgNCDiscard){
+				var msgDiscard=msg as MsgNCDiscard;
+				StartCoroutine(OnMsgDiscard(msgDiscard));
+			}else if(msg is MsgNCMeld){
+				var msgMeld=msg as MsgNCMeld;
+				OnMsgMeld(msgMeld);
+			}else if(msg is MsgNCDraw){
+				var msgDraw=msg as MsgNCDraw;
+				OnMsgDraw(msgDraw);
+			}else if(msg is MsgNCSettle){
+				var msgSettle=msg as MsgNCSettle;
+				OnMsgSettle(msgSettle);
+			}else if(msg is MsgNCFinish){
+				var msgFinish=msg as MsgNCFinish;
+				OnMsgFinish(msgFinish);
+			}else if(msg is MsgNCDismissSync){
+			}else if(msg is MsgNCDismissAck){
+			}
+		});
+	}
+	
 	public IEnumerator OnMsgStart(MsgNCStart msg){
 		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;

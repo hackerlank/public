@@ -2,7 +2,7 @@
 using System.Collections;
 using Proto3;
 
-public interface GameController {
+public interface GameController:PlayerController{
 	//message handler
 	IEnumerator	OnMsgStart(MsgNCStart msg);
 	IEnumerator	OnMsgDiscard(MsgNCDiscard msg);

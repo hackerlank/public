@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Proto3;
 using Google.Protobuf;
 
@@ -14,6 +15,7 @@ public class Player {
 	bool					connected=false;
 	//ui controller,keep null for robot
 	//public PlayerController	controller;
+	public List<PlayerController>	controllers=new List<PlayerController>();
 	public MessageHandler	msgHandler=delegate(Player player,IMessage msg){};
 
 	public uint				gameId=0;
@@ -207,6 +209,9 @@ public class Player {
 		default:
 			break;
 		}
-		if(msg!=null)msgHandler.Invoke(this,msg);
+		if(msg!=null){
+			msgHandler.Invoke(this,msg);
+			foreach(var ctrl in controllers)ctrl.onMessage(this,msg);
+		}
 	}
 }

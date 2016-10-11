@@ -3,8 +3,8 @@ using System.Collections;
 using Proto3;
 using Google.Protobuf;
 
-public class MahjongAIController {
-	static public void onMessage(Player player,IMessage msg){
+public class MahjongAIController:PlayerController{
+	public void onMessage(Player player,IMessage msg){
 		if(Main.Instance.gameController==null)return;
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		Loom.QueueOnMainThread(delegate{

@@ -67,19 +67,19 @@ public class CreatePanel : MonoBehaviour {
 				Destroy(LobbyPanel.Instance.gameObject);
 		};
 
-		Player.MessageHandler aiController=null;
+		PlayerController ai=null;
 		switch(Icon.GameId){
 		case pb_enum.GameMj:
 			MahJongPanel.Create(handler);
-			aiController=MahjongAIController.onMessage;
+			ai=new MahjongAIController();
 			break;
 		case pb_enum.GameDdz:
 		default:
 			DoudeZhuPanel.Create(handler);
-			aiController=DoudeZhuAIController.onMessage;
+			ai=new DoudeZhuAIController();
 			break;
 		}
-		Main.Instance.MainPlayer.msgHandler+=PlayerController.onMessage;
+		Main.Instance.MainPlayer.controllers.Add(Main.Instance.gameController);
 
 		if(nRobots>0){
 			//add robots demand
@@ -87,7 +87,7 @@ public class CreatePanel : MonoBehaviour {
 			if(nRobots>=MP)nRobots=MP-1;
 			for(uint i=0;i<nRobots;++i){
 				var robot=new Player(true);
-				robot.msgHandler+=aiController;
+				robot.controllers.Add(ai);
 				Main.Instance.players.Add(robot);
 				Main.Instance.StartCoroutine(robot.JoinGame(Main.Instance.MainPlayer.msgNCCreate.GameId));
 			}
