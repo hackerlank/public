@@ -6,23 +6,19 @@ using Google.Protobuf;
 
 public class Player {
 	//networking
-	public delegate void	MessageHandler(Player player,IMessage msg);
-	public delegate void	ProtobufHandler(pb_msg mid,byte[] bytes);
+	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
 	public bool				Entered=false;
 	public HttpProxy		http;
 	WSProxy					ws;
 
 	bool					connected=false;
-	//ui controller,keep null for robot
-	//public PlayerController	controller;
-	public List<PlayerController>	controllers=new List<PlayerController>();
-	public MessageHandler	msgHandler=delegate(Player player,IMessage msg){};
+	bool					bRobot=false;
 
+	public List<PlayerController>	controllers=new List<PlayerController>();
 	public uint				gameId=0;
 	public uint				pos=0;
 	public game_data_t		gameData=new game_data_t();
 
-	bool					bRobot=false;
 
 	public MsgNCCreate	msgNCCreate;
 	public MsgNCJoin	msgNCJoin;
@@ -209,9 +205,7 @@ public class Player {
 		default:
 			break;
 		}
-		if(msg!=null){
-			msgHandler.Invoke(this,msg);
+		if(msg!=null)
 			foreach(var ctrl in controllers)ctrl.onMessage(this,msg);
-		}
 	}
 }
