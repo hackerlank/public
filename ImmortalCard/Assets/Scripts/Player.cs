@@ -13,7 +13,7 @@ public class Player {
 
 	bool					connected=false;
 	//ui controller,keep null for robot
-	public PlayerController	controller;
+	//public PlayerController	controller;
 	public MessageHandler	msgHandler=delegate(Player player,IMessage msg){};
 
 	public uint				gameId=0;
@@ -37,7 +37,6 @@ public class Player {
 		ws.onClose+=onClose;
 		ws.onError+=onError;
 		ws.onMessage+=onMessage;
-		if(bRobot)msgHandler+=PlayerAIController.onMessage;
 	}
 
 	public void Connect(uint id=0){

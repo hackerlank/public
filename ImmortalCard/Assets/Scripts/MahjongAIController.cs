@@ -3,7 +3,7 @@ using System.Collections;
 using Proto3;
 using Google.Protobuf;
 
-public class PlayerAIController {
+public class MahjongAIController {
 	static public void onMessage(Player player,IMessage msg){
 		if(Main.Instance.gameController==null)return;
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;

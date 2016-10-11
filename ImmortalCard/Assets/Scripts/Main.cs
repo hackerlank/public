@@ -20,7 +20,6 @@ public class Main : MonoBehaviour {
 		//Loom
 		gameObject.AddComponent<Loom>();
 		MainPlayer=new Player();
-		MainPlayer.msgHandler+=PlayerController.onMessage;
 		Instance=this;
 	}
 
