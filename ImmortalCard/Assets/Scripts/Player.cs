@@ -6,13 +6,15 @@ using Google.Protobuf;
 public class Player {
 	//networking
 	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
-	public bool				Connected=false;
 	public bool				Entered=false;
 	public HttpProxy		http;
 	WSProxy					ws;
 
+	bool					connected=false;
 	//ui controller,keep null for robot
 	public PlayerController	controller;
+
+	public uint				gameId=0;
 
 	bool					bRobot=false;
 
@@ -33,25 +35,21 @@ public class Player {
 		ws.onMessage+=onMessage;
 	}
 
-	uint gameId=0;
 	public void Connect(uint id=0){
-		gameId=id;
-		var M=(uint)pb_enum.DefMaxNodes;
-		if(id==0){
-			//re-generate key
-			Random.seed=(int)Utils.time;
-			gameId=(uint)(Random.value*M);
-		}
-		if(!Connected){
+		if(!connected){
+			var M=(uint)pb_enum.DefMaxNodes;
+			if(id==0){
+				//re-generate key
+				Random.seed=(int)Utils.time;
+				id=(uint)(Random.value*M);
+			}
+			gameId=id;
+
 			//connect by key
-			var key=gameId%M;
+			var key=id%M;
 			ws.Connect(Configs.ws+"/"+key);
 			Debug.Log("connecting by key "+key);
 		}
-	}
-
-	public void Connect(string uri){
-		ws.Connect(uri);
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
@@ -59,8 +57,8 @@ public class Player {
 	}
 		
 	public void onOpen(string error){
-		if(!Connected){
-			Connected=true;
+		if(!connected){
+			connected=true;
 			/*
 			Loom.QueueOnMainThread(delegate{
 				if(CreatePanel.Instance!=null)
@@ -74,7 +72,7 @@ public class Player {
 		}
 	}
 	public void onClose(string error){
-		Connected=false;
+		connected=false;
 		Debug.Log("OnClose "+error);
 	}
 	public void onError(string error){
