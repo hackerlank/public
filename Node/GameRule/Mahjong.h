@@ -27,7 +27,7 @@ protected:
     virtual int         maxHands();
     virtual int         bottom();
     
-    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
+    //virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
     virtual bool        settle(Game&);
     virtual bool        isGameOver(Game&);
 private:
@@ -36,7 +36,7 @@ private:
     //is game over against cards without AA
     bool                isGameOverWithoutAA(std::vector<unit_id_t>&);
 
-    void                tickRobot(Game&);
+    //void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                verifyDiscard(Game&,proto3::bunch_t&);
     bool                comparePending(Game::pending_t& x,Game::pending_t& y);

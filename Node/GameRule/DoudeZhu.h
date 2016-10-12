@@ -27,11 +27,11 @@ protected:
     virtual int         maxHands();
     virtual int         bottom();
     
-    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
+    //virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
     virtual bool        settle(Game&);
     virtual bool        isGameOver(Game&);
 private:
-    void                tickRobot(Game&);
+    //void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
     void                log(Game&){}

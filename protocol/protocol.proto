@@ -364,8 +364,7 @@ message MsgNCDiscard{
 
 pb_msg mid				=1;
 bunch_t bunch           =2;
-repeated bunch_t hints  =3;
-pb_enum result			=4;
+pb_enum result			=3;
 };
 
 message MsgCNMeld{
@@ -386,7 +385,6 @@ message MsgNCDraw{
 pb_msg mid				=1;
 uint32 pos              =2;
 uint32 card             =3;
-repeated bunch_t hints  =4;
 };
 
 message MsgCNDismissSync{
