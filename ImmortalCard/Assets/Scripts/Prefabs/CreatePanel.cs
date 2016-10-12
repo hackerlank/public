@@ -86,7 +86,7 @@ public class CreatePanel : MonoBehaviour {
 			var MP=Main.Instance.gameController.Rule.MaxPlayer;
 			if(nRobots>=MP)nRobots=MP-1;
 			for(uint i=0;i<nRobots;++i){
-				var robot=new Player(true);
+				var robot=new Player();
 				robot.controllers.Add(ai);
 				Main.Instance.players.Add(robot);
 				Main.Instance.StartCoroutine(robot.JoinGame(Main.Instance.MainPlayer.msgNCCreate.GameId));

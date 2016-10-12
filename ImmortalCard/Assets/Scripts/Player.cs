@@ -12,7 +12,6 @@ public class Player {
 	WSProxy					ws;
 
 	bool					connected=false;
-	bool					bRobot=false;
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
 	public uint				gameId=0;
@@ -23,9 +22,7 @@ public class Player {
 	public MsgNCCreate	msgNCCreate;
 	public MsgNCJoin	msgNCJoin;
 
-	public Player(bool robot=false){
-		bRobot=robot;
-
+	public Player(){
 		//networks
 		http=new HttpProxy();
 		http.onResponse+=onMessage;
@@ -75,12 +72,6 @@ public class Player {
 	public void onOpen(string error){
 		if(!connected){
 			connected=true;
-			/*
-			Loom.QueueOnMainThread(delegate{
-				if(CreatePanel.Instance!=null)
-					CreatePanel.Instance.OnConnected();
-			});
-			*/
 			MsgCNEnter msg=new MsgCNEnter();
 			msg.Mid=pb_msg.MsgCnEnter;
 			msg.Version=100;
@@ -112,11 +103,6 @@ public class Player {
 			Debug.Log("entered");
 			if(msgEnter.Result==pb_enum.Succeess){
 				Entered=true;
-				/*
-				Loom.QueueOnMainThread(delegate{
-					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnMsgCNEnter();
-				});
-				*/
 			}else
 				Debug.LogError("enter error: "+msgEnter.Result);
 			break;
@@ -125,11 +111,6 @@ public class Player {
 			Debug.Log("created game "+msgCreate.GameId);
 			if(msgCreate.Result==pb_enum.Succeess){
 				msgNCCreate=msgCreate;
-				/*
-				Loom.QueueOnMainThread(delegate{
-					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnCreated(msgCreate);
-				});
-				*/
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
 			break;
@@ -138,11 +119,6 @@ public class Player {
 			Debug.Log("joined game");
 			if(msgJoin.Result==pb_enum.Succeess){
 				msgNCJoin=msgJoin;
-				/*
-				Loom.QueueOnMainThread(delegate{
-					if(CreatePanel.Instance!=null)CreatePanel.Instance.OnJoined(msgJoin);
-				});
-				*/
 			}else
 				Debug.LogError("join error: "+msgJoin.Result);
 			break;
@@ -195,16 +171,12 @@ public class Player {
 		case pb_msg.MsgNcDismissSync:
 			MsgNCDismissSync msgDismissSync=MsgNCDismissSync.Parser.ParseFrom(bytes);
 			if(msgDismissSync.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
-				});
 			}else
 				Debug.LogError("dismiss sync error: "+msgDismissSync.Result);
 			break;
 		case pb_msg.MsgNcDismissAck:
 			MsgNCDismissAck msgDismissAck=MsgNCDismissAck.Parser.ParseFrom(bytes);
 			if(msgDismissAck.Result==pb_enum.Succeess){
-				Loom.QueueOnMainThread(delegate{
-				});
 			}else
 				Debug.LogError("dismiss ack error: "+msgDismissAck.Result);
 			break;

@@ -38,6 +38,7 @@ public class WSProxy {
 			var mid=baseMsg.Mid;
 			
 			Loom.QueueOnMainThread(delegate{
+				//dispatch to main thread
 				onMessage.Invoke(mid,body);
 			});
 		};
