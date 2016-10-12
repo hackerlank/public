@@ -55,7 +55,6 @@ void DoudeZhu::Tick(Game& game){
         default:
             break;
     }
-    //if(game.state<Game::State::ST_SETTLE)tickRobot(game);
 }
 
 int DoudeZhu::Type(){
@@ -211,35 +210,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
     }else
         player.send(omsg);
 }
-/*
-void DoudeZhu::tickRobot(Game& game){
-    for(auto robot:game.players){
-        switch (game.state) {
-            case Game::State::ST_WAIT:
-                if(robot->isRobot)OnReady(*robot);
-                break;
-            case Game::State::ST_DISCARD:
-                if(game.token==robot->pos&&robot->isRobot){
-                    if(game.delay--<0){
-                        //KEYE_LOG("tick robot %d\n",robot->pos);
 
-                        MsgCNDiscard msg;
-                        google::protobuf::RepeatedField<proto3::bunch_t> bunches;
-                        if(hint(bunches,game,robot->pos,*msg.mutable_bunch()))
-                            msg.mutable_bunch()->CopyFrom(bunches.Get(0));
-                        else
-                            msg.mutable_bunch()->set_type(pb_enum::OP_PASS);
-                        OnDiscard(*robot,msg);
-                        game.delay=0;
-                    }
-                }
-                break;
-            default:
-                break;
-        }
-    }
-}
-*/
 bool DoudeZhu::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
@@ -280,7 +251,7 @@ bool DoudeZhu::isGameOver(Game& game){
     }
     return false;
 }
-/*
+
 bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
     //C(17,8) = 24310; C(17,2) = 136
     auto& hands=game.players[pos]->gameData.hands();
@@ -412,7 +383,7 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
         return false;
     }
 }
-*/
+
 pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     //sort cards
     std::vector<uint32> ids(bunch.pawns().begin(),bunch.pawns().end());

@@ -94,6 +94,16 @@ public class MahJongPanel : GamePanel {
 		OnCall();
 	}
 
+	List<bunch_t> _hints=null;
+	override protected void discard(MsgNCDiscard msg){
+		//show hints
+		if(msg.Bunch.Pawns.Count>0){
+			var card=msg.Bunch.Pawns[0];
+			if(!showHints(card,false))
+				pass(card);
+		}
+	}
+
 	override protected void draw(uint id,uint pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
@@ -102,9 +112,60 @@ public class MahJongPanel : GamePanel {
 			card.state=Card.State.ST_DISCARD;
 			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
 		});
+
+		//show hints
+		if(!showHints(id,true))
+			pass(id);
+	}
+
+	bool showHints(uint card,bool bDraw){
+		var player=Main.Instance.MainPlayer;
+		var hands=new uint[player.gameData.Hands.Count];
+		player.gameData.Hands.CopyTo(hands,0);
+
+		var bunch=new bunch_t();
+		bunch.Pos=(bDraw?player.pos:player.pos+1);
+		bunch.Type=pb_enum.BunchA;
+
+		_hints=Rule.Hint(player,hands,bunch);
+
+		//show/hide buttons
+		//GameObject[] btns=new GameObject[]{BtnHint,BtnDiscard};
+		//foreach(var btn in btns)btn.SetActive(false);
+		foreach(var b in _hints){
+			switch(b.Type){
+			case pb_enum.BunchAa:
+				break;
+			case pb_enum.BunchAaa:
+				break;
+			case pb_enum.BunchAaaa:
+				break;
+			default:
+				break;
+			}
+		}
+
+		return _hints.Count>0;
+	}
+
+	void pass(uint card){
+		//pass discard or draw
+		var player=Main.Instance.MainPlayer;
+		var omsgMeld=new MsgCNMeld();
+		omsgMeld.Mid=pb_msg.MsgCnMeld;
+		
+		bunch_t bunch=new bunch_t();
+		bunch.Pos=player.pos;
+		bunch.Pawns.Add(card);
+		bunch.Type=pb_enum.OpPass;
+		omsgMeld.Bunch=bunch;
+		
+		player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
 	}
 	
 	override protected void meld(bunch_t bunch){
+		_hints=null;
+
 		var from=_token;
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
@@ -172,22 +233,10 @@ public class MahJongPanel : GamePanel {
 
 	public void OnCall(){
 		//set default color
-		int key=20;
-		int I=0;
-		int[] count=new int[3];
-		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
-		foreach(var card in hands)count[card.Value/1000-1]++;
-		for(int i=0;i<3;++i){
-			if(key>count[i]){
-				key=count[i];
-				I=i;
-			}
-		}
-		key=1000*(I+1)+1;
-
+		var key=MahJongRule.FindDefaultColor(Main.Instance.MainPlayer);
 		var msg=new MsgCNEngage();
 		msg.Mid=pb_msg.MsgCnEngage;
-		msg.Key=(uint)key;
+		msg.Key=key;
 		Main.Instance.MainPlayer.Send<MsgCNEngage>(msg.Mid,msg);
 		Debug.Log("Set default card "+key.ToString());
 	}
@@ -196,34 +245,54 @@ public class MahJongPanel : GamePanel {
 	}
 	
 	public void OnAAA(){
-		MsgCNMeld msg=new MsgCNMeld();
-		msg.Mid=pb_msg.MsgCnMeld;
-		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=_pos;
-		msg.Bunch.Type=pb_enum.BunchAaa;
-		if(_hints.Count>0)
-			msg.Bunch.MergeFrom(_hints[0]);
-		Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+		if(_hints!=null&&_hints.Count>0){
+			foreach(var hint in _hints){
+				if(hint.Type==pb_enum.BunchAaa){
+					MsgCNMeld msg=new MsgCNMeld();
+					msg.Mid=pb_msg.MsgCnMeld;
+					msg.Bunch=new bunch_t();
+					msg.Bunch.Pos=_pos;
+					msg.Bunch.Type=hint.Type;
+					msg.Bunch.MergeFrom(hint);
+					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+					break;
+				}
+			}
+		}
 	}
 	
 	public void OnAAAA(){
-		MsgCNMeld msg=new MsgCNMeld();
-		msg.Mid=pb_msg.MsgCnMeld;
-		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=_pos;
-		msg.Bunch.Type=pb_enum.BunchAaaa;
-		if(_hints.Count>0)
-			msg.Bunch.MergeFrom(_hints[0]);
-		Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+		if(_hints!=null&&_hints.Count>0){
+			foreach(var hint in _hints){
+				if(hint.Type==pb_enum.BunchAaaa){
+					MsgCNMeld msg=new MsgCNMeld();
+					msg.Mid=pb_msg.MsgCnMeld;
+					msg.Bunch=new bunch_t();
+					msg.Bunch.Pos=_pos;
+					msg.Bunch.Type=hint.Type;
+					msg.Bunch.MergeFrom(hint);
+					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+					break;
+				}
+			}
+		}
 	}
 	
 	public void OnWin(){
-		MsgCNMeld msg=new MsgCNMeld();
-		msg.Mid=pb_msg.MsgCnMeld;
-		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=_pos;
-		msg.Bunch.Type=pb_enum.BunchWin;
-		Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+		if(_hints!=null&&_hints.Count>0){
+			foreach(var hint in _hints){
+				if(hint.Type==pb_enum.BunchWin){
+					MsgCNMeld msg=new MsgCNMeld();
+					msg.Mid=pb_msg.MsgCnMeld;
+					msg.Bunch=new bunch_t();
+					msg.Bunch.Pos=_pos;
+					msg.Bunch.Type=hint.Type;
+					msg.Bunch.MergeFrom(hint);
+					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+					break;
+				}
+			}
+		}
 	}
 	
 	override public void OnPass(){
@@ -232,8 +301,6 @@ public class MahJongPanel : GamePanel {
 		msg.Bunch=new bunch_t();
 		msg.Bunch.Pos=_pos;
 		msg.Bunch.Type=pb_enum.OpPass;
-		if(_hints.Count>0)
-			msg.Bunch.MergeFrom(_hints[0]);
 		Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	

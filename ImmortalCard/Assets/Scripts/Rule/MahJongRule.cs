@@ -34,7 +34,7 @@ public class MahJongRule: GameRule {
 	}
 
 	public override List<bunch_t> Hint(Player player,uint[] hands,bunch_t src_bunch){
-		//for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
+		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
 		if(player==null||hands==null||src_bunch==null||hands.Length<=0)
 			return hints;
@@ -48,13 +48,11 @@ public class MahJongRule: GameRule {
 		var A=id;
 
 		//default color check
-		/*
-		if(A/1000==player.gameData.selected_card()){
+		if(A/1000==player.gameData.SelectedCard){
 			Debug.Log("hint default color,pos="+pos);
 			return hints;
 		}
-		*/
-		
+
 		//game over
 		List<bunch_t> output=new List<bunch_t>();
 		if(isGameOver(player,id,output)){
@@ -92,7 +90,8 @@ public class MahJongRule: GameRule {
 				bunch.Pawns.Add(id);
 				hints.Add(bunch);
 			}
-		}else/* if(game.pileMap.find(id)!=game.pileMap.end())*/{
+		}else if(src_bunch.Pos==pos){
+			//BUNCH_AAAA, only for self
 			foreach(var melt in player.gameData.Bunch){
 				if(melt.Type==pb_enum.BunchAaa){
 					var C=melt.Pawns[0];
@@ -194,5 +193,20 @@ public class MahJongRule: GameRule {
 	
 	public override uint inverseTransformValue(uint val){
 		return val;
+	}
+
+	public static uint FindDefaultColor(Player player){
+		int key=20;
+		int I=0;
+		int[] count=new int[3];
+		foreach(var card in player.gameData.Hands)count[card/1000-1]++;
+		for(int i=0;i<3;++i){
+			if(key>count[i]){
+				key=count[i];
+				I=i;
+			}
+		}
+		key=1000*(I+1)+1;
+		return (uint)key;
 	}
 }

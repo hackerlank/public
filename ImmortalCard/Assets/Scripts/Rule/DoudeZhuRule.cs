@@ -94,7 +94,7 @@ public class DoudeZhuRule: GameRule {
 							case pb_enum.BunchAaa:    idx=3;break;
 							case pb_enum.BunchAa:     idx=2;break;
 							case pb_enum.BunchA:
-							default:                    idx=1;break;
+							default:                  idx=1;break;
 							}
 							
 							for(int j=idx;j<5;++j){

@@ -62,9 +62,44 @@ public class DoudeZhuPanel : GamePanel {
 		return check;
 	}
 
-	override protected void discard(uint pos){
+	override protected void discard(MsgNCDiscard msg){
 		//set to next after discard
+		uint pos=msg.Bunch.Pos;
 		changeToken(pos+1);
+		_hints=null;
+		_nhints=0;
+	}
+
+	int _nhints=0;
+	List<bunch_t> _hints=null;
+	override protected void showHints(){
+		var player=Main.Instance.MainPlayer;
+		if(_hints==null){
+			bunch_t bunch=null;
+			if(Rule.Historical.Count<=0){
+				bunch=new bunch_t();
+				bunch.Pos=player.pos;
+				bunch.Type=pb_enum.OpPass;
+			}else{
+				bunch=Rule.Historical[Rule.Historical.Count-1];
+				if(bunch.Type==pb_enum.OpPass&&Rule.Historical.Count>=2)
+					bunch=Rule.Historical[Rule.Historical.Count-2];
+			}
+			var hands=new uint[player.gameData.Hands.Count];
+			player.gameData.Hands.CopyTo(hands,0);
+			_hints=Rule.Hint(player,hands,bunch);
+		}
+
+		if(_hints.Count>0){
+			var hints=_hints[_nhints];
+			foreach(Transform ch in HandAreas[player.pos].transform){
+				var card=ch.gameObject.GetComponent<Card>();
+				if(card!=null)foreach(var id in hints.Pawns)
+					if(card.Value==id)
+						card.Tap();
+			}
+			_nhints=(_nhints+1)%_hints.Count;
+		}
 	}
 
 	// ----------------------------------------------

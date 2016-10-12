@@ -21,7 +21,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	protected uint			_pos,_token,_banker;
 	protected List<Card>	_selection=new List<Card>();
-	protected List<bunch_t>	_hints=new List<bunch_t>();
 
 	public MsgNCFinish	Summary=null;
 	// ----------------------------------------------
@@ -44,23 +43,9 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		StartCoroutine(Discard());
 	}
 	
-	//int _nhints=0;
 	public void OnHint(){
 		deselectAll();
-		/*
-		if(_hints==null)genHints();
-
-		if(_hints!=null&&_hints.Count>0){
-			var hints=_hints[_nhints];
-			foreach(Transform ch in HandArea.transform){
-				var card=ch.gameObject.GetComponent<Card>();
-				if(card!=null)foreach(var id in hints)
-					if(card.Value.Id==id)
-						card.Tap();
-			}
-			_nhints=(_nhints+1)%_hints.Count;
-		}
-		*/
+		showHints();
 	}
 	
 	virtual public void OnPass(){
@@ -230,7 +215,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			var nCards=int.Parse(nHandCards[pos].text)-1;
 			nHandCards[pos].text=nCards.ToString();
 		}
-		discard(pos);
+		discard(msg);
 		Debug.Log(str);
 	}
 	
@@ -304,9 +289,10 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 
 	virtual protected void start(){}
-	virtual protected void discard(uint pos){}
+	virtual protected void discard(MsgNCDiscard msg){}
 	virtual protected void draw(uint card,uint pos){}
 	virtual protected void meld(bunch_t bunch){}
+	virtual protected void showHints(){}
 	virtual protected void sortHands(){}
 
 	protected void deselectAll(){
