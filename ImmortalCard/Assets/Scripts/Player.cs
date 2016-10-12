@@ -95,6 +95,7 @@ public class Player {
 		Debug.Log("OnError: "+error);
 	}
 	public void onMessage(pb_msg mid,byte[] bytes){
+		//receive and handle logic which PlayerController indenpendent
 		//Debug.Log("OnMessage "+mid);
 		IMessage msg=null;
 		switch(mid){
@@ -157,6 +158,11 @@ public class Player {
 		case pb_msg.MsgNcDiscard:
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(msgDiscard.Result==pb_enum.Succeess){
+				var hist=Main.Instance.gameController.Rule.Historical;
+				if(hist.Count<=0||hist[hist.Count-1].Pos!=msgDiscard.Bunch.Pos){
+					Debug.Log("add historical "+Player.bunch2str(msgDiscard.Bunch));
+					hist.Add(msgDiscard.Bunch);
+				}
 				msg=msgDiscard;
 			}else
 				Debug.LogError("discard error: "+msgDiscard.Result);
@@ -207,5 +213,18 @@ public class Player {
 		}
 		if(msg!=null)
 			foreach(var ctrl in controllers)ctrl.onMessage(this,msg);
+	}
+
+	public static string bunch2str(bunch_t bunch){
+		string str="ops="+bunch.Type+",pos="+bunch.Pos;
+		if(bunch.Pawns.Count<=0)
+			str+=",empty";
+		else{
+			str+=",cards(";
+			foreach(var card in bunch.Pawns)
+				str+=card+",";
+			str+=")";
+		}
+		return str;
 	}
 }

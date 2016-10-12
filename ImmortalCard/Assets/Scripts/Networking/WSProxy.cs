@@ -37,7 +37,9 @@ public class WSProxy {
 			MsgBase baseMsg=MsgBase.Parser.ParseFrom(body);
 			var mid=baseMsg.Mid;
 			
-			onMessage.Invoke(mid,body);
+			Loom.QueueOnMainThread(delegate{
+				onMessage.Invoke(mid,body);
+			});
 		};
 		socket.Connect();
 	}

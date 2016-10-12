@@ -22,7 +22,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	protected uint			_pos,_token,_banker;
 	protected List<Card>	_selection=new List<Card>();
 	protected List<bunch_t>	_hints=new List<bunch_t>();
-	protected List<bunch_t>	_historical=new List<bunch_t>();
 
 	public MsgNCFinish	Summary=null;
 	// ----------------------------------------------
@@ -114,7 +113,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		_pos=msg.Pos;
 		changeToken(msg.Pos);
 		_banker=msg.Banker;
-		_historical.Clear();
+		Rule.Historical.Clear();
 		_selection.Clear();
 		/* position transform
 		*	  (O)
@@ -227,7 +226,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			var nCards=int.Parse(nHandCards[pos].text)-1;
 			nHandCards[pos].text=nCards.ToString();
 		}
-		_historical.Add(msg.Bunch);
 		discard(pos);
 		Debug.Log(str);
 	}

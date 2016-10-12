@@ -35,11 +35,12 @@ public class DoudeZhuPanel : GamePanel {
 				Debug.Log("Discard invalid card");
 				break;
 			}
-			check=_historical.Count<1;
+
+			check=Rule.Historical.Count<1;
 			if(!check){
-				var hist=_historical[_historical.Count-1];
-				if(hist.Type==pb_enum.OpPass&&_historical.Count>=2)
-					hist=_historical[_historical.Count-2];
+				var hist=Rule.Historical[Rule.Historical.Count-1];
+				if(hist.Type==pb_enum.OpPass&&Rule.Historical.Count>=2)
+					hist=Rule.Historical[Rule.Historical.Count-2];
 				if(hist.Type==pb_enum.OpPass)
 					check=true;
 				else{
