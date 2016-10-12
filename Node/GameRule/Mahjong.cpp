@@ -152,6 +152,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
 
         game->pendingMeld.clear();
         omsg.mutable_bunch()->set_pos(player.pos);
+        
         //hints
         for(int i=0;i<MaxPlayer();++i){
             auto p=game->players[i];

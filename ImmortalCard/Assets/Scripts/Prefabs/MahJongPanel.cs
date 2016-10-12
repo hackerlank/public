@@ -150,44 +150,6 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 	
-	//List<uint[]> _hints=null;
-	override protected void genHints(){
-		//_hints=null;
-		//_nhints=0;
-		var M=HandAreas[0].childCount;
-		var N=DiscardAreas[2].childCount;
-		if(N>0&&M>0){
-			uint[] hands=new uint[M];
-			uint[] ids=new uint[N];
-			int i=0;
-			foreach(Transform ch in HandAreas[0].transform){
-				var card=ch.gameObject.GetComponent<Card>();
-				if(card!=null)hands[i++]=card.Value;
-			}
-			i=0;
-			foreach(Transform ch in DiscardAreas[2].transform){
-				var card=ch.gameObject.GetComponent<Card>();
-				if(card!=null)ids[i++]=card.Value;
-			}
-			
-			//_hints=Main.Instance.gameRule.hint(hands,ids);
-		}
-	}
-
-	override protected void showHints(){
-		foreach(var bunch in _hints){
-			switch(bunch.Type){
-			case pb_enum.BunchAaa:
-				break;
-			case pb_enum.BunchAaaa:
-				break;
-			case pb_enum.BunchWin:
-				break;
-			default:
-				break;
-			}
-		}
-	}
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
@@ -261,8 +223,6 @@ public class MahJongPanel : GamePanel {
 		msg.Bunch=new bunch_t();
 		msg.Bunch.Pos=_pos;
 		msg.Bunch.Type=pb_enum.BunchWin;
-		if(_hints.Count>0)
-			msg.Bunch.MergeFrom(_hints[0]);
 		Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	

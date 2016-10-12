@@ -33,6 +33,139 @@ public class DoudeZhuRule: GameRule {
 			Hands[1].Add(Pile[i]);
 	}
 
+	public override List<bunch_t> Hint(Player player,uint[] hands,bunch_t src_bunch){
+		var hints=new List<bunch_t>();
+		if(hands!=null&&src_bunch!=null&&hands.Length>0){
+			var H=Historical.Count;
+			if(H<=0){
+				var b=new bunch_t();
+				b.Type=pb_enum.BunchA;
+				b.Pos=src_bunch.Pos+1;
+				b.Pawns.Add(hands[0]);
+				hints.Add(b);
+			}else{
+				bunch_t hist=Historical[H-1];
+				if(hist.Type==pb_enum.OpPass&&H>1)
+					hist=Historical[H-2];
+				var type=(pb_enum)hist.Type;
+				Debug.Log("Hint by "+Player.bunch2str(hist));
+				if(type==pb_enum.OpPass){
+					var b=new bunch_t();
+					b.Type=pb_enum.BunchA;
+					b.Pos=src_bunch.Pos+1;
+					b.Pawns.Add(hands[0]);
+					hints.Add(b);
+				}else if(hist.Pawns.Count>0){
+					List<uint> cards=new List<uint>(hands);					//cards vector
+					List<uint>[] sortByVal=new List<uint>[28];				//redundant vector
+					for(int i=0;i<28;++i)sortByVal[i]=new List<uint>();
+					foreach(var card in cards)sortByVal[card%100].Add(card);
+					List<List<uint>>[] sortByWidth=new List<List<uint>>[5];	//null,A,AA,AAA,AAAA
+					for(int i=0;i<5;++i)sortByWidth[i]=new List<List<uint>>();
+					foreach(var sorted in sortByVal)sortByWidth[sorted.Count].Add(sorted);
+					
+					var histCard=hist.Pawns[0];
+					if(type==pb_enum.BunchAbc){
+						//make a queue without duplicated
+						cards.Clear();
+						foreach(var v in sortByVal)if(v.Count>0&&v[0]%100>histCard%100)cards.Add(v[0]);
+						if(cards.Count>0){
+							int len=(int)hist.Pawns.Count;
+							int y=(int)cards.Count-len;
+							for(int i=0;i<y;++i){
+								bunch_t bunch_=new bunch_t();
+								for(int j=i,jj=i+len;j!=jj;++j)bunch_.Pawns.Add(cards[j]);
+								var bt=verifyBunch(bunch_);
+								if(bt==type&&compareBunch(bunch_,hist)){
+									bunch_.Pos=src_bunch.Pos+1;
+									hints.Add(bunch_);
+								}
+							}
+						}
+					}else{
+						switch(hist.Type){
+						case pb_enum.BunchA:
+						case pb_enum.BunchAa:
+						case pb_enum.BunchAaa:
+						case pb_enum.BunchAaaa:{
+							int idx=1;
+							switch(hist.Type){
+							case pb_enum.BunchAaaa:   idx=4;break;
+							case pb_enum.BunchAaa:    idx=3;break;
+							case pb_enum.BunchAa:     idx=2;break;
+							case pb_enum.BunchA:
+							default:                    idx=1;break;
+							}
+							
+							for(int j=idx;j<5;++j){
+								var vv=sortByWidth[j];
+								foreach(var v in vv){
+									var card=v[0];
+									if(card%100>histCard%100){
+										var b=new bunch_t();
+										b.Type=hist.Type;
+										b.Pos=src_bunch.Pos+1;
+										foreach(var c in v)b.Pawns.Add(c);
+										hints.Add(b);
+									}
+								}
+							}
+							break;
+						}
+						case pb_enum.BunchAaaab:
+							if(sortByWidth[4].Count>0&&sortByWidth[1].Count>=2){
+								var id0=sortByWidth[1][0][0];
+								var id1=sortByWidth[1][1][0];
+								foreach(var sorted in sortByWidth[4]){
+									bunch_t bunch_=new bunch_t();
+									bunch_.Pawns.Add(id0);
+									bunch_.Pawns.Add(id1);
+									foreach(var card in sorted)bunch_.Pawns.Add(card);
+									var bt=verifyBunch(bunch_);
+									if(bt==type&&compareBunch(bunch_,hist)){
+										bunch_.Pos=src_bunch.Pos+1;
+										bunch_.Type=hist.Type;
+										hints.Add(bunch_);
+									}
+								}
+							}
+							break;
+						case pb_enum.BunchAaab:
+							if(sortByWidth[3].Count>0&&sortByWidth[1].Count>0){
+								var id=sortByWidth[1][0][0];
+								foreach(var sorted in sortByWidth[3]){
+									bunch_t bunch_=new bunch_t();
+									bunch_.Pawns.Add(id);
+									foreach(var card in sorted)bunch_.Pawns.Add(card);
+									var bt=verifyBunch(bunch_);
+									if(bt==type&&compareBunch(bunch_,hist)){
+										bunch_.Pos=src_bunch.Pos+1;
+										bunch_.Type=hist.Type;
+										hints.Add(bunch_);
+									}
+								}
+							}
+							break;
+						default:
+							break;
+						}//switch
+					}//else if(type==pb_enum.BUNCH_ABC)
+					if(hist.Type!=pb_enum.BunchAaaa&&sortByWidth[4].Count>0){
+						//boom!
+						foreach(var sorted in sortByWidth[4]){
+							bunch_t bunch_=new bunch_t();
+							foreach(var card in sorted)bunch_.Pawns.Add(card);
+							bunch_.Pos=src_bunch.Pos+1;
+							bunch_.Type=pb_enum.BunchAaaa;
+							hints.Add(bunch_);
+						}
+					}
+				}//else if(type==pb_enum.OpPass)
+			}//else if(H<=0)
+		}//if(hands!=null&&src_bunch!=null&&hands.Length>0)
+		return hints;
+	}
+
 	protected override pb_enum verifyBunch(bunch_t bunch){
 		//sort cards
 		List<uint> ids=new List<uint>(bunch.Pawns);

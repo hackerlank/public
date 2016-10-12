@@ -350,7 +350,7 @@ uint32 ante             =4;
 uint32 multiple         =5;
 repeated uint32 hands   =6;
 repeated uint32 bottom  =7;
-repeated uint32 count   =8;
+repeated uint32 count   =8; //hands count
 pb_enum result			=9;
 };
 

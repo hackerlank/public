@@ -8,9 +8,7 @@ public class MahjongAIController:PlayerController{
 		if(Main.Instance.gameController==null)return;
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(msg is MsgNCStart){
-			var msgStart=msg as MsgNCStart;
-			player.pos=msgStart.Pos;
-			player.gameData.Hands.AddRange(msgStart.Hands);
+			//var msgStart=msg as MsgNCStart;
 
 		}else if(msg is MsgNCDiscard){
 			//simplest discard AI

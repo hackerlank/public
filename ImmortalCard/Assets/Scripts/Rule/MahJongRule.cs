@@ -33,6 +33,142 @@ public class MahJongRule: GameRule {
 		*/
 	}
 
+	public override List<bunch_t> Hint(Player player,uint[] hands,bunch_t src_bunch){
+		//for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
+		var hints=new List<bunch_t>();
+		if(player==null||hands==null||src_bunch==null||hands.Length<=0)
+			return hints;
+
+		uint pos=player.pos;
+		if(src_bunch.Pawns.Count!=1){
+			Debug.Log("hint wrong cards len="+src_bunch.Pawns.Count+",pos="+pos);
+			return hints;
+		}
+		var id=src_bunch.Pawns[0];
+		var A=id;
+
+		//default color check
+		/*
+		if(A/1000==player.gameData.selected_card()){
+			Debug.Log("hint default color,pos="+pos);
+			return hints;
+		}
+		*/
+		
+		//game over
+		List<bunch_t> output=new List<bunch_t>();
+		if(isGameOver(player,id,output)){
+			var bunch=new bunch_t();
+			bunch.Pos=pos;
+			bunch.Type=pb_enum.BunchWin;
+			bunch.Pawns.Add(id);
+			hints.Add(bunch);
+		}
+		
+		//select color
+		List<uint> sel=new List<uint>();
+		foreach(var hand in hands){
+			var B=hand;
+			if(B/1000==A/1000&&B%100==A%100)
+				sel.Add(hand);
+		}
+		var len=sel.Count;
+		if(len>=2){
+			if(len>=3){
+				//BUNCH_AAAA
+				var bunch=new bunch_t();
+				bunch.Pos=pos;
+				bunch.Type=pb_enum.BunchAaaa;
+				for(int i=0;i<3;++i)bunch.Pawns.Add(sel[i]);
+				bunch.Pawns.Add(id);
+				hints.Add(bunch);
+			}
+			if(src_bunch.Pos!=pos){
+				//BUNCH_AAA, not for self
+				var bunch=new bunch_t();
+				bunch.Pos=pos;
+				bunch.Type=pb_enum.BunchAaa;
+				for(int i=0;i<2;++i)bunch.Pawns.Add(sel[i]);
+				bunch.Pawns.Add(id);
+				hints.Add(bunch);
+			}
+		}else/* if(game.pileMap.find(id)!=game.pileMap.end())*/{
+			foreach(var melt in player.gameData.Bunch){
+				if(melt.Type==pb_enum.BunchAaa){
+					var C=melt.Pawns[0];
+					if(C/1000==A/1000&&C%100==A%100){
+						//BUNCH_AAAA
+						var bunch=new bunch_t();
+						bunch.Pos=pos;
+						bunch.Type=pb_enum.BunchAaaa;
+						bunch.Pawns.AddRange(melt.Pawns);
+						bunch.Pawns.Add(id);
+						hints.Add(bunch);
+						break;
+					}
+				}
+			}
+		}
+		
+		var count=hints.Count;
+		if(count>0){
+			string str="hint "+count+",pos="+pos+",";
+			foreach(var bunch in hints)
+				str+=Player.bunch2str(bunch);
+			Debug.Log(str);
+		}
+		return hints;
+	}
+
+	bool isGameOver(Player player,uint id,List<bunch_t> output){
+		var hands=player.gameData.Hands;
+		if(hands.Count<2){
+			Debug.Log("isGameOver failed: len="+hands.Count);
+			return false;
+		}
+		List<uint> cards=new List<uint>();
+		cards.AddRange(hands);
+		cards.Add(id);
+		cards.Sort(Main.Instance.gameController.Rule.comparision);
+
+		var len=cards.Count-1;
+		for(int i=0;i!=len;++i){
+			var A=cards[i+0];
+			var B=cards[i+1];
+			if(A/1000==B/1000&&A%100==B%100){
+				List<uint> tmp=new List<uint>();
+				for(int j=0;j!=cards.Count;++j)if(j!=i&&j!=i+1)tmp.Add(cards[j]);
+				if(isGameOverWithoutAA(tmp))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	bool isGameOverWithoutAA(List<uint> cards){
+		var len=cards.Count;
+		if(len%3!=0){
+			//Debug.Log("isGameOverWithoutAA failed: len=%lu\n",len);
+			return false;
+		}
+		
+		for(int i=0,ii=len/3;i!=ii;++i){
+			var A=cards[i+0];
+			var B=cards[i+1];
+			var C=cards[i+2];
+			if(A/1000!=B/1000||A/1000!=C/1000){
+				//Debug.Log("isGameOverWithoutAA failed: color\n");
+				return false;
+			}
+			if(!((A%100+1==B%100&&A%100+2==C%100)||(A%100==B%100&&A%100==C%100))){
+				//Debug.Log("isGameOverWithoutAA failed: invalid pattern\n");
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 	protected override pb_enum verifyBunch(bunch_t bunch){
 		var bt=pb_enum.BunchA;
 		return bt;

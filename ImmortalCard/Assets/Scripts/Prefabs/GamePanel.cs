@@ -198,8 +198,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 		var pos=msg.Bunch.Pos;
 		changeToken(pos);
-		_hints.Clear();
-		_hints.AddRange(msg.Hints);
 		string str=pos+" discard ";
 		var cards=new uint[msg.Bunch.Pawns.Count];
 		msg.Bunch.Pawns.CopyTo(cards,0);
@@ -238,10 +236,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	
 	public void OnMsgDraw(MsgNCDraw msg){
 		changeToken(msg.Pos);
-		_hints.Clear();
-		_hints.AddRange(msg.Hints);
-		if(_hints.Count>0)
-			showHints();
 		draw(msg.Card,msg.Pos);
 		Debug.Log(msg.Pos+" draw "+(int)msg.Card);
 	}
@@ -314,9 +308,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	virtual protected void draw(uint card,uint pos){}
 	virtual protected void meld(bunch_t bunch){}
 	virtual protected void sortHands(){}
-
-	virtual protected void genHints(){}
-	virtual protected void showHints(){}
 
 	protected void deselectAll(){
 		var copy=new List<Card>(_selection);

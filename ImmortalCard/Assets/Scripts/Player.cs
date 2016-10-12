@@ -127,6 +127,8 @@ public class Player {
 			Debug.Log("start game");
 			if(msgStart.Result==pb_enum.Succeess){
 				msg=msgStart;
+				pos=msgStart.Pos;
+				gameData.Hands.AddRange(msgStart.Hands);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			break;

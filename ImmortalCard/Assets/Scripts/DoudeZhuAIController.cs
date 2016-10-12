@@ -8,9 +8,7 @@ public class DoudeZhuAIController:PlayerController {
 		if(Main.Instance.gameController==null)return;
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(msg is MsgNCStart){
-			var msgStart=msg as MsgNCStart;
-			player.pos=msgStart.Pos;
-			player.gameData.Hands.AddRange(msgStart.Hands);
+			//var msgStart=msg as MsgNCStart;
 
 		}else if(msg is MsgNCDiscard){
 			//discard AI
@@ -25,7 +23,7 @@ public class DoudeZhuAIController:PlayerController {
 				bunch_t bunch=null;
 				var hands=new uint[player.gameData.Hands.Count];
 				player.gameData.Hands.CopyTo(hands,0);
-				var hints=Main.Instance.gameController.Rule.Hint(hands,msgDiscard.Bunch);
+				var hints=Main.Instance.gameController.Rule.Hint(player,hands,msgDiscard.Bunch);
 				if(hints.Count>0)
 					bunch=hints[0];
 				else{
