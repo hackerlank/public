@@ -28,6 +28,7 @@ const unit_id_t i_invalid=(unit_id_t)-1;
 #include "GameRule.h"
 #include "GameRule/DoudeZhu.h"
 #include "GameRule/Mahjong.h"
+#include "GameRule/Paohuzi.h"
 #include "Node.h"
 
 #endif /* login_fwd_h */
