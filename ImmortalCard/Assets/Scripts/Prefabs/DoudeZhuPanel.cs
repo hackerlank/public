@@ -24,7 +24,7 @@ public class DoudeZhuPanel : GamePanel {
 
 	override public float DiscardScalar{get{return .625f;}}
 
-	override protected bool checkDiscard(Card card=null){
+	override protected bool verifyDiscard(Card card=null){
 		//discard my card
 		var check=false;
 		do{

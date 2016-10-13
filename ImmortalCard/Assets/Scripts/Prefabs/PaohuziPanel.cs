@@ -26,7 +26,7 @@ public class PaohuziPanel : GamePanel {
 	float AbandonScalar{get{return .7f;}}
 	override public float DiscardScalar{get{return 1f;}}
 
-	override protected bool checkDiscard(Card card=null){
+	override protected bool verifyDiscard(Card card=null){
 		//discard my card
 		var check=false;
 		do{

@@ -123,6 +123,14 @@ public class Player {
 			}else
 				Debug.LogError("join error: "+msgJoin.Result);
 			break;
+		case pb_msg.MsgNcEngage:
+			MsgNCEngage msgEngage=MsgNCEngage.Parser.ParseFrom(bytes);
+			if(msgEngage.Result==pb_enum.Succeess){
+				msg=msgEngage;
+			}else
+				Debug.LogError("engage error: "+msgEngage.Result);
+			break;
+			
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){

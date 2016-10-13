@@ -61,6 +61,11 @@ int Mahjong::bottom(){
     return 1;
 }
 
+void Mahjong::deal(Game& game){
+    GameRule::deal(game);
+    for(auto p:game.players)p->engaged=false;
+}
+
 void Mahjong::initCard(Game& game){
     //id: [color-index-value]
     for(int j=1;j<=3;++j){          //Tong,Suo,Wan => 1-3

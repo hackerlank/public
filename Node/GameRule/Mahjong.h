@@ -35,6 +35,7 @@ private:
     bool                isGameOver(Game&,pos_t,unit_id_t,std::vector<proto3::bunch_t>&);
     //is game over against cards without AA
     bool                isGameOverWithoutAA(std::vector<unit_id_t>&);
+    virtual void        deal(Game&);
 
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                verifyDiscard(Game&,proto3::bunch_t&);

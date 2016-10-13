@@ -28,45 +28,6 @@ public class MahJongPanel : GamePanel {
 
 	float AbandonScalar{get{return .7f;}}
 	override public float DiscardScalar{get{return 1f;}}
-
-	override protected bool checkDiscard(Card card=null){
-		//discard my card
-		var check=false;
-		do{
-			var token=_token%maxPlayer;
-			if(token!=_pos){
-				Debug.Log("Discard invalid turn");
-				break;
-			}
-			if(null==card&&_selection.Count<=0){
-				Debug.Log("Discard invalid card");
-				break;
-			}
-			check=Rule.Historical.Count<1;
-			if(!check){
-				var hist=Rule.Historical[Rule.Historical.Count-1];
-				if(hist.Type==pb_enum.OpPass&&Rule.Historical.Count>=2)
-					hist=Rule.Historical[Rule.Historical.Count-2];
-				if(hist.Type==pb_enum.OpPass)
-					check=true;
-				else{
-					bunch_t curr=new bunch_t();
-					curr.Pos=_pos;
-					if(card!=null)
-						curr.Pawns.Add(card.Value);
-					else{
-						foreach(var c in _selection)
-							curr.Pawns.Add(c.Value);
-					}
-					if(Rule.Verify(curr,hist))
-						check=true;
-				}
-			}
-			if(!check)
-				Debug.Log("Discard invalid bunch");
-		}while(false);
-		return check;
-	}
 	
 	public override void TapCard(Card card,bool select=true){
 		var selected=false;
@@ -78,6 +39,7 @@ public class MahJongPanel : GamePanel {
 	override protected void onMsgEngage(MsgNCEngage msg){
 		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 		foreach(var btn in btns)btn.SetActive(false);
+		Main.Instance.MainPlayer.gameData.SelectedCard=msg.Key;
 	}
 
 	override protected void onMsgStart(){

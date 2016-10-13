@@ -167,6 +167,19 @@ public class MahJongRule: GameRule {
 		return true;
 	}
 
+	public override bool verifyDiscard(Player player,int id){
+		var gdata=player.gameData;
+		//huazhu
+		var B=gdata.SelectedCard;
+		var A=id;
+		if(A/1000!=B/1000){
+			foreach(var card in gdata.Hands){
+				if(card/1000==B/1000)
+					return false;
+			}
+		}
+		return true;
+	}
 
 	protected override pb_enum verifyBunch(bunch_t bunch){
 		var bt=pb_enum.BunchA;

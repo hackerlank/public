@@ -236,7 +236,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	abstract public float DiscardScalar{get;}
 	abstract public string CardPrefab{get;}
 	
-	virtual protected bool checkDiscard(Card card=null){return true;}
+	virtual protected bool verifyDiscard(Card card=null){return true;}
 	
 	virtual public void TapCard(Card card,bool select=true){
 		if(select)
@@ -248,7 +248,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	public IEnumerator Discard(Card card=null){
 		//discard my card
-		if(checkDiscard(card)){
+		var id=card.Value;
+		if(Rule.verifyDiscard(Main.Instance.MainPlayer,id)){
 			//remove discards
 			foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 			//discard
@@ -273,6 +274,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			}
 			yield return new WaitForSeconds(Configs.OpsInterval);
 			Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
+		}else{
+			Debug.LogError("Discard error verify failed");
 		}
 	}
 

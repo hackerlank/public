@@ -35,7 +35,7 @@ protected:
     virtual bool        settle(Game&)=0;
     virtual bool        isGameOver(Game&)=0;
     
-    void                deal(Game&);
+    virtual void        deal(Game&);
     void                changeState(Game&,Game::State);
     void                changePos(Game&,pos_t);
 

@@ -42,7 +42,7 @@ void Paohuzi::Tick(Game& game){
 }
 
 int Paohuzi::Type(){
-    return pb_enum::GAME_MJ;
+    return pb_enum::GAME_PHZ;
 }
 
 int Paohuzi::MaxPlayer(){
