@@ -24,15 +24,9 @@ void Mahjong::Tick(Game& game){
             break;
         case Game::State::ST_DISCARD:
             //OnDiscard
-            //if(!game.pendingDiscard||game.pendingDiscard->arrived)
-            //    changeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_MELD:
             //OnMeld
-            break;
-        case Game::State::ST_DRAW:
-            //draw(game);
-            //changeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_SETTLE:
             if(settle(game))
@@ -156,7 +150,6 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
             p->send(omsg);
             p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
-            KEYE_LOG("----OnDiscard send MsgNCDiscard to %d\n",i);
         }
         
         //historic
@@ -315,9 +308,8 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto needDraw=false;
         if(bunch.type()==pb_enum::OP_PASS){
             if(isDraw){
-            //if(game.pileMap.find(card)!=game.pileMap.end()){
                 //draw pass to discard
-                KEYE_LOG("OnMeld pass to discard\n");
+                //KEYE_LOG("OnMeld pass to discard\n");
                 changeState(game,Game::State::ST_DISCARD);
                 //pending discard
                 game.pendingDiscard=std::make_shared<Game::pending_t>();
@@ -342,8 +334,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
         
         //then draw
         if(needDraw){
-            KEYE_LOG("OnMeld pass to draw\n");
-            //changeState(game,Game::State::ST_DRAW);
+            //KEYE_LOG("OnMeld pass to draw\n");
             draw(game);
             changeState(game,Game::State::ST_MELD);
         }
@@ -351,12 +342,6 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
 }
 
 void Mahjong::draw(Game& game){
-    /*
-    if(game.state!=Game::ST_DRAW){
-        KEYE_LOG("draw wrong st=%d\n",game.state);
-        return;
-    }
-    */
     changePos(game,game.token+1);
     auto player=game.players[game.token];
     auto card=game.pile.back();

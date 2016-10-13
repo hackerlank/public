@@ -77,11 +77,14 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 		}else if(msg is MsgNCMeld){
 			var msgMeld=msg as MsgNCMeld;
-			OnMsgMeld(msgMeld);
+			changeToken(msgMeld.Bunch.Pos);
+			onMsgMeld(msgMeld.Bunch);
 
 		}else if(msg is MsgNCDraw){
 			var msgDraw=msg as MsgNCDraw;
-			OnMsgDraw(msgDraw);
+			Debug.Log(msgDraw.Pos+" draw "+(int)msgDraw.Card);
+			changeToken(msgDraw.Pos);
+			onMsgDraw(msgDraw.Card,msgDraw.Pos);
 
 		}else if(msg is MsgNCSettle){
 			var msgSettle=msg as MsgNCSettle;
@@ -171,7 +174,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			Players[_banker].gameTimer.On();
 		Debug.Log(str);
 
-		start();
+		onMsgStart();
 		yield break;
 	}
 
@@ -210,25 +213,15 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			}
 			//yield return new WaitForSeconds(1);
 		}
+		Debug.Log(str);
 		//record
 		if(pos<nHandCards.Length&&nHandCards[pos]!=null){
 			var nCards=int.Parse(nHandCards[pos].text)-1;
 			nHandCards[pos].text=nCards.ToString();
 		}
-		discard(msg);
-		Debug.Log(str);
+		onMsgDiscard(msg);
 	}
 	
-	public void OnMsgDraw(MsgNCDraw msg){
-		Debug.Log(msg.Pos+" draw "+(int)msg.Card);
-		changeToken(msg.Pos);
-		draw(msg.Card,msg.Pos);
-	}
-	public void OnMsgMeld(MsgNCMeld msg){
-		changeToken(msg.Bunch.Pos);
-		meld(msg.Bunch);
-	}
-
 	public void OnMsgSettle(MsgNCSettle msg){
 		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
@@ -287,10 +280,10 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		}
 	}
 
-	virtual protected void start(){}
-	virtual protected void discard(MsgNCDiscard msg){}
-	virtual protected void draw(int card,int pos){}
-	virtual protected void meld(bunch_t bunch){}
+	virtual protected void onMsgStart(){}
+	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
+	virtual protected void onMsgDraw(int card,int pos){}
+	virtual protected void onMsgMeld(bunch_t bunch){}
 	virtual protected void showHints(){}
 	virtual protected void sortHands(){}
 

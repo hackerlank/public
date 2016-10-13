@@ -38,7 +38,7 @@ std::shared_ptr<Game> Node::createGame(int key,proto3::MsgCNCreate& msg){
     std::shared_ptr<Game> gameptr;
     auto rule=gameRules.find(msg.game());
     if(rule!=gameRules.end()&&key>0){
-        auto gid=key*DEF_MAX_GAMES_PER_NODE+_game_index++;
+        auto gid=key*pb_enum::DEF_MAX_GAMES_PER_NODE+_game_index++;
         gameptr=std::make_shared<Game>();
         games[gid]=gameptr;
         gameptr->id=gid;

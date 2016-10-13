@@ -46,7 +46,7 @@ public class MahjongAIController:PlayerController{
 				omsgMeld.Bunch=bunch;
 				
 				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-				Debug.Log(player.pos+" meld "+(hints.Count>0?bunch.Pawns[0]:0)+" after "+msgDiscard.Bunch.Pos+" discard");
+				Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after "+msgDiscard.Bunch.Pos+" discard");
 			}
 
 		}else if(msg is MsgNCMeld){
@@ -77,7 +77,7 @@ public class MahjongAIController:PlayerController{
 				omsgDiscard.Bunch.Pawns.Add(discard);
 				omsgDiscard.Bunch.Type=pb_enum.BunchA;
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-				Debug.Log("----"+player.pos+" discard "+discard+" after self "+(int)msgMeld.Bunch.Type);
+				Debug.Log(player.pos+" discard "+discard+" after self "+(int)msgMeld.Bunch.Type);
 			}
 
 		}else if(msg is MsgNCDraw){
@@ -104,7 +104,7 @@ public class MahjongAIController:PlayerController{
 				omsgMeld.Bunch=bunch;
 				
 				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-				Debug.Log(player.pos+" meld "+(hints.Count>0?bunch.Pawns[0]:0)+" after self draw");
+				Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after self draw");
 			}
 			
 		}else if(msg is MsgNCSettle){

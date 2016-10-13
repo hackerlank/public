@@ -38,7 +38,6 @@ GAME_MJ                 =23;
 OPTION_ROUND            =10;
 OPTION_ANTI             =11;
 OPTION_CATEGORY         =12;
-OPTION_ROBOT            =13;
 
 // game category
 CATEGORY_EASY           =10;

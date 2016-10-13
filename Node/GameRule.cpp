@@ -146,9 +146,6 @@ const char* GameRule::state2str(std::string& str,Game::State st){
         case Game::State::ST_ENGAGE:
             str="ST_ENGAGE";
             break;
-        case Game::State::ST_DRAW:
-            str="ST_DRAW";
-            break;
         case Game::State::ST_DISCARD:
             str="ST_DISCARD";
             break;

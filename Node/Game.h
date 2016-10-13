@@ -17,9 +17,8 @@ public:
         ST_ENGAGE,  //1
         ST_DISCARD,
         ST_MELD,    //3
-        ST_DRAW,
-        ST_SETTLE,  //5
-        ST_END,
+        ST_SETTLE,
+        ST_END,     //5
     };
     struct pending_t{
         //operation in oper queue

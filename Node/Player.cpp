@@ -13,8 +13,7 @@ using namespace proto3;
 Player::Player(keye::svc_handler& sh)
 :pos(-1)
 ,ready(false)
-,engaged(true)
-,isRobot(false){
+,engaged(true){
     spsh=sh();
 }
 
@@ -30,13 +29,9 @@ void Player::on_read(PBHelper& pb){
                 auto key=getKey();
                 auto gameptr=Node::sNode->createGame(key,imsg);
                 if(gameptr){
-                    int irobot=0;
                     int maxRound=1;
                     for(auto kv:imsg.option()){
                         switch (kv.ikey()) {
-                            case pb_enum::OPTION_ROBOT:
-                                irobot=kv.ivalue();
-                                break;
                             case pb_enum::OPTION_ROUND:
                                 maxRound=kv.ivalue();
                                 break;
@@ -55,21 +50,6 @@ void Player::on_read(PBHelper& pb){
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     KEYE_LOG("game created,gid=%zd\n",game->id);
-                    
-                    if(irobot>=game->rule->MaxPlayer())
-                        irobot=game->rule->MaxPlayer()-1;
-                    if(irobot>0){
-                        for(int i=0;i<irobot;++i){
-                            keye::null_svc_handler nullsh;
-                            auto robot=std::make_shared<Player>(nullsh);
-                            robot->game=gameptr;
-                            game->players.push_back(robot);
-                            robot->ready=true;
-                            robot->pos=game->players.size()-1;
-                            robot->isRobot=true;
-                            KEYE_LOG("add robots %d\n",robot->pos);
-                        }
-                    }
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
                     KEYE_LOG("game create failed,no rule %d\n",imsg.game());

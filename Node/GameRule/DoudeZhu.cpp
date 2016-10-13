@@ -42,8 +42,6 @@ void DoudeZhu::Tick(Game& game){
             if(isGameOver(game))
                 changeState(game,Game::State::ST_SETTLE);
             break;
-        case Game::State::ST_MELD:
-            break;
         case Game::State::ST_SETTLE:
             if(settle(game))
                 changeState(game,Game::State::ST_END);

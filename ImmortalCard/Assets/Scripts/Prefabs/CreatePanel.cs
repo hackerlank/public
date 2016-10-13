@@ -29,9 +29,6 @@ public class CreatePanel : MonoBehaviour {
 		while(!Main.Instance.MainPlayer.Entered)yield return null;
 
 		nRobots=4;
-		var opRobot=new key_value();
-		opRobot.Ikey=pb_enum.OptionRobot;
-		opRobot.Ivalue=0;//nRobots;
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
 		opRound.Ivalue=Main.Instance.Round;
@@ -39,11 +36,10 @@ public class CreatePanel : MonoBehaviour {
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;
 		msgC.Game=Icon.GameId;
-		msgC.Option.Add(opRobot);
 		msgC.Option.Add(opRound);
 		
 		Main.Instance.MainPlayer.Send<MsgCNCreate>(msgC.Mid,msgC);
-		Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
+		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
 		
 		while(Main.Instance.MainPlayer.msgNCCreate==null)yield return null;
 		createGame();

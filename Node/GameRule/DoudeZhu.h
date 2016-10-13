@@ -31,7 +31,6 @@ protected:
     virtual bool        settle(Game&);
     virtual bool        isGameOver(Game&);
 private:
-    //void                tickRobot(Game&);
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
     void                log(Game&){}

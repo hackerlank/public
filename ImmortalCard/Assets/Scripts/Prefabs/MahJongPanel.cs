@@ -71,7 +71,7 @@ public class MahJongPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
-	override protected void start(){
+	override protected void onMsgStart(){
 		//transform position
 		var m=maxPlayer-1;
 		var M=_pos;
@@ -95,7 +95,7 @@ public class MahJongPanel : GamePanel {
 	}
 
 	List<bunch_t> _hints=null;
-	override protected void discard(MsgNCDiscard msg){
+	override protected void onMsgDiscard(MsgNCDiscard msg){
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
@@ -106,7 +106,7 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected void draw(int id,int pos){
+	override protected void onMsgDraw(int id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -122,7 +122,7 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected void meld(bunch_t bunch){
+	override protected void onMsgMeld(bunch_t bunch){
 		_hints=null;
 		
 		var from=_token;
@@ -165,6 +165,7 @@ public class MahJongPanel : GamePanel {
 		var bunch=new bunch_t();
 		bunch.Pos=(bDraw?player.pos:player.pos+1);
 		bunch.Type=pb_enum.BunchA;
+		bunch.Pawns.Add(card);
 
 		_hints=Rule.Hint(player,hands,bunch);
 

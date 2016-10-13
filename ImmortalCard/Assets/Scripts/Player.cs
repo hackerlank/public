@@ -34,18 +34,17 @@ public class Player {
 		ws.onMessage+=onMessage;
 	}
 
-	public void Connect(int id=0){
+	public void Connect(int gid=0){
 		if(!connected){
 			var M=(int)pb_enum.DefMaxNodes;
-			if(id==0){
+			if(gid==0){
 				//re-generate key
 				Random.seed=(int)Utils.time;
-				id=(int)(Random.value*M);
+				gid=(int)(Random.value*M)*(int)pb_enum.DefMaxGamesPerNode;
 			}
-			gameId=id;
 
 			//connect by key
-			var key=id%M;
+			var key=gid/(int)pb_enum.DefMaxGamesPerNode;
 			ws.Connect(Configs.ws+"/"+key);
 			Debug.Log("connecting by key "+key);
 		}
@@ -56,7 +55,8 @@ public class Player {
 	}
 		
 	public IEnumerator JoinGame(int id){
-		Connect(id);
+		gameId=id;
+		Connect(gameId);
 		while(!Entered)yield return null;
 		
 		MsgCNJoin msgJ=new MsgCNJoin();
@@ -100,7 +100,7 @@ public class Player {
 			break;
 		case pb_msg.MsgNcEnter:
 			MsgNCEnter msgEnter=MsgNCEnter.Parser.ParseFrom(bytes);
-			Debug.Log("entered");
+			//Debug.Log("entered");
 			if(msgEnter.Result==pb_enum.Succeess){
 				Entered=true;
 			}else
@@ -110,13 +110,14 @@ public class Player {
 			MsgNCCreate msgCreate=MsgNCCreate.Parser.ParseFrom(bytes);
 			Debug.Log("created game "+msgCreate.GameId);
 			if(msgCreate.Result==pb_enum.Succeess){
+				gameId=msgCreate.GameId;
 				msgNCCreate=msgCreate;
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
 			break;
 		case pb_msg.MsgNcJoin:
 			MsgNCJoin msgJoin=MsgNCJoin.Parser.ParseFrom(bytes);
-			Debug.Log("joined game");
+			//Debug.Log("joined game");
 			if(msgJoin.Result==pb_enum.Succeess){
 				msgNCJoin=msgJoin;
 			}else
@@ -128,7 +129,6 @@ public class Player {
 				msg=msgStart;
 				pos=msgStart.Pos;
 				gameData.Hands.AddRange(msgStart.Hands);
-				Debug.Log("start game at "+pos);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			break;
@@ -190,7 +190,7 @@ public class Player {
 	}
 
 	public static string bunch2str(bunch_t bunch){
-		string str="ops="+bunch.Type+",pos="+bunch.Pos;
+		string str="ops="+(int)bunch.Type+",pos="+bunch.Pos;
 		if(bunch.Pawns.Count<=0)
 			str+=",empty";
 		else{
