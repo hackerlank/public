@@ -7,6 +7,8 @@ using Proto3;
 public class MahJongPanel : GamePanel {
 	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
+	public GameObject	BtnA3,BtnA4,BtnWin;
+	public GameObject	BtnTong,BtnTiao,BtnWan;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
@@ -170,7 +172,7 @@ public class MahJongPanel : GamePanel {
 		_hints=Rule.Hint(player,hands,bunch);
 
 		//show/hide buttons
-		//GameObject[] btns=new GameObject[]{BtnHint,BtnDiscard};
+		//GameObject[] btns=new GameObject[]{BtnA3,BtnA4,BtnWin};
 		//foreach(var btn in btns)btn.SetActive(false);
 		foreach(var b in _hints){
 			switch(b.Type){

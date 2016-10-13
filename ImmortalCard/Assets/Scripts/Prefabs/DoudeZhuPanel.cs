@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Proto3;
 
 public class DoudeZhuPanel : GamePanel {
+	public GameObject	BtnHint;
 	public GameObject	BtnCall,BtnDouble;
 
 	// ----------------------------------------------
@@ -76,7 +77,7 @@ public class DoudeZhuPanel : GamePanel {
 
 	int _nhints=0;
 	List<bunch_t> _hints=null;
-	override protected bool showHints(){
+	bool showHints(){
 		var player=Main.Instance.MainPlayer;
 		if(_hints==null){
 			bunch_t bunch=null;
@@ -124,6 +125,11 @@ public class DoudeZhuPanel : GamePanel {
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
 	}
 
+	public void OnHint(){
+		deselectAll();
+		showHints();
+	}
+	
 	public void OnCall(){
 	}
 

@@ -13,7 +13,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public PlayerIcon[]	Players;
 	public Text[]		nHandCards;
 	public Text			Ante,Multiples,Infomation;
-	public GameObject	BtnHint,BtnDiscard,BtnPass,Buttons;
+	public GameObject	BtnDiscard,BtnPass,Buttons;
 
 	protected int		maxPlayer=0;
 	protected int		round=0;
@@ -41,11 +41,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	public void OnDiscard(){
 		StartCoroutine(Discard());
-	}
-	
-	public void OnHint(){
-		deselectAll();
-		showHints();
 	}
 	
 	virtual public void OnPass(){
@@ -284,7 +279,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
 	virtual protected void onMsgDraw(int card,int pos){}
 	virtual protected void onMsgMeld(bunch_t bunch){}
-	virtual protected bool showHints(){return true;}
 	virtual protected void sortHands(){}
 
 	protected void deselectAll(){
