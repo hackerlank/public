@@ -275,7 +275,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 				}
 				_selection.Clear();
 			}
-			yield return new WaitForSeconds(1);
+			yield return new WaitForSeconds(Configs.OpsInterval);
 			Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
 		}
 	}
@@ -284,7 +284,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
 	virtual protected void onMsgDraw(int card,int pos){}
 	virtual protected void onMsgMeld(bunch_t bunch){}
-	virtual protected void showHints(){}
+	virtual protected bool showHints(){return true;}
 	virtual protected void sortHands(){}
 
 	protected void deselectAll(){

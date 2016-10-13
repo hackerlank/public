@@ -5,7 +5,12 @@ using Google.Protobuf;
 
 public class DoudeZhuAIController:PlayerController {
 	public void onMessage(Player player,IMessage msg){
-		if(Main.Instance.gameController==null)return;
+		Main.Instance.StartCoroutine(onMessageCo(player,msg));
+	}
+	
+	IEnumerator onMessageCo(Player player,IMessage msg){
+		if(Main.Instance.gameController==null)yield break;
+
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(msg is MsgNCStart){
 			//var msgStart=msg as MsgNCStart;

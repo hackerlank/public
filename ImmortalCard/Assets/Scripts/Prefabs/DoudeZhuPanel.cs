@@ -68,11 +68,15 @@ public class DoudeZhuPanel : GamePanel {
 		changeToken(pos+1);
 		_hints=null;
 		_nhints=0;
+
+		//auto pass
+		if(_pos==_token&&!showHints())
+			Invoke("OnPass",Configs.OpsInterval);
 	}
 
 	int _nhints=0;
 	List<bunch_t> _hints=null;
-	override protected void showHints(){
+	override protected bool showHints(){
 		var player=Main.Instance.MainPlayer;
 		if(_hints==null){
 			bunch_t bunch=null;
@@ -100,6 +104,7 @@ public class DoudeZhuPanel : GamePanel {
 			}
 			_nhints=(_nhints+1)%_hints.Count;
 		}
+		return _hints.Count>0;
 	}
 
 	// ----------------------------------------------

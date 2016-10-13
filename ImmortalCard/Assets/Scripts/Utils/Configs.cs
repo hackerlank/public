@@ -8,6 +8,8 @@ public class Configs{
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
 		
+	public static float OpsInterval=1f;
+
 	public static void Load(){
 		string file="Config/config.ini";
 		TextAsset text = (TextAsset)Resources.Load(file);

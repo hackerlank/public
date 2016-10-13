@@ -5,7 +5,14 @@ using Google.Protobuf;
 
 public class MahjongAIController:PlayerController{
 	public void onMessage(Player player,IMessage msg){
-		if(Main.Instance.gameController==null)return;
+		Main.Instance.StartCoroutine(onMessageCo(player,msg));
+	}
+
+	IEnumerator onMessageCo(Player player,IMessage msg){
+		if(Main.Instance.gameController==null)yield break;
+
+		yield return new WaitForSeconds(Configs.OpsInterval);
+
 		//var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
@@ -54,7 +61,7 @@ public class MahjongAIController:PlayerController{
 
 			//do nothing if all pass discard,because draw message will come
 			if(msgMeld.Bunch.Pos==-1&&msgMeld.Bunch.Type==pb_enum.OpPass)
-				return;
+				yield break;
 
 			if(player.pos==msgMeld.Bunch.Pos){
 				//remove from hands

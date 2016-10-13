@@ -100,7 +100,7 @@ public class MahJongPanel : GamePanel {
 		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
 			if(!showHints(card,false)){
-				pass(card);
+				StartCoroutine(passCo(card));
 				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 			}
 		}
@@ -117,7 +117,7 @@ public class MahJongPanel : GamePanel {
 
 		//show hints only for MainPlayer
 		if(pos==Main.Instance.MainPlayer.pos&&!showHints(id,true)){
-			pass(id);
+			StartCoroutine(passCo(id));
 			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
 		}
 	}
@@ -188,7 +188,9 @@ public class MahJongPanel : GamePanel {
 		return _hints.Count>0;
 	}
 
-	void pass(int card){
+	IEnumerator passCo(int card){
+		yield return new WaitForSeconds(Configs.OpsInterval);
+
 		//pass discard or draw
 		var player=Main.Instance.MainPlayer;
 		var omsgMeld=new MsgCNMeld();
