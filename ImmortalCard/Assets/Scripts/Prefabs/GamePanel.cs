@@ -16,7 +16,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public GameObject	BtnHint,BtnDiscard,BtnPass,Buttons;
 
 	protected int		maxPlayer=0;
-	protected uint		round=0;
+	protected int		round=0;
 	protected GameRule	rule=null;
 
 	protected int			_pos,_token,_banker;
@@ -142,7 +142,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		if(nHandCards.Length>m)nHandCards[m]=tempN[L];
 
 		//sort
-		var hands=new List<uint>(msg.Hands);
+		var hands=new List<int>(msg.Hands);
 		hands.Sort(Rule.comparision);
 		//deal
 		
@@ -184,7 +184,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		var pos=msg.Bunch.Pos;
 		changeToken(pos);
 		string str=pos+" discard ";
-		var cards=new uint[msg.Bunch.Pawns.Count];
+		var cards=new int[msg.Bunch.Pawns.Count];
 		msg.Bunch.Pawns.CopyTo(cards,0);
 		if(pos==_pos){
 			//adjust by feedback
@@ -241,9 +241,9 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
-	public uint Round{get{return round;}set{round=value;}}
+	public int Round{get{return round;}set{round=value;}}
 	public GameRule Rule{get{return rule;}set{rule=value;}}
-	abstract public string Id2File(uint color,uint value);
+	abstract public string Id2File(int color,int value);
 	abstract public float DiscardScalar{get;}
 	abstract public string CardPrefab{get;}
 	
@@ -289,7 +289,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	virtual protected void start(){}
 	virtual protected void discard(MsgNCDiscard msg){}
-	virtual protected void draw(uint card,int pos){}
+	virtual protected void draw(int card,int pos){}
 	virtual protected void meld(bunch_t bunch){}
 	virtual protected void showHints(){}
 	virtual protected void sortHands(){}
@@ -301,7 +301,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 
 
-	//System.Comparison<uint>
+	//System.Comparison<int>
 	int compare_card(Card x,Card y){
 		return rule.comparision(x.Value,y.Value);
 	}

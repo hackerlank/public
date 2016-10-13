@@ -275,7 +275,7 @@ void key_value::SharedCtor() {
   key_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   value_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ikey_ = 0;
-  ivalue_ = 0u;
+  ivalue_ = 0;
 }
 
 key_value::~key_value() {
@@ -404,12 +404,12 @@ bool key_value::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 ivalue = 4;
+      // optional int32 ivalue = 4;
       case 4: {
         if (tag == 32) {
          parse_ivalue:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &ivalue_)));
 
         } else {
@@ -469,9 +469,9 @@ void key_value::SerializeWithCachedSizes(
       3, this->ikey(), output);
   }
 
-  // optional uint32 ivalue = 4;
+  // optional int32 ivalue = 4;
   if (this->ivalue() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->ivalue(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->ivalue(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.key_value)
@@ -501,10 +501,10 @@ int key_value::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->ikey());
   }
 
-  // optional uint32 ivalue = 4;
+  // optional int32 ivalue = 4;
   if (this->ivalue() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->ivalue());
   }
 
@@ -674,15 +674,15 @@ void key_value::clear_ikey() {
   // @@protoc_insertion_point(field_set:proto3.key_value.ikey)
 }
 
-// optional uint32 ivalue = 4;
+// optional int32 ivalue = 4;
 void key_value::clear_ivalue() {
-  ivalue_ = 0u;
+  ivalue_ = 0;
 }
- ::google::protobuf::uint32 key_value::ivalue() const {
+ ::google::protobuf::int32 key_value::ivalue() const {
   // @@protoc_insertion_point(field_get:proto3.key_value.ivalue)
   return ivalue_;
 }
- void key_value::set_ivalue(::google::protobuf::uint32 value) {
+ void key_value::set_ivalue(::google::protobuf::int32 value) {
   
   ivalue_ = value;
   // @@protoc_insertion_point(field_set:proto3.key_value.ivalue)
@@ -727,13 +727,13 @@ void user_t::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  flag_ = 0u;
+  flag_ = 0;
   dev_type_ = 0;
   account_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   pswd_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  gender_ = 0u;
-  age_ = 0u;
+  gender_ = 0;
+  age_ = 0;
   udid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -837,12 +837,12 @@ bool user_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 flag = 2;
+      // optional int32 flag = 2;
       case 2: {
         if (tag == 16) {
          parse_flag:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &flag_)));
 
         } else {
@@ -919,12 +919,12 @@ bool user_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 gender = 7;
+      // optional int32 gender = 7;
       case 7: {
         if (tag == 56) {
          parse_gender:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &gender_)));
 
         } else {
@@ -934,12 +934,12 @@ bool user_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 age = 8;
+      // optional int32 age = 8;
       case 8: {
         if (tag == 64) {
          parse_age:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &age_)));
 
         } else {
@@ -1000,9 +1000,9 @@ void user_t::SerializeWithCachedSizes(
       1, this->uid(), output);
   }
 
-  // optional uint32 flag = 2;
+  // optional int32 flag = 2;
   if (this->flag() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->flag(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->flag(), output);
   }
 
   // optional .proto3.pb_enum dev_type = 3;
@@ -1041,14 +1041,14 @@ void user_t::SerializeWithCachedSizes(
       6, this->pswd(), output);
   }
 
-  // optional uint32 gender = 7;
+  // optional int32 gender = 7;
   if (this->gender() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(7, this->gender(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->gender(), output);
   }
 
-  // optional uint32 age = 8;
+  // optional int32 age = 8;
   if (this->age() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->age(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->age(), output);
   }
 
   // optional string udid = 9;
@@ -1075,10 +1075,10 @@ int user_t::ByteSize() const {
         this->uid());
   }
 
-  // optional uint32 flag = 2;
+  // optional int32 flag = 2;
   if (this->flag() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->flag());
   }
 
@@ -1109,17 +1109,17 @@ int user_t::ByteSize() const {
         this->pswd());
   }
 
-  // optional uint32 gender = 7;
+  // optional int32 gender = 7;
   if (this->gender() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->gender());
   }
 
-  // optional uint32 age = 8;
+  // optional int32 age = 8;
   if (this->age() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->age());
   }
 
@@ -1261,15 +1261,15 @@ void user_t::clear_uid() {
   // @@protoc_insertion_point(field_set_allocated:proto3.user_t.uid)
 }
 
-// optional uint32 flag = 2;
+// optional int32 flag = 2;
 void user_t::clear_flag() {
-  flag_ = 0u;
+  flag_ = 0;
 }
- ::google::protobuf::uint32 user_t::flag() const {
+ ::google::protobuf::int32 user_t::flag() const {
   // @@protoc_insertion_point(field_get:proto3.user_t.flag)
   return flag_;
 }
- void user_t::set_flag(::google::protobuf::uint32 value) {
+ void user_t::set_flag(::google::protobuf::int32 value) {
   
   flag_ = value;
   // @@protoc_insertion_point(field_set:proto3.user_t.flag)
@@ -1421,29 +1421,29 @@ void user_t::clear_pswd() {
   // @@protoc_insertion_point(field_set_allocated:proto3.user_t.pswd)
 }
 
-// optional uint32 gender = 7;
+// optional int32 gender = 7;
 void user_t::clear_gender() {
-  gender_ = 0u;
+  gender_ = 0;
 }
- ::google::protobuf::uint32 user_t::gender() const {
+ ::google::protobuf::int32 user_t::gender() const {
   // @@protoc_insertion_point(field_get:proto3.user_t.gender)
   return gender_;
 }
- void user_t::set_gender(::google::protobuf::uint32 value) {
+ void user_t::set_gender(::google::protobuf::int32 value) {
   
   gender_ = value;
   // @@protoc_insertion_point(field_set:proto3.user_t.gender)
 }
 
-// optional uint32 age = 8;
+// optional int32 age = 8;
 void user_t::clear_age() {
-  age_ = 0u;
+  age_ = 0;
 }
- ::google::protobuf::uint32 user_t::age() const {
+ ::google::protobuf::int32 user_t::age() const {
   // @@protoc_insertion_point(field_get:proto3.user_t.age)
   return age_;
 }
- void user_t::set_age(::google::protobuf::uint32 value) {
+ void user_t::set_age(::google::protobuf::int32 value) {
   
   age_ = value;
   // @@protoc_insertion_point(field_set:proto3.user_t.age)
@@ -1532,10 +1532,10 @@ void player_t::SharedCtor() {
   _cached_size_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   pid_ = 0u;
-  level_ = 0u;
-  xp_ = 0u;
-  currency_ = 0u;
-  energy_ = 0u;
+  level_ = 0;
+  xp_ = 0;
+  currency_ = 0;
+  energy_ = 0;
 }
 
 player_t::~player_t() {
@@ -1597,7 +1597,7 @@ void player_t::Clear() {
 
   ZR_(pid_, currency_);
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  energy_ = 0u;
+  energy_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1647,12 +1647,12 @@ bool player_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 level = 3;
+      // optional int32 level = 3;
       case 3: {
         if (tag == 24) {
          parse_level:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &level_)));
 
         } else {
@@ -1662,12 +1662,12 @@ bool player_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 xp = 4;
+      // optional int32 xp = 4;
       case 4: {
         if (tag == 32) {
          parse_xp:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &xp_)));
 
         } else {
@@ -1677,12 +1677,12 @@ bool player_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 currency = 5;
+      // optional int32 currency = 5;
       case 5: {
         if (tag == 40) {
          parse_currency:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &currency_)));
 
         } else {
@@ -1692,12 +1692,12 @@ bool player_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 energy = 6;
+      // optional int32 energy = 6;
       case 6: {
         if (tag == 48) {
          parse_energy:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &energy_)));
 
         } else {
@@ -1779,24 +1779,24 @@ void player_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->pid(), output);
   }
 
-  // optional uint32 level = 3;
+  // optional int32 level = 3;
   if (this->level() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->level(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->level(), output);
   }
 
-  // optional uint32 xp = 4;
+  // optional int32 xp = 4;
   if (this->xp() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->xp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->xp(), output);
   }
 
-  // optional uint32 currency = 5;
+  // optional int32 currency = 5;
   if (this->currency() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->currency(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->currency(), output);
   }
 
-  // optional uint32 energy = 6;
+  // optional int32 energy = 6;
   if (this->energy() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->energy(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->energy(), output);
   }
 
   // repeated .proto3.win_t wins = 7;
@@ -1832,31 +1832,31 @@ int player_t::ByteSize() const {
         this->pid());
   }
 
-  // optional uint32 level = 3;
+  // optional int32 level = 3;
   if (this->level() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->level());
   }
 
-  // optional uint32 xp = 4;
+  // optional int32 xp = 4;
   if (this->xp() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->xp());
   }
 
-  // optional uint32 currency = 5;
+  // optional int32 currency = 5;
   if (this->currency() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->currency());
   }
 
-  // optional uint32 energy = 6;
+  // optional int32 energy = 6;
   if (this->energy() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->energy());
   }
 
@@ -2009,57 +2009,57 @@ void player_t::clear_pid() {
   // @@protoc_insertion_point(field_set:proto3.player_t.pid)
 }
 
-// optional uint32 level = 3;
+// optional int32 level = 3;
 void player_t::clear_level() {
-  level_ = 0u;
+  level_ = 0;
 }
- ::google::protobuf::uint32 player_t::level() const {
+ ::google::protobuf::int32 player_t::level() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.level)
   return level_;
 }
- void player_t::set_level(::google::protobuf::uint32 value) {
+ void player_t::set_level(::google::protobuf::int32 value) {
   
   level_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.level)
 }
 
-// optional uint32 xp = 4;
+// optional int32 xp = 4;
 void player_t::clear_xp() {
-  xp_ = 0u;
+  xp_ = 0;
 }
- ::google::protobuf::uint32 player_t::xp() const {
+ ::google::protobuf::int32 player_t::xp() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.xp)
   return xp_;
 }
- void player_t::set_xp(::google::protobuf::uint32 value) {
+ void player_t::set_xp(::google::protobuf::int32 value) {
   
   xp_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.xp)
 }
 
-// optional uint32 currency = 5;
+// optional int32 currency = 5;
 void player_t::clear_currency() {
-  currency_ = 0u;
+  currency_ = 0;
 }
- ::google::protobuf::uint32 player_t::currency() const {
+ ::google::protobuf::int32 player_t::currency() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.currency)
   return currency_;
 }
- void player_t::set_currency(::google::protobuf::uint32 value) {
+ void player_t::set_currency(::google::protobuf::int32 value) {
   
   currency_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.currency)
 }
 
-// optional uint32 energy = 6;
+// optional int32 energy = 6;
 void player_t::clear_energy() {
-  energy_ = 0u;
+  energy_ = 0;
 }
- ::google::protobuf::uint32 player_t::energy() const {
+ ::google::protobuf::int32 player_t::energy() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.energy)
   return energy_;
 }
- void player_t::set_energy(::google::protobuf::uint32 value) {
+ void player_t::set_energy(::google::protobuf::int32 value) {
   
   energy_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.energy)
@@ -2161,11 +2161,11 @@ void win_t::SharedCtor() {
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  gid_ = 0u;
-  win_ = 0u;
-  lose_ = 0u;
-  draw_ = 0u;
-  score_ = 0u;
+  gid_ = 0;
+  win_ = 0;
+  lose_ = 0;
+  draw_ = 0;
+  score_ = 0;
 }
 
 win_t::~win_t() {
@@ -2259,12 +2259,12 @@ bool win_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 gid = 2;
+      // optional int32 gid = 2;
       case 2: {
         if (tag == 16) {
          parse_gid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &gid_)));
 
         } else {
@@ -2274,12 +2274,12 @@ bool win_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 win = 3;
+      // optional int32 win = 3;
       case 3: {
         if (tag == 24) {
          parse_win:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &win_)));
 
         } else {
@@ -2289,12 +2289,12 @@ bool win_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 lose = 4;
+      // optional int32 lose = 4;
       case 4: {
         if (tag == 32) {
          parse_lose:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &lose_)));
 
         } else {
@@ -2304,12 +2304,12 @@ bool win_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 draw = 5;
+      // optional int32 draw = 5;
       case 5: {
         if (tag == 40) {
          parse_draw:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &draw_)));
 
         } else {
@@ -2319,12 +2319,12 @@ bool win_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 score = 6;
+      // optional int32 score = 6;
       case 6: {
         if (tag == 48) {
          parse_score:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &score_)));
 
         } else {
@@ -2368,29 +2368,29 @@ void win_t::SerializeWithCachedSizes(
       1, this->uid(), output);
   }
 
-  // optional uint32 gid = 2;
+  // optional int32 gid = 2;
   if (this->gid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->gid(), output);
   }
 
-  // optional uint32 win = 3;
+  // optional int32 win = 3;
   if (this->win() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->win(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->win(), output);
   }
 
-  // optional uint32 lose = 4;
+  // optional int32 lose = 4;
   if (this->lose() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->lose(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->lose(), output);
   }
 
-  // optional uint32 draw = 5;
+  // optional int32 draw = 5;
   if (this->draw() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->draw(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->draw(), output);
   }
 
-  // optional uint32 score = 6;
+  // optional int32 score = 6;
   if (this->score() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->score(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->score(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.win_t)
@@ -2407,38 +2407,38 @@ int win_t::ByteSize() const {
         this->uid());
   }
 
-  // optional uint32 gid = 2;
+  // optional int32 gid = 2;
   if (this->gid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->gid());
   }
 
-  // optional uint32 win = 3;
+  // optional int32 win = 3;
   if (this->win() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->win());
   }
 
-  // optional uint32 lose = 4;
+  // optional int32 lose = 4;
   if (this->lose() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->lose());
   }
 
-  // optional uint32 draw = 5;
+  // optional int32 draw = 5;
   if (this->draw() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->draw());
   }
 
-  // optional uint32 score = 6;
+  // optional int32 score = 6;
   if (this->score() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->score());
   }
 
@@ -2557,71 +2557,71 @@ void win_t::clear_uid() {
   // @@protoc_insertion_point(field_set_allocated:proto3.win_t.uid)
 }
 
-// optional uint32 gid = 2;
+// optional int32 gid = 2;
 void win_t::clear_gid() {
-  gid_ = 0u;
+  gid_ = 0;
 }
- ::google::protobuf::uint32 win_t::gid() const {
+ ::google::protobuf::int32 win_t::gid() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.gid)
   return gid_;
 }
- void win_t::set_gid(::google::protobuf::uint32 value) {
+ void win_t::set_gid(::google::protobuf::int32 value) {
   
   gid_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.gid)
 }
 
-// optional uint32 win = 3;
+// optional int32 win = 3;
 void win_t::clear_win() {
-  win_ = 0u;
+  win_ = 0;
 }
- ::google::protobuf::uint32 win_t::win() const {
+ ::google::protobuf::int32 win_t::win() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.win)
   return win_;
 }
- void win_t::set_win(::google::protobuf::uint32 value) {
+ void win_t::set_win(::google::protobuf::int32 value) {
   
   win_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.win)
 }
 
-// optional uint32 lose = 4;
+// optional int32 lose = 4;
 void win_t::clear_lose() {
-  lose_ = 0u;
+  lose_ = 0;
 }
- ::google::protobuf::uint32 win_t::lose() const {
+ ::google::protobuf::int32 win_t::lose() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.lose)
   return lose_;
 }
- void win_t::set_lose(::google::protobuf::uint32 value) {
+ void win_t::set_lose(::google::protobuf::int32 value) {
   
   lose_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.lose)
 }
 
-// optional uint32 draw = 5;
+// optional int32 draw = 5;
 void win_t::clear_draw() {
-  draw_ = 0u;
+  draw_ = 0;
 }
- ::google::protobuf::uint32 win_t::draw() const {
+ ::google::protobuf::int32 win_t::draw() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.draw)
   return draw_;
 }
- void win_t::set_draw(::google::protobuf::uint32 value) {
+ void win_t::set_draw(::google::protobuf::int32 value) {
   
   draw_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.draw)
 }
 
-// optional uint32 score = 6;
+// optional int32 score = 6;
 void win_t::clear_score() {
-  score_ = 0u;
+  score_ = 0;
 }
- ::google::protobuf::uint32 win_t::score() const {
+ ::google::protobuf::int32 win_t::score() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.score)
   return score_;
 }
- void win_t::set_score(::google::protobuf::uint32 value) {
+ void win_t::set_score(::google::protobuf::int32 value) {
   
   score_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.score)
@@ -2661,7 +2661,7 @@ void achv_t::SharedCtor() {
   _cached_size_ = 0;
   type_ = 0;
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  value_ = 0u;
+  value_ = 0;
 }
 
 achv_t::~achv_t() {
@@ -2771,12 +2771,12 @@ bool achv_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 value = 3;
+      // optional int32 value = 3;
       case 3: {
         if (tag == 24) {
          parse_value:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &value_)));
 
         } else {
@@ -2826,9 +2826,9 @@ void achv_t::SerializeWithCachedSizes(
       2, this->name(), output);
   }
 
-  // optional uint32 value = 3;
+  // optional int32 value = 3;
   if (this->value() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->value(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->value(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.achv_t)
@@ -2851,10 +2851,10 @@ int achv_t::ByteSize() const {
         this->name());
   }
 
-  // optional uint32 value = 3;
+  // optional int32 value = 3;
   if (this->value() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->value());
   }
 
@@ -2975,15 +2975,15 @@ void achv_t::clear_name() {
   // @@protoc_insertion_point(field_set_allocated:proto3.achv_t.name)
 }
 
-// optional uint32 value = 3;
+// optional int32 value = 3;
 void achv_t::clear_value() {
-  value_ = 0u;
+  value_ = 0;
 }
- ::google::protobuf::uint32 achv_t::value() const {
+ ::google::protobuf::int32 achv_t::value() const {
   // @@protoc_insertion_point(field_get:proto3.achv_t.value)
   return value_;
 }
- void achv_t::set_value(::google::protobuf::uint32 value) {
+ void achv_t::set_value(::google::protobuf::int32 value) {
   
   value_ = value;
   // @@protoc_insertion_point(field_set:proto3.achv_t.value)
@@ -3029,14 +3029,14 @@ void game_t::SharedCtor() {
     _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  id_ = 0u;
+  id_ = 0;
   version_ = 0u;
   ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   port_ = 0u;
-  occupied_ = 0u;
-  capacity_ = 0u;
+  occupied_ = 0;
+  capacity_ = 0;
   desc_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = 0u;
+  status_ = 0;
   openning_time_ = 0u;
   maintain_start_ = 0u;
   maintain_end_ = 0u;
@@ -3122,11 +3122,11 @@ bool game_t::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional uint32 id = 1;
+      // optional int32 id = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &id_)));
 
         } else {
@@ -3183,12 +3183,12 @@ bool game_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 occupied = 5;
+      // optional int32 occupied = 5;
       case 5: {
         if (tag == 40) {
          parse_occupied:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &occupied_)));
 
         } else {
@@ -3198,12 +3198,12 @@ bool game_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 capacity = 6;
+      // optional int32 capacity = 6;
       case 6: {
         if (tag == 48) {
          parse_capacity:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &capacity_)));
 
         } else {
@@ -3230,12 +3230,12 @@ bool game_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 status = 8;
+      // optional int32 status = 8;
       case 8: {
         if (tag == 64) {
          parse_status:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &status_)));
 
         } else {
@@ -3314,9 +3314,9 @@ failure:
 void game_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.game_t)
-  // optional uint32 id = 1;
+  // optional int32 id = 1;
   if (this->id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
   }
 
   // optional uint32 version = 2;
@@ -3339,14 +3339,14 @@ void game_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->port(), output);
   }
 
-  // optional uint32 occupied = 5;
+  // optional int32 occupied = 5;
   if (this->occupied() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->occupied(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->occupied(), output);
   }
 
-  // optional uint32 capacity = 6;
+  // optional int32 capacity = 6;
   if (this->capacity() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->capacity(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->capacity(), output);
   }
 
   // optional string desc = 7;
@@ -3359,9 +3359,9 @@ void game_t::SerializeWithCachedSizes(
       7, this->desc(), output);
   }
 
-  // optional uint32 status = 8;
+  // optional int32 status = 8;
   if (this->status() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->status(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->status(), output);
   }
 
   // optional uint32 openning_time = 9;
@@ -3386,10 +3386,10 @@ int game_t::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.game_t)
   int total_size = 0;
 
-  // optional uint32 id = 1;
+  // optional int32 id = 1;
   if (this->id() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->id());
   }
 
@@ -3414,17 +3414,17 @@ int game_t::ByteSize() const {
         this->port());
   }
 
-  // optional uint32 occupied = 5;
+  // optional int32 occupied = 5;
   if (this->occupied() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->occupied());
   }
 
-  // optional uint32 capacity = 6;
+  // optional int32 capacity = 6;
   if (this->capacity() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->capacity());
   }
 
@@ -3435,10 +3435,10 @@ int game_t::ByteSize() const {
         this->desc());
   }
 
-  // optional uint32 status = 8;
+  // optional int32 status = 8;
   if (this->status() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->status());
   }
 
@@ -3555,15 +3555,15 @@ void game_t::InternalSwap(game_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // game_t
 
-// optional uint32 id = 1;
+// optional int32 id = 1;
 void game_t::clear_id() {
-  id_ = 0u;
+  id_ = 0;
 }
- ::google::protobuf::uint32 game_t::id() const {
+ ::google::protobuf::int32 game_t::id() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.id)
   return id_;
 }
- void game_t::set_id(::google::protobuf::uint32 value) {
+ void game_t::set_id(::google::protobuf::int32 value) {
   
   id_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.id)
@@ -3641,29 +3641,29 @@ void game_t::clear_port() {
   // @@protoc_insertion_point(field_set:proto3.game_t.port)
 }
 
-// optional uint32 occupied = 5;
+// optional int32 occupied = 5;
 void game_t::clear_occupied() {
-  occupied_ = 0u;
+  occupied_ = 0;
 }
- ::google::protobuf::uint32 game_t::occupied() const {
+ ::google::protobuf::int32 game_t::occupied() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.occupied)
   return occupied_;
 }
- void game_t::set_occupied(::google::protobuf::uint32 value) {
+ void game_t::set_occupied(::google::protobuf::int32 value) {
   
   occupied_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.occupied)
 }
 
-// optional uint32 capacity = 6;
+// optional int32 capacity = 6;
 void game_t::clear_capacity() {
-  capacity_ = 0u;
+  capacity_ = 0;
 }
- ::google::protobuf::uint32 game_t::capacity() const {
+ ::google::protobuf::int32 game_t::capacity() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.capacity)
   return capacity_;
 }
- void game_t::set_capacity(::google::protobuf::uint32 value) {
+ void game_t::set_capacity(::google::protobuf::int32 value) {
   
   capacity_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.capacity)
@@ -3713,15 +3713,15 @@ void game_t::clear_desc() {
   // @@protoc_insertion_point(field_set_allocated:proto3.game_t.desc)
 }
 
-// optional uint32 status = 8;
+// optional int32 status = 8;
 void game_t::clear_status() {
-  status_ = 0u;
+  status_ = 0;
 }
- ::google::protobuf::uint32 game_t::status() const {
+ ::google::protobuf::int32 game_t::status() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.status)
   return status_;
 }
- void game_t::set_status(::google::protobuf::uint32 value) {
+ void game_t::set_status(::google::protobuf::int32 value) {
   
   status_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.status)
@@ -3813,11 +3813,11 @@ void lobby_t::SharedCtor() {
   version_ = 0u;
   ip_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   port_ = 0u;
-  occupied_ = 0u;
-  capacity_ = 0u;
+  occupied_ = 0;
+  capacity_ = 0;
   desc_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   bulletin_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = 0u;
+  status_ = 0;
   maintain_start_ = 0u;
   maintain_end_ = 0u;
   time_zone_ = 0u;
@@ -3886,7 +3886,7 @@ void lobby_t::Clear() {
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   desc_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   bulletin_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  status_ = 0u;
+  status_ = 0;
   ZR_(maintain_start_, time_zone_);
 
 #undef ZR_HELPER_
@@ -3951,12 +3951,12 @@ bool lobby_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 occupied = 4;
+      // optional int32 occupied = 4;
       case 4: {
         if (tag == 32) {
          parse_occupied:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &occupied_)));
 
         } else {
@@ -3966,12 +3966,12 @@ bool lobby_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 capacity = 5;
+      // optional int32 capacity = 5;
       case 5: {
         if (tag == 40) {
          parse_capacity:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &capacity_)));
 
         } else {
@@ -4015,12 +4015,12 @@ bool lobby_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 status = 8;
+      // optional int32 status = 8;
       case 8: {
         if (tag == 64) {
          parse_status:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &status_)));
 
         } else {
@@ -4136,14 +4136,14 @@ void lobby_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->port(), output);
   }
 
-  // optional uint32 occupied = 4;
+  // optional int32 occupied = 4;
   if (this->occupied() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->occupied(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->occupied(), output);
   }
 
-  // optional uint32 capacity = 5;
+  // optional int32 capacity = 5;
   if (this->capacity() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->capacity(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->capacity(), output);
   }
 
   // optional string desc = 6;
@@ -4166,9 +4166,9 @@ void lobby_t::SerializeWithCachedSizes(
       7, this->bulletin(), output);
   }
 
-  // optional uint32 status = 8;
+  // optional int32 status = 8;
   if (this->status() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(8, this->status(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->status(), output);
   }
 
   // optional uint32 maintain_start = 9;
@@ -4220,17 +4220,17 @@ int lobby_t::ByteSize() const {
         this->port());
   }
 
-  // optional uint32 occupied = 4;
+  // optional int32 occupied = 4;
   if (this->occupied() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->occupied());
   }
 
-  // optional uint32 capacity = 5;
+  // optional int32 capacity = 5;
   if (this->capacity() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->capacity());
   }
 
@@ -4248,10 +4248,10 @@ int lobby_t::ByteSize() const {
         this->bulletin());
   }
 
-  // optional uint32 status = 8;
+  // optional int32 status = 8;
   if (this->status() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->status());
   }
 
@@ -4451,29 +4451,29 @@ void lobby_t::clear_port() {
   // @@protoc_insertion_point(field_set:proto3.lobby_t.port)
 }
 
-// optional uint32 occupied = 4;
+// optional int32 occupied = 4;
 void lobby_t::clear_occupied() {
-  occupied_ = 0u;
+  occupied_ = 0;
 }
- ::google::protobuf::uint32 lobby_t::occupied() const {
+ ::google::protobuf::int32 lobby_t::occupied() const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.occupied)
   return occupied_;
 }
- void lobby_t::set_occupied(::google::protobuf::uint32 value) {
+ void lobby_t::set_occupied(::google::protobuf::int32 value) {
   
   occupied_ = value;
   // @@protoc_insertion_point(field_set:proto3.lobby_t.occupied)
 }
 
-// optional uint32 capacity = 5;
+// optional int32 capacity = 5;
 void lobby_t::clear_capacity() {
-  capacity_ = 0u;
+  capacity_ = 0;
 }
- ::google::protobuf::uint32 lobby_t::capacity() const {
+ ::google::protobuf::int32 lobby_t::capacity() const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.capacity)
   return capacity_;
 }
- void lobby_t::set_capacity(::google::protobuf::uint32 value) {
+ void lobby_t::set_capacity(::google::protobuf::int32 value) {
   
   capacity_ = value;
   // @@protoc_insertion_point(field_set:proto3.lobby_t.capacity)
@@ -4567,15 +4567,15 @@ void lobby_t::clear_bulletin() {
   // @@protoc_insertion_point(field_set_allocated:proto3.lobby_t.bulletin)
 }
 
-// optional uint32 status = 8;
+// optional int32 status = 8;
 void lobby_t::clear_status() {
-  status_ = 0u;
+  status_ = 0;
 }
- ::google::protobuf::uint32 lobby_t::status() const {
+ ::google::protobuf::int32 lobby_t::status() const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.status)
   return status_;
 }
- void lobby_t::set_status(::google::protobuf::uint32 value) {
+ void lobby_t::set_status(::google::protobuf::int32 value) {
   
   status_ = value;
   // @@protoc_insertion_point(field_set:proto3.lobby_t.status)
@@ -4792,16 +4792,16 @@ bool bunch_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 pawns = 3;
+      // repeated int32 pawns = 3;
       case 3: {
         if (tag == 26) {
          parse_pawns:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_pawns())));
         } else if (tag == 24) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 26, input, this->mutable_pawns())));
         } else {
           goto handle_unusual;
@@ -4845,13 +4845,13 @@ void bunch_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->pos(), output);
   }
 
-  // repeated uint32 pawns = 3;
+  // repeated int32 pawns = 3;
   if (this->pawns_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_pawns_cached_byte_size_);
   }
   for (int i = 0; i < this->pawns_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->pawns(i), output);
   }
 
@@ -4875,12 +4875,12 @@ int bunch_t::ByteSize() const {
         this->pos());
   }
 
-  // repeated uint32 pawns = 3;
+  // repeated int32 pawns = 3;
   {
     int data_size = 0;
     for (int i = 0; i < this->pawns_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->pawns(i));
+        Int32Size(this->pawns(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -4976,31 +4976,31 @@ void bunch_t::clear_pos() {
   // @@protoc_insertion_point(field_set:proto3.bunch_t.pos)
 }
 
-// repeated uint32 pawns = 3;
+// repeated int32 pawns = 3;
 int bunch_t::pawns_size() const {
   return pawns_.size();
 }
 void bunch_t::clear_pawns() {
   pawns_.Clear();
 }
- ::google::protobuf::uint32 bunch_t::pawns(int index) const {
+ ::google::protobuf::int32 bunch_t::pawns(int index) const {
   // @@protoc_insertion_point(field_get:proto3.bunch_t.pawns)
   return pawns_.Get(index);
 }
- void bunch_t::set_pawns(int index, ::google::protobuf::uint32 value) {
+ void bunch_t::set_pawns(int index, ::google::protobuf::int32 value) {
   pawns_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.bunch_t.pawns)
 }
- void bunch_t::add_pawns(::google::protobuf::uint32 value) {
+ void bunch_t::add_pawns(::google::protobuf::int32 value) {
   pawns_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.bunch_t.pawns)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 bunch_t::pawns() const {
   // @@protoc_insertion_point(field_list:proto3.bunch_t.pawns)
   return pawns_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 bunch_t::mutable_pawns() {
   // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.pawns)
   return &pawns_;
@@ -5038,7 +5038,7 @@ game_data_t::game_data_t(const game_data_t& from)
 void game_data_t::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  selected_card_ = 0u;
+  selected_card_ = 0;
 }
 
 game_data_t::~game_data_t() {
@@ -5081,7 +5081,7 @@ game_data_t* game_data_t::New(::google::protobuf::Arena* arena) const {
 
 void game_data_t::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.game_data_t)
-  selected_card_ = 0u;
+  selected_card_ = 0;
   hands_.Clear();
   discards_.Clear();
   bunch_.Clear();
@@ -5097,15 +5097,15 @@ bool game_data_t::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated uint32 hands = 1;
+      // repeated int32 hands = 1;
       case 1: {
         if (tag == 10) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_hands())));
         } else if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 10, input, this->mutable_hands())));
         } else {
           goto handle_unusual;
@@ -5114,16 +5114,16 @@ bool game_data_t::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 discards = 2;
+      // repeated int32 discards = 2;
       case 2: {
         if (tag == 18) {
          parse_discards:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_discards())));
         } else if (tag == 16) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 18, input, this->mutable_discards())));
         } else {
           goto handle_unusual;
@@ -5149,12 +5149,12 @@ bool game_data_t::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 selected_card = 4;
+      // optional int32 selected_card = 4;
       case 4: {
         if (tag == 32) {
          parse_selected_card:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &selected_card_)));
 
         } else {
@@ -5188,23 +5188,23 @@ failure:
 void game_data_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.game_data_t)
-  // repeated uint32 hands = 1;
+  // repeated int32 hands = 1;
   if (this->hands_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_hands_cached_byte_size_);
   }
   for (int i = 0; i < this->hands_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->hands(i), output);
   }
 
-  // repeated uint32 discards = 2;
+  // repeated int32 discards = 2;
   if (this->discards_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_discards_cached_byte_size_);
   }
   for (int i = 0; i < this->discards_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->discards(i), output);
   }
 
@@ -5214,9 +5214,9 @@ void game_data_t::SerializeWithCachedSizes(
       3, this->bunch(i), output);
   }
 
-  // optional uint32 selected_card = 4;
+  // optional int32 selected_card = 4;
   if (this->selected_card() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->selected_card(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->selected_card(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.game_data_t)
@@ -5226,19 +5226,19 @@ int game_data_t::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.game_data_t)
   int total_size = 0;
 
-  // optional uint32 selected_card = 4;
+  // optional int32 selected_card = 4;
   if (this->selected_card() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->selected_card());
   }
 
-  // repeated uint32 hands = 1;
+  // repeated int32 hands = 1;
   {
     int data_size = 0;
     for (int i = 0; i < this->hands_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->hands(i));
+        Int32Size(this->hands(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -5250,12 +5250,12 @@ int game_data_t::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated uint32 discards = 2;
+  // repeated int32 discards = 2;
   {
     int data_size = 0;
     for (int i = 0; i < this->discards_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->discards(i));
+        Int32Size(this->discards(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -5331,61 +5331,61 @@ void game_data_t::InternalSwap(game_data_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // game_data_t
 
-// repeated uint32 hands = 1;
+// repeated int32 hands = 1;
 int game_data_t::hands_size() const {
   return hands_.size();
 }
 void game_data_t::clear_hands() {
   hands_.Clear();
 }
- ::google::protobuf::uint32 game_data_t::hands(int index) const {
+ ::google::protobuf::int32 game_data_t::hands(int index) const {
   // @@protoc_insertion_point(field_get:proto3.game_data_t.hands)
   return hands_.Get(index);
 }
- void game_data_t::set_hands(int index, ::google::protobuf::uint32 value) {
+ void game_data_t::set_hands(int index, ::google::protobuf::int32 value) {
   hands_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.game_data_t.hands)
 }
- void game_data_t::add_hands(::google::protobuf::uint32 value) {
+ void game_data_t::add_hands(::google::protobuf::int32 value) {
   hands_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.game_data_t.hands)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 game_data_t::hands() const {
   // @@protoc_insertion_point(field_list:proto3.game_data_t.hands)
   return hands_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 game_data_t::mutable_hands() {
   // @@protoc_insertion_point(field_mutable_list:proto3.game_data_t.hands)
   return &hands_;
 }
 
-// repeated uint32 discards = 2;
+// repeated int32 discards = 2;
 int game_data_t::discards_size() const {
   return discards_.size();
 }
 void game_data_t::clear_discards() {
   discards_.Clear();
 }
- ::google::protobuf::uint32 game_data_t::discards(int index) const {
+ ::google::protobuf::int32 game_data_t::discards(int index) const {
   // @@protoc_insertion_point(field_get:proto3.game_data_t.discards)
   return discards_.Get(index);
 }
- void game_data_t::set_discards(int index, ::google::protobuf::uint32 value) {
+ void game_data_t::set_discards(int index, ::google::protobuf::int32 value) {
   discards_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.game_data_t.discards)
 }
- void game_data_t::add_discards(::google::protobuf::uint32 value) {
+ void game_data_t::add_discards(::google::protobuf::int32 value) {
   discards_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.game_data_t.discards)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 game_data_t::discards() const {
   // @@protoc_insertion_point(field_list:proto3.game_data_t.discards)
   return discards_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 game_data_t::mutable_discards() {
   // @@protoc_insertion_point(field_mutable_list:proto3.game_data_t.discards)
   return &discards_;
@@ -5421,15 +5421,15 @@ game_data_t::bunch() const {
   return bunch_;
 }
 
-// optional uint32 selected_card = 4;
+// optional int32 selected_card = 4;
 void game_data_t::clear_selected_card() {
-  selected_card_ = 0u;
+  selected_card_ = 0;
 }
- ::google::protobuf::uint32 game_data_t::selected_card() const {
+ ::google::protobuf::int32 game_data_t::selected_card() const {
   // @@protoc_insertion_point(field_get:proto3.game_data_t.selected_card)
   return selected_card_;
 }
- void game_data_t::set_selected_card(::google::protobuf::uint32 value) {
+ void game_data_t::set_selected_card(::google::protobuf::int32 value) {
   
   selected_card_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_data_t.selected_card)
@@ -7046,7 +7046,7 @@ void MsgLCEnter::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  key_ = 0u;
+  key_ = 0;
   player_ = NULL;
   lobby_ = NULL;
   result_ = 0;
@@ -7147,12 +7147,12 @@ bool MsgLCEnter::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 key = 2;
+      // optional int32 key = 2;
       case 2: {
         if (tag == 16) {
          parse_key:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &key_)));
 
         } else {
@@ -7234,9 +7234,9 @@ void MsgLCEnter::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional uint32 key = 2;
+  // optional int32 key = 2;
   if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->key(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->key(), output);
   }
 
   // optional .proto3.player_t player = 3;
@@ -7270,10 +7270,10 @@ int MsgLCEnter::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional uint32 key = 2;
+  // optional int32 key = 2;
   if (this->key() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->key());
   }
 
@@ -7377,15 +7377,15 @@ void MsgLCEnter::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
 }
 
-// optional uint32 key = 2;
+// optional int32 key = 2;
 void MsgLCEnter::clear_key() {
-  key_ = 0u;
+  key_ = 0;
 }
- ::google::protobuf::uint32 MsgLCEnter::key() const {
+ ::google::protobuf::int32 MsgLCEnter::key() const {
   // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.key)
   return key_;
 }
- void MsgLCEnter::set_key(::google::protobuf::uint32 value) {
+ void MsgLCEnter::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.key)
@@ -8628,7 +8628,7 @@ void MsgNCCreate::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  game_id_ = 0u;
+  game_id_ = 0;
   result_ = 0;
 }
 
@@ -8720,12 +8720,12 @@ bool MsgNCCreate::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 game_id = 2;
+      // optional int32 game_id = 2;
       case 2: {
         if (tag == 16) {
          parse_game_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &game_id_)));
 
         } else {
@@ -8781,9 +8781,9 @@ void MsgNCCreate::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional uint32 game_id = 2;
+  // optional int32 game_id = 2;
   if (this->game_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->game_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->game_id(), output);
   }
 
   // optional .proto3.pb_enum result = 3;
@@ -8805,10 +8805,10 @@ int MsgNCCreate::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional uint32 game_id = 2;
+  // optional int32 game_id = 2;
   if (this->game_id() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->game_id());
   }
 
@@ -8890,15 +8890,15 @@ void MsgNCCreate::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCCreate.mid)
 }
 
-// optional uint32 game_id = 2;
+// optional int32 game_id = 2;
 void MsgNCCreate::clear_game_id() {
-  game_id_ = 0u;
+  game_id_ = 0;
 }
- ::google::protobuf::uint32 MsgNCCreate::game_id() const {
+ ::google::protobuf::int32 MsgNCCreate::game_id() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCCreate.game_id)
   return game_id_;
 }
- void MsgNCCreate::set_game_id(::google::protobuf::uint32 value) {
+ void MsgNCCreate::set_game_id(::google::protobuf::int32 value) {
   
   game_id_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCCreate.game_id)
@@ -8949,7 +8949,7 @@ void MsgCNJoin::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  game_id_ = 0u;
+  game_id_ = 0;
 }
 
 MsgCNJoin::~MsgCNJoin() {
@@ -9040,12 +9040,12 @@ bool MsgCNJoin::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 game_id = 2;
+      // optional int32 game_id = 2;
       case 2: {
         if (tag == 16) {
          parse_game_id:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &game_id_)));
 
         } else {
@@ -9085,9 +9085,9 @@ void MsgCNJoin::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional uint32 game_id = 2;
+  // optional int32 game_id = 2;
   if (this->game_id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->game_id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->game_id(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNJoin)
@@ -9103,10 +9103,10 @@ int MsgCNJoin::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional uint32 game_id = 2;
+  // optional int32 game_id = 2;
   if (this->game_id() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->game_id());
   }
 
@@ -9178,15 +9178,15 @@ void MsgCNJoin::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.mid)
 }
 
-// optional uint32 game_id = 2;
+// optional int32 game_id = 2;
 void MsgCNJoin::clear_game_id() {
-  game_id_ = 0u;
+  game_id_ = 0;
 }
- ::google::protobuf::uint32 MsgCNJoin::game_id() const {
+ ::google::protobuf::int32 MsgCNJoin::game_id() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNJoin.game_id)
   return game_id_;
 }
- void MsgCNJoin::set_game_id(::google::protobuf::uint32 value) {
+ void MsgCNJoin::set_game_id(::google::protobuf::int32 value) {
   
   game_id_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.game_id)
@@ -10141,7 +10141,7 @@ void MsgCNEngage::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  key_ = 0u;
+  key_ = 0;
 }
 
 MsgCNEngage::~MsgCNEngage() {
@@ -10232,12 +10232,12 @@ bool MsgCNEngage::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 key = 2;
+      // optional int32 key = 2;
       case 2: {
         if (tag == 16) {
          parse_key:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &key_)));
 
         } else {
@@ -10277,9 +10277,9 @@ void MsgCNEngage::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional uint32 key = 2;
+  // optional int32 key = 2;
   if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->key(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->key(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNEngage)
@@ -10295,10 +10295,10 @@ int MsgCNEngage::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional uint32 key = 2;
+  // optional int32 key = 2;
   if (this->key() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->key());
   }
 
@@ -10370,15 +10370,15 @@ void MsgCNEngage::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.mid)
 }
 
-// optional uint32 key = 2;
+// optional int32 key = 2;
 void MsgCNEngage::clear_key() {
-  key_ = 0u;
+  key_ = 0;
 }
- ::google::protobuf::uint32 MsgCNEngage::key() const {
+ ::google::protobuf::int32 MsgCNEngage::key() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.key)
   return key_;
 }
- void MsgCNEngage::set_key(::google::protobuf::uint32 value) {
+ void MsgCNEngage::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.key)
@@ -10418,7 +10418,7 @@ void MsgNCEngage::SharedCtor() {
   _cached_size_ = 0;
   mid_ = 0;
   pos_ = 0;
-  key_ = 0u;
+  key_ = 0;
   result_ = 0;
 }
 
@@ -10525,12 +10525,12 @@ bool MsgNCEngage::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 key = 3;
+      // optional int32 key = 3;
       case 3: {
         if (tag == 24) {
          parse_key:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &key_)));
 
         } else {
@@ -10591,9 +10591,9 @@ void MsgNCEngage::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->pos(), output);
   }
 
-  // optional uint32 key = 3;
+  // optional int32 key = 3;
   if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->key(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->key(), output);
   }
 
   // optional .proto3.pb_enum result = 4;
@@ -10622,10 +10622,10 @@ int MsgNCEngage::ByteSize() const {
         this->pos());
   }
 
-  // optional uint32 key = 3;
+  // optional int32 key = 3;
   if (this->key() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->key());
   }
 
@@ -10725,15 +10725,15 @@ void MsgNCEngage::clear_pos() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.pos)
 }
 
-// optional uint32 key = 3;
+// optional int32 key = 3;
 void MsgNCEngage::clear_key() {
-  key_ = 0u;
+  key_ = 0;
 }
- ::google::protobuf::uint32 MsgNCEngage::key() const {
+ ::google::protobuf::int32 MsgNCEngage::key() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.key)
   return key_;
 }
- void MsgNCEngage::set_key(::google::protobuf::uint32 value) {
+ void MsgNCEngage::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.key)
@@ -10793,8 +10793,8 @@ void MsgNCStart::SharedCtor() {
   mid_ = 0;
   banker_ = 0;
   pos_ = 0;
-  ante_ = 0u;
-  multiple_ = 0u;
+  ante_ = 0;
+  multiple_ = 0;
   result_ = 0;
 }
 
@@ -10855,7 +10855,7 @@ void MsgNCStart::Clear() {
 } while (0)
 
   ZR_(mid_, ante_);
-  multiple_ = 0u;
+  multiple_ = 0;
   result_ = 0;
 
 #undef ZR_HELPER_
@@ -10921,12 +10921,12 @@ bool MsgNCStart::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 ante = 4;
+      // optional int32 ante = 4;
       case 4: {
         if (tag == 32) {
          parse_ante:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &ante_)));
 
         } else {
@@ -10936,12 +10936,12 @@ bool MsgNCStart::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 multiple = 5;
+      // optional int32 multiple = 5;
       case 5: {
         if (tag == 40) {
          parse_multiple:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &multiple_)));
 
         } else {
@@ -10951,16 +10951,16 @@ bool MsgNCStart::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 hands = 6;
+      // repeated int32 hands = 6;
       case 6: {
         if (tag == 50) {
          parse_hands:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_hands())));
         } else if (tag == 48) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 50, input, this->mutable_hands())));
         } else {
           goto handle_unusual;
@@ -10969,16 +10969,16 @@ bool MsgNCStart::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 bottom = 7;
+      // repeated int32 bottom = 7;
       case 7: {
         if (tag == 58) {
          parse_bottom:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_bottom())));
         } else if (tag == 56) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 58, input, this->mutable_bottom())));
         } else {
           goto handle_unusual;
@@ -10987,16 +10987,16 @@ bool MsgNCStart::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated uint32 count = 8;
+      // repeated int32 count = 8;
       case 8: {
         if (tag == 66) {
          parse_count:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_count())));
         } else if (tag == 64) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  1, 66, input, this->mutable_count())));
         } else {
           goto handle_unusual;
@@ -11061,43 +11061,43 @@ void MsgNCStart::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->pos(), output);
   }
 
-  // optional uint32 ante = 4;
+  // optional int32 ante = 4;
   if (this->ante() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(4, this->ante(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->ante(), output);
   }
 
-  // optional uint32 multiple = 5;
+  // optional int32 multiple = 5;
   if (this->multiple() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->multiple(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->multiple(), output);
   }
 
-  // repeated uint32 hands = 6;
+  // repeated int32 hands = 6;
   if (this->hands_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(6, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_hands_cached_byte_size_);
   }
   for (int i = 0; i < this->hands_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->hands(i), output);
   }
 
-  // repeated uint32 bottom = 7;
+  // repeated int32 bottom = 7;
   if (this->bottom_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(7, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_bottom_cached_byte_size_);
   }
   for (int i = 0; i < this->bottom_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->bottom(i), output);
   }
 
-  // repeated uint32 count = 8;
+  // repeated int32 count = 8;
   if (this->count_size() > 0) {
     ::google::protobuf::internal::WireFormatLite::WriteTag(8, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_count_cached_byte_size_);
   }
   for (int i = 0; i < this->count_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32NoTag(
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
       this->count(i), output);
   }
 
@@ -11134,17 +11134,17 @@ int MsgNCStart::ByteSize() const {
         this->pos());
   }
 
-  // optional uint32 ante = 4;
+  // optional int32 ante = 4;
   if (this->ante() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->ante());
   }
 
-  // optional uint32 multiple = 5;
+  // optional int32 multiple = 5;
   if (this->multiple() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->multiple());
   }
 
@@ -11154,12 +11154,12 @@ int MsgNCStart::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated uint32 hands = 6;
+  // repeated int32 hands = 6;
   {
     int data_size = 0;
     for (int i = 0; i < this->hands_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->hands(i));
+        Int32Size(this->hands(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -11171,12 +11171,12 @@ int MsgNCStart::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated uint32 bottom = 7;
+  // repeated int32 bottom = 7;
   {
     int data_size = 0;
     for (int i = 0; i < this->bottom_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->bottom(i));
+        Int32Size(this->bottom(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -11188,12 +11188,12 @@ int MsgNCStart::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated uint32 count = 8;
+  // repeated int32 count = 8;
   {
     int data_size = 0;
     for (int i = 0; i < this->count_size(); i++) {
       data_size += ::google::protobuf::internal::WireFormatLite::
-        UInt32Size(this->count(i));
+        Int32Size(this->count(i));
     }
     if (data_size > 0) {
       total_size += 1 +
@@ -11323,119 +11323,119 @@ void MsgNCStart::clear_pos() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.pos)
 }
 
-// optional uint32 ante = 4;
+// optional int32 ante = 4;
 void MsgNCStart::clear_ante() {
-  ante_ = 0u;
+  ante_ = 0;
 }
- ::google::protobuf::uint32 MsgNCStart::ante() const {
+ ::google::protobuf::int32 MsgNCStart::ante() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.ante)
   return ante_;
 }
- void MsgNCStart::set_ante(::google::protobuf::uint32 value) {
+ void MsgNCStart::set_ante(::google::protobuf::int32 value) {
   
   ante_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.ante)
 }
 
-// optional uint32 multiple = 5;
+// optional int32 multiple = 5;
 void MsgNCStart::clear_multiple() {
-  multiple_ = 0u;
+  multiple_ = 0;
 }
- ::google::protobuf::uint32 MsgNCStart::multiple() const {
+ ::google::protobuf::int32 MsgNCStart::multiple() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.multiple)
   return multiple_;
 }
- void MsgNCStart::set_multiple(::google::protobuf::uint32 value) {
+ void MsgNCStart::set_multiple(::google::protobuf::int32 value) {
   
   multiple_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.multiple)
 }
 
-// repeated uint32 hands = 6;
+// repeated int32 hands = 6;
 int MsgNCStart::hands_size() const {
   return hands_.size();
 }
 void MsgNCStart::clear_hands() {
   hands_.Clear();
 }
- ::google::protobuf::uint32 MsgNCStart::hands(int index) const {
+ ::google::protobuf::int32 MsgNCStart::hands(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.hands)
   return hands_.Get(index);
 }
- void MsgNCStart::set_hands(int index, ::google::protobuf::uint32 value) {
+ void MsgNCStart::set_hands(int index, ::google::protobuf::int32 value) {
   hands_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.hands)
 }
- void MsgNCStart::add_hands(::google::protobuf::uint32 value) {
+ void MsgNCStart::add_hands(::google::protobuf::int32 value) {
   hands_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.hands)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::hands() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.hands)
   return hands_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_hands() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.hands)
   return &hands_;
 }
 
-// repeated uint32 bottom = 7;
+// repeated int32 bottom = 7;
 int MsgNCStart::bottom_size() const {
   return bottom_.size();
 }
 void MsgNCStart::clear_bottom() {
   bottom_.Clear();
 }
- ::google::protobuf::uint32 MsgNCStart::bottom(int index) const {
+ ::google::protobuf::int32 MsgNCStart::bottom(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.bottom)
   return bottom_.Get(index);
 }
- void MsgNCStart::set_bottom(int index, ::google::protobuf::uint32 value) {
+ void MsgNCStart::set_bottom(int index, ::google::protobuf::int32 value) {
   bottom_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.bottom)
 }
- void MsgNCStart::add_bottom(::google::protobuf::uint32 value) {
+ void MsgNCStart::add_bottom(::google::protobuf::int32 value) {
   bottom_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.bottom)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::bottom() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.bottom)
   return bottom_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_bottom() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.bottom)
   return &bottom_;
 }
 
-// repeated uint32 count = 8;
+// repeated int32 count = 8;
 int MsgNCStart::count_size() const {
   return count_.size();
 }
 void MsgNCStart::clear_count() {
   count_.Clear();
 }
- ::google::protobuf::uint32 MsgNCStart::count(int index) const {
+ ::google::protobuf::int32 MsgNCStart::count(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.count)
   return count_.Get(index);
 }
- void MsgNCStart::set_count(int index, ::google::protobuf::uint32 value) {
+ void MsgNCStart::set_count(int index, ::google::protobuf::int32 value) {
   count_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.count)
 }
- void MsgNCStart::add_count(::google::protobuf::uint32 value) {
+ void MsgNCStart::add_count(::google::protobuf::int32 value) {
   count_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.count)
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::count() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.count)
   return count_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_count() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.count)
   return &count_;
@@ -12784,7 +12784,7 @@ void MsgNCDraw::SharedCtor() {
   _cached_size_ = 0;
   mid_ = 0;
   pos_ = 0;
-  card_ = 0u;
+  card_ = 0;
 }
 
 MsgNCDraw::~MsgNCDraw() {
@@ -12890,12 +12890,12 @@ bool MsgNCDraw::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 card = 3;
+      // optional int32 card = 3;
       case 3: {
         if (tag == 24) {
          parse_card:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &card_)));
 
         } else {
@@ -12940,9 +12940,9 @@ void MsgNCDraw::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->pos(), output);
   }
 
-  // optional uint32 card = 3;
+  // optional int32 card = 3;
   if (this->card() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->card(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->card(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCDraw)
@@ -12965,10 +12965,10 @@ int MsgNCDraw::ByteSize() const {
         this->pos());
   }
 
-  // optional uint32 card = 3;
+  // optional int32 card = 3;
   if (this->card() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->card());
   }
 
@@ -13058,15 +13058,15 @@ void MsgNCDraw::clear_pos() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.pos)
 }
 
-// optional uint32 card = 3;
+// optional int32 card = 3;
 void MsgNCDraw::clear_card() {
-  card_ = 0u;
+  card_ = 0;
 }
- ::google::protobuf::uint32 MsgNCDraw::card() const {
+ ::google::protobuf::int32 MsgNCDraw::card() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.card)
   return card_;
 }
- void MsgNCDraw::set_card(::google::protobuf::uint32 value) {
+ void MsgNCDraw::set_card(::google::protobuf::int32 value) {
   
   card_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.card)
@@ -14164,7 +14164,7 @@ void MsgNCSettle::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  winner_ = 0u;
+  winner_ = 0;
   result_ = 0;
 }
 
@@ -14259,12 +14259,12 @@ bool MsgNCSettle::MergePartialFromCodedStream(
         break;
       }
 
-      // optional uint32 winner = 2;
+      // optional int32 winner = 2;
       case 2: {
         if (tag == 16) {
          parse_winner:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &winner_)));
 
         } else {
@@ -14353,9 +14353,9 @@ void MsgNCSettle::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional uint32 winner = 2;
+  // optional int32 winner = 2;
   if (this->winner() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->winner(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->winner(), output);
   }
 
   // repeated .proto3.player_t play = 3;
@@ -14389,10 +14389,10 @@ int MsgNCSettle::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional uint32 winner = 2;
+  // optional int32 winner = 2;
   if (this->winner() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->winner());
   }
 
@@ -14494,15 +14494,15 @@ void MsgNCSettle::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.mid)
 }
 
-// optional uint32 winner = 2;
+// optional int32 winner = 2;
 void MsgNCSettle::clear_winner() {
-  winner_ = 0u;
+  winner_ = 0;
 }
- ::google::protobuf::uint32 MsgNCSettle::winner() const {
+ ::google::protobuf::int32 MsgNCSettle::winner() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.winner)
   return winner_;
 }
- void MsgNCSettle::set_winner(::google::protobuf::uint32 value) {
+ void MsgNCSettle::set_winner(::google::protobuf::int32 value) {
   
   winner_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.winner)

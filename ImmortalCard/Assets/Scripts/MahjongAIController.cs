@@ -33,7 +33,7 @@ public class MahjongAIController:PlayerController{
 				omsgMeld.Mid=pb_msg.MsgCnMeld;
 				
 				bunch_t bunch=null;
-				var hands=new uint[player.gameData.Hands.Count];
+				var hands=new int[player.gameData.Hands.Count];
 				player.gameData.Hands.CopyTo(hands,0);
 				var hints=Main.Instance.gameController.Rule.Hint(player,hands,msgDiscard.Bunch);
 				if(hints.Count>0)
@@ -62,7 +62,7 @@ public class MahjongAIController:PlayerController{
 					player.gameData.Hands.Remove(card);
 
 				//discard
-				uint discard=player.gameData.Hands[0];
+				var discard=player.gameData.Hands[0];
 				foreach(var hand in player.gameData.Hands){
 					//huazhu
 					if(hand/1000==player.gameData.SelectedCard/1000){
@@ -91,7 +91,7 @@ public class MahjongAIController:PlayerController{
 				bunch.Pos=player.pos;
 				bunch.Pawns.Add(msgDraw.Card);
 
-				var hands=new uint[player.gameData.Hands.Count];
+				var hands=new int[player.gameData.Hands.Count];
 				player.gameData.Hands.CopyTo(hands,0);
 				var hints=Main.Instance.gameController.Rule.Hint(player,hands,bunch);
 				if(hints.Count>0)

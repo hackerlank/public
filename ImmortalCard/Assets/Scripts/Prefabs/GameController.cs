@@ -4,7 +4,7 @@ using Proto3;
 
 public interface GameController:PlayerController{
 	//game rule
-	uint Round{get;set;}
+	int Round{get;set;}
 	GameRule Rule{get;set;}
 
 	//card operation
@@ -13,6 +13,6 @@ public interface GameController:PlayerController{
 
 	//ui
 	void OnExit();
-	string Id2File(uint color,uint value);
+	string Id2File(int color,int value);
 	float DiscardScalar{get;}
 }

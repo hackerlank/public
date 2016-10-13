@@ -27,8 +27,8 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 	}
 
 	public int Id,Clr,Val;	//only for debug
-	uint _value;
-	public uint Value{
+	int _value;
+	public int Value{
 		get{
 			return _value;
 		}set{
@@ -38,7 +38,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 				Clr=(int)value/1000;
 				Val=(int)value%100;
 
-				var file=Main.Instance.gameController.Id2File((uint)Clr,(uint)Val);
+				var file=Main.Instance.gameController.Id2File(Clr,Val);
 				if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
 					image.sprite=CardCache.sprites[file];
 				_value=value;
@@ -109,7 +109,7 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		le.preferredHeight*=scalar;
 	}
 
-	public static void Create(string path,uint data=0,Transform parent=null,System.Action<Card> handler=null){
+	public static void Create(string path,int data=0,Transform parent=null,System.Action<Card> handler=null){
 		if(CardCache.cards[path]){
 			var go=GameObject.Instantiate(CardCache.cards[path]) as GameObject;
 			go.SetActive(true);

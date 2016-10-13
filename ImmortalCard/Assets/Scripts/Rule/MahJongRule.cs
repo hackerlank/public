@@ -9,10 +9,10 @@ public class MahJongRule: GameRule {
 	public override int MaxPlayer{get{return 4;}}
 
 	protected override void deal(MsgNCStart msg){
-		uint id=0;
-		for(uint k=1;k<=3;++k){
-			for(uint i=1;i<=9;++i){
-				for(uint j=0;j<4;++j){
+		int id=0;
+		for(int k=1;k<=3;++k){
+			for(int i=1;i<=9;++i){
+				for(int j=0;j<4;++j){
 					id=k*1000+j*100+i;
 					Pile.Add(id);
 				}
@@ -22,18 +22,18 @@ public class MahJongRule: GameRule {
 		Pile=shuffle(Pile);
 		/*
 		//deal
-		for(uint i=0;i<14;++i)
+		for(int i=0;i<14;++i)
 			msg.Hands.Add(Pile[i]);
 		//other hands
-		Hands=new List<uint>[2]{new List<uint>(),new List<uint>()};
-		for(uint i=14;i<14+13;++i)
+		Hands=new List<int>[2]{new List<int>(),new List<int>()};
+		for(int i=14;i<14+13;++i)
 			Hands[0].Add(Pile[i]);
-		for(uint i=14+13;i<14+13*2;++i)
+		for(int i=14+13;i<14+13*2;++i)
 			Hands[1].Add(Pile[i]);
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,uint[] hands,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
 		if(player==null||hands==null||src_bunch==null||hands.Length<=0)
@@ -64,7 +64,7 @@ public class MahJongRule: GameRule {
 		}
 		
 		//select color
-		List<uint> sel=new List<uint>();
+		List<int> sel=new List<int>();
 		foreach(var hand in hands){
 			var B=hand;
 			if(B/1000==A/1000&&B%100==A%100)
@@ -119,13 +119,13 @@ public class MahJongRule: GameRule {
 		return hints;
 	}
 
-	bool isGameOver(Player player,uint id,List<bunch_t> output){
+	bool isGameOver(Player player,int id,List<bunch_t> output){
 		var hands=player.gameData.Hands;
 		if(hands.Count<2){
 			Debug.Log("isGameOver failed: len="+hands.Count);
 			return false;
 		}
-		List<uint> cards=new List<uint>();
+		List<int> cards=new List<int>();
 		cards.AddRange(hands);
 		cards.Add(id);
 		cards.Sort(Main.Instance.gameController.Rule.comparision);
@@ -135,7 +135,7 @@ public class MahJongRule: GameRule {
 			var A=cards[i+0];
 			var B=cards[i+1];
 			if(A/1000==B/1000&&A%100==B%100){
-				List<uint> tmp=new List<uint>();
+				List<int> tmp=new List<int>();
 				for(int j=0;j!=cards.Count;++j)if(j!=i&&j!=i+1)tmp.Add(cards[j]);
 				if(isGameOverWithoutAA(tmp))
 					return true;
@@ -144,7 +144,7 @@ public class MahJongRule: GameRule {
 		return false;
 	}
 	
-	bool isGameOverWithoutAA(List<uint> cards){
+	bool isGameOverWithoutAA(List<int> cards){
 		var len=cards.Count;
 		if(len%3!=0){
 			//Debug.Log("isGameOverWithoutAA failed: len=%lu\n",len);
@@ -179,7 +179,7 @@ public class MahJongRule: GameRule {
 		return win;
 	}
 	
-	public override int comparision(uint x,uint y){
+	public override int comparision(int x,int y){
 		var cx=(int)x/1000;
 		var cy=(int)y/1000;
 		if(cx<cy)return 1;
@@ -187,15 +187,15 @@ public class MahJongRule: GameRule {
 		else return -1;
 	}
 
-	public override uint transformValue(uint val){
+	public override int transformValue(int val){
 		return val;
 	}
 	
-	public override uint inverseTransformValue(uint val){
+	public override int inverseTransformValue(int val){
 		return val;
 	}
 
-	public static uint FindDefaultColor(Player player){
+	public static int FindDefaultColor(Player player){
 		int key=20;
 		int I=0;
 		int[] count=new int[3];
@@ -207,6 +207,6 @@ public class MahJongRule: GameRule {
 			}
 		}
 		key=1000*(I+1)+1;
-		return (uint)key;
+		return key;
 	}
 }

@@ -11,7 +11,7 @@ public class DoudeZhuPanel : GamePanel {
 	// logic
 	// ----------------------------------------------
 	override public string CardPrefab{get{return "Card";}}
-	override public string Id2File(uint color,uint value){
+	override public string Id2File(int color,int value){
 		if(Rule!=null){
 			color-=1;
 			string[] Colors={"c","d","h","s"};
@@ -85,7 +85,7 @@ public class DoudeZhuPanel : GamePanel {
 				if(bunch.Type==pb_enum.OpPass&&Rule.Historical.Count>=2)
 					bunch=Rule.Historical[Rule.Historical.Count-2];
 			}
-			var hands=new uint[player.gameData.Hands.Count];
+			var hands=new int[player.gameData.Hands.Count];
 			player.gameData.Hands.CopyTo(hands,0);
 			_hints=Rule.Hint(player,hands,bunch);
 		}
@@ -113,8 +113,8 @@ public class DoudeZhuPanel : GamePanel {
 		files.Add("back");
 		files.Add("c14");
 		files.Add("d15");
-		for(uint j=1;j<=4;++j)
-			for(uint i=1;i<=13;++i)
+		for(int j=1;j<=4;++j)
+			for(int i=1;i<=13;++i)
 				files.Add(Id2File(j,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
 	}

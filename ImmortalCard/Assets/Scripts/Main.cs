@@ -6,7 +6,7 @@ public class Main : MonoBehaviour {
 
 	public static Main		Instance=null;
 
-	public uint				Round=4;
+	public int				Round=4;
 	public GameController	gameController=null;
 
 	public enum Mode{

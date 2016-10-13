@@ -82,7 +82,7 @@ message key_value{
 string key				=1;
 string value            =2;
 pb_enum ikey            =3;
-uint32 ivalue           =4;
+int32 ivalue            =4;
 }
 // ----------------------------------------------------------------
 // struct
@@ -90,13 +90,13 @@ uint32 ivalue           =4;
 message user_t{
 
 string uid				=1;
-uint32 flag             =2;
+int32 flag              =2;
 pb_enum dev_type        =3;
 string account			=4;
 string name				=5;
 string pswd				=6;
-uint32 gender			=7;
-uint32 age              =8;
+int32 gender			=7;
+int32 age               =8;
 string udid				=9;
 };
 
@@ -104,10 +104,10 @@ message player_t{
 
 string uid				=1;
 uint32 pid              =2;
-uint32 level            =3;
-uint32 xp               =4;
-uint32 currency         =5;
-uint32 energy           =6;
+int32 level             =3;
+int32 xp                =4;
+int32 currency          =5;
+int32 energy            =6;
 repeated win_t wins     =7;
 repeated achv_t achvs   =8;
 };
@@ -115,30 +115,30 @@ repeated achv_t achvs   =8;
 message win_t{
 
 string uid				=1;
-uint32 gid              =2;
-uint32 win              =3;
-uint32 lose             =4;
-uint32 draw             =5;
-uint32 score            =6;
+int32 gid               =2;
+int32 win               =3;
+int32 lose              =4;
+int32 draw              =5;
+int32 score             =6;
 };
 
 message achv_t{
 
 pb_enum type            =1;
 string name             =2;
-uint32 value            =3;
+int32 value             =3;
 };
 
 message game_t{
 
-uint32 id               = 1;
+int32 id                = 1;
 uint32 version          = 2;
 string ip               = 3;
 uint32 port             = 4;
-uint32 occupied         = 5;
-uint32 capacity         = 6;
+int32 occupied          = 5;
+int32 capacity          = 6;
 string desc             = 7;
-uint32 status           = 8;
+int32 status            = 8;
 uint32 openning_time    = 9;
 uint32 maintain_start   = 10;
 uint32 maintain_end     = 11;
@@ -149,11 +149,11 @@ message lobby_t{
 uint32 version          = 1;
 string ip               = 2;
 uint32 port             = 3;
-uint32 occupied         = 4;
-uint32 capacity         = 5;
+int32 occupied          = 4;
+int32 capacity          = 5;
 string desc             = 6;
 string bulletin         = 7;
-uint32 status           = 8;
+int32 status            = 8;
 uint32 maintain_start   = 9;
 uint32 maintain_end     = 10;
 uint32 time_zone        = 11;
@@ -164,15 +164,15 @@ message bunch_t{
 
 pb_enum type            =1;
 int32 pos               =2; //easy to use -1
-repeated uint32 pawns   =3;
+repeated int32 pawns    =3;
 };
 
 message game_data_t{
 
-repeated uint32 hands   =1;
-repeated uint32 discards=2;
+repeated int32 hands    =1;
+repeated int32 discards =2;
 repeated bunch_t bunch  =3;
-uint32 selected_card    =4;
+int32 selected_card     =4;
 };
 // ----------------------------------------------------------------
 // messages
@@ -265,7 +265,7 @@ uint64 session          =4;
 message MsgLCEnter{
 
 pb_msg mid				=1;
-uint32 key              =2;
+int32 key              =2;
 player_t player         =3;
 lobby_t lobby           =4;
 pb_enum result			=5;
@@ -297,14 +297,14 @@ repeated key_value option   =3; //anti,rounds
 message MsgNCCreate{
 
 pb_msg mid				=1;
-uint32 game_id			=2;
+int32 game_id			=2;
 pb_enum result			=3;
 };
 
 message MsgCNJoin{
 
 pb_msg mid              =1;
-uint32 game_id			=2;
+int32 game_id			=2;
 };
 
 message MsgNCJoin{
@@ -330,14 +330,14 @@ pb_enum result          =3;
 message MsgCNEngage{
 
 pb_msg mid              =1;
-uint32 key              =2;
+int32 key              =2;
 }
 
 message MsgNCEngage{
 
 pb_msg mid              =1;
 int32 pos               =2;
-uint32 key              =3;
+int32 key              =3;
 pb_enum result          =4;
 }
 
@@ -346,11 +346,11 @@ message MsgNCStart{
 pb_msg mid              =1;
 int32 banker            =2;
 int32 pos               =3;
-uint32 ante             =4;
-uint32 multiple         =5;
-repeated uint32 hands   =6;
-repeated uint32 bottom  =7;
-repeated uint32 count   =8; //hands count
+int32 ante              =4;
+int32 multiple          =5;
+repeated int32 hands    =6;
+repeated int32 bottom   =7;
+repeated int32 count    =8; //hands count
 pb_enum result			=9;
 };
 
@@ -384,7 +384,7 @@ message MsgNCDraw{
 
 pb_msg mid				=1;
 int32 pos               =2;
-uint32 card             =3;
+int32 card             =3;
 };
 
 message MsgCNDismissSync{
@@ -414,7 +414,7 @@ pb_enum result			=3;
 message MsgNCSettle{
 
 pb_msg mid				=1;
-uint32 winner           =2;
+int32 winner           =2;
 repeated player_t play  =3;
 repeated bunch_t hands  =4;
 pb_enum result			=5;

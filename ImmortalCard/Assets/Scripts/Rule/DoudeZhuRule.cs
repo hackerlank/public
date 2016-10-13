@@ -9,14 +9,14 @@ public class DoudeZhuRule: GameRule {
 	public override int MaxPlayer{get{return 3;}}
 
 	protected override void deal(MsgNCStart msg){
-		uint id=0;
-		for(uint i=1;i<=13;++i){ //A-K => 1-13
-			for(uint j=1;j<=4;++j){
+		int id=0;
+		for(int i=1;i<=13;++i){ //A-K => 1-13
+			for(int j=1;j<=4;++j){
 				id=j*1000+transformValue(i);
 				Pile.Add(id);
 			}
 		}
-		for(uint j=1;j<=2;++j){  //Joker(color 0,1) => 14,15
+		for(int j=1;j<=2;++j){  //Joker(color 0,1) => 14,15
 			id=j*1000+transformValue(14+j);
 			Pile.Add(id);
 		}
@@ -26,14 +26,14 @@ public class DoudeZhuRule: GameRule {
 		for(int i=0;i<20;++i)
 			msg.Hands.Add(Pile[i]);
 		//other hands
-		Hands=new List<uint>[2]{new List<uint>(),new List<uint>()};
+		Hands=new List<int>[2]{new List<int>(),new List<int>()};
 		for(int i=20;i<20+17;++i)
 			Hands[0].Add(Pile[i]);
 		for(int i=20+17;i<20+17*2;++i)
 			Hands[1].Add(Pile[i]);
 	}
 
-	public override List<bunch_t> Hint(Player player,uint[] hands,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){
 		var hints=new List<bunch_t>();
 		if(hands!=null&&src_bunch!=null&&hands.Length>0){
 			var H=Historical.Count;
@@ -56,12 +56,12 @@ public class DoudeZhuRule: GameRule {
 					b.Pawns.Add(hands[0]);
 					hints.Add(b);
 				}else if(hist.Pawns.Count>0){
-					List<uint> cards=new List<uint>(hands);					//cards vector
-					List<uint>[] sortByVal=new List<uint>[28];				//redundant vector
-					for(int i=0;i<28;++i)sortByVal[i]=new List<uint>();
+					List<int> cards=new List<int>(hands);					//cards vector
+					List<int>[] sortByVal=new List<int>[28];				//redundant vector
+					for(int i=0;i<28;++i)sortByVal[i]=new List<int>();
 					foreach(var card in cards)sortByVal[card%100].Add(card);
-					List<List<uint>>[] sortByWidth=new List<List<uint>>[5];	//null,A,AA,AAA,AAAA
-					for(int i=0;i<5;++i)sortByWidth[i]=new List<List<uint>>();
+					List<List<int>>[] sortByWidth=new List<List<int>>[5];	//null,A,AA,AAA,AAAA
+					for(int i=0;i<5;++i)sortByWidth[i]=new List<List<int>>();
 					foreach(var sorted in sortByVal)sortByWidth[sorted.Count].Add(sorted);
 					
 					var histCard=hist.Pawns[0];
@@ -168,12 +168,12 @@ public class DoudeZhuRule: GameRule {
 
 	protected override pb_enum verifyBunch(bunch_t bunch){
 		//sort cards
-		List<uint> ids=new List<uint>(bunch.Pawns);
+		List<int> ids=new List<int>(bunch.Pawns);
 		ids.Sort(comparision);
 
 		var len=ids.Count;
 		var bt=pb_enum.BunchInvalid;
-		List<uint> cards=new List<uint>();
+		List<int> cards=new List<int>();
 		foreach(var c in ids)cards.Add(c);
 		//verify by length
 		switch (len) {
@@ -202,7 +202,7 @@ public class DoudeZhuRule: GameRule {
             */
 			else{
 				//collect all counts
-				Dictionary<uint,int> valCount=new Dictionary<uint, int>();  //[value,count]
+				Dictionary<int,int> valCount=new Dictionary<int, int>();  //[value,count]
 				int maxSame=0;
 				foreach(var card in cards){
 					var val=card%100;
@@ -219,7 +219,7 @@ public class DoudeZhuRule: GameRule {
 			break;
 		default:{
 			//more than 5: BunchAaab,BunchAbc,BunchAaaab
-			Dictionary<uint,int> valCount=new Dictionary<uint, int>();  //[value,count]
+			Dictionary<int,int> valCount=new Dictionary<int, int>();  //[value,count]
 			//collect all counts
 			int maxSame=0;
 			foreach(var card in cards){
@@ -253,7 +253,7 @@ public class DoudeZhuRule: GameRule {
 				else{
 					//more than 1: AAABBBCD,AAABBBCCCDEF
 					List<int> B=new List<int>();
-					List<uint> vAAA=new List<uint>();
+					List<int> vAAA=new List<int>();
 					foreach(var imap in valCount){
 						if(imap.Value!=3)
 							B.Add(imap.Value);
@@ -338,12 +338,12 @@ public class DoudeZhuRule: GameRule {
 			switch (bt) {
 			case pb_enum.BunchAaab:
 			case pb_enum.BunchAaaab:{
-				List<uint> bunchCards=new List<uint>();
-				List<uint> histCards=new List<uint>();
+				List<int> bunchCards=new List<int>();
+				List<int> histCards=new List<int>();
 				foreach(var c in bunch.Pawns)bunchCards.Add(c);
 				foreach(var c in hist.Pawns)histCards.Add(c);
 				//find value of the same cards
-				uint bunchVal=0,histVal=0;
+				int bunchVal=0,histVal=0;
 				if(pb_enum.BunchAaab==bt){
 					for(int i=0,ii=bunchCards.Count-2;i<ii;++i){
 						if(bunchCards[i]%100==bunchCards[i+1]%100&&bunchCards[i]%100==bunchCards[i+2]%100)
@@ -384,11 +384,11 @@ public class DoudeZhuRule: GameRule {
 		return win;
 	}
 	
-	public override int comparision(uint x,uint y){
+	public override int comparision(int x,int y){
 		return (int)y%100-(int)x%100;
 	}
 
-	public override uint transformValue(uint val){
+	public override int transformValue(int val){
 		if      (val==1) return 14;
 		else if (val==2) return 16;
 		else if (val==14)return 18;
@@ -396,7 +396,7 @@ public class DoudeZhuRule: GameRule {
 		else             return val;
 	}
 	
-	public override uint inverseTransformValue(uint val){
+	public override int inverseTransformValue(int val){
 		if      (val==14)return 1;
 		else if (val==16)return 2;
 		else if (val==18)return 14;

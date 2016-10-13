@@ -14,14 +14,14 @@ public class LobbyPanel : MonoBehaviour {
 
 	void Start(){
 		game_t game=new game_t();
-		game.Id=(uint)pb_enum.GameDdz;
+		game.Id=(int)pb_enum.GameDdz;
 		addGame(game);
 		game=new game_t();
-		game.Id=(uint)pb_enum.GameMj;
+		game.Id=(int)pb_enum.GameMj;
 		addGame(game);
 		for(int i=0;i<10;++i){
 			game=new game_t();
-			game.Id=(uint)pb_enum.GameMj;
+			game.Id=(int)pb_enum.GameMj;
 			addGame(game);
 		}
 	}

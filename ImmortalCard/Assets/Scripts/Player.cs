@@ -14,7 +14,7 @@ public class Player {
 	bool					connected=false;
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
-	public uint				gameId=0;
+	public int				gameId=0;
 	public int				pos=0;
 	public game_data_t		gameData=new game_data_t();
 
@@ -34,13 +34,13 @@ public class Player {
 		ws.onMessage+=onMessage;
 	}
 
-	public void Connect(uint id=0){
+	public void Connect(int id=0){
 		if(!connected){
-			var M=(uint)pb_enum.DefMaxNodes;
+			var M=(int)pb_enum.DefMaxNodes;
 			if(id==0){
 				//re-generate key
 				Random.seed=(int)Utils.time;
-				id=(uint)(Random.value*M);
+				id=(int)(Random.value*M);
 			}
 			gameId=id;
 
@@ -55,7 +55,7 @@ public class Player {
 		ws.Send<T>(mid,msg);
 	}
 		
-	public IEnumerator JoinGame(uint id){
+	public IEnumerator JoinGame(int id){
 		Connect(id);
 		while(!Entered)yield return null;
 		

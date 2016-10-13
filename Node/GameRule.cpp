@@ -176,7 +176,7 @@ const char* GameRule::bunch2str(std::string& str,const proto3::bunch_t& bunch){
     return str.c_str();
 }
 
-const char* GameRule::cards2str(std::string& str,const google::protobuf::RepeatedField<uint32>& ids){
+const char* GameRule::cards2str(std::string& str,const google::protobuf::RepeatedField<int>& ids){
     str.clear();
     char buf[32];
     for(auto id:ids){

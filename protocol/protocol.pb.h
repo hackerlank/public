@@ -265,11 +265,11 @@ class key_value : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_enum ikey() const;
   void set_ikey(::proto3::pb_enum value);
 
-  // optional uint32 ivalue = 4;
+  // optional int32 ivalue = 4;
   void clear_ivalue();
   static const int kIvalueFieldNumber = 4;
-  ::google::protobuf::uint32 ivalue() const;
-  void set_ivalue(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 ivalue() const;
+  void set_ivalue(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.key_value)
  private:
@@ -281,7 +281,7 @@ class key_value : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::internal::ArenaStringPtr key_;
   ::google::protobuf::internal::ArenaStringPtr value_;
   int ikey_;
-  ::google::protobuf::uint32 ivalue_;
+  ::google::protobuf::int32 ivalue_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -371,11 +371,11 @@ class user_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::std::string* release_uid();
   void set_allocated_uid(::std::string* uid);
 
-  // optional uint32 flag = 2;
+  // optional int32 flag = 2;
   void clear_flag();
   static const int kFlagFieldNumber = 2;
-  ::google::protobuf::uint32 flag() const;
-  void set_flag(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 flag() const;
+  void set_flag(::google::protobuf::int32 value);
 
   // optional .proto3.pb_enum dev_type = 3;
   void clear_dev_type();
@@ -416,17 +416,17 @@ class user_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::std::string* release_pswd();
   void set_allocated_pswd(::std::string* pswd);
 
-  // optional uint32 gender = 7;
+  // optional int32 gender = 7;
   void clear_gender();
   static const int kGenderFieldNumber = 7;
-  ::google::protobuf::uint32 gender() const;
-  void set_gender(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 gender() const;
+  void set_gender(::google::protobuf::int32 value);
 
-  // optional uint32 age = 8;
+  // optional int32 age = 8;
   void clear_age();
   static const int kAgeFieldNumber = 8;
-  ::google::protobuf::uint32 age() const;
-  void set_age(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 age() const;
+  void set_age(::google::protobuf::int32 value);
 
   // optional string udid = 9;
   void clear_udid();
@@ -447,13 +447,13 @@ class user_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
 
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
-  ::google::protobuf::uint32 flag_;
+  ::google::protobuf::int32 flag_;
   int dev_type_;
   ::google::protobuf::internal::ArenaStringPtr account_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   ::google::protobuf::internal::ArenaStringPtr pswd_;
-  ::google::protobuf::uint32 gender_;
-  ::google::protobuf::uint32 age_;
+  ::google::protobuf::int32 gender_;
+  ::google::protobuf::int32 age_;
   ::google::protobuf::internal::ArenaStringPtr udid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -550,29 +550,29 @@ class player_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_po
   ::google::protobuf::uint32 pid() const;
   void set_pid(::google::protobuf::uint32 value);
 
-  // optional uint32 level = 3;
+  // optional int32 level = 3;
   void clear_level();
   static const int kLevelFieldNumber = 3;
-  ::google::protobuf::uint32 level() const;
-  void set_level(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 level() const;
+  void set_level(::google::protobuf::int32 value);
 
-  // optional uint32 xp = 4;
+  // optional int32 xp = 4;
   void clear_xp();
   static const int kXpFieldNumber = 4;
-  ::google::protobuf::uint32 xp() const;
-  void set_xp(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 xp() const;
+  void set_xp(::google::protobuf::int32 value);
 
-  // optional uint32 currency = 5;
+  // optional int32 currency = 5;
   void clear_currency();
   static const int kCurrencyFieldNumber = 5;
-  ::google::protobuf::uint32 currency() const;
-  void set_currency(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 currency() const;
+  void set_currency(::google::protobuf::int32 value);
 
-  // optional uint32 energy = 6;
+  // optional int32 energy = 6;
   void clear_energy();
   static const int kEnergyFieldNumber = 6;
-  ::google::protobuf::uint32 energy() const;
-  void set_energy(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 energy() const;
+  void set_energy(::google::protobuf::int32 value);
 
   // repeated .proto3.win_t wins = 7;
   int wins_size() const;
@@ -607,12 +607,12 @@ class player_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_po
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
   ::google::protobuf::uint32 pid_;
-  ::google::protobuf::uint32 level_;
-  ::google::protobuf::uint32 xp_;
-  ::google::protobuf::uint32 currency_;
+  ::google::protobuf::int32 level_;
+  ::google::protobuf::int32 xp_;
+  ::google::protobuf::int32 currency_;
   ::google::protobuf::RepeatedPtrField< ::proto3::win_t > wins_;
   ::google::protobuf::RepeatedPtrField< ::proto3::achv_t > achvs_;
-  ::google::protobuf::uint32 energy_;
+  ::google::protobuf::int32 energy_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -702,35 +702,35 @@ class win_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point
   ::std::string* release_uid();
   void set_allocated_uid(::std::string* uid);
 
-  // optional uint32 gid = 2;
+  // optional int32 gid = 2;
   void clear_gid();
   static const int kGidFieldNumber = 2;
-  ::google::protobuf::uint32 gid() const;
-  void set_gid(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 gid() const;
+  void set_gid(::google::protobuf::int32 value);
 
-  // optional uint32 win = 3;
+  // optional int32 win = 3;
   void clear_win();
   static const int kWinFieldNumber = 3;
-  ::google::protobuf::uint32 win() const;
-  void set_win(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 win() const;
+  void set_win(::google::protobuf::int32 value);
 
-  // optional uint32 lose = 4;
+  // optional int32 lose = 4;
   void clear_lose();
   static const int kLoseFieldNumber = 4;
-  ::google::protobuf::uint32 lose() const;
-  void set_lose(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 lose() const;
+  void set_lose(::google::protobuf::int32 value);
 
-  // optional uint32 draw = 5;
+  // optional int32 draw = 5;
   void clear_draw();
   static const int kDrawFieldNumber = 5;
-  ::google::protobuf::uint32 draw() const;
-  void set_draw(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 draw() const;
+  void set_draw(::google::protobuf::int32 value);
 
-  // optional uint32 score = 6;
+  // optional int32 score = 6;
   void clear_score();
   static const int kScoreFieldNumber = 6;
-  ::google::protobuf::uint32 score() const;
-  void set_score(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 score() const;
+  void set_score(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.win_t)
  private:
@@ -740,11 +740,11 @@ class win_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point
 
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
-  ::google::protobuf::uint32 gid_;
-  ::google::protobuf::uint32 win_;
-  ::google::protobuf::uint32 lose_;
-  ::google::protobuf::uint32 draw_;
-  ::google::protobuf::uint32 score_;
+  ::google::protobuf::int32 gid_;
+  ::google::protobuf::int32 win_;
+  ::google::protobuf::int32 lose_;
+  ::google::protobuf::int32 draw_;
+  ::google::protobuf::int32 score_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -840,11 +840,11 @@ class achv_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // optional uint32 value = 3;
+  // optional int32 value = 3;
   void clear_value();
   static const int kValueFieldNumber = 3;
-  ::google::protobuf::uint32 value() const;
-  void set_value(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 value() const;
+  void set_value(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.achv_t)
  private:
@@ -855,7 +855,7 @@ class achv_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   int type_;
-  ::google::protobuf::uint32 value_;
+  ::google::protobuf::int32 value_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -934,11 +934,11 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
 
   // accessors -------------------------------------------------------
 
-  // optional uint32 id = 1;
+  // optional int32 id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
-  ::google::protobuf::uint32 id() const;
-  void set_id(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 id() const;
+  void set_id(::google::protobuf::int32 value);
 
   // optional uint32 version = 2;
   void clear_version();
@@ -963,17 +963,17 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::uint32 port() const;
   void set_port(::google::protobuf::uint32 value);
 
-  // optional uint32 occupied = 5;
+  // optional int32 occupied = 5;
   void clear_occupied();
   static const int kOccupiedFieldNumber = 5;
-  ::google::protobuf::uint32 occupied() const;
-  void set_occupied(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 occupied() const;
+  void set_occupied(::google::protobuf::int32 value);
 
-  // optional uint32 capacity = 6;
+  // optional int32 capacity = 6;
   void clear_capacity();
   static const int kCapacityFieldNumber = 6;
-  ::google::protobuf::uint32 capacity() const;
-  void set_capacity(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 capacity() const;
+  void set_capacity(::google::protobuf::int32 value);
 
   // optional string desc = 7;
   void clear_desc();
@@ -986,11 +986,11 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::std::string* release_desc();
   void set_allocated_desc(::std::string* desc);
 
-  // optional uint32 status = 8;
+  // optional int32 status = 8;
   void clear_status();
   static const int kStatusFieldNumber = 8;
-  ::google::protobuf::uint32 status() const;
-  void set_status(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
 
   // optional uint32 openning_time = 9;
   void clear_openning_time();
@@ -1017,14 +1017,14 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::uint32 id_;
+  ::google::protobuf::int32 id_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::internal::ArenaStringPtr ip_;
   ::google::protobuf::uint32 port_;
-  ::google::protobuf::uint32 occupied_;
+  ::google::protobuf::int32 occupied_;
   ::google::protobuf::internal::ArenaStringPtr desc_;
-  ::google::protobuf::uint32 capacity_;
-  ::google::protobuf::uint32 status_;
+  ::google::protobuf::int32 capacity_;
+  ::google::protobuf::int32 status_;
   ::google::protobuf::uint32 openning_time_;
   ::google::protobuf::uint32 maintain_start_;
   ::google::protobuf::uint32 maintain_end_;
@@ -1129,17 +1129,17 @@ class lobby_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::uint32 port() const;
   void set_port(::google::protobuf::uint32 value);
 
-  // optional uint32 occupied = 4;
+  // optional int32 occupied = 4;
   void clear_occupied();
   static const int kOccupiedFieldNumber = 4;
-  ::google::protobuf::uint32 occupied() const;
-  void set_occupied(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 occupied() const;
+  void set_occupied(::google::protobuf::int32 value);
 
-  // optional uint32 capacity = 5;
+  // optional int32 capacity = 5;
   void clear_capacity();
   static const int kCapacityFieldNumber = 5;
-  ::google::protobuf::uint32 capacity() const;
-  void set_capacity(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 capacity() const;
+  void set_capacity(::google::protobuf::int32 value);
 
   // optional string desc = 6;
   void clear_desc();
@@ -1163,11 +1163,11 @@ class lobby_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::std::string* release_bulletin();
   void set_allocated_bulletin(::std::string* bulletin);
 
-  // optional uint32 status = 8;
+  // optional int32 status = 8;
   void clear_status();
   static const int kStatusFieldNumber = 8;
-  ::google::protobuf::uint32 status() const;
-  void set_status(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 status() const;
+  void set_status(::google::protobuf::int32 value);
 
   // optional uint32 maintain_start = 9;
   void clear_maintain_start();
@@ -1209,11 +1209,11 @@ class lobby_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::internal::ArenaStringPtr ip_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint32 port_;
-  ::google::protobuf::uint32 occupied_;
-  ::google::protobuf::uint32 capacity_;
+  ::google::protobuf::int32 occupied_;
+  ::google::protobuf::int32 capacity_;
   ::google::protobuf::internal::ArenaStringPtr desc_;
   ::google::protobuf::internal::ArenaStringPtr bulletin_;
-  ::google::protobuf::uint32 status_;
+  ::google::protobuf::int32 status_;
   ::google::protobuf::uint32 maintain_start_;
   ::google::protobuf::uint32 maintain_end_;
   ::google::protobuf::uint32 time_zone_;
@@ -1308,16 +1308,16 @@ class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::int32 pos() const;
   void set_pos(::google::protobuf::int32 value);
 
-  // repeated uint32 pawns = 3;
+  // repeated int32 pawns = 3;
   int pawns_size() const;
   void clear_pawns();
   static const int kPawnsFieldNumber = 3;
-  ::google::protobuf::uint32 pawns(int index) const;
-  void set_pawns(int index, ::google::protobuf::uint32 value);
-  void add_pawns(::google::protobuf::uint32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  ::google::protobuf::int32 pawns(int index) const;
+  void set_pawns(int index, ::google::protobuf::int32 value);
+  void add_pawns(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
       pawns() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_pawns();
 
   // @@protoc_insertion_point(class_scope:proto3.bunch_t)
@@ -1329,7 +1329,7 @@ class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   bool _is_default_instance_;
   int type_;
   ::google::protobuf::int32 pos_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > pawns_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > pawns_;
   mutable int _pawns_cached_byte_size_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1409,28 +1409,28 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // repeated uint32 hands = 1;
+  // repeated int32 hands = 1;
   int hands_size() const;
   void clear_hands();
   static const int kHandsFieldNumber = 1;
-  ::google::protobuf::uint32 hands(int index) const;
-  void set_hands(int index, ::google::protobuf::uint32 value);
-  void add_hands(::google::protobuf::uint32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  ::google::protobuf::int32 hands(int index) const;
+  void set_hands(int index, ::google::protobuf::int32 value);
+  void add_hands(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
       hands() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_hands();
 
-  // repeated uint32 discards = 2;
+  // repeated int32 discards = 2;
   int discards_size() const;
   void clear_discards();
   static const int kDiscardsFieldNumber = 2;
-  ::google::protobuf::uint32 discards(int index) const;
-  void set_discards(int index, ::google::protobuf::uint32 value);
-  void add_discards(::google::protobuf::uint32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  ::google::protobuf::int32 discards(int index) const;
+  void set_discards(int index, ::google::protobuf::int32 value);
+  void add_discards(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
       discards() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_discards();
 
   // repeated .proto3.bunch_t bunch = 3;
@@ -1445,11 +1445,11 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
       bunch() const;
 
-  // optional uint32 selected_card = 4;
+  // optional int32 selected_card = 4;
   void clear_selected_card();
   static const int kSelectedCardFieldNumber = 4;
-  ::google::protobuf::uint32 selected_card() const;
-  void set_selected_card(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 selected_card() const;
+  void set_selected_card(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.game_data_t)
  private:
@@ -1458,12 +1458,12 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > hands_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > hands_;
   mutable int _hands_cached_byte_size_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > discards_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > discards_;
   mutable int _discards_cached_byte_size_;
   ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > bunch_;
-  ::google::protobuf::uint32 selected_card_;
+  ::google::protobuf::int32 selected_card_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2011,11 +2011,11 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 key = 2;
+  // optional int32 key = 2;
   void clear_key();
   static const int kKeyFieldNumber = 2;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 key() const;
+  void set_key(::google::protobuf::int32 value);
 
   // optional .proto3.player_t player = 3;
   bool has_player() const;
@@ -2049,7 +2049,7 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 key_;
+  ::google::protobuf::int32 key_;
   ::proto3::player_t* player_;
   ::proto3::lobby_t* lobby_;
   int result_;
@@ -2476,11 +2476,11 @@ class MsgNCCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 game_id = 2;
+  // optional int32 game_id = 2;
   void clear_game_id();
   static const int kGameIdFieldNumber = 2;
-  ::google::protobuf::uint32 game_id() const;
-  void set_game_id(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 game_id() const;
+  void set_game_id(::google::protobuf::int32 value);
 
   // optional .proto3.pb_enum result = 3;
   void clear_result();
@@ -2496,7 +2496,7 @@ class MsgNCCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 game_id_;
+  ::google::protobuf::int32 game_id_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2582,11 +2582,11 @@ class MsgCNJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 game_id = 2;
+  // optional int32 game_id = 2;
   void clear_game_id();
   static const int kGameIdFieldNumber = 2;
-  ::google::protobuf::uint32 game_id() const;
-  void set_game_id(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 game_id() const;
+  void set_game_id(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNJoin)
  private:
@@ -2596,7 +2596,7 @@ class MsgCNJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 game_id_;
+  ::google::protobuf::int32 game_id_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2998,11 +2998,11 @@ class MsgCNEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 key = 2;
+  // optional int32 key = 2;
   void clear_key();
   static const int kKeyFieldNumber = 2;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 key() const;
+  void set_key(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNEngage)
  private:
@@ -3012,7 +3012,7 @@ class MsgCNEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 key_;
+  ::google::protobuf::int32 key_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -3103,11 +3103,11 @@ class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::int32 pos() const;
   void set_pos(::google::protobuf::int32 value);
 
-  // optional uint32 key = 3;
+  // optional int32 key = 3;
   void clear_key();
   static const int kKeyFieldNumber = 3;
-  ::google::protobuf::uint32 key() const;
-  void set_key(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 key() const;
+  void set_key(::google::protobuf::int32 value);
 
   // optional .proto3.pb_enum result = 4;
   void clear_result();
@@ -3124,7 +3124,7 @@ class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
   bool _is_default_instance_;
   int mid_;
   ::google::protobuf::int32 pos_;
-  ::google::protobuf::uint32 key_;
+  ::google::protobuf::int32 key_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3222,52 +3222,52 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::int32 pos() const;
   void set_pos(::google::protobuf::int32 value);
 
-  // optional uint32 ante = 4;
+  // optional int32 ante = 4;
   void clear_ante();
   static const int kAnteFieldNumber = 4;
-  ::google::protobuf::uint32 ante() const;
-  void set_ante(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 ante() const;
+  void set_ante(::google::protobuf::int32 value);
 
-  // optional uint32 multiple = 5;
+  // optional int32 multiple = 5;
   void clear_multiple();
   static const int kMultipleFieldNumber = 5;
-  ::google::protobuf::uint32 multiple() const;
-  void set_multiple(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 multiple() const;
+  void set_multiple(::google::protobuf::int32 value);
 
-  // repeated uint32 hands = 6;
+  // repeated int32 hands = 6;
   int hands_size() const;
   void clear_hands();
   static const int kHandsFieldNumber = 6;
-  ::google::protobuf::uint32 hands(int index) const;
-  void set_hands(int index, ::google::protobuf::uint32 value);
-  void add_hands(::google::protobuf::uint32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  ::google::protobuf::int32 hands(int index) const;
+  void set_hands(int index, ::google::protobuf::int32 value);
+  void add_hands(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
       hands() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_hands();
 
-  // repeated uint32 bottom = 7;
+  // repeated int32 bottom = 7;
   int bottom_size() const;
   void clear_bottom();
   static const int kBottomFieldNumber = 7;
-  ::google::protobuf::uint32 bottom(int index) const;
-  void set_bottom(int index, ::google::protobuf::uint32 value);
-  void add_bottom(::google::protobuf::uint32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  ::google::protobuf::int32 bottom(int index) const;
+  void set_bottom(int index, ::google::protobuf::int32 value);
+  void add_bottom(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
       bottom() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_bottom();
 
-  // repeated uint32 count = 8;
+  // repeated int32 count = 8;
   int count_size() const;
   void clear_count();
   static const int kCountFieldNumber = 8;
-  ::google::protobuf::uint32 count(int index) const;
-  void set_count(int index, ::google::protobuf::uint32 value);
-  void add_count(::google::protobuf::uint32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+  ::google::protobuf::int32 count(int index) const;
+  void set_count(int index, ::google::protobuf::int32 value);
+  void add_count(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
       count() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_count();
 
   // optional .proto3.pb_enum result = 9;
@@ -3286,14 +3286,14 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   int mid_;
   ::google::protobuf::int32 banker_;
   ::google::protobuf::int32 pos_;
-  ::google::protobuf::uint32 ante_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > hands_;
+  ::google::protobuf::int32 ante_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > hands_;
   mutable int _hands_cached_byte_size_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > bottom_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > bottom_;
   mutable int _bottom_cached_byte_size_;
-  ::google::protobuf::uint32 multiple_;
+  ::google::protobuf::int32 multiple_;
   int result_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > count_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > count_;
   mutable int _count_cached_byte_size_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3807,11 +3807,11 @@ class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::google::protobuf::int32 pos() const;
   void set_pos(::google::protobuf::int32 value);
 
-  // optional uint32 card = 3;
+  // optional int32 card = 3;
   void clear_card();
   static const int kCardFieldNumber = 3;
-  ::google::protobuf::uint32 card() const;
-  void set_card(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 card() const;
+  void set_card(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.MsgNCDraw)
  private:
@@ -3822,7 +3822,7 @@ class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   bool _is_default_instance_;
   int mid_;
   ::google::protobuf::int32 pos_;
-  ::google::protobuf::uint32 card_;
+  ::google::protobuf::int32 card_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -4303,11 +4303,11 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 winner = 2;
+  // optional int32 winner = 2;
   void clear_winner();
   static const int kWinnerFieldNumber = 2;
-  ::google::protobuf::uint32 winner() const;
-  void set_winner(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 winner() const;
+  void set_winner(::google::protobuf::int32 value);
 
   // repeated .proto3.player_t play = 3;
   int play_size() const;
@@ -4347,7 +4347,7 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 winner_;
+  ::google::protobuf::int32 winner_;
   ::google::protobuf::RepeatedPtrField< ::proto3::player_t > play_;
   ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hands_;
   int result_;
@@ -4701,15 +4701,15 @@ inline void key_value::set_ikey(::proto3::pb_enum value) {
   // @@protoc_insertion_point(field_set:proto3.key_value.ikey)
 }
 
-// optional uint32 ivalue = 4;
+// optional int32 ivalue = 4;
 inline void key_value::clear_ivalue() {
-  ivalue_ = 0u;
+  ivalue_ = 0;
 }
-inline ::google::protobuf::uint32 key_value::ivalue() const {
+inline ::google::protobuf::int32 key_value::ivalue() const {
   // @@protoc_insertion_point(field_get:proto3.key_value.ivalue)
   return ivalue_;
 }
-inline void key_value::set_ivalue(::google::protobuf::uint32 value) {
+inline void key_value::set_ivalue(::google::protobuf::int32 value) {
   
   ivalue_ = value;
   // @@protoc_insertion_point(field_set:proto3.key_value.ivalue)
@@ -4763,15 +4763,15 @@ inline void user_t::set_allocated_uid(::std::string* uid) {
   // @@protoc_insertion_point(field_set_allocated:proto3.user_t.uid)
 }
 
-// optional uint32 flag = 2;
+// optional int32 flag = 2;
 inline void user_t::clear_flag() {
-  flag_ = 0u;
+  flag_ = 0;
 }
-inline ::google::protobuf::uint32 user_t::flag() const {
+inline ::google::protobuf::int32 user_t::flag() const {
   // @@protoc_insertion_point(field_get:proto3.user_t.flag)
   return flag_;
 }
-inline void user_t::set_flag(::google::protobuf::uint32 value) {
+inline void user_t::set_flag(::google::protobuf::int32 value) {
   
   flag_ = value;
   // @@protoc_insertion_point(field_set:proto3.user_t.flag)
@@ -4923,29 +4923,29 @@ inline void user_t::set_allocated_pswd(::std::string* pswd) {
   // @@protoc_insertion_point(field_set_allocated:proto3.user_t.pswd)
 }
 
-// optional uint32 gender = 7;
+// optional int32 gender = 7;
 inline void user_t::clear_gender() {
-  gender_ = 0u;
+  gender_ = 0;
 }
-inline ::google::protobuf::uint32 user_t::gender() const {
+inline ::google::protobuf::int32 user_t::gender() const {
   // @@protoc_insertion_point(field_get:proto3.user_t.gender)
   return gender_;
 }
-inline void user_t::set_gender(::google::protobuf::uint32 value) {
+inline void user_t::set_gender(::google::protobuf::int32 value) {
   
   gender_ = value;
   // @@protoc_insertion_point(field_set:proto3.user_t.gender)
 }
 
-// optional uint32 age = 8;
+// optional int32 age = 8;
 inline void user_t::clear_age() {
-  age_ = 0u;
+  age_ = 0;
 }
-inline ::google::protobuf::uint32 user_t::age() const {
+inline ::google::protobuf::int32 user_t::age() const {
   // @@protoc_insertion_point(field_get:proto3.user_t.age)
   return age_;
 }
-inline void user_t::set_age(::google::protobuf::uint32 value) {
+inline void user_t::set_age(::google::protobuf::int32 value) {
   
   age_ = value;
   // @@protoc_insertion_point(field_set:proto3.user_t.age)
@@ -5057,57 +5057,57 @@ inline void player_t::set_pid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.player_t.pid)
 }
 
-// optional uint32 level = 3;
+// optional int32 level = 3;
 inline void player_t::clear_level() {
-  level_ = 0u;
+  level_ = 0;
 }
-inline ::google::protobuf::uint32 player_t::level() const {
+inline ::google::protobuf::int32 player_t::level() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.level)
   return level_;
 }
-inline void player_t::set_level(::google::protobuf::uint32 value) {
+inline void player_t::set_level(::google::protobuf::int32 value) {
   
   level_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.level)
 }
 
-// optional uint32 xp = 4;
+// optional int32 xp = 4;
 inline void player_t::clear_xp() {
-  xp_ = 0u;
+  xp_ = 0;
 }
-inline ::google::protobuf::uint32 player_t::xp() const {
+inline ::google::protobuf::int32 player_t::xp() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.xp)
   return xp_;
 }
-inline void player_t::set_xp(::google::protobuf::uint32 value) {
+inline void player_t::set_xp(::google::protobuf::int32 value) {
   
   xp_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.xp)
 }
 
-// optional uint32 currency = 5;
+// optional int32 currency = 5;
 inline void player_t::clear_currency() {
-  currency_ = 0u;
+  currency_ = 0;
 }
-inline ::google::protobuf::uint32 player_t::currency() const {
+inline ::google::protobuf::int32 player_t::currency() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.currency)
   return currency_;
 }
-inline void player_t::set_currency(::google::protobuf::uint32 value) {
+inline void player_t::set_currency(::google::protobuf::int32 value) {
   
   currency_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.currency)
 }
 
-// optional uint32 energy = 6;
+// optional int32 energy = 6;
 inline void player_t::clear_energy() {
-  energy_ = 0u;
+  energy_ = 0;
 }
-inline ::google::protobuf::uint32 player_t::energy() const {
+inline ::google::protobuf::int32 player_t::energy() const {
   // @@protoc_insertion_point(field_get:proto3.player_t.energy)
   return energy_;
 }
-inline void player_t::set_energy(::google::protobuf::uint32 value) {
+inline void player_t::set_energy(::google::protobuf::int32 value) {
   
   energy_ = value;
   // @@protoc_insertion_point(field_set:proto3.player_t.energy)
@@ -5221,71 +5221,71 @@ inline void win_t::set_allocated_uid(::std::string* uid) {
   // @@protoc_insertion_point(field_set_allocated:proto3.win_t.uid)
 }
 
-// optional uint32 gid = 2;
+// optional int32 gid = 2;
 inline void win_t::clear_gid() {
-  gid_ = 0u;
+  gid_ = 0;
 }
-inline ::google::protobuf::uint32 win_t::gid() const {
+inline ::google::protobuf::int32 win_t::gid() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.gid)
   return gid_;
 }
-inline void win_t::set_gid(::google::protobuf::uint32 value) {
+inline void win_t::set_gid(::google::protobuf::int32 value) {
   
   gid_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.gid)
 }
 
-// optional uint32 win = 3;
+// optional int32 win = 3;
 inline void win_t::clear_win() {
-  win_ = 0u;
+  win_ = 0;
 }
-inline ::google::protobuf::uint32 win_t::win() const {
+inline ::google::protobuf::int32 win_t::win() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.win)
   return win_;
 }
-inline void win_t::set_win(::google::protobuf::uint32 value) {
+inline void win_t::set_win(::google::protobuf::int32 value) {
   
   win_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.win)
 }
 
-// optional uint32 lose = 4;
+// optional int32 lose = 4;
 inline void win_t::clear_lose() {
-  lose_ = 0u;
+  lose_ = 0;
 }
-inline ::google::protobuf::uint32 win_t::lose() const {
+inline ::google::protobuf::int32 win_t::lose() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.lose)
   return lose_;
 }
-inline void win_t::set_lose(::google::protobuf::uint32 value) {
+inline void win_t::set_lose(::google::protobuf::int32 value) {
   
   lose_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.lose)
 }
 
-// optional uint32 draw = 5;
+// optional int32 draw = 5;
 inline void win_t::clear_draw() {
-  draw_ = 0u;
+  draw_ = 0;
 }
-inline ::google::protobuf::uint32 win_t::draw() const {
+inline ::google::protobuf::int32 win_t::draw() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.draw)
   return draw_;
 }
-inline void win_t::set_draw(::google::protobuf::uint32 value) {
+inline void win_t::set_draw(::google::protobuf::int32 value) {
   
   draw_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.draw)
 }
 
-// optional uint32 score = 6;
+// optional int32 score = 6;
 inline void win_t::clear_score() {
-  score_ = 0u;
+  score_ = 0;
 }
-inline ::google::protobuf::uint32 win_t::score() const {
+inline ::google::protobuf::int32 win_t::score() const {
   // @@protoc_insertion_point(field_get:proto3.win_t.score)
   return score_;
 }
-inline void win_t::set_score(::google::protobuf::uint32 value) {
+inline void win_t::set_score(::google::protobuf::int32 value) {
   
   score_ = value;
   // @@protoc_insertion_point(field_set:proto3.win_t.score)
@@ -5353,15 +5353,15 @@ inline void achv_t::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:proto3.achv_t.name)
 }
 
-// optional uint32 value = 3;
+// optional int32 value = 3;
 inline void achv_t::clear_value() {
-  value_ = 0u;
+  value_ = 0;
 }
-inline ::google::protobuf::uint32 achv_t::value() const {
+inline ::google::protobuf::int32 achv_t::value() const {
   // @@protoc_insertion_point(field_get:proto3.achv_t.value)
   return value_;
 }
-inline void achv_t::set_value(::google::protobuf::uint32 value) {
+inline void achv_t::set_value(::google::protobuf::int32 value) {
   
   value_ = value;
   // @@protoc_insertion_point(field_set:proto3.achv_t.value)
@@ -5371,15 +5371,15 @@ inline void achv_t::set_value(::google::protobuf::uint32 value) {
 
 // game_t
 
-// optional uint32 id = 1;
+// optional int32 id = 1;
 inline void game_t::clear_id() {
-  id_ = 0u;
+  id_ = 0;
 }
-inline ::google::protobuf::uint32 game_t::id() const {
+inline ::google::protobuf::int32 game_t::id() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.id)
   return id_;
 }
-inline void game_t::set_id(::google::protobuf::uint32 value) {
+inline void game_t::set_id(::google::protobuf::int32 value) {
   
   id_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.id)
@@ -5457,29 +5457,29 @@ inline void game_t::set_port(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.port)
 }
 
-// optional uint32 occupied = 5;
+// optional int32 occupied = 5;
 inline void game_t::clear_occupied() {
-  occupied_ = 0u;
+  occupied_ = 0;
 }
-inline ::google::protobuf::uint32 game_t::occupied() const {
+inline ::google::protobuf::int32 game_t::occupied() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.occupied)
   return occupied_;
 }
-inline void game_t::set_occupied(::google::protobuf::uint32 value) {
+inline void game_t::set_occupied(::google::protobuf::int32 value) {
   
   occupied_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.occupied)
 }
 
-// optional uint32 capacity = 6;
+// optional int32 capacity = 6;
 inline void game_t::clear_capacity() {
-  capacity_ = 0u;
+  capacity_ = 0;
 }
-inline ::google::protobuf::uint32 game_t::capacity() const {
+inline ::google::protobuf::int32 game_t::capacity() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.capacity)
   return capacity_;
 }
-inline void game_t::set_capacity(::google::protobuf::uint32 value) {
+inline void game_t::set_capacity(::google::protobuf::int32 value) {
   
   capacity_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.capacity)
@@ -5529,15 +5529,15 @@ inline void game_t::set_allocated_desc(::std::string* desc) {
   // @@protoc_insertion_point(field_set_allocated:proto3.game_t.desc)
 }
 
-// optional uint32 status = 8;
+// optional int32 status = 8;
 inline void game_t::clear_status() {
-  status_ = 0u;
+  status_ = 0;
 }
-inline ::google::protobuf::uint32 game_t::status() const {
+inline ::google::protobuf::int32 game_t::status() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.status)
   return status_;
 }
-inline void game_t::set_status(::google::protobuf::uint32 value) {
+inline void game_t::set_status(::google::protobuf::int32 value) {
   
   status_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.status)
@@ -5661,29 +5661,29 @@ inline void lobby_t::set_port(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.lobby_t.port)
 }
 
-// optional uint32 occupied = 4;
+// optional int32 occupied = 4;
 inline void lobby_t::clear_occupied() {
-  occupied_ = 0u;
+  occupied_ = 0;
 }
-inline ::google::protobuf::uint32 lobby_t::occupied() const {
+inline ::google::protobuf::int32 lobby_t::occupied() const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.occupied)
   return occupied_;
 }
-inline void lobby_t::set_occupied(::google::protobuf::uint32 value) {
+inline void lobby_t::set_occupied(::google::protobuf::int32 value) {
   
   occupied_ = value;
   // @@protoc_insertion_point(field_set:proto3.lobby_t.occupied)
 }
 
-// optional uint32 capacity = 5;
+// optional int32 capacity = 5;
 inline void lobby_t::clear_capacity() {
-  capacity_ = 0u;
+  capacity_ = 0;
 }
-inline ::google::protobuf::uint32 lobby_t::capacity() const {
+inline ::google::protobuf::int32 lobby_t::capacity() const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.capacity)
   return capacity_;
 }
-inline void lobby_t::set_capacity(::google::protobuf::uint32 value) {
+inline void lobby_t::set_capacity(::google::protobuf::int32 value) {
   
   capacity_ = value;
   // @@protoc_insertion_point(field_set:proto3.lobby_t.capacity)
@@ -5777,15 +5777,15 @@ inline void lobby_t::set_allocated_bulletin(::std::string* bulletin) {
   // @@protoc_insertion_point(field_set_allocated:proto3.lobby_t.bulletin)
 }
 
-// optional uint32 status = 8;
+// optional int32 status = 8;
 inline void lobby_t::clear_status() {
-  status_ = 0u;
+  status_ = 0;
 }
-inline ::google::protobuf::uint32 lobby_t::status() const {
+inline ::google::protobuf::int32 lobby_t::status() const {
   // @@protoc_insertion_point(field_get:proto3.lobby_t.status)
   return status_;
 }
-inline void lobby_t::set_status(::google::protobuf::uint32 value) {
+inline void lobby_t::set_status(::google::protobuf::int32 value) {
   
   status_ = value;
   // @@protoc_insertion_point(field_set:proto3.lobby_t.status)
@@ -5895,31 +5895,31 @@ inline void bunch_t::set_pos(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.bunch_t.pos)
 }
 
-// repeated uint32 pawns = 3;
+// repeated int32 pawns = 3;
 inline int bunch_t::pawns_size() const {
   return pawns_.size();
 }
 inline void bunch_t::clear_pawns() {
   pawns_.Clear();
 }
-inline ::google::protobuf::uint32 bunch_t::pawns(int index) const {
+inline ::google::protobuf::int32 bunch_t::pawns(int index) const {
   // @@protoc_insertion_point(field_get:proto3.bunch_t.pawns)
   return pawns_.Get(index);
 }
-inline void bunch_t::set_pawns(int index, ::google::protobuf::uint32 value) {
+inline void bunch_t::set_pawns(int index, ::google::protobuf::int32 value) {
   pawns_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.bunch_t.pawns)
 }
-inline void bunch_t::add_pawns(::google::protobuf::uint32 value) {
+inline void bunch_t::add_pawns(::google::protobuf::int32 value) {
   pawns_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.bunch_t.pawns)
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 bunch_t::pawns() const {
   // @@protoc_insertion_point(field_list:proto3.bunch_t.pawns)
   return pawns_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 bunch_t::mutable_pawns() {
   // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.pawns)
   return &pawns_;
@@ -5929,61 +5929,61 @@ bunch_t::mutable_pawns() {
 
 // game_data_t
 
-// repeated uint32 hands = 1;
+// repeated int32 hands = 1;
 inline int game_data_t::hands_size() const {
   return hands_.size();
 }
 inline void game_data_t::clear_hands() {
   hands_.Clear();
 }
-inline ::google::protobuf::uint32 game_data_t::hands(int index) const {
+inline ::google::protobuf::int32 game_data_t::hands(int index) const {
   // @@protoc_insertion_point(field_get:proto3.game_data_t.hands)
   return hands_.Get(index);
 }
-inline void game_data_t::set_hands(int index, ::google::protobuf::uint32 value) {
+inline void game_data_t::set_hands(int index, ::google::protobuf::int32 value) {
   hands_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.game_data_t.hands)
 }
-inline void game_data_t::add_hands(::google::protobuf::uint32 value) {
+inline void game_data_t::add_hands(::google::protobuf::int32 value) {
   hands_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.game_data_t.hands)
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 game_data_t::hands() const {
   // @@protoc_insertion_point(field_list:proto3.game_data_t.hands)
   return hands_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 game_data_t::mutable_hands() {
   // @@protoc_insertion_point(field_mutable_list:proto3.game_data_t.hands)
   return &hands_;
 }
 
-// repeated uint32 discards = 2;
+// repeated int32 discards = 2;
 inline int game_data_t::discards_size() const {
   return discards_.size();
 }
 inline void game_data_t::clear_discards() {
   discards_.Clear();
 }
-inline ::google::protobuf::uint32 game_data_t::discards(int index) const {
+inline ::google::protobuf::int32 game_data_t::discards(int index) const {
   // @@protoc_insertion_point(field_get:proto3.game_data_t.discards)
   return discards_.Get(index);
 }
-inline void game_data_t::set_discards(int index, ::google::protobuf::uint32 value) {
+inline void game_data_t::set_discards(int index, ::google::protobuf::int32 value) {
   discards_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.game_data_t.discards)
 }
-inline void game_data_t::add_discards(::google::protobuf::uint32 value) {
+inline void game_data_t::add_discards(::google::protobuf::int32 value) {
   discards_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.game_data_t.discards)
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 game_data_t::discards() const {
   // @@protoc_insertion_point(field_list:proto3.game_data_t.discards)
   return discards_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 game_data_t::mutable_discards() {
   // @@protoc_insertion_point(field_mutable_list:proto3.game_data_t.discards)
   return &discards_;
@@ -6019,15 +6019,15 @@ game_data_t::bunch() const {
   return bunch_;
 }
 
-// optional uint32 selected_card = 4;
+// optional int32 selected_card = 4;
 inline void game_data_t::clear_selected_card() {
-  selected_card_ = 0u;
+  selected_card_ = 0;
 }
-inline ::google::protobuf::uint32 game_data_t::selected_card() const {
+inline ::google::protobuf::int32 game_data_t::selected_card() const {
   // @@protoc_insertion_point(field_get:proto3.game_data_t.selected_card)
   return selected_card_;
 }
-inline void game_data_t::set_selected_card(::google::protobuf::uint32 value) {
+inline void game_data_t::set_selected_card(::google::protobuf::int32 value) {
   
   selected_card_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_data_t.selected_card)
@@ -6395,15 +6395,15 @@ inline void MsgLCEnter::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
 }
 
-// optional uint32 key = 2;
+// optional int32 key = 2;
 inline void MsgLCEnter::clear_key() {
-  key_ = 0u;
+  key_ = 0;
 }
-inline ::google::protobuf::uint32 MsgLCEnter::key() const {
+inline ::google::protobuf::int32 MsgLCEnter::key() const {
   // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.key)
   return key_;
 }
-inline void MsgLCEnter::set_key(::google::protobuf::uint32 value) {
+inline void MsgLCEnter::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.key)
@@ -6751,15 +6751,15 @@ inline void MsgNCCreate::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCCreate.mid)
 }
 
-// optional uint32 game_id = 2;
+// optional int32 game_id = 2;
 inline void MsgNCCreate::clear_game_id() {
-  game_id_ = 0u;
+  game_id_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCCreate::game_id() const {
+inline ::google::protobuf::int32 MsgNCCreate::game_id() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCCreate.game_id)
   return game_id_;
 }
-inline void MsgNCCreate::set_game_id(::google::protobuf::uint32 value) {
+inline void MsgNCCreate::set_game_id(::google::protobuf::int32 value) {
   
   game_id_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCCreate.game_id)
@@ -6797,15 +6797,15 @@ inline void MsgCNJoin::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.mid)
 }
 
-// optional uint32 game_id = 2;
+// optional int32 game_id = 2;
 inline void MsgCNJoin::clear_game_id() {
-  game_id_ = 0u;
+  game_id_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNJoin::game_id() const {
+inline ::google::protobuf::int32 MsgCNJoin::game_id() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNJoin.game_id)
   return game_id_;
 }
-inline void MsgCNJoin::set_game_id(::google::protobuf::uint32 value) {
+inline void MsgCNJoin::set_game_id(::google::protobuf::int32 value) {
   
   game_id_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNJoin.game_id)
@@ -6969,15 +6969,15 @@ inline void MsgCNEngage::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.mid)
 }
 
-// optional uint32 key = 2;
+// optional int32 key = 2;
 inline void MsgCNEngage::clear_key() {
-  key_ = 0u;
+  key_ = 0;
 }
-inline ::google::protobuf::uint32 MsgCNEngage::key() const {
+inline ::google::protobuf::int32 MsgCNEngage::key() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.key)
   return key_;
 }
-inline void MsgCNEngage::set_key(::google::protobuf::uint32 value) {
+inline void MsgCNEngage::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.key)
@@ -7015,15 +7015,15 @@ inline void MsgNCEngage::set_pos(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.pos)
 }
 
-// optional uint32 key = 3;
+// optional int32 key = 3;
 inline void MsgNCEngage::clear_key() {
-  key_ = 0u;
+  key_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCEngage::key() const {
+inline ::google::protobuf::int32 MsgNCEngage::key() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.key)
   return key_;
 }
-inline void MsgNCEngage::set_key(::google::protobuf::uint32 value) {
+inline void MsgNCEngage::set_key(::google::protobuf::int32 value) {
   
   key_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.key)
@@ -7089,119 +7089,119 @@ inline void MsgNCStart::set_pos(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.pos)
 }
 
-// optional uint32 ante = 4;
+// optional int32 ante = 4;
 inline void MsgNCStart::clear_ante() {
-  ante_ = 0u;
+  ante_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCStart::ante() const {
+inline ::google::protobuf::int32 MsgNCStart::ante() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.ante)
   return ante_;
 }
-inline void MsgNCStart::set_ante(::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_ante(::google::protobuf::int32 value) {
   
   ante_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.ante)
 }
 
-// optional uint32 multiple = 5;
+// optional int32 multiple = 5;
 inline void MsgNCStart::clear_multiple() {
-  multiple_ = 0u;
+  multiple_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCStart::multiple() const {
+inline ::google::protobuf::int32 MsgNCStart::multiple() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.multiple)
   return multiple_;
 }
-inline void MsgNCStart::set_multiple(::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_multiple(::google::protobuf::int32 value) {
   
   multiple_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.multiple)
 }
 
-// repeated uint32 hands = 6;
+// repeated int32 hands = 6;
 inline int MsgNCStart::hands_size() const {
   return hands_.size();
 }
 inline void MsgNCStart::clear_hands() {
   hands_.Clear();
 }
-inline ::google::protobuf::uint32 MsgNCStart::hands(int index) const {
+inline ::google::protobuf::int32 MsgNCStart::hands(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.hands)
   return hands_.Get(index);
 }
-inline void MsgNCStart::set_hands(int index, ::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_hands(int index, ::google::protobuf::int32 value) {
   hands_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.hands)
 }
-inline void MsgNCStart::add_hands(::google::protobuf::uint32 value) {
+inline void MsgNCStart::add_hands(::google::protobuf::int32 value) {
   hands_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.hands)
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::hands() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.hands)
   return hands_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_hands() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.hands)
   return &hands_;
 }
 
-// repeated uint32 bottom = 7;
+// repeated int32 bottom = 7;
 inline int MsgNCStart::bottom_size() const {
   return bottom_.size();
 }
 inline void MsgNCStart::clear_bottom() {
   bottom_.Clear();
 }
-inline ::google::protobuf::uint32 MsgNCStart::bottom(int index) const {
+inline ::google::protobuf::int32 MsgNCStart::bottom(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.bottom)
   return bottom_.Get(index);
 }
-inline void MsgNCStart::set_bottom(int index, ::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_bottom(int index, ::google::protobuf::int32 value) {
   bottom_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.bottom)
 }
-inline void MsgNCStart::add_bottom(::google::protobuf::uint32 value) {
+inline void MsgNCStart::add_bottom(::google::protobuf::int32 value) {
   bottom_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.bottom)
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::bottom() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.bottom)
   return bottom_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_bottom() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.bottom)
   return &bottom_;
 }
 
-// repeated uint32 count = 8;
+// repeated int32 count = 8;
 inline int MsgNCStart::count_size() const {
   return count_.size();
 }
 inline void MsgNCStart::clear_count() {
   count_.Clear();
 }
-inline ::google::protobuf::uint32 MsgNCStart::count(int index) const {
+inline ::google::protobuf::int32 MsgNCStart::count(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.count)
   return count_.Get(index);
 }
-inline void MsgNCStart::set_count(int index, ::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_count(int index, ::google::protobuf::int32 value) {
   count_.Set(index, value);
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.count)
 }
-inline void MsgNCStart::add_count(::google::protobuf::uint32 value) {
+inline void MsgNCStart::add_count(::google::protobuf::int32 value) {
   count_.Add(value);
   // @@protoc_insertion_point(field_add:proto3.MsgNCStart.count)
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >&
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
 MsgNCStart::count() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCStart.count)
   return count_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::uint32 >*
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_count() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.count)
   return &count_;
@@ -7521,15 +7521,15 @@ inline void MsgNCDraw::set_pos(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.pos)
 }
 
-// optional uint32 card = 3;
+// optional int32 card = 3;
 inline void MsgNCDraw::clear_card() {
-  card_ = 0u;
+  card_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDraw::card() const {
+inline ::google::protobuf::int32 MsgNCDraw::card() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.card)
   return card_;
 }
-inline void MsgNCDraw::set_card(::google::protobuf::uint32 value) {
+inline void MsgNCDraw::set_card(::google::protobuf::int32 value) {
   
   card_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.card)
@@ -7681,15 +7681,15 @@ inline void MsgNCSettle::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.mid)
 }
 
-// optional uint32 winner = 2;
+// optional int32 winner = 2;
 inline void MsgNCSettle::clear_winner() {
-  winner_ = 0u;
+  winner_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCSettle::winner() const {
+inline ::google::protobuf::int32 MsgNCSettle::winner() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.winner)
   return winner_;
 }
-inline void MsgNCSettle::set_winner(::google::protobuf::uint32 value) {
+inline void MsgNCSettle::set_winner(::google::protobuf::int32 value) {
   
   winner_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.winner)

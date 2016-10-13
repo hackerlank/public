@@ -21,7 +21,7 @@ public class DoudeZhuAIController:PlayerController {
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				
 				bunch_t bunch=null;
-				var hands=new uint[player.gameData.Hands.Count];
+				var hands=new int[player.gameData.Hands.Count];
 				player.gameData.Hands.CopyTo(hands,0);
 				var hints=Main.Instance.gameController.Rule.Hint(player,hands,msgDiscard.Bunch);
 				if(hints.Count>0)

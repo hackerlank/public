@@ -11,7 +11,7 @@ public class MahJongPanel : GamePanel {
 	// logic
 	// ----------------------------------------------
 	override public string CardPrefab{get{return "Mahjong";}}
-	override public string Id2File(uint color,uint value){
+	override public string Id2File(int color,int value){
 		if(Rule!=null){
 			color-=1;
 			string[] Colors={"tong","tiao","wan"};
@@ -106,7 +106,7 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected void draw(uint id,int pos){
+	override protected void draw(int id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -157,9 +157,9 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 	
-	bool showHints(uint card,bool bDraw){
+	bool showHints(int card,bool bDraw){
 		var player=Main.Instance.MainPlayer;
-		var hands=new uint[player.gameData.Hands.Count];
+		var hands=new int[player.gameData.Hands.Count];
 		player.gameData.Hands.CopyTo(hands,0);
 
 		var bunch=new bunch_t();
@@ -187,7 +187,7 @@ public class MahJongPanel : GamePanel {
 		return _hints.Count>0;
 	}
 
-	void pass(uint card){
+	void pass(int card){
 		//pass discard or draw
 		var player=Main.Instance.MainPlayer;
 		var omsgMeld=new MsgCNMeld();
@@ -204,7 +204,7 @@ public class MahJongPanel : GamePanel {
 	
 	override protected void sortHands(){
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
-		var ids=new List<uint>();
+		var ids=new List<int>();
 		foreach(var card in hands)ids.Add(card.Value);
 		ids.Sort(Rule.comparision);
 		foreach(var card in hands){
@@ -231,7 +231,7 @@ public class MahJongPanel : GamePanel {
 		files.Add("zhong");
 		files.Add("fa");
 		files.Add("bai");
-		for(uint k=1;k<=3;++k)for(uint i=1;i<=9;++i)
+		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
 	}
