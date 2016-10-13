@@ -6,7 +6,7 @@ using Proto3;
 public class DoudeZhuRule: GameRule {
 
 	public override int MaxCards{get{return 54;}}
-	public override uint MaxPlayer{get{return 3;}}
+	public override int MaxPlayer{get{return 3;}}
 
 	protected override void deal(MsgNCStart msg){
 		uint id=0;

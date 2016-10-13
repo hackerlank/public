@@ -10,7 +10,7 @@ public class CreatePanel : MonoBehaviour {
 	[HideInInspector]
 	public GameIcon	Icon;
 
-	uint nRobots=0;
+	int nRobots=0;
 	
 	public void OnCreate(){
 		StartCoroutine(createCo());

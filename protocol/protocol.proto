@@ -163,7 +163,7 @@ repeated game_t games   =12;
 message bunch_t{
 
 pb_enum type            =1;
-uint32 pos              =2;
+int32 pos               =2; //easy to use -1
 repeated uint32 pawns   =3;
 };
 
@@ -323,7 +323,7 @@ pb_msg mid              =1;
 message MsgNCReady{
 
 pb_msg mid              =1;
-uint32 pos              =2;
+int32 pos               =2;
 pb_enum result          =3;
 }
 
@@ -336,7 +336,7 @@ uint32 key              =2;
 message MsgNCEngage{
 
 pb_msg mid              =1;
-uint32 pos              =2;
+int32 pos               =2;
 uint32 key              =3;
 pb_enum result          =4;
 }
@@ -344,8 +344,8 @@ pb_enum result          =4;
 message MsgNCStart{
 
 pb_msg mid              =1;
-uint32 banker           =2;
-uint32 pos              =3;
+int32 banker            =2;
+int32 pos               =3;
 uint32 ante             =4;
 uint32 multiple         =5;
 repeated uint32 hands   =6;
@@ -383,7 +383,7 @@ pb_enum result			=3;
 message MsgNCDraw{
 
 pb_msg mid				=1;
-uint32 pos              =2;
+int32 pos               =2;
 uint32 card             =3;
 };
 
@@ -395,7 +395,7 @@ pb_msg mid				=1;
 message MsgNCDismissSync{
 
 pb_msg mid				=1;
-uint32 pos              =2;
+int32 pos               =2;
 pb_enum result			=3;
 };
 
@@ -407,7 +407,7 @@ pb_msg mid				=1;
 message MsgNCDismissAck{
 
 pb_msg mid				=1;
-uint32 pos              =2;
+int32 pos               =2;
 pb_enum result			=3;
 };
 

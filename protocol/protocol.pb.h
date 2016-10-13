@@ -1302,11 +1302,11 @@ class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::proto3::pb_enum type() const;
   void set_type(::proto3::pb_enum value);
 
-  // optional uint32 pos = 2;
+  // optional int32 pos = 2;
   void clear_pos();
   static const int kPosFieldNumber = 2;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // repeated uint32 pawns = 3;
   int pawns_size() const;
@@ -1328,7 +1328,7 @@ class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
 
   bool _is_default_instance_;
   int type_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 pos_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > pawns_;
   mutable int _pawns_cached_byte_size_;
   mutable int _cached_size_;
@@ -2892,11 +2892,11 @@ class MsgNCReady : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 pos = 2;
+  // optional int32 pos = 2;
   void clear_pos();
   static const int kPosFieldNumber = 2;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // optional .proto3.pb_enum result = 3;
   void clear_result();
@@ -2912,7 +2912,7 @@ class MsgNCReady : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 pos_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3097,11 +3097,11 @@ class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 pos = 2;
+  // optional int32 pos = 2;
   void clear_pos();
   static const int kPosFieldNumber = 2;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // optional uint32 key = 3;
   void clear_key();
@@ -3123,7 +3123,7 @@ class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 pos_;
   ::google::protobuf::uint32 key_;
   int result_;
   mutable int _cached_size_;
@@ -3210,17 +3210,17 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 banker = 2;
+  // optional int32 banker = 2;
   void clear_banker();
   static const int kBankerFieldNumber = 2;
-  ::google::protobuf::uint32 banker() const;
-  void set_banker(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 banker() const;
+  void set_banker(::google::protobuf::int32 value);
 
-  // optional uint32 pos = 3;
+  // optional int32 pos = 3;
   void clear_pos();
   static const int kPosFieldNumber = 3;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // optional uint32 ante = 4;
   void clear_ante();
@@ -3284,8 +3284,8 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 banker_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 banker_;
+  ::google::protobuf::int32 pos_;
   ::google::protobuf::uint32 ante_;
   ::google::protobuf::RepeatedField< ::google::protobuf::uint32 > hands_;
   mutable int _hands_cached_byte_size_;
@@ -3801,11 +3801,11 @@ class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 pos = 2;
+  // optional int32 pos = 2;
   void clear_pos();
   static const int kPosFieldNumber = 2;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // optional uint32 card = 3;
   void clear_card();
@@ -3821,7 +3821,7 @@ class MsgNCDraw : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 pos_;
   ::google::protobuf::uint32 card_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3999,11 +3999,11 @@ class MsgNCDismissSync : public ::google::protobuf::MessageLite /* @@protoc_inse
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 pos = 2;
+  // optional int32 pos = 2;
   void clear_pos();
   static const int kPosFieldNumber = 2;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // optional .proto3.pb_enum result = 3;
   void clear_result();
@@ -4019,7 +4019,7 @@ class MsgNCDismissSync : public ::google::protobuf::MessageLite /* @@protoc_inse
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 pos_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -4197,11 +4197,11 @@ class MsgNCDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional uint32 pos = 2;
+  // optional int32 pos = 2;
   void clear_pos();
   static const int kPosFieldNumber = 2;
-  ::google::protobuf::uint32 pos() const;
-  void set_pos(::google::protobuf::uint32 value);
+  ::google::protobuf::int32 pos() const;
+  void set_pos(::google::protobuf::int32 value);
 
   // optional .proto3.pb_enum result = 3;
   void clear_result();
@@ -4217,7 +4217,7 @@ class MsgNCDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
 
   bool _is_default_instance_;
   int mid_;
-  ::google::protobuf::uint32 pos_;
+  ::google::protobuf::int32 pos_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -5881,15 +5881,15 @@ inline void bunch_t::set_type(::proto3::pb_enum value) {
   // @@protoc_insertion_point(field_set:proto3.bunch_t.type)
 }
 
-// optional uint32 pos = 2;
+// optional int32 pos = 2;
 inline void bunch_t::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 bunch_t::pos() const {
+inline ::google::protobuf::int32 bunch_t::pos() const {
   // @@protoc_insertion_point(field_get:proto3.bunch_t.pos)
   return pos_;
 }
-inline void bunch_t::set_pos(::google::protobuf::uint32 value) {
+inline void bunch_t::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.bunch_t.pos)
@@ -6923,15 +6923,15 @@ inline void MsgNCReady::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCReady.mid)
 }
 
-// optional uint32 pos = 2;
+// optional int32 pos = 2;
 inline void MsgNCReady::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCReady::pos() const {
+inline ::google::protobuf::int32 MsgNCReady::pos() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCReady.pos)
   return pos_;
 }
-inline void MsgNCReady::set_pos(::google::protobuf::uint32 value) {
+inline void MsgNCReady::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCReady.pos)
@@ -7001,15 +7001,15 @@ inline void MsgNCEngage::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.mid)
 }
 
-// optional uint32 pos = 2;
+// optional int32 pos = 2;
 inline void MsgNCEngage::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCEngage::pos() const {
+inline ::google::protobuf::int32 MsgNCEngage::pos() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.pos)
   return pos_;
 }
-inline void MsgNCEngage::set_pos(::google::protobuf::uint32 value) {
+inline void MsgNCEngage::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.pos)
@@ -7061,29 +7061,29 @@ inline void MsgNCStart::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.mid)
 }
 
-// optional uint32 banker = 2;
+// optional int32 banker = 2;
 inline void MsgNCStart::clear_banker() {
-  banker_ = 0u;
+  banker_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCStart::banker() const {
+inline ::google::protobuf::int32 MsgNCStart::banker() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.banker)
   return banker_;
 }
-inline void MsgNCStart::set_banker(::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_banker(::google::protobuf::int32 value) {
   
   banker_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.banker)
 }
 
-// optional uint32 pos = 3;
+// optional int32 pos = 3;
 inline void MsgNCStart::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCStart::pos() const {
+inline ::google::protobuf::int32 MsgNCStart::pos() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCStart.pos)
   return pos_;
 }
-inline void MsgNCStart::set_pos(::google::protobuf::uint32 value) {
+inline void MsgNCStart::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.pos)
@@ -7507,15 +7507,15 @@ inline void MsgNCDraw::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.mid)
 }
 
-// optional uint32 pos = 2;
+// optional int32 pos = 2;
 inline void MsgNCDraw::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDraw::pos() const {
+inline ::google::protobuf::int32 MsgNCDraw::pos() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDraw.pos)
   return pos_;
 }
-inline void MsgNCDraw::set_pos(::google::protobuf::uint32 value) {
+inline void MsgNCDraw::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDraw.pos)
@@ -7571,15 +7571,15 @@ inline void MsgNCDismissSync::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.mid)
 }
 
-// optional uint32 pos = 2;
+// optional int32 pos = 2;
 inline void MsgNCDismissSync::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDismissSync::pos() const {
+inline ::google::protobuf::int32 MsgNCDismissSync::pos() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDismissSync.pos)
   return pos_;
 }
-inline void MsgNCDismissSync::set_pos(::google::protobuf::uint32 value) {
+inline void MsgNCDismissSync::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissSync.pos)
@@ -7635,15 +7635,15 @@ inline void MsgNCDismissAck::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.mid)
 }
 
-// optional uint32 pos = 2;
+// optional int32 pos = 2;
 inline void MsgNCDismissAck::clear_pos() {
-  pos_ = 0u;
+  pos_ = 0;
 }
-inline ::google::protobuf::uint32 MsgNCDismissAck::pos() const {
+inline ::google::protobuf::int32 MsgNCDismissAck::pos() const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCDismissAck.pos)
   return pos_;
 }
-inline void MsgNCDismissAck::set_pos(::google::protobuf::uint32 value) {
+inline void MsgNCDismissAck::set_pos(::google::protobuf::int32 value) {
   
   pos_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCDismissAck.pos)

@@ -15,7 +15,7 @@ public class Player {
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
 	public uint				gameId=0;
-	public uint				pos=0;
+	public int				pos=0;
 	public game_data_t		gameData=new game_data_t();
 
 
@@ -124,11 +124,11 @@ public class Player {
 			break;
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
-			Debug.Log("start game");
 			if(msgStart.Result==pb_enum.Succeess){
 				msg=msgStart;
 				pos=msgStart.Pos;
 				gameData.Hands.AddRange(msgStart.Hands);
+				Debug.Log("start game at "+pos);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			break;

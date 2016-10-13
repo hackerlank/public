@@ -23,25 +23,16 @@ void Mahjong::Tick(Game& game){
                 changeState(game,Game::State::ST_DISCARD);
             break;
         case Game::State::ST_DISCARD:
-            if(!game.pendingDiscard||game.pendingDiscard->arrived)
-                changeState(game,Game::State::ST_MELD);
+            //OnDiscard
+            //if(!game.pendingDiscard||game.pendingDiscard->arrived)
+            //    changeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_MELD:
-            if(!game.pendingMeld.empty()&&game.pendingMeld.front().arrived){
-                auto& pending=game.pendingMeld.front();
-                if(pending.bunch.type()==pb_enum::OP_PASS)
-                    changeState(game,Game::State::ST_DRAW);
-                else if(isGameOver(game))
-                    changeState(game,Game::State::ST_SETTLE);
-                else
-                    //A,AAA,AAAA
-                    changeState(game,Game::State::ST_DISCARD);
-                game.pendingMeld.clear();
-            }
+            //OnMeld
             break;
         case Game::State::ST_DRAW:
-            draw(game);
-            changeState(game,Game::State::ST_MELD);
+            //draw(game);
+            //changeState(game,Game::State::ST_MELD);
             break;
         case Game::State::ST_SETTLE:
             if(settle(game))
@@ -148,7 +139,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         omsg.set_result(pb_enum::SUCCEESS);
         omsg.mutable_bunch()->CopyFrom(msg.bunch());
 
-        game->pendingMeld.clear();
+        //game->pendingMeld.clear();
         omsg.mutable_bunch()->set_pos(player.pos);
         
         //ready for meld
@@ -157,6 +148,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         for(int i=0;i<MaxPlayer();++i){
             auto p=game->players[i];
             if(i!=player.pos){
+                //only pending others
                 game->pendingMeld.push_back(Game::pending_t());
                 auto& pending=game->pendingMeld.back();
                 pending.bunch.set_pos(i);
@@ -164,6 +156,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
             p->send(omsg);
             p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
+            KEYE_LOG("----OnDiscard send MsgNCDiscard to %d\n",i);
         }
         
         //historic
@@ -188,8 +181,8 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
     
     //pending queue
-    auto& queue=game.pendingMeld;
-    if(queue.empty()){
+    auto& pendingMeld=game.pendingMeld;
+    if(pendingMeld.empty()){
         KEYE_LOG("OnMeld with queue empty,pos=%d\n",pos);
         return;
     }
@@ -197,8 +190,8 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     //pos
     bool found=false;
     int i=0;
-    for(;i<queue.size();++i)
-        if(pos==queue[i].bunch.pos()){
+    for(;i<pendingMeld.size();++i)
+        if(pos==pendingMeld[i].bunch.pos()){
             found=true;
             break;
         }
@@ -208,7 +201,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
     
     //arrived and duplicated
-    auto& pending=queue[i];
+    auto& pending=pendingMeld[i];
     if(pending.arrived){
         KEYE_LOG("OnMeld already arrived, pos=%d\n",pos);
         return;
@@ -242,21 +235,22 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     pending.bunch.CopyFrom(curr);
     
     int ready=0;
-    for(auto& p:queue)if(p.arrived)++ready;
-    if(ready>=queue.size()){
+    for(auto& p:pendingMeld)if(p.arrived)++ready;
+    if(ready>=pendingMeld.size()){
         //sort
-        std::sort(queue.begin(),queue.end(),std::bind(&Mahjong::comparePending,this,std::placeholders::_1,std::placeholders::_2));
+        std::sort(pendingMeld.begin(),pendingMeld.end(),std::bind(&Mahjong::comparePending,this,std::placeholders::_1,std::placeholders::_2));
         
         //priority
-        auto& front=queue.front();
+        auto& front=pendingMeld.front();
         auto& bunch=front.bunch;
 
         //ok,verify
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(pb_enum::SUCCEESS);
-        KEYE_LOG("OnMeld pos=%d,%s\n",pos,bunch2str(str,bunch));
+        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",pos,bunch2str(str,bunch),game.token);
 
+        auto isDraw=(pendingMeld.size()==1);
         switch(bunch.type()){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
@@ -266,8 +260,11 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                 break;
             }
             case pb_enum::OP_PASS:
-                //handle pass
-                bunch.set_pos(game.token);  //ensure token
+                //handle pass, ensure token
+                if(isDraw)
+                    bunch.set_pos(game.token);
+                else
+                    bunch.set_pos(-1);
                 break;
             case pb_enum::BUNCH_INVALID:
                 //invalid
@@ -280,6 +277,8 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                 //pending discard
                 game.pendingDiscard=std::make_shared<Game::pending_t>();
                 game.pendingDiscard->bunch.set_pos(player.pos);
+                //remove from pile map
+                game.pileMap.erase(card);
                 break;
             default:{
                 //verify
@@ -308,30 +307,63 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                     game.pendingDiscard=std::make_shared<Game::pending_t>();
                     game.pendingDiscard->bunch.set_pos(player.pos);
                     changePos(game,player.pos);
-                 }//meld
+                }//meld
             }//default
         }//switch
 
+        //change state before send message
+        auto needDraw=false;
+        if(bunch.type()==pb_enum::OP_PASS){
+            if(isDraw){
+            //if(game.pileMap.find(card)!=game.pileMap.end()){
+                //draw pass to discard
+                KEYE_LOG("OnMeld pass to discard\n");
+                changeState(game,Game::State::ST_DISCARD);
+                //pending discard
+                game.pendingDiscard=std::make_shared<Game::pending_t>();
+                game.pendingDiscard->bunch.set_pos(game.token);
+            }else{
+                //discard pass to draw,don't do it immediately!
+                needDraw=true;
+            }
+        }else if(isGameOver(game))
+            changeState(game,Game::State::ST_SETTLE);
+        else //A,AAA,AAAA
+            changeState(game,Game::State::ST_DISCARD);
+
+        game.pendingMeld.clear();
+
         msg.mutable_bunch()->CopyFrom(bunch);
         for(auto p:game.players){
+            //need reply all
             p->send(msg);
             p->lastMsg=std::make_shared<MsgNCMeld>(msg);
         }
-    }//if front
+        
+        //then draw
+        if(needDraw){
+            KEYE_LOG("OnMeld pass to draw\n");
+            //changeState(game,Game::State::ST_DRAW);
+            draw(game);
+            changeState(game,Game::State::ST_MELD);
+        }
+    }//if(ready>=queue.size())
 }
 
 void Mahjong::draw(Game& game){
+    /*
     if(game.state!=Game::ST_DRAW){
         KEYE_LOG("draw wrong st=%d\n",game.state);
         return;
     }
+    */
     changePos(game,game.token+1);
     auto player=game.players[game.token];
     auto card=game.pile.back();
     game.pile.pop_back();
     KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
 
-    game.pendingMeld.clear();
+    //game.pendingMeld.clear();
     game.pendingMeld.push_back(Game::pending_t());
 
     MsgNCDraw msg;
@@ -347,8 +379,8 @@ void Mahjong::draw(Game& game){
             pending.bunch.set_pos(game.token);
             pending.bunch.add_pawns(card);
         }else{
-            msg.set_card(i_invalid);
-            //msg.clear_hints();
+            msg.set_card(card);
+//            msg.set_card(i_invalid);
         }
         p->send(msg);
         p->lastMsg=std::make_shared<MsgNCDraw>(msg);

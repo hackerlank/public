@@ -46,7 +46,7 @@ namespace Proto3 {
             "bl9zdGFydBgJIAEoDRIUCgxtYWludGFpbl9lbmQYCiABKA0SEQoJdGltZV96",
             "b25lGAsgASgNEh0KBWdhbWVzGAwgAygLMg4ucHJvdG8zLmdhbWVfdCJECgdi",
             "dW5jaF90Eh0KBHR5cGUYASABKA4yDy5wcm90bzMucGJfZW51bRILCgNwb3MY",
-            "AiABKA0SDQoFcGF3bnMYAyADKA0iZQoLZ2FtZV9kYXRhX3QSDQoFaGFuZHMY",
+            "AiABKAUSDQoFcGF3bnMYAyADKA0iZQoLZ2FtZV9kYXRhX3QSDQoFaGFuZHMY",
             "ASADKA0SEAoIZGlzY2FyZHMYAiADKA0SHgoFYnVuY2gYAyADKAsyDy5wcm90",
             "bzMuYnVuY2hfdBIVCg1zZWxlY3RlZF9jYXJkGAQgASgNIiYKB01zZ0Jhc2US",
             "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJYCgpNc2dDU0xvZ2luEhsK",
@@ -76,12 +76,12 @@ namespace Proto3 {
             "YXllcl90Eh8KBnJlc3VsdBgEIAEoDjIPLnByb3RvMy5wYl9lbnVtIikKCk1z",
             "Z0NOUmVhZHkSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJXCgpNc2dO",
             "Q1JlYWR5EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIg",
-            "ASgNEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIjcKC01zZ0NO",
+            "ASgFEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIjcKC01zZ0NO",
             "RW5nYWdlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDa2V5GAIg",
             "ASgNImUKC01zZ05DRW5nYWdlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
-            "c2cSCwoDcG9zGAIgASgNEgsKA2tleRgDIAEoDRIfCgZyZXN1bHQYBCABKA4y",
+            "c2cSCwoDcG9zGAIgASgFEgsKA2tleRgDIAEoDRIfCgZyZXN1bHQYBCABKA4y",
             "Dy5wcm90bzMucGJfZW51bSK1AQoKTXNnTkNTdGFydBIbCgNtaWQYASABKA4y",
-            "Di5wcm90bzMucGJfbXNnEg4KBmJhbmtlchgCIAEoDRILCgNwb3MYAyABKA0S",
+            "Di5wcm90bzMucGJfbXNnEg4KBmJhbmtlchgCIAEoBRILCgNwb3MYAyABKAUS",
             "DAoEYW50ZRgEIAEoDRIQCghtdWx0aXBsZRgFIAEoDRINCgVoYW5kcxgGIAMo",
             "DRIOCgZib3R0b20YByADKA0SDQoFY291bnQYCCADKA0SHwoGcmVzdWx0GAkg",
             "ASgOMg8ucHJvdG8zLnBiX2VudW0iSwoMTXNnQ05EaXNjYXJkEhsKA21pZBgB",
@@ -93,13 +93,13 @@ namespace Proto3 {
             "dG8zLmJ1bmNoX3QiaQoJTXNnTkNNZWxkEhsKA21pZBgBIAEoDjIOLnByb3Rv",
             "My5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZy",
             "ZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSJDCglNc2dOQ0RyYXcSGwoD",
-            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKA0SDAoEY2Fy",
+            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSDAoEY2Fy",
             "ZBgDIAEoDSIvChBNc2dDTkRpc21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnBy",
             "b3RvMy5wYl9tc2ciXQoQTXNnTkNEaXNtaXNzU3luYxIbCgNtaWQYASABKA4y",
-            "Di5wcm90bzMucGJfbXNnEgsKA3BvcxgCIAEoDRIfCgZyZXN1bHQYAyABKA4y",
+            "Di5wcm90bzMucGJfbXNnEgsKA3BvcxgCIAEoBRIfCgZyZXN1bHQYAyABKA4y",
             "Dy5wcm90bzMucGJfZW51bSIuCg9Nc2dDTkRpc21pc3NBY2sSGwoDbWlkGAEg",
             "ASgOMg4ucHJvdG8zLnBiX21zZyJcCg9Nc2dOQ0Rpc21pc3NBY2sSGwoDbWlk",
-            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKA0SHwoGcmVzdWx0",
+            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0",
             "GAMgASgOMg8ucHJvdG8zLnBiX2VudW0imwEKC01zZ05DU2V0dGxlEhsKA21p",
             "ZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDgoGd2lubmVyGAIgASgNEh4KBHBs",
             "YXkYAyADKAsyEC5wcm90bzMucGxheWVyX3QSHgoFaGFuZHMYBCADKAsyDy5w",
@@ -2457,9 +2457,12 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private uint pos_;
+    private int pos_;
+    /// <summary>
+    /// easy to use -1
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -2517,7 +2520,7 @@ namespace Proto3 {
       }
       if (Pos != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       pawns_.WriteTo(output, _repeated_pawns_codec);
     }
@@ -2529,7 +2532,7 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       size += pawns_.CalculateSize(_repeated_pawns_codec);
       return size;
@@ -2562,7 +2565,7 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 26:
@@ -5013,9 +5016,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private uint pos_;
+    private int pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -5074,7 +5077,7 @@ namespace Proto3 {
       }
       if (Pos != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       if (Result != 0) {
         output.WriteRawTag(24);
@@ -5089,7 +5092,7 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -5126,7 +5129,7 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 24: {
@@ -5332,9 +5335,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private uint pos_;
+    private int pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -5406,7 +5409,7 @@ namespace Proto3 {
       }
       if (Pos != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       if (Key != 0) {
         output.WriteRawTag(24);
@@ -5425,7 +5428,7 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       if (Key != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Key);
@@ -5468,7 +5471,7 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 24: {
@@ -5538,9 +5541,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "banker" field.</summary>
     public const int BankerFieldNumber = 2;
-    private uint banker_;
+    private int banker_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Banker {
+    public int Banker {
       get { return banker_; }
       set {
         banker_ = value;
@@ -5549,9 +5552,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 3;
-    private uint pos_;
+    private int pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -5677,11 +5680,11 @@ namespace Proto3 {
       }
       if (Banker != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Banker);
+        output.WriteInt32(Banker);
       }
       if (Pos != 0) {
         output.WriteRawTag(24);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       if (Ante != 0) {
         output.WriteRawTag(32);
@@ -5707,10 +5710,10 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Banker != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Banker);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Banker);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       if (Ante != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Ante);
@@ -5768,11 +5771,11 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Banker = input.ReadUInt32();
+            Banker = input.ReadInt32();
             break;
           }
           case 24: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 32: {
@@ -6515,9 +6518,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private uint pos_;
+    private int pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -6576,7 +6579,7 @@ namespace Proto3 {
       }
       if (Pos != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       if (Card != 0) {
         output.WriteRawTag(24);
@@ -6591,7 +6594,7 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       if (Card != 0) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Card);
@@ -6628,7 +6631,7 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 24: {
@@ -6805,9 +6808,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private uint pos_;
+    private int pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -6866,7 +6869,7 @@ namespace Proto3 {
       }
       if (Pos != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       if (Result != 0) {
         output.WriteRawTag(24);
@@ -6881,7 +6884,7 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -6918,7 +6921,7 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 24: {
@@ -7095,9 +7098,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "pos" field.</summary>
     public const int PosFieldNumber = 2;
-    private uint pos_;
+    private int pos_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public uint Pos {
+    public int Pos {
       get { return pos_; }
       set {
         pos_ = value;
@@ -7156,7 +7159,7 @@ namespace Proto3 {
       }
       if (Pos != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt32(Pos);
+        output.WriteInt32(Pos);
       }
       if (Result != 0) {
         output.WriteRawTag(24);
@@ -7171,7 +7174,7 @@ namespace Proto3 {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
       if (Pos != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Pos);
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Pos);
       }
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
@@ -7208,7 +7211,7 @@ namespace Proto3 {
             break;
           }
           case 16: {
-            Pos = input.ReadUInt32();
+            Pos = input.ReadInt32();
             break;
           }
           case 24: {

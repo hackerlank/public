@@ -96,15 +96,17 @@ public class MahJongPanel : GamePanel {
 
 	List<bunch_t> _hints=null;
 	override protected void discard(MsgNCDiscard msg){
-		//show hints
-		if(msg.Bunch.Pawns.Count>0){
+		//show hints for others
+		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
-			if(!showHints(card,false))
+			if(!showHints(card,false)){
 				pass(card);
+				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
+			}
 		}
 	}
 
-	override protected void draw(uint id,uint pos){
+	override protected void draw(uint id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -113,11 +115,48 @@ public class MahJongPanel : GamePanel {
 			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
 		});
 
-		//show hints
-		if(!showHints(id,true))
+		//show hints only for MainPlayer
+		if(pos==Main.Instance.MainPlayer.pos&&!showHints(id,true)){
 			pass(id);
+			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
+		}
 	}
 
+	override protected void meld(bunch_t bunch){
+		_hints=null;
+		
+		var from=_token;
+		var to=bunch.Pos;
+		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
+		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
+		if(A!=null)
+		switch(bunch.Type){
+		case pb_enum.BunchA:
+			//collect
+			A.DiscardTo(HandAreas[to],scalar);
+			A.Static=false;
+			A.state=Card.State.ST_NORMAL;
+			if(to==_pos)sortHands();
+			break;
+		case pb_enum.BunchAaa:
+		case pb_enum.BunchAaaa:
+			//meld
+			A.DiscardTo(MeldAreas[to],scalar);
+			var hands=HandAreas[to].GetComponentsInChildren<Card>();
+			foreach(var id in bunch.Pawns)
+			foreach(var card in hands){
+				if(card.Value==id)
+					card.DiscardTo(MeldAreas[to],scalar);
+			}
+			break;
+		default:
+			//abandon
+			if(to==-1)to=_token;
+			A.DiscardTo(AbandonAreas[to],AbandonScalar);
+			break;
+		}
+	}
+	
 	bool showHints(uint card,bool bDraw){
 		var player=Main.Instance.MainPlayer;
 		var hands=new uint[player.gameData.Hands.Count];
@@ -163,40 +202,6 @@ public class MahJongPanel : GamePanel {
 		player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
 	}
 	
-	override protected void meld(bunch_t bunch){
-		_hints=null;
-
-		var from=_token;
-		var to=bunch.Pos;
-		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
-		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
-		if(A!=null)
-		switch(bunch.Type){
-		case pb_enum.BunchA:
-			//collect
-			A.DiscardTo(HandAreas[to],scalar);
-			A.Static=false;
-			A.state=Card.State.ST_NORMAL;
-			if(to==_pos)sortHands();
-			break;
-		case pb_enum.BunchAaa:
-		case pb_enum.BunchAaaa:
-			//meld
-			A.DiscardTo(MeldAreas[to],scalar);
-			var hands=HandAreas[to].GetComponentsInChildren<Card>();
-			foreach(var id in bunch.Pawns)
-			foreach(var card in hands){
-				if(card.Value==id)
-					card.DiscardTo(MeldAreas[to],scalar);
-			}
-			break;
-		default:
-			//abandon
-			A.DiscardTo(AbandonAreas[to],AbandonScalar);
-			break;
-		}
-	}
-
 	override protected void sortHands(){
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		var ids=new List<uint>();

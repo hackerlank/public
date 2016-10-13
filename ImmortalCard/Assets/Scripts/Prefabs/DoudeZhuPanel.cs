@@ -64,7 +64,7 @@ public class DoudeZhuPanel : GamePanel {
 
 	override protected void discard(MsgNCDiscard msg){
 		//set to next after discard
-		uint pos=msg.Bunch.Pos;
+		int pos=msg.Bunch.Pos;
 		changeToken(pos+1);
 		_hints=null;
 		_nhints=0;

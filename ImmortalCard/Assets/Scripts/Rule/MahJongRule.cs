@@ -6,7 +6,7 @@ using Proto3;
 public class MahJongRule: GameRule {
 
 	public override int MaxCards{get{return 108;}}
-	public override uint MaxPlayer{get{return 4;}}
+	public override int MaxPlayer{get{return 4;}}
 
 	protected override void deal(MsgNCStart msg){
 		uint id=0;
@@ -39,7 +39,7 @@ public class MahJongRule: GameRule {
 		if(player==null||hands==null||src_bunch==null||hands.Length<=0)
 			return hints;
 
-		uint pos=player.pos;
+		int pos=player.pos;
 		if(src_bunch.Pawns.Count!=1){
 			Debug.Log("hint wrong cards len="+src_bunch.Pawns.Count+",pos="+pos);
 			return hints;

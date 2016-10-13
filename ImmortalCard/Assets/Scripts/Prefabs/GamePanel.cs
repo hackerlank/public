@@ -15,11 +15,11 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnHint,BtnDiscard,BtnPass,Buttons;
 
-	protected uint		maxPlayer=0;
+	protected int		maxPlayer=0;
 	protected uint		round=0;
 	protected GameRule	rule=null;
 
-	protected uint			_pos,_token,_banker;
+	protected int			_pos,_token,_banker;
 	protected List<Card>	_selection=new List<Card>();
 
 	public MsgNCFinish	Summary=null;
@@ -220,14 +220,13 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 	
 	public void OnMsgDraw(MsgNCDraw msg){
+		Debug.Log(msg.Pos+" draw "+(int)msg.Card);
 		changeToken(msg.Pos);
 		draw(msg.Card,msg.Pos);
-		Debug.Log(msg.Pos+" draw "+(int)msg.Card);
 	}
 	public void OnMsgMeld(MsgNCMeld msg){
 		changeToken(msg.Bunch.Pos);
 		meld(msg.Bunch);
-		Debug.Log(msg.Bunch.Pos+" meld "+(int)msg.Bunch.Type);
 	}
 
 	public void OnMsgSettle(MsgNCSettle msg){
@@ -290,7 +289,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	virtual protected void start(){}
 	virtual protected void discard(MsgNCDiscard msg){}
-	virtual protected void draw(uint card,uint pos){}
+	virtual protected void draw(uint card,int pos){}
 	virtual protected void meld(bunch_t bunch){}
 	virtual protected void showHints(){}
 	virtual protected void sortHands(){}
@@ -307,7 +306,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		return rule.comparision(x.Value,y.Value);
 	}
 
-	protected void changeToken(uint pos){
+	protected void changeToken(int pos){
+		if(pos==-1)return;
 		var old=_token;
 		_token=pos%maxPlayer;
 		if(old!=_token){

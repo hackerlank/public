@@ -28,7 +28,7 @@ public class MahjongAIController:PlayerController{
 				foreach(var card in msgDiscard.Bunch.Pawns)
 					player.gameData.Hands.Remove(card);
 			}else{
-				//meld
+				//meld only for others
 				var omsgMeld=new MsgCNMeld();
 				omsgMeld.Mid=pb_msg.MsgCnMeld;
 				
@@ -46,10 +46,16 @@ public class MahjongAIController:PlayerController{
 				omsgMeld.Bunch=bunch;
 				
 				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+				Debug.Log(player.pos+" meld "+(hints.Count>0?bunch.Pawns[0]:0)+" after "+msgDiscard.Bunch.Pos+" discard");
 			}
 
 		}else if(msg is MsgNCMeld){
 			var msgMeld=msg as MsgNCMeld;
+
+			//do nothing if all pass discard,because draw message will come
+			if(msgMeld.Bunch.Pos==-1&&msgMeld.Bunch.Type==pb_enum.OpPass)
+				return;
+
 			if(player.pos==msgMeld.Bunch.Pos){
 				//remove from hands
 				foreach(var card in msgMeld.Bunch.Pawns)
@@ -71,12 +77,13 @@ public class MahjongAIController:PlayerController{
 				omsgDiscard.Bunch.Pawns.Add(discard);
 				omsgDiscard.Bunch.Type=pb_enum.BunchA;
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
+				Debug.Log("----"+player.pos+" discard "+discard+" after self "+(int)msgMeld.Bunch.Type);
 			}
 
 		}else if(msg is MsgNCDraw){
 			var msgDraw=msg as MsgNCDraw;
 			if(player.pos==msgDraw.Pos){
-				//meld
+				//meld only for the drawer
 				var omsgMeld=new MsgCNMeld();
 				omsgMeld.Mid=pb_msg.MsgCnMeld;
 				
@@ -97,6 +104,7 @@ public class MahjongAIController:PlayerController{
 				omsgMeld.Bunch=bunch;
 				
 				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+				Debug.Log(player.pos+" meld "+(hints.Count>0?bunch.Pawns[0]:0)+" after self draw");
 			}
 			
 		}else if(msg is MsgNCSettle){

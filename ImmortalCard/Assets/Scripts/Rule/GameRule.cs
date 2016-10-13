@@ -9,7 +9,7 @@ public abstract class GameRule {
 	public List<bunch_t> Historical=new List<bunch_t>(); //historical game data
 
 	public virtual int MaxCards{get{return 54;}}
-	public virtual uint MaxPlayer{get{return 3;}}
+	public virtual int MaxPlayer{get{return 3;}}
 
 	public virtual List<bunch_t> Hint(Player player,uint[] hands,bunch_t src_bunch){return new List<bunch_t>();}
 
