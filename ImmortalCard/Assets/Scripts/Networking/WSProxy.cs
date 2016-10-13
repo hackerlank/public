@@ -43,6 +43,7 @@ public class WSProxy {
 			});
 		};
 		socket.Connect();
+		Debug.Log("Connect to "+uri);
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
