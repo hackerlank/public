@@ -6,7 +6,7 @@ using Proto3;
 
 public class DoudeZhuPanel : GamePanel {
 	public GameObject	BtnHint;
-	public GameObject	BtnCall,BtnDouble;
+	public GameObject	BtnDiscard,BtnCall,BtnDouble;
 
 	// ----------------------------------------------
 	// logic
@@ -134,6 +134,10 @@ public class DoudeZhuPanel : GamePanel {
 	}
 
 	public void OnDouble(){
+	}
+	
+	public void OnDiscard(){
+		StartCoroutine(Discard());
 	}
 	
 	public static void Create(System.Action<Component> handler=null){

@@ -13,7 +13,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	public PlayerIcon[]	Players;
 	public Text[]		nHandCards;
 	public Text			Ante,Multiples,Infomation;
-	public GameObject	BtnDiscard,BtnPass,Buttons;
+	public GameObject	BtnPass,Buttons;
 
 	protected int		maxPlayer=0;
 	protected int		round=0;
@@ -39,10 +39,6 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		Main.Instance.gameController=null;
 	}
 
-	public void OnDiscard(){
-		StartCoroutine(Discard());
-	}
-	
 	virtual public void OnPass(){
 		deselectAll();
 		MsgCNDiscard msg=new MsgCNDiscard();
@@ -62,7 +58,12 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	// messages
 	// ----------------------------------------------
 	public void onMessage(Player player,IMessage msg){
-		if(msg is MsgNCStart){
+		if(msg is MsgNCEngage){
+			var msgEngage=msg as MsgNCEngage;
+			if(player.pos==msgEngage.Pos)
+				onMsgEngage(msgEngage);
+
+		}else if(msg is MsgNCStart){
 			var msgStart=msg as MsgNCStart;
 			StartCoroutine(OnMsgStart(msgStart));
 
@@ -95,7 +96,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 		}
 	}
-	
+
 	public IEnumerator OnMsgStart(MsgNCStart msg){
 		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;
@@ -275,6 +276,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		}
 	}
 
+	virtual protected void onMsgEngage(MsgNCEngage msg){}
 	virtual protected void onMsgStart(){}
 	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
 	virtual protected void onMsgDraw(int card,int pos){}

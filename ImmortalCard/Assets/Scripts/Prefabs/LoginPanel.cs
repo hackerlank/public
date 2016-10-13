@@ -6,13 +6,15 @@ using Proto3;
 
 public class LoginPanel : MonoBehaviour {
 
-	public Text Host;
+	public Text Host,DefaultHost;
 
 	public static LoginPanel Instance=null;
 	void Awake(){Instance=this;}
 	void OnDestroy(){Instance=null;}
 	
 	public void OnLogin(){
+		if(Host.text.Length<=0)
+			Host.text=DefaultHost.text;
 		if(Host.text.Length>0){
 			var uri=Host.text;
 			var ws=Host.text;

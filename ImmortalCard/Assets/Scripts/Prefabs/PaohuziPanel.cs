@@ -7,8 +7,7 @@ using Proto3;
 public class PaohuziPanel : GamePanel {
 	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
-	public GameObject	BtnA3,BtnA4,BtnWin;
-	public GameObject	BtnTong,BtnTiao,BtnWan;
+	public GameObject	BtnABC,BtnA3,BtnA4,BtnWin;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
@@ -92,8 +91,6 @@ public class PaohuziPanel : GamePanel {
 		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
 		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
 		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
-
-		OnCall();
 	}
 
 	List<bunch_t> _hints=null;
@@ -241,17 +238,7 @@ public class PaohuziPanel : GamePanel {
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
 	}
 
-	public void OnCall(){
-		//set default color
-		var key=MahJongRule.FindDefaultColor(Main.Instance.MainPlayer);
-		var msg=new MsgCNEngage();
-		msg.Mid=pb_msg.MsgCnEngage;
-		msg.Key=key;
-		Main.Instance.MainPlayer.Send<MsgCNEngage>(msg.Mid,msg);
-		Debug.Log("Set default card "+key.ToString());
-	}
-
-	public void OnDouble(){
+	public void OnABC(){
 	}
 	
 	public void OnAAA(){

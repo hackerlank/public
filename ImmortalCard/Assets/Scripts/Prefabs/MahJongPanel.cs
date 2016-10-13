@@ -9,6 +9,8 @@ public class MahJongPanel : GamePanel {
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
 	public GameObject	BtnA3,BtnA4,BtnWin;
 	public GameObject	BtnTong,BtnTiao,BtnWan;
+
+	GameObject[]		btnOps;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
@@ -73,6 +75,11 @@ public class MahJongPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
+	override protected void onMsgEngage(MsgNCEngage msg){
+		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
+		foreach(var btn in btns)btn.SetActive(false);
+	}
+
 	override protected void onMsgStart(){
 		//transform position
 		var m=maxPlayer-1;
@@ -92,8 +99,6 @@ public class MahJongPanel : GamePanel {
 		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
 		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
 		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
-
-		OnCall();
 	}
 
 	List<bunch_t> _hints=null;
@@ -172,15 +177,17 @@ public class MahJongPanel : GamePanel {
 		_hints=Rule.Hint(player,hands,bunch);
 
 		//show/hide buttons
-		//GameObject[] btns=new GameObject[]{BtnA3,BtnA4,BtnWin};
-		//foreach(var btn in btns)btn.SetActive(false);
+		if(_hints.Count>0)BtnPass.SetActive(true);
 		foreach(var b in _hints){
 			switch(b.Type){
-			case pb_enum.BunchAa:
-				break;
 			case pb_enum.BunchAaa:
+				BtnA3.SetActive(true);
 				break;
 			case pb_enum.BunchAaaa:
+				BtnA4.SetActive(true);
+				break;
+			case pb_enum.BunchWin:
+				BtnWin.SetActive(true);
 				break;
 			default:
 				break;
@@ -239,11 +246,24 @@ public class MahJongPanel : GamePanel {
 		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
+
+		btnOps=new GameObject[]{BtnA3,BtnA4,BtnWin,BtnPass};
 	}
 
-	public void OnCall(){
+	public void OnTong(){
+		setDefaultColor(1001);
+	}
+	public void OnTiao(){
+		setDefaultColor(2001);
+	}
+	public void OnWan(){
+		setDefaultColor(3001);
+	}
+
+	void setDefaultColor(int key){
+		var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
+		foreach(var btn in btns)btn.SetActive(false);
 		//set default color
-		var key=MahJongRule.FindDefaultColor(Main.Instance.MainPlayer);
 		var msg=new MsgCNEngage();
 		msg.Mid=pb_msg.MsgCnEngage;
 		msg.Key=key;
@@ -251,10 +271,8 @@ public class MahJongPanel : GamePanel {
 		Debug.Log("Set default card "+key.ToString());
 	}
 
-	public void OnDouble(){
-	}
-	
 	public void OnAAA(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.BunchAaa){
@@ -272,6 +290,7 @@ public class MahJongPanel : GamePanel {
 	}
 	
 	public void OnAAAA(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.BunchAaaa){
@@ -289,6 +308,7 @@ public class MahJongPanel : GamePanel {
 	}
 	
 	public void OnWin(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.BunchWin){
@@ -306,6 +326,7 @@ public class MahJongPanel : GamePanel {
 	}
 	
 	override public void OnPass(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		MsgCNMeld msg=new MsgCNMeld();
 		msg.Mid=pb_msg.MsgCnMeld;
 		msg.Bunch=new bunch_t();
