@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Proto3;
 
 public class CreatePanel : MonoBehaviour {
+	public Text DefinedCards;
 
 	public static CreatePanel Instance=null;
 	void Awake(){Instance=this;}

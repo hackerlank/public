@@ -24,45 +24,6 @@ public class DoudeZhuPanel : GamePanel {
 
 	override public float DiscardScalar{get{return .625f;}}
 
-	override protected bool verifyDiscard(Card card=null){
-		//discard my card
-		var check=false;
-		do{
-			if(_pos!=_token%maxPlayer){
-				Debug.Log("Discard invalid turn");
-				break;
-			}
-			if(null==card&&_selection.Count<=0){
-				Debug.Log("Discard invalid card");
-				break;
-			}
-
-			check=Rule.Historical.Count<1;
-			if(!check){
-				var hist=Rule.Historical[Rule.Historical.Count-1];
-				if(hist.Type==pb_enum.OpPass&&Rule.Historical.Count>=2)
-					hist=Rule.Historical[Rule.Historical.Count-2];
-				if(hist.Type==pb_enum.OpPass)
-					check=true;
-				else{
-					bunch_t curr=new bunch_t();
-					curr.Pos=_pos;
-					if(card!=null)
-						curr.Pawns.Add(card.Value);
-					else{
-						foreach(var c in _selection)
-							curr.Pawns.Add(c.Value);
-					}
-					if(rule.Verify(curr,hist))
-						check=true;
-				}
-			}
-			if(!check)
-				Debug.Log("Discard invalid bunch");
-		}while(false);
-		return check;
-	}
-
 	override protected void onMsgDiscard(MsgNCDiscard msg){
 		//set to next after discard
 		int pos=msg.Bunch.Pos;

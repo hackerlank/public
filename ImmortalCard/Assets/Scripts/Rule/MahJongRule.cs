@@ -167,11 +167,17 @@ public class MahJongRule: GameRule {
 		return true;
 	}
 
-	public override bool verifyDiscard(Player player,int id){
+	public override bool verifyDiscard(Player player,bunch_t bunch){
+		//huazhu check
+		if(player.pos!=_token%MaxPlayer){
+			Debug.Log("Discard invalid turn");
+			return false;
+		}
+		if(bunch.Pawns.Count<=0)return false;
+
 		var gdata=player.gameData;
-		//huazhu
 		var B=gdata.SelectedCard;
-		var A=id;
+		var A=bunch.Pawns[0];
 		if(A/1000!=B/1000){
 			foreach(var card in gdata.Hands){
 				if(card/1000==B/1000)
@@ -182,14 +188,7 @@ public class MahJongRule: GameRule {
 	}
 
 	protected override pb_enum verifyBunch(bunch_t bunch){
-		var bt=pb_enum.BunchA;
-		return bt;
-	}
-	
-	protected override bool compareBunch(bunch_t bunch,bunch_t hist){
-		//rule win
-		var win=true;
-		return win;
+		return pb_enum.BunchA;
 	}
 	
 	public override int comparision(int x,int y){

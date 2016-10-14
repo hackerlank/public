@@ -7,15 +7,12 @@ public abstract class GameRule {
 	public List<int> Pile;
 	public List<int>[] Hands;
 	public List<bunch_t> Historical=new List<bunch_t>(); //historical game data
+	protected int _token,_banker;
 
 	public virtual int MaxCards{get{return 54;}}
 	public virtual int MaxPlayer{get{return 3;}}
 
 	public virtual List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){return new List<bunch_t>();}
-
-	public bool Verify(bunch_t curr,bunch_t last){
-		return pb_enum.BunchInvalid!=verifyBunch(curr)&&compareBunch(curr,last);
-	}
 
 	public MsgNCStart Deal(){
 		Pile=new List<int>();
@@ -45,8 +42,8 @@ public abstract class GameRule {
 
 	protected virtual void deal(MsgNCStart msg){}
 	protected virtual pb_enum verifyBunch(bunch_t bunch){return pb_enum.BunchA;}
-	protected virtual bool compareBunch(bunch_t bunch,bunch_t hist){return bunch.Type>hist.Type;}
-	public virtual bool verifyDiscard(Player player,int card){return true;}
+	protected virtual bool compareBunch(bunch_t bunch,bunch_t hist){return true;}
+	public virtual bool verifyDiscard(Player player,bunch_t bunch){return true;}
 	public abstract int comparision(int x,int y);
 	public virtual int transformValue(int val){return val;}
 	public virtual int inverseTransformValue(int val){return val;}

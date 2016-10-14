@@ -166,6 +166,28 @@ public class DoudeZhuRule: GameRule {
 		return hints;
 	}
 
+	public override bool verifyDiscard(Player player,bunch_t bunch){
+		//discard my card
+		if(player.pos!=_token%MaxPlayer){
+			Debug.Log("Discard invalid turn");
+			return false;
+		}
+		
+		if(Historical.Count>0){
+			var hist=Historical[Historical.Count-1];
+			if(hist.Type==pb_enum.OpPass&&Historical.Count>=2)
+				hist=Historical[Historical.Count-2];
+			var check=(hist.Type==pb_enum.OpPass||
+			       pb_enum.BunchInvalid!=verifyBunch(bunch)
+			       &&compareBunch(bunch,hist));
+			if(!check){
+				Debug.Log("Discard invalid bunch");
+				return false;
+			}
+		}
+		return true;
+	}
+
 	protected override pb_enum verifyBunch(bunch_t bunch){
 		//sort cards
 		List<int> ids=new List<int>(bunch.Pawns);
