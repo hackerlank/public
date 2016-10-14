@@ -28,12 +28,12 @@ void GameRule::deal(Game& game){
     initCard(game);
     
     //shuffle
-    if(game.definedCards.empty()){
-        std::random_device rd;
-        std::mt19937 gen(rd());
-        std::shuffle(game.pile.begin(),game.pile.end(),gen);
-        std::shuffle(game.pile.begin(),game.pile.end(),gen);
-    }else{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(game.pile.begin(),game.pile.end(),gen);
+    std::shuffle(game.pile.begin(),game.pile.end(),gen);
+
+    if(!game.definedCards.empty()){
         std::vector<int> o;
         parseCardsByString(o,game.definedCards);
         for(size_t i=0,ii=o.size();i!=ii;++i){

@@ -42,8 +42,13 @@ public class WSProxy {
 				onMessage.Invoke(mid,body);
 			});
 		};
-		socket.Connect();
-		Debug.Log("Connect to "+uri);
+		//socket.Connect();
+		socket.ConnectAsync();
+		Debug.Log("Connecting to "+uri);
+	}
+
+	public void Close(){
+		if(socket!=null)socket.CloseAsync();
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{

@@ -202,4 +202,11 @@ public class PaohuziRule: GameRule {
 		key=1000*(I+1)+1;
 		return key;
 	}
+	
+	public override PlayerController AIController{
+		get{
+			if(aiController==null)aiController=new PaohuziAIController();
+			return aiController;
+		}
+	}
 }

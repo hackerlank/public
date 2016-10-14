@@ -28,6 +28,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	// ----------------------------------------------
 	virtual public void Awake(){
 		Main.Instance.gameController=this;
+		Main.Instance.MainPlayer.controllers.Add(this);
 	}
 
 	IEnumerator Start(){
@@ -36,6 +37,10 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	}
 
 	void OnDestroy(){
+		Main.Instance.MainPlayer.Disconnect();
+		foreach(var robot in Main.Instance.players)robot.Disconnect();
+		Main.Instance.players.Clear();
+		Main.Instance.MainPlayer.controllers.Clear();
 		Main.Instance.gameController=null;
 	}
 

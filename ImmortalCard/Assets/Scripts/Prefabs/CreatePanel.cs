@@ -54,55 +54,60 @@ public class CreatePanel : MonoBehaviour {
 			PlayerPrefs.Save();
 		}
 		
+		Main.Instance.MainPlayer.msgNCCreate=null;
 		Main.Instance.MainPlayer.Send<MsgCNCreate>(msgC.Mid,msgC);
 		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
-		
+
 		while(Main.Instance.MainPlayer.msgNCCreate==null)yield return null;
-		createGame();
+		var gameId=Main.Instance.MainPlayer.msgNCCreate.GameId;
+		Main.Instance.MainPlayer.msgNCCreate=null;
+		createGame(gameId);
 	}
 
 	IEnumerator joinCo(){
+		Main.Instance.MainPlayer.msgNCJoin=null;
 		Utils.Load<GameKeyPopup>(gameObject.transform.parent);
-		yield return StartCoroutine(Main.Instance.MainPlayer.JoinGame(Main.Instance.MainPlayer.gameId));
+
+		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
 		if(Icon==null){
 			Icon=new GameIcon();
 			Icon.GameId=Main.Instance.MainPlayer.msgNCJoin.Game;
 		}
-		createGame();
+		Main.Instance.MainPlayer.msgNCJoin=null;
+		createGame(Main.Instance.MainPlayer.gameId);
 	}
 
-	void createGame(){
+	void createGame(int gameId){
 		if(Icon==null)return;
+
 		System.Action<Component> handler=delegate(Component obj){
 			Destroy(gameObject);
 			if(LobbyPanel.Instance!=null)
 				Destroy(LobbyPanel.Instance.gameObject);
+
+			if(nRobots>0){
+				//add robots demand
+				var panel=obj as GamePanel;
+
+				var MP=panel.Rule.MaxPlayer;
+				if(nRobots>=MP)nRobots=MP-1;
+				for(uint i=0;i<nRobots;++i){
+					var robot=new Player();
+					robot.controllers.Add(panel.Rule.AIController);
+					Main.Instance.players.Add(robot);
+					panel.StartCoroutine(robot.JoinGame(gameId));
+				}
+			}
 		};
 
-		PlayerController ai=null;
 		switch(Icon.GameId){
 		case pb_enum.GameMj:
 			MahJongPanel.Create(handler);
-			ai=new MahjongAIController();
 			break;
 		case pb_enum.GameDdz:
 		default:
 			DoudeZhuPanel.Create(handler);
-			ai=new DoudeZhuAIController();
 			break;
-		}
-		Main.Instance.MainPlayer.controllers.Add(Main.Instance.gameController);
-
-		if(nRobots>0){
-			//add robots demand
-			var MP=Main.Instance.gameController.Rule.MaxPlayer;
-			if(nRobots>=MP)nRobots=MP-1;
-			for(uint i=0;i<nRobots;++i){
-				var robot=new Player();
-				robot.controllers.Add(ai);
-				Main.Instance.players.Add(robot);
-				Main.Instance.StartCoroutine(robot.JoinGame(Main.Instance.MainPlayer.msgNCCreate.GameId));
-			}
 		}
 	}
 }

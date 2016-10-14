@@ -194,8 +194,8 @@ public class MahJongPanel : GamePanel {
 	// events
 	// ----------------------------------------------
 	override public void Awake(){
-		base.Awake();
 		Rule=new MahJongRule();
+		base.Awake();
 
 		var files=new List<string>();
 		files.Add("dong");

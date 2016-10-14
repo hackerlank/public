@@ -9,7 +9,7 @@ public class GameKeyPopup : MonoBehaviour {
 		Debug.Log("----game id="+textKey.text);
 		try{
 			var gameId=int.Parse(textKey.text);
-			Main.Instance.MainPlayer.Connect(gameId);
+			Main.Instance.StartCoroutine(Main.Instance.MainPlayer.JoinGame(gameId));
 			Destroy(gameObject);
 		}catch(System.Exception){
 			Debug.LogError("Invalid key");

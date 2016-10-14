@@ -425,4 +425,11 @@ public class DoudeZhuRule: GameRule {
 		else if (val==19)return 15;
 		else             return val;
 	}
+
+	public override PlayerController AIController{
+		get{
+			if(aiController==null)aiController=new DoudeZhuAIController();
+			return aiController;
+		}
+	}
 }

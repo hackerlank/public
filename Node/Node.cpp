@@ -65,7 +65,7 @@ void Node::on_open(svc_handler&) {
 void Node::on_close(svc_handler& sh) {
     auto shid=sh.id();
     players.erase(shid);
-//    KEYE_LOG("on_close\n");
+    //KEYE_LOG("on_close\n");
 }
 
 void Node::on_read(svc_handler& sh, void* buf, size_t sz) {

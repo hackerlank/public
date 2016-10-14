@@ -50,6 +50,11 @@ public class Player {
 		}
 	}
 
+	public void Disconnect(){
+		if(connected)
+			ws.Close();
+	}
+
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
 		ws.Send<T>(mid,msg);
 	}
