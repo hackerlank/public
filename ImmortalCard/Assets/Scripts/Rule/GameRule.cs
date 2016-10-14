@@ -7,7 +7,7 @@ public abstract class GameRule {
 	public List<int> Pile;
 	public List<int>[] Hands;
 	public List<bunch_t> Historical=new List<bunch_t>(); //historical game data
-	protected int _token,_banker;
+	public int Token,Banker;
 
 	public virtual int MaxCards{get{return 54;}}
 	public virtual int MaxPlayer{get{return 3;}}

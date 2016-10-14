@@ -32,7 +32,7 @@ public class DoudeZhuPanel : GamePanel {
 		_nhints=0;
 
 		//auto pass
-		if(_pos==_token&&!showHints())
+		if(_pos==Rule.Token&&!showHints())
 			Invoke("OnPass",Configs.OpsInterval);
 	}
 

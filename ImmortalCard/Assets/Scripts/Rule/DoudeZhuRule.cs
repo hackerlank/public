@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Proto3;
@@ -168,7 +168,7 @@ public class DoudeZhuRule: GameRule {
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
 		//discard my card
-		if(player.pos!=_token%MaxPlayer){
+		if(player.pos!=Token%MaxPlayer){
 			Debug.Log("Discard invalid turn");
 			return false;
 		}

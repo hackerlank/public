@@ -85,7 +85,7 @@ public class PaohuziPanel : GamePanel {
 	override protected void onMsgMeld(bunch_t bunch){
 		_hints=null;
 		
-		var from=_token;
+		var from=Rule.Token;
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
@@ -111,7 +111,7 @@ public class PaohuziPanel : GamePanel {
 			break;
 		default:
 			//abandon
-			if(to==-1)to=_token;
+			if(to==-1)to=Rule.Token;
 			A.DiscardTo(AbandonAreas[to],AbandonScalar);
 			break;
 		}

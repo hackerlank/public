@@ -19,7 +19,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	protected int		round=0;
 	protected GameRule	rule=null;
 
-	protected int			_pos,_token,_banker;
+	protected int			_pos;
 	protected List<Card>	_selection=new List<Card>();
 
 	public MsgNCFinish	Summary=null;
@@ -102,7 +102,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		++Round;
 		_pos=msg.Pos;
 		changeToken(msg.Pos);
-		_banker=msg.Banker;
+		Rule.Banker=msg.Banker;
 		Rule.Historical.Clear();
 		_selection.Clear();
 		/* position transform
@@ -166,8 +166,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 			if(i<BottomCards.Length&&BottomCards[i]!=null)
 				BottomCards[i].Value=msg.Bottom[i];
 		}
-		if(Players[_banker].gameTimer!=null)
-			Players[_banker].gameTimer.On();
+		if(Players[Rule.Banker].gameTimer!=null)
+			Players[Rule.Banker].gameTimer.On();
 		Debug.Log(str);
 
 		onMsgStart();
@@ -309,13 +309,13 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 	protected void changeToken(int pos){
 		if(pos==-1)return;
-		var old=_token;
-		_token=pos%maxPlayer;
-		if(old!=_token){
+		var old=Rule.Token;
+		Rule.Token=pos%maxPlayer;
+		if(old!=Rule.Token){
 			if(Players[old].gameTimer!=null)
 				Players[old].gameTimer.On(false);
-			if(Players[_token].gameTimer!=null)
-				Players[_token].gameTimer.On();
+			if(Players[Rule.Token].gameTimer!=null)
+				Players[Rule.Token].gameTimer.On();
 		}
 	}
 }

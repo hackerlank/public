@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Proto3;
@@ -169,7 +169,7 @@ public class MahJongRule: GameRule {
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
 		//huazhu check
-		if(player.pos!=_token%MaxPlayer){
+		if(player.pos!=Token%MaxPlayer){
 			Debug.Log("Discard invalid turn");
 			return false;
 		}
