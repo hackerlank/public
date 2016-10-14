@@ -35,6 +35,9 @@ void Player::on_read(PBHelper& pb){
                             case pb_enum::OPTION_ROUND:
                                 maxRound=kv.ivalue();
                                 break;
+                            case pb_enum::OPTION_DEFINED_CARDS:
+                                gameptr->definedCards=kv.value();
+                                break;
                             default:
                                 break;
                         }

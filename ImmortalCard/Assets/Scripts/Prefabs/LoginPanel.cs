@@ -6,29 +6,40 @@ using Proto3;
 
 public class LoginPanel : MonoBehaviour {
 
-	public Text Host,DefaultHost;
+	public InputField Host;
+	public Text DefaultHost;
 
 	public static LoginPanel Instance=null;
-	void Awake(){Instance=this;}
+	void Awake(){
+		Host.text=PlayerPrefs.GetString(Configs.PrefsKey_Uri,DefaultHost.text);
+		Instance=this;
+	}
 	void OnDestroy(){Instance=null;}
 	
 	public void OnLogin(){
-		if(Host.text.Length<=0)
-			Host.text=DefaultHost.text;
 		if(Host.text.Length>0){
-			var uri=Host.text;
-			var ws=Host.text;
-			if(uri.IndexOf(':')<=0){
-				uri+=":8800";
-				ws+=":8820";
+			var saved=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
+			if(Host.text!=saved){
+				PlayerPrefs.SetString(Configs.PrefsKey_Uri,Host.text);
+				PlayerPrefs.Save();
 			}
-			if(uri.IndexOf('/')<=0){
-				uri="http://"+uri;
-				ws="ws://"+ws;
-			}
-			Configs.uri=uri;
-			Configs.ws=ws;
+		}else{
+			Debug.LogError("Invalid host");
+			return;
 		}
+
+		var uri=Host.text;
+		var ws=Host.text;
+		if(uri.IndexOf(':')<=0){
+			uri+=":8800";
+			ws+=":8820";
+		}
+		if(uri.IndexOf('/')<=0){
+			uri="http://"+uri;
+			ws="ws://"+ws;
+		}
+		Configs.uri=uri;
+		Configs.ws=ws;
 
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			//only for testing

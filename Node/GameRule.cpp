@@ -12,6 +12,8 @@
 #include <algorithm>
 using namespace proto3;
 
+inline void parseCardsByString(std::vector<int>& o,std::string& line);
+
 void GameRule::deal(Game& game){
     //clear
     changePos(game,game.banker);
@@ -26,10 +28,26 @@ void GameRule::deal(Game& game){
     initCard(game);
     
     //shuffle
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::shuffle(game.pile.begin(),game.pile.end(),gen);
-    std::shuffle(game.pile.begin(),game.pile.end(),gen);
+    if(game.definedCards.empty()){
+        std::random_device rd;
+        std::mt19937 gen(rd());
+        std::shuffle(game.pile.begin(),game.pile.end(),gen);
+        std::shuffle(game.pile.begin(),game.pile.end(),gen);
+    }else{
+        std::vector<int> o;
+        parseCardsByString(o,game.definedCards);
+        for(size_t i=0,ii=o.size();i!=ii;++i){
+            auto I=o[i];
+            for(size_t j=0,jj=game.pile.size();j!=jj;++j){
+                auto J=game.pile[j];
+                if(I==J&&i!=j){
+                    //swap
+                    std::swap(game.pile[i],game.pile[j]);
+                    break;
+                }
+            }
+        }
+    }
     
     //deal: fixed position,movable banker
     auto MP=MaxPlayer();
@@ -181,4 +199,18 @@ const char* GameRule::cards2str(std::string& str,const google::protobuf::Repeate
         str+=buf;
     }
     return str.c_str();
+}
+
+void parseCardsByString(std::vector<int>& o,std::string& line){
+    char c=',';
+    std::string comma;comma.push_back(c);
+    if(!line.empty()&&line.back()!=c)line+=comma;
+    while(true){
+        auto i=line.find(comma);
+        if(i==std::string::npos)break;
+        auto str=line.substr(0,i);
+        auto id=atoi(str.c_str());
+        line=line.substr(++i);
+        o.push_back(id);
+    }
 }

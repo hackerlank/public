@@ -4,10 +4,13 @@ using System.Collections;
 using Proto3;
 
 public class CreatePanel : MonoBehaviour {
-	public Text DefinedCards;
+	public InputField DefinedCards;
 
 	public static CreatePanel Instance=null;
-	void Awake(){Instance=this;}
+	void Awake(){
+		DefinedCards.text=PlayerPrefs.GetString(Configs.PrefsKey_DefinedCards);
+		Instance=this;
+	}
 	void OnDestroy(){Instance=null;}
 	[HideInInspector]
 	public GameIcon	Icon;
@@ -39,6 +42,17 @@ public class CreatePanel : MonoBehaviour {
 		msgC.Mid=pb_msg.MsgCnCreate;
 		msgC.Game=Icon.GameId;
 		msgC.Option.Add(opRound);
+
+		if(DefinedCards.text.Length>0){
+			var opCards=new key_value();
+			opCards.Ikey=pb_enum.OptionDefinedCards;
+			opCards.Value=DefinedCards.text;
+			msgC.Option.Add(opCards);
+
+			//save
+			PlayerPrefs.SetString(Configs.PrefsKey_DefinedCards,DefinedCards.text);
+			PlayerPrefs.Save();
+		}
 		
 		Main.Instance.MainPlayer.Send<MsgCNCreate>(msgC.Mid,msgC);
 		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
