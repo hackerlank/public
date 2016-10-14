@@ -212,7 +212,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
 
     //card or just pass
-    unit_id_t card=i_invalid;
+    int card=-1;
     if(curr.type()!=pb_enum::OP_PASS){
         if(curr.pawns().empty()){
             KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
@@ -230,7 +230,11 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     //queue in
     std::string str;
     //KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,curr));
+    auto ops=pending.bunch.type();
     pending.bunch.CopyFrom(curr);
+    //restore pending ops for draw
+    if(pending.bunch.type()==pb_enum::OP_PASS)
+        pending.bunch.set_type(ops);
     
     int ready=0;
     for(auto& p:pendingMeld)if(p.arrived)++ready;
@@ -367,10 +371,11 @@ void Mahjong::draw(Game& game){
             //pending meld
             auto& pending=game.pendingMeld.back();
             pending.bunch.set_pos(game.token);
+            pending.bunch.set_type(pb_enum::BUNCH_A);   //default ops
             pending.bunch.add_pawns(card);
         }else{
             msg.set_card(card);
-//            msg.set_card(i_invalid);
+//            msg.set_card(-1);
         }
         p->send(msg);
         p->lastMsg=std::make_shared<MsgNCDraw>(msg);

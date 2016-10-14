@@ -207,7 +207,7 @@ void Paohuzi::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
 
     //card or just pass
-    unit_id_t card=i_invalid;
+    int card=-1;
     if(curr.type()!=pb_enum::OP_PASS){
         if(curr.pawns().empty()){
             KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
@@ -365,7 +365,7 @@ void Paohuzi::draw(Game& game){
             pending.bunch.add_pawns(card);
         }else{
             msg.set_card(card);
-//            msg.set_card(i_invalid);
+//            msg.set_card(-1);
         }
         p->send(msg);
         p->lastMsg=std::make_shared<MsgNCDraw>(msg);

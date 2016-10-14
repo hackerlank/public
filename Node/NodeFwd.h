@@ -21,8 +21,6 @@ typedef short color_t;
 typedef short value_t;
 typedef unsigned game_id_t;
 
-const unit_id_t i_invalid=(unit_id_t)-1;
-
 #include "Player.h"
 #include "Game.h"
 #include "GameRule.h"
