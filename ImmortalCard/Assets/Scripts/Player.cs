@@ -139,6 +139,12 @@ public class Player {
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){
+				//clear player data
+				gameData.Hands.Clear();
+				gameData.Discards.Clear();
+				gameData.Bunch.Clear();
+				gameData.SelectedCard=-1;
+				//copy data
 				msg=msgStart;
 				pos=msgStart.Pos;
 				gameData.Hands.AddRange(msgStart.Hands);
@@ -173,6 +179,12 @@ public class Player {
 			MsgNCSettle msgSettle=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(msgSettle.Result==pb_enum.Succeess){
 				msg=msgSettle;
+				if(this!=Main.Instance.MainPlayer){
+					//robots
+					var omsgReady=new MsgCNReady();
+					omsgReady.Mid=pb_msg.MsgCnReady;
+					Send<MsgCNReady>(omsgReady.Mid,omsgReady);
+				}
 			}else
 				Debug.LogError("settle error: "+msgSettle.Result);
 			break;

@@ -407,7 +407,6 @@ bool Mahjong::settle(Game& game){
     for(auto p:game.players){
         p->send(msg);
         p->lastMsg=std::make_shared<MsgNCSettle>(msg);
-        p->ready=false;
     }
     
     if(++game.round>=game.Round){

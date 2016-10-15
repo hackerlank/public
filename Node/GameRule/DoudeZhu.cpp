@@ -227,10 +227,7 @@ bool DoudeZhu::settle(Game& game){
         //auto player=msg.add_play();
     }
     
-    for(auto p:game.players){
-        p->send(msg);
-        p->ready=false;
-    }
+    for(auto p:game.players)p->send(msg);
 
     if(++game.round>=game.Round){
         MsgNCFinish fin;

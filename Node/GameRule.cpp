@@ -132,7 +132,10 @@ bool GameRule::Engaged(Game& game){
 bool GameRule::Ready(Game& game){
     int n=0;
     for(auto p:game.players)if(p&&p->ready)++n;
-    return n>=MaxPlayer();
+    auto ready=(n>=MaxPlayer());
+    //reset after all ready
+    if(ready)for(auto p:game.players)if(p)p->ready=false;
+    return ready;
 }
 
 void GameRule::changePos(Game& game,pos_t pos){

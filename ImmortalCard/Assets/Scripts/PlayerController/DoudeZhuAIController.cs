@@ -37,6 +37,7 @@ public class DoudeZhuAIController:PlayerController {
 					bunch.Type=pb_enum.OpPass;
 				}
 				omsgDiscard.Bunch=bunch;
+				//Debug.Log(player.pos+" discard "+Player.bunch2str(omsgDiscard.Bunch));
 				
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
 			}

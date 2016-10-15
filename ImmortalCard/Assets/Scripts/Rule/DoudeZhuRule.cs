@@ -105,7 +105,7 @@ public class DoudeZhuRule: GameRule {
 										var b=new bunch_t();
 										b.Type=hist.Type;
 										b.Pos=src_bunch.Pos+1;
-										foreach(var c in v)b.Pawns.Add(c);
+										for(int i=0;i<idx;++i)b.Pawns.Add(v[i]);	//overflow!
 										hints.Add(b);
 									}
 								}

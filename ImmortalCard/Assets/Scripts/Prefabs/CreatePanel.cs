@@ -36,7 +36,7 @@ public class CreatePanel : MonoBehaviour {
 		nRobots=4;
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
-		opRound.Ivalue=Main.Instance.Round;
+		opRound.Ivalue=Main.Round;
 		
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;

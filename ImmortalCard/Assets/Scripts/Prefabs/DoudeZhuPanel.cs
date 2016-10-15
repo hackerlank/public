@@ -58,11 +58,14 @@ public class DoudeZhuPanel : GamePanel {
 
 		if(_hints.Count>0){
 			var hints=_hints[_nhints];
+			_selection.Clear();
 			foreach(Transform ch in HandAreas[player.pos].transform){
 				var card=ch.gameObject.GetComponent<Card>();
 				if(card!=null)foreach(var id in hints.Pawns)
-					if(card.Value==id)
-						card.Tap();
+				if(card.Value==id){
+					card.Tap();
+					_selection.Add(card);
+				}
 			}
 			_nhints=(_nhints+1)%_hints.Count;
 		}
