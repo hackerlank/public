@@ -8,6 +8,7 @@ public class DoudeZhuPanel : GamePanel {
 	public GameObject	BtnHint;
 	public GameObject	BtnDiscard,BtnCall,BtnDouble;
 
+	GameObject[]		btnOps;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
@@ -32,8 +33,12 @@ public class DoudeZhuPanel : GamePanel {
 		_nhints=0;
 
 		//auto pass
-		if(_pos==Rule.Token&&!showHints())
-			Invoke("OnPass",Configs.OpsInterval);
+		if(_pos==Rule.Token){
+			if(showHints())
+				foreach(var btn in btnOps)btn.SetActive(true);
+			else
+				Invoke("OnPass",Configs.OpsInterval);
+		}
 	}
 
 	int _nhints=0;
@@ -76,8 +81,8 @@ public class DoudeZhuPanel : GamePanel {
 	// events
 	// ----------------------------------------------
 	override public void Awake(){
-		base.Awake();
 		Rule=new DoudeZhuRule();
+		base.Awake();
 
 		var files=new List<string>();
 		files.Add("back");
@@ -87,6 +92,8 @@ public class DoudeZhuPanel : GamePanel {
 			for(int i=1;i<=13;++i)
 				files.Add(Id2File(j,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
+
+		btnOps=new GameObject[]{BtnHint,BtnDiscard,BtnPass};
 	}
 
 	public void OnHint(){
@@ -101,9 +108,15 @@ public class DoudeZhuPanel : GamePanel {
 	}
 	
 	public void OnDiscard(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		StartCoroutine(Discard());
 	}
 	
+	override public void OnPass(){
+		foreach(var btn in btnOps)btn.SetActive(false);
+		base.OnPass();
+	}
+
 	public static void Create(System.Action<Component> handler=null){
 		Utils.Load<DoudeZhuPanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);

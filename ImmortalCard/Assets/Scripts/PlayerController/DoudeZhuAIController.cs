@@ -18,10 +18,7 @@ public class DoudeZhuAIController:PlayerController {
 		}else if(msg is MsgNCDiscard){
 			//discard AI
 			var msgDiscard=msg as MsgNCDiscard;
-			if(player.pos==msgDiscard.Bunch.Pos){
-				foreach(var card in msgDiscard.Bunch.Pawns)
-					player.gameData.Hands.Remove(card);
-			}else if(player.pos==(msgDiscard.Bunch.Pos+1)%maxPlayer){
+			if(player.pos==(msgDiscard.Bunch.Pos+1)%maxPlayer){
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				

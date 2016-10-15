@@ -30,11 +30,7 @@ public class MahjongAIController:PlayerController{
 		}else if(msg is MsgNCDiscard){
 			//discard AI
 			var msgDiscard=msg as MsgNCDiscard;
-			if(player.pos==msgDiscard.Bunch.Pos){
-				//remove from hands
-				foreach(var card in msgDiscard.Bunch.Pawns)
-					player.gameData.Hands.Remove(card);
-			}else{
+			if(player.pos!=msgDiscard.Bunch.Pos){
 				//meld only for others
 				var omsgMeld=new MsgCNMeld();
 				omsgMeld.Mid=pb_msg.MsgCnMeld;
@@ -64,9 +60,7 @@ public class MahjongAIController:PlayerController{
 				yield break;
 
 			if(player.pos==msgMeld.Bunch.Pos){
-				//remove from hands
-				foreach(var card in msgMeld.Bunch.Pawns)
-					player.gameData.Hands.Remove(card);
+				Main.Instance.gameController.Rule.Meld(player,msgMeld.Bunch);
 
 				//discard
 				var discard=player.gameData.Hands[0];

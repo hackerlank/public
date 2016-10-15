@@ -148,6 +148,9 @@ public class Player {
 				msg=msgStart;
 				pos=msgStart.Pos;
 				gameData.Hands.AddRange(msgStart.Hands);
+				var str="deal "+pos+":";
+				foreach(var hand in msgStart.Hands)str+=hand+",";
+				Debug.Log(str);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			break;
@@ -155,10 +158,16 @@ public class Player {
 		case pb_msg.MsgNcDiscard:
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(msgDiscard.Result==pb_enum.Succeess){
+				//append historical
 				var hist=Main.Instance.gameController.Rule.Historical;
 				if(hist.Count<=0||hist[hist.Count-1].Pos!=msgDiscard.Bunch.Pos){
 					Debug.Log("add historical "+Player.bunch2str(msgDiscard.Bunch));
 					hist.Add(msgDiscard.Bunch);
+				}
+				//remove discards from hands
+				if(pos==msgDiscard.Bunch.Pos){
+					foreach(var card in msgDiscard.Bunch.Pawns)
+						gameData.Hands.Remove(card);
 				}
 				msg=msgDiscard;
 			}else

@@ -78,8 +78,8 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 
 		}else if(msg is MsgNCMeld){
 			var msgMeld=msg as MsgNCMeld;
-			changeToken(msgMeld.Bunch.Pos);
 			onMsgMeld(msgMeld.Bunch);
+			changeToken(msgMeld.Bunch.Pos);
 
 		}else if(msg is MsgNCDraw){
 			var msgDraw=msg as MsgNCDraw;

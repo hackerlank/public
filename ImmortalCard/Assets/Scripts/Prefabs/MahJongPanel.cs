@@ -124,6 +124,11 @@ public class MahJongPanel : GamePanel {
 			A.DiscardTo(AbandonAreas[to],AbandonScalar);
 			break;
 		}
+		//remove from hands
+		var player=Main.Instance.MainPlayer;
+		if(player.pos==bunch.Pos){
+			Rule.Meld(player,bunch);
+		}
 	}
 	
 	bool showHints(int card,bool bDraw){

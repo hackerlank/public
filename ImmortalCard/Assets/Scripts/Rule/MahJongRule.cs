@@ -119,6 +119,22 @@ public class MahJongRule: GameRule {
 		return hints;
 	}
 
+	public override void Meld(Player player,bunch_t bunch){
+		switch(bunch.Type){
+		case pb_enum.BunchA:
+			foreach(var card in bunch.Pawns)
+				player.gameData.Hands.Add(card);
+			break;
+		case pb_enum.BunchAaa:
+		case pb_enum.BunchAaaa:
+			foreach(var card in bunch.Pawns){
+				player.gameData.Hands.Remove(card);
+				player.gameData.Bunch.Add(bunch);
+			}
+			break;
+		}
+	}
+
 	bool isGameOver(Player player,int id,List<bunch_t> output){
 		var hands=player.gameData.Hands;
 		if(hands.Count<2){

@@ -245,19 +245,21 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
         //priority
         auto& front=pendingMeld.front();
         auto& bunch=front.bunch;
+        auto where=bunch.pos();
+        auto& who=*game.players[where];
 
         //ok,verify
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(pb_enum::SUCCEESS);
-        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",pos,bunch2str(str,bunch),game.token);
+        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
 
         auto isDraw=(pendingMeld.size()==1);
         switch(bunch.type()){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
-                if(isGameOver(game,pos,card,output)){
-                    player.gameData.clear_hands();
+                if(isGameOver(game,where,card,output)){
+                    who.gameData.clear_hands();
                 }
                 break;
             }
@@ -270,15 +272,15 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                 break;
             case pb_enum::BUNCH_INVALID:
                 //invalid
-                KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",pos);
+                KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",where);
                 msg.set_result(pb_enum::BUNCH_INVALID);
                 break;
             case pb_enum::BUNCH_A:
                 //collect after draw
-                player.gameData.mutable_hands()->Add(card);
+                who.gameData.mutable_hands()->Add(card);
                 //pending discard
                 game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(player.pos);
+                game.pendingDiscard->bunch.set_pos(where);
                 //remove from pile map
                 game.pileMap.erase(card);
                 break;
@@ -288,27 +290,27 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                 auto result=verifyBunch(game,*(bunch_t*)&bunch);
                 if(result==pb_enum::BUNCH_INVALID){
                     std::string str;
-                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,pos);
+                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
                     msg.set_result(pb_enum::BUNCH_INVALID);
                 }else{
                     //erase from hands
-                    auto& hands=*player.gameData.mutable_hands();
+                    auto& hands=*who.gameData.mutable_hands();
                     for(auto j:bunch.pawns()){
                         for(auto i=hands.begin();i!=hands.end();++i){
                             if(j==*i){
-                                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",player.pos,*i);
+                                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
                                 hands.erase(i);
                                 break;
                             }
                         }
                     }
                     //then meld
-                    auto h=player.gameData.add_bunch();
+                    auto h=who.gameData.add_bunch();
                     h->CopyFrom(bunch);
                     //pending discard
                     game.pendingDiscard=std::make_shared<Game::pending_t>();
-                    game.pendingDiscard->bunch.set_pos(player.pos);
-                    changePos(game,player.pos);
+                    game.pendingDiscard->bunch.set_pos(where);
+                    changePos(game,where);
                 }//meld
             }//default
         }//switch
@@ -331,10 +333,12 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
             changeState(game,Game::State::ST_SETTLE);
         else //A,AAA,AAAA
             changeState(game,Game::State::ST_DISCARD);
-
-        game.pendingMeld.clear();
-
         msg.mutable_bunch()->CopyFrom(bunch);
+        
+        //clear after copy
+        game.pendingMeld.clear();
+        
+        //then send
         for(auto p:game.players){
             //need reply all
             p->send(msg);

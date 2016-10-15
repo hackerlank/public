@@ -15,6 +15,7 @@ public abstract class GameRule {
 	public virtual int MaxPlayer{get{return 3;}}
 
 	public virtual List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){return new List<bunch_t>();}
+	public virtual void Meld(Player player,bunch_t bunch){}
 
 	public MsgNCStart Deal(){
 		Pile=new List<int>();
