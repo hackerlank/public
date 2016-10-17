@@ -7,6 +7,7 @@ public class LobbyPanel : MonoBehaviour {
 
 	public Text			Bulletin;
 	public Transform	GameRoot;
+	public ContentSizeFitter	Content;
 
 	public static LobbyPanel Instance=null;
 	void Awake(){Instance=this;}
@@ -14,12 +15,13 @@ public class LobbyPanel : MonoBehaviour {
 
 	void Start(){
 		game_t game=new game_t();
+		int total=8;
 		game.Id=(int)pb_enum.GameDdz;
 		addGame(game);
 		game=new game_t();
 		game.Id=(int)pb_enum.GameMj;
 		addGame(game);
-		for(int i=0;i<10;++i){
+		for(int i=0;i<total-2;++i){
 			game=new game_t();
 			game.Id=(int)pb_enum.GameMj;
 			addGame(game);
