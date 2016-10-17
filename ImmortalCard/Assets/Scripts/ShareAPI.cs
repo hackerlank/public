@@ -6,6 +6,8 @@ public class ShareAPI {
 	ShareSDK sdk;
 
 	public ShareAPI() {
+		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+
 		sdk=Main.Instance.gameObject.GetComponent<ShareSDK>();
 		sdk.appKey=Configs.modId;
 		sdk.devInfo.wechat.Enable=true;
@@ -19,11 +21,15 @@ public class ShareAPI {
 	}
 
 	public void SignIn(){
+		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+		
 		sdk.Authorize(PlatformType.SinaWeibo);
 		sdk.GetUserInfo(PlatformType.SinaWeibo);
 	}
 	
 	public void Share(string title,string text){
+		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+		
 		ShareContent content = new ShareContent();
 		content.SetText(text);
 		content.SetImagePath("Images/Immortal");

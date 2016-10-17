@@ -35,4 +35,14 @@ public class LobbyPanel : MonoBehaviour {
 			icon.Name.text=icon.GameId.ToString();
 		});
 	}
+
+	public void OnShare(){
+		Main.Instance.share.Share("Title","Hello Wechat!");
+	}
+
+	public void OnClose(){
+		Utils.Load<LoginPanel>(gameObject.transform.parent,delegate(Component obj){
+			Destroy(gameObject);
+		});
+	}
 }

@@ -61,6 +61,8 @@ namespace cn.sharesdk.unity3d
 			shareSDKUtils = new iOSImpl(gameObject);
 			#endif
 			shareSDKUtils.InitSDK(appKey);
+			if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+			
 			shareSDKUtils.SetPlatformConfig(platformConfigs);
 		}
 		
