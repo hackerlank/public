@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+	<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+	<ProductVersion>10.0.20506</ProductVersion>
+	<SchemaVersion>2.0</SchemaVersion>
+	<ProjectGuid>{E127EE3D-BE8B-8070-2B83-5B933CF164EB}</ProjectGuid>
+	<OutputType>Library</OutputType>
+	<AppDesignerFolder>Properties</AppDesignerFolder>
+	<RootNamespace></RootNamespace>
+	<AssemblyName>Assembly-UnityScript-Editor</AssemblyName>
+	<TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+	<FileAlignment>512</FileAlignment>
+	<BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	<DebugSymbols>true</DebugSymbols>
+	<DebugType>full</DebugType>
+	<Optimize>false</Optimize>
+	<OutputPath>Temp\bin\Debug\</OutputPath>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_7_2;UNITY_4_7;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_IL2CPP;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;UNITY5_SCRIPTING_IN_UNITY4;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_IL2CPP;DEVELOPMENT_BUILD;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_PRO_LICENSE;ENABLE_DUCK_TYPING</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	<DebugType>pdbonly</DebugType>
+	<Optimize>true</Optimize>
+	<OutputPath>Temp\bin\Release\</OutputPath>
+	<DefineConstants>TRACE</DefineConstants>
+	<ErrorReport>prompt</ErrorReport>
+	<WarningLevel>4</WarningLevel>
+	<NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+	<Reference Include="System" />
+    <Reference Include="System.XML" />
+	<Reference Include="System.Core" />
+	<Reference Include="System.Xml.Linq" />
+	<Reference Include="UnityEngine">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEngine.dll</HintPath>
+	</Reference>
+	<Reference Include="UnityEditor">
+	  <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\NativeExt.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\ShareSDK.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\AliPaySocial.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Copy.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\DouBan.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Dropbox.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Evernote.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Facebook.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\FacebookMessenger.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Flickr.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\GooglePlus.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Instagram.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Instapaper.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\KaKao.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\KaiXin.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Line.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\LinkedIn.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Mail.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\MingDao.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Pinterest.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Pocket.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Print.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\QQ.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\RenRen.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\SMS.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\SinaWeibo.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\TencentWeibo.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Tumblr.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\Twitter.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\VKontakte.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\WeChat.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\WhatsApp.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\YiXin.js" />
+     <Compile Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ScriptCore\platforms\YouDaoNote.js" />
+     <None Include="Assets\SocketIO\JSONObject\readme.txt" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_oks_strings.xml" />
+     <None Include="Assets\BundleManager\Resources\Urls.txt" />
+     <None Include="Assets\BundleManager\BMConfiger.txt" />
+     <None Include="Assets\BundleManager\BundleData.txt" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_strings.xml" />
+     <None Include="Assets\Editor\SDKPorter\ShareSDK\Support\PlatformSDK\WeChatSDK\README.txt" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\drawable\ssdk_oks_classic_progressbar.xml" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\drawable\ssdk_oks_classic_platform_cell_back.xml" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\values-en\ssdk_strings.xml" />
+     <None Include="Assets\BundleManager\TestDownloadManager\TestBundleDatas\BundleData.txt" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_oks_color_drawables.xml" />
+     <None Include="Assets\BundleManager\TestDownloadManager\TestBundleDatas\BMConfiger.txt" />
+     <None Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ConfigurationFile\ShareContent.xml" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\values\ssdk_instapaper_strings.xml" />
+     <None Include="Assets\SocketIO\Readme.txt" />
+     <None Include="Assets\Plugins\Android\ShareSDK\AndroidManifest.xml" />
+     <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
+     <None Include="Assets\BundleManager\BuildStates.txt" />
+     <None Include="Assets\BundleManager\TestDownloadManager\TestBundleDatas\BuildStates.txt" />
+     <None Include="Assets\Plugins\Android\ShareSDK\res\values-en\ssdk_oks_strings.xml" />
+     <None Include="Assets\Editor\SDKPorter\ShareSDK\Support\Required\ShareSDK.bundle\ConfigurationFile\ShareSDK.xml" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.7.2/Standalone/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.7.2/Editor/UnityEditor.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>/Applications/Unity/Unity.app/Contents/Frameworks/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{ED068ADA-CFD6-617F-5FBD-126B6F74866E}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{66F39D76-86C2-5B1F-882C-68305AC5EC1D}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+	   Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>
