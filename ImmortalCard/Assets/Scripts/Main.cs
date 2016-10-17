@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,6 +8,7 @@ public class Main : MonoBehaviour {
 
 	public const int		Round=2;
 	public GameController	gameController=null;
+	public ShareAPI			share;
 
 	public enum Mode{
 		STANDALONE,
@@ -17,10 +18,11 @@ public class Main : MonoBehaviour {
 	public Mode GameMode{get{return Mode.NODE;}}
 
 	void Awake(){
+		Instance=this;
 		//Loom
 		gameObject.AddComponent<Loom>();
 		MainPlayer=new Player();
-		Instance=this;
+		share=new ShareAPI();
 	}
 
 	void Start () {

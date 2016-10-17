@@ -9,7 +9,9 @@ public class Configs{
 
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
-		
+	//ShareSDK app id
+	public static string modId="180127d1c7541";
+
 	public static float OpsInterval=1f;
 
 	public static void Load(){

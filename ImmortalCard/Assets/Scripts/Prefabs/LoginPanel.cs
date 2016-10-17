@@ -69,6 +69,7 @@ public class LoginPanel : MonoBehaviour {
 	}
 
 	public void DoLogin(){
+		Main.Instance.share.SignIn();
 		Destroy(gameObject);
 		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj){
 			Destroy(gameObject);
