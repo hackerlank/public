@@ -5,6 +5,8 @@ using Proto3;
 
 public class CreatePanel : MonoBehaviour {
 	public InputField DefinedCards;
+	public GameObject CreateTab,JoinTab;
+	public Transform	GameRoot;
 
 	public static CreatePanel Instance=null;
 	void Awake(){
@@ -13,20 +15,59 @@ public class CreatePanel : MonoBehaviour {
 	}
 	void OnDestroy(){Instance=null;}
 	[HideInInspector]
-	public GameIcon	Icon;
+	public GameIcon	CurrentGame;
+	[HideInInspector]
+	public RuleIcon	Icon;
 
 	int nRobots=0;
+
+	void Start(){
+		game_t game=new game_t();
+		game.Id=(int)pb_enum.GameDdz;
+		addGame(game);
+		game=new game_t();
+		game.Id=(int)pb_enum.GameMj;
+		addGame(game);
+		for(int i=0;i<14;++i){
+			game=new game_t();
+			game.Id=(int)pb_enum.GameMj;
+			addGame(game);
+		}
+	}
 	
+	void addGame(game_t game){
+		Utils.Load<RuleIcon>(GameRoot,delegate(Component obj){
+			var icon=obj as RuleIcon;
+			icon.GameId=(pb_enum)game.Id;
+			icon.Name.text=icon.GameId.ToString();
+		});
+	}
+
 	public void OnCreate(){
-		StartCoroutine(createCo());
+		CreateTab.SetActive(true);
+		JoinTab.SetActive(false);
 	}
 
 	public void OnJoin(){
+		CreateTab.SetActive(false);
+		JoinTab.SetActive(true);
+	}
+
+	public void OnCreateOK(){
+		StartCoroutine(createCo());
+	}
+	
+	public void OnJoinOK(){
 		StartCoroutine(joinCo());
+	}
+	
+	public void OnDial(int n){
 	}
 
 	public void OnClose(){
-		Destroy(gameObject);
+		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj){
+			Destroy(gameObject);
+		});
 	}
 	
 	IEnumerator createCo(){
@@ -70,7 +111,7 @@ public class CreatePanel : MonoBehaviour {
 
 		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
 		if(Icon==null){
-			Icon=new GameIcon();
+			Icon=new RuleIcon();
 			Icon.GameId=Main.Instance.MainPlayer.msgNCJoin.Game;
 		}
 		Main.Instance.MainPlayer.msgNCJoin=null;

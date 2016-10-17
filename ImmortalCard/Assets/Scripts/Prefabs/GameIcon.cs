@@ -13,7 +13,8 @@ public class GameIcon : MonoBehaviour {
 		var canvas=gameObject.GetComponentInParent<Canvas>();
 		Utils.Load<CreatePanel>(canvas.transform,delegate(Component obj){
 			var panel=obj as CreatePanel;
-			panel.Icon=this;
+			panel.CurrentGame=this;
+			if(LobbyPanel.Instance)Destroy(LobbyPanel.Instance.gameObject);
 		});
 	}
 }
