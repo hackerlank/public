@@ -36,13 +36,23 @@ public class LobbyPanel : MonoBehaviour {
 		});
 	}
 
+	public void OnIcon(){
+	}
+	
+	public void OnCurrency(){
+	}
+	
+	public void OnMail(){
+	}
+	
+	public void OnSettings(){
+	}
+	
+	public void OnProxy(){
+		Utils.Load<ChargePanel>(gameObject.transform.parent);
+	}
+	
 	public void OnShare(){
 		Main.Instance.share.Share("Title","Hello Wechat!");
-	}
-
-	public void OnClose(){
-		Utils.Load<LoginPanel>(gameObject.transform.parent,delegate(Component obj){
-			Destroy(gameObject);
-		});
 	}
 }

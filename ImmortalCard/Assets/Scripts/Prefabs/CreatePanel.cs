@@ -6,7 +6,8 @@ using Proto3;
 public class CreatePanel : MonoBehaviour {
 	public InputField DefinedCards;
 	public GameObject CreateTab,JoinTab;
-	public Transform	GameRoot;
+	public Transform GameRoot;
+	public Text Information;
 
 	public static CreatePanel Instance=null;
 	void Awake(){
@@ -40,6 +41,7 @@ public class CreatePanel : MonoBehaviour {
 			var icon=obj as RuleIcon;
 			icon.GameId=(pb_enum)game.Id;
 			icon.Name.text=icon.GameId.ToString();
+			if(Icon==null)Icon=icon;
 		});
 	}
 
@@ -64,7 +66,13 @@ public class CreatePanel : MonoBehaviour {
 	public void OnDial(int n){
 	}
 
-	public void OnClose(){
+	public void OnHelp(){
+	}
+
+	public void OnLog(){
+	}
+
+	public void OnBack(){
 		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj){
 			Destroy(gameObject);
 		});
