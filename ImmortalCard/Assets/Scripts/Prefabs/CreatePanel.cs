@@ -115,8 +115,6 @@ public class CreatePanel : MonoBehaviour {
 
 	IEnumerator joinCo(){
 		Main.Instance.MainPlayer.msgNCJoin=null;
-		Utils.Load<GameKeyPopup>(gameObject.transform.parent);
-
 		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
 		if(Icon==null){
 			Icon=new RuleIcon();
