@@ -12,6 +12,7 @@ public class DoudeZhuPanel : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
+	override public bool CardDrag{get{return false;}}
 	override public string CardPrefab{get{return "Card";}}
 	override public string Id2File(int color,int value){
 		if(Rule!=null){

@@ -8,6 +8,7 @@ public interface GameController:PlayerController{
 	GameRule Rule{get;set;}
 
 	//card operation
+	bool CardDrag{get;}
 	void TapCard(Card card,bool select=true);
 	IEnumerator Discard(Card card=null);
 

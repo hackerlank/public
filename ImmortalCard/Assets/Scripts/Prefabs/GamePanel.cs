@@ -1,11 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 using Google.Protobuf;
 
-public abstract class GamePanel : MonoBehaviour,GameController {
+public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandler,IPointerUpHandler{
 	public Card[]		BottomCards;
 	public Transform	Pile;
 	public Transform[]	HandAreas;
@@ -58,6 +59,20 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj) {
 			Destroy(gameObject);
 		});
+	}
+
+	bool pointerDown=false;
+	public void OnPointerDown (PointerEventData eventData){
+		pointerDown=true;
+	}
+
+	public void OnPointerUp (PointerEventData eventData){
+		pointerDown=false;
+	}
+
+	public void OnCardEnter(Card card){
+		if(pointerDown)
+			TapCard(card,card.state!=Card.State.ST_SELECT);
 	}
 	// ----------------------------------------------
 	// messages
@@ -237,6 +252,7 @@ public abstract class GamePanel : MonoBehaviour,GameController {
 	// ----------------------------------------------
 	public int Round{get{return round;}set{round=value;}}
 	public GameRule Rule{get{return rule;}set{rule=value;}}
+	virtual public bool CardDrag{get{return true;}}
 	abstract public string Id2File(int color,int value);
 	abstract public float DiscardScalar{get;}
 	abstract public string CardPrefab{get;}

@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHandler,IEndDragHandler {
+public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
+		,IPointerEnterHandler,IPointerDownHandler,IPointerUpHandler{
 
 	public LayoutElement le;
 	public Image image;
@@ -19,6 +20,9 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		set{
 			_state=value;
 		}
+		get{
+			return _state;
+		}
 	}
 
 	bool _static=true;
@@ -26,35 +30,19 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		set{_static=value;}
 	}
 
-	public int Id,Clr,Val;	//only for debug
-	int _value;
+	public int _value;	//only for debug
 	public int Value{
 		get{
 			return _value;
 		}set{
 			if(Main.Instance.gameController!=null){
-				//remember debug value
-				Id=(int)value;
-				Clr=(int)value/1000;
-				Val=(int)value%100;
+				var Clr=(int)value/1000;
+				var Val=(int)value%100;
 
 				var file=Main.Instance.gameController.Id2File(Clr,Val);
 				if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
 					image.sprite=CardCache.sprites[file];
 				_value=value;
-				/*
-			string str="load card("+value.Id+","+value.Color+","+value.Value+")";
-			_value=value;
-			//bind image
-			string[] Colors={"c","d","h","s"};
-			string file="back";
-			if(value.Value>=0)
-				file=string.Format("{0}{1:00}",Colors[value.Color],value.Value);
-			//Debug.Log(str+"file="+file);
-			Utils.SpriteCreate(file,delegate(Sprite sprite) {
-				image.sprite=sprite;
-			});
-			*/
 			}
 		}
 	}
@@ -71,29 +59,40 @@ public class Card : MonoBehaviour,IPointerClickHandler,IDragHandler,IBeginDragHa
 		}
 	}
 
-	public void OnPointerClick (PointerEventData eventData){
-		if(_static||eventData==null||eventData.dragging||eventData.pointerEnter==null)return;
-		//Debug.Log("----click on card "+eventData.clickCount);
-		if(eventData.clickCount==2)
-			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
-		else if(eventData.clickCount==1){
-			if(_state==State.ST_NORMAL||_state==State.ST_SELECT)
-				Main.Instance.gameController.TapCard(this,_state==State.ST_NORMAL);
+	public void OnPointerDown (PointerEventData eventData){
+		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT))return;
+		
+		var panel=Main.Instance.gameController as GamePanel;
+		if(panel!=null){
+			panel.OnPointerDown(null);
+			panel.TapCard(this,_state!=State.ST_SELECT);
 		}
 	}
-	
-	public void OnBeginDrag (PointerEventData eventData){
+
+	public void OnPointerUp (PointerEventData eventData){
+		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT))return;
+
+		if(eventData.clickCount>=2)
+			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
+		var panel=Main.Instance.gameController as GamePanel;
+		if(panel!=null)
+			panel.OnPointerUp(null);
 	}
-	
+
+	public void OnPointerEnter (PointerEventData eventData){
+		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||Main.Instance.gameController.CardDrag)return;
+
+		var panel=Main.Instance.gameController as GamePanel;
+		panel.OnCardEnter(this);
+	}
+
 	public void OnEndDrag (PointerEventData eventData){
-		if(_static)return;
+		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
 		Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
-		//Debug.Log("----end drag");
 	}
 	
 	public void OnDrag(PointerEventData eventData){
-		if(_static)return;
-		//Debug.Log("----drag on card");
+		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
 		var delta=eventData.delta;
 		eventData.pointerDrag.transform.position+=new Vector3(delta.x,delta.y,0);
 	}
