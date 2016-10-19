@@ -36,6 +36,10 @@ void protobuf_AssignDesc_protocol_2eproto();
 void protobuf_ShutdownFile_protocol_2eproto();
 
 class MsgBase;
+class MsgCHCharge;
+class MsgCHLogin;
+class MsgCHQuery;
+class MsgCHRegister;
 class MsgCLEnter;
 class MsgCNCreate;
 class MsgCNDiscard;
@@ -48,6 +52,10 @@ class MsgCNMeld;
 class MsgCNReady;
 class MsgCNStats;
 class MsgCSLogin;
+class MsgHCCharge;
+class MsgHCLogin;
+class MsgHCQuery;
+class MsgHCRegister;
 class MsgLCEnter;
 class MsgNCCreate;
 class MsgNCDiscard;
@@ -65,6 +73,7 @@ class MsgNCStart;
 class MsgSCLogin;
 class achv_t;
 class bunch_t;
+class charge_t;
 class game_data_t;
 class game_t;
 class key_value;
@@ -136,7 +145,21 @@ enum pb_msg {
   MSG_CL_ENTER = 4001,
   MSG_LC_ENTER = 4002,
   MSG_LC_EXIT = 4004,
-  MSG_CL_END = 5999,
+  MSG_CL_END = 4999,
+  MSG_CH_BEGIN = 5000,
+  MSG_CH_LOGIN = 5001,
+  MSG_HC_LOGIN = 5002,
+  MSG_CH_REGISTER = 5003,
+  MSG_HC_REGISTER = 5004,
+  MSG_CH_CHARGE = 5005,
+  MSG_HC_CHARGE = 5006,
+  MSG_CH_QUERY = 5007,
+  MSG_HC_QUERY = 5008,
+  MSG_CH_FORGET = 5009,
+  MSG_HC_FORGET = 5010,
+  MSG_CH_RESET_PSWD = 5011,
+  MSG_HC_RESET_PSWD = 5012,
+  MSG_CH_END = 5999,
   MSG_CN_BEGIN = 6000,
   MSG_CN_ENTER = 6001,
   MSG_NC_ENTER = 6002,
@@ -1478,6 +1501,129 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
 };
 // -------------------------------------------------------------------
 
+class charge_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.charge_t) */ {
+ public:
+  charge_t();
+  virtual ~charge_t();
+
+  charge_t(const charge_t& from);
+
+  inline charge_t& operator=(const charge_t& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const charge_t& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const charge_t* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(charge_t* other);
+
+  // implements Message ----------------------------------------------
+
+  inline charge_t* New() const { return New(NULL); }
+
+  charge_t* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const charge_t& from);
+  void MergeFrom(const charge_t& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(charge_t* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional string phone = 1;
+  void clear_phone();
+  static const int kPhoneFieldNumber = 1;
+  const ::std::string& phone() const;
+  void set_phone(const ::std::string& value);
+  void set_phone(const char* value);
+  void set_phone(const char* value, size_t size);
+  ::std::string* mutable_phone();
+  ::std::string* release_phone();
+  void set_allocated_phone(::std::string* phone);
+
+  // optional string uid = 2;
+  void clear_uid();
+  static const int kUidFieldNumber = 2;
+  const ::std::string& uid() const;
+  void set_uid(const ::std::string& value);
+  void set_uid(const char* value);
+  void set_uid(const char* value, size_t size);
+  ::std::string* mutable_uid();
+  ::std::string* release_uid();
+  void set_allocated_uid(::std::string* uid);
+
+  // optional uint32 time = 3;
+  void clear_time();
+  static const int kTimeFieldNumber = 3;
+  ::google::protobuf::uint32 time() const;
+  void set_time(::google::protobuf::uint32 value);
+
+  // optional int32 amount = 4;
+  void clear_amount();
+  static const int kAmountFieldNumber = 4;
+  ::google::protobuf::int32 amount() const;
+  void set_amount(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:proto3.charge_t)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr phone_;
+  ::google::protobuf::internal::ArenaStringPtr uid_;
+  ::google::protobuf::uint32 time_;
+  ::google::protobuf::int32 amount_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static charge_t* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgBase : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgBase) */ {
  public:
   MsgBase();
@@ -2064,6 +2210,981 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
 
   void InitAsDefaultInstance();
   static MsgLCEnter* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgCHLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCHLogin) */ {
+ public:
+  MsgCHLogin();
+  virtual ~MsgCHLogin();
+
+  MsgCHLogin(const MsgCHLogin& from);
+
+  inline MsgCHLogin& operator=(const MsgCHLogin& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgCHLogin& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgCHLogin* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgCHLogin* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgCHLogin* New() const { return New(NULL); }
+
+  MsgCHLogin* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgCHLogin& from);
+  void MergeFrom(const MsgCHLogin& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgCHLogin* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional uint32 version = 2;
+  void clear_version();
+  static const int kVersionFieldNumber = 2;
+  ::google::protobuf::uint32 version() const;
+  void set_version(::google::protobuf::uint32 value);
+
+  // optional string phone = 3;
+  void clear_phone();
+  static const int kPhoneFieldNumber = 3;
+  const ::std::string& phone() const;
+  void set_phone(const ::std::string& value);
+  void set_phone(const char* value);
+  void set_phone(const char* value, size_t size);
+  ::std::string* mutable_phone();
+  ::std::string* release_phone();
+  void set_allocated_phone(::std::string* phone);
+
+  // optional string pswd = 4;
+  void clear_pswd();
+  static const int kPswdFieldNumber = 4;
+  const ::std::string& pswd() const;
+  void set_pswd(const ::std::string& value);
+  void set_pswd(const char* value);
+  void set_pswd(const char* value, size_t size);
+  ::std::string* mutable_pswd();
+  ::std::string* release_pswd();
+  void set_allocated_pswd(::std::string* pswd);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgCHLogin)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  ::google::protobuf::uint32 version_;
+  ::google::protobuf::internal::ArenaStringPtr phone_;
+  ::google::protobuf::internal::ArenaStringPtr pswd_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgCHLogin* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgHCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgHCLogin) */ {
+ public:
+  MsgHCLogin();
+  virtual ~MsgHCLogin();
+
+  MsgHCLogin(const MsgHCLogin& from);
+
+  inline MsgHCLogin& operator=(const MsgHCLogin& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgHCLogin& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgHCLogin* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgHCLogin* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgHCLogin* New() const { return New(NULL); }
+
+  MsgHCLogin* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgHCLogin& from);
+  void MergeFrom(const MsgHCLogin& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgHCLogin* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional int32 amount = 2;
+  void clear_amount();
+  static const int kAmountFieldNumber = 2;
+  ::google::protobuf::int32 amount() const;
+  void set_amount(::google::protobuf::int32 value);
+
+  // optional uint64 session = 3;
+  void clear_session();
+  static const int kSessionFieldNumber = 3;
+  ::google::protobuf::uint64 session() const;
+  void set_session(::google::protobuf::uint64 value);
+
+  // optional .proto3.pb_enum result = 4;
+  void clear_result();
+  static const int kResultFieldNumber = 4;
+  ::proto3::pb_enum result() const;
+  void set_result(::proto3::pb_enum value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgHCLogin)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  ::google::protobuf::int32 amount_;
+  ::google::protobuf::uint64 session_;
+  int result_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgHCLogin* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgCHRegister : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCHRegister) */ {
+ public:
+  MsgCHRegister();
+  virtual ~MsgCHRegister();
+
+  MsgCHRegister(const MsgCHRegister& from);
+
+  inline MsgCHRegister& operator=(const MsgCHRegister& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgCHRegister& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgCHRegister* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgCHRegister* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgCHRegister* New() const { return New(NULL); }
+
+  MsgCHRegister* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgCHRegister& from);
+  void MergeFrom(const MsgCHRegister& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgCHRegister* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional string uid = 2;
+  void clear_uid();
+  static const int kUidFieldNumber = 2;
+  const ::std::string& uid() const;
+  void set_uid(const ::std::string& value);
+  void set_uid(const char* value);
+  void set_uid(const char* value, size_t size);
+  ::std::string* mutable_uid();
+  ::std::string* release_uid();
+  void set_allocated_uid(::std::string* uid);
+
+  // optional string phone = 3;
+  void clear_phone();
+  static const int kPhoneFieldNumber = 3;
+  const ::std::string& phone() const;
+  void set_phone(const ::std::string& value);
+  void set_phone(const char* value);
+  void set_phone(const char* value, size_t size);
+  ::std::string* mutable_phone();
+  ::std::string* release_phone();
+  void set_allocated_phone(::std::string* phone);
+
+  // optional string pswd = 4;
+  void clear_pswd();
+  static const int kPswdFieldNumber = 4;
+  const ::std::string& pswd() const;
+  void set_pswd(const ::std::string& value);
+  void set_pswd(const char* value);
+  void set_pswd(const char* value, size_t size);
+  ::std::string* mutable_pswd();
+  ::std::string* release_pswd();
+  void set_allocated_pswd(::std::string* pswd);
+
+  // optional string name = 5;
+  void clear_name();
+  static const int kNameFieldNumber = 5;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // optional string address = 6;
+  void clear_address();
+  static const int kAddressFieldNumber = 6;
+  const ::std::string& address() const;
+  void set_address(const ::std::string& value);
+  void set_address(const char* value);
+  void set_address(const char* value, size_t size);
+  ::std::string* mutable_address();
+  ::std::string* release_address();
+  void set_allocated_address(::std::string* address);
+
+  // optional string idcard = 7;
+  void clear_idcard();
+  static const int kIdcardFieldNumber = 7;
+  const ::std::string& idcard() const;
+  void set_idcard(const ::std::string& value);
+  void set_idcard(const char* value);
+  void set_idcard(const char* value, size_t size);
+  ::std::string* mutable_idcard();
+  ::std::string* release_idcard();
+  void set_allocated_idcard(::std::string* idcard);
+
+  // optional string wechat = 8;
+  void clear_wechat();
+  static const int kWechatFieldNumber = 8;
+  const ::std::string& wechat() const;
+  void set_wechat(const ::std::string& value);
+  void set_wechat(const char* value);
+  void set_wechat(const char* value, size_t size);
+  ::std::string* mutable_wechat();
+  ::std::string* release_wechat();
+  void set_allocated_wechat(::std::string* wechat);
+
+  // optional string alipay = 9;
+  void clear_alipay();
+  static const int kAlipayFieldNumber = 9;
+  const ::std::string& alipay() const;
+  void set_alipay(const ::std::string& value);
+  void set_alipay(const char* value);
+  void set_alipay(const char* value, size_t size);
+  ::std::string* mutable_alipay();
+  ::std::string* release_alipay();
+  void set_allocated_alipay(::std::string* alipay);
+
+  // optional string verifycode = 10;
+  void clear_verifycode();
+  static const int kVerifycodeFieldNumber = 10;
+  const ::std::string& verifycode() const;
+  void set_verifycode(const ::std::string& value);
+  void set_verifycode(const char* value);
+  void set_verifycode(const char* value, size_t size);
+  ::std::string* mutable_verifycode();
+  ::std::string* release_verifycode();
+  void set_allocated_verifycode(::std::string* verifycode);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgCHRegister)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::internal::ArenaStringPtr uid_;
+  ::google::protobuf::internal::ArenaStringPtr phone_;
+  ::google::protobuf::internal::ArenaStringPtr pswd_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr address_;
+  ::google::protobuf::internal::ArenaStringPtr idcard_;
+  ::google::protobuf::internal::ArenaStringPtr wechat_;
+  ::google::protobuf::internal::ArenaStringPtr alipay_;
+  ::google::protobuf::internal::ArenaStringPtr verifycode_;
+  int mid_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgCHRegister* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgHCRegister : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgHCRegister) */ {
+ public:
+  MsgHCRegister();
+  virtual ~MsgHCRegister();
+
+  MsgHCRegister(const MsgHCRegister& from);
+
+  inline MsgHCRegister& operator=(const MsgHCRegister& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgHCRegister& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgHCRegister* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgHCRegister* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgHCRegister* New() const { return New(NULL); }
+
+  MsgHCRegister* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgHCRegister& from);
+  void MergeFrom(const MsgHCRegister& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgHCRegister* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional .proto3.pb_enum result = 2;
+  void clear_result();
+  static const int kResultFieldNumber = 2;
+  ::proto3::pb_enum result() const;
+  void set_result(::proto3::pb_enum value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgHCRegister)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  int result_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgHCRegister* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgCHCharge : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCHCharge) */ {
+ public:
+  MsgCHCharge();
+  virtual ~MsgCHCharge();
+
+  MsgCHCharge(const MsgCHCharge& from);
+
+  inline MsgCHCharge& operator=(const MsgCHCharge& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgCHCharge& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgCHCharge* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgCHCharge* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgCHCharge* New() const { return New(NULL); }
+
+  MsgCHCharge* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgCHCharge& from);
+  void MergeFrom(const MsgCHCharge& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgCHCharge* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional uint64 session = 2;
+  void clear_session();
+  static const int kSessionFieldNumber = 2;
+  ::google::protobuf::uint64 session() const;
+  void set_session(::google::protobuf::uint64 value);
+
+  // optional string uid = 3;
+  void clear_uid();
+  static const int kUidFieldNumber = 3;
+  const ::std::string& uid() const;
+  void set_uid(const ::std::string& value);
+  void set_uid(const char* value);
+  void set_uid(const char* value, size_t size);
+  ::std::string* mutable_uid();
+  ::std::string* release_uid();
+  void set_allocated_uid(::std::string* uid);
+
+  // optional int32 amount = 4;
+  void clear_amount();
+  static const int kAmountFieldNumber = 4;
+  ::google::protobuf::int32 amount() const;
+  void set_amount(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgCHCharge)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::uint64 session_;
+  int mid_;
+  ::google::protobuf::int32 amount_;
+  ::google::protobuf::internal::ArenaStringPtr uid_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgCHCharge* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgHCCharge : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgHCCharge) */ {
+ public:
+  MsgHCCharge();
+  virtual ~MsgHCCharge();
+
+  MsgHCCharge(const MsgHCCharge& from);
+
+  inline MsgHCCharge& operator=(const MsgHCCharge& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgHCCharge& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgHCCharge* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgHCCharge* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgHCCharge* New() const { return New(NULL); }
+
+  MsgHCCharge* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgHCCharge& from);
+  void MergeFrom(const MsgHCCharge& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgHCCharge* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional .proto3.pb_enum result = 5;
+  void clear_result();
+  static const int kResultFieldNumber = 5;
+  ::proto3::pb_enum result() const;
+  void set_result(::proto3::pb_enum value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgHCCharge)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  int mid_;
+  int result_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgHCCharge* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgCHQuery : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCHQuery) */ {
+ public:
+  MsgCHQuery();
+  virtual ~MsgCHQuery();
+
+  MsgCHQuery(const MsgCHQuery& from);
+
+  inline MsgCHQuery& operator=(const MsgCHQuery& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgCHQuery& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgCHQuery* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgCHQuery* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgCHQuery* New() const { return New(NULL); }
+
+  MsgCHQuery* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgCHQuery& from);
+  void MergeFrom(const MsgCHQuery& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgCHQuery* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // optional uint64 session = 2;
+  void clear_session();
+  static const int kSessionFieldNumber = 2;
+  ::google::protobuf::uint64 session() const;
+  void set_session(::google::protobuf::uint64 value);
+
+  // optional string uid = 3;
+  void clear_uid();
+  static const int kUidFieldNumber = 3;
+  const ::std::string& uid() const;
+  void set_uid(const ::std::string& value);
+  void set_uid(const char* value);
+  void set_uid(const char* value, size_t size);
+  ::std::string* mutable_uid();
+  ::std::string* release_uid();
+  void set_allocated_uid(::std::string* uid);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgCHQuery)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::uint64 session_;
+  ::google::protobuf::internal::ArenaStringPtr uid_;
+  int mid_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgCHQuery* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgHCQuery : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgHCQuery) */ {
+ public:
+  MsgHCQuery();
+  virtual ~MsgHCQuery();
+
+  MsgHCQuery(const MsgHCQuery& from);
+
+  inline MsgHCQuery& operator=(const MsgHCQuery& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const MsgHCQuery& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const MsgHCQuery* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(MsgHCQuery* other);
+
+  // implements Message ----------------------------------------------
+
+  inline MsgHCQuery* New() const { return New(NULL); }
+
+  MsgHCQuery* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const MsgHCQuery& from);
+  void MergeFrom(const MsgHCQuery& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(MsgHCQuery* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
+
+  // repeated .proto3.charge_t log = 2;
+  int log_size() const;
+  void clear_log();
+  static const int kLogFieldNumber = 2;
+  const ::proto3::charge_t& log(int index) const;
+  ::proto3::charge_t* mutable_log(int index);
+  ::proto3::charge_t* add_log();
+  ::google::protobuf::RepeatedPtrField< ::proto3::charge_t >*
+      mutable_log();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::charge_t >&
+      log() const;
+
+  // optional .proto3.pb_enum result = 3;
+  void clear_result();
+  static const int kResultFieldNumber = 3;
+  ::proto3::pb_enum result() const;
+  void set_result(::proto3::pb_enum value);
+
+  // @@protoc_insertion_point(class_scope:proto3.MsgHCQuery)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::charge_t > log_;
+  int mid_;
+  int result_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static MsgHCQuery* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -6035,6 +7156,126 @@ inline void game_data_t::set_selected_card(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
+// charge_t
+
+// optional string phone = 1;
+inline void charge_t::clear_phone() {
+  phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& charge_t::phone() const {
+  // @@protoc_insertion_point(field_get:proto3.charge_t.phone)
+  return phone_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void charge_t::set_phone(const ::std::string& value) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.charge_t.phone)
+}
+inline void charge_t::set_phone(const char* value) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.charge_t.phone)
+}
+inline void charge_t::set_phone(const char* value, size_t size) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.charge_t.phone)
+}
+inline ::std::string* charge_t::mutable_phone() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.charge_t.phone)
+  return phone_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* charge_t::release_phone() {
+  // @@protoc_insertion_point(field_release:proto3.charge_t.phone)
+  
+  return phone_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void charge_t::set_allocated_phone(::std::string* phone) {
+  if (phone != NULL) {
+    
+  } else {
+    
+  }
+  phone_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), phone);
+  // @@protoc_insertion_point(field_set_allocated:proto3.charge_t.phone)
+}
+
+// optional string uid = 2;
+inline void charge_t::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& charge_t::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.charge_t.uid)
+  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void charge_t::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.charge_t.uid)
+}
+inline void charge_t::set_uid(const char* value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.charge_t.uid)
+}
+inline void charge_t::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.charge_t.uid)
+}
+inline ::std::string* charge_t::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.charge_t.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* charge_t::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.charge_t.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void charge_t::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:proto3.charge_t.uid)
+}
+
+// optional uint32 time = 3;
+inline void charge_t::clear_time() {
+  time_ = 0u;
+}
+inline ::google::protobuf::uint32 charge_t::time() const {
+  // @@protoc_insertion_point(field_get:proto3.charge_t.time)
+  return time_;
+}
+inline void charge_t::set_time(::google::protobuf::uint32 value) {
+  
+  time_ = value;
+  // @@protoc_insertion_point(field_set:proto3.charge_t.time)
+}
+
+// optional int32 amount = 4;
+inline void charge_t::clear_amount() {
+  amount_ = 0;
+}
+inline ::google::protobuf::int32 charge_t::amount() const {
+  // @@protoc_insertion_point(field_get:proto3.charge_t.amount)
+  return amount_;
+}
+inline void charge_t::set_amount(::google::protobuf::int32 value) {
+  
+  amount_ = value;
+  // @@protoc_insertion_point(field_set:proto3.charge_t.amount)
+}
+
+// -------------------------------------------------------------------
+
 // MsgBase
 
 // optional .proto3.pb_msg mid = 1;
@@ -6505,6 +7746,892 @@ inline void MsgLCEnter::set_result(::proto3::pb_enum value) {
   
   result_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.result)
+}
+
+// -------------------------------------------------------------------
+
+// MsgCHLogin
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgCHLogin::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgCHLogin::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHLogin.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgCHLogin::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHLogin.mid)
+}
+
+// optional uint32 version = 2;
+inline void MsgCHLogin::clear_version() {
+  version_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgCHLogin::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHLogin.version)
+  return version_;
+}
+inline void MsgCHLogin::set_version(::google::protobuf::uint32 value) {
+  
+  version_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHLogin.version)
+}
+
+// optional string phone = 3;
+inline void MsgCHLogin::clear_phone() {
+  phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHLogin::phone() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHLogin.phone)
+  return phone_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHLogin::set_phone(const ::std::string& value) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHLogin.phone)
+}
+inline void MsgCHLogin::set_phone(const char* value) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHLogin.phone)
+}
+inline void MsgCHLogin::set_phone(const char* value, size_t size) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHLogin.phone)
+}
+inline ::std::string* MsgCHLogin::mutable_phone() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHLogin.phone)
+  return phone_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHLogin::release_phone() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHLogin.phone)
+  
+  return phone_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHLogin::set_allocated_phone(::std::string* phone) {
+  if (phone != NULL) {
+    
+  } else {
+    
+  }
+  phone_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), phone);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHLogin.phone)
+}
+
+// optional string pswd = 4;
+inline void MsgCHLogin::clear_pswd() {
+  pswd_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHLogin::pswd() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHLogin.pswd)
+  return pswd_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHLogin::set_pswd(const ::std::string& value) {
+  
+  pswd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHLogin.pswd)
+}
+inline void MsgCHLogin::set_pswd(const char* value) {
+  
+  pswd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHLogin.pswd)
+}
+inline void MsgCHLogin::set_pswd(const char* value, size_t size) {
+  
+  pswd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHLogin.pswd)
+}
+inline ::std::string* MsgCHLogin::mutable_pswd() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHLogin.pswd)
+  return pswd_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHLogin::release_pswd() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHLogin.pswd)
+  
+  return pswd_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHLogin::set_allocated_pswd(::std::string* pswd) {
+  if (pswd != NULL) {
+    
+  } else {
+    
+  }
+  pswd_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), pswd);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHLogin.pswd)
+}
+
+// -------------------------------------------------------------------
+
+// MsgHCLogin
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgHCLogin::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgHCLogin::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCLogin.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgHCLogin::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCLogin.mid)
+}
+
+// optional int32 amount = 2;
+inline void MsgHCLogin::clear_amount() {
+  amount_ = 0;
+}
+inline ::google::protobuf::int32 MsgHCLogin::amount() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCLogin.amount)
+  return amount_;
+}
+inline void MsgHCLogin::set_amount(::google::protobuf::int32 value) {
+  
+  amount_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCLogin.amount)
+}
+
+// optional uint64 session = 3;
+inline void MsgHCLogin::clear_session() {
+  session_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgHCLogin::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCLogin.session)
+  return session_;
+}
+inline void MsgHCLogin::set_session(::google::protobuf::uint64 value) {
+  
+  session_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCLogin.session)
+}
+
+// optional .proto3.pb_enum result = 4;
+inline void MsgHCLogin::clear_result() {
+  result_ = 0;
+}
+inline ::proto3::pb_enum MsgHCLogin::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCLogin.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+inline void MsgHCLogin::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCLogin.result)
+}
+
+// -------------------------------------------------------------------
+
+// MsgCHRegister
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgCHRegister::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgCHRegister::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgCHRegister::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.mid)
+}
+
+// optional string uid = 2;
+inline void MsgCHRegister::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.uid)
+  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.uid)
+}
+inline void MsgCHRegister::set_uid(const char* value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.uid)
+}
+inline void MsgCHRegister::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.uid)
+}
+inline ::std::string* MsgCHRegister::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.uid)
+}
+
+// optional string phone = 3;
+inline void MsgCHRegister::clear_phone() {
+  phone_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::phone() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.phone)
+  return phone_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_phone(const ::std::string& value) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.phone)
+}
+inline void MsgCHRegister::set_phone(const char* value) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.phone)
+}
+inline void MsgCHRegister::set_phone(const char* value, size_t size) {
+  
+  phone_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.phone)
+}
+inline ::std::string* MsgCHRegister::mutable_phone() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.phone)
+  return phone_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_phone() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.phone)
+  
+  return phone_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_phone(::std::string* phone) {
+  if (phone != NULL) {
+    
+  } else {
+    
+  }
+  phone_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), phone);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.phone)
+}
+
+// optional string pswd = 4;
+inline void MsgCHRegister::clear_pswd() {
+  pswd_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::pswd() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.pswd)
+  return pswd_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_pswd(const ::std::string& value) {
+  
+  pswd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.pswd)
+}
+inline void MsgCHRegister::set_pswd(const char* value) {
+  
+  pswd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.pswd)
+}
+inline void MsgCHRegister::set_pswd(const char* value, size_t size) {
+  
+  pswd_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.pswd)
+}
+inline ::std::string* MsgCHRegister::mutable_pswd() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.pswd)
+  return pswd_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_pswd() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.pswd)
+  
+  return pswd_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_pswd(::std::string* pswd) {
+  if (pswd != NULL) {
+    
+  } else {
+    
+  }
+  pswd_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), pswd);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.pswd)
+}
+
+// optional string name = 5;
+inline void MsgCHRegister::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::name() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.name)
+}
+inline void MsgCHRegister::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.name)
+}
+inline void MsgCHRegister::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.name)
+}
+inline ::std::string* MsgCHRegister::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_name() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.name)
+}
+
+// optional string address = 6;
+inline void MsgCHRegister::clear_address() {
+  address_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::address() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.address)
+  return address_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_address(const ::std::string& value) {
+  
+  address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.address)
+}
+inline void MsgCHRegister::set_address(const char* value) {
+  
+  address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.address)
+}
+inline void MsgCHRegister::set_address(const char* value, size_t size) {
+  
+  address_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.address)
+}
+inline ::std::string* MsgCHRegister::mutable_address() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.address)
+  return address_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_address() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.address)
+  
+  return address_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_address(::std::string* address) {
+  if (address != NULL) {
+    
+  } else {
+    
+  }
+  address_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), address);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.address)
+}
+
+// optional string idcard = 7;
+inline void MsgCHRegister::clear_idcard() {
+  idcard_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::idcard() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.idcard)
+  return idcard_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_idcard(const ::std::string& value) {
+  
+  idcard_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.idcard)
+}
+inline void MsgCHRegister::set_idcard(const char* value) {
+  
+  idcard_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.idcard)
+}
+inline void MsgCHRegister::set_idcard(const char* value, size_t size) {
+  
+  idcard_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.idcard)
+}
+inline ::std::string* MsgCHRegister::mutable_idcard() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.idcard)
+  return idcard_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_idcard() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.idcard)
+  
+  return idcard_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_idcard(::std::string* idcard) {
+  if (idcard != NULL) {
+    
+  } else {
+    
+  }
+  idcard_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), idcard);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.idcard)
+}
+
+// optional string wechat = 8;
+inline void MsgCHRegister::clear_wechat() {
+  wechat_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::wechat() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.wechat)
+  return wechat_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_wechat(const ::std::string& value) {
+  
+  wechat_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.wechat)
+}
+inline void MsgCHRegister::set_wechat(const char* value) {
+  
+  wechat_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.wechat)
+}
+inline void MsgCHRegister::set_wechat(const char* value, size_t size) {
+  
+  wechat_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.wechat)
+}
+inline ::std::string* MsgCHRegister::mutable_wechat() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.wechat)
+  return wechat_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_wechat() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.wechat)
+  
+  return wechat_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_wechat(::std::string* wechat) {
+  if (wechat != NULL) {
+    
+  } else {
+    
+  }
+  wechat_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), wechat);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.wechat)
+}
+
+// optional string alipay = 9;
+inline void MsgCHRegister::clear_alipay() {
+  alipay_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::alipay() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.alipay)
+  return alipay_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_alipay(const ::std::string& value) {
+  
+  alipay_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.alipay)
+}
+inline void MsgCHRegister::set_alipay(const char* value) {
+  
+  alipay_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.alipay)
+}
+inline void MsgCHRegister::set_alipay(const char* value, size_t size) {
+  
+  alipay_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.alipay)
+}
+inline ::std::string* MsgCHRegister::mutable_alipay() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.alipay)
+  return alipay_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_alipay() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.alipay)
+  
+  return alipay_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_alipay(::std::string* alipay) {
+  if (alipay != NULL) {
+    
+  } else {
+    
+  }
+  alipay_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), alipay);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.alipay)
+}
+
+// optional string verifycode = 10;
+inline void MsgCHRegister::clear_verifycode() {
+  verifycode_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHRegister::verifycode() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHRegister.verifycode)
+  return verifycode_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_verifycode(const ::std::string& value) {
+  
+  verifycode_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHRegister.verifycode)
+}
+inline void MsgCHRegister::set_verifycode(const char* value) {
+  
+  verifycode_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHRegister.verifycode)
+}
+inline void MsgCHRegister::set_verifycode(const char* value, size_t size) {
+  
+  verifycode_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHRegister.verifycode)
+}
+inline ::std::string* MsgCHRegister::mutable_verifycode() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHRegister.verifycode)
+  return verifycode_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHRegister::release_verifycode() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHRegister.verifycode)
+  
+  return verifycode_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHRegister::set_allocated_verifycode(::std::string* verifycode) {
+  if (verifycode != NULL) {
+    
+  } else {
+    
+  }
+  verifycode_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), verifycode);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHRegister.verifycode)
+}
+
+// -------------------------------------------------------------------
+
+// MsgHCRegister
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgHCRegister::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgHCRegister::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCRegister.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgHCRegister::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCRegister.mid)
+}
+
+// optional .proto3.pb_enum result = 2;
+inline void MsgHCRegister::clear_result() {
+  result_ = 0;
+}
+inline ::proto3::pb_enum MsgHCRegister::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCRegister.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+inline void MsgHCRegister::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCRegister.result)
+}
+
+// -------------------------------------------------------------------
+
+// MsgCHCharge
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgCHCharge::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgCHCharge::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHCharge.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgCHCharge::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHCharge.mid)
+}
+
+// optional uint64 session = 2;
+inline void MsgCHCharge::clear_session() {
+  session_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgCHCharge::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHCharge.session)
+  return session_;
+}
+inline void MsgCHCharge::set_session(::google::protobuf::uint64 value) {
+  
+  session_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHCharge.session)
+}
+
+// optional string uid = 3;
+inline void MsgCHCharge::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHCharge::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHCharge.uid)
+  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHCharge::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHCharge.uid)
+}
+inline void MsgCHCharge::set_uid(const char* value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHCharge.uid)
+}
+inline void MsgCHCharge::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHCharge.uid)
+}
+inline ::std::string* MsgCHCharge::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHCharge.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHCharge::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHCharge.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHCharge::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHCharge.uid)
+}
+
+// optional int32 amount = 4;
+inline void MsgCHCharge::clear_amount() {
+  amount_ = 0;
+}
+inline ::google::protobuf::int32 MsgCHCharge::amount() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHCharge.amount)
+  return amount_;
+}
+inline void MsgCHCharge::set_amount(::google::protobuf::int32 value) {
+  
+  amount_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHCharge.amount)
+}
+
+// -------------------------------------------------------------------
+
+// MsgHCCharge
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgHCCharge::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgHCCharge::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCCharge.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgHCCharge::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCCharge.mid)
+}
+
+// optional .proto3.pb_enum result = 5;
+inline void MsgHCCharge::clear_result() {
+  result_ = 0;
+}
+inline ::proto3::pb_enum MsgHCCharge::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCCharge.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+inline void MsgHCCharge::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCCharge.result)
+}
+
+// -------------------------------------------------------------------
+
+// MsgCHQuery
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgCHQuery::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgCHQuery::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHQuery.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgCHQuery::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHQuery.mid)
+}
+
+// optional uint64 session = 2;
+inline void MsgCHQuery::clear_session() {
+  session_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgCHQuery::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHQuery.session)
+  return session_;
+}
+inline void MsgCHQuery::set_session(::google::protobuf::uint64 value) {
+  
+  session_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCHQuery.session)
+}
+
+// optional string uid = 3;
+inline void MsgCHQuery::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCHQuery::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCHQuery.uid)
+  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHQuery::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCHQuery.uid)
+}
+inline void MsgCHQuery::set_uid(const char* value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCHQuery.uid)
+}
+inline void MsgCHQuery::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCHQuery.uid)
+}
+inline ::std::string* MsgCHQuery::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCHQuery.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCHQuery::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCHQuery.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCHQuery::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCHQuery.uid)
+}
+
+// -------------------------------------------------------------------
+
+// MsgHCQuery
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgHCQuery::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgHCQuery::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCQuery.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgHCQuery::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCQuery.mid)
+}
+
+// repeated .proto3.charge_t log = 2;
+inline int MsgHCQuery::log_size() const {
+  return log_.size();
+}
+inline void MsgHCQuery::clear_log() {
+  log_.Clear();
+}
+inline const ::proto3::charge_t& MsgHCQuery::log(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCQuery.log)
+  return log_.Get(index);
+}
+inline ::proto3::charge_t* MsgHCQuery::mutable_log(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgHCQuery.log)
+  return log_.Mutable(index);
+}
+inline ::proto3::charge_t* MsgHCQuery::add_log() {
+  // @@protoc_insertion_point(field_add:proto3.MsgHCQuery.log)
+  return log_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::charge_t >*
+MsgHCQuery::mutable_log() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgHCQuery.log)
+  return &log_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::charge_t >&
+MsgHCQuery::log() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgHCQuery.log)
+  return log_;
+}
+
+// optional .proto3.pb_enum result = 3;
+inline void MsgHCQuery::clear_result() {
+  result_ = 0;
+}
+inline ::proto3::pb_enum MsgHCQuery::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgHCQuery.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+inline void MsgHCQuery::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgHCQuery.result)
 }
 
 // -------------------------------------------------------------------
@@ -7938,6 +10065,24 @@ inline void MsgCNStats::set_allocated_value(::std::string* value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

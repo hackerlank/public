@@ -174,6 +174,13 @@ repeated int32 discards =2;
 repeated bunch_t bunch  =3;
 int32 selected_card     =4;
 };
+
+message charge_t{
+string phone            =1;
+string uid              =2;
+uint32 time             =3;
+int32 amount            =4;
+}
 // ----------------------------------------------------------------
 // messages
 // ----------------------------------------------------------------
@@ -185,7 +192,7 @@ MSG_RAW                 =1001;
 
 //Client --  Login
 MSG_CS_BEGIN            =2000;
-MSG_CS_LOGIN            =2001;
+MSG_CS_LOGIN            =2001;  //odd for in,even for out
 MSG_SC_LOGIN            =2002;
 
 MSG_CS_END              =3999;
@@ -195,7 +202,23 @@ MSG_CL_ENTER            =4001;
 MSG_LC_ENTER            =4002;
 MSG_LC_EXIT             =4004;
 
-MSG_CL_END              =5999;
+MSG_CL_END              =4999;
+//Client --  Charge
+MSG_CH_BEGIN            =5000;
+MSG_CH_LOGIN            =5001;
+MSG_HC_LOGIN            =5002;
+MSG_CH_REGISTER         =5003;
+MSG_HC_REGISTER         =5004;
+MSG_CH_CHARGE           =5005;
+MSG_HC_CHARGE           =5006;
+MSG_CH_QUERY            =5007;
+MSG_HC_QUERY            =5008;
+MSG_CH_FORGET           =5009;
+MSG_HC_FORGET           =5010;
+MSG_CH_RESET_PSWD       =5011;
+MSG_HC_RESET_PSWD       =5012;
+
+MSG_CH_END              =5999;
 //Client --  Node
 MSG_CN_BEGIN            =6000;
 MSG_CN_ENTER            =6001;
@@ -269,6 +292,71 @@ int32 key              =2;
 player_t player         =3;
 lobby_t lobby           =4;
 pb_enum result			=5;
+};
+// ----------------------------------------------------------------
+// Charge
+message MsgCHLogin{
+
+pb_msg mid				=1;
+uint32 version			=2;
+string phone            =3; //phone as id
+string pswd				=4;
+};
+
+message MsgHCLogin{
+
+pb_msg mid				=1;
+int32 amount            =2;
+uint64 session          =3;
+pb_enum result			=4;
+};
+
+message MsgCHRegister{
+
+pb_msg mid				=1;
+string uid              =2;
+string phone			=3;
+string pswd             =4;
+string name             =5;
+string address			=6;
+string idcard			=7;
+string wechat			=8;
+string alipay			=9;
+string verifycode		=10;
+};
+
+message MsgHCRegister{
+
+pb_msg mid				=1;
+pb_enum result			=2;
+};
+
+message MsgCHCharge{
+
+pb_msg mid				=1;
+uint64 session          =2;
+string uid              =3;
+int32 amount            =4;
+};
+
+message MsgHCCharge{
+
+pb_msg mid				=1;
+pb_enum result			=5;
+};
+
+message MsgCHQuery{
+
+pb_msg mid				=1;
+uint64 session          =2;
+string uid				=3;
+};
+
+message MsgHCQuery{
+
+pb_msg mid				=1;
+repeated charge_t log   =2;
+pb_enum result			=3;
 };
 // ----------------------------------------------------------------
 // Node

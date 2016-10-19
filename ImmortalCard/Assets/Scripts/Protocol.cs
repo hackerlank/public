@@ -48,99 +48,125 @@ namespace Proto3 {
             "dW5jaF90Eh0KBHR5cGUYASABKA4yDy5wcm90bzMucGJfZW51bRILCgNwb3MY",
             "AiABKAUSDQoFcGF3bnMYAyADKAUiZQoLZ2FtZV9kYXRhX3QSDQoFaGFuZHMY",
             "ASADKAUSEAoIZGlzY2FyZHMYAiADKAUSHgoFYnVuY2gYAyADKAsyDy5wcm90",
-            "bzMuYnVuY2hfdBIVCg1zZWxlY3RlZF9jYXJkGAQgASgFIiYKB01zZ0Jhc2US",
-            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJYCgpNc2dDU0xvZ2luEhsK",
-            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDwoHdmVyc2lvbhgDIAEoDRIc",
-            "CgR1c2VyGAIgASgLMg4ucHJvdG8zLnVzZXJfdCKTAQoKTXNnU0NMb2dpbhIb",
-            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3VpZBgCIAEoCRIPCgd2",
-            "ZXJzaW9uGAMgASgNEg8KB3Nlc3Npb24YBCABKAQSCgoCaXAYBSABKAkSDAoE",
-            "cG9ydBgGIAEoDRIfCgZyZXN1bHQYByABKA4yDy5wcm90bzMucGJfZW51bSJY",
-            "CgpNc2dDTEVudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoD",
-            "dWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEoBCKZ",
-            "AQoKTXNnTENFbnRlchIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsK",
-            "A2tleRgCIAEoBRIgCgZwbGF5ZXIYAyABKAsyEC5wcm90bzMucGxheWVyX3QS",
-            "HgoFbG9iYnkYBCABKAsyDy5wcm90bzMubG9iYnlfdBIfCgZyZXN1bHQYBSAB",
-            "KA4yDy5wcm90bzMucGJfZW51bSJYCgpNc2dDTkVudGVyEhsKA21pZBgBIAEo",
-            "DjIOLnByb3RvMy5wYl9tc2cSCwoDdWlkGAIgASgJEg8KB3ZlcnNpb24YAyAB",
-            "KA0SDwoHc2Vzc2lvbhgEIAEoBCJsCgpNc2dOQ0VudGVyEhsKA21pZBgBIAEo",
-            "DjIOLnByb3RvMy5wYl9tc2cSIAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBs",
-            "YXllcl90Eh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtImwKC01z",
-            "Z0NOQ3JlYXRlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHQoEZ2Ft",
-            "ZRgCIAEoDjIPLnByb3RvMy5wYl9lbnVtEiEKBm9wdGlvbhgDIAMoCzIRLnBy",
-            "b3RvMy5rZXlfdmFsdWUiXAoLTXNnTkNDcmVhdGUSGwoDbWlkGAEgASgOMg4u",
-            "cHJvdG8zLnBiX21zZxIPCgdnYW1lX2lkGAIgASgFEh8KBnJlc3VsdBgDIAEo",
-            "DjIPLnByb3RvMy5wYl9lbnVtIjkKCU1zZ0NOSm9pbhIbCgNtaWQYASABKA4y",
-            "Di5wcm90bzMucGJfbXNnEg8KB2dhbWVfaWQYAiABKAUiiwEKCU1zZ05DSm9p",
-            "bhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh0KBGdhbWUYAiABKA4y",
-            "Dy5wcm90bzMucGJfZW51bRIhCgdwbGF5ZXJzGAMgAygLMhAucHJvdG8zLnBs",
-            "YXllcl90Eh8KBnJlc3VsdBgEIAEoDjIPLnByb3RvMy5wYl9lbnVtIikKCk1z",
-            "Z0NOUmVhZHkSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZyJXCgpNc2dO",
-            "Q1JlYWR5EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIg",
-            "ASgFEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIjcKC01zZ0NO",
-            "RW5nYWdlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDa2V5GAIg",
-            "ASgFImUKC01zZ05DRW5nYWdlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
-            "c2cSCwoDcG9zGAIgASgFEgsKA2tleRgDIAEoBRIfCgZyZXN1bHQYBCABKA4y",
-            "Dy5wcm90bzMucGJfZW51bSK1AQoKTXNnTkNTdGFydBIbCgNtaWQYASABKA4y",
-            "Di5wcm90bzMucGJfbXNnEg4KBmJhbmtlchgCIAEoBRILCgNwb3MYAyABKAUS",
-            "DAoEYW50ZRgEIAEoBRIQCghtdWx0aXBsZRgFIAEoBRINCgVoYW5kcxgGIAMo",
-            "BRIOCgZib3R0b20YByADKAUSDQoFY291bnQYCCADKAUSHwoGcmVzdWx0GAkg",
-            "ASgOMg8ucHJvdG8zLnBiX2VudW0iSwoMTXNnQ05EaXNjYXJkEhsKA21pZBgB",
-            "IAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMu",
-            "YnVuY2hfdCJsCgxNc2dOQ0Rpc2NhcmQSGwoDbWlkGAEgASgOMg4ucHJvdG8z",
-            "LnBiX21zZxIeCgVidW5jaBgCIAEoCzIPLnByb3RvMy5idW5jaF90Eh8KBnJl",
-            "c3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIkgKCU1zZ0NOTWVsZBIbCgNt",
-            "aWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBWJ1bmNoGAIgASgLMg8ucHJv",
-            "dG8zLmJ1bmNoX3QiaQoJTXNnTkNNZWxkEhsKA21pZBgBIAEoDjIOLnByb3Rv",
-            "My5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZy",
-            "ZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSJDCglNc2dOQ0RyYXcSGwoD",
-            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSDAoEY2Fy",
-            "ZBgDIAEoBSIvChBNc2dDTkRpc21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnBy",
-            "b3RvMy5wYl9tc2ciXQoQTXNnTkNEaXNtaXNzU3luYxIbCgNtaWQYASABKA4y",
-            "Di5wcm90bzMucGJfbXNnEgsKA3BvcxgCIAEoBRIfCgZyZXN1bHQYAyABKA4y",
-            "Dy5wcm90bzMucGJfZW51bSIuCg9Nc2dDTkRpc21pc3NBY2sSGwoDbWlkGAEg",
-            "ASgOMg4ucHJvdG8zLnBiX21zZyJcCg9Nc2dOQ0Rpc21pc3NBY2sSGwoDbWlk",
-            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0",
-            "GAMgASgOMg8ucHJvdG8zLnBiX2VudW0imwEKC01zZ05DU2V0dGxlEhsKA21p",
-            "ZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDgoGd2lubmVyGAIgASgFEh4KBHBs",
-            "YXkYAyADKAsyEC5wcm90bzMucGxheWVyX3QSHgoFaGFuZHMYBCADKAsyDy5w",
-            "cm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51",
-            "bSJrCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNn",
-            "Eh4KBHBsYXkYAiADKAsyEC5wcm90bzMucGxheWVyX3QSHwoGcmVzdWx0GAMg",
-            "ASgOMg8ucHJvdG8zLnBiX2VudW0iRQoKTXNnQ05TdGF0cxIbCgNtaWQYASAB",
-            "KA4yDi5wcm90bzMucGJfbXNnEgsKA2tleRgCIAEoCRINCgV2YWx1ZRgDIAEo",
-            "CSrBBQoHcGJfZW51bRILCgdVTktOT1dOEAASCAoETk9ORRAAEgwKCFNVQ0NF",
-            "RVNTEAASCgoGREVWX1BDEAASCwoHREVWX1BTNBABEgwKCERFVl9YQk9YEAIS",
-            "CwoHREVWX0lPUxADEg8KC0RFVl9BTkRST0lEEAQSEAoMREVWX1dJTlBIT05F",
-            "EAUSDAoIR0FNRV9ERFoQFBIMCghHQU1FX1BESxAVEgwKCEdBTUVfUEhaEBYS",
-            "CwoHR0FNRV9NShAXEhAKDE9QVElPTl9ST1VORBAKEg8KC09QVElPTl9BTlRJ",
-            "EAsSEwoPT1BUSU9OX0NBVEVHT1JZEAwSGAoUT1BUSU9OX0RFRklORURfQ0FS",
-            "RFMQDRIRCg1DQVRFR09SWV9FQVNZEAoSEwoPQ0FURUdPUllfTk9STUFMEAsS",
-            "EQoNQ0FURUdPUllfSEFSRBAMEgsKB09QX1BBU1MQABIOCgpPUF9ESVNDQVJE",
-            "EAESEQoNQlVOQ0hfSU5WQUxJRBAKEgsKB0JVTkNIX0EQCxIMCghCVU5DSF9B",
-            "QRAMEg0KCUJVTkNIX0FBQRANEg4KCkJVTkNIX0FBQUEQDhIPCgtCVU5DSF9B",
-            "QUFBQhAPEg4KCkJVTkNIX0FBQUIQEBINCglCVU5DSF9BQkMQERINCglCVU5D",
-            "SF9XSU4QZBINCglBQ0hWX0JPTUIQChIPCgtBQ0hWX0hFQVZFThALEg0KCUFD",
-            "SFZfSEVMTBAMEhIKDURFRl9NQVhfTk9ERVMQ6AcSHAoWREVGX01BWF9HQU1F",
-            "U19QRVJfTk9ERRCgjQYSDgoKRVJSX0ZBSUxFRBBkEhEKDUVSUl9DQU5DRUxM",
-            "RUQQZRIQCgxFUlJfUFJPVE9DT0wQZhINCglFUlJfUEFSQU0QZxISCg5FUlJf",
-            "RFVQTElDQVRFRBBoEhAKC0VSUl9VTktOT1dOEOcHGgIQASrjBQoGcGJfbXNn",
-            "Eg8KC01TR19JTlZBTElEEAASDgoJTVNHX0JFR0lOEOgHEgwKB01TR19SQVcQ",
-            "6QcSEQoMTVNHX0NTX0JFR0lOENAPEhEKDE1TR19DU19MT0dJThDRDxIRCgxN",
-            "U0dfU0NfTE9HSU4Q0g8SDwoKTVNHX0NTX0VORBCfHxIRCgxNU0dfQ0xfQkVH",
-            "SU4QoB8SEQoMTVNHX0NMX0VOVEVSEKEfEhEKDE1TR19MQ19FTlRFUhCiHxIQ",
-            "CgtNU0dfTENfRVhJVBCkHxIPCgpNU0dfQ0xfRU5EEO8uEhEKDE1TR19DTl9C",
-            "RUdJThDwLhIRCgxNU0dfQ05fRU5URVIQ8S4SEQoMTVNHX05DX0VOVEVSEPIu",
-            "EhIKDU1TR19DTl9DUkVBVEUQ+y4SEgoNTVNHX05DX0NSRUFURRD8LhIQCgtN",
-            "U0dfQ05fSk9JThD9LhIQCgtNU0dfTkNfSk9JThD+LhIYChNNU0dfQ05fRElT",
-            "TUlTU19TWU5DEIUvEhgKE01TR19OQ19ESVNNSVNTX1NZTkMQhi8SFwoSTVNH",
-            "X0NOX0RJU01JU1NfQUNLEIcvEhcKEk1TR19OQ19ESVNNSVNTX0FDSxCILxIR",
-            "CgxNU0dfQ05fUkVBRFkQjy8SEQoMTVNHX05DX1JFQURZEJAvEhIKDU1TR19D",
-            "Tl9FTkdBR0UQkS8SEgoNTVNHX05DX0VOR0FHRRCSLxIRCgxNU0dfTkNfU1RB",
-            "UlQQky8SEgoNTVNHX05DX1NFVFRMRRCULxISCg1NU0dfTkNfRklOSVNIEJYv",
-            "EhMKDk1TR19DTl9ESVNDQVJEEKMvEhMKDk1TR19OQ19ESVNDQVJEEKQvEhAK",
-            "C01TR19DTl9NRUxEEKUvEhAKC01TR19OQ19NRUxEEKYvEhAKC01TR19OQ19E",
-            "UkFXEKcvEhEKDE1TR19DTl9TVEFUUxDBLxIPCgpNU0dfQ05fRU5EENc2EgwK",
-            "B01TR19FTkQQj05CAkgDYgZwcm90bzM="));
+            "bzMuYnVuY2hfdBIVCg1zZWxlY3RlZF9jYXJkGAQgASgFIkQKCGNoYXJnZV90",
+            "Eg0KBXBob25lGAEgASgJEgsKA3VpZBgCIAEoCRIMCgR0aW1lGAMgASgNEg4K",
+            "BmFtb3VudBgEIAEoBSImCgdNc2dCYXNlEhsKA21pZBgBIAEoDjIOLnByb3Rv",
+            "My5wYl9tc2ciWAoKTXNnQ1NMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMu",
+            "cGJfbXNnEg8KB3ZlcnNpb24YAyABKA0SHAoEdXNlchgCIAEoCzIOLnByb3Rv",
+            "My51c2VyX3QikwEKCk1zZ1NDTG9naW4SGwoDbWlkGAEgASgOMg4ucHJvdG8z",
+            "LnBiX21zZxILCgN1aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEoDRIPCgdzZXNz",
+            "aW9uGAQgASgEEgoKAmlwGAUgASgJEgwKBHBvcnQYBiABKA0SHwoGcmVzdWx0",
+            "GAcgASgOMg8ucHJvdG8zLnBiX2VudW0iWAoKTXNnQ0xFbnRlchIbCgNtaWQY",
+            "ASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3VpZBgCIAEoCRIPCgd2ZXJzaW9u",
+            "GAMgASgNEg8KB3Nlc3Npb24YBCABKAQimQEKCk1zZ0xDRW50ZXISGwoDbWlk",
+            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiABKAUSIAoGcGxheWVy",
+            "GAMgASgLMhAucHJvdG8zLnBsYXllcl90Eh4KBWxvYmJ5GAQgASgLMg8ucHJv",
+            "dG8zLmxvYmJ5X3QSHwoGcmVzdWx0GAUgASgOMg8ucHJvdG8zLnBiX2VudW0i",
+            "VwoKTXNnQ0hMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8K",
+            "B3ZlcnNpb24YAiABKA0SDQoFcGhvbmUYAyABKAkSDAoEcHN3ZBgEIAEoCSJr",
+            "CgpNc2dIQ0xvZ2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDgoG",
+            "YW1vdW50GAIgASgFEg8KB3Nlc3Npb24YAyABKAQSHwoGcmVzdWx0GAQgASgO",
+            "Mg8ucHJvdG8zLnBiX2VudW0iuQEKDU1zZ0NIUmVnaXN0ZXISGwoDbWlkGAEg",
+            "ASgOMg4ucHJvdG8zLnBiX21zZxILCgN1aWQYAiABKAkSDQoFcGhvbmUYAyAB",
+            "KAkSDAoEcHN3ZBgEIAEoCRIMCgRuYW1lGAUgASgJEg8KB2FkZHJlc3MYBiAB",
+            "KAkSDgoGaWRjYXJkGAcgASgJEg4KBndlY2hhdBgIIAEoCRIOCgZhbGlwYXkY",
+            "CSABKAkSEgoKdmVyaWZ5Y29kZRgKIAEoCSJNCg1Nc2dIQ1JlZ2lzdGVyEhsK",
+            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVzdWx0GAIgASgOMg8u",
+            "cHJvdG8zLnBiX2VudW0iWAoLTXNnQ0hDaGFyZ2USGwoDbWlkGAEgASgOMg4u",
+            "cHJvdG8zLnBiX21zZxIPCgdzZXNzaW9uGAIgASgEEgsKA3VpZBgDIAEoCRIO",
+            "CgZhbW91bnQYBCABKAUiSwoLTXNnSENDaGFyZ2USGwoDbWlkGAEgASgOMg4u",
+            "cHJvdG8zLnBiX21zZxIfCgZyZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51",
+            "bSJHCgpNc2dDSFF1ZXJ5EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "DwoHc2Vzc2lvbhgCIAEoBBILCgN1aWQYAyABKAkiaQoKTXNnSENRdWVyeRIb",
+            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh0KA2xvZxgCIAMoCzIQLnBy",
+            "b3RvMy5jaGFyZ2VfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51",
+            "bSJYCgpNc2dDTkVudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "CwoDdWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEo",
+            "BCJsCgpNc2dOQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "IAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90Eh8KBnJlc3VsdBgD",
+            "IAEoDjIPLnByb3RvMy5wYl9lbnVtImwKC01zZ0NOQ3JlYXRlEhsKA21pZBgB",
+            "IAEoDjIOLnByb3RvMy5wYl9tc2cSHQoEZ2FtZRgCIAEoDjIPLnByb3RvMy5w",
+            "Yl9lbnVtEiEKBm9wdGlvbhgDIAMoCzIRLnByb3RvMy5rZXlfdmFsdWUiXAoL",
+            "TXNnTkNDcmVhdGUSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgdn",
+            "YW1lX2lkGAIgASgFEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVt",
+            "IjkKCU1zZ0NOSm9pbhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8K",
+            "B2dhbWVfaWQYAiABKAUiiwEKCU1zZ05DSm9pbhIbCgNtaWQYASABKA4yDi5w",
+            "cm90bzMucGJfbXNnEh0KBGdhbWUYAiABKA4yDy5wcm90bzMucGJfZW51bRIh",
+            "CgdwbGF5ZXJzGAMgAygLMhAucHJvdG8zLnBsYXllcl90Eh8KBnJlc3VsdBgE",
+            "IAEoDjIPLnByb3RvMy5wYl9lbnVtIikKCk1zZ0NOUmVhZHkSGwoDbWlkGAEg",
+            "ASgOMg4ucHJvdG8zLnBiX21zZyJXCgpNc2dOQ1JlYWR5EhsKA21pZBgBIAEo",
+            "DjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEh8KBnJlc3VsdBgDIAEo",
+            "DjIPLnByb3RvMy5wYl9lbnVtIjcKC01zZ0NORW5nYWdlEhsKA21pZBgBIAEo",
+            "DjIOLnByb3RvMy5wYl9tc2cSCwoDa2V5GAIgASgFImUKC01zZ05DRW5nYWdl",
+            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEgsK",
+            "A2tleRgDIAEoBRIfCgZyZXN1bHQYBCABKA4yDy5wcm90bzMucGJfZW51bSK1",
+            "AQoKTXNnTkNTdGFydBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg4K",
+            "BmJhbmtlchgCIAEoBRILCgNwb3MYAyABKAUSDAoEYW50ZRgEIAEoBRIQCght",
+            "dWx0aXBsZRgFIAEoBRINCgVoYW5kcxgGIAMoBRIOCgZib3R0b20YByADKAUS",
+            "DQoFY291bnQYCCADKAUSHwoGcmVzdWx0GAkgASgOMg8ucHJvdG8zLnBiX2Vu",
+            "dW0iSwoMTXNnQ05EaXNjYXJkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
+            "c2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMuYnVuY2hfdCJsCgxNc2dOQ0Rp",
+            "c2NhcmQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIeCgVidW5jaBgC",
+            "IAEoCzIPLnByb3RvMy5idW5jaF90Eh8KBnJlc3VsdBgDIAEoDjIPLnByb3Rv",
+            "My5wYl9lbnVtIkgKCU1zZ0NOTWVsZBIbCgNtaWQYASABKA4yDi5wcm90bzMu",
+            "cGJfbXNnEh4KBWJ1bmNoGAIgASgLMg8ucHJvdG8zLmJ1bmNoX3QiaQoJTXNn",
+            "TkNNZWxkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gY",
+            "AiABKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90",
+            "bzMucGJfZW51bSJDCglNc2dOQ0RyYXcSGwoDbWlkGAEgASgOMg4ucHJvdG8z",
+            "LnBiX21zZxILCgNwb3MYAiABKAUSDAoEY2FyZBgDIAEoBSIvChBNc2dDTkRp",
+            "c21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXQoQTXNn",
+            "TkNEaXNtaXNzU3luYxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsK",
+            "A3BvcxgCIAEoBRIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSIu",
+            "Cg9Nc2dDTkRpc21pc3NBY2sSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21z",
+            "ZyJcCg9Nc2dOQ0Rpc21pc3NBY2sSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBi",
+            "X21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBi",
+            "X2VudW0imwEKC01zZ05DU2V0dGxlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
+            "Yl9tc2cSDgoGd2lubmVyGAIgASgFEh4KBHBsYXkYAyADKAsyEC5wcm90bzMu",
+            "cGxheWVyX3QSHgoFaGFuZHMYBCADKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZy",
+            "ZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51bSJrCgtNc2dOQ0ZpbmlzaBIb",
+            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBHBsYXkYAiADKAsyEC5w",
+            "cm90bzMucGxheWVyX3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2Vu",
+            "dW0iRQoKTXNnQ05TdGF0cxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNn",
+            "EgsKA2tleRgCIAEoCRINCgV2YWx1ZRgDIAEoCSrBBQoHcGJfZW51bRILCgdV",
+            "TktOT1dOEAASCAoETk9ORRAAEgwKCFNVQ0NFRVNTEAASCgoGREVWX1BDEAAS",
+            "CwoHREVWX1BTNBABEgwKCERFVl9YQk9YEAISCwoHREVWX0lPUxADEg8KC0RF",
+            "Vl9BTkRST0lEEAQSEAoMREVWX1dJTlBIT05FEAUSDAoIR0FNRV9ERFoQFBIM",
+            "CghHQU1FX1BESxAVEgwKCEdBTUVfUEhaEBYSCwoHR0FNRV9NShAXEhAKDE9Q",
+            "VElPTl9ST1VORBAKEg8KC09QVElPTl9BTlRJEAsSEwoPT1BUSU9OX0NBVEVH",
+            "T1JZEAwSGAoUT1BUSU9OX0RFRklORURfQ0FSRFMQDRIRCg1DQVRFR09SWV9F",
+            "QVNZEAoSEwoPQ0FURUdPUllfTk9STUFMEAsSEQoNQ0FURUdPUllfSEFSRBAM",
+            "EgsKB09QX1BBU1MQABIOCgpPUF9ESVNDQVJEEAESEQoNQlVOQ0hfSU5WQUxJ",
+            "RBAKEgsKB0JVTkNIX0EQCxIMCghCVU5DSF9BQRAMEg0KCUJVTkNIX0FBQRAN",
+            "Eg4KCkJVTkNIX0FBQUEQDhIPCgtCVU5DSF9BQUFBQhAPEg4KCkJVTkNIX0FB",
+            "QUIQEBINCglCVU5DSF9BQkMQERINCglCVU5DSF9XSU4QZBINCglBQ0hWX0JP",
+            "TUIQChIPCgtBQ0hWX0hFQVZFThALEg0KCUFDSFZfSEVMTBAMEhIKDURFRl9N",
+            "QVhfTk9ERVMQ6AcSHAoWREVGX01BWF9HQU1FU19QRVJfTk9ERRCgjQYSDgoK",
+            "RVJSX0ZBSUxFRBBkEhEKDUVSUl9DQU5DRUxMRUQQZRIQCgxFUlJfUFJPVE9D",
+            "T0wQZhINCglFUlJfUEFSQU0QZxISCg5FUlJfRFVQTElDQVRFRBBoEhAKC0VS",
+            "Ul9VTktOT1dOEOcHGgIQASr/BwoGcGJfbXNnEg8KC01TR19JTlZBTElEEAAS",
+            "DgoJTVNHX0JFR0lOEOgHEgwKB01TR19SQVcQ6QcSEQoMTVNHX0NTX0JFR0lO",
+            "ENAPEhEKDE1TR19DU19MT0dJThDRDxIRCgxNU0dfU0NfTE9HSU4Q0g8SDwoK",
+            "TVNHX0NTX0VORBCfHxIRCgxNU0dfQ0xfQkVHSU4QoB8SEQoMTVNHX0NMX0VO",
+            "VEVSEKEfEhEKDE1TR19MQ19FTlRFUhCiHxIQCgtNU0dfTENfRVhJVBCkHxIP",
+            "CgpNU0dfQ0xfRU5EEIcnEhEKDE1TR19DSF9CRUdJThCIJxIRCgxNU0dfQ0hf",
+            "TE9HSU4QiScSEQoMTVNHX0hDX0xPR0lOEIonEhQKD01TR19DSF9SRUdJU1RF",
+            "UhCLJxIUCg9NU0dfSENfUkVHSVNURVIQjCcSEgoNTVNHX0NIX0NIQVJHRRCN",
+            "JxISCg1NU0dfSENfQ0hBUkdFEI4nEhEKDE1TR19DSF9RVUVSWRCPJxIRCgxN",
+            "U0dfSENfUVVFUlkQkCcSEgoNTVNHX0NIX0ZPUkdFVBCRJxISCg1NU0dfSENf",
+            "Rk9SR0VUEJInEhYKEU1TR19DSF9SRVNFVF9QU1dEEJMnEhYKEU1TR19IQ19S",
+            "RVNFVF9QU1dEEJQnEg8KCk1TR19DSF9FTkQQ7y4SEQoMTVNHX0NOX0JFR0lO",
+            "EPAuEhEKDE1TR19DTl9FTlRFUhDxLhIRCgxNU0dfTkNfRU5URVIQ8i4SEgoN",
+            "TVNHX0NOX0NSRUFURRD7LhISCg1NU0dfTkNfQ1JFQVRFEPwuEhAKC01TR19D",
+            "Tl9KT0lOEP0uEhAKC01TR19OQ19KT0lOEP4uEhgKE01TR19DTl9ESVNNSVNT",
+            "X1NZTkMQhS8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCGLxIXChJNU0dfQ05f",
+            "RElTTUlTU19BQ0sQhy8SFwoSTVNHX05DX0RJU01JU1NfQUNLEIgvEhEKDE1T",
+            "R19DTl9SRUFEWRCPLxIRCgxNU0dfTkNfUkVBRFkQkC8SEgoNTVNHX0NOX0VO",
+            "R0FHRRCRLxISCg1NU0dfTkNfRU5HQUdFEJIvEhEKDE1TR19OQ19TVEFSVBCT",
+            "LxISCg1NU0dfTkNfU0VUVExFEJQvEhIKDU1TR19OQ19GSU5JU0gQli8SEwoO",
+            "TVNHX0NOX0RJU0NBUkQQoy8SEwoOTVNHX05DX0RJU0NBUkQQpC8SEAoLTVNH",
+            "X0NOX01FTEQQpS8SEAoLTVNHX05DX01FTEQQpi8SEAoLTVNHX05DX0RSQVcQ",
+            "py8SEQoMTVNHX0NOX1NUQVRTEMEvEg8KCk1TR19DTl9FTkQQ1zYSDAoHTVNH",
+            "X0VORBCPTkICSANiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -153,11 +179,20 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.lobby_t), global::Proto3.lobby_t.Parser, new[]{ "Version", "Ip", "Port", "Occupied", "Capacity", "Desc", "Bulletin", "Status", "MaintainStart", "MaintainEnd", "TimeZone", "Games" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.bunch_t), global::Proto3.bunch_t.Parser, new[]{ "Type", "Pos", "Pawns" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_data_t), global::Proto3.game_data_t.Parser, new[]{ "Hands", "Discards", "Bunch", "SelectedCard" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.charge_t), global::Proto3.charge_t.Parser, new[]{ "Phone", "Uid", "Time", "Amount" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgBase), global::Proto3.MsgBase.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCSLogin), global::Proto3.MsgCSLogin.Parser, new[]{ "Mid", "Version", "User" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgSCLogin), global::Proto3.MsgSCLogin.Parser, new[]{ "Mid", "Uid", "Version", "Session", "Ip", "Port", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCLEnter), global::Proto3.MsgCLEnter.Parser, new[]{ "Mid", "Uid", "Version", "Session" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgLCEnter), global::Proto3.MsgLCEnter.Parser, new[]{ "Mid", "Key", "Player", "Lobby", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCHLogin), global::Proto3.MsgCHLogin.Parser, new[]{ "Mid", "Version", "Phone", "Pswd" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgHCLogin), global::Proto3.MsgHCLogin.Parser, new[]{ "Mid", "Amount", "Session", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCHRegister), global::Proto3.MsgCHRegister.Parser, new[]{ "Mid", "Uid", "Phone", "Pswd", "Name", "Address", "Idcard", "Wechat", "Alipay", "Verifycode" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgHCRegister), global::Proto3.MsgHCRegister.Parser, new[]{ "Mid", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCHCharge), global::Proto3.MsgCHCharge.Parser, new[]{ "Mid", "Session", "Uid", "Amount" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgHCCharge), global::Proto3.MsgHCCharge.Parser, new[]{ "Mid", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCHQuery), global::Proto3.MsgCHQuery.Parser, new[]{ "Mid", "Session", "Uid" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgHCQuery), global::Proto3.MsgHCQuery.Parser, new[]{ "Mid", "Log", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNEnter), global::Proto3.MsgCNEnter.Parser, new[]{ "Mid", "Uid", "Version", "Session" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCEnter), global::Proto3.MsgNCEnter.Parser, new[]{ "Mid", "Player", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNCreate), global::Proto3.MsgCNCreate.Parser, new[]{ "Mid", "Game", "Option" }, null, null, null),
@@ -277,6 +312,9 @@ namespace Proto3 {
     /// Client --  Login
     /// </summary>
     [pbr::OriginalName("MSG_CS_BEGIN")] MsgCsBegin = 2000,
+    /// <summary>
+    /// odd for in,even for out
+    /// </summary>
     [pbr::OriginalName("MSG_CS_LOGIN")] MsgCsLogin = 2001,
     [pbr::OriginalName("MSG_SC_LOGIN")] MsgScLogin = 2002,
     [pbr::OriginalName("MSG_CS_END")] MsgCsEnd = 3999,
@@ -287,7 +325,24 @@ namespace Proto3 {
     [pbr::OriginalName("MSG_CL_ENTER")] MsgClEnter = 4001,
     [pbr::OriginalName("MSG_LC_ENTER")] MsgLcEnter = 4002,
     [pbr::OriginalName("MSG_LC_EXIT")] MsgLcExit = 4004,
-    [pbr::OriginalName("MSG_CL_END")] MsgClEnd = 5999,
+    [pbr::OriginalName("MSG_CL_END")] MsgClEnd = 4999,
+    /// <summary>
+    /// Client --  Charge
+    /// </summary>
+    [pbr::OriginalName("MSG_CH_BEGIN")] MsgChBegin = 5000,
+    [pbr::OriginalName("MSG_CH_LOGIN")] MsgChLogin = 5001,
+    [pbr::OriginalName("MSG_HC_LOGIN")] MsgHcLogin = 5002,
+    [pbr::OriginalName("MSG_CH_REGISTER")] MsgChRegister = 5003,
+    [pbr::OriginalName("MSG_HC_REGISTER")] MsgHcRegister = 5004,
+    [pbr::OriginalName("MSG_CH_CHARGE")] MsgChCharge = 5005,
+    [pbr::OriginalName("MSG_HC_CHARGE")] MsgHcCharge = 5006,
+    [pbr::OriginalName("MSG_CH_QUERY")] MsgChQuery = 5007,
+    [pbr::OriginalName("MSG_HC_QUERY")] MsgHcQuery = 5008,
+    [pbr::OriginalName("MSG_CH_FORGET")] MsgChForget = 5009,
+    [pbr::OriginalName("MSG_HC_FORGET")] MsgHcForget = 5010,
+    [pbr::OriginalName("MSG_CH_RESET_PSWD")] MsgChResetPswd = 5011,
+    [pbr::OriginalName("MSG_HC_RESET_PSWD")] MsgHcResetPswd = 5012,
+    [pbr::OriginalName("MSG_CH_END")] MsgChEnd = 5999,
     /// <summary>
     /// Client --  Node
     /// </summary>
@@ -2758,6 +2813,207 @@ namespace Proto3 {
 
   }
 
+  public sealed partial class charge_t : pb::IMessage<charge_t> {
+    private static readonly pb::MessageParser<charge_t> _parser = new pb::MessageParser<charge_t>(() => new charge_t());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<charge_t> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[9]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public charge_t() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public charge_t(charge_t other) : this() {
+      phone_ = other.phone_;
+      uid_ = other.uid_;
+      time_ = other.time_;
+      amount_ = other.amount_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public charge_t Clone() {
+      return new charge_t(this);
+    }
+
+    /// <summary>Field number for the "phone" field.</summary>
+    public const int PhoneFieldNumber = 1;
+    private string phone_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Phone {
+      get { return phone_; }
+      set {
+        phone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "uid" field.</summary>
+    public const int UidFieldNumber = 2;
+    private string uid_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Uid {
+      get { return uid_; }
+      set {
+        uid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "time" field.</summary>
+    public const int TimeFieldNumber = 3;
+    private uint time_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Time {
+      get { return time_; }
+      set {
+        time_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 4;
+    private int amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as charge_t);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(charge_t other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Phone != other.Phone) return false;
+      if (Uid != other.Uid) return false;
+      if (Time != other.Time) return false;
+      if (Amount != other.Amount) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+      if (Uid.Length != 0) hash ^= Uid.GetHashCode();
+      if (Time != 0) hash ^= Time.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Phone.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Phone);
+      }
+      if (Uid.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Uid);
+      }
+      if (Time != 0) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Time);
+      }
+      if (Amount != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Amount);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Phone.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+      }
+      if (Uid.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
+      }
+      if (Time != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Time);
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Amount);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(charge_t other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Phone.Length != 0) {
+        Phone = other.Phone;
+      }
+      if (other.Uid.Length != 0) {
+        Uid = other.Uid;
+      }
+      if (other.Time != 0) {
+        Time = other.Time;
+      }
+      if (other.Amount != 0) {
+        Amount = other.Amount;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            Phone = input.ReadString();
+            break;
+          }
+          case 18: {
+            Uid = input.ReadString();
+            break;
+          }
+          case 24: {
+            Time = input.ReadUInt32();
+            break;
+          }
+          case 32: {
+            Amount = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public sealed partial class MsgBase : pb::IMessage<MsgBase> {
     private static readonly pb::MessageParser<MsgBase> _parser = new pb::MessageParser<MsgBase>(() => new MsgBase());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2765,7 +3021,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2886,7 +3142,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[10]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3065,7 +3321,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[11]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3354,7 +3610,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[12]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3555,7 +3811,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[13]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3791,6 +4047,1613 @@ namespace Proto3 {
 
   /// <summary>
   ///  ----------------------------------------------------------------
+  ///  Charge
+  /// </summary>
+  public sealed partial class MsgCHLogin : pb::IMessage<MsgCHLogin> {
+    private static readonly pb::MessageParser<MsgCHLogin> _parser = new pb::MessageParser<MsgCHLogin>(() => new MsgCHLogin());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgCHLogin> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHLogin() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHLogin(MsgCHLogin other) : this() {
+      mid_ = other.mid_;
+      version_ = other.version_;
+      phone_ = other.phone_;
+      pswd_ = other.pswd_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHLogin Clone() {
+      return new MsgCHLogin(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "version" field.</summary>
+    public const int VersionFieldNumber = 2;
+    private uint version_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public uint Version {
+      get { return version_; }
+      set {
+        version_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "phone" field.</summary>
+    public const int PhoneFieldNumber = 3;
+    private string phone_ = "";
+    /// <summary>
+    /// phone as id
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Phone {
+      get { return phone_; }
+      set {
+        phone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "pswd" field.</summary>
+    public const int PswdFieldNumber = 4;
+    private string pswd_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Pswd {
+      get { return pswd_; }
+      set {
+        pswd_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgCHLogin);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgCHLogin other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Version != other.Version) return false;
+      if (Phone != other.Phone) return false;
+      if (Pswd != other.Pswd) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Version != 0) hash ^= Version.GetHashCode();
+      if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+      if (Pswd.Length != 0) hash ^= Pswd.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Version != 0) {
+        output.WriteRawTag(16);
+        output.WriteUInt32(Version);
+      }
+      if (Phone.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Phone);
+      }
+      if (Pswd.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(Pswd);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Version != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Version);
+      }
+      if (Phone.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+      }
+      if (Pswd.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Pswd);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgCHLogin other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Version != 0) {
+        Version = other.Version;
+      }
+      if (other.Phone.Length != 0) {
+        Phone = other.Phone;
+      }
+      if (other.Pswd.Length != 0) {
+        Pswd = other.Pswd;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            Version = input.ReadUInt32();
+            break;
+          }
+          case 26: {
+            Phone = input.ReadString();
+            break;
+          }
+          case 34: {
+            Pswd = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgHCLogin : pb::IMessage<MsgHCLogin> {
+    private static readonly pb::MessageParser<MsgHCLogin> _parser = new pb::MessageParser<MsgHCLogin>(() => new MsgHCLogin());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgHCLogin> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[16]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCLogin() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCLogin(MsgHCLogin other) : this() {
+      mid_ = other.mid_;
+      amount_ = other.amount_;
+      session_ = other.session_;
+      result_ = other.result_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCLogin Clone() {
+      return new MsgHCLogin(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 2;
+    private int amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "session" field.</summary>
+    public const int SessionFieldNumber = 3;
+    private ulong session_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Session {
+      get { return session_; }
+      set {
+        session_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 4;
+    private global::Proto3.pb_enum result_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_enum Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgHCLogin);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgHCLogin other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Amount != other.Amount) return false;
+      if (Session != other.Session) return false;
+      if (Result != other.Result) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
+      if (Session != 0UL) hash ^= Session.GetHashCode();
+      if (Result != 0) hash ^= Result.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Amount != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Amount);
+      }
+      if (Session != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(Session);
+      }
+      if (Result != 0) {
+        output.WriteRawTag(32);
+        output.WriteEnum((int) Result);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Amount);
+      }
+      if (Session != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
+      }
+      if (Result != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgHCLogin other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Amount != 0) {
+        Amount = other.Amount;
+      }
+      if (other.Session != 0UL) {
+        Session = other.Session;
+      }
+      if (other.Result != 0) {
+        Result = other.Result;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            Amount = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            Session = input.ReadUInt64();
+            break;
+          }
+          case 32: {
+            result_ = (global::Proto3.pb_enum) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgCHRegister : pb::IMessage<MsgCHRegister> {
+    private static readonly pb::MessageParser<MsgCHRegister> _parser = new pb::MessageParser<MsgCHRegister>(() => new MsgCHRegister());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgCHRegister> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[17]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHRegister() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHRegister(MsgCHRegister other) : this() {
+      mid_ = other.mid_;
+      uid_ = other.uid_;
+      phone_ = other.phone_;
+      pswd_ = other.pswd_;
+      name_ = other.name_;
+      address_ = other.address_;
+      idcard_ = other.idcard_;
+      wechat_ = other.wechat_;
+      alipay_ = other.alipay_;
+      verifycode_ = other.verifycode_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHRegister Clone() {
+      return new MsgCHRegister(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "uid" field.</summary>
+    public const int UidFieldNumber = 2;
+    private string uid_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Uid {
+      get { return uid_; }
+      set {
+        uid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "phone" field.</summary>
+    public const int PhoneFieldNumber = 3;
+    private string phone_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Phone {
+      get { return phone_; }
+      set {
+        phone_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "pswd" field.</summary>
+    public const int PswdFieldNumber = 4;
+    private string pswd_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Pswd {
+      get { return pswd_; }
+      set {
+        pswd_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "name" field.</summary>
+    public const int NameFieldNumber = 5;
+    private string name_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "address" field.</summary>
+    public const int AddressFieldNumber = 6;
+    private string address_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Address {
+      get { return address_; }
+      set {
+        address_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "idcard" field.</summary>
+    public const int IdcardFieldNumber = 7;
+    private string idcard_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Idcard {
+      get { return idcard_; }
+      set {
+        idcard_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "wechat" field.</summary>
+    public const int WechatFieldNumber = 8;
+    private string wechat_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Wechat {
+      get { return wechat_; }
+      set {
+        wechat_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "alipay" field.</summary>
+    public const int AlipayFieldNumber = 9;
+    private string alipay_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Alipay {
+      get { return alipay_; }
+      set {
+        alipay_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "verifycode" field.</summary>
+    public const int VerifycodeFieldNumber = 10;
+    private string verifycode_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Verifycode {
+      get { return verifycode_; }
+      set {
+        verifycode_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgCHRegister);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgCHRegister other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Uid != other.Uid) return false;
+      if (Phone != other.Phone) return false;
+      if (Pswd != other.Pswd) return false;
+      if (Name != other.Name) return false;
+      if (Address != other.Address) return false;
+      if (Idcard != other.Idcard) return false;
+      if (Wechat != other.Wechat) return false;
+      if (Alipay != other.Alipay) return false;
+      if (Verifycode != other.Verifycode) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Uid.Length != 0) hash ^= Uid.GetHashCode();
+      if (Phone.Length != 0) hash ^= Phone.GetHashCode();
+      if (Pswd.Length != 0) hash ^= Pswd.GetHashCode();
+      if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Address.Length != 0) hash ^= Address.GetHashCode();
+      if (Idcard.Length != 0) hash ^= Idcard.GetHashCode();
+      if (Wechat.Length != 0) hash ^= Wechat.GetHashCode();
+      if (Alipay.Length != 0) hash ^= Alipay.GetHashCode();
+      if (Verifycode.Length != 0) hash ^= Verifycode.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Uid.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Uid);
+      }
+      if (Phone.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Phone);
+      }
+      if (Pswd.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(Pswd);
+      }
+      if (Name.Length != 0) {
+        output.WriteRawTag(42);
+        output.WriteString(Name);
+      }
+      if (Address.Length != 0) {
+        output.WriteRawTag(50);
+        output.WriteString(Address);
+      }
+      if (Idcard.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(Idcard);
+      }
+      if (Wechat.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(Wechat);
+      }
+      if (Alipay.Length != 0) {
+        output.WriteRawTag(74);
+        output.WriteString(Alipay);
+      }
+      if (Verifycode.Length != 0) {
+        output.WriteRawTag(82);
+        output.WriteString(Verifycode);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Uid.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
+      }
+      if (Phone.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Phone);
+      }
+      if (Pswd.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Pswd);
+      }
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Address.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Address);
+      }
+      if (Idcard.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Idcard);
+      }
+      if (Wechat.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Wechat);
+      }
+      if (Alipay.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Alipay);
+      }
+      if (Verifycode.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Verifycode);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgCHRegister other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Uid.Length != 0) {
+        Uid = other.Uid;
+      }
+      if (other.Phone.Length != 0) {
+        Phone = other.Phone;
+      }
+      if (other.Pswd.Length != 0) {
+        Pswd = other.Pswd;
+      }
+      if (other.Name.Length != 0) {
+        Name = other.Name;
+      }
+      if (other.Address.Length != 0) {
+        Address = other.Address;
+      }
+      if (other.Idcard.Length != 0) {
+        Idcard = other.Idcard;
+      }
+      if (other.Wechat.Length != 0) {
+        Wechat = other.Wechat;
+      }
+      if (other.Alipay.Length != 0) {
+        Alipay = other.Alipay;
+      }
+      if (other.Verifycode.Length != 0) {
+        Verifycode = other.Verifycode;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            Uid = input.ReadString();
+            break;
+          }
+          case 26: {
+            Phone = input.ReadString();
+            break;
+          }
+          case 34: {
+            Pswd = input.ReadString();
+            break;
+          }
+          case 42: {
+            Name = input.ReadString();
+            break;
+          }
+          case 50: {
+            Address = input.ReadString();
+            break;
+          }
+          case 58: {
+            Idcard = input.ReadString();
+            break;
+          }
+          case 66: {
+            Wechat = input.ReadString();
+            break;
+          }
+          case 74: {
+            Alipay = input.ReadString();
+            break;
+          }
+          case 82: {
+            Verifycode = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgHCRegister : pb::IMessage<MsgHCRegister> {
+    private static readonly pb::MessageParser<MsgHCRegister> _parser = new pb::MessageParser<MsgHCRegister>(() => new MsgHCRegister());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgHCRegister> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[18]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCRegister() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCRegister(MsgHCRegister other) : this() {
+      mid_ = other.mid_;
+      result_ = other.result_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCRegister Clone() {
+      return new MsgHCRegister(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 2;
+    private global::Proto3.pb_enum result_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_enum Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgHCRegister);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgHCRegister other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Result != other.Result) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Result != 0) hash ^= Result.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Result != 0) {
+        output.WriteRawTag(16);
+        output.WriteEnum((int) Result);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Result != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgHCRegister other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Result != 0) {
+        Result = other.Result;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            result_ = (global::Proto3.pb_enum) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgCHCharge : pb::IMessage<MsgCHCharge> {
+    private static readonly pb::MessageParser<MsgCHCharge> _parser = new pb::MessageParser<MsgCHCharge>(() => new MsgCHCharge());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgCHCharge> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[19]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHCharge() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHCharge(MsgCHCharge other) : this() {
+      mid_ = other.mid_;
+      session_ = other.session_;
+      uid_ = other.uid_;
+      amount_ = other.amount_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHCharge Clone() {
+      return new MsgCHCharge(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "session" field.</summary>
+    public const int SessionFieldNumber = 2;
+    private ulong session_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Session {
+      get { return session_; }
+      set {
+        session_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "uid" field.</summary>
+    public const int UidFieldNumber = 3;
+    private string uid_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Uid {
+      get { return uid_; }
+      set {
+        uid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "amount" field.</summary>
+    public const int AmountFieldNumber = 4;
+    private int amount_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Amount {
+      get { return amount_; }
+      set {
+        amount_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgCHCharge);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgCHCharge other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Session != other.Session) return false;
+      if (Uid != other.Uid) return false;
+      if (Amount != other.Amount) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Session != 0UL) hash ^= Session.GetHashCode();
+      if (Uid.Length != 0) hash ^= Uid.GetHashCode();
+      if (Amount != 0) hash ^= Amount.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Session != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(Session);
+      }
+      if (Uid.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Uid);
+      }
+      if (Amount != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(Amount);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Session != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
+      }
+      if (Uid.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
+      }
+      if (Amount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Amount);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgCHCharge other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Session != 0UL) {
+        Session = other.Session;
+      }
+      if (other.Uid.Length != 0) {
+        Uid = other.Uid;
+      }
+      if (other.Amount != 0) {
+        Amount = other.Amount;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            Session = input.ReadUInt64();
+            break;
+          }
+          case 26: {
+            Uid = input.ReadString();
+            break;
+          }
+          case 32: {
+            Amount = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgHCCharge : pb::IMessage<MsgHCCharge> {
+    private static readonly pb::MessageParser<MsgHCCharge> _parser = new pb::MessageParser<MsgHCCharge>(() => new MsgHCCharge());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgHCCharge> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[20]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCCharge() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCCharge(MsgHCCharge other) : this() {
+      mid_ = other.mid_;
+      result_ = other.result_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCCharge Clone() {
+      return new MsgHCCharge(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 5;
+    private global::Proto3.pb_enum result_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_enum Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgHCCharge);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgHCCharge other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Result != other.Result) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Result != 0) hash ^= Result.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Result != 0) {
+        output.WriteRawTag(40);
+        output.WriteEnum((int) Result);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Result != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgHCCharge other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Result != 0) {
+        Result = other.Result;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 40: {
+            result_ = (global::Proto3.pb_enum) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgCHQuery : pb::IMessage<MsgCHQuery> {
+    private static readonly pb::MessageParser<MsgCHQuery> _parser = new pb::MessageParser<MsgCHQuery>(() => new MsgCHQuery());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgCHQuery> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[21]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHQuery() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHQuery(MsgCHQuery other) : this() {
+      mid_ = other.mid_;
+      session_ = other.session_;
+      uid_ = other.uid_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCHQuery Clone() {
+      return new MsgCHQuery(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "session" field.</summary>
+    public const int SessionFieldNumber = 2;
+    private ulong session_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Session {
+      get { return session_; }
+      set {
+        session_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "uid" field.</summary>
+    public const int UidFieldNumber = 3;
+    private string uid_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string Uid {
+      get { return uid_; }
+      set {
+        uid_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgCHQuery);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgCHQuery other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Session != other.Session) return false;
+      if (Uid != other.Uid) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Session != 0UL) hash ^= Session.GetHashCode();
+      if (Uid.Length != 0) hash ^= Uid.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Session != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(Session);
+      }
+      if (Uid.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Uid);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Session != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
+      }
+      if (Uid.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgCHQuery other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Session != 0UL) {
+        Session = other.Session;
+      }
+      if (other.Uid.Length != 0) {
+        Uid = other.Uid;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            Session = input.ReadUInt64();
+            break;
+          }
+          case 26: {
+            Uid = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgHCQuery : pb::IMessage<MsgHCQuery> {
+    private static readonly pb::MessageParser<MsgHCQuery> _parser = new pb::MessageParser<MsgHCQuery>(() => new MsgHCQuery());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgHCQuery> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[22]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCQuery() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCQuery(MsgHCQuery other) : this() {
+      mid_ = other.mid_;
+      log_ = other.log_.Clone();
+      result_ = other.result_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgHCQuery Clone() {
+      return new MsgHCQuery(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "log" field.</summary>
+    public const int LogFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Proto3.charge_t> _repeated_log_codec
+        = pb::FieldCodec.ForMessage(18, global::Proto3.charge_t.Parser);
+    private readonly pbc::RepeatedField<global::Proto3.charge_t> log_ = new pbc::RepeatedField<global::Proto3.charge_t>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Proto3.charge_t> Log {
+      get { return log_; }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 3;
+    private global::Proto3.pb_enum result_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_enum Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgHCQuery);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgHCQuery other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if(!log_.Equals(other.log_)) return false;
+      if (Result != other.Result) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      hash ^= log_.GetHashCode();
+      if (Result != 0) hash ^= Result.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      log_.WriteTo(output, _repeated_log_codec);
+      if (Result != 0) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Result);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      size += log_.CalculateSize(_repeated_log_codec);
+      if (Result != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgHCQuery other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      log_.Add(other.log_);
+      if (other.Result != 0) {
+        Result = other.Result;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            log_.AddEntriesFrom(input, _repeated_log_codec);
+            break;
+          }
+          case 24: {
+            result_ = (global::Proto3.pb_enum) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  /// <summary>
+  ///  ----------------------------------------------------------------
   ///  Node
   /// </summary>
   public sealed partial class MsgCNEnter : pb::IMessage<MsgCNEnter> {
@@ -3800,7 +5663,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[14]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4001,7 +5864,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[15]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4180,7 +6043,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[16]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4348,7 +6211,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[17]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4521,7 +6384,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[18]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4666,7 +6529,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[19]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4859,7 +6722,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[20]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4976,7 +6839,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[21]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5149,7 +7012,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[22]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5294,7 +7157,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[23]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5495,7 +7358,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[24]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[33]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5818,7 +7681,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[25]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[34]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5969,7 +7832,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[26]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[35]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6148,7 +8011,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[36]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6299,7 +8162,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[37]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6478,7 +8341,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[38]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6651,7 +8514,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[39]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6768,7 +8631,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[31]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[40]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6941,7 +8804,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[41]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7058,7 +8921,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[33]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[42]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7231,7 +9094,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[34]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[43]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7444,7 +9307,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[35]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[44]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7609,7 +9472,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[36]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[45]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

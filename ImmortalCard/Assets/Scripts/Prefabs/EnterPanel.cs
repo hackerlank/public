@@ -3,13 +3,13 @@ using UnityEngine.UI;
 using System.Collections;
 using Proto3;
 
-public class CreatePanel : MonoBehaviour {
+public class EnterPanel : MonoBehaviour {
 	public InputField DefinedCards;
 	public GameObject CreateTab,JoinTab;
 	public Transform GameRoot;
 	public Text Information;
 
-	public static CreatePanel Instance=null;
+	public static EnterPanel Instance=null;
 	void Awake(){
 		DefinedCards.text=PlayerPrefs.GetString(Configs.PrefsKey_DefinedCards);
 		Instance=this;

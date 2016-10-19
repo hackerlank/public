@@ -12,8 +12,8 @@ public class RuleIcon : MonoBehaviour {
 
 	public void OnGame(){
 		OutLineEfx.SetActive(true);
-		if(CreatePanel.Instance.Icon!=null)
-			CreatePanel.Instance.Icon.OutLineEfx.SetActive(false);
-		CreatePanel.Instance.Icon=this;
+		if(EnterPanel.Instance.Icon!=null)
+			EnterPanel.Instance.Icon.OutLineEfx.SetActive(false);
+		EnterPanel.Instance.Icon=this;
 	}
 }

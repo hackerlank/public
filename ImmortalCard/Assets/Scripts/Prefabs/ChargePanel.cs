@@ -39,7 +39,7 @@ public class ChargePanel : MonoBehaviour {
 	// Register
 	//---------------------------------------------------------
 	public InputField RPhone,RPswd;
-	public InputField Name,Address,IdCard,Wechat,Alipay;
+	public InputField Name,Address,IdCard,Wechat,Alipay,Verify;
 
 	public void OnRegister(){
 		if(!registering){
@@ -54,6 +54,7 @@ public class ChargePanel : MonoBehaviour {
 	// Charge
 	//---------------------------------------------------------
 	public InputField Id,Amount;
+	public Text Total;
 
 	bool query=false;
 	public void OnCharge(){

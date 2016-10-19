@@ -11,8 +11,8 @@ public class GameIcon : MonoBehaviour {
 
 	public void OnGame(){
 		var canvas=gameObject.GetComponentInParent<Canvas>();
-		Utils.Load<CreatePanel>(canvas.transform,delegate(Component obj){
-			var panel=obj as CreatePanel;
+		Utils.Load<EnterPanel>(canvas.transform,delegate(Component obj){
+			var panel=obj as EnterPanel;
 			panel.CurrentGame=this;
 			if(LobbyPanel.Instance)Destroy(LobbyPanel.Instance.gameObject);
 		});
