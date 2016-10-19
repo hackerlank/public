@@ -29,7 +29,7 @@ public class EnterPanel : MonoBehaviour {
 		game=new game_t();
 		game.Id=(int)pb_enum.GameMj;
 		addGame(game);
-		for(int i=0;i<14;++i){
+		for(int i=0;i<0;++i){
 			game=new game_t();
 			game.Id=(int)pb_enum.GameMj;
 			addGame(game);

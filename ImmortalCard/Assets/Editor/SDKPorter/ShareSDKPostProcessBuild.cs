@@ -52,20 +52,7 @@ public static class ShareSDKPostProcessBuild {
 				<dict>
 					<key>CFBundleURLSchemes</key>
 					<array>
-						<string>vk5312801</string>
-					<string>yx0d9a9f9088ea44d78680f3274da1765f</string>
-					<string>pin4797078908495202393</string>
-					<string>kakao48d3f524e4a636b08d81b3ceb50f1003</string>
-					<string>pdk4797078908495202393</string>
-					<string>tb2QUXqO9fcgGdtGG1FcvML6ZunIQzAEL8xY6hIaxdJnDti2DYwM</string>
-					<string>com.mob.demoShareSDK</string>
-					<string>rm226427com.mob.demoShareSDK</string>
-					<string>pocketapp1234</string>
-					<string>QQ05FB8B52</string>
-					<string>wx4868b35061f87885</string>
-					<string>tencent100371282</string>
-					<string>fb107704292745179</string>
-					<string>wb568898243</string>
+						<string>wx095f354454b92144</string>
 					</array>
 				</dict>
 			</array>";
@@ -74,50 +61,24 @@ public static class ShareSDKPostProcessBuild {
 		string LSAdd = @"
 		<key>LSApplicationQueriesSchemes</key>
 			<array>
-			<string>mqqopensdkapiV4</string>
-			<string>weibosdk</string>
-			<string>sinaweibohd</string>
-			<string>sinaweibo</string>
-			<string>vkauthorize</string>
-			<string>fb-messenger</string>
-			<string>yixinfav</string>
-			<string>yixinoauth</string>
-			<string>yixinopenapi</string>
-			<string>yixin</string>
-			<string>pinit</string>
-			<string>kakaolink</string>
-			<string>kakao48d3f524e4a636b08d81b3ceb50f1003</string>
 			<string>alipay</string>
-			<string>storykompassauth</string>
-			<string>pinterestsdk.v1</string>
-			<string>kakaokompassauth</string>
 			<string>alipayshare</string>
-			<string>pinit</string>
-			<string>line</string>
-			<string>whatsapp</string>
-			<string>mqqwpa</string>
-			<string>instagram</string>
-			<string>fbauth2</string>
-			<string>renren</string>
-			<string>renrenios</string>
-			<string>renrenapi</string>
-			<string>rm226427com.mob.demoShareSDK</string>
 			<string>mqq</string>
-			<string>mqqopensdkapiV2</string>
-			<string>mqqopensdkapiV3</string>
-			<string>wtloginmqq2</string>
-			<string>mqqapi</string>
-			<string>mqqOpensdkSSoLogin</string>
-			<string>sinaweibohdsso</string>
-			<string>sinaweibosso</string>
 			<string>wechat</string>
 			<string>weixin</string>
 		</array>";
 
+		string ATSAdd = @"
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+		</dict>";
 
 		//在plist里面增加一行
 		plist.AddKey(PlistAdd);
 		plist.AddKey (LSAdd);
+		plist.AddKey (ATSAdd);
 		plist.Save();
 	}
 

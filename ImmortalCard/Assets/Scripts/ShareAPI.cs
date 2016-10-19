@@ -12,8 +12,8 @@ public class ShareAPI {
 		sdk.appKey=Configs.modId;
 		sdk.devInfo.wechat.Enable=true;
 		sdk.devInfo.wechatMoments.Enable=true;
-		sdk.devInfo.wechatFavorites.Enable=true;
-		sdk.devInfo.wechatSeries.Enable=true;
+		//sdk.devInfo.wechatFavorites.Enable=true;
+		//sdk.devInfo.wechatSeries.Enable=true;
 
 		sdk.shareHandler = ShareResultHandler;
 		sdk.authHandler = AuthResultHandler;
@@ -23,25 +23,24 @@ public class ShareAPI {
 	public void SignIn(){
 		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
 		
-		sdk.Authorize(PlatformType.SinaWeibo);
-		sdk.GetUserInfo(PlatformType.SinaWeibo);
+		sdk.Authorize(PlatformType.WeChat);
+		sdk.GetUserInfo(PlatformType.WeChat);
 	}
-	
-	public void Share(string title,string text){
+
+	public void Share(string title,string text,int type,string url=""){
+		//type[ ContentType.Image=2, ContentType.Webpage=4, ContentType.App=7 ]
 		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
-		
+
 		ShareContent content = new ShareContent();
-		content.SetText(text);
-		content.SetImagePath("Images/Immortal");
 		content.SetTitle(title);
-		content.SetShareType(ContentType.Image);
-		
-		//share from menu
-		sdk.ShowPlatformList (null, content, 100, 100);
-		//share from editor
-		sdk.ShowShareContentEditor (PlatformType.WeChat, content);
-		//share directly
-		sdk.ShareContent (PlatformType.WeChat, content);
+		content.SetText(text);
+		//content.SetImageUrl("http://www.mob.com/images/logo_black.png");
+		content.SetImagePath(PrepareShareImage(type==ContentType.Image));
+		content.SetUrl(url);
+		content.SetSiteUrl(url);
+		content.SetShareType(type);
+
+		sdk.ShowPlatformList(null, content, 100, 100);
 	}
 
 	void ShareResultHandler (int reqID, ResponseState state, PlatformType type, Hashtable result){
@@ -95,5 +94,23 @@ public class ShareAPI {
 		}
 		else
 			Debug.Log("get user info unknown");
+	}
+
+	string PrepareShareImage(bool capture){
+		string imagePath="";
+		if(capture){
+			Application.CaptureScreenshot("screenshot.png");
+			imagePath=Application.persistentDataPath + "/screenshot.png";
+		}else{
+			//should be in the root of Resources folder
+			var file="immortal";
+			imagePath = Application.persistentDataPath + "/"+file+".png";  
+			if (!System.IO.File.Exists(imagePath)){  
+				Texture2D o = Resources.Load(file) as Texture2D;
+				if (o != null)
+					System.IO.File.WriteAllBytes(imagePath, o.EncodeToPNG());
+			}
+		}
+		return imagePath;
 	}
 }
