@@ -44,7 +44,10 @@ public class EnterPanel : MonoBehaviour {
 			var icon=obj as RuleIcon;
 			icon.GameId=(pb_enum)game.Id;
 			icon.Name.text=icon.GameId.ToString().Substring(4);
-			if(Icon==null)Icon=icon;
+			if(Icon==null){
+				Icon=icon;
+				Icon.OnGame();
+			}
 		});
 	}
 

@@ -13,7 +13,8 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 		ST_NORMAL,
 		ST_SELECT,
 		ST_DISCARD,
-		ST_DEAD
+		ST_MELD,
+		ST_ABANDON
 	}
 	protected State _state=State.ST_NORMAL;
 	public virtual State state{

@@ -11,31 +11,24 @@ public class Zipai : Card{
 	public override State state{
 		set{
 			_state=value;
-			var grid=GetComponentInParent<GridLayoutGroup>();
-			var rect=transform as RectTransform;
+			var rect=body.transform as RectTransform;
+			var w=rect.sizeDelta.x;
 			switch(_state){
 			case State.ST_NORMAL:
-				if(grid!=null){
-					grid.cellSize=new Vector2(86,78);
-					rect.sizeDelta=new Vector2(86,240);
-				}
+				rect.sizeDelta=new Vector2(w,240);
+				break;
+			case State.ST_MELD:
+				//meld
+				rect.sizeDelta=new Vector2(w,54);
+				imageDown.gameObject.SetActive(false);
+				break;
+			case State.ST_ABANDON:
+				rect.sizeDelta=new Vector2(w,48);
+				imageDown.gameObject.SetActive(false);
 				break;
 			case State.ST_SELECT:
-				break;
 			case State.ST_DISCARD:
-				//meld
-				if(grid!=null){
-					grid.cellSize=new Vector2(54,48);
-					rect.sizeDelta=new Vector2(54,54);
-					imageDown.gameObject.SetActive(false);
-				}
-				break;
-			case State.ST_DEAD:
-				if(grid!=null){
-					grid.cellSize=new Vector2(48,48);
-					rect.sizeDelta=new Vector2(48,48);
-					imageDown.gameObject.SetActive(false);
-				}
+			default:
 				break;
 			}
 		}

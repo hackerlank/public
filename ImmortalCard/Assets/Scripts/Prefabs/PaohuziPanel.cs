@@ -108,11 +108,13 @@ public class PaohuziPanel : GamePanel {
 				if(card.Value==id)
 					card.DiscardTo(MeldAreas[to],scalar);
 			}
+			A.state=Card.State.ST_MELD;
 			break;
 		default:
 			//abandon
 			if(to==-1)to=Rule.Token;
 			A.DiscardTo(AbandonAreas[to],AbandonScalar);
+			A.state=Card.State.ST_ABANDON;
 			break;
 		}
 	}
