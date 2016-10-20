@@ -219,8 +219,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 				var fin=false;
 				var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
 				Card.Create(CardPrefab,id,from,delegate(Card card) {
-					card.state=Card.State.ST_DISCARD;
 					card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+					card.state=Card.State.ST_DISCARD;
 					fin=true;
 				});
 				yield return null;
@@ -290,14 +290,14 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			msg.Bunch.Type=pb_enum.BunchA;
 			if(card!=null){
 				deselectAll();
-				card.state=Card.State.ST_DISCARD;
 				card.DiscardTo(DiscardAreas[_pos],DiscardScalar);
+				card.state=Card.State.ST_DISCARD;
 				msg.Bunch.Pawns.Add(card.Value);
 			}else if(_selection.Count>0){
 				_selection.Sort(compare_card);
 				foreach(var c in _selection){
-					c.state=Card.State.ST_DISCARD;
 					c.DiscardTo(DiscardAreas[_pos],DiscardScalar);
+					c.state=Card.State.ST_DISCARD;
 					msg.Bunch.Pawns.Add(c.Value);
 				}
 				_selection.Clear();

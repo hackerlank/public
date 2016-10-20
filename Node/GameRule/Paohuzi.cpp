@@ -50,11 +50,11 @@ int Paohuzi::MaxPlayer(){
 }
 
 int Paohuzi::maxCards(){
-    return 108;
+    return 80;
 }
 
 int Paohuzi::maxHands(){
-    return 13;
+    return 14;
 }
 
 int Paohuzi::bottom(){
@@ -63,8 +63,8 @@ int Paohuzi::bottom(){
 
 void Paohuzi::initCard(Game& game){
     //id: [color-index-value]
-    for(int j=1;j<=3;++j){          //Tong,Suo,Wan => 1-3
-        for(int i=1;i<=9;++i){      //1-9
+    for(int j=1;j<=2;++j){          //Big,Small => 1-2
+        for(int i=1;i<=10;++i){      //1-10
             for(int k=0;k<4;++k){   //xxxx
                 unit_id_t id=j*1000+k*100+i;
                 game.pile.push_back(id);
@@ -605,9 +605,9 @@ bool Paohuzi::verifyDiscard(Game& game,bunch_t& bunch){
 
 bool Paohuzi::validId(uint id){
     auto color=id/1000;
-    if(color<1||color>4)return false;
+    if(color<1||color>2)return false;
     auto value=id%100;
-    if(value<1||value>9)return false;
+    if(value<1||value>10)return false;
     return true;
 }
 

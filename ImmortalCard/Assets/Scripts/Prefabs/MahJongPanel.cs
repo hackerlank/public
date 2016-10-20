@@ -80,8 +80,8 @@ public class MahJongPanel : GamePanel {
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
 		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
-			card.state=Card.State.ST_DISCARD;
 			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+			card.state=Card.State.ST_DISCARD;
 		});
 
 		//show hints only for MainPlayer

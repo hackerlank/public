@@ -29,6 +29,9 @@ public class EnterPanel : MonoBehaviour {
 		game=new game_t();
 		game.Id=(int)pb_enum.GameMj;
 		addGame(game);
+		game=new game_t();
+		game.Id=(int)pb_enum.GamePhz;
+		addGame(game);
 		for(int i=0;i<0;++i){
 			game=new game_t();
 			game.Id=(int)pb_enum.GameMj;
@@ -40,7 +43,7 @@ public class EnterPanel : MonoBehaviour {
 		Utils.Load<RuleIcon>(GameRoot,delegate(Component obj){
 			var icon=obj as RuleIcon;
 			icon.GameId=(pb_enum)game.Id;
-			icon.Name.text=icon.GameId.ToString();
+			icon.Name.text=icon.GameId.ToString().Substring(4);
 			if(Icon==null)Icon=icon;
 		});
 	}
@@ -150,6 +153,9 @@ public class EnterPanel : MonoBehaviour {
 		switch(Icon.GameId){
 		case pb_enum.GameMj:
 			MahJongPanel.Create(handler);
+			break;
+		case pb_enum.GamePhz:
+			PaohuziPanel.Create(handler);
 			break;
 		case pb_enum.GameDdz:
 		default:

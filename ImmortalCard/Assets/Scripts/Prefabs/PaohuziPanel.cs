@@ -11,19 +11,19 @@ public class PaohuziPanel : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
-	override public string CardPrefab{get{return "Mahjong";}}
+	override public string CardPrefab{get{return "Zipai";}}
 	override public string Id2File(int color,int value){
 		if(Rule!=null){
 			color-=1;
-			string[] Colors={"tong","tiao","wan"};
+			string[] Colors={"b","s"};
 			value=Rule.inverseTransformValue(value);
 			if(color<Colors.Length)
-				return string.Format("{0}{1:0}",Colors[color],value);
+				return string.Format("{0}{1:00}",Colors[color],value);
 		}
 		return "";
 	}
 
-	float AbandonScalar{get{return .7f;}}
+	float AbandonScalar{get{return 1f;}}
 	override public float DiscardScalar{get{return 1f;}}
 
 	public override void TapCard(Card card,bool select=true){
@@ -71,8 +71,8 @@ public class PaohuziPanel : GamePanel {
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
 		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
-			card.state=Card.State.ST_DISCARD;
 			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+			card.state=Card.State.ST_DISCARD;
 		});
 
 		//show hints only for MainPlayer
@@ -184,19 +184,13 @@ public class PaohuziPanel : GamePanel {
 	// ----------------------------------------------
 	override public void Awake(){
 		base.Awake();
-		Rule=new MahJongRule();
+		Rule=new PaohuziRule();
 
 		var files=new List<string>();
-		files.Add("dong");
-		files.Add("nan");
-		files.Add("xi");
-		files.Add("bei");
-		files.Add("zhong");
-		files.Add("fa");
-		files.Add("bai");
-		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
+		files.Add("back");
+		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
 			files.Add(Id2File(k,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
 	}
 
 	public void OnABC(){

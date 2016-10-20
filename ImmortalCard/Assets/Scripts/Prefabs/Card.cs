@@ -15,8 +15,8 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 		ST_DISCARD,
 		ST_DEAD
 	}
-	State _state=State.ST_NORMAL;
-	public State state{
+	protected State _state=State.ST_NORMAL;
+	public virtual State state{
 		set{
 			_state=value;
 		}
@@ -25,13 +25,13 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 		}
 	}
 
-	bool _static=true;
+	protected bool _static=true;
 	public bool Static{
 		set{_static=value;}
 	}
 
 	public int _value;	//only for debug
-	public int Value{
+	public virtual int Value{
 		get{
 			return _value;
 		}set{
@@ -114,8 +114,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 			go.SetActive(true);
 			var card=go.GetComponent<Card>();
 			if(card!=null){
-				if(data>1000)
-					card.Value=data;
+				card.Value=data;
 				//parent
 				if(parent!=null){
 					card.transform.SetParent(parent);
