@@ -181,6 +181,6 @@ int Player::getKey(){
 }
 
 void Player::reset(){
-    gameData.Clear();
+    playData.Clear();
     lastMsg.reset();
 }

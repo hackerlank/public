@@ -22,8 +22,8 @@ public:
     pos_t                   pos;
     bool                    ready,engaged;
     std::shared_ptr<Game>   game;
-    proto3::game_data_t                            gameData;   //player game data
-    std::shared_ptr<google::protobuf::MessageLite> lastMsg;
+    proto3::play_t                                  playData;   //gameplay data
+    std::shared_ptr<google::protobuf::MessageLite>  lastMsg;
 private:
     std::shared_ptr<keye::svc_handler>              spsh;
 };

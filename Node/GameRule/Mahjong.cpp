@@ -124,7 +124,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
         cards2str(str,msg.bunch().pawns());
         KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
         //remove hands
-        auto& hands=*player.gameData.mutable_hands();
+        auto& hands=*player.playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
@@ -259,7 +259,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
                 if(isGameOver(game,where,card,output)){
-                    who.gameData.clear_hands();
+                    who.playData.clear_hands();
                 }
                 break;
             }
@@ -277,7 +277,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                 break;
             case pb_enum::BUNCH_A:
                 //collect after draw
-                who.gameData.mutable_hands()->Add(card);
+                who.playData.mutable_hands()->Add(card);
                 //pending discard
                 game.pendingDiscard=std::make_shared<Game::pending_t>();
                 game.pendingDiscard->bunch.set_pos(where);
@@ -294,7 +294,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                     msg.set_result(pb_enum::BUNCH_INVALID);
                 }else{
                     //erase from hands
-                    auto& hands=*who.gameData.mutable_hands();
+                    auto& hands=*who.playData.mutable_hands();
                     for(auto j:bunch.pawns()){
                         for(auto i=hands.begin();i!=hands.end();++i){
                             if(j==*i){
@@ -305,7 +305,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
                         }
                     }
                     //then meld
-                    auto h=who.gameData.add_bunch();
+                    auto h=who.playData.add_bunch();
                     h->CopyFrom(bunch);
                     //pending discard
                     game.pendingDiscard=std::make_shared<Game::pending_t>();
@@ -393,7 +393,7 @@ bool Mahjong::isNaturalWin(Game& game,pos_t pos){
 bool Mahjong::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.players[i]->gameData;
+        auto& gd=game.players[i]->playData;
         if(gd.hands().size()<=0)
             pos=i;
     }
@@ -402,9 +402,9 @@ bool Mahjong::settle(Game& game){
     MsgNCSettle msg;
     msg.set_mid(pb_msg::MSG_NC_SETTLE);
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto play=msg.mutable_data(i);
+        auto play=msg.mutable_play(i);
         play->set_win(i==pos?1:0);
-        play->mutable_hands()->CopyFrom(game.players[i]->gameData.hands());
+        play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
         //auto player=msg.add_play();
     }
     
@@ -428,7 +428,7 @@ bool Mahjong::settle(Game& game){
 
 bool Mahjong::isGameOver(Game& game){
     for(auto player:game.players){
-        if(player->gameData.hands().size()<=0)
+        if(player->playData.hands().size()<=0)
             return true;
     }
     return false;
@@ -436,7 +436,7 @@ bool Mahjong::isGameOver(Game& game){
 
 bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
     auto player=game.players[pos];
-    auto& hands=player->gameData.hands();
+    auto& hands=player->playData.hands();
     if(hands.size()<2){
         KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
         return false;
@@ -515,10 +515,10 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     auto id=src_bunch.pawns(0);
     auto A=id;
     auto& player=*game.players[pos];
-    auto& hands=player.gameData.hands();
+    auto& hands=player.playData.hands();
     
     //default color check
-    if(A/1000==player.gameData.selected_card()){
+    if(A/1000==player.playData.selected_card()){
         KEYE_LOG("hint default color,pos=%d\n",pos);
         return false;
     }
@@ -558,7 +558,7 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
             bunch->add_pawns(id);
         }
     }else if(game.pileMap.find(id)!=game.pileMap.end()){
-        for(auto melt:player.gameData.bunch()){
+        for(auto melt:player.playData.bunch()){
             if(melt.type()==pb_enum::BUNCH_AAA){
                 auto C=melt.pawns(0);
                 if(C/1000==A/1000&&C%100==A%100){
@@ -624,7 +624,7 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
 bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     if(bunch.pawns_size()!=1)
         return false;
-    auto& gdata=game.players[bunch.pos()]->gameData;
+    auto& gdata=game.players[bunch.pos()]->playData;
     //huazhu
     auto B=gdata.selected_card();
     auto A=bunch.pawns(0);

@@ -61,7 +61,7 @@ void GameRule::deal(Game& game){
         size_t ibeg=(i==0?0:BK+MH*(i-1));
         size_t iend=+BK+MH*i;
         std::sort( game.pile.begin()+ibeg,    game.pile.begin()+iend, sorter);
-        for(auto x=game.pile.begin()+ibeg, xx=game.pile.begin()+iend; x!=xx;++x)game.players[pos]->gameData.mutable_hands()->Add(*x);
+        for(auto x=game.pile.begin()+ibeg, xx=game.pile.begin()+iend; x!=xx;++x)game.players[pos]->playData.mutable_hands()->Add(*x);
     }
     game.pile.erase(game.pile.begin(),game.pile.begin()+BK+MH*(MP-1));
     for(auto x=game.pile.begin(),xx=game.pile.end();x!=xx;++x)game.pileMap[*x]=0;
@@ -74,16 +74,16 @@ void GameRule::deal(Game& game){
     msg.set_ante(10);
     msg.set_multiple(1);
     for(int i=0;i<MP;++i)
-        msg.mutable_count()->Add((int)game.players[i]->gameData.hands().size());
+        msg.mutable_count()->Add((int)game.players[i]->playData.hands().size());
     msg.mutable_bottom()->CopyFrom(bottom.pawns());
     
     for(auto p:game.players){
         msg.set_pos(p->pos);
         auto hands=msg.mutable_hands();
-        auto n=(int)game.players[p->pos]->gameData.hands().size();
+        auto n=(int)game.players[p->pos]->playData.hands().size();
         hands->Resize(n,0);
         for(int j=0;j<n;++j)
-            hands->Set(j,game.players[p->pos]->gameData.hands(j));
+            hands->Set(j,game.players[p->pos]->playData.hands(j));
         
         p->send(msg);
         hands->Clear();
@@ -112,7 +112,7 @@ void GameRule::OnEngage(Player& player,uint key){
         if(player.engaged)return;
         
         player.engaged=true;
-        player.gameData.set_selected_card(key);
+        player.playData.set_selected_card(key);
         
         MsgNCEngage omsg;
         omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
@@ -154,7 +154,7 @@ void GameRule::changeState(Game& game,Game::State state){
 
 void GameRule::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
-    auto& hands=game.players[pos]->gameData.hands();
+    auto& hands=game.players[pos]->playData.hands();
     cards2str(str,hands);
     KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
 }

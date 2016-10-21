@@ -168,7 +168,7 @@ int32 pos               =2; //easy to use -1
 repeated int32 pawns    =3;
 };
 
-message game_data_t{
+message play_t{
 
 player_t player         =1;
 repeated int32 hands    =2;
@@ -506,7 +506,7 @@ pb_enum result			=3;
 message MsgNCSettle{
 
 pb_msg mid				=1;
-repeated game_data_t data  =2;
+repeated play_t play    =2;
 pb_enum result			=3;
 };
 
