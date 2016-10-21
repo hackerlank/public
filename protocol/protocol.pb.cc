@@ -2675,6 +2675,7 @@ void win_t::clear_score() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int achv_t::kTypeFieldNumber;
 const int achv_t::kNameFieldNumber;
+const int achv_t::kKeyFieldNumber;
 const int achv_t::kValueFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -2702,6 +2703,7 @@ void achv_t::SharedCtor() {
   _cached_size_ = 0;
   type_ = 0;
   name_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  key_ = 0;
   value_ = 0;
 }
 
@@ -2808,13 +2810,28 @@ bool achv_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_value;
+        if (input->ExpectTag(24)) goto parse_key;
         break;
       }
 
-      // optional int32 value = 3;
+      // optional int32 key = 3;
       case 3: {
         if (tag == 24) {
+         parse_key:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &key_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_value;
+        break;
+      }
+
+      // optional int32 value = 4;
+      case 4: {
+        if (tag == 32) {
          parse_value:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -2867,9 +2884,14 @@ void achv_t::SerializeWithCachedSizes(
       2, this->name(), output);
   }
 
-  // optional int32 value = 3;
+  // optional int32 key = 3;
+  if (this->key() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->key(), output);
+  }
+
+  // optional int32 value = 4;
   if (this->value() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->value(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->value(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.achv_t)
@@ -2892,7 +2914,14 @@ int achv_t::ByteSize() const {
         this->name());
   }
 
-  // optional int32 value = 3;
+  // optional int32 key = 3;
+  if (this->key() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->key());
+  }
+
+  // optional int32 value = 4;
   if (this->value() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -2922,6 +2951,9 @@ void achv_t::MergeFrom(const achv_t& from) {
 
     name_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.name_);
   }
+  if (from.key() != 0) {
+    set_key(from.key());
+  }
   if (from.value() != 0) {
     set_value(from.value());
   }
@@ -2946,6 +2978,7 @@ void achv_t::Swap(achv_t* other) {
 void achv_t::InternalSwap(achv_t* other) {
   std::swap(type_, other->type_);
   name_.Swap(&other->name_);
+  std::swap(key_, other->key_);
   std::swap(value_, other->value_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -3016,7 +3049,21 @@ void achv_t::clear_name() {
   // @@protoc_insertion_point(field_set_allocated:proto3.achv_t.name)
 }
 
-// optional int32 value = 3;
+// optional int32 key = 3;
+void achv_t::clear_key() {
+  key_ = 0;
+}
+ ::google::protobuf::int32 achv_t::key() const {
+  // @@protoc_insertion_point(field_get:proto3.achv_t.key)
+  return key_;
+}
+ void achv_t::set_key(::google::protobuf::int32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.achv_t.key)
+}
+
+// optional int32 value = 4;
 void achv_t::clear_value() {
   value_ = 0;
 }
@@ -5052,10 +5099,13 @@ bunch_t::mutable_pawns() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int game_data_t::kPlayerFieldNumber;
 const int game_data_t::kHandsFieldNumber;
 const int game_data_t::kDiscardsFieldNumber;
 const int game_data_t::kBunchFieldNumber;
 const int game_data_t::kSelectedCardFieldNumber;
+const int game_data_t::kWinFieldNumber;
+const int game_data_t::kWinbyFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 game_data_t::game_data_t()
@@ -5066,6 +5116,12 @@ game_data_t::game_data_t()
 
 void game_data_t::InitAsDefaultInstance() {
   _is_default_instance_ = true;
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  player_ = const_cast< ::proto3::player_t*>(
+      ::proto3::player_t::internal_default_instance());
+#else
+  player_ = const_cast< ::proto3::player_t*>(&::proto3::player_t::default_instance());
+#endif
 }
 
 game_data_t::game_data_t(const game_data_t& from)
@@ -5079,7 +5135,9 @@ game_data_t::game_data_t(const game_data_t& from)
 void game_data_t::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
+  player_ = NULL;
   selected_card_ = 0;
+  win_ = 0;
 }
 
 game_data_t::~game_data_t() {
@@ -5093,6 +5151,7 @@ void game_data_t::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete player_;
   }
 }
 
@@ -5122,10 +5181,33 @@ game_data_t* game_data_t::New(::google::protobuf::Arena* arena) const {
 
 void game_data_t::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.game_data_t)
-  selected_card_ = 0;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(game_data_t, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<game_data_t*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(selected_card_, win_);
+  if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
+  player_ = NULL;
+
+#undef ZR_HELPER_
+#undef ZR_
+
   hands_.Clear();
   discards_.Clear();
   bunch_.Clear();
+  winby_.Clear();
 }
 
 bool game_data_t::MergePartialFromCodedStream(
@@ -5138,44 +5220,57 @@ bool game_data_t::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated int32 hands = 1;
+      // optional .proto3.player_t player = 1;
       case 1: {
         if (tag == 10) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_hands())));
-        } else if (tag == 8) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 10, input, this->mutable_hands())));
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_player()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_discards;
+        if (input->ExpectTag(18)) goto parse_hands;
         break;
       }
 
-      // repeated int32 discards = 2;
+      // repeated int32 hands = 2;
       case 2: {
         if (tag == 18) {
+         parse_hands:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_hands())));
+        } else if (tag == 16) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 18, input, this->mutable_hands())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_discards;
+        break;
+      }
+
+      // repeated int32 discards = 3;
+      case 3: {
+        if (tag == 26) {
          parse_discards:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_discards())));
-        } else if (tag == 16) {
+        } else if (tag == 24) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 18, input, this->mutable_discards())));
+                 1, 26, input, this->mutable_discards())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_bunch;
+        if (input->ExpectTag(34)) goto parse_bunch;
         break;
       }
 
-      // repeated .proto3.bunch_t bunch = 3;
-      case 3: {
-        if (tag == 26) {
+      // repeated .proto3.bunch_t bunch = 4;
+      case 4: {
+        if (tag == 34) {
          parse_bunch:
           DO_(input->IncrementRecursionDepth());
          parse_loop_bunch:
@@ -5184,20 +5279,53 @@ bool game_data_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_loop_bunch;
+        if (input->ExpectTag(34)) goto parse_loop_bunch;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(32)) goto parse_selected_card;
+        if (input->ExpectTag(40)) goto parse_selected_card;
         break;
       }
 
-      // optional int32 selected_card = 4;
-      case 4: {
-        if (tag == 32) {
+      // optional int32 selected_card = 5;
+      case 5: {
+        if (tag == 40) {
          parse_selected_card:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &selected_card_)));
 
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_win;
+        break;
+      }
+
+      // optional int32 win = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_win:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &win_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(58)) goto parse_winby;
+        break;
+      }
+
+      // repeated int32 winby = 7;
+      case 7: {
+        if (tag == 58) {
+         parse_winby:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_winby())));
+        } else if (tag == 56) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 58, input, this->mutable_winby())));
         } else {
           goto handle_unusual;
         }
@@ -5229,9 +5357,15 @@ failure:
 void game_data_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.game_data_t)
-  // repeated int32 hands = 1;
+  // optional .proto3.player_t player = 1;
+  if (this->has_player()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      1, *this->player_, output);
+  }
+
+  // repeated int32 hands = 2;
   if (this->hands_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(1, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_hands_cached_byte_size_);
   }
   for (int i = 0; i < this->hands_size(); i++) {
@@ -5239,9 +5373,9 @@ void game_data_t::SerializeWithCachedSizes(
       this->hands(i), output);
   }
 
-  // repeated int32 discards = 2;
+  // repeated int32 discards = 3;
   if (this->discards_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_discards_cached_byte_size_);
   }
   for (int i = 0; i < this->discards_size(); i++) {
@@ -5249,15 +5383,30 @@ void game_data_t::SerializeWithCachedSizes(
       this->discards(i), output);
   }
 
-  // repeated .proto3.bunch_t bunch = 3;
+  // repeated .proto3.bunch_t bunch = 4;
   for (unsigned int i = 0, n = this->bunch_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->bunch(i), output);
+      4, this->bunch(i), output);
   }
 
-  // optional int32 selected_card = 4;
+  // optional int32 selected_card = 5;
   if (this->selected_card() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->selected_card(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->selected_card(), output);
+  }
+
+  // optional int32 win = 6;
+  if (this->win() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->win(), output);
+  }
+
+  // repeated int32 winby = 7;
+  if (this->winby_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(7, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_winby_cached_byte_size_);
+  }
+  for (int i = 0; i < this->winby_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->winby(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.game_data_t)
@@ -5267,14 +5416,28 @@ int game_data_t::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.game_data_t)
   int total_size = 0;
 
-  // optional int32 selected_card = 4;
+  // optional .proto3.player_t player = 1;
+  if (this->has_player()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->player_);
+  }
+
+  // optional int32 selected_card = 5;
   if (this->selected_card() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->selected_card());
   }
 
-  // repeated int32 hands = 1;
+  // optional int32 win = 6;
+  if (this->win() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->win());
+  }
+
+  // repeated int32 hands = 2;
   {
     int data_size = 0;
     for (int i = 0; i < this->hands_size(); i++) {
@@ -5291,7 +5454,7 @@ int game_data_t::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated int32 discards = 2;
+  // repeated int32 discards = 3;
   {
     int data_size = 0;
     for (int i = 0; i < this->discards_size(); i++) {
@@ -5308,12 +5471,29 @@ int game_data_t::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated .proto3.bunch_t bunch = 3;
+  // repeated .proto3.bunch_t bunch = 4;
   total_size += 1 * this->bunch_size();
   for (int i = 0; i < this->bunch_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->bunch(i));
+  }
+
+  // repeated int32 winby = 7;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->winby_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->winby(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _winby_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -5335,8 +5515,15 @@ void game_data_t::MergeFrom(const game_data_t& from) {
   hands_.MergeFrom(from.hands_);
   discards_.MergeFrom(from.discards_);
   bunch_.MergeFrom(from.bunch_);
+  winby_.MergeFrom(from.winby_);
+  if (from.has_player()) {
+    mutable_player()->::proto3::player_t::MergeFrom(from.player());
+  }
   if (from.selected_card() != 0) {
     set_selected_card(from.selected_card());
+  }
+  if (from.win() != 0) {
+    set_win(from.win());
   }
 }
 
@@ -5357,10 +5544,13 @@ void game_data_t::Swap(game_data_t* other) {
   InternalSwap(other);
 }
 void game_data_t::InternalSwap(game_data_t* other) {
+  std::swap(player_, other->player_);
   hands_.UnsafeArenaSwap(&other->hands_);
   discards_.UnsafeArenaSwap(&other->discards_);
   bunch_.UnsafeArenaSwap(&other->bunch_);
   std::swap(selected_card_, other->selected_card_);
+  std::swap(win_, other->win_);
+  winby_.UnsafeArenaSwap(&other->winby_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -5372,7 +5562,49 @@ void game_data_t::InternalSwap(game_data_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // game_data_t
 
-// repeated int32 hands = 1;
+// optional .proto3.player_t player = 1;
+bool game_data_t::has_player() const {
+  return !_is_default_instance_ && player_ != NULL;
+}
+void game_data_t::clear_player() {
+  if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
+  player_ = NULL;
+}
+const ::proto3::player_t& game_data_t::player() const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.player)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return player_ != NULL ? *player_ : *default_instance().player_;
+#else
+  return player_ != NULL ? *player_ : *default_instance_->player_;
+#endif
+}
+::proto3::player_t* game_data_t::mutable_player() {
+  
+  if (player_ == NULL) {
+    player_ = new ::proto3::player_t;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.game_data_t.player)
+  return player_;
+}
+::proto3::player_t* game_data_t::release_player() {
+  // @@protoc_insertion_point(field_release:proto3.game_data_t.player)
+  
+  ::proto3::player_t* temp = player_;
+  player_ = NULL;
+  return temp;
+}
+void game_data_t::set_allocated_player(::proto3::player_t* player) {
+  delete player_;
+  player_ = player;
+  if (player) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_data_t.player)
+}
+
+// repeated int32 hands = 2;
 int game_data_t::hands_size() const {
   return hands_.size();
 }
@@ -5402,7 +5634,7 @@ game_data_t::mutable_hands() {
   return &hands_;
 }
 
-// repeated int32 discards = 2;
+// repeated int32 discards = 3;
 int game_data_t::discards_size() const {
   return discards_.size();
 }
@@ -5432,7 +5664,7 @@ game_data_t::mutable_discards() {
   return &discards_;
 }
 
-// repeated .proto3.bunch_t bunch = 3;
+// repeated .proto3.bunch_t bunch = 4;
 int game_data_t::bunch_size() const {
   return bunch_.size();
 }
@@ -5462,7 +5694,7 @@ game_data_t::bunch() const {
   return bunch_;
 }
 
-// optional int32 selected_card = 4;
+// optional int32 selected_card = 5;
 void game_data_t::clear_selected_card() {
   selected_card_ = 0;
 }
@@ -5474,6 +5706,50 @@ void game_data_t::clear_selected_card() {
   
   selected_card_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_data_t.selected_card)
+}
+
+// optional int32 win = 6;
+void game_data_t::clear_win() {
+  win_ = 0;
+}
+ ::google::protobuf::int32 game_data_t::win() const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.win)
+  return win_;
+}
+ void game_data_t::set_win(::google::protobuf::int32 value) {
+  
+  win_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_data_t.win)
+}
+
+// repeated int32 winby = 7;
+int game_data_t::winby_size() const {
+  return winby_.size();
+}
+void game_data_t::clear_winby() {
+  winby_.Clear();
+}
+ ::google::protobuf::int32 game_data_t::winby(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.winby)
+  return winby_.Get(index);
+}
+ void game_data_t::set_winby(int index, ::google::protobuf::int32 value) {
+  winby_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.game_data_t.winby)
+}
+ void game_data_t::add_winby(::google::protobuf::int32 value) {
+  winby_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.game_data_t.winby)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+game_data_t::winby() const {
+  // @@protoc_insertion_point(field_list:proto3.game_data_t.winby)
+  return winby_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+game_data_t::mutable_winby() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_data_t.winby)
+  return &winby_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -18076,9 +18352,7 @@ void MsgNCDismissAck::clear_result() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCSettle::kMidFieldNumber;
-const int MsgNCSettle::kWinnerFieldNumber;
-const int MsgNCSettle::kPlayFieldNumber;
-const int MsgNCSettle::kHandsFieldNumber;
+const int MsgNCSettle::kDataFieldNumber;
 const int MsgNCSettle::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -18104,7 +18378,6 @@ void MsgNCSettle::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  winner_ = 0;
   result_ = 0;
 }
 
@@ -18164,14 +18437,12 @@ void MsgNCSettle::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, winner_);
-  result_ = 0;
+  ZR_(mid_, result_);
 
 #undef ZR_HELPER_
 #undef ZR_
 
-  play_.Clear();
-  hands_.Clear();
+  data_.Clear();
 }
 
 bool MsgNCSettle::MergePartialFromCodedStream(
@@ -18195,61 +18466,30 @@ bool MsgNCSettle::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_winner;
+        if (input->ExpectTag(18)) goto parse_data;
         break;
       }
 
-      // optional int32 winner = 2;
+      // repeated .proto3.game_data_t data = 2;
       case 2: {
-        if (tag == 16) {
-         parse_winner:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &winner_)));
-
+        if (tag == 18) {
+         parse_data:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_data:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_data()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_play;
+        if (input->ExpectTag(18)) goto parse_loop_data;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(24)) goto parse_result;
         break;
       }
 
-      // repeated .proto3.player_t play = 3;
+      // optional .proto3.pb_enum result = 3;
       case 3: {
-        if (tag == 26) {
-         parse_play:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_play:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_play()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(26)) goto parse_loop_play;
-        if (input->ExpectTag(34)) goto parse_loop_hands;
-        input->UnsafeDecrementRecursionDepth();
-        break;
-      }
-
-      // repeated .proto3.bunch_t hands = 4;
-      case 4: {
-        if (tag == 34) {
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_hands:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_hands()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(34)) goto parse_loop_hands;
-        input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(40)) goto parse_result;
-        break;
-      }
-
-      // optional .proto3.pb_enum result = 5;
-      case 5: {
-        if (tag == 40) {
+        if (tag == 24) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -18293,27 +18533,16 @@ void MsgNCSettle::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional int32 winner = 2;
-  if (this->winner() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->winner(), output);
-  }
-
-  // repeated .proto3.player_t play = 3;
-  for (unsigned int i = 0, n = this->play_size(); i < n; i++) {
+  // repeated .proto3.game_data_t data = 2;
+  for (unsigned int i = 0, n = this->data_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->play(i), output);
+      2, this->data(i), output);
   }
 
-  // repeated .proto3.bunch_t hands = 4;
-  for (unsigned int i = 0, n = this->hands_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      4, this->hands(i), output);
-  }
-
-  // optional .proto3.pb_enum result = 5;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      5, this->result(), output);
+      3, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCSettle)
@@ -18329,33 +18558,18 @@ int MsgNCSettle::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional int32 winner = 2;
-  if (this->winner() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->winner());
-  }
-
-  // optional .proto3.pb_enum result = 5;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.player_t play = 3;
-  total_size += 1 * this->play_size();
-  for (int i = 0; i < this->play_size(); i++) {
+  // repeated .proto3.game_data_t data = 2;
+  total_size += 1 * this->data_size();
+  for (int i = 0; i < this->data_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->play(i));
-  }
-
-  // repeated .proto3.bunch_t hands = 4;
-  total_size += 1 * this->hands_size();
-  for (int i = 0; i < this->hands_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->hands(i));
+        this->data(i));
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -18374,13 +18588,9 @@ void MsgNCSettle::MergeFrom(const MsgNCSettle& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
-  play_.MergeFrom(from.play_);
-  hands_.MergeFrom(from.hands_);
+  data_.MergeFrom(from.data_);
   if (from.mid() != 0) {
     set_mid(from.mid());
-  }
-  if (from.winner() != 0) {
-    set_winner(from.winner());
   }
   if (from.result() != 0) {
     set_result(from.result());
@@ -18405,9 +18615,7 @@ void MsgNCSettle::Swap(MsgNCSettle* other) {
 }
 void MsgNCSettle::InternalSwap(MsgNCSettle* other) {
   std::swap(mid_, other->mid_);
-  std::swap(winner_, other->winner_);
-  play_.UnsafeArenaSwap(&other->play_);
-  hands_.UnsafeArenaSwap(&other->hands_);
+  data_.UnsafeArenaSwap(&other->data_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -18434,81 +18642,37 @@ void MsgNCSettle::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.mid)
 }
 
-// optional int32 winner = 2;
-void MsgNCSettle::clear_winner() {
-  winner_ = 0;
+// repeated .proto3.game_data_t data = 2;
+int MsgNCSettle::data_size() const {
+  return data_.size();
 }
- ::google::protobuf::int32 MsgNCSettle::winner() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.winner)
-  return winner_;
+void MsgNCSettle::clear_data() {
+  data_.Clear();
 }
- void MsgNCSettle::set_winner(::google::protobuf::int32 value) {
-  
-  winner_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.winner)
+const ::proto3::game_data_t& MsgNCSettle::data(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.data)
+  return data_.Get(index);
 }
-
-// repeated .proto3.player_t play = 3;
-int MsgNCSettle::play_size() const {
-  return play_.size();
+::proto3::game_data_t* MsgNCSettle::mutable_data(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCSettle.data)
+  return data_.Mutable(index);
 }
-void MsgNCSettle::clear_play() {
-  play_.Clear();
+::proto3::game_data_t* MsgNCSettle::add_data() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.data)
+  return data_.Add();
 }
-const ::proto3::player_t& MsgNCSettle::play(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.play)
-  return play_.Get(index);
+::google::protobuf::RepeatedPtrField< ::proto3::game_data_t >*
+MsgNCSettle::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.data)
+  return &data_;
 }
-::proto3::player_t* MsgNCSettle::mutable_play(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCSettle.play)
-  return play_.Mutable(index);
-}
-::proto3::player_t* MsgNCSettle::add_play() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.play)
-  return play_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::proto3::player_t >*
-MsgNCSettle::mutable_play() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.play)
-  return &play_;
-}
-const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
-MsgNCSettle::play() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.play)
-  return play_;
+const ::google::protobuf::RepeatedPtrField< ::proto3::game_data_t >&
+MsgNCSettle::data() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.data)
+  return data_;
 }
 
-// repeated .proto3.bunch_t hands = 4;
-int MsgNCSettle::hands_size() const {
-  return hands_.size();
-}
-void MsgNCSettle::clear_hands() {
-  hands_.Clear();
-}
-const ::proto3::bunch_t& MsgNCSettle::hands(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.hands)
-  return hands_.Get(index);
-}
-::proto3::bunch_t* MsgNCSettle::mutable_hands(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCSettle.hands)
-  return hands_.Mutable(index);
-}
-::proto3::bunch_t* MsgNCSettle::add_hands() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.hands)
-  return hands_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-MsgNCSettle::mutable_hands() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.hands)
-  return &hands_;
-}
-const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-MsgNCSettle::hands() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.hands)
-  return hands_;
-}
-
-// optional .proto3.pb_enum result = 5;
+// optional .proto3.pb_enum result = 3;
 void MsgNCSettle::clear_result() {
   result_ = 0;
 }

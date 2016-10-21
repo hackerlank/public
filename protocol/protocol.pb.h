@@ -863,9 +863,15 @@ class achv_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::std::string* release_name();
   void set_allocated_name(::std::string* name);
 
-  // optional int32 value = 3;
+  // optional int32 key = 3;
+  void clear_key();
+  static const int kKeyFieldNumber = 3;
+  ::google::protobuf::int32 key() const;
+  void set_key(::google::protobuf::int32 value);
+
+  // optional int32 value = 4;
   void clear_value();
-  static const int kValueFieldNumber = 3;
+  static const int kValueFieldNumber = 4;
   ::google::protobuf::int32 value() const;
   void set_value(::google::protobuf::int32 value);
 
@@ -878,6 +884,7 @@ class achv_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   bool _is_default_instance_;
   ::google::protobuf::internal::ArenaStringPtr name_;
   int type_;
+  ::google::protobuf::int32 key_;
   ::google::protobuf::int32 value_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -1432,10 +1439,19 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // repeated int32 hands = 1;
+  // optional .proto3.player_t player = 1;
+  bool has_player() const;
+  void clear_player();
+  static const int kPlayerFieldNumber = 1;
+  const ::proto3::player_t& player() const;
+  ::proto3::player_t* mutable_player();
+  ::proto3::player_t* release_player();
+  void set_allocated_player(::proto3::player_t* player);
+
+  // repeated int32 hands = 2;
   int hands_size() const;
   void clear_hands();
-  static const int kHandsFieldNumber = 1;
+  static const int kHandsFieldNumber = 2;
   ::google::protobuf::int32 hands(int index) const;
   void set_hands(int index, ::google::protobuf::int32 value);
   void add_hands(::google::protobuf::int32 value);
@@ -1444,10 +1460,10 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_hands();
 
-  // repeated int32 discards = 2;
+  // repeated int32 discards = 3;
   int discards_size() const;
   void clear_discards();
-  static const int kDiscardsFieldNumber = 2;
+  static const int kDiscardsFieldNumber = 3;
   ::google::protobuf::int32 discards(int index) const;
   void set_discards(int index, ::google::protobuf::int32 value);
   void add_discards(::google::protobuf::int32 value);
@@ -1456,10 +1472,10 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_discards();
 
-  // repeated .proto3.bunch_t bunch = 3;
+  // repeated .proto3.bunch_t bunch = 4;
   int bunch_size() const;
   void clear_bunch();
-  static const int kBunchFieldNumber = 3;
+  static const int kBunchFieldNumber = 4;
   const ::proto3::bunch_t& bunch(int index) const;
   ::proto3::bunch_t* mutable_bunch(int index);
   ::proto3::bunch_t* add_bunch();
@@ -1468,11 +1484,29 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
       bunch() const;
 
-  // optional int32 selected_card = 4;
+  // optional int32 selected_card = 5;
   void clear_selected_card();
-  static const int kSelectedCardFieldNumber = 4;
+  static const int kSelectedCardFieldNumber = 5;
   ::google::protobuf::int32 selected_card() const;
   void set_selected_card(::google::protobuf::int32 value);
+
+  // optional int32 win = 6;
+  void clear_win();
+  static const int kWinFieldNumber = 6;
+  ::google::protobuf::int32 win() const;
+  void set_win(::google::protobuf::int32 value);
+
+  // repeated int32 winby = 7;
+  int winby_size() const;
+  void clear_winby();
+  static const int kWinbyFieldNumber = 7;
+  ::google::protobuf::int32 winby(int index) const;
+  void set_winby(int index, ::google::protobuf::int32 value);
+  void add_winby(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      winby() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_winby();
 
   // @@protoc_insertion_point(class_scope:proto3.game_data_t)
  private:
@@ -1481,12 +1515,16 @@ class game_data_t : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::proto3::player_t* player_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > hands_;
   mutable int _hands_cached_byte_size_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > discards_;
   mutable int _discards_cached_byte_size_;
   ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > bunch_;
   ::google::protobuf::int32 selected_card_;
+  ::google::protobuf::int32 win_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > winby_;
+  mutable int _winby_cached_byte_size_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -5424,39 +5462,21 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional int32 winner = 2;
-  void clear_winner();
-  static const int kWinnerFieldNumber = 2;
-  ::google::protobuf::int32 winner() const;
-  void set_winner(::google::protobuf::int32 value);
+  // repeated .proto3.game_data_t data = 2;
+  int data_size() const;
+  void clear_data();
+  static const int kDataFieldNumber = 2;
+  const ::proto3::game_data_t& data(int index) const;
+  ::proto3::game_data_t* mutable_data(int index);
+  ::proto3::game_data_t* add_data();
+  ::google::protobuf::RepeatedPtrField< ::proto3::game_data_t >*
+      mutable_data();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::game_data_t >&
+      data() const;
 
-  // repeated .proto3.player_t play = 3;
-  int play_size() const;
-  void clear_play();
-  static const int kPlayFieldNumber = 3;
-  const ::proto3::player_t& play(int index) const;
-  ::proto3::player_t* mutable_play(int index);
-  ::proto3::player_t* add_play();
-  ::google::protobuf::RepeatedPtrField< ::proto3::player_t >*
-      mutable_play();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
-      play() const;
-
-  // repeated .proto3.bunch_t hands = 4;
-  int hands_size() const;
-  void clear_hands();
-  static const int kHandsFieldNumber = 4;
-  const ::proto3::bunch_t& hands(int index) const;
-  ::proto3::bunch_t* mutable_hands(int index);
-  ::proto3::bunch_t* add_hands();
-  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-      mutable_hands();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-      hands() const;
-
-  // optional .proto3.pb_enum result = 5;
+  // optional .proto3.pb_enum result = 3;
   void clear_result();
-  static const int kResultFieldNumber = 5;
+  static const int kResultFieldNumber = 3;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -5467,10 +5487,8 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::game_data_t > data_;
   int mid_;
-  ::google::protobuf::int32 winner_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::player_t > play_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hands_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -6474,7 +6492,21 @@ inline void achv_t::set_allocated_name(::std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:proto3.achv_t.name)
 }
 
-// optional int32 value = 3;
+// optional int32 key = 3;
+inline void achv_t::clear_key() {
+  key_ = 0;
+}
+inline ::google::protobuf::int32 achv_t::key() const {
+  // @@protoc_insertion_point(field_get:proto3.achv_t.key)
+  return key_;
+}
+inline void achv_t::set_key(::google::protobuf::int32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.achv_t.key)
+}
+
+// optional int32 value = 4;
 inline void achv_t::clear_value() {
   value_ = 0;
 }
@@ -7050,7 +7082,49 @@ bunch_t::mutable_pawns() {
 
 // game_data_t
 
-// repeated int32 hands = 1;
+// optional .proto3.player_t player = 1;
+inline bool game_data_t::has_player() const {
+  return !_is_default_instance_ && player_ != NULL;
+}
+inline void game_data_t::clear_player() {
+  if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
+  player_ = NULL;
+}
+inline const ::proto3::player_t& game_data_t::player() const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.player)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return player_ != NULL ? *player_ : *default_instance().player_;
+#else
+  return player_ != NULL ? *player_ : *default_instance_->player_;
+#endif
+}
+inline ::proto3::player_t* game_data_t::mutable_player() {
+  
+  if (player_ == NULL) {
+    player_ = new ::proto3::player_t;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.game_data_t.player)
+  return player_;
+}
+inline ::proto3::player_t* game_data_t::release_player() {
+  // @@protoc_insertion_point(field_release:proto3.game_data_t.player)
+  
+  ::proto3::player_t* temp = player_;
+  player_ = NULL;
+  return temp;
+}
+inline void game_data_t::set_allocated_player(::proto3::player_t* player) {
+  delete player_;
+  player_ = player;
+  if (player) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_data_t.player)
+}
+
+// repeated int32 hands = 2;
 inline int game_data_t::hands_size() const {
   return hands_.size();
 }
@@ -7080,7 +7154,7 @@ game_data_t::mutable_hands() {
   return &hands_;
 }
 
-// repeated int32 discards = 2;
+// repeated int32 discards = 3;
 inline int game_data_t::discards_size() const {
   return discards_.size();
 }
@@ -7110,7 +7184,7 @@ game_data_t::mutable_discards() {
   return &discards_;
 }
 
-// repeated .proto3.bunch_t bunch = 3;
+// repeated .proto3.bunch_t bunch = 4;
 inline int game_data_t::bunch_size() const {
   return bunch_.size();
 }
@@ -7140,7 +7214,7 @@ game_data_t::bunch() const {
   return bunch_;
 }
 
-// optional int32 selected_card = 4;
+// optional int32 selected_card = 5;
 inline void game_data_t::clear_selected_card() {
   selected_card_ = 0;
 }
@@ -7152,6 +7226,50 @@ inline void game_data_t::set_selected_card(::google::protobuf::int32 value) {
   
   selected_card_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_data_t.selected_card)
+}
+
+// optional int32 win = 6;
+inline void game_data_t::clear_win() {
+  win_ = 0;
+}
+inline ::google::protobuf::int32 game_data_t::win() const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.win)
+  return win_;
+}
+inline void game_data_t::set_win(::google::protobuf::int32 value) {
+  
+  win_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_data_t.win)
+}
+
+// repeated int32 winby = 7;
+inline int game_data_t::winby_size() const {
+  return winby_.size();
+}
+inline void game_data_t::clear_winby() {
+  winby_.Clear();
+}
+inline ::google::protobuf::int32 game_data_t::winby(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_data_t.winby)
+  return winby_.Get(index);
+}
+inline void game_data_t::set_winby(int index, ::google::protobuf::int32 value) {
+  winby_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.game_data_t.winby)
+}
+inline void game_data_t::add_winby(::google::protobuf::int32 value) {
+  winby_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.game_data_t.winby)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+game_data_t::winby() const {
+  // @@protoc_insertion_point(field_list:proto3.game_data_t.winby)
+  return winby_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+game_data_t::mutable_winby() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_data_t.winby)
+  return &winby_;
 }
 
 // -------------------------------------------------------------------
@@ -9808,81 +9926,37 @@ inline void MsgNCSettle::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.mid)
 }
 
-// optional int32 winner = 2;
-inline void MsgNCSettle::clear_winner() {
-  winner_ = 0;
+// repeated .proto3.game_data_t data = 2;
+inline int MsgNCSettle::data_size() const {
+  return data_.size();
 }
-inline ::google::protobuf::int32 MsgNCSettle::winner() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.winner)
-  return winner_;
+inline void MsgNCSettle::clear_data() {
+  data_.Clear();
 }
-inline void MsgNCSettle::set_winner(::google::protobuf::int32 value) {
-  
-  winner_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.winner)
+inline const ::proto3::game_data_t& MsgNCSettle::data(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.data)
+  return data_.Get(index);
 }
-
-// repeated .proto3.player_t play = 3;
-inline int MsgNCSettle::play_size() const {
-  return play_.size();
+inline ::proto3::game_data_t* MsgNCSettle::mutable_data(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCSettle.data)
+  return data_.Mutable(index);
 }
-inline void MsgNCSettle::clear_play() {
-  play_.Clear();
+inline ::proto3::game_data_t* MsgNCSettle::add_data() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.data)
+  return data_.Add();
 }
-inline const ::proto3::player_t& MsgNCSettle::play(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.play)
-  return play_.Get(index);
+inline ::google::protobuf::RepeatedPtrField< ::proto3::game_data_t >*
+MsgNCSettle::mutable_data() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.data)
+  return &data_;
 }
-inline ::proto3::player_t* MsgNCSettle::mutable_play(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCSettle.play)
-  return play_.Mutable(index);
-}
-inline ::proto3::player_t* MsgNCSettle::add_play() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.play)
-  return play_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::proto3::player_t >*
-MsgNCSettle::mutable_play() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.play)
-  return &play_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
-MsgNCSettle::play() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.play)
-  return play_;
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::game_data_t >&
+MsgNCSettle::data() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.data)
+  return data_;
 }
 
-// repeated .proto3.bunch_t hands = 4;
-inline int MsgNCSettle::hands_size() const {
-  return hands_.size();
-}
-inline void MsgNCSettle::clear_hands() {
-  hands_.Clear();
-}
-inline const ::proto3::bunch_t& MsgNCSettle::hands(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.hands)
-  return hands_.Get(index);
-}
-inline ::proto3::bunch_t* MsgNCSettle::mutable_hands(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCSettle.hands)
-  return hands_.Mutable(index);
-}
-inline ::proto3::bunch_t* MsgNCSettle::add_hands() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.hands)
-  return hands_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-MsgNCSettle::mutable_hands() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.hands)
-  return &hands_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-MsgNCSettle::hands() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.hands)
-  return hands_;
-}
-
-// optional .proto3.pb_enum result = 5;
+// optional .proto3.pb_enum result = 3;
 inline void MsgNCSettle::clear_result() {
   result_ = 0;
 }

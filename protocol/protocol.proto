@@ -126,7 +126,8 @@ message achv_t{
 
 pb_enum type            =1;
 string name             =2;
-int32 value             =3;
+int32 key               =3;
+int32 value             =4;
 };
 
 message game_t{
@@ -169,10 +170,13 @@ repeated int32 pawns    =3;
 
 message game_data_t{
 
-repeated int32 hands    =1;
-repeated int32 discards =2;
-repeated bunch_t bunch  =3;
-int32 selected_card     =4;
+player_t player         =1;
+repeated int32 hands    =2;
+repeated int32 discards =3;
+repeated bunch_t bunch  =4;
+int32 selected_card     =5; //default or selected card at startup
+int32 win               =6; //win sequence,minus means lose
+repeated int32 winby    =7; //others were win by me
 };
 
 message charge_t{
@@ -502,10 +506,8 @@ pb_enum result			=3;
 message MsgNCSettle{
 
 pb_msg mid				=1;
-int32 winner           =2;
-repeated player_t play  =3;
-repeated bunch_t hands  =4;
-pb_enum result			=5;
+repeated game_data_t data  =2;
+pb_enum result			=3;
 };
 
 message MsgNCFinish{

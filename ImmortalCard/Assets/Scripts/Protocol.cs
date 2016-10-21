@@ -33,140 +33,141 @@ namespace Proto3 {
             "BmVuZXJneRgGIAEoBRIbCgR3aW5zGAcgAygLMg0ucHJvdG8zLndpbl90Eh0K",
             "BWFjaHZzGAggAygLMg4ucHJvdG8zLmFjaHZfdCJZCgV3aW5fdBILCgN1aWQY",
             "ASABKAkSCwoDZ2lkGAIgASgFEgsKA3dpbhgDIAEoBRIMCgRsb3NlGAQgASgF",
-            "EgwKBGRyYXcYBSABKAUSDQoFc2NvcmUYBiABKAUiRAoGYWNodl90Eh0KBHR5",
-            "cGUYASABKA4yDy5wcm90bzMucGJfZW51bRIMCgRuYW1lGAIgASgJEg0KBXZh",
-            "bHVlGAMgASgFIsYBCgZnYW1lX3QSCgoCaWQYASABKAUSDwoHdmVyc2lvbhgC",
-            "IAEoDRIKCgJpcBgDIAEoCRIMCgRwb3J0GAQgASgNEhAKCG9jY3VwaWVkGAUg",
-            "ASgFEhAKCGNhcGFjaXR5GAYgASgFEgwKBGRlc2MYByABKAkSDgoGc3RhdHVz",
-            "GAggASgFEhUKDW9wZW5uaW5nX3RpbWUYCSABKA0SFgoObWFpbnRhaW5fc3Rh",
-            "cnQYCiABKA0SFAoMbWFpbnRhaW5fZW5kGAsgASgNIugBCgdsb2JieV90Eg8K",
-            "B3ZlcnNpb24YASABKA0SCgoCaXAYAiABKAkSDAoEcG9ydBgDIAEoDRIQCghv",
-            "Y2N1cGllZBgEIAEoBRIQCghjYXBhY2l0eRgFIAEoBRIMCgRkZXNjGAYgASgJ",
-            "EhAKCGJ1bGxldGluGAcgASgJEg4KBnN0YXR1cxgIIAEoBRIWCg5tYWludGFp",
-            "bl9zdGFydBgJIAEoDRIUCgxtYWludGFpbl9lbmQYCiABKA0SEQoJdGltZV96",
-            "b25lGAsgASgNEh0KBWdhbWVzGAwgAygLMg4ucHJvdG8zLmdhbWVfdCJECgdi",
-            "dW5jaF90Eh0KBHR5cGUYASABKA4yDy5wcm90bzMucGJfZW51bRILCgNwb3MY",
-            "AiABKAUSDQoFcGF3bnMYAyADKAUiZQoLZ2FtZV9kYXRhX3QSDQoFaGFuZHMY",
-            "ASADKAUSEAoIZGlzY2FyZHMYAiADKAUSHgoFYnVuY2gYAyADKAsyDy5wcm90",
-            "bzMuYnVuY2hfdBIVCg1zZWxlY3RlZF9jYXJkGAQgASgFIkQKCGNoYXJnZV90",
-            "Eg0KBXBob25lGAEgASgJEgsKA3VpZBgCIAEoCRIMCgR0aW1lGAMgASgNEg4K",
-            "BmFtb3VudBgEIAEoBSImCgdNc2dCYXNlEhsKA21pZBgBIAEoDjIOLnByb3Rv",
-            "My5wYl9tc2ciWAoKTXNnQ1NMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMu",
-            "cGJfbXNnEg8KB3ZlcnNpb24YAyABKA0SHAoEdXNlchgCIAEoCzIOLnByb3Rv",
-            "My51c2VyX3QikwEKCk1zZ1NDTG9naW4SGwoDbWlkGAEgASgOMg4ucHJvdG8z",
+            "EgwKBGRyYXcYBSABKAUSDQoFc2NvcmUYBiABKAUiUQoGYWNodl90Eh0KBHR5",
+            "cGUYASABKA4yDy5wcm90bzMucGJfZW51bRIMCgRuYW1lGAIgASgJEgsKA2tl",
+            "eRgDIAEoBRINCgV2YWx1ZRgEIAEoBSLGAQoGZ2FtZV90EgoKAmlkGAEgASgF",
+            "Eg8KB3ZlcnNpb24YAiABKA0SCgoCaXAYAyABKAkSDAoEcG9ydBgEIAEoDRIQ",
+            "CghvY2N1cGllZBgFIAEoBRIQCghjYXBhY2l0eRgGIAEoBRIMCgRkZXNjGAcg",
+            "ASgJEg4KBnN0YXR1cxgIIAEoBRIVCg1vcGVubmluZ190aW1lGAkgASgNEhYK",
+            "Dm1haW50YWluX3N0YXJ0GAogASgNEhQKDG1haW50YWluX2VuZBgLIAEoDSLo",
+            "AQoHbG9iYnlfdBIPCgd2ZXJzaW9uGAEgASgNEgoKAmlwGAIgASgJEgwKBHBv",
+            "cnQYAyABKA0SEAoIb2NjdXBpZWQYBCABKAUSEAoIY2FwYWNpdHkYBSABKAUS",
+            "DAoEZGVzYxgGIAEoCRIQCghidWxsZXRpbhgHIAEoCRIOCgZzdGF0dXMYCCAB",
+            "KAUSFgoObWFpbnRhaW5fc3RhcnQYCSABKA0SFAoMbWFpbnRhaW5fZW5kGAog",
+            "ASgNEhEKCXRpbWVfem9uZRgLIAEoDRIdCgVnYW1lcxgMIAMoCzIOLnByb3Rv",
+            "My5nYW1lX3QiRAoHYnVuY2hfdBIdCgR0eXBlGAEgASgOMg8ucHJvdG8zLnBi",
+            "X2VudW0SCwoDcG9zGAIgASgFEg0KBXBhd25zGAMgAygFIqMBCgtnYW1lX2Rh",
+            "dGFfdBIgCgZwbGF5ZXIYASABKAsyEC5wcm90bzMucGxheWVyX3QSDQoFaGFu",
+            "ZHMYAiADKAUSEAoIZGlzY2FyZHMYAyADKAUSHgoFYnVuY2gYBCADKAsyDy5w",
+            "cm90bzMuYnVuY2hfdBIVCg1zZWxlY3RlZF9jYXJkGAUgASgFEgsKA3dpbhgG",
+            "IAEoBRINCgV3aW5ieRgHIAMoBSJECghjaGFyZ2VfdBINCgVwaG9uZRgBIAEo",
+            "CRILCgN1aWQYAiABKAkSDAoEdGltZRgDIAEoDRIOCgZhbW91bnQYBCABKAUi",
+            "JgoHTXNnQmFzZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnIlgKCk1z",
+            "Z0NTTG9naW4SGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgd2ZXJz",
+            "aW9uGAMgASgNEhwKBHVzZXIYAiABKAsyDi5wcm90bzMudXNlcl90IpMBCgpN",
+            "c2dTQ0xvZ2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDdWlk",
+            "GAIgASgJEg8KB3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEoBBIKCgJp",
+            "cBgFIAEoCRIMCgRwb3J0GAYgASgNEh8KBnJlc3VsdBgHIAEoDjIPLnByb3Rv",
+            "My5wYl9lbnVtIlgKCk1zZ0NMRW50ZXISGwoDbWlkGAEgASgOMg4ucHJvdG8z",
             "LnBiX21zZxILCgN1aWQYAiABKAkSDwoHdmVyc2lvbhgDIAEoDRIPCgdzZXNz",
-            "aW9uGAQgASgEEgoKAmlwGAUgASgJEgwKBHBvcnQYBiABKA0SHwoGcmVzdWx0",
-            "GAcgASgOMg8ucHJvdG8zLnBiX2VudW0iWAoKTXNnQ0xFbnRlchIbCgNtaWQY",
-            "ASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3VpZBgCIAEoCRIPCgd2ZXJzaW9u",
-            "GAMgASgNEg8KB3Nlc3Npb24YBCABKAQimQEKCk1zZ0xDRW50ZXISGwoDbWlk",
-            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiABKAUSIAoGcGxheWVy",
-            "GAMgASgLMhAucHJvdG8zLnBsYXllcl90Eh4KBWxvYmJ5GAQgASgLMg8ucHJv",
-            "dG8zLmxvYmJ5X3QSHwoGcmVzdWx0GAUgASgOMg8ucHJvdG8zLnBiX2VudW0i",
-            "VwoKTXNnQ0hMb2dpbhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8K",
-            "B3ZlcnNpb24YAiABKA0SDQoFcGhvbmUYAyABKAkSDAoEcHN3ZBgEIAEoCSJr",
-            "CgpNc2dIQ0xvZ2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDgoG",
-            "YW1vdW50GAIgASgFEg8KB3Nlc3Npb24YAyABKAQSHwoGcmVzdWx0GAQgASgO",
-            "Mg8ucHJvdG8zLnBiX2VudW0iuQEKDU1zZ0NIUmVnaXN0ZXISGwoDbWlkGAEg",
-            "ASgOMg4ucHJvdG8zLnBiX21zZxILCgN1aWQYAiABKAkSDQoFcGhvbmUYAyAB",
-            "KAkSDAoEcHN3ZBgEIAEoCRIMCgRuYW1lGAUgASgJEg8KB2FkZHJlc3MYBiAB",
-            "KAkSDgoGaWRjYXJkGAcgASgJEg4KBndlY2hhdBgIIAEoCRIOCgZhbGlwYXkY",
-            "CSABKAkSEgoKdmVyaWZ5Y29kZRgKIAEoCSJNCg1Nc2dIQ1JlZ2lzdGVyEhsK",
-            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHwoGcmVzdWx0GAIgASgOMg8u",
-            "cHJvdG8zLnBiX2VudW0iWAoLTXNnQ0hDaGFyZ2USGwoDbWlkGAEgASgOMg4u",
-            "cHJvdG8zLnBiX21zZxIPCgdzZXNzaW9uGAIgASgEEgsKA3VpZBgDIAEoCRIO",
-            "CgZhbW91bnQYBCABKAUiSwoLTXNnSENDaGFyZ2USGwoDbWlkGAEgASgOMg4u",
-            "cHJvdG8zLnBiX21zZxIfCgZyZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51",
-            "bSJHCgpNc2dDSFF1ZXJ5EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
-            "DwoHc2Vzc2lvbhgCIAEoBBILCgN1aWQYAyABKAkiaQoKTXNnSENRdWVyeRIb",
-            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh0KA2xvZxgCIAMoCzIQLnBy",
-            "b3RvMy5jaGFyZ2VfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51",
-            "bSJYCgpNc2dDTkVudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
-            "CwoDdWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgEIAEo",
-            "BCJsCgpNc2dOQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
-            "IAoGcGxheWVyGAIgASgLMhAucHJvdG8zLnBsYXllcl90Eh8KBnJlc3VsdBgD",
-            "IAEoDjIPLnByb3RvMy5wYl9lbnVtImwKC01zZ0NOQ3JlYXRlEhsKA21pZBgB",
-            "IAEoDjIOLnByb3RvMy5wYl9tc2cSHQoEZ2FtZRgCIAEoDjIPLnByb3RvMy5w",
-            "Yl9lbnVtEiEKBm9wdGlvbhgDIAMoCzIRLnByb3RvMy5rZXlfdmFsdWUiXAoL",
-            "TXNnTkNDcmVhdGUSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgdn",
-            "YW1lX2lkGAIgASgFEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVt",
-            "IjkKCU1zZ0NOSm9pbhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8K",
-            "B2dhbWVfaWQYAiABKAUiiwEKCU1zZ05DSm9pbhIbCgNtaWQYASABKA4yDi5w",
-            "cm90bzMucGJfbXNnEh0KBGdhbWUYAiABKA4yDy5wcm90bzMucGJfZW51bRIh",
-            "CgdwbGF5ZXJzGAMgAygLMhAucHJvdG8zLnBsYXllcl90Eh8KBnJlc3VsdBgE",
-            "IAEoDjIPLnByb3RvMy5wYl9lbnVtIikKCk1zZ0NOUmVhZHkSGwoDbWlkGAEg",
-            "ASgOMg4ucHJvdG8zLnBiX21zZyJXCgpNc2dOQ1JlYWR5EhsKA21pZBgBIAEo",
-            "DjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEh8KBnJlc3VsdBgDIAEo",
-            "DjIPLnByb3RvMy5wYl9lbnVtIjcKC01zZ0NORW5nYWdlEhsKA21pZBgBIAEo",
-            "DjIOLnByb3RvMy5wYl9tc2cSCwoDa2V5GAIgASgFImUKC01zZ05DRW5nYWdl",
-            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEgsK",
-            "A2tleRgDIAEoBRIfCgZyZXN1bHQYBCABKA4yDy5wcm90bzMucGJfZW51bSK1",
-            "AQoKTXNnTkNTdGFydBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg4K",
-            "BmJhbmtlchgCIAEoBRILCgNwb3MYAyABKAUSDAoEYW50ZRgEIAEoBRIQCght",
-            "dWx0aXBsZRgFIAEoBRINCgVoYW5kcxgGIAMoBRIOCgZib3R0b20YByADKAUS",
-            "DQoFY291bnQYCCADKAUSHwoGcmVzdWx0GAkgASgOMg8ucHJvdG8zLnBiX2Vu",
-            "dW0iSwoMTXNnQ05EaXNjYXJkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9t",
-            "c2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMuYnVuY2hfdCJsCgxNc2dOQ0Rp",
-            "c2NhcmQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIeCgVidW5jaBgC",
-            "IAEoCzIPLnByb3RvMy5idW5jaF90Eh8KBnJlc3VsdBgDIAEoDjIPLnByb3Rv",
-            "My5wYl9lbnVtIkgKCU1zZ0NOTWVsZBIbCgNtaWQYASABKA4yDi5wcm90bzMu",
-            "cGJfbXNnEh4KBWJ1bmNoGAIgASgLMg8ucHJvdG8zLmJ1bmNoX3QiaQoJTXNn",
-            "TkNNZWxkEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gY",
-            "AiABKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90",
-            "bzMucGJfZW51bSJDCglNc2dOQ0RyYXcSGwoDbWlkGAEgASgOMg4ucHJvdG8z",
-            "LnBiX21zZxILCgNwb3MYAiABKAUSDAoEY2FyZBgDIAEoBSIvChBNc2dDTkRp",
-            "c21pc3NTeW5jEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXQoQTXNn",
-            "TkNEaXNtaXNzU3luYxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsK",
-            "A3BvcxgCIAEoBRIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSIu",
-            "Cg9Nc2dDTkRpc21pc3NBY2sSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21z",
-            "ZyJcCg9Nc2dOQ0Rpc21pc3NBY2sSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBi",
-            "X21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBi",
-            "X2VudW0imwEKC01zZ05DU2V0dGxlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
-            "Yl9tc2cSDgoGd2lubmVyGAIgASgFEh4KBHBsYXkYAyADKAsyEC5wcm90bzMu",
-            "cGxheWVyX3QSHgoFaGFuZHMYBCADKAsyDy5wcm90bzMuYnVuY2hfdBIfCgZy",
-            "ZXN1bHQYBSABKA4yDy5wcm90bzMucGJfZW51bSJrCgtNc2dOQ0ZpbmlzaBIb",
-            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBHBsYXkYAiADKAsyEC5w",
-            "cm90bzMucGxheWVyX3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2Vu",
-            "dW0iRQoKTXNnQ05TdGF0cxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNn",
-            "EgsKA2tleRgCIAEoCRINCgV2YWx1ZRgDIAEoCSrBBQoHcGJfZW51bRILCgdV",
-            "TktOT1dOEAASCAoETk9ORRAAEgwKCFNVQ0NFRVNTEAASCgoGREVWX1BDEAAS",
-            "CwoHREVWX1BTNBABEgwKCERFVl9YQk9YEAISCwoHREVWX0lPUxADEg8KC0RF",
-            "Vl9BTkRST0lEEAQSEAoMREVWX1dJTlBIT05FEAUSDAoIR0FNRV9ERFoQFBIM",
-            "CghHQU1FX1BESxAVEgwKCEdBTUVfUEhaEBYSCwoHR0FNRV9NShAXEhAKDE9Q",
-            "VElPTl9ST1VORBAKEg8KC09QVElPTl9BTlRJEAsSEwoPT1BUSU9OX0NBVEVH",
-            "T1JZEAwSGAoUT1BUSU9OX0RFRklORURfQ0FSRFMQDRIRCg1DQVRFR09SWV9F",
-            "QVNZEAoSEwoPQ0FURUdPUllfTk9STUFMEAsSEQoNQ0FURUdPUllfSEFSRBAM",
-            "EgsKB09QX1BBU1MQABIOCgpPUF9ESVNDQVJEEAESEQoNQlVOQ0hfSU5WQUxJ",
-            "RBAKEgsKB0JVTkNIX0EQCxIMCghCVU5DSF9BQRAMEg0KCUJVTkNIX0FBQRAN",
-            "Eg4KCkJVTkNIX0FBQUEQDhIPCgtCVU5DSF9BQUFBQhAPEg4KCkJVTkNIX0FB",
-            "QUIQEBINCglCVU5DSF9BQkMQERINCglCVU5DSF9XSU4QZBINCglBQ0hWX0JP",
-            "TUIQChIPCgtBQ0hWX0hFQVZFThALEg0KCUFDSFZfSEVMTBAMEhIKDURFRl9N",
-            "QVhfTk9ERVMQ6AcSHAoWREVGX01BWF9HQU1FU19QRVJfTk9ERRCgjQYSDgoK",
-            "RVJSX0ZBSUxFRBBkEhEKDUVSUl9DQU5DRUxMRUQQZRIQCgxFUlJfUFJPVE9D",
-            "T0wQZhINCglFUlJfUEFSQU0QZxISCg5FUlJfRFVQTElDQVRFRBBoEhAKC0VS",
-            "Ul9VTktOT1dOEOcHGgIQASr/BwoGcGJfbXNnEg8KC01TR19JTlZBTElEEAAS",
-            "DgoJTVNHX0JFR0lOEOgHEgwKB01TR19SQVcQ6QcSEQoMTVNHX0NTX0JFR0lO",
-            "ENAPEhEKDE1TR19DU19MT0dJThDRDxIRCgxNU0dfU0NfTE9HSU4Q0g8SDwoK",
-            "TVNHX0NTX0VORBCfHxIRCgxNU0dfQ0xfQkVHSU4QoB8SEQoMTVNHX0NMX0VO",
-            "VEVSEKEfEhEKDE1TR19MQ19FTlRFUhCiHxIQCgtNU0dfTENfRVhJVBCkHxIP",
-            "CgpNU0dfQ0xfRU5EEIcnEhEKDE1TR19DSF9CRUdJThCIJxIRCgxNU0dfQ0hf",
-            "TE9HSU4QiScSEQoMTVNHX0hDX0xPR0lOEIonEhQKD01TR19DSF9SRUdJU1RF",
-            "UhCLJxIUCg9NU0dfSENfUkVHSVNURVIQjCcSEgoNTVNHX0NIX0NIQVJHRRCN",
-            "JxISCg1NU0dfSENfQ0hBUkdFEI4nEhEKDE1TR19DSF9RVUVSWRCPJxIRCgxN",
-            "U0dfSENfUVVFUlkQkCcSEgoNTVNHX0NIX0ZPUkdFVBCRJxISCg1NU0dfSENf",
-            "Rk9SR0VUEJInEhYKEU1TR19DSF9SRVNFVF9QU1dEEJMnEhYKEU1TR19IQ19S",
-            "RVNFVF9QU1dEEJQnEg8KCk1TR19DSF9FTkQQ7y4SEQoMTVNHX0NOX0JFR0lO",
-            "EPAuEhEKDE1TR19DTl9FTlRFUhDxLhIRCgxNU0dfTkNfRU5URVIQ8i4SEgoN",
-            "TVNHX0NOX0NSRUFURRD7LhISCg1NU0dfTkNfQ1JFQVRFEPwuEhAKC01TR19D",
-            "Tl9KT0lOEP0uEhAKC01TR19OQ19KT0lOEP4uEhgKE01TR19DTl9ESVNNSVNT",
-            "X1NZTkMQhS8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCGLxIXChJNU0dfQ05f",
-            "RElTTUlTU19BQ0sQhy8SFwoSTVNHX05DX0RJU01JU1NfQUNLEIgvEhEKDE1T",
-            "R19DTl9SRUFEWRCPLxIRCgxNU0dfTkNfUkVBRFkQkC8SEgoNTVNHX0NOX0VO",
-            "R0FHRRCRLxISCg1NU0dfTkNfRU5HQUdFEJIvEhEKDE1TR19OQ19TVEFSVBCT",
-            "LxISCg1NU0dfTkNfU0VUVExFEJQvEhIKDU1TR19OQ19GSU5JU0gQli8SEwoO",
-            "TVNHX0NOX0RJU0NBUkQQoy8SEwoOTVNHX05DX0RJU0NBUkQQpC8SEAoLTVNH",
-            "X0NOX01FTEQQpS8SEAoLTVNHX05DX01FTEQQpi8SEAoLTVNHX05DX0RSQVcQ",
-            "py8SEQoMTVNHX0NOX1NUQVRTEMEvEg8KCk1TR19DTl9FTkQQ1zYSDAoHTVNH",
-            "X0VORBCPTkICSANiBnByb3RvMw=="));
+            "aW9uGAQgASgEIpkBCgpNc2dMQ0VudGVyEhsKA21pZBgBIAEoDjIOLnByb3Rv",
+            "My5wYl9tc2cSCwoDa2V5GAIgASgFEiAKBnBsYXllchgDIAEoCzIQLnByb3Rv",
+            "My5wbGF5ZXJfdBIeCgVsb2JieRgEIAEoCzIPLnByb3RvMy5sb2JieV90Eh8K",
+            "BnJlc3VsdBgFIAEoDjIPLnByb3RvMy5wYl9lbnVtIlcKCk1zZ0NITG9naW4S",
+            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgd2ZXJzaW9uGAIgASgN",
+            "Eg0KBXBob25lGAMgASgJEgwKBHBzd2QYBCABKAkiawoKTXNnSENMb2dpbhIb",
+            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg4KBmFtb3VudBgCIAEoBRIP",
+            "CgdzZXNzaW9uGAMgASgEEh8KBnJlc3VsdBgEIAEoDjIPLnByb3RvMy5wYl9l",
+            "bnVtIrkBCg1Nc2dDSFJlZ2lzdGVyEhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
+            "Yl9tc2cSCwoDdWlkGAIgASgJEg0KBXBob25lGAMgASgJEgwKBHBzd2QYBCAB",
+            "KAkSDAoEbmFtZRgFIAEoCRIPCgdhZGRyZXNzGAYgASgJEg4KBmlkY2FyZBgH",
+            "IAEoCRIOCgZ3ZWNoYXQYCCABKAkSDgoGYWxpcGF5GAkgASgJEhIKCnZlcmlm",
+            "eWNvZGUYCiABKAkiTQoNTXNnSENSZWdpc3RlchIbCgNtaWQYASABKA4yDi5w",
+            "cm90bzMucGJfbXNnEh8KBnJlc3VsdBgCIAEoDjIPLnByb3RvMy5wYl9lbnVt",
+            "IlgKC01zZ0NIQ2hhcmdlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "DwoHc2Vzc2lvbhgCIAEoBBILCgN1aWQYAyABKAkSDgoGYW1vdW50GAQgASgF",
+            "IksKC01zZ0hDQ2hhcmdlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "HwoGcmVzdWx0GAUgASgOMg8ucHJvdG8zLnBiX2VudW0iRwoKTXNnQ0hRdWVy",
+            "eRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8KB3Nlc3Npb24YAiAB",
+            "KAQSCwoDdWlkGAMgASgJImkKCk1zZ0hDUXVlcnkSGwoDbWlkGAEgASgOMg4u",
+            "cHJvdG8zLnBiX21zZxIdCgNsb2cYAiADKAsyEC5wcm90bzMuY2hhcmdlX3QS",
+            "HwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iWAoKTXNnQ05FbnRl",
+            "chIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA3VpZBgCIAEoCRIP",
+            "Cgd2ZXJzaW9uGAMgASgNEg8KB3Nlc3Npb24YBCABKAQibAoKTXNnTkNFbnRl",
+            "chIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEiAKBnBsYXllchgCIAEo",
+            "CzIQLnByb3RvMy5wbGF5ZXJfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMu",
+            "cGJfZW51bSJsCgtNc2dDTkNyZWF0ZRIbCgNtaWQYASABKA4yDi5wcm90bzMu",
+            "cGJfbXNnEh0KBGdhbWUYAiABKA4yDy5wcm90bzMucGJfZW51bRIhCgZvcHRp",
+            "b24YAyADKAsyES5wcm90bzMua2V5X3ZhbHVlIlwKC01zZ05DQ3JlYXRlEhsK",
+            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDwoHZ2FtZV9pZBgCIAEoBRIf",
+            "CgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSI5CglNc2dDTkpvaW4S",
+            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIPCgdnYW1lX2lkGAIgASgF",
+            "IosBCglNc2dOQ0pvaW4SGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxId",
+            "CgRnYW1lGAIgASgOMg8ucHJvdG8zLnBiX2VudW0SIQoHcGxheWVycxgDIAMo",
+            "CzIQLnByb3RvMy5wbGF5ZXJfdBIfCgZyZXN1bHQYBCABKA4yDy5wcm90bzMu",
+            "cGJfZW51bSIpCgpNc2dDTlJlYWR5EhsKA21pZBgBIAEoDjIOLnByb3RvMy5w",
+            "Yl9tc2ciVwoKTXNnTkNSZWFkeRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJf",
+            "bXNnEgsKA3BvcxgCIAEoBRIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJf",
+            "ZW51bSI3CgtNc2dDTkVuZ2FnZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJf",
+            "bXNnEgsKA2tleRgCIAEoBSJlCgtNc2dOQ0VuZ2FnZRIbCgNtaWQYASABKA4y",
+            "Di5wcm90bzMucGJfbXNnEgsKA3BvcxgCIAEoBRILCgNrZXkYAyABKAUSHwoG",
+            "cmVzdWx0GAQgASgOMg8ucHJvdG8zLnBiX2VudW0itQEKCk1zZ05DU3RhcnQS",
+            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIOCgZiYW5rZXIYAiABKAUS",
+            "CwoDcG9zGAMgASgFEgwKBGFudGUYBCABKAUSEAoIbXVsdGlwbGUYBSABKAUS",
+            "DQoFaGFuZHMYBiADKAUSDgoGYm90dG9tGAcgAygFEg0KBWNvdW50GAggAygF",
+            "Eh8KBnJlc3VsdBgJIAEoDjIPLnByb3RvMy5wYl9lbnVtIksKDE1zZ0NORGlz",
+            "Y2FyZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBWJ1bmNoGAIg",
+            "ASgLMg8ucHJvdG8zLmJ1bmNoX3QibAoMTXNnTkNEaXNjYXJkEhsKA21pZBgB",
+            "IAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5wcm90bzMu",
+            "YnVuY2hfdBIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSJICglN",
+            "c2dDTk1lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIeCgVidW5j",
+            "aBgCIAEoCzIPLnByb3RvMy5idW5jaF90ImkKCU1zZ05DTWVsZBIbCgNtaWQY",
+            "ASABKA4yDi5wcm90bzMucGJfbXNnEh4KBWJ1bmNoGAIgASgLMg8ucHJvdG8z",
+            "LmJ1bmNoX3QSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iQwoJ",
+            "TXNnTkNEcmF3EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9z",
+            "GAIgASgFEgwKBGNhcmQYAyABKAUiLwoQTXNnQ05EaXNtaXNzU3luYxIbCgNt",
+            "aWQYASABKA4yDi5wcm90bzMucGJfbXNnIl0KEE1zZ05DRGlzbWlzc1N5bmMS",
+            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSHwoG",
+            "cmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iLgoPTXNnQ05EaXNtaXNz",
+            "QWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXAoPTXNnTkNEaXNt",
+            "aXNzQWNrEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIg",
+            "ASgFEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIm4KC01zZ05D",
+            "U2V0dGxlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSIQoEZGF0YRgC",
+            "IAMoCzITLnByb3RvMy5nYW1lX2RhdGFfdBIfCgZyZXN1bHQYAyABKA4yDy5w",
+            "cm90bzMucGJfZW51bSJrCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4yDi5w",
+            "cm90bzMucGJfbXNnEh4KBHBsYXkYAiADKAsyEC5wcm90bzMucGxheWVyX3QS",
+            "HwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iRQoKTXNnQ05TdGF0",
+            "cxIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEgsKA2tleRgCIAEoCRIN",
+            "CgV2YWx1ZRgDIAEoCSrBBQoHcGJfZW51bRILCgdVTktOT1dOEAASCAoETk9O",
+            "RRAAEgwKCFNVQ0NFRVNTEAASCgoGREVWX1BDEAASCwoHREVWX1BTNBABEgwK",
+            "CERFVl9YQk9YEAISCwoHREVWX0lPUxADEg8KC0RFVl9BTkRST0lEEAQSEAoM",
+            "REVWX1dJTlBIT05FEAUSDAoIR0FNRV9ERFoQFBIMCghHQU1FX1BESxAVEgwK",
+            "CEdBTUVfUEhaEBYSCwoHR0FNRV9NShAXEhAKDE9QVElPTl9ST1VORBAKEg8K",
+            "C09QVElPTl9BTlRJEAsSEwoPT1BUSU9OX0NBVEVHT1JZEAwSGAoUT1BUSU9O",
+            "X0RFRklORURfQ0FSRFMQDRIRCg1DQVRFR09SWV9FQVNZEAoSEwoPQ0FURUdP",
+            "UllfTk9STUFMEAsSEQoNQ0FURUdPUllfSEFSRBAMEgsKB09QX1BBU1MQABIO",
+            "CgpPUF9ESVNDQVJEEAESEQoNQlVOQ0hfSU5WQUxJRBAKEgsKB0JVTkNIX0EQ",
+            "CxIMCghCVU5DSF9BQRAMEg0KCUJVTkNIX0FBQRANEg4KCkJVTkNIX0FBQUEQ",
+            "DhIPCgtCVU5DSF9BQUFBQhAPEg4KCkJVTkNIX0FBQUIQEBINCglCVU5DSF9B",
+            "QkMQERINCglCVU5DSF9XSU4QZBINCglBQ0hWX0JPTUIQChIPCgtBQ0hWX0hF",
+            "QVZFThALEg0KCUFDSFZfSEVMTBAMEhIKDURFRl9NQVhfTk9ERVMQ6AcSHAoW",
+            "REVGX01BWF9HQU1FU19QRVJfTk9ERRCgjQYSDgoKRVJSX0ZBSUxFRBBkEhEK",
+            "DUVSUl9DQU5DRUxMRUQQZRIQCgxFUlJfUFJPVE9DT0wQZhINCglFUlJfUEFS",
+            "QU0QZxISCg5FUlJfRFVQTElDQVRFRBBoEhAKC0VSUl9VTktOT1dOEOcHGgIQ",
+            "ASr/BwoGcGJfbXNnEg8KC01TR19JTlZBTElEEAASDgoJTVNHX0JFR0lOEOgH",
+            "EgwKB01TR19SQVcQ6QcSEQoMTVNHX0NTX0JFR0lOENAPEhEKDE1TR19DU19M",
+            "T0dJThDRDxIRCgxNU0dfU0NfTE9HSU4Q0g8SDwoKTVNHX0NTX0VORBCfHxIR",
+            "CgxNU0dfQ0xfQkVHSU4QoB8SEQoMTVNHX0NMX0VOVEVSEKEfEhEKDE1TR19M",
+            "Q19FTlRFUhCiHxIQCgtNU0dfTENfRVhJVBCkHxIPCgpNU0dfQ0xfRU5EEIcn",
+            "EhEKDE1TR19DSF9CRUdJThCIJxIRCgxNU0dfQ0hfTE9HSU4QiScSEQoMTVNH",
+            "X0hDX0xPR0lOEIonEhQKD01TR19DSF9SRUdJU1RFUhCLJxIUCg9NU0dfSENf",
+            "UkVHSVNURVIQjCcSEgoNTVNHX0NIX0NIQVJHRRCNJxISCg1NU0dfSENfQ0hB",
+            "UkdFEI4nEhEKDE1TR19DSF9RVUVSWRCPJxIRCgxNU0dfSENfUVVFUlkQkCcS",
+            "EgoNTVNHX0NIX0ZPUkdFVBCRJxISCg1NU0dfSENfRk9SR0VUEJInEhYKEU1T",
+            "R19DSF9SRVNFVF9QU1dEEJMnEhYKEU1TR19IQ19SRVNFVF9QU1dEEJQnEg8K",
+            "Ck1TR19DSF9FTkQQ7y4SEQoMTVNHX0NOX0JFR0lOEPAuEhEKDE1TR19DTl9F",
+            "TlRFUhDxLhIRCgxNU0dfTkNfRU5URVIQ8i4SEgoNTVNHX0NOX0NSRUFURRD7",
+            "LhISCg1NU0dfTkNfQ1JFQVRFEPwuEhAKC01TR19DTl9KT0lOEP0uEhAKC01T",
+            "R19OQ19KT0lOEP4uEhgKE01TR19DTl9ESVNNSVNTX1NZTkMQhS8SGAoTTVNH",
+            "X05DX0RJU01JU1NfU1lOQxCGLxIXChJNU0dfQ05fRElTTUlTU19BQ0sQhy8S",
+            "FwoSTVNHX05DX0RJU01JU1NfQUNLEIgvEhEKDE1TR19DTl9SRUFEWRCPLxIR",
+            "CgxNU0dfTkNfUkVBRFkQkC8SEgoNTVNHX0NOX0VOR0FHRRCRLxISCg1NU0df",
+            "TkNfRU5HQUdFEJIvEhEKDE1TR19OQ19TVEFSVBCTLxISCg1NU0dfTkNfU0VU",
+            "VExFEJQvEhIKDU1TR19OQ19GSU5JU0gQli8SEwoOTVNHX0NOX0RJU0NBUkQQ",
+            "oy8SEwoOTVNHX05DX0RJU0NBUkQQpC8SEAoLTVNHX0NOX01FTEQQpS8SEAoL",
+            "TVNHX05DX01FTEQQpi8SEAoLTVNHX05DX0RSQVcQpy8SEQoMTVNHX0NOX1NU",
+            "QVRTEMEvEg8KCk1TR19DTl9FTkQQ1zYSDAoHTVNHX0VORBCPTkICSANiBnBy",
+            "b3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -174,11 +175,11 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.user_t), global::Proto3.user_t.Parser, new[]{ "Uid", "Flag", "DevType", "Account", "Name", "Pswd", "Gender", "Age", "Udid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.player_t), global::Proto3.player_t.Parser, new[]{ "Uid", "Pid", "Level", "Xp", "Currency", "Energy", "Wins", "Achvs" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.win_t), global::Proto3.win_t.Parser, new[]{ "Uid", "Gid", "Win", "Lose", "Draw", "Score" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.achv_t), global::Proto3.achv_t.Parser, new[]{ "Type", "Name", "Value" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.achv_t), global::Proto3.achv_t.Parser, new[]{ "Type", "Name", "Key", "Value" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_t), global::Proto3.game_t.Parser, new[]{ "Id", "Version", "Ip", "Port", "Occupied", "Capacity", "Desc", "Status", "OpenningTime", "MaintainStart", "MaintainEnd" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.lobby_t), global::Proto3.lobby_t.Parser, new[]{ "Version", "Ip", "Port", "Occupied", "Capacity", "Desc", "Bulletin", "Status", "MaintainStart", "MaintainEnd", "TimeZone", "Games" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.bunch_t), global::Proto3.bunch_t.Parser, new[]{ "Type", "Pos", "Pawns" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_data_t), global::Proto3.game_data_t.Parser, new[]{ "Hands", "Discards", "Bunch", "SelectedCard" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.game_data_t), global::Proto3.game_data_t.Parser, new[]{ "Player", "Hands", "Discards", "Bunch", "SelectedCard", "Win", "Winby" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.charge_t), global::Proto3.charge_t.Parser, new[]{ "Phone", "Uid", "Time", "Amount" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgBase), global::Proto3.MsgBase.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCSLogin), global::Proto3.MsgCSLogin.Parser, new[]{ "Mid", "Version", "User" }, null, null, null),
@@ -213,7 +214,7 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDismissSync), global::Proto3.MsgNCDismissSync.Parser, new[]{ "Mid", "Pos", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDismissAck), global::Proto3.MsgCNDismissAck.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDismissAck), global::Proto3.MsgNCDismissAck.Parser, new[]{ "Mid", "Pos", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCSettle), global::Proto3.MsgNCSettle.Parser, new[]{ "Mid", "Winner", "Play", "Hands", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCSettle), global::Proto3.MsgNCSettle.Parser, new[]{ "Mid", "Data", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCFinish), global::Proto3.MsgNCFinish.Parser, new[]{ "Mid", "Play", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNStats), global::Proto3.MsgCNStats.Parser, new[]{ "Mid", "Key", "Value" }, null, null, null)
           }));
@@ -1504,6 +1505,7 @@ namespace Proto3 {
     public achv_t(achv_t other) : this() {
       type_ = other.type_;
       name_ = other.name_;
+      key_ = other.key_;
       value_ = other.value_;
     }
 
@@ -1534,8 +1536,19 @@ namespace Proto3 {
       }
     }
 
+    /// <summary>Field number for the "key" field.</summary>
+    public const int KeyFieldNumber = 3;
+    private int key_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Key {
+      get { return key_; }
+      set {
+        key_ = value;
+      }
+    }
+
     /// <summary>Field number for the "value" field.</summary>
-    public const int ValueFieldNumber = 3;
+    public const int ValueFieldNumber = 4;
     private int value_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int Value {
@@ -1560,6 +1573,7 @@ namespace Proto3 {
       }
       if (Type != other.Type) return false;
       if (Name != other.Name) return false;
+      if (Key != other.Key) return false;
       if (Value != other.Value) return false;
       return true;
     }
@@ -1569,6 +1583,7 @@ namespace Proto3 {
       int hash = 1;
       if (Type != 0) hash ^= Type.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
+      if (Key != 0) hash ^= Key.GetHashCode();
       if (Value != 0) hash ^= Value.GetHashCode();
       return hash;
     }
@@ -1588,8 +1603,12 @@ namespace Proto3 {
         output.WriteRawTag(18);
         output.WriteString(Name);
       }
-      if (Value != 0) {
+      if (Key != 0) {
         output.WriteRawTag(24);
+        output.WriteInt32(Key);
+      }
+      if (Value != 0) {
+        output.WriteRawTag(32);
         output.WriteInt32(Value);
       }
     }
@@ -1602,6 +1621,9 @@ namespace Proto3 {
       }
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (Key != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Key);
       }
       if (Value != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Value);
@@ -1619,6 +1641,9 @@ namespace Proto3 {
       }
       if (other.Name.Length != 0) {
         Name = other.Name;
+      }
+      if (other.Key != 0) {
+        Key = other.Key;
       }
       if (other.Value != 0) {
         Value = other.Value;
@@ -1642,6 +1667,10 @@ namespace Proto3 {
             break;
           }
           case 24: {
+            Key = input.ReadInt32();
+            break;
+          }
+          case 32: {
             Value = input.ReadInt32();
             break;
           }
@@ -2658,10 +2687,13 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public game_data_t(game_data_t other) : this() {
+      Player = other.player_ != null ? other.Player.Clone() : null;
       hands_ = other.hands_.Clone();
       discards_ = other.discards_.Clone();
       bunch_ = other.bunch_.Clone();
       selectedCard_ = other.selectedCard_;
+      win_ = other.win_;
+      winby_ = other.winby_.Clone();
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2669,10 +2701,21 @@ namespace Proto3 {
       return new game_data_t(this);
     }
 
+    /// <summary>Field number for the "player" field.</summary>
+    public const int PlayerFieldNumber = 1;
+    private global::Proto3.player_t player_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.player_t Player {
+      get { return player_; }
+      set {
+        player_ = value;
+      }
+    }
+
     /// <summary>Field number for the "hands" field.</summary>
-    public const int HandsFieldNumber = 1;
+    public const int HandsFieldNumber = 2;
     private static readonly pb::FieldCodec<int> _repeated_hands_codec
-        = pb::FieldCodec.ForInt32(10);
+        = pb::FieldCodec.ForInt32(18);
     private readonly pbc::RepeatedField<int> hands_ = new pbc::RepeatedField<int>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<int> Hands {
@@ -2680,9 +2723,9 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "discards" field.</summary>
-    public const int DiscardsFieldNumber = 2;
+    public const int DiscardsFieldNumber = 3;
     private static readonly pb::FieldCodec<int> _repeated_discards_codec
-        = pb::FieldCodec.ForInt32(18);
+        = pb::FieldCodec.ForInt32(26);
     private readonly pbc::RepeatedField<int> discards_ = new pbc::RepeatedField<int>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<int> Discards {
@@ -2690,9 +2733,9 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "bunch" field.</summary>
-    public const int BunchFieldNumber = 3;
+    public const int BunchFieldNumber = 4;
     private static readonly pb::FieldCodec<global::Proto3.bunch_t> _repeated_bunch_codec
-        = pb::FieldCodec.ForMessage(26, global::Proto3.bunch_t.Parser);
+        = pb::FieldCodec.ForMessage(34, global::Proto3.bunch_t.Parser);
     private readonly pbc::RepeatedField<global::Proto3.bunch_t> bunch_ = new pbc::RepeatedField<global::Proto3.bunch_t>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Proto3.bunch_t> Bunch {
@@ -2700,14 +2743,44 @@ namespace Proto3 {
     }
 
     /// <summary>Field number for the "selected_card" field.</summary>
-    public const int SelectedCardFieldNumber = 4;
+    public const int SelectedCardFieldNumber = 5;
     private int selectedCard_;
+    /// <summary>
+    /// default or selected card at startup
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int SelectedCard {
       get { return selectedCard_; }
       set {
         selectedCard_ = value;
       }
+    }
+
+    /// <summary>Field number for the "win" field.</summary>
+    public const int WinFieldNumber = 6;
+    private int win_;
+    /// <summary>
+    /// win sequence,minus means lose
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Win {
+      get { return win_; }
+      set {
+        win_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "winby" field.</summary>
+    public const int WinbyFieldNumber = 7;
+    private static readonly pb::FieldCodec<int> _repeated_winby_codec
+        = pb::FieldCodec.ForInt32(58);
+    private readonly pbc::RepeatedField<int> winby_ = new pbc::RepeatedField<int>();
+    /// <summary>
+    /// others were win by me
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<int> Winby {
+      get { return winby_; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2723,20 +2796,26 @@ namespace Proto3 {
       if (ReferenceEquals(other, this)) {
         return true;
       }
+      if (!object.Equals(Player, other.Player)) return false;
       if(!hands_.Equals(other.hands_)) return false;
       if(!discards_.Equals(other.discards_)) return false;
       if(!bunch_.Equals(other.bunch_)) return false;
       if (SelectedCard != other.SelectedCard) return false;
+      if (Win != other.Win) return false;
+      if(!winby_.Equals(other.winby_)) return false;
       return true;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override int GetHashCode() {
       int hash = 1;
+      if (player_ != null) hash ^= Player.GetHashCode();
       hash ^= hands_.GetHashCode();
       hash ^= discards_.GetHashCode();
       hash ^= bunch_.GetHashCode();
       if (SelectedCard != 0) hash ^= SelectedCard.GetHashCode();
+      if (Win != 0) hash ^= Win.GetHashCode();
+      hash ^= winby_.GetHashCode();
       return hash;
     }
 
@@ -2747,24 +2826,40 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output) {
+      if (player_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Player);
+      }
       hands_.WriteTo(output, _repeated_hands_codec);
       discards_.WriteTo(output, _repeated_discards_codec);
       bunch_.WriteTo(output, _repeated_bunch_codec);
       if (SelectedCard != 0) {
-        output.WriteRawTag(32);
+        output.WriteRawTag(40);
         output.WriteInt32(SelectedCard);
       }
+      if (Win != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Win);
+      }
+      winby_.WriteTo(output, _repeated_winby_codec);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public int CalculateSize() {
       int size = 0;
+      if (player_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Player);
+      }
       size += hands_.CalculateSize(_repeated_hands_codec);
       size += discards_.CalculateSize(_repeated_discards_codec);
       size += bunch_.CalculateSize(_repeated_bunch_codec);
       if (SelectedCard != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SelectedCard);
       }
+      if (Win != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Win);
+      }
+      size += winby_.CalculateSize(_repeated_winby_codec);
       return size;
     }
 
@@ -2773,12 +2868,22 @@ namespace Proto3 {
       if (other == null) {
         return;
       }
+      if (other.player_ != null) {
+        if (player_ == null) {
+          player_ = new global::Proto3.player_t();
+        }
+        Player.MergeFrom(other.Player);
+      }
       hands_.Add(other.hands_);
       discards_.Add(other.discards_);
       bunch_.Add(other.bunch_);
       if (other.SelectedCard != 0) {
         SelectedCard = other.SelectedCard;
       }
+      if (other.Win != 0) {
+        Win = other.Win;
+      }
+      winby_.Add(other.winby_);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2789,22 +2894,38 @@ namespace Proto3 {
           default:
             input.SkipLastField();
             break;
-          case 10:
-          case 8: {
-            hands_.AddEntriesFrom(input, _repeated_hands_codec);
+          case 10: {
+            if (player_ == null) {
+              player_ = new global::Proto3.player_t();
+            }
+            input.ReadMessage(player_);
             break;
           }
           case 18:
           case 16: {
+            hands_.AddEntriesFrom(input, _repeated_hands_codec);
+            break;
+          }
+          case 26:
+          case 24: {
             discards_.AddEntriesFrom(input, _repeated_discards_codec);
             break;
           }
-          case 26: {
+          case 34: {
             bunch_.AddEntriesFrom(input, _repeated_bunch_codec);
             break;
           }
-          case 32: {
+          case 40: {
             SelectedCard = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            Win = input.ReadInt32();
+            break;
+          }
+          case 58:
+          case 56: {
+            winby_.AddEntriesFrom(input, _repeated_winby_codec);
             break;
           }
         }
@@ -9112,9 +9233,7 @@ namespace Proto3 {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public MsgNCSettle(MsgNCSettle other) : this() {
       mid_ = other.mid_;
-      winner_ = other.winner_;
-      play_ = other.play_.Clone();
-      hands_ = other.hands_.Clone();
+      data_ = other.data_.Clone();
       result_ = other.result_;
     }
 
@@ -9134,39 +9253,18 @@ namespace Proto3 {
       }
     }
 
-    /// <summary>Field number for the "winner" field.</summary>
-    public const int WinnerFieldNumber = 2;
-    private int winner_;
+    /// <summary>Field number for the "data" field.</summary>
+    public const int DataFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::Proto3.game_data_t> _repeated_data_codec
+        = pb::FieldCodec.ForMessage(18, global::Proto3.game_data_t.Parser);
+    private readonly pbc::RepeatedField<global::Proto3.game_data_t> data_ = new pbc::RepeatedField<global::Proto3.game_data_t>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Winner {
-      get { return winner_; }
-      set {
-        winner_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "play" field.</summary>
-    public const int PlayFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Proto3.player_t> _repeated_play_codec
-        = pb::FieldCodec.ForMessage(26, global::Proto3.player_t.Parser);
-    private readonly pbc::RepeatedField<global::Proto3.player_t> play_ = new pbc::RepeatedField<global::Proto3.player_t>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto3.player_t> Play {
-      get { return play_; }
-    }
-
-    /// <summary>Field number for the "hands" field.</summary>
-    public const int HandsFieldNumber = 4;
-    private static readonly pb::FieldCodec<global::Proto3.bunch_t> _repeated_hands_codec
-        = pb::FieldCodec.ForMessage(34, global::Proto3.bunch_t.Parser);
-    private readonly pbc::RepeatedField<global::Proto3.bunch_t> hands_ = new pbc::RepeatedField<global::Proto3.bunch_t>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto3.bunch_t> Hands {
-      get { return hands_; }
+    public pbc::RepeatedField<global::Proto3.game_data_t> Data {
+      get { return data_; }
     }
 
     /// <summary>Field number for the "result" field.</summary>
-    public const int ResultFieldNumber = 5;
+    public const int ResultFieldNumber = 3;
     private global::Proto3.pb_enum result_ = 0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public global::Proto3.pb_enum Result {
@@ -9190,9 +9288,7 @@ namespace Proto3 {
         return true;
       }
       if (Mid != other.Mid) return false;
-      if (Winner != other.Winner) return false;
-      if(!play_.Equals(other.play_)) return false;
-      if(!hands_.Equals(other.hands_)) return false;
+      if(!data_.Equals(other.data_)) return false;
       if (Result != other.Result) return false;
       return true;
     }
@@ -9201,9 +9297,7 @@ namespace Proto3 {
     public override int GetHashCode() {
       int hash = 1;
       if (Mid != 0) hash ^= Mid.GetHashCode();
-      if (Winner != 0) hash ^= Winner.GetHashCode();
-      hash ^= play_.GetHashCode();
-      hash ^= hands_.GetHashCode();
+      hash ^= data_.GetHashCode();
       if (Result != 0) hash ^= Result.GetHashCode();
       return hash;
     }
@@ -9219,14 +9313,9 @@ namespace Proto3 {
         output.WriteRawTag(8);
         output.WriteEnum((int) Mid);
       }
-      if (Winner != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Winner);
-      }
-      play_.WriteTo(output, _repeated_play_codec);
-      hands_.WriteTo(output, _repeated_hands_codec);
+      data_.WriteTo(output, _repeated_data_codec);
       if (Result != 0) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(24);
         output.WriteEnum((int) Result);
       }
     }
@@ -9237,11 +9326,7 @@ namespace Proto3 {
       if (Mid != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
       }
-      if (Winner != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Winner);
-      }
-      size += play_.CalculateSize(_repeated_play_codec);
-      size += hands_.CalculateSize(_repeated_hands_codec);
+      size += data_.CalculateSize(_repeated_data_codec);
       if (Result != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
       }
@@ -9256,11 +9341,7 @@ namespace Proto3 {
       if (other.Mid != 0) {
         Mid = other.Mid;
       }
-      if (other.Winner != 0) {
-        Winner = other.Winner;
-      }
-      play_.Add(other.play_);
-      hands_.Add(other.hands_);
+      data_.Add(other.data_);
       if (other.Result != 0) {
         Result = other.Result;
       }
@@ -9278,19 +9359,11 @@ namespace Proto3 {
             mid_ = (global::Proto3.pb_msg) input.ReadEnum();
             break;
           }
-          case 16: {
-            Winner = input.ReadInt32();
+          case 18: {
+            data_.AddEntriesFrom(input, _repeated_data_codec);
             break;
           }
-          case 26: {
-            play_.AddEntriesFrom(input, _repeated_play_codec);
-            break;
-          }
-          case 34: {
-            hands_.AddEntriesFrom(input, _repeated_hands_codec);
-            break;
-          }
-          case 40: {
+          case 24: {
             result_ = (global::Proto3.pb_enum) input.ReadEnum();
             break;
           }

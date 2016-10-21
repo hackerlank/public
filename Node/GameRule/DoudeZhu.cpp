@@ -220,10 +220,10 @@ bool DoudeZhu::settle(Game& game){
     //broadcast
     MsgNCSettle msg;
     msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    msg.set_winner(pos);
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto hand=msg.add_hands();
-        hand->mutable_pawns()->CopyFrom(game.players[i]->gameData.hands());
+    for(int i=0,ii=MaxPlayer();i!=ii;++i){
+        auto play=msg.mutable_data(i);
+        play->set_win(i==pos?1:0);
+        play->mutable_hands()->CopyFrom(game.players[i]->gameData.hands());
         //auto player=msg.add_play();
     }
     
