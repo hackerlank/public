@@ -121,15 +121,12 @@ public class PaohuziPanel : GamePanel {
 	
 	bool showHints(int card,bool bDraw){
 		var player=Main.Instance.MainPlayer;
-		var hands=new int[player.gameData.Hands.Count];
-		player.gameData.Hands.CopyTo(hands,0);
-
 		var bunch=new bunch_t();
 		bunch.Pos=(bDraw?player.pos:player.pos+1);
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(card);
 
-		_hints=Rule.Hint(player,hands,bunch);
+		_hints=Rule.Hint(player,bunch);
 
 		//show/hide buttons
 		//GameObject[] btns=new GameObject[]{BtnA3,BtnA4,BtnWin};

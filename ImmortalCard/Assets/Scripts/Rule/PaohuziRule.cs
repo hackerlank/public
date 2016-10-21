@@ -33,10 +33,11 @@ public class PaohuziRule: GameRule {
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
-		if(player==null||hands==null||src_bunch==null||hands.Length<=0)
+		var hands=player.gameData.Hands;
+		if(player==null||src_bunch==null||hands.Count<=0)
 			return hints;
 
 		int pos=player.pos;

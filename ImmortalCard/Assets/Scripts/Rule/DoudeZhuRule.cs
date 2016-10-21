@@ -33,9 +33,10 @@ public class DoudeZhuRule: GameRule {
 			Hands[1].Add(Pile[i]);
 	}
 
-	public override List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		var hints=new List<bunch_t>();
-		if(hands!=null&&src_bunch!=null&&hands.Length>0){
+		var hands=player.gameData.Hands;
+		if(src_bunch!=null&&hands.Count>0){
 			var H=Historical.Count;
 			if(H<=0){
 				var b=new bunch_t();

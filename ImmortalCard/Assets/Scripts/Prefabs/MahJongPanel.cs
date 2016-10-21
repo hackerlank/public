@@ -141,15 +141,12 @@ public class MahJongPanel : GamePanel {
 	
 	bool showHints(int card,bool bDraw,bool startup=false){
 		var player=Main.Instance.MainPlayer;
-		var hands=new int[player.gameData.Hands.Count];
-		player.gameData.Hands.CopyTo(hands,0);
-
 		var bunch=new bunch_t();
 		bunch.Pos=(bDraw?player.pos:(player.pos+1)%maxPlayer);
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(card);
 
-		_hints=Rule.Hint(player,hands,bunch);
+		_hints=Rule.Hint(player,bunch);
 
 		//show/hide buttons
 		foreach(var b in _hints){

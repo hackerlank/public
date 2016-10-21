@@ -57,9 +57,7 @@ public class DoudeZhuPanel : GamePanel {
 				if(bunch.Type==pb_enum.OpPass&&Rule.Historical.Count>=2)
 					bunch=Rule.Historical[Rule.Historical.Count-2];
 			}
-			var hands=new int[player.gameData.Hands.Count];
-			player.gameData.Hands.CopyTo(hands,0);
-			_hints=Rule.Hint(player,hands,bunch);
+			_hints=Rule.Hint(player,bunch);
 		}
 
 		if(_hints.Count>0){

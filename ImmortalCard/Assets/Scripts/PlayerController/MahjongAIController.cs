@@ -36,9 +36,7 @@ public class MahjongAIController:PlayerController{
 				omsgMeld.Mid=pb_msg.MsgCnMeld;
 				
 				bunch_t bunch=null;
-				var hands=new int[player.gameData.Hands.Count];
-				player.gameData.Hands.CopyTo(hands,0);
-				var hints=Main.Instance.gameController.Rule.Hint(player,hands,msgDiscard.Bunch);
+				var hints=Main.Instance.gameController.Rule.Hint(player,msgDiscard.Bunch);
 				if(hints.Count>0)
 					bunch=hints[0];
 				else{
@@ -92,9 +90,7 @@ public class MahjongAIController:PlayerController{
 				bunch.Pos=player.pos;
 				bunch.Pawns.Add(msgDraw.Card);
 
-				var hands=new int[player.gameData.Hands.Count];
-				player.gameData.Hands.CopyTo(hands,0);
-				var hints=Main.Instance.gameController.Rule.Hint(player,hands,bunch);
+				var hints=Main.Instance.gameController.Rule.Hint(player,bunch);
 				if(hints.Count>0)
 					bunch=hints[0];
 				else{

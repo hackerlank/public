@@ -33,10 +33,11 @@ public class MahJongRule: GameRule {
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,int[] hands,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
-		if(player==null||hands==null||src_bunch==null||hands.Length<=0)
+		var hands=player.gameData.Hands;
+		if(player==null||src_bunch==null||hands.Count<=0)
 			return hints;
 
 		int pos=player.pos;
@@ -142,7 +143,7 @@ public class MahJongRule: GameRule {
 
 		List<int> cards=new List<int>();
 		cards.AddRange(hands);
-		cards.Add(id);
+		cards.Add(card);
 		cards.Sort(Main.Instance.gameController.Rule.comparision);
 
 		var len=cards.Count;
