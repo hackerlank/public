@@ -6,7 +6,7 @@ using Proto3;
 public class PaohuziRule: GameRule {
 
 	public override int MaxCards{get{return 80;}}
-	public override int MaxPlayer{get{return 4;}}
+	public override int MaxPlayer{get{return 3;}}
 
 	protected override void deal(MsgNCStart msg){
 		int id=0;

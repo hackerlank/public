@@ -46,7 +46,7 @@ int Paohuzi::Type(){
 }
 
 int Paohuzi::MaxPlayer(){
-    return 4;
+    return 3;
 }
 
 int Paohuzi::maxCards(){
@@ -54,7 +54,7 @@ int Paohuzi::maxCards(){
 }
 
 int Paohuzi::maxHands(){
-    return 14;
+    return 20;
 }
 
 int Paohuzi::bottom(){

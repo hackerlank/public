@@ -61,6 +61,14 @@ public class MahJongPanel : GamePanel {
 		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
 		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
 		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
+
+		//check natural win
+		var player=Main.Instance.MainPlayer;
+		var hands=player.gameData.Hands;
+		var last=hands[hands.Count-1];
+		hands.RemoveAt(hands.Count-1);
+		showHints(last,true,true);
+		hands.Add(last);
 	}
 
 	List<bunch_t> _hints=null;
@@ -131,27 +139,26 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 	
-	bool showHints(int card,bool bDraw){
+	bool showHints(int card,bool bDraw,bool startup=false){
 		var player=Main.Instance.MainPlayer;
 		var hands=new int[player.gameData.Hands.Count];
 		player.gameData.Hands.CopyTo(hands,0);
 
 		var bunch=new bunch_t();
-		bunch.Pos=(bDraw?player.pos:player.pos+1);
+		bunch.Pos=(bDraw?player.pos:(player.pos+1)%maxPlayer);
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(card);
 
 		_hints=Rule.Hint(player,hands,bunch);
 
 		//show/hide buttons
-		if(_hints.Count>0)BtnPass.SetActive(true);
 		foreach(var b in _hints){
 			switch(b.Type){
 			case pb_enum.BunchAaa:
-				BtnA3.SetActive(true);
+				if(!startup)BtnA3.SetActive(true);
 				break;
 			case pb_enum.BunchAaaa:
-				BtnA4.SetActive(true);
+				if(!startup)BtnA4.SetActive(true);
 				break;
 			case pb_enum.BunchWin:
 				BtnWin.SetActive(true);
@@ -160,6 +167,7 @@ public class MahJongPanel : GamePanel {
 				break;
 			}
 		}
+		if(_hints.Count>0&&(!startup||BtnWin.activeSelf))BtnPass.SetActive(true);
 
 		return _hints.Count>0;
 	}

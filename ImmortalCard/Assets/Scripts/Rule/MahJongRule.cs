@@ -55,7 +55,7 @@ public class MahJongRule: GameRule {
 
 		//game over
 		List<bunch_t> output=new List<bunch_t>();
-		if(isGameOver(player,id,output)){
+		if(IsGameOver(player,id,output)){
 			var bunch=new bunch_t();
 			bunch.Pos=pos;
 			bunch.Type=pb_enum.BunchWin;
@@ -135,19 +135,18 @@ public class MahJongRule: GameRule {
 		}
 	}
 
-	bool isGameOver(Player player,int id,List<bunch_t> output){
+	public bool IsGameOver(Player player,int card,List<bunch_t> output=null){
 		var hands=player.gameData.Hands;
-		if(hands.Count<2){
-			Debug.Log("isGameOver failed: len="+hands.Count);
+		if(hands.Count<2)
 			return false;
-		}
+
 		List<int> cards=new List<int>();
 		cards.AddRange(hands);
 		cards.Add(id);
 		cards.Sort(Main.Instance.gameController.Rule.comparision);
 
-		var len=cards.Count-1;
-		for(int i=0;i!=len;++i){
+		var len=cards.Count;
+		for(int i=0;i<len;++i){
 			var A=cards[i+0];
 			var B=cards[i+1];
 			if(A/1000==B/1000&&A%100==B%100){
@@ -162,24 +161,45 @@ public class MahJongRule: GameRule {
 	
 	bool isGameOverWithoutAA(List<int> cards){
 		var len=cards.Count;
-		if(len%3!=0){
-			//Debug.Log("isGameOverWithoutAA failed: len=%lu\n",len);
+		if(len%3!=0)
 			return false;
-		}
-		
-		for(int i=0,ii=len/3;i!=ii;++i){
+
+		int i=0;
+		while(i<len){
+			//next 3 continuous cards
 			var A=cards[i+0];
 			var B=cards[i+1];
 			var C=cards[i+2];
-			if(A/1000!=B/1000||A/1000!=C/1000){
-				//Debug.Log("isGameOverWithoutAA failed: color\n");
-				return false;
+			
+			if(A/1000 == B/1000 && A/1000 == C/1000){
+				//same color
+				A%=100;B%=100;C%=100;
+				
+				if((A+1==B && B+1==C) || (A==B && A==C)){
+					//great values
+					i+=3;
+					continue;
+				}else if(i+6<=len){
+					//next 6 continuous cards
+					var D=cards[i+3];
+					var E=cards[i+4];
+					var F=cards[i+5];
+					
+					if(D/1000 == E/1000 && D/1000 == F/1000){
+						//same color
+						D%=100;E%=100;F%=100;
+						if(A==B && C==D && E==F && B+1==C && D+1==E){
+							//great values
+							i+=6;
+							continue;
+						}
+					}
+				}
 			}
-			if(!((A%100+1==B%100&&A%100+2==C%100)||(A%100==B%100&&A%100==C%100))){
-				//Debug.Log("isGameOverWithoutAA failed: invalid pattern\n");
-				return false;
-			}
+			//other wise
+			return false;
 		}
+		
 		return true;
 	}
 

@@ -464,23 +464,43 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
 
 bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     auto len=cards.size();
-    if(len%3!=0){
-        //KEYE_LOG("isGameOverWithoutAA failed: len=%lu\n",len);
+    if(len%3!=0)
         return false;
-    }
     
-    for(size_t i=0,ii=len/3;i!=ii;++i){
+    size_t i=0;
+    while(i<len){
+        //next 3 continuous cards
         auto A=cards[i+0];
         auto B=cards[i+1];
         auto C=cards[i+2];
-        if(A/1000!=B/1000||A/1000!=C/1000){
-            //KEYE_LOG("isGameOverWithoutAA failed: color\n");
-            return false;
+        
+        if(A/1000 == B/1000 && A/1000 == C/1000){
+            //same color
+            A%=100;B%=100;C%=100;
+            
+            if((A+1==B && B+1==C) || (A==B && A==C)){
+                //great values
+                i+=3;
+                continue;
+            }else if(i+6<=len){
+                //next 6 continuous cards
+                auto D=cards[i+3];
+                auto E=cards[i+4];
+                auto F=cards[i+5];
+                
+                if(D/1000 == E/1000 && D/1000 == F/1000){
+                    //same color
+                    D%=100;E%=100;F%=100;
+                    if(A==B && C==D && E==F && B+1==C && D+1==E){
+                        //great values
+                        i+=6;
+                        continue;
+                    }
+                }
+            }
         }
-        if(!((A%100+1==B%100&&A%100+2==C%100)||(A%100==B%100&&A%100==C%100))){
-            //KEYE_LOG("isGameOverWithoutAA failed: invalid pattern\n");
-            return false;
-        }
+        //other wise
+        return false;
     }
     
     return true;
