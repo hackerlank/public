@@ -9,14 +9,13 @@
 #ifndef DoudeZhu_h
 #define DoudeZhu_h
 
-class DoudeZhu: public GameRule{
+class DoudeZhu: public DiscardGame{
 public:
     virtual void        Tick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
 
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
-    virtual void        OnMeld(Player&,const proto3::bunch_t&){};
     
     static void         test();
 protected:
@@ -29,12 +28,10 @@ protected:
     
     virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
     virtual bool        settle(Game&);
-    virtual bool        isGameOver(Game&);
 private:
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
     void                log(Game&){}
-    void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
 };
 
 #endif /* DoudeZhu_h */

@@ -94,6 +94,14 @@ void GameRule::deal(Game& game){
     game.pendingDiscard->bunch.set_pos(game.token);
 }
 
+bool GameRule::isGameOver(Game& game){
+    for(auto player:game.players){
+        if(player->playData.hands().size()<=0)
+            return true;
+    }
+    return false;
+}
+
 void GameRule::OnReady(Player& player){
     if(auto game=player.game){
         if(player.ready)return;
@@ -202,6 +210,13 @@ const char* GameRule::cards2str(std::string& str,const google::protobuf::Repeate
         str+=buf;
     }
     return str.c_str();
+}
+
+void GameRule::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
+    bunch.mutable_pawns()->Clear();
+    for(auto id:vals){
+        bunch.mutable_pawns()->Add(id);
+    }
 }
 
 void parseCardsByString(std::vector<int>& o,std::string& line){

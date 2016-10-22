@@ -24,6 +24,8 @@ typedef unsigned game_id_t;
 #include "Player.h"
 #include "Game.h"
 #include "GameRule.h"
+#include "GameRule/DiscardGame.h"
+#include "GameRule/MeldGame.h"
 #include "GameRule/DoudeZhu.h"
 #include "GameRule/Mahjong.h"
 #include "GameRule/Paohuzi.h"

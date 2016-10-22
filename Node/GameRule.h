@@ -33,7 +33,7 @@ protected:
     
     virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;
     virtual bool        settle(Game&)=0;
-    virtual bool        isGameOver(Game&)=0;
+    virtual bool        isGameOver(Game&);
     
     virtual void        deal(Game&);
     void                changeState(Game&,Game::State);
@@ -43,6 +43,8 @@ protected:
     const char*         bunch2str(std::string&,const proto3::bunch_t&);
     const char*         cards2str(std::string&,const google::protobuf::RepeatedField<int>&);
     void                logHands(Game&,uint32,std::string="");
+    
+    void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
 };
 
 #endif /* GameRule_h */

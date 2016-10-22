@@ -13,6 +13,8 @@
 		5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46E11D7E744500465098 /* GameRule.cpp */; };
 		5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */; };
 		5E4D46FD1D7F828B00465098 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E4D46FB1D7F828B00465098 /* Player.cpp */; };
+		5E5E84121DBB528600C62C7B /* DiscardGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5E84111DBB528600C62C7B /* DiscardGame.cpp */; };
+		5E5E84151DBB52AD00C62C7B /* MeldGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5E84141DBB52AD00C62C7B /* MeldGame.cpp */; };
 		5E7EB9F81DAF8D9800E6B115 /* Paohuzi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E7EB9F61DAF8D9800E6B115 /* Paohuzi.cpp */; };
 		5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E8A17421D71E71600CDCE1D /* Node.cpp */; };
 		5EEEA7981D67A19B00630485 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */; };
@@ -46,6 +48,10 @@
 		5E4D46F91D7EA73800465098 /* DoudeZhu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoudeZhu.h; sourceTree = "<group>"; };
 		5E4D46FB1D7F828B00465098 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		5E4D46FC1D7F828B00465098 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		5E5E84111DBB528600C62C7B /* DiscardGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiscardGame.cpp; sourceTree = "<group>"; };
+		5E5E84131DBB52A100C62C7B /* DiscardGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscardGame.h; sourceTree = "<group>"; };
+		5E5E84141DBB52AD00C62C7B /* MeldGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeldGame.cpp; sourceTree = "<group>"; };
+		5E5E84161DBB52BE00C62C7B /* MeldGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeldGame.h; sourceTree = "<group>"; };
 		5E7EB9F61DAF8D9800E6B115 /* Paohuzi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Paohuzi.cpp; sourceTree = "<group>"; };
 		5E7EB9F71DAF8D9800E6B115 /* Paohuzi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paohuzi.h; sourceTree = "<group>"; };
 		5E8A17421D71E71600CDCE1D /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
@@ -105,6 +111,10 @@
 		5E4D46F71D7EA73800465098 /* GameRule */ = {
 			isa = PBXGroup;
 			children = (
+				5E5E84111DBB528600C62C7B /* DiscardGame.cpp */,
+				5E5E84131DBB52A100C62C7B /* DiscardGame.h */,
+				5E5E84141DBB52AD00C62C7B /* MeldGame.cpp */,
+				5E5E84161DBB52BE00C62C7B /* MeldGame.h */,
 				5E4D46F81D7EA73800465098 /* DoudeZhu.cpp */,
 				5E4D46F91D7EA73800465098 /* DoudeZhu.h */,
 				5E7EB9F61DAF8D9800E6B115 /* Paohuzi.cpp */,
@@ -171,6 +181,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E5E84151DBB52AD00C62C7B /* MeldGame.cpp in Sources */,
+				5E5E84121DBB528600C62C7B /* DiscardGame.cpp in Sources */,
 				5E4D46E31D7E744500465098 /* GameRule.cpp in Sources */,
 				5E8A17451D71E71600CDCE1D /* Node.cpp in Sources */,
 				5E4D46FA1D7EA73800465098 /* DoudeZhu.cpp in Sources */,

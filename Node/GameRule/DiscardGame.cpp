@@ -1,5 +1,5 @@
 //
-//  DoudeZhu.cpp
+//  DiscardGame.cpp
 //  Node
 //
 //  Created by Vic Liu on 9/6/16.
@@ -26,7 +26,7 @@ inline uint32 inverseTransformValue(uint32 val){
     else             return val;
 }
 
-void DoudeZhu::Tick(Game& game){
+void DiscardGame::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
             if(Ready(game)){
@@ -55,41 +55,7 @@ void DoudeZhu::Tick(Game& game){
     }
 }
 
-int DoudeZhu::Type(){
-    return pb_enum::GAME_DDZ;
-}
-
-int DoudeZhu::MaxPlayer(){
-    return 3;
-}
-
-int DoudeZhu::maxCards(){
-    return 54;
-}
-
-int DoudeZhu::maxHands(){
-    return 17;
-}
-
-int DoudeZhu::bottom(){
-    return 3;
-}
-
-void DoudeZhu::initCard(Game& game){
-    //id: [color-index-value]
-    for(int i=1;i<=13;++i){     //value: A-K => 1-13
-        for(int j=1;j<=4;++j){  //color: clubs,diamonds,hearts,spades => 1-4
-            unit_id_t id=j*1000+transformValue(i);
-            game.pile.push_back(id);
-        }
-    }
-    for(int j=1;j<=2;++j){      //Joker(color 1,2) => 14,15
-        unit_id_t id=j*1000+transformValue(13+j);
-        game.pile.push_back(id);
-    }
-}
-
-void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
+void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     MsgNCDiscard omsg;
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
     omsg.set_result(pb_enum::ERR_FAILED);
@@ -209,7 +175,7 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
         player.send(omsg);
 }
 
-bool DoudeZhu::settle(Game& game){
+bool DiscardGame::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto& gd=game.players[i]->playData;
@@ -239,7 +205,7 @@ bool DoudeZhu::settle(Game& game){
     return false;
 }
 
-bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
+bool DiscardGame::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
     //C(17,8) = 24310; C(17,2) = 136
     auto& hands=game.players[pos]->playData.hands();
     auto& bunch=*bunches.Add();
@@ -247,7 +213,7 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
     
     //sort cards
     std::vector<uint32> ids(hands.begin(),hands.end());
-    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,std::placeholders::_1,std::placeholders::_2));
+    std::sort(ids.begin(),ids.end(),std::bind(&DiscardGame::comparision,this,std::placeholders::_1,std::placeholders::_2));
 
     std::vector<uint> ids_;
     auto H=game.historical.size();
@@ -371,10 +337,10 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
     }
 }
 
-pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
+pb_enum DiscardGame::verifyBunch(bunch_t& bunch){
     //sort cards
     std::vector<uint32> ids(bunch.pawns().begin(),bunch.pawns().end());
-    std::sort(ids.begin(),ids.end(),std::bind(&DoudeZhu::comparision,this,std::placeholders::_1,std::placeholders::_2));
+    std::sort(ids.begin(),ids.end(),std::bind(&DiscardGame::comparision,this,std::placeholders::_1,std::placeholders::_2));
 
     auto len=ids.size();
     auto bt=pb_enum::BUNCH_INVALID;
@@ -529,19 +495,11 @@ pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     return bt;
 }
 
-bool DoudeZhu::validId(uint id){
-    auto color=id/1000;
-    if(color<1||color>4)return false;
-    auto value=id%100;
-    if(value<1||value>transformValue(15))return false;
-    return true;
-}
-
-bool DoudeZhu::comparision(uint x,uint y){
+bool DiscardGame::comparision(uint x,uint y){
     return x%100<y%100;
 }
 
-bool DoudeZhu::compareBunch(bunch_t& bunch,bunch_t& hist){
+bool DiscardGame::compareBunch(bunch_t& bunch,bunch_t& hist){
     //rule win
     auto win=false;
     auto bt=bunch.type();
@@ -606,22 +564,3 @@ bool DoudeZhu::compareBunch(bunch_t& bunch,bunch_t& hist){
     //KEYE_LOG("compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
     return win;
 }
-
-void DoudeZhu::test(){
-    DoudeZhu ddz;
-    Game game;
-    ddz.deal(game);
-    proto3::bunch_t A,B;
-    A.set_pos(0);
-    B.set_pos(1);
-    std::vector<uint> va{5,6,7,8,9};
-    std::vector<uint> vb{4,5,6,7,8};
-    ddz.make_bunch(A,va);
-    ddz.make_bunch(B,vb);
-    
-    ddz.verifyBunch(A);
-    ddz.verifyBunch(B);
-    ddz.compareBunch(A,B);
-}
-
-

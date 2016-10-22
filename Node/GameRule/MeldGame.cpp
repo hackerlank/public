@@ -1,5 +1,5 @@
 //
-//  Mahjong.cpp
+//  MeldGame.cpp
 //  Node
 //
 //  Created by Vic Liu on 9/6/16.
@@ -10,7 +10,7 @@
 #include "NodeFwd.h"
 using namespace proto3;
 
-void Mahjong::Tick(Game& game){
+void MeldGame::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
             if(Ready(game)){
@@ -41,44 +41,7 @@ void Mahjong::Tick(Game& game){
     }
 }
 
-int Mahjong::Type(){
-    return pb_enum::GAME_MJ;
-}
-
-int Mahjong::MaxPlayer(){
-    return 4;
-}
-
-int Mahjong::maxCards(){
-    return 108;
-}
-
-int Mahjong::maxHands(){
-    return 13;
-}
-
-int Mahjong::bottom(){
-    return 1;
-}
-
-void Mahjong::deal(Game& game){
-    GameRule::deal(game);
-    for(auto p:game.players)p->engaged=false;
-}
-
-void Mahjong::initCard(Game& game){
-    //id: [color-index-value]
-    for(int j=1;j<=3;++j){          //Tong,Suo,Wan => 1-3
-        for(int i=1;i<=9;++i){      //1-9
-            for(int k=0;k<4;++k){   //xxxx
-                unit_id_t id=j*1000+k*100+i;
-                game.pile.push_back(id);
-            }
-        }
-    }
-}
-
-void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
+void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     MsgNCDiscard omsg;
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
     omsg.set_result(pb_enum::ERR_FAILED);
@@ -164,7 +127,7 @@ void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
     player.send(omsg);
 }
 
-void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
+void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     auto pos=player.pos;
     auto spgame=player.game;
     if(!spgame){
@@ -240,7 +203,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     for(auto& p:pendingMeld)if(p.arrived)++ready;
     if(ready>=pendingMeld.size()){
         //sort
-        std::sort(pendingMeld.begin(),pendingMeld.end(),std::bind(&Mahjong::comparePending,this,std::placeholders::_1,std::placeholders::_2));
+        std::sort(pendingMeld.begin(),pendingMeld.end(),std::bind(&MeldGame::comparePending,this,std::placeholders::_1,std::placeholders::_2));
         
         //priority
         auto& front=pendingMeld.front();
@@ -354,7 +317,7 @@ void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     }//if(ready>=queue.size())
 }
 
-void Mahjong::draw(Game& game){
+void MeldGame::draw(Game& game){
     changePos(game,game.token+1);
     auto player=game.players[game.token];
     auto card=game.pile.back();
@@ -386,7 +349,11 @@ void Mahjong::draw(Game& game){
     }
 }
 
-bool Mahjong::settle(Game& game){
+bool MeldGame::isNaturalWin(Game& game,pos_t pos){
+    return false;
+}
+
+bool MeldGame::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto& gd=game.players[i]->playData;
@@ -422,7 +389,7 @@ bool Mahjong::settle(Game& game){
     return false;
 }
 
-bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
+bool MeldGame::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
     auto player=game.players[pos];
     auto& hands=player->playData.hands();
     if(hands.size()<2){
@@ -432,7 +399,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
     std::vector<unit_id_t> cards;
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
     cards.push_back(id);
-    auto sorter=std::bind(&Mahjong::comparision,this,std::placeholders::_1,std::placeholders::_2);
+    auto sorter=std::bind(&MeldGame::comparision,this,std::placeholders::_1,std::placeholders::_2);
     std::sort(cards.begin(),cards.end(),sorter);
     
     auto len=cards.size()-1;
@@ -450,7 +417,7 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
     return false;
 }
 
-bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
+bool MeldGame::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     auto len=cards.size();
     if(len%3!=0)
         return false;
@@ -494,87 +461,7 @@ bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     return true;
 }
 
-bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
-    //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
-    if(src_bunch.pawns_size()!=1){
-        KEYE_LOG("hint wrong cards len=%d,pos=%d\n",src_bunch.pawns_size(),pos);
-        return false;
-    }
-    auto id=src_bunch.pawns(0);
-    auto A=id;
-    auto& player=*game.players[pos];
-    auto& hands=player.playData.hands();
-    
-    //default color check
-    if(A/1000==player.playData.selected_card()){
-        KEYE_LOG("hint default color,pos=%d\n",pos);
-        return false;
-    }
-    
-    //game over
-    std::vector<bunch_t> output;
-    if(isGameOver(game,pos,id,output)){
-        auto bunch=bunches.Add();
-        bunch->set_pos(pos);
-        bunch->set_type(pb_enum::BUNCH_WIN);
-        bunch->mutable_pawns()->Add(id);
-    }
-
-    //select color
-    std::vector<unit_id_t> sel;
-    for(auto hand:hands){
-        auto B=hand;
-        if(B/1000==A/1000&&B%100==A%100)
-            sel.push_back(hand);
-    }
-    auto len=sel.size();
-    if(len>=2){
-        if(len>=3){
-            //BUNCH_AAAA
-            auto bunch=bunches.Add();
-            bunch->set_pos(pos);
-            bunch->set_type(pb_enum::BUNCH_AAAA);
-            for(int i=0;i<3;++i)bunch->add_pawns(sel[i]);
-            bunch->add_pawns(id);
-        }
-        if(src_bunch.pos()!=pos){
-            //BUNCH_AAA, not for self
-            auto bunch=bunches.Add();
-            bunch->set_pos(pos);
-            bunch->set_type(pb_enum::BUNCH_AAA);
-            for(int i=0;i<2;++i)bunch->add_pawns(sel[i]);
-            bunch->add_pawns(id);
-        }
-    }else if(game.pileMap.find(id)!=game.pileMap.end()){
-        for(auto melt:player.playData.bunch()){
-            if(melt.type()==pb_enum::BUNCH_AAA){
-                auto C=melt.pawns(0);
-                if(C/1000==A/1000&&C%100==A%100){
-                    //BUNCH_AAAA
-                    auto bunch=bunches.Add();
-                    bunch->set_pos(pos);
-                    bunch->set_type(pb_enum::BUNCH_AAAA);
-                    bunch->mutable_pawns()->CopyFrom(melt.pawns());
-                    bunch->add_pawns(id);
-                    break;
-                }
-            }
-        }
-    }
-    
-    auto count=bunches.size();
-    if(count>0){
-        std::string str,ss;
-        for(auto& bunch:bunches){
-            bunch2str(ss,bunch);
-            str+=ss;
-        }
-        KEYE_LOG("hint %d,pos=%d,%s\n",count,pos,str.c_str());
-    }
-    return count>0;
-}
-
-pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
+pb_enum MeldGame::verifyBunch(Game& game,bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     switch (bunch.type()) {
         case pb_enum::BUNCH_A:
@@ -609,7 +496,7 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
     return bt;
 }
 
-bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
+bool MeldGame::verifyDiscard(Game& game,bunch_t& bunch){
     if(bunch.pawns_size()!=1)
         return false;
     auto& gdata=game.players[bunch.pos()]->playData;
@@ -625,15 +512,7 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     return true;
 }
 
-bool Mahjong::validId(uint id){
-    auto color=id/1000;
-    if(color<1||color>4)return false;
-    auto value=id%100;
-    if(value<1||value>9)return false;
-    return true;
-}
-
-bool Mahjong::comparision(uint x,uint y){
+bool MeldGame::comparision(uint x,uint y){
     auto cx=x/1000;
     auto cy=y/1000;
     if(cx<cy)return true;
@@ -641,26 +520,8 @@ bool Mahjong::comparision(uint x,uint y){
     else return false;
 }
 
-bool Mahjong::comparePending(Game::pending_t& x,Game::pending_t& y){
+bool MeldGame::comparePending(Game::pending_t& x,Game::pending_t& y){
     auto a=(int)x.bunch.type();
     auto b=(int)y.bunch.type();
     return a>b;
 }
-
-void Mahjong::test(){
-    Mahjong ddz;
-    Game game;
-    ddz.deal(game);
-    proto3::bunch_t A,B;
-    A.set_pos(0);
-    B.set_pos(1);
-    std::vector<uint> va{5,6,7,8,9};
-    std::vector<uint> vb{4,5,6,7,8};
-    ddz.make_bunch(A,va);
-    ddz.make_bunch(B,vb);
-    
-    ddz.verifyBunch(game,A);
-    ddz.verifyBunch(game,B);
-}
-
-

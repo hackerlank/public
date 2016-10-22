@@ -319,7 +319,7 @@ void Paohuzi::OnMeld(Player& player,const proto3::bunch_t& curr){
                 //discard pass to draw,don't do it immediately!
                 needDraw=true;
             }
-        }else if(isGameOver(game))
+        }else if(GameRule::isGameOver(game))
             changeState(game,Game::State::ST_SETTLE);
         else //A,AAA,AAAA
             changeState(game,Game::State::ST_DISCARD);
@@ -409,14 +409,6 @@ bool Paohuzi::settle(Game& game){
             p->lastMsg=std::make_shared<MsgNCFinish>(fin);
         }
         return true;
-    }
-    return false;
-}
-
-bool Paohuzi::isGameOver(Game& game){
-    for(auto player:game.players){
-        if(player->playData.hands().size()<=0)
-            return true;
     }
     return false;
 }
@@ -922,13 +914,6 @@ bool Paohuzi::comparePending(Game::pending_t& x,Game::pending_t& y){
     auto a=(int)x.bunch.type();
     auto b=(int)y.bunch.type();
     return a>b;
-}
-
-void Paohuzi::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
-    bunch.mutable_pawns()->Clear();
-    for(auto id:vals){
-        bunch.mutable_pawns()->Add(id);
-    }
 }
 int Paohuzi::winPoint(Game&,proto3::pb_enum){
     return 1;

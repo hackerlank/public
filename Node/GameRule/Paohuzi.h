@@ -9,7 +9,7 @@
 #ifndef Paohuzi_h
 #define Paohuzi_h
 
-class Paohuzi: public GameRule{
+class Paohuzi: public MeldGame{
 public:
     virtual void        Tick(Game&);
     virtual int         Type();
@@ -29,7 +29,6 @@ protected:
     
     virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
     virtual bool        settle(Game&);
-    virtual bool        isGameOver(Game&);
 private:
     //is game over with melt card
     bool                isGameOver(Game&,pos_t,unit_id_t,std::vector<proto3::bunch_t>&);
@@ -40,7 +39,6 @@ private:
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
     bool                comparePending(Game::pending_t& x,Game::pending_t& y);
     void                log(Game&){}
-    void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
     bool				isNaturalWin(Game&,pos_t);
     void				draw(Game& game);
     
