@@ -128,7 +128,7 @@ enum pb_enum {
   BUNCH_AAAAB = 15,
   BUNCH_AAAB = 16,
   BUNCH_ABC = 17,
-  PHZ_AA = 18,
+  PHZ_AA = 12,
   PHZ_ABC = 18,
   PHZ_AbA = 19,
   PHZ_BBB = 20,

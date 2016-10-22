@@ -143,7 +143,7 @@ namespace Proto3 {
             "DhILCgdPUF9QQVNTEAASDgoKT1BfRElTQ0FSRBABEhEKDUJVTkNIX0lOVkFM",
             "SUQQChILCgdCVU5DSF9BEAsSDAoIQlVOQ0hfQUEQDBINCglCVU5DSF9BQUEQ",
             "DRIOCgpCVU5DSF9BQUFBEA4SDwoLQlVOQ0hfQUFBQUIQDxIOCgpCVU5DSF9B",
-            "QUFCEBASDQoJQlVOQ0hfQUJDEBESCgoGUEhaX0FBEBISCwoHUEhaX0FCQxAS",
+            "QUFCEBASDQoJQlVOQ0hfQUJDEBESCgoGUEhaX0FBEAwSCwoHUEhaX0FCQxAS",
             "EgsKB1BIWl9BYkEQExILCgdQSFpfQkJCEBQSCwoHUEhaX0FBQRAVEg4KClBI",
             "Wl9BQUF3ZWkQFhIPCgtQSFpfQUFBY2hvdRAXEg0KCVBIWl9CQkJfQhAYEhAK",
             "DFBIWl9CQkJCZGVzaxAZEhAKDFBIWl9BQUFBZGVzaxAaEgwKCFBIWl9BQUFB",
@@ -360,7 +360,7 @@ namespace Proto3 {
     /// <summary>
     /// jiang
     /// </summary>
-    [pbr::OriginalName("PHZ_AA")] PhzAa = 18,
+    [pbr::OriginalName("PHZ_AA")] PhzAa = 12,
     /// <summary>
     /// ju
     /// </summary>
@@ -6514,7 +6514,7 @@ namespace Proto3 {
         = pb::FieldCodec.ForMessage(26, global::Proto3.key_value.Parser);
     private readonly pbc::RepeatedField<global::Proto3.key_value> option_ = new pbc::RepeatedField<global::Proto3.key_value>();
     /// <summary>
-    /// anti               =1;rounds
+    /// anti,rounds
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Proto3.key_value> Option {

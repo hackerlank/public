@@ -47,71 +47,37 @@ void Mahjong::initCard(Game& game){
     }
 }
 
-pb_enum Mahjong::meld(Game& game,pos_t where,unit_id_t card,proto3::bunch_t& bunch){
-    auto ret=pb_enum::SUCCEESS;
-    auto& pendingMeld=game.pendingMeld;
-    auto isDraw=(pendingMeld.size()==1);
-    auto& who=*game.players[where];
-    switch(bunch.type()){
-        case pb_enum::BUNCH_WIN:{
-            std::vector<bunch_t> output;
-            if(isGameOver(game,where,card,output)){
-                who.playData.clear_hands();
-            }
-            break;
-        }
-        case pb_enum::OP_PASS:
-            //handle pass, ensure token
-            if(isDraw)
-                bunch.set_pos(game.token);
-            else
-                bunch.set_pos(-1);
-            break;
-        case pb_enum::BUNCH_INVALID:
-            //invalid
-            KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",where);
-            ret=pb_enum::BUNCH_INVALID;
-            break;
-        case pb_enum::BUNCH_A:
-            //collect after draw
-            who.playData.mutable_hands()->Add(card);
-            //pending discard
-            game.pendingDiscard=std::make_shared<Game::pending_t>();
-            game.pendingDiscard->bunch.set_pos(where);
-            //remove from pile map
-            game.pileMap.erase(card);
-            break;
-        default:{
-            //verify
-            auto old_ops=bunch.type();
-            auto result=verifyBunch(game,*(bunch_t*)&bunch);
-            if(result==pb_enum::BUNCH_INVALID){
-                std::string str;
-                KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
-                ret=pb_enum::BUNCH_INVALID;
-            }else{
-                //erase from hands
-                auto& hands=*who.playData.mutable_hands();
-                for(auto j:bunch.pawns()){
-                    for(auto i=hands.begin();i!=hands.end();++i){
-                        if(j==*i){
-                            //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
-                            hands.erase(i);
-                            break;
-                        }
-                    }
+void Mahjong::meld(Game& game,pos_t pos,unit_id_t card,proto3::bunch_t& bunch){
+    auto ret=bunch.type();
+    auto& player=*game.players[pos];
+    if(ret==pb_enum::BUNCH_A){
+        //collect after draw
+        player.playData.mutable_hands()->Add(card);
+        //pending discard
+        game.pendingDiscard=std::make_shared<Game::pending_t>();
+        game.pendingDiscard->bunch.set_pos(pos);
+        //remove from pile map
+        game.pileMap.erase(card);
+    }else{
+        //erase from hands
+        auto& hands=*player.playData.mutable_hands();
+        for(auto j:bunch.pawns()){
+            for(auto i=hands.begin();i!=hands.end();++i){
+                if(j==*i){
+                    //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
+                    hands.erase(i);
+                    break;
                 }
-                //then meld
-                auto h=who.playData.add_bunch();
-                h->CopyFrom(bunch);
-                //pending discard
-                game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(where);
-                changePos(game,where);
-            }//meld
-        }//default
-    }//switch
-    return ret;
+            }
+        }
+        //then meld
+        auto h=player.playData.add_bunch();
+        h->CopyFrom(bunch);
+        //pending discard
+        game.pendingDiscard=std::make_shared<Game::pending_t>();
+        game.pendingDiscard->bunch.set_pos(pos);
+        changePos(game,pos);
+    }
 }
 
 bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){

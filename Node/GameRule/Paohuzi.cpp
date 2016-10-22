@@ -48,10 +48,26 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
-pb_enum Paohuzi::meld(Game& game,pos_t where,unit_id_t card,proto3::bunch_t& bunch){
-    auto ret=pb_enum::SUCCEESS;
-    //auto& pendingMeld=game.pendingMeld;
-    return ret;
+void Paohuzi::meld(Game& game,pos_t pos,unit_id_t card,proto3::bunch_t& bunch){
+    auto& player=*game.players[pos];
+    //erase from hands
+    auto& hands=*player.playData.mutable_hands();
+    for(auto j:bunch.pawns()){
+        for(auto i=hands.begin();i!=hands.end();++i){
+            if(j==*i){
+                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
+                hands.erase(i);
+                break;
+            }
+        }
+    }
+    //then meld
+    auto h=player.playData.add_bunch();
+    h->CopyFrom(bunch);
+    //pending discard
+    game.pendingDiscard=std::make_shared<Game::pending_t>();
+    game.pendingDiscard->bunch.set_pos(pos);
+    changePos(game,pos);
 }
 
 bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3::bunch_t>& output){
@@ -502,33 +518,75 @@ bool Paohuzi::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
 
 pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
-    switch (bunch.type()) {
-        case pb_enum::BUNCH_A:
-            if(bunch.pawns_size()==1)
-                bt=bunch.type();
-            break;
-        case pb_enum::BUNCH_AAA:
+    auto type=fixOps(bunch.type());
+    switch(type) {
+        case pb_enum::PHZ_AAA:
+        case pb_enum::PHZ_AAAwei:
+        case pb_enum::PHZ_AAAchou:
+        case pb_enum::PHZ_BBB:
             if(bunch.pawns_size()==3){
                 auto A=bunch.pawns(0);
                 auto B=bunch.pawns(1);
                 auto C=bunch.pawns(2);
-                if(A/1000==B/1000&&A/1000==C/1000&&
-                   A%100==B%100&&A%100==C%100)
+                if(A/1000==B/1000 && A/1000==C/1000 &&
+                   A%100==B%100 && A%100==C%100)
                     bt=bunch.type();
             }
             break;
-        case pb_enum::BUNCH_AAAA:
+        case pb_enum::PHZ_AAAA:
+        case pb_enum::PHZ_AAAAstart:
+        case pb_enum::PHZ_AAAAdesk:
+        case pb_enum::PHZ_BBB_B:
+        case pb_enum::PHZ_BBBBdesk:
             if(bunch.pawns_size()==4){
                 auto A=bunch.pawns(0);
                 auto B=bunch.pawns(1);
                 auto C=bunch.pawns(2);
                 auto D=bunch.pawns(3);
-                if(A/1000==B/1000&&A/1000==C/1000&&A/1000==D/1000&&
-                   A%100==B%100&&A%100==C%100&&A%100==D%100)
+                if(A/1000==B/1000 && A/1000==C/1000 && A/1000==D/1000 &&
+                   A%100==B%100 && A%100==C%100 && A%100==D%100)
                     bt=bunch.type();
             }
             break;
+        case pb_enum::PHZ_ABC:
+            if(bunch.pawns_size()==3){
+                std::vector<unit_id_t> cards;
+                std::copy(bunch.pawns().begin(),bunch.pawns().end(),std::back_inserter(cards));
+                auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
+                std::sort(cards.begin(),cards.end(),sorter);
+
+                auto A=cards[0];
+                auto B=cards[1];
+                auto C=cards[2];
+                if(A/1000==B/1000 && A/1000==C/1000 &&
+                   ((A%100+1==B%100 && A%100+2==C%100) ||
+                    (A%100==2 && B%100==7 && C%100==10)))
+                    bt=bunch.type();
+            }
+            break;
+        case pb_enum::PHZ_AbA:
+            if(bunch.pawns_size()==3){
+                auto A=bunch.pawns(0);
+                auto B=bunch.pawns(1);
+                auto C=bunch.pawns(2);
+                if(A%100==B%100 && A%100==C%100 &&
+                    !(A/1000==B/1000 && A/1000==C/1000))
+                    bt=bunch.type();
+            }
+            break;
+        case pb_enum::PHZ_AA:
+            if(bunch.pawns_size()==2){
+                auto A=bunch.pawns(0);
+                auto B=bunch.pawns(1);
+                if(A/1000==B/1000 && A%100==B%100)
+                    bt=bunch.type();
+            }
+            break;
+        case pb_enum::OP_PASS:
+            bt=bunch.type();
+            break;
         default:
+            //invalid
             break;
     }
     bunch.set_type(bt);

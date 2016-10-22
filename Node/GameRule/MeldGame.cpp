@@ -211,33 +211,65 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto where=bunch.pos();
 
         //ok,verify
-        MsgNCMeld msg;
-        msg.set_mid(pb_msg::MSG_NC_MELD);
-        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
-
-        auto isDraw=game.pileMap.find(card)!=game.pileMap.end();
-        //maybe Mahjong use: auto isDraw=(pendingMeld.size()==1);
-        auto ret=meld(game,where,card,bunch);
-        msg.set_result(ret);
+        auto old_ops=bunch.type();
+        auto result=verifyBunch(game,bunch);
+        auto ret=pb_enum::SUCCEESS;
+        
+        //first deal as pass while invalid
+        if(result==pb_enum::BUNCH_INVALID){
+            std::string str;
+            KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,pos);
+            //result=pb_enum::BUNCH_INVALID;
+            result=pb_enum::OP_PASS;
+            ret=pb_enum::BUNCH_INVALID;
+        }
+        
+        auto needDraw=false;
+        auto isDraw=(pendingMeld.size()==1);
+        switch(result){
+            case pb_enum::BUNCH_WIN:{
+                std::vector<bunch_t> output;
+                if(isGameOver(game,pos,card,output)){
+                    player.playData.clear_hands();
+                    if(GameRule::isGameOver(game))
+                        changeState(game,Game::State::ST_SETTLE);
+                }else{
+                    changeState(game,Game::State::ST_DISCARD);
+                    ret=pb_enum::ERR_FAILED;
+                }
+                break;
+            }
+            case pb_enum::OP_PASS:
+                //handle pass, ensure token
+                if(isDraw){
+                    bunch.set_pos(game.token);
+                    //draw pass to discard
+                    //KEYE_LOG("OnMeld pass to discard\n");
+                    changeState(game,Game::State::ST_DISCARD);
+                    //pending discard
+                    game.pendingDiscard=std::make_shared<Game::pending_t>();
+                    game.pendingDiscard->bunch.set_pos(game.token);
+                }else{
+                    bunch.set_pos(-1);
+                    //discard pass to draw,don't do it immediately!
+                    needDraw=true;
+                }
+                break;
+            case pb_enum::BUNCH_INVALID:
+                //checked already
+                break;
+            default:
+                //meld or do some specials
+                meld(game,where,card,bunch);
+                //A,AAA,AAAA
+                changeState(game,Game::State::ST_DISCARD);
+        }
 
         //change state before send message
-        auto needDraw=false;
-        if(bunch.type()==pb_enum::OP_PASS){
-            if(isDraw){
-                //draw pass to discard
-                //KEYE_LOG("OnMeld pass to discard\n");
-                changeState(game,Game::State::ST_DISCARD);
-                //pending discard
-                game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(game.token);
-            }else{
-                //discard pass to draw,don't do it immediately!
-                needDraw=true;
-            }
-        }else if(GameRule::isGameOver(game))
-            changeState(game,Game::State::ST_SETTLE);
-        else //A,AAA,AAAA
-            changeState(game,Game::State::ST_DISCARD);
+        MsgNCMeld msg;
+        msg.set_mid(pb_msg::MSG_NC_MELD);
+        msg.set_result(ret);
+        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
         msg.mutable_bunch()->CopyFrom(bunch);
         
         //clear after copy

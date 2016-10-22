@@ -32,7 +32,7 @@ protected:
     //is game over against cards without AA
     bool                    isGameOverWithoutAA(std::vector<unit_id_t>&);
 
-    virtual proto3::pb_enum meld(Game& game,pos_t,unit_id_t,proto3::bunch_t&);
+    virtual void            meld(Game& game,pos_t,unit_id_t,proto3::bunch_t&);
 private:
     virtual void            deal(Game&);
 };

@@ -28,7 +28,7 @@ protected:
 
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;
 
-    virtual proto3::pb_enum meld(Game& game,pos_t,unit_id_t,proto3::bunch_t&)=0;
+    virtual void            meld(Game& game,pos_t,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
     virtual bool            isNaturalWin(Game&,pos_t);
 };
