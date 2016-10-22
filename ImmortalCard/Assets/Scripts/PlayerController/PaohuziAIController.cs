@@ -17,7 +17,7 @@ public class PaohuziAIController:PlayerController{
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
 			if(player.pos==msgEngage.Pos)
-				player.gameData.SelectedCard=msgEngage.Key;
+				player.playData.SelectedCard=msgEngage.Key;
 
 		}else if(msg is MsgNCStart){
 			//var msgStart=msg as MsgNCStart;
@@ -33,7 +33,7 @@ public class PaohuziAIController:PlayerController{
 			if(player.pos==msgDiscard.Bunch.Pos){
 				//remove from hands
 				foreach(var card in msgDiscard.Bunch.Pawns)
-					player.gameData.Hands.Remove(card);
+					player.playData.Hands.Remove(card);
 			}else{
 				//meld only for others
 				var omsgMeld=new MsgCNMeld();
@@ -64,13 +64,13 @@ public class PaohuziAIController:PlayerController{
 			if(player.pos==msgMeld.Bunch.Pos){
 				//remove from hands
 				foreach(var card in msgMeld.Bunch.Pawns)
-					player.gameData.Hands.Remove(card);
+					player.playData.Hands.Remove(card);
 
 				//discard
-				var discard=player.gameData.Hands[0];
-				foreach(var hand in player.gameData.Hands){
+				var discard=player.playData.Hands[0];
+				foreach(var hand in player.playData.Hands){
 					//huazhu
-					if(hand/1000==player.gameData.SelectedCard/1000){
+					if(hand/1000==player.playData.SelectedCard/1000){
 						discard=hand;
 						break;
 					}

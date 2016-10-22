@@ -39,7 +39,7 @@ public class MahJongPanel : GamePanel {
 	override protected void onMsgEngage(MsgNCEngage msg){
 		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 		foreach(var btn in btns)btn.SetActive(false);
-		Main.Instance.MainPlayer.gameData.SelectedCard=msg.Key;
+		Main.Instance.MainPlayer.playData.SelectedCard=msg.Key;
 	}
 
 	override protected void onMsgStart(){
@@ -64,7 +64,7 @@ public class MahJongPanel : GamePanel {
 
 		//check natural win
 		var player=Main.Instance.MainPlayer;
-		var hands=player.gameData.Hands;
+		var hands=player.playData.Hands;
 		var last=hands[hands.Count-1];
 		hands.RemoveAt(hands.Count-1);
 		showHints(last,true,true);

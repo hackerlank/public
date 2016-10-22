@@ -17,7 +17,7 @@ public class MahjongAIController:PlayerController{
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
 			if(player.pos==msgEngage.Pos)
-				player.gameData.SelectedCard=msgEngage.Key;
+				player.playData.SelectedCard=msgEngage.Key;
 
 		}else if(msg is MsgNCStart){
 			//var msgStart=msg as MsgNCStart;
@@ -61,10 +61,10 @@ public class MahjongAIController:PlayerController{
 				Main.Instance.gameController.Rule.Meld(player,msgMeld.Bunch);
 
 				//discard
-				var discard=player.gameData.Hands[0];
-				foreach(var hand in player.gameData.Hands){
+				var discard=player.playData.Hands[0];
+				foreach(var hand in player.playData.Hands){
 					//huazhu
-					if(hand/1000==player.gameData.SelectedCard/1000){
+					if(hand/1000==player.playData.SelectedCard/1000){
 						discard=hand;
 						break;
 					}

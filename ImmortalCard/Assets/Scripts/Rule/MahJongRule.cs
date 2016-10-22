@@ -36,7 +36,7 @@ public class MahJongRule: GameRule {
 	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
-		var hands=player.gameData.Hands;
+		var hands=player.playData.Hands;
 		if(player==null||src_bunch==null||hands.Count<=0)
 			return hints;
 
@@ -49,7 +49,7 @@ public class MahJongRule: GameRule {
 		var A=id;
 
 		//default color check
-		if(A/1000==player.gameData.SelectedCard){
+		if(A/1000==player.playData.SelectedCard){
 			Debug.Log("hint default color,pos="+pos);
 			return hints;
 		}
@@ -93,7 +93,7 @@ public class MahJongRule: GameRule {
 			}
 		}else if(src_bunch.Pos==pos){
 			//BUNCH_AAAA, only for self
-			foreach(var melt in player.gameData.Bunch){
+			foreach(var melt in player.playData.Bunch){
 				if(melt.Type==pb_enum.BunchAaa){
 					var C=melt.Pawns[0];
 					if(C/1000==A/1000&&C%100==A%100){
@@ -124,20 +124,20 @@ public class MahJongRule: GameRule {
 		switch(bunch.Type){
 		case pb_enum.BunchA:
 			foreach(var card in bunch.Pawns)
-				player.gameData.Hands.Add(card);
+				player.playData.Hands.Add(card);
 			break;
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
 			foreach(var card in bunch.Pawns){
-				player.gameData.Hands.Remove(card);
-				player.gameData.Bunch.Add(bunch);
+				player.playData.Hands.Remove(card);
+				player.playData.Bunch.Add(bunch);
 			}
 			break;
 		}
 	}
 
 	public bool IsGameOver(Player player,int card,List<bunch_t> output=null){
-		var hands=player.gameData.Hands;
+		var hands=player.playData.Hands;
 		if(hands.Count<2)
 			return false;
 
@@ -212,7 +212,7 @@ public class MahJongRule: GameRule {
 		}
 		if(bunch.Pawns.Count<=0)return false;
 
-		var gdata=player.gameData;
+		var gdata=player.playData;
 		var B=gdata.SelectedCard;
 		var A=bunch.Pawns[0];
 		if(A/1000!=B/1000){
@@ -248,7 +248,7 @@ public class MahJongRule: GameRule {
 		int key=20;
 		int I=0;
 		int[] count=new int[3];
-		foreach(var card in player.gameData.Hands)count[card/1000-1]++;
+		foreach(var card in player.playData.Hands)count[card/1000-1]++;
 		for(int i=0;i<3;++i){
 			if(key>count[i]){
 				key=count[i];

@@ -16,7 +16,7 @@ public class Player {
 	public List<PlayerController>	controllers=new List<PlayerController>();
 	public int				gameId=0;
 	public int				pos=0;
-	public game_data_t		gameData=new game_data_t();
+	public play_t			playData=new play_t();
 
 
 	public MsgNCCreate	msgNCCreate;
@@ -140,14 +140,14 @@ public class Player {
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){
 				//clear player data
-				gameData.Hands.Clear();
-				gameData.Discards.Clear();
-				gameData.Bunch.Clear();
-				gameData.SelectedCard=-1;
+				playData.Hands.Clear();
+				playData.Discards.Clear();
+				playData.Bunch.Clear();
+				playData.SelectedCard=-1;
 				//copy data
 				msg=msgStart;
 				pos=msgStart.Pos;
-				gameData.Hands.AddRange(msgStart.Hands);
+				playData.Hands.AddRange(msgStart.Hands);
 				var str="deal "+pos+":";
 				foreach(var hand in msgStart.Hands)str+=hand+",";
 				Debug.Log(str);
@@ -167,7 +167,7 @@ public class Player {
 				//remove discards from hands
 				if(pos==msgDiscard.Bunch.Pos){
 					foreach(var card in msgDiscard.Bunch.Pawns)
-						gameData.Hands.Remove(card);
+						playData.Hands.Remove(card);
 				}
 				msg=msgDiscard;
 			}else
