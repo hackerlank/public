@@ -209,74 +209,16 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto& front=pendingMeld.front();
         auto& bunch=front.bunch;
         auto where=bunch.pos();
-        auto& who=*game.players[where];
 
         //ok,verify
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
-        msg.set_result(pb_enum::SUCCEESS);
         KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
 
-        auto isDraw=(pendingMeld.size()==1);
-        switch(bunch.type()){
-            case pb_enum::BUNCH_WIN:{
-                std::vector<bunch_t> output;
-                if(isGameOver(game,where,card,output)){
-                    who.playData.clear_hands();
-                }
-                break;
-            }
-            case pb_enum::OP_PASS:
-                //handle pass, ensure token
-                if(isDraw)
-                    bunch.set_pos(game.token);
-                else
-                    bunch.set_pos(-1);
-                break;
-            case pb_enum::BUNCH_INVALID:
-                //invalid
-                KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",where);
-                msg.set_result(pb_enum::BUNCH_INVALID);
-                break;
-            case pb_enum::BUNCH_A:
-                //collect after draw
-                who.playData.mutable_hands()->Add(card);
-                //pending discard
-                game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(where);
-                //remove from pile map
-                game.pileMap.erase(card);
-                break;
-            default:{
-                //verify
-                auto old_ops=bunch.type();
-                auto result=verifyBunch(game,*(bunch_t*)&bunch);
-                if(result==pb_enum::BUNCH_INVALID){
-                    std::string str;
-                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
-                    msg.set_result(pb_enum::BUNCH_INVALID);
-                }else{
-                    //erase from hands
-                    auto& hands=*who.playData.mutable_hands();
-                    for(auto j:bunch.pawns()){
-                        for(auto i=hands.begin();i!=hands.end();++i){
-                            if(j==*i){
-                                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
-                                hands.erase(i);
-                                break;
-                            }
-                        }
-                    }
-                    //then meld
-                    auto h=who.playData.add_bunch();
-                    h->CopyFrom(bunch);
-                    //pending discard
-                    game.pendingDiscard=std::make_shared<Game::pending_t>();
-                    game.pendingDiscard->bunch.set_pos(where);
-                    changePos(game,where);
-                }//meld
-            }//default
-        }//switch
+        auto isDraw=game.pileMap.find(card)!=game.pileMap.end();
+        //maybe Mahjong use: auto isDraw=(pendingMeld.size()==1);
+        auto ret=meld(game,where,card,bunch);
+        msg.set_result(ret);
 
         //change state before send message
         auto needDraw=false;
@@ -351,129 +293,6 @@ void MeldGame::draw(Game& game){
 
 bool MeldGame::isNaturalWin(Game& game,pos_t pos){
     return false;
-}
-
-bool MeldGame::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
-    auto player=game.players[pos];
-    auto& hands=player->playData.hands();
-    if(hands.size()<2){
-        KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
-        return false;
-    }
-    std::vector<unit_id_t> cards;
-    std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
-    cards.push_back(id);
-    auto sorter=std::bind(&MeldGame::comparision,this,std::placeholders::_1,std::placeholders::_2);
-    std::sort(cards.begin(),cards.end(),sorter);
-    
-    auto len=cards.size()-1;
-    for(size_t i=0;i!=len;++i){
-        auto A=cards[i+0];
-        auto B=cards[i+1];
-        if(A/1000==B/1000&&A%100==B%100){
-            std::vector<unit_id_t> tmp;
-            for(size_t j=0;j!=cards.size();++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
-            if(isGameOverWithoutAA(tmp)){
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
-bool MeldGame::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
-    auto len=cards.size();
-    if(len%3!=0)
-        return false;
-    
-    size_t i=0;
-    while(i<len){
-        //next 3 continuous cards
-        auto A=cards[i+0];
-        auto B=cards[i+1];
-        auto C=cards[i+2];
-        
-        if(A/1000 == B/1000 && A/1000 == C/1000){
-            //same color
-            A%=100;B%=100;C%=100;
-            
-            if((A+1==B && B+1==C) || (A==B && A==C)){
-                //great values
-                i+=3;
-                continue;
-            }else if(i+6<=len){
-                //next 6 continuous cards
-                auto D=cards[i+3];
-                auto E=cards[i+4];
-                auto F=cards[i+5];
-                
-                if(D/1000 == E/1000 && D/1000 == F/1000){
-                    //same color
-                    D%=100;E%=100;F%=100;
-                    if(A==B && C==D && E==F && B+1==C && D+1==E){
-                        //great values
-                        i+=6;
-                        continue;
-                    }
-                }
-            }
-        }
-        //other wise
-        return false;
-    }
-    
-    return true;
-}
-
-pb_enum MeldGame::verifyBunch(Game& game,bunch_t& bunch){
-    auto bt=pb_enum::BUNCH_INVALID;
-    switch (bunch.type()) {
-        case pb_enum::BUNCH_A:
-            if(bunch.pawns_size()==1)
-                bt=bunch.type();
-            break;
-        case pb_enum::BUNCH_AAA:
-            if(bunch.pawns_size()==3){
-                auto A=bunch.pawns(0);
-                auto B=bunch.pawns(1);
-                auto C=bunch.pawns(2);
-                if(A/1000==B/1000&&A/1000==C/1000&&
-                   A%100==B%100&&A%100==C%100)
-                    bt=bunch.type();
-            }
-            break;
-        case pb_enum::BUNCH_AAAA:
-            if(bunch.pawns_size()==4){
-                auto A=bunch.pawns(0);
-                auto B=bunch.pawns(1);
-                auto C=bunch.pawns(2);
-                auto D=bunch.pawns(3);
-                if(A/1000==B/1000&&A/1000==C/1000&&A/1000==D/1000&&
-                   A%100==B%100&&A%100==C%100&&A%100==D%100)
-                    bt=bunch.type();
-            }
-            break;
-        default:
-            break;
-    }
-    bunch.set_type(bt);
-    return bt;
-}
-
-bool MeldGame::verifyDiscard(Game& game,bunch_t& bunch){
-    if(bunch.pawns_size()!=1)
-        return false;
-    auto& gdata=game.players[bunch.pos()]->playData;
-    //huazhu
-    auto B=gdata.selected_card();
-    auto A=bunch.pawns(0);
-    if(A/1000!=B/1000){
-        for(auto card:gdata.hands()){
-            if(card/1000==B/1000)
-                return false;
-        }
-    }
-    return true;
 }
 
 bool MeldGame::comparision(uint x,uint y){

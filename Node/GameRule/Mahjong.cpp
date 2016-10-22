@@ -10,37 +10,6 @@
 #include "NodeFwd.h"
 using namespace proto3;
 
-void Mahjong::Tick(Game& game){
-    switch (game.state) {
-        case Game::State::ST_WAIT:
-            if(Ready(game)){
-                changeState(game,Game::State::ST_ENGAGE);
-                deal(game);
-            }
-            break;
-        case Game::State::ST_ENGAGE:
-            if(Engaged(game))
-                changeState(game,Game::State::ST_DISCARD);
-            break;
-        case Game::State::ST_DISCARD:
-            //OnDiscard
-            break;
-        case Game::State::ST_MELD:
-            //OnMeld
-            break;
-        case Game::State::ST_SETTLE:
-            if(settle(game))
-                changeState(game,Game::State::ST_END);
-            else
-                changeState(game,Game::State::ST_WAIT);
-            break;
-        case Game::State::ST_END:
-            break;
-        default:
-            break;
-    }
-}
-
 int Mahjong::Type(){
     return pb_enum::GAME_MJ;
 }
@@ -78,226 +47,71 @@ void Mahjong::initCard(Game& game){
     }
 }
 
-void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
-    auto pos=player.pos;
-    auto spgame=player.game;
-    if(!spgame){
-        KEYE_LOG("OnMeld no game\n");
-        return;
-    }
-    auto& game=*spgame;
-    //state
-    if(game.state!=Game::State::ST_MELD){
-        KEYE_LOG("OnMeld wrong st=%d,pos=%d\n",game.state,pos);
-        return;
-    }
-    
-    //pending queue
+pb_enum Mahjong::meld(Game& game,pos_t where,unit_id_t card,proto3::bunch_t& bunch){
+    auto ret=pb_enum::SUCCEESS;
     auto& pendingMeld=game.pendingMeld;
-    if(pendingMeld.empty()){
-        KEYE_LOG("OnMeld with queue empty,pos=%d\n",pos);
-        return;
-    }
-
-    //pos
-    bool found=false;
-    int i=0;
-    for(;i<pendingMeld.size();++i)
-        if(pos==pendingMeld[i].bunch.pos()){
-            found=true;
+    auto isDraw=(pendingMeld.size()==1);
+    auto& who=*game.players[where];
+    switch(bunch.type()){
+        case pb_enum::BUNCH_WIN:{
+            std::vector<bunch_t> output;
+            if(isGameOver(game,where,card,output)){
+                who.playData.clear_hands();
+            }
             break;
         }
-    if(!found){
-        KEYE_LOG("OnMeld wrong player pos=%d\n",pos);
-        return;
-    }
-    
-    //arrived and duplicated
-    auto& pending=pendingMeld[i];
-    if(pending.arrived){
-        KEYE_LOG("OnMeld already arrived, pos=%d\n",pos);
-        return;
-    }
-    pending.arrived=true;
-
-    if(pending.bunch.pawns_size()<=0){
-        KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
-        return;
-    }
-
-    //card or just pass
-    int card=-1;
-    if(curr.type()!=pb_enum::OP_PASS){
-        if(curr.pawns().empty()){
-            KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
-            return;
-        }
-        card=*curr.pawns().rbegin();
-        
-        auto pcard=*pending.bunch.pawns().rbegin();
-        if(card!=pcard){
-            KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
-            return;
-        }
-    }
-
-    //queue in
-    std::string str;
-    //KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,curr));
-    auto ops=pending.bunch.type();
-    pending.bunch.CopyFrom(curr);
-    //restore pending ops for draw
-    if(pending.bunch.type()==pb_enum::OP_PASS)
-        pending.bunch.set_type(ops);
-    
-    int ready=0;
-    for(auto& p:pendingMeld)if(p.arrived)++ready;
-    if(ready>=pendingMeld.size()){
-        //sort
-        std::sort(pendingMeld.begin(),pendingMeld.end(),std::bind(&Mahjong::comparePending,this,std::placeholders::_1,std::placeholders::_2));
-        
-        //priority
-        auto& front=pendingMeld.front();
-        auto& bunch=front.bunch;
-        auto where=bunch.pos();
-        auto& who=*game.players[where];
-
-        //ok,verify
-        MsgNCMeld msg;
-        msg.set_mid(pb_msg::MSG_NC_MELD);
-        msg.set_result(pb_enum::SUCCEESS);
-        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
-
-        auto isDraw=(pendingMeld.size()==1);
-        switch(bunch.type()){
-            case pb_enum::BUNCH_WIN:{
-                std::vector<bunch_t> output;
-                if(isGameOver(game,where,card,output)){
-                    who.playData.clear_hands();
+        case pb_enum::OP_PASS:
+            //handle pass, ensure token
+            if(isDraw)
+                bunch.set_pos(game.token);
+            else
+                bunch.set_pos(-1);
+            break;
+        case pb_enum::BUNCH_INVALID:
+            //invalid
+            KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",where);
+            ret=pb_enum::BUNCH_INVALID;
+            break;
+        case pb_enum::BUNCH_A:
+            //collect after draw
+            who.playData.mutable_hands()->Add(card);
+            //pending discard
+            game.pendingDiscard=std::make_shared<Game::pending_t>();
+            game.pendingDiscard->bunch.set_pos(where);
+            //remove from pile map
+            game.pileMap.erase(card);
+            break;
+        default:{
+            //verify
+            auto old_ops=bunch.type();
+            auto result=verifyBunch(game,*(bunch_t*)&bunch);
+            if(result==pb_enum::BUNCH_INVALID){
+                std::string str;
+                KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
+                ret=pb_enum::BUNCH_INVALID;
+            }else{
+                //erase from hands
+                auto& hands=*who.playData.mutable_hands();
+                for(auto j:bunch.pawns()){
+                    for(auto i=hands.begin();i!=hands.end();++i){
+                        if(j==*i){
+                            //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
+                            hands.erase(i);
+                            break;
+                        }
+                    }
                 }
-                break;
-            }
-            case pb_enum::OP_PASS:
-                //handle pass, ensure token
-                if(isDraw)
-                    bunch.set_pos(game.token);
-                else
-                    bunch.set_pos(-1);
-                break;
-            case pb_enum::BUNCH_INVALID:
-                //invalid
-                KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",where);
-                msg.set_result(pb_enum::BUNCH_INVALID);
-                break;
-            case pb_enum::BUNCH_A:
-                //collect after draw
-                who.playData.mutable_hands()->Add(card);
+                //then meld
+                auto h=who.playData.add_bunch();
+                h->CopyFrom(bunch);
                 //pending discard
                 game.pendingDiscard=std::make_shared<Game::pending_t>();
                 game.pendingDiscard->bunch.set_pos(where);
-                //remove from pile map
-                game.pileMap.erase(card);
-                break;
-            default:{
-                //verify
-                auto old_ops=bunch.type();
-                auto result=verifyBunch(game,*(bunch_t*)&bunch);
-                if(result==pb_enum::BUNCH_INVALID){
-                    std::string str;
-                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
-                    msg.set_result(pb_enum::BUNCH_INVALID);
-                }else{
-                    //erase from hands
-                    auto& hands=*who.playData.mutable_hands();
-                    for(auto j:bunch.pawns()){
-                        for(auto i=hands.begin();i!=hands.end();++i){
-                            if(j==*i){
-                                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
-                                hands.erase(i);
-                                break;
-                            }
-                        }
-                    }
-                    //then meld
-                    auto h=who.playData.add_bunch();
-                    h->CopyFrom(bunch);
-                    //pending discard
-                    game.pendingDiscard=std::make_shared<Game::pending_t>();
-                    game.pendingDiscard->bunch.set_pos(where);
-                    changePos(game,where);
-                }//meld
-            }//default
-        }//switch
-
-        //change state before send message
-        auto needDraw=false;
-        if(bunch.type()==pb_enum::OP_PASS){
-            if(isDraw){
-                //draw pass to discard
-                //KEYE_LOG("OnMeld pass to discard\n");
-                changeState(game,Game::State::ST_DISCARD);
-                //pending discard
-                game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(game.token);
-            }else{
-                //discard pass to draw,don't do it immediately!
-                needDraw=true;
-            }
-        }else if(GameRule::isGameOver(game))
-            changeState(game,Game::State::ST_SETTLE);
-        else //A,AAA,AAAA
-            changeState(game,Game::State::ST_DISCARD);
-        msg.mutable_bunch()->CopyFrom(bunch);
-        
-        //clear after copy
-        game.pendingMeld.clear();
-        
-        //then send
-        for(auto p:game.players){
-            //need reply all
-            p->send(msg);
-            p->lastMsg=std::make_shared<MsgNCMeld>(msg);
-        }
-        
-        //then draw
-        if(needDraw){
-            //KEYE_LOG("OnMeld pass to draw\n");
-            draw(game);
-            changeState(game,Game::State::ST_MELD);
-        }
-    }//if(ready>=queue.size())
-}
-
-void Mahjong::draw(Game& game){
-    changePos(game,game.token+1);
-    auto player=game.players[game.token];
-    auto card=game.pile.back();
-    game.pile.pop_back();
-    KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
-
-    //game.pendingMeld.clear();
-    game.pendingMeld.push_back(Game::pending_t());
-
-    MsgNCDraw msg;
-    msg.set_mid(pb_msg::MSG_NC_DRAW);
-    msg.set_pos(game.token);
-    for(int i=0;i<MaxPlayer();++i){
-        auto p=game.players[i];
-        if(i==game.token){
-            msg.set_card(card);
-
-            //pending meld
-            auto& pending=game.pendingMeld.back();
-            pending.bunch.set_pos(game.token);
-            pending.bunch.set_type(pb_enum::BUNCH_A);   //default ops
-            pending.bunch.add_pawns(card);
-        }else{
-            msg.set_card(card);
-//            msg.set_card(-1);
-        }
-        p->send(msg);
-        p->lastMsg=std::make_shared<MsgNCDraw>(msg);
-    }
+                changePos(game,where);
+            }//meld
+        }//default
+    }//switch
+    return ret;
 }
 
 bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
@@ -326,6 +140,10 @@ bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::b
         }
     }
     return false;
+}
+
+bool Mahjong::isGameOver(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&){
+    return true;
 }
 
 bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
@@ -509,12 +327,6 @@ bool Mahjong::validId(uint id){
     auto value=id%100;
     if(value<1||value>9)return false;
     return true;
-}
-
-bool Mahjong::comparePending(Game::pending_t& x,Game::pending_t& y){
-    auto a=(int)x.bunch.type();
-    auto b=(int)y.bunch.type();
-    return a>b;
 }
 
 void Mahjong::test(){

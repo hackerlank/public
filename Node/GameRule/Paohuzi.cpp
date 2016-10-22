@@ -16,37 +16,6 @@ pb_enum fixOps(pb_enum ops){
     return ops;
 }
 
-void Paohuzi::Tick(Game& game){
-    switch (game.state) {
-        case Game::State::ST_WAIT:
-            if(Ready(game)){
-                changeState(game,Game::State::ST_ENGAGE);
-                deal(game);
-            }
-            break;
-        case Game::State::ST_ENGAGE:
-            if(Engaged(game))
-                changeState(game,Game::State::ST_DISCARD);
-            break;
-        case Game::State::ST_DISCARD:
-            //OnDiscard
-            break;
-        case Game::State::ST_MELD:
-            //OnMeld
-            break;
-        case Game::State::ST_SETTLE:
-            if(settle(game))
-                changeState(game,Game::State::ST_END);
-            else
-                changeState(game,Game::State::ST_WAIT);
-            break;
-        case Game::State::ST_END:
-            break;
-        default:
-            break;
-    }
-}
-
 int Paohuzi::Type(){
     return pb_enum::GAME_PHZ;
 }
@@ -79,302 +48,10 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
-void Paohuzi::OnDiscard(Player& player,MsgCNDiscard& msg){
-    MsgNCDiscard omsg;
-    omsg.set_mid(pb_msg::MSG_NC_DISCARD);
-    omsg.set_result(pb_enum::ERR_FAILED);
-    
-    do{
-        auto game=player.game;
-        if(!game){
-            KEYE_LOG("OnDiscard no game\n");
-            break;
-        }
-        if(game->token!=player.pos){
-            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
-            break;
-        }
-        
-        if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
-            break;
-        }
-        msg.mutable_bunch()->set_pos(player.pos);
-        
-        //cards check
-        auto card=(unit_id_t)msg.bunch().pawns(0);
-        //boundary check
-        if(!validId(card)){
-            KEYE_LOG("OnDiscard invalid cards %d\n",card);
-            break;
-        }
-
-        //shut discard after verify
-        if(!game->pendingDiscard){
-            KEYE_LOG("OnDiscard not on pending\n");
-            break;
-        }else
-            player.game->pendingDiscard.reset();
-
-        std::string str;
-        cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
-        //remove hands
-        auto& hands=*player.playData.mutable_hands();
-        for(auto j:msg.bunch().pawns()){
-            for(auto i=hands.begin();i!=hands.end();++i){
-                if(j==*i){
-                    //KEYE_LOG("OnDiscard pos=%d,erase card %d\n",player.pos,*i);
-                    hands.erase(i);
-                    break;
-                }
-            }
-        }
-        //logHands(*game,player.pos,"OnDiscard");
-        omsg.set_result(pb_enum::SUCCEESS);
-        omsg.mutable_bunch()->CopyFrom(msg.bunch());
-
-        //game->pendingMeld.clear();
-        omsg.mutable_bunch()->set_pos(player.pos);
-        
-        //ready for meld
-        changeState(*player.game,Game::State::ST_MELD);
-        //pending meld
-        for(int i=0;i<MaxPlayer();++i){
-            auto p=game->players[i];
-            if(i!=player.pos){
-                //only pending others
-                game->pendingMeld.push_back(Game::pending_t());
-                auto& pending=game->pendingMeld.back();
-                pending.bunch.set_pos(i);
-                pending.bunch.add_pawns(card);
-            }
-            p->send(omsg);
-            p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
-        }
-        
-        //historic
-        game->historical.push_back(msg.bunch());
-        return;
-    }while(false);
-    player.send(omsg);
-}
-
-void Paohuzi::OnMeld(Player& player,const proto3::bunch_t& curr){
-    auto pos=player.pos;
-    auto spgame=player.game;
-    if(!spgame){
-        KEYE_LOG("OnMeld no game\n");
-        return;
-    }
-    auto& game=*spgame;
-    //state
-    if(game.state!=Game::State::ST_MELD){
-        KEYE_LOG("OnMeld wrong st=%d,pos=%d\n",game.state,pos);
-        return;
-    }
-    
-    //pending queue
-    auto& pendingMeld=game.pendingMeld;
-    if(pendingMeld.empty()){
-        KEYE_LOG("OnMeld with queue empty,pos=%d\n",pos);
-        return;
-    }
-
-    //pos
-    bool found=false;
-    int i=0;
-    for(;i<pendingMeld.size();++i)
-        if(pos==pendingMeld[i].bunch.pos()){
-            found=true;
-            break;
-        }
-    if(!found){
-        KEYE_LOG("OnMeld wrong player pos=%d\n",pos);
-        return;
-    }
-    
-    //arrived and duplicated
-    auto& pending=pendingMeld[i];
-    if(pending.arrived){
-        KEYE_LOG("OnMeld already arrived, pos=%d\n",pos);
-        return;
-    }
-    pending.arrived=true;
-
-    if(pending.bunch.pawns_size()<=0){
-        KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
-        return;
-    }
-
-    //card or just pass
-    int card=-1;
-    if(curr.type()!=pb_enum::OP_PASS){
-        if(curr.pawns().empty()){
-            KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
-            return;
-        }
-        card=*curr.pawns().rbegin();
-        
-        auto pcard=*pending.bunch.pawns().rbegin();
-        if(card!=pcard){
-            KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
-            return;
-        }
-    }
-
-    //queue in
-    std::string str;
-    //KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,curr));
-    pending.bunch.CopyFrom(curr);
-    
-    int ready=0;
-    for(auto& p:pendingMeld)if(p.arrived)++ready;
-    if(ready>=pendingMeld.size()){
-        //sort
-        std::sort(pendingMeld.begin(),pendingMeld.end(),std::bind(&Paohuzi::comparePending,this,std::placeholders::_1,std::placeholders::_2));
-        
-        //priority
-        auto& front=pendingMeld.front();
-        auto& bunch=front.bunch;
-
-        //ok,verify
-        MsgNCMeld msg;
-        msg.set_mid(pb_msg::MSG_NC_MELD);
-        msg.set_result(pb_enum::SUCCEESS);
-        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",pos,bunch2str(str,bunch),game.token);
-
-        auto isDraw=(pendingMeld.size()==1);
-        switch(bunch.type()){
-            case pb_enum::BUNCH_WIN:{
-                std::vector<bunch_t> output;
-                if(isGameOver(game,pos,card,output)){
-                    player.playData.clear_hands();
-                }
-                break;
-            }
-            case pb_enum::OP_PASS:
-                //handle pass, ensure token
-                if(isDraw)
-                    bunch.set_pos(game.token);
-                else
-                    bunch.set_pos(-1);
-                break;
-            case pb_enum::BUNCH_INVALID:
-                //invalid
-                KEYE_LOG("OnMeld error, unknown ops, pos=%d\n",pos);
-                msg.set_result(pb_enum::BUNCH_INVALID);
-                break;
-            case pb_enum::BUNCH_A:
-                //collect after draw
-                player.playData.mutable_hands()->Add(card);
-                //pending discard
-                game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(player.pos);
-                //remove from pile map
-                game.pileMap.erase(card);
-                break;
-            default:{
-                //verify
-                auto old_ops=bunch.type();
-                auto result=verifyBunch(game,*(bunch_t*)&bunch);
-                if(result==pb_enum::BUNCH_INVALID){
-                    std::string str;
-                    KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,pos);
-                    msg.set_result(pb_enum::BUNCH_INVALID);
-                }else{
-                    //erase from hands
-                    auto& hands=*player.playData.mutable_hands();
-                    for(auto j:bunch.pawns()){
-                        for(auto i=hands.begin();i!=hands.end();++i){
-                            if(j==*i){
-                                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",player.pos,*i);
-                                hands.erase(i);
-                                break;
-                            }
-                        }
-                    }
-                    //then meld
-                    auto h=player.playData.add_bunch();
-                    h->CopyFrom(bunch);
-                    //pending discard
-                    game.pendingDiscard=std::make_shared<Game::pending_t>();
-                    game.pendingDiscard->bunch.set_pos(player.pos);
-                    changePos(game,player.pos);
-                }//meld
-            }//default
-        }//switch
-
-        //change state before send message
-        auto needDraw=false;
-        if(bunch.type()==pb_enum::OP_PASS){
-            if(isDraw){
-                //draw pass to discard
-                //KEYE_LOG("OnMeld pass to discard\n");
-                changeState(game,Game::State::ST_DISCARD);
-                //pending discard
-                game.pendingDiscard=std::make_shared<Game::pending_t>();
-                game.pendingDiscard->bunch.set_pos(game.token);
-            }else{
-                //discard pass to draw,don't do it immediately!
-                needDraw=true;
-            }
-        }else if(GameRule::isGameOver(game))
-            changeState(game,Game::State::ST_SETTLE);
-        else //A,AAA,AAAA
-            changeState(game,Game::State::ST_DISCARD);
-
-        game.pendingMeld.clear();
-
-        msg.mutable_bunch()->CopyFrom(bunch);
-        for(auto p:game.players){
-            //need reply all
-            p->send(msg);
-            p->lastMsg=std::make_shared<MsgNCMeld>(msg);
-        }
-        
-        //then draw
-        if(needDraw){
-            //KEYE_LOG("OnMeld pass to draw\n");
-            draw(game);
-            changeState(game,Game::State::ST_MELD);
-        }
-    }//if(ready>=queue.size())
-}
-
-void Paohuzi::draw(Game& game){
-    changePos(game,game.token+1);
-    auto player=game.players[game.token];
-    auto card=game.pile.back();
-    game.pile.pop_back();
-    KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
-
-    //game.pendingMeld.clear();
-    game.pendingMeld.push_back(Game::pending_t());
-
-    MsgNCDraw msg;
-    msg.set_mid(pb_msg::MSG_NC_DRAW);
-    msg.set_pos(game.token);
-    for(int i=0;i<MaxPlayer();++i){
-        auto p=game.players[i];
-        if(i==game.token){
-            msg.set_card(card);
-
-            //pending meld
-            auto& pending=game.pendingMeld.back();
-            pending.bunch.set_pos(game.token);
-            pending.bunch.add_pawns(card);
-        }else{
-            msg.set_card(card);
-//            msg.set_card(-1);
-        }
-        p->send(msg);
-        p->lastMsg=std::make_shared<MsgNCDraw>(msg);
-    }
-}
-
-bool Paohuzi::isNaturalWin(Game& game,pos_t pos){
-    return false;
+pb_enum Paohuzi::meld(Game& game,pos_t where,unit_id_t card,proto3::bunch_t& bunch){
+    auto ret=pb_enum::SUCCEESS;
+    //auto& pendingMeld=game.pendingMeld;
+    return ret;
 }
 
 bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3::bunch_t>& output){
@@ -397,7 +74,7 @@ bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3:
     auto myself=(pos==game.token);
     
     std::vector<bunch_t> allSuites(suite.begin(),suite.end());
-    std::vector<int> hand(hands.begin(),hands.end());
+    std::vector<unit_id_t> hand(hands.begin(),hands.end());
     
     logHands(game,pos);
     //是否需要将
@@ -488,7 +165,7 @@ bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3:
             std::vector<bunch_t> tmpSuites(allSuites);
             auto& jiang=*ij;
             //make a temp hand cards
-            std::vector<int> tmpHand;
+            std::vector<unit_id_t> tmpHand;
             for(auto it=hand.begin(),iend=hand.end(); it!=iend; ++it)
                 if(jiang.pawns(0)!=*it&&jiang.pawns(1)!=*it)
                     tmpHand.push_back(*it);
@@ -539,12 +216,12 @@ bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3:
     return false;
 }
 
-bool Paohuzi::isGameOver(Game& game,std::vector<int>& cards,std::vector<bunch_t>& allSuites){
+bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bunch_t>& allSuites){
     //recursive check if is game over
     std::vector<bunch_t> outSuites;
     std::vector<bunch_t> multiSuites;
     //copy hand
-    std::vector<int> _cards(cards);
+    std::vector<unit_id_t> _cards(cards);
     
     //logCards(_cards,"-----isGameOver:");
     //先找每张牌的组合，如果没有则返回
@@ -595,7 +272,7 @@ bool Paohuzi::isGameOver(Game& game,std::vector<int>& cards,std::vector<bunch_t>
         //遍历每个组合
         std::vector<bunch_t> vm;
         for(auto m=multiSuites.begin(),mm=multiSuites.end();m!=mm;++m){
-            std::vector<int> mcards(_cards);
+            std::vector<unit_id_t> mcards(_cards);
             //此组合的牌从临时手牌移除，并加入临时suites
             for(auto l=m->pawns().begin(),ll=m->pawns().end();l!=ll;++l)
                 for(auto k=mcards.begin(); k!=mcards.end();++k){
@@ -685,12 +362,12 @@ bool Paohuzi::hint3(Game& game,pos_t pos,unit_id_t card,bunch_t& hints){
     return false;
 }
 
-void Paohuzi::hint(Game& game,unit_id_t card,std::vector<int>& _hand,std::vector<bunch_t>& hints){
+void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::vector<bunch_t>& hints){
     //这张牌可能的所有组合：句,绞
     std::vector<int> jiao,same;
     auto A=card;
     
-    std::vector<int> hand(_hand);
+    std::vector<unit_id_t> hand(_hand);
     //按颜色和点数排序
     std::vector<std::vector<int>> mc[2];
     mc[0].resize(10);
@@ -866,11 +543,6 @@ bool Paohuzi::validId(uint id){
     return true;
 }
 
-bool Paohuzi::comparePending(Game::pending_t& x,Game::pending_t& y){
-    auto a=(int)x.bunch.type();
-    auto b=(int)y.bunch.type();
-    return a>b;
-}
 int Paohuzi::winPoint(Game&,proto3::pb_enum){
     return 1;
 }
@@ -883,9 +555,9 @@ int Paohuzi::calcPoints(Game&,std::vector<proto3::bunch_t>&){
 int Paohuzi::calcPoints(Game&,pos_t){
     return 1;
 }
-                               bool Paohuzi::chouWei(Game&,pos_t,proto3::bunch_t&){
-                                   return true;
-                               }
+bool Paohuzi::chouWei(Game&,pos_t,proto3::bunch_t&){
+    return true;
+}
 
 void Paohuzi::test(){
     Paohuzi ddz;
