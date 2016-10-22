@@ -128,45 +128,69 @@ namespace Proto3 {
             "c2cSHgoEcGxheRgCIAMoCzIQLnByb3RvMy5wbGF5ZXJfdBIfCgZyZXN1bHQY",
             "AyABKA4yDy5wcm90bzMucGJfZW51bSJFCgpNc2dDTlN0YXRzEhsKA21pZBgB",
             "IAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDa2V5GAIgASgJEg0KBXZhbHVlGAMg",
-            "ASgJKsEFCgdwYl9lbnVtEgsKB1VOS05PV04QABIICgROT05FEAASDAoIU1VD",
+            "ASgJKuANCgdwYl9lbnVtEgsKB1VOS05PV04QABIICgROT05FEAASDAoIU1VD",
             "Q0VFU1MQABIKCgZERVZfUEMQABILCgdERVZfUFM0EAESDAoIREVWX1hCT1gQ",
             "AhILCgdERVZfSU9TEAMSDwoLREVWX0FORFJPSUQQBBIQCgxERVZfV0lOUEhP",
             "TkUQBRIMCghHQU1FX0REWhAUEgwKCEdBTUVfUERLEBUSDAoIR0FNRV9QSFoQ",
             "FhILCgdHQU1FX01KEBcSEAoMT1BUSU9OX1JPVU5EEAoSDwoLT1BUSU9OX0FO",
             "VEkQCxITCg9PUFRJT05fQ0FURUdPUlkQDBIYChRPUFRJT05fREVGSU5FRF9D",
             "QVJEUxANEhEKDUNBVEVHT1JZX0VBU1kQChITCg9DQVRFR09SWV9OT1JNQUwQ",
-            "CxIRCg1DQVRFR09SWV9IQVJEEAwSCwoHT1BfUEFTUxAAEg4KCk9QX0RJU0NB",
-            "UkQQARIRCg1CVU5DSF9JTlZBTElEEAoSCwoHQlVOQ0hfQRALEgwKCEJVTkNI",
-            "X0FBEAwSDQoJQlVOQ0hfQUFBEA0SDgoKQlVOQ0hfQUFBQRAOEg8KC0JVTkNI",
-            "X0FBQUFCEA8SDgoKQlVOQ0hfQUFBQhAQEg0KCUJVTkNIX0FCQxAREg0KCUJV",
-            "TkNIX1dJThBkEg0KCUFDSFZfQk9NQhAKEg8KC0FDSFZfSEVBVkVOEAsSDQoJ",
-            "QUNIVl9IRUxMEAwSEgoNREVGX01BWF9OT0RFUxDoBxIcChZERUZfTUFYX0dB",
-            "TUVTX1BFUl9OT0RFEKCNBhIOCgpFUlJfRkFJTEVEEGQSEQoNRVJSX0NBTkNF",
-            "TExFRBBlEhAKDEVSUl9QUk9UT0NPTBBmEg0KCUVSUl9QQVJBTRBnEhIKDkVS",
-            "Ul9EVVBMSUNBVEVEEGgSEAoLRVJSX1VOS05PV04Q5wcaAhABKv8HCgZwYl9t",
-            "c2cSDwoLTVNHX0lOVkFMSUQQABIOCglNU0dfQkVHSU4Q6AcSDAoHTVNHX1JB",
-            "VxDpBxIRCgxNU0dfQ1NfQkVHSU4Q0A8SEQoMTVNHX0NTX0xPR0lOENEPEhEK",
-            "DE1TR19TQ19MT0dJThDSDxIPCgpNU0dfQ1NfRU5EEJ8fEhEKDE1TR19DTF9C",
-            "RUdJThCgHxIRCgxNU0dfQ0xfRU5URVIQoR8SEQoMTVNHX0xDX0VOVEVSEKIf",
-            "EhAKC01TR19MQ19FWElUEKQfEg8KCk1TR19DTF9FTkQQhycSEQoMTVNHX0NI",
-            "X0JFR0lOEIgnEhEKDE1TR19DSF9MT0dJThCJJxIRCgxNU0dfSENfTE9HSU4Q",
-            "iicSFAoPTVNHX0NIX1JFR0lTVEVSEIsnEhQKD01TR19IQ19SRUdJU1RFUhCM",
-            "JxISCg1NU0dfQ0hfQ0hBUkdFEI0nEhIKDU1TR19IQ19DSEFSR0UQjicSEQoM",
-            "TVNHX0NIX1FVRVJZEI8nEhEKDE1TR19IQ19RVUVSWRCQJxISCg1NU0dfQ0hf",
-            "Rk9SR0VUEJEnEhIKDU1TR19IQ19GT1JHRVQQkicSFgoRTVNHX0NIX1JFU0VU",
-            "X1BTV0QQkycSFgoRTVNHX0hDX1JFU0VUX1BTV0QQlCcSDwoKTVNHX0NIX0VO",
-            "RBDvLhIRCgxNU0dfQ05fQkVHSU4Q8C4SEQoMTVNHX0NOX0VOVEVSEPEuEhEK",
-            "DE1TR19OQ19FTlRFUhDyLhISCg1NU0dfQ05fQ1JFQVRFEPsuEhIKDU1TR19O",
-            "Q19DUkVBVEUQ/C4SEAoLTVNHX0NOX0pPSU4Q/S4SEAoLTVNHX05DX0pPSU4Q",
-            "/i4SGAoTTVNHX0NOX0RJU01JU1NfU1lOQxCFLxIYChNNU0dfTkNfRElTTUlT",
-            "U19TWU5DEIYvEhcKEk1TR19DTl9ESVNNSVNTX0FDSxCHLxIXChJNU0dfTkNf",
-            "RElTTUlTU19BQ0sQiC8SEQoMTVNHX0NOX1JFQURZEI8vEhEKDE1TR19OQ19S",
-            "RUFEWRCQLxISCg1NU0dfQ05fRU5HQUdFEJEvEhIKDU1TR19OQ19FTkdBR0UQ",
-            "ki8SEQoMTVNHX05DX1NUQVJUEJMvEhIKDU1TR19OQ19TRVRUTEUQlC8SEgoN",
-            "TVNHX05DX0ZJTklTSBCWLxITCg5NU0dfQ05fRElTQ0FSRBCjLxITCg5NU0df",
-            "TkNfRElTQ0FSRBCkLxIQCgtNU0dfQ05fTUVMRBClLxIQCgtNU0dfTkNfTUVM",
-            "RBCmLxIQCgtNU0dfTkNfRFJBVxCnLxIRCgxNU0dfQ05fU1RBVFMQwS8SDwoK",
-            "TVNHX0NOX0VORBDXNhIMCgdNU0dfRU5EEI9OQgJIA2IGcHJvdG8z"));
+            "CxIRCg1DQVRFR09SWV9IQVJEEAwSCgoGUEhaX1NZEAASDAoIUEhaX1NZQlAQ",
+            "ARIKCgZQSFpfTEQQAhIKCgZQSFpfSEgQAxIOCgpQSFpfQ0RfUU1UEAQSDgoK",
+            "UEhaX0NEX0hIRBAFEgoKBlBIWl9DUxAGEg4KClBIWl9YWF9HSFoQBxIKCgZQ",
+            "SFpfSFkQCBIOCgpQSFpfWVpfU0JXEAkSDQoJUEhaX1BFR0haEAoSDgoKUEha",
+            "X1NDX0VRUxALEgoKBlBIWl9DWhAMEgoKBlBIWl9HWBANEgsKB1BIWl9NQVgQ",
+            "DhILCgdPUF9QQVNTEAASDgoKT1BfRElTQ0FSRBABEhEKDUJVTkNIX0lOVkFM",
+            "SUQQChILCgdCVU5DSF9BEAsSDAoIQlVOQ0hfQUEQDBINCglCVU5DSF9BQUEQ",
+            "DRIOCgpCVU5DSF9BQUFBEA4SDwoLQlVOQ0hfQUFBQUIQDxIOCgpCVU5DSF9B",
+            "QUFCEBASDQoJQlVOQ0hfQUJDEBESCgoGUEhaX0FBEBISCwoHUEhaX0FCQxAS",
+            "EgsKB1BIWl9BYkEQExILCgdQSFpfQkJCEBQSCwoHUEhaX0FBQRAVEg4KClBI",
+            "Wl9BQUF3ZWkQFhIPCgtQSFpfQUFBY2hvdRAXEg0KCVBIWl9CQkJfQhAYEhAK",
+            "DFBIWl9CQkJCZGVzaxAZEhAKDFBIWl9BQUFBZGVzaxAaEgwKCFBIWl9BQUFB",
+            "EBsSEQoNUEhaX0FBQUFzdGFydBAcEg0KCUJVTkNIX1dJThBkEg0KCVdJTl9G",
+            "aXJzdBABEg4KCldJTl9TZWNvbmQQAhIOCgpXSU5fTWlkZGxlEAUSEAoMV0lO",
+            "X01lbkZsdXNoEAYSDQoJV0lOX0ZsdXNoEAcSEQoNV0lOX01ham9yUGFpchAJ",
+            "EhEKDVdJTl9GbHVzaFBhaXIQChITCg9XSU5fRHJhZ29uN1BhaXIQCxIKCgZX",
+            "SU5fMTkQDBISCg5XSU5fRmx1c2g3UGFpchANEhIKDldJTl9NYWpvcjdQYWly",
+            "EA4SGAoUV0lOX0ZsdXNoRHJhZ29uN1BhaXIQDxIPCgtXSU5fRmx1c2gxORAQ",
+            "Eg4KCldJTl9OT1JNQUwQABIMCghXSU5fVElBThABEgoKBldJTl9ESRABEgwK",
+            "CFdJTl9MQVNUEAESDAoIV0lOX1RJTkcQARINCglXSU5fMTNSRUQQARILCgdX",
+            "SU5fUkVEEAESDQoJV0lOX0JMQUNLEAESCwoHV0lOX0JJRxABEg0KCVdJTl9T",
+            "TUFMTBABEg4KCldJTl9TSU5HTEUQARIMCghXSU5fUEFJUhABEg4KCldJTl9N",
+            "T05LRVkQARIOCgpXSU5fWUVMTE9XEAESDAoIV0lOX1NFTEYQARIKCgZXSU5f",
+            "MzAQARIKCgZXSU5fMjAQARIMCghXSU5fRklSRRABEg0KCVdJTl9QTEFURRAB",
+            "EgwKCFdJTl8yUkVEEAESDAoIV0lOXzNSRUQQARIMCghXSU5fNFJFRBABEg4K",
+            "CldJTl9ET1VCTEUQDBINCglXSU5fMTBSRUQQARILCgdXSU5fNUZVEAESDwoL",
+            "V0lOX1JVTkRVQUwQARINCglXSU5fN1BBSVIQARIPCgtXSU5fRFVBTERSQRAB",
+            "Eg4KCldJTl9SRVBFQVQQARILCgdXSU5fTUFYEAESDQoJQUNIVl9CT01CEAoS",
+            "DwoLQUNIVl9IRUFWRU4QCxINCglBQ0hWX0hFTEwQDBISCg1ERUZfTUFYX05P",
+            "REVTEOgHEhwKFkRFRl9NQVhfR0FNRVNfUEVSX05PREUQoI0GEg4KCkVSUl9G",
+            "QUlMRUQQZBIRCg1FUlJfQ0FOQ0VMTEVEEGUSEAoMRVJSX1BST1RPQ09MEGYS",
+            "DQoJRVJSX1BBUkFNEGcSEgoORVJSX0RVUExJQ0FURUQQaBIQCgtFUlJfVU5L",
+            "Tk9XThDnBxoCEAEq/wcKBnBiX21zZxIPCgtNU0dfSU5WQUxJRBAAEg4KCU1T",
+            "R19CRUdJThDoBxIMCgdNU0dfUkFXEOkHEhEKDE1TR19DU19CRUdJThDQDxIR",
+            "CgxNU0dfQ1NfTE9HSU4Q0Q8SEQoMTVNHX1NDX0xPR0lOENIPEg8KCk1TR19D",
+            "U19FTkQQnx8SEQoMTVNHX0NMX0JFR0lOEKAfEhEKDE1TR19DTF9FTlRFUhCh",
+            "HxIRCgxNU0dfTENfRU5URVIQoh8SEAoLTVNHX0xDX0VYSVQQpB8SDwoKTVNH",
+            "X0NMX0VORBCHJxIRCgxNU0dfQ0hfQkVHSU4QiCcSEQoMTVNHX0NIX0xPR0lO",
+            "EIknEhEKDE1TR19IQ19MT0dJThCKJxIUCg9NU0dfQ0hfUkVHSVNURVIQiycS",
+            "FAoPTVNHX0hDX1JFR0lTVEVSEIwnEhIKDU1TR19DSF9DSEFSR0UQjScSEgoN",
+            "TVNHX0hDX0NIQVJHRRCOJxIRCgxNU0dfQ0hfUVVFUlkQjycSEQoMTVNHX0hD",
+            "X1FVRVJZEJAnEhIKDU1TR19DSF9GT1JHRVQQkScSEgoNTVNHX0hDX0ZPUkdF",
+            "VBCSJxIWChFNU0dfQ0hfUkVTRVRfUFNXRBCTJxIWChFNU0dfSENfUkVTRVRf",
+            "UFNXRBCUJxIPCgpNU0dfQ0hfRU5EEO8uEhEKDE1TR19DTl9CRUdJThDwLhIR",
+            "CgxNU0dfQ05fRU5URVIQ8S4SEQoMTVNHX05DX0VOVEVSEPIuEhIKDU1TR19D",
+            "Tl9DUkVBVEUQ+y4SEgoNTVNHX05DX0NSRUFURRD8LhIQCgtNU0dfQ05fSk9J",
+            "ThD9LhIQCgtNU0dfTkNfSk9JThD+LhIYChNNU0dfQ05fRElTTUlTU19TWU5D",
+            "EIUvEhgKE01TR19OQ19ESVNNSVNTX1NZTkMQhi8SFwoSTVNHX0NOX0RJU01J",
+            "U1NfQUNLEIcvEhcKEk1TR19OQ19ESVNNSVNTX0FDSxCILxIRCgxNU0dfQ05f",
+            "UkVBRFkQjy8SEQoMTVNHX05DX1JFQURZEJAvEhIKDU1TR19DTl9FTkdBR0UQ",
+            "kS8SEgoNTVNHX05DX0VOR0FHRRCSLxIRCgxNU0dfTkNfU1RBUlQQky8SEgoN",
+            "TVNHX05DX1NFVFRMRRCULxISCg1NU0dfTkNfRklOSVNIEJYvEhMKDk1TR19D",
+            "Tl9ESVNDQVJEEKMvEhMKDk1TR19OQ19ESVNDQVJEEKQvEhAKC01TR19DTl9N",
+            "RUxEEKUvEhAKC01TR19OQ19NRUxEEKYvEhAKC01TR19OQ19EUkFXEKcvEhEK",
+            "DE1TR19DTl9TVEFUUxDBLxIPCgpNU0dfQ05fRU5EENc2EgwKB01TR19FTkQQ",
+            "j05CAkgDYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -261,6 +285,63 @@ namespace Proto3 {
     [pbr::OriginalName("CATEGORY_NORMAL")] CategoryNormal = 11,
     [pbr::OriginalName("CATEGORY_HARD")] CategoryHard = 12,
     /// <summary>
+    /// 邵阳字牌
+    /// </summary>
+    [pbr::OriginalName("PHZ_SY")] PhzSy = 0,
+    /// <summary>
+    /// 邵阳剥皮
+    /// </summary>
+    [pbr::OriginalName("PHZ_SYBP")] PhzSybp = 1,
+    /// <summary>
+    /// 娄底放炮
+    /// </summary>
+    [pbr::OriginalName("PHZ_LD")] PhzLd = 2,
+    /// <summary>
+    /// 怀化红拐弯
+    /// </summary>
+    [pbr::OriginalName("PHZ_HH")] PhzHh = 3,
+    /// <summary>
+    /// 常德全名堂
+    /// </summary>
+    [pbr::OriginalName("PHZ_CD_QMT")] PhzCdQmt = 4,
+    /// <summary>
+    /// 常德红黑点
+    /// </summary>
+    [pbr::OriginalName("PHZ_CD_HHD")] PhzCdHhd = 5,
+    /// <summary>
+    /// 长沙
+    /// </summary>
+    [pbr::OriginalName("PHZ_CS")] PhzCs = 6,
+    /// <summary>
+    /// 湘乡告胡子
+    /// </summary>
+    [pbr::OriginalName("PHZ_XX_GHZ")] PhzXxGhz = 7,
+    /// <summary>
+    /// 衡阳六条枪
+    /// </summary>
+    [pbr::OriginalName("PHZ_HY")] PhzHy = 8,
+    /// <summary>
+    /// 永州双霸王
+    /// </summary>
+    [pbr::OriginalName("PHZ_YZ_SBW")] PhzYzSbw = 9,
+    /// <summary>
+    /// 碰胡子
+    /// </summary>
+    [pbr::OriginalName("PHZ_PEGHZ")] PhzPeghz = 10,
+    /// <summary>
+    /// 四川二七十
+    /// </summary>
+    [pbr::OriginalName("PHZ_SC_EQS")] PhzScEqs = 11,
+    /// <summary>
+    /// 郴州跑胡子
+    /// </summary>
+    [pbr::OriginalName("PHZ_CZ")] PhzCz = 12,
+    /// <summary>
+    /// 广西跑胡子
+    /// </summary>
+    [pbr::OriginalName("PHZ_GX")] PhzGx = 13,
+    [pbr::OriginalName("PHZ_MAX")] PhzMax = 14,
+    /// <summary>
     ///  game operation
     /// </summary>
     [pbr::OriginalName("OP_PASS")] OpPass = 0,
@@ -276,7 +357,222 @@ namespace Proto3 {
     [pbr::OriginalName("BUNCH_AAAAB")] BunchAaaab = 15,
     [pbr::OriginalName("BUNCH_AAAB")] BunchAaab = 16,
     [pbr::OriginalName("BUNCH_ABC")] BunchAbc = 17,
+    /// <summary>
+    /// jiang
+    /// </summary>
+    [pbr::OriginalName("PHZ_AA")] PhzAa = 18,
+    /// <summary>
+    /// ju
+    /// </summary>
+    [pbr::OriginalName("PHZ_ABC")] PhzAbc = 18,
+    /// <summary>
+    /// jiao  AaA
+    /// </summary>
+    [pbr::OriginalName("PHZ_AbA")] PhzAbA = 19,
+    /// <summary>
+    /// peng  BB_B
+    /// </summary>
+    [pbr::OriginalName("PHZ_BBB")] PhzBbb = 20,
+    /// <summary>
+    /// kan
+    /// </summary>
+    [pbr::OriginalName("PHZ_AAA")] PhzAaa = 21,
+    /// <summary>
+    /// wei   AA_A
+    /// </summary>
+    [pbr::OriginalName("PHZ_AAAwei")] PhzAaawei = 22,
+    /// <summary>
+    /// chou wei  AAA_
+    /// </summary>
+    [pbr::OriginalName("PHZ_AAAchou")] PhzAaachou = 23,
+    /// <summary>
+    /// pao
+    /// </summary>
+    [pbr::OriginalName("PHZ_BBB_B")] PhzBbbB = 24,
+    /// <summary>
+    /// desk pao  AAA_A
+    /// </summary>
+    [pbr::OriginalName("PHZ_BBBBdesk")] PhzBbbbdesk = 25,
+    /// <summary>
+    /// desk ti   _AAAA
+    /// </summary>
+    [pbr::OriginalName("PHZ_AAAAdesk")] PhzAaaadesk = 26,
+    /// <summary>
+    /// ti
+    /// </summary>
+    [pbr::OriginalName("PHZ_AAAA")] PhzAaaa = 27,
+    /// <summary>
+    /// startup ti    AAAA_
+    /// </summary>
+    [pbr::OriginalName("PHZ_AAAAstart")] PhzAaaastart = 28,
     [pbr::OriginalName("BUNCH_WIN")] BunchWin = 100,
+    /// <summary>
+    /// WIN_Normal              =0; //ping hu
+    /// </summary>
+    [pbr::OriginalName("WIN_First")] WinFirst = 1,
+    /// <summary>
+    /// di hu
+    /// </summary>
+    [pbr::OriginalName("WIN_Second")] WinSecond = 2,
+    /// <summary>
+    /// WIN_Last                =3; //hai di hu
+    /// WIN_Pair                =4; //dui hu
+    /// </summary>
+    [pbr::OriginalName("WIN_Middle")] WinMiddle = 5,
+    /// <summary>
+    /// men qing
+    /// </summary>
+    [pbr::OriginalName("WIN_MenFlush")] WinMenFlush = 6,
+    /// <summary>
+    /// qing yi se
+    /// </summary>
+    [pbr::OriginalName("WIN_Flush")] WinFlush = 7,
+    /// <summary>
+    /// WIN_7Pair               =8; //7 dui
+    /// </summary>
+    [pbr::OriginalName("WIN_MajorPair")] WinMajorPair = 9,
+    /// <summary>
+    /// qing dui
+    /// </summary>
+    [pbr::OriginalName("WIN_FlushPair")] WinFlushPair = 10,
+    /// <summary>
+    /// long 7 dui
+    /// </summary>
+    [pbr::OriginalName("WIN_Dragon7Pair")] WinDragon7Pair = 11,
+    /// <summary>
+    /// yao jiu
+    /// </summary>
+    [pbr::OriginalName("WIN_19")] Win19 = 12,
+    /// <summary>
+    /// qing 7 dui
+    /// </summary>
+    [pbr::OriginalName("WIN_Flush7Pair")] WinFlush7Pair = 13,
+    /// <summary>
+    /// jiang 7 dui
+    /// </summary>
+    [pbr::OriginalName("WIN_Major7Pair")] WinMajor7Pair = 14,
+    /// <summary>
+    /// qing long 7 dui
+    /// </summary>
+    [pbr::OriginalName("WIN_FlushDragon7Pair")] WinFlushDragon7Pair = 15,
+    /// <summary>
+    /// qing 19
+    /// </summary>
+    [pbr::OriginalName("WIN_Flush19")] WinFlush19 = 16,
+    [pbr::OriginalName("WIN_NORMAL")] WinNormal = 0,
+    /// <summary>
+    /// 天胡
+    /// </summary>
+    [pbr::OriginalName("WIN_TIAN")] WinTian = 1,
+    /// <summary>
+    /// 地胡
+    /// </summary>
+    [pbr::OriginalName("WIN_DI")] WinDi = 1,
+    /// <summary>
+    /// 海胡
+    /// </summary>
+    [pbr::OriginalName("WIN_LAST")] WinLast = 1,
+    /// <summary>
+    /// 听胡
+    /// </summary>
+    [pbr::OriginalName("WIN_TING")] WinTing = 1,
+    /// <summary>
+    /// 乌红
+    /// </summary>
+    [pbr::OriginalName("WIN_13RED")] Win13Red = 1,
+    /// <summary>
+    /// 红胡
+    /// </summary>
+    [pbr::OriginalName("WIN_RED")] WinRed = 1,
+    /// <summary>
+    /// 黑胡
+    /// </summary>
+    [pbr::OriginalName("WIN_BLACK")] WinBlack = 1,
+    /// <summary>
+    /// 大胡
+    /// </summary>
+    [pbr::OriginalName("WIN_BIG")] WinBig = 1,
+    /// <summary>
+    /// 小胡
+    /// </summary>
+    [pbr::OriginalName("WIN_SMALL")] WinSmall = 1,
+    /// <summary>
+    /// 点胡
+    /// </summary>
+    [pbr::OriginalName("WIN_SINGLE")] WinSingle = 1,
+    /// <summary>
+    /// 对胡
+    /// </summary>
+    [pbr::OriginalName("WIN_PAIR")] WinPair = 1,
+    /// <summary>
+    /// 耍猴
+    /// </summary>
+    [pbr::OriginalName("WIN_MONKEY")] WinMonkey = 1,
+    /// <summary>
+    /// 黄番
+    /// </summary>
+    [pbr::OriginalName("WIN_YELLOW")] WinYellow = 1,
+    /// <summary>
+    /// 自摸
+    /// </summary>
+    [pbr::OriginalName("WIN_SELF")] WinSelf = 1,
+    /// <summary>
+    /// 30胡               =1;15
+    /// </summary>
+    [pbr::OriginalName("WIN_30")] Win30 = 1,
+    /// <summary>
+    /// 20胡
+    /// </summary>
+    [pbr::OriginalName("WIN_20")] Win20 = 1,
+    /// <summary>
+    /// 放炮
+    /// </summary>
+    [pbr::OriginalName("WIN_FIRE")] WinFire = 1,
+    /// <summary>
+    /// 一块匾
+    /// </summary>
+    [pbr::OriginalName("WIN_PLATE")] WinPlate = 1,
+    /// <summary>
+    /// 二比
+    /// </summary>
+    [pbr::OriginalName("WIN_2RED")] Win2Red = 1,
+    /// <summary>
+    /// 三比               =1;20
+    /// </summary>
+    [pbr::OriginalName("WIN_3RED")] Win3Red = 1,
+    /// <summary>
+    /// 四比
+    /// </summary>
+    [pbr::OriginalName("WIN_4RED")] Win4Red = 1,
+    /// <summary>
+    /// 双飘    2RED_
+    /// </summary>
+    [pbr::OriginalName("WIN_DOUBLE")] WinDouble = 12,
+    /// <summary>
+    /// 十红，针对湘乡
+    /// </summary>
+    [pbr::OriginalName("WIN_10RED")] Win10Red = 1,
+    /// <summary>
+    /// 五福，碰胡子用
+    /// </summary>
+    [pbr::OriginalName("WIN_5FU")] Win5Fu = 1,
+    /// <summary>
+    /// 跑双
+    /// </summary>
+    [pbr::OriginalName("WIN_RUNDUAL")] WinRundual = 1,
+    /// <summary>
+    /// 小七对
+    /// </summary>
+    [pbr::OriginalName("WIN_7PAIR")] Win7Pair = 1,
+    /// <summary>
+    /// 双龙
+    /// </summary>
+    [pbr::OriginalName("WIN_DUALDRA")] WinDualdra = 1,
+    /// <summary>
+    /// 连胡
+    /// </summary>
+    [pbr::OriginalName("WIN_REPEAT")] WinRepeat = 1,
+    [pbr::OriginalName("WIN_MAX")] WinMax = 1,
     /// <summary>
     ///  achievement
     /// </summary>
@@ -6218,7 +6514,7 @@ namespace Proto3 {
         = pb::FieldCodec.ForMessage(26, global::Proto3.key_value.Parser);
     private readonly pbc::RepeatedField<global::Proto3.key_value> option_ = new pbc::RepeatedField<global::Proto3.key_value>();
     /// <summary>
-    /// anti,rounds
+    /// anti               =1;rounds
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public pbc::RepeatedField<global::Proto3.key_value> Option {

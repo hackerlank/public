@@ -33,16 +33,24 @@ protected:
 private:
     //is game over with melt card
     bool                isGameOver(Game&,pos_t,unit_id_t,std::vector<proto3::bunch_t>&);
-    //is game over against cards without AA
-    bool                isGameOverWithoutAA(std::vector<unit_id_t>&);
+    bool                isGameOver(Game&,std::vector<int>&,std::vector<proto3::bunch_t>&);
+    bool                hint3(Game&,pos_t,unit_id_t,proto3::bunch_t&);
+    void                hint(Game&,unit_id_t,std::vector<int>&,std::vector<proto3::bunch_t>&);
 
     proto3::pb_enum     verifyBunch(Game&,proto3::bunch_t&);
-    bool                verifyDiscard(Game&,proto3::bunch_t&);
     bool                comparePending(Game::pending_t& x,Game::pending_t& y);
     void                log(Game&){}
     void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
     bool				isNaturalWin(Game&,pos_t);
     void				draw(Game& game);
+    
+    int						winPoint(Game&,proto3::pb_enum);
+    int						calcScore(Game&,proto3::pb_enum,int points);
+    int						calcPoints(Game&,std::vector<proto3::bunch_t>&);
+    int						calcPoints(Game&,pos_t);
+    
+    bool					chouWei(Game&,pos_t,proto3::bunch_t&);
+    
 };
 
 #endif /* Paohuzi_h */

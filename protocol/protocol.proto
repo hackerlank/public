@@ -45,6 +45,27 @@ CATEGORY_EASY           =10;
 CATEGORY_NORMAL         =11;
 CATEGORY_HARD           =12;
 
+PHZ_SY                  =0;	//邵阳字牌
+PHZ_SYBP                =1;	//邵阳剥皮
+PHZ_LD                  =2;//娄底放炮
+
+PHZ_HH                  =3;//怀化红拐弯
+PHZ_CD_QMT              =4;	//常德全名堂
+PHZ_CD_HHD              =5;	//常德红黑点
+
+PHZ_CS                  =6;//长沙
+PHZ_XX_GHZ              =7;	//湘乡告胡子
+PHZ_HY                  =8;//衡阳六条枪
+
+PHZ_YZ_SBW              =9; //永州双霸王
+PHZ_PEGHZ               =10;	//碰胡子
+PHZ_SC_EQS              =11; //四川二七十
+
+PHZ_CZ                  =12;//郴州跑胡子
+PHZ_GX                  =13;//广西跑胡子
+
+PHZ_MAX                 =14;
+
 // game operation
 OP_PASS                 =0;
 OP_DISCARD              =1;
@@ -58,7 +79,76 @@ BUNCH_AAAA              =14;
 BUNCH_AAAAB             =15;
 BUNCH_AAAB              =16;
 BUNCH_ABC               =17;
+
+PHZ_AA                  =18;  //jiang
+PHZ_ABC                 =18;  //ju
+PHZ_AbA                 =19;	//jiao  AaA
+PHZ_BBB                 =20;	//peng  BB_B
+PHZ_AAA                 =21;	//kan
+PHZ_AAAwei              =22;	//wei   AA_A
+PHZ_AAAchou             =23;	//chou wei  AAA_
+PHZ_BBB_B               =24;	//pao
+PHZ_BBBBdesk            =25;	//desk pao  AAA_A
+PHZ_AAAAdesk            =26;	//desk ti   _AAAA
+PHZ_AAAA                =27;	//ti
+PHZ_AAAAstart            =28;	//startup ti    AAAA_
+
 BUNCH_WIN               =100;
+
+//WIN_Normal              =0; //ping hu
+WIN_First               =1; //tian hu
+WIN_Second              =2; //di hu
+//WIN_Last                =3; //hai di hu
+//WIN_Pair                =4; //dui hu
+WIN_Middle              =5; //zhong zhang
+WIN_MenFlush            =6; //men qing
+WIN_Flush               =7; //qing yi se
+//WIN_7Pair               =8; //7 dui
+WIN_MajorPair           =9; //jiang dui
+WIN_FlushPair           =10; //qing dui
+WIN_Dragon7Pair         =11; //long 7 dui
+WIN_19                  =12; //yao jiu
+WIN_Flush7Pair          =13; //qing 7 dui
+WIN_Major7Pair          =14; //jiang 7 dui
+WIN_FlushDragon7Pair    =15; //qing long 7 dui
+WIN_Flush19             =16; //qing 19
+
+WIN_NORMAL =0           ;
+WIN_TIAN                =1;	//天胡
+WIN_DI                  =1;		//地胡
+WIN_LAST                =1;	//海胡
+WIN_TING                =1;	//听胡
+
+WIN_13RED               =1;	//乌红
+WIN_RED                 =1;	//红胡
+WIN_BLACK               =1;	//黑胡
+WIN_BIG                 =1;	//大胡
+WIN_SMALL               =1;	//小胡
+
+WIN_SINGLE              =1;	//点胡
+WIN_PAIR                =1;	//对胡
+WIN_MONKEY              =1;	//耍猴
+WIN_YELLOW              =1;	//黄番
+WIN_SELF                =1;	//自摸
+
+WIN_30                  =1;		//30胡               =1;15
+WIN_20                  =1;		//20胡
+WIN_FIRE                =1;	//放炮
+WIN_PLATE               =1;	//一块匾
+WIN_2RED                =1;	//二比
+
+WIN_3RED                =1;	//三比               =1;20
+WIN_4RED                =1;	//四比
+WIN_DOUBLE               =12;	//双飘    2RED_
+WIN_10RED               =1;	//十红，针对湘乡
+
+WIN_5FU                 =1;	//五福，碰胡子用
+WIN_RUNDUAL             =1;//跑双
+WIN_7PAIR               =1;	//小七对
+WIN_DUALDRA             =1;//双龙
+WIN_REPEAT              =1;	//连胡
+
+WIN_MAX                 =1;
 
 // achievement
 ACHV_BOMB               =10;
