@@ -11,7 +11,6 @@
 
 class DoudeZhu: public DiscardGame{
 public:
-    virtual void        Tick(Game&);
     virtual int         Type();
     virtual int         MaxPlayer();
 
@@ -21,13 +20,11 @@ public:
 protected:
     virtual void        initCard(Game&);
     virtual bool        validId(uint);
-    virtual bool        comparision(uint x,uint y);
     virtual int         maxCards();
     virtual int         maxHands();
     virtual int         bottom();
     
     virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
-    virtual bool        settle(Game&);
 private:
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);

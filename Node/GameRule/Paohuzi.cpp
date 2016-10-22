@@ -377,42 +377,6 @@ bool Paohuzi::isNaturalWin(Game& game,pos_t pos){
     return false;
 }
 
-bool Paohuzi::settle(Game& game){
-    pos_t pos=-1;
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.players[i]->playData;
-        if(gd.hands().size()<=0)
-            pos=i;
-    }
-
-    //broadcast
-    MsgNCSettle msg;
-    msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto play=msg.mutable_play(i);
-        play->set_win(i==pos?1:0);
-        play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
-        //auto player=msg.add_play();
-    }
-    
-    for(auto p:game.players){
-        p->send(msg);
-        p->lastMsg=std::make_shared<MsgNCSettle>(msg);
-    }
-    
-    if(++game.round>=game.Round){
-        MsgNCFinish fin;
-        fin.set_mid(pb_msg::MSG_NC_FINISH);
-        fin.set_result(pb_enum::SUCCEESS);
-        for(auto p:game.players){
-            p->send(msg);
-            p->lastMsg=std::make_shared<MsgNCFinish>(fin);
-        }
-        return true;
-    }
-    return false;
-}
-
 bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3::bunch_t>& output){
     auto player=game.players[pos];
     auto& playdata=game.players[pos]->playData;
@@ -900,14 +864,6 @@ bool Paohuzi::validId(uint id){
     auto value=id%100;
     if(value<1||value>10)return false;
     return true;
-}
-
-bool Paohuzi::comparision(uint x,uint y){
-    auto cx=x/1000;
-    auto cy=y/1000;
-    if(cx<cy)return true;
-    else if(cx==cy)return x%100<y%100;
-    else return false;
 }
 
 bool Paohuzi::comparePending(Game::pending_t& x,Game::pending_t& y){

@@ -16,8 +16,6 @@ public:
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void        OnMeld(Player&,const proto3::bunch_t&);
 protected:
-    virtual bool        settle(Game&);
-    
     virtual bool        verifyDiscard(Game&,proto3::bunch_t&);
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&);
 

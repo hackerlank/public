@@ -26,35 +26,6 @@ inline uint32 inverseTransformValue(uint32 val){
     else             return val;
 }
 
-void DoudeZhu::Tick(Game& game){
-    switch (game.state) {
-        case Game::State::ST_WAIT:
-            if(Ready(game)){
-                changeState(game,Game::State::ST_ENGAGE);
-                deal(game);
-            }
-            break;
-        case Game::State::ST_ENGAGE:
-            if(Engaged(game))
-                changeState(game,Game::State::ST_DISCARD);
-            break;
-        case Game::State::ST_DISCARD:
-            if(isGameOver(game))
-                changeState(game,Game::State::ST_SETTLE);
-            break;
-        case Game::State::ST_SETTLE:
-            if(settle(game))
-                changeState(game,Game::State::ST_END);
-            else
-                changeState(game,Game::State::ST_WAIT);
-            break;
-        case Game::State::ST_END:
-            break;
-        default:
-            break;
-    }
-}
-
 int DoudeZhu::Type(){
     return pb_enum::GAME_DDZ;
 }
@@ -207,36 +178,6 @@ void DoudeZhu::OnDiscard(Player& player,MsgCNDiscard& msg){
             changePos(*game,game->token+1);
     }else
         player.send(omsg);
-}
-
-bool DoudeZhu::settle(Game& game){
-    pos_t pos=-1;
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.players[i]->playData;
-        if(gd.hands().size()<=0)
-            pos=i;
-    }
-
-    //broadcast
-    MsgNCSettle msg;
-    msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    for(int i=0,ii=MaxPlayer();i!=ii;++i){
-        auto play=msg.mutable_play(i);
-        play->set_win(i==pos?1:0);
-        play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
-        //auto player=msg.add_play();
-    }
-    
-    for(auto p:game.players)p->send(msg);
-
-    if(++game.round>=game.Round){
-        MsgNCFinish fin;
-        fin.set_mid(pb_msg::MSG_NC_FINISH);
-        fin.set_result(pb_enum::SUCCEESS);
-        for(auto p:game.players)p->send(msg);
-        return true;
-    }
-    return false;
 }
 
 bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
@@ -535,10 +476,6 @@ bool DoudeZhu::validId(uint id){
     auto value=id%100;
     if(value<1||value>transformValue(15))return false;
     return true;
-}
-
-bool DoudeZhu::comparision(uint x,uint y){
-    return x%100<y%100;
 }
 
 bool DoudeZhu::compareBunch(bunch_t& bunch,bunch_t& hist){

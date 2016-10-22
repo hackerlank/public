@@ -22,13 +22,11 @@ public:
 protected:
     virtual void        initCard(Game&);
     virtual bool        validId(uint);
-    virtual bool        comparision(uint x,uint y);
     virtual int         maxCards();
     virtual int         maxHands();
     virtual int         bottom();
     
     virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
-    virtual bool        settle(Game&);
 private:
     //is game over with melt card
     bool                isGameOver(Game&,pos_t,unit_id_t,std::vector<proto3::bunch_t>&);

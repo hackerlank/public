@@ -78,92 +78,6 @@ void Mahjong::initCard(Game& game){
     }
 }
 
-void Mahjong::OnDiscard(Player& player,MsgCNDiscard& msg){
-    MsgNCDiscard omsg;
-    omsg.set_mid(pb_msg::MSG_NC_DISCARD);
-    omsg.set_result(pb_enum::ERR_FAILED);
-    
-    do{
-        auto game=player.game;
-        if(!game){
-            KEYE_LOG("OnDiscard no game\n");
-            break;
-        }
-        if(game->token!=player.pos){
-            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
-            break;
-        }
-        
-        if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
-            break;
-        }
-        msg.mutable_bunch()->set_pos(player.pos);
-        
-        if(!verifyDiscard(*game,*msg.mutable_bunch())){
-            KEYE_LOG("OnDiscard invalid bunch\n");
-            break;
-        }
-        
-        //cards check
-        auto card=(unit_id_t)msg.bunch().pawns(0);
-        //boundary check
-        if(!validId(card)){
-            KEYE_LOG("OnDiscard invalid cards %d\n",card);
-            break;
-        }
-
-        //shut discard after verify
-        if(!game->pendingDiscard){
-            KEYE_LOG("OnDiscard not on pending\n");
-            break;
-        }else
-            player.game->pendingDiscard.reset();
-
-        std::string str;
-        cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
-        //remove hands
-        auto& hands=*player.playData.mutable_hands();
-        for(auto j:msg.bunch().pawns()){
-            for(auto i=hands.begin();i!=hands.end();++i){
-                if(j==*i){
-                    //KEYE_LOG("OnDiscard pos=%d,erase card %d\n",player.pos,*i);
-                    hands.erase(i);
-                    break;
-                }
-            }
-        }
-        //logHands(*game,player.pos,"OnDiscard");
-        omsg.set_result(pb_enum::SUCCEESS);
-        omsg.mutable_bunch()->CopyFrom(msg.bunch());
-
-        //game->pendingMeld.clear();
-        omsg.mutable_bunch()->set_pos(player.pos);
-        
-        //ready for meld
-        changeState(*player.game,Game::State::ST_MELD);
-        //pending meld
-        for(int i=0;i<MaxPlayer();++i){
-            auto p=game->players[i];
-            if(i!=player.pos){
-                //only pending others
-                game->pendingMeld.push_back(Game::pending_t());
-                auto& pending=game->pendingMeld.back();
-                pending.bunch.set_pos(i);
-                pending.bunch.add_pawns(card);
-            }
-            p->send(omsg);
-            p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
-        }
-        
-        //historic
-        game->historical.push_back(msg.bunch());
-        return;
-    }while(false);
-    player.send(omsg);
-}
-
 void Mahjong::OnMeld(Player& player,const proto3::bunch_t& curr){
     auto pos=player.pos;
     auto spgame=player.game;
@@ -386,42 +300,6 @@ void Mahjong::draw(Game& game){
     }
 }
 
-bool Mahjong::settle(Game& game){
-    pos_t pos=-1;
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.players[i]->playData;
-        if(gd.hands().size()<=0)
-            pos=i;
-    }
-
-    //broadcast
-    MsgNCSettle msg;
-    msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto play=msg.mutable_play(i);
-        play->set_win(i==pos?1:0);
-        play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
-        //auto player=msg.add_play();
-    }
-    
-    for(auto p:game.players){
-        p->send(msg);
-        p->lastMsg=std::make_shared<MsgNCSettle>(msg);
-    }
-    
-    if(++game.round>=game.Round){
-        MsgNCFinish fin;
-        fin.set_mid(pb_msg::MSG_NC_FINISH);
-        fin.set_result(pb_enum::SUCCEESS);
-        for(auto p:game.players){
-            p->send(msg);
-            p->lastMsg=std::make_shared<MsgNCFinish>(fin);
-        }
-        return true;
-    }
-    return false;
-}
-
 bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
     auto player=game.players[pos];
     auto& hands=player->playData.hands();
@@ -631,14 +509,6 @@ bool Mahjong::validId(uint id){
     auto value=id%100;
     if(value<1||value>9)return false;
     return true;
-}
-
-bool Mahjong::comparision(uint x,uint y){
-    auto cx=x/1000;
-    auto cy=y/1000;
-    if(cx<cy)return true;
-    else if(cx==cy)return x%100<y%100;
-    else return false;
 }
 
 bool Mahjong::comparePending(Game::pending_t& x,Game::pending_t& y){

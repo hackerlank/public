@@ -31,8 +31,7 @@ protected:
     virtual int         maxHands()=0;
     virtual int         bottom()=0;
     
-    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&)=0;
-    virtual bool        settle(Game&)=0;
+    virtual bool        settle(Game&);
     virtual bool        isGameOver(Game&);
     
     virtual void        deal(Game&);
