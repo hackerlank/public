@@ -16,6 +16,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnPass,Buttons;
 
+	protected GameObject[]		btnOps;	//all ops buttons
+
 	protected int		maxPlayer=0;
 	protected int		round=0;
 	protected GameRule	rule=null;

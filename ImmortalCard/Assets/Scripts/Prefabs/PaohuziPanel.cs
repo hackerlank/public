@@ -91,23 +91,29 @@ public class PaohuziPanel : GamePanel {
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(A!=null)
 		switch(bunch.Type){
-		case pb_enum.BunchA:
-			//collect
-			A.DiscardTo(HandAreas[to],scalar);
-			A.Static=false;
-			A.state=Card.State.ST_NORMAL;
-			if(to==_pos)sortHands();
-			break;
+		case pb_enum.PhzAbc:
+		case pb_enum.PhzAbA:
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
-			//meld
-			A.DiscardTo(MeldAreas[to],scalar);
+			//meld,make a bunch with constant 4 cards
+			List<Card> cards=new List<Card>();
+			//find cards in hands
 			var hands=HandAreas[to].GetComponentsInChildren<Card>();
 			foreach(var id in bunch.Pawns)
 			foreach(var card in hands){
 				if(card.Value==id)
-					card.DiscardTo(MeldAreas[to],scalar);
+					cards.Add(card);
 			}
+			cards.Add(A);
+			//add place holder
+			for(int i=cards.Count;i<4;++i){
+				var blank=new Card();
+				cards.Insert(0,blank);
+			}
+
+			//move to meld area
+			foreach(var c in cards)
+				c.DiscardTo(MeldAreas[to],scalar);
 			A.state=Card.State.ST_MELD;
 			break;
 		default:
@@ -119,7 +125,7 @@ public class PaohuziPanel : GamePanel {
 		}
 	}
 	
-	bool showHints(int card,bool bDraw){
+	bool showHints(int card,bool bDraw,bool startup=false){
 		var player=Main.Instance.MainPlayer;
 		var bunch=new bunch_t();
 		bunch.Pos=(bDraw?player.pos:player.pos+1);
@@ -129,20 +135,22 @@ public class PaohuziPanel : GamePanel {
 		_hints=Rule.Hint(player,bunch);
 
 		//show/hide buttons
-		//GameObject[] btns=new GameObject[]{BtnA3,BtnA4,BtnWin};
-		//foreach(var btn in btns)btn.SetActive(false);
 		foreach(var b in _hints){
 			switch(b.Type){
-			case pb_enum.BunchAa:
+			case pb_enum.BunchAbc:
+				if(!startup)BtnABC.SetActive(true);
 				break;
 			case pb_enum.BunchAaa:
+				if(!startup)BtnA3.SetActive(true);
 				break;
-			case pb_enum.BunchAaaa:
+			case pb_enum.BunchWin:
+				if(!startup)BtnWin.SetActive(true);
 				break;
 			default:
 				break;
 			}
 		}
+		if(_hints.Count>0&&(!startup||BtnWin.activeSelf))BtnPass.SetActive(true);
 
 		return _hints.Count>0;
 	}
@@ -190,15 +198,37 @@ public class PaohuziPanel : GamePanel {
 		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
+
+		btnOps=new GameObject[]{BtnABC,BtnA3,BtnWin,BtnPass};
 	}
 
 	public void OnABC(){
+		foreach(var btn in btnOps)btn.SetActive(false);
+		if(_hints!=null&&_hints.Count>0){
+			foreach(var hint in _hints){
+				if(hint.Type==pb_enum.PhzAbc||
+					hint.Type==pb_enum.PhzAbA){
+					MsgCNMeld msg=new MsgCNMeld();
+					msg.Mid=pb_msg.MsgCnMeld;
+					msg.Bunch=new bunch_t();
+					msg.Bunch.Pos=_pos;
+					msg.Bunch.Type=hint.Type;
+					msg.Bunch.MergeFrom(hint);
+					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+					break;
+				}
+			}
+		}
 	}
 	
 	public void OnAAA(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
 			foreach(var hint in _hints){
-				if(hint.Type==pb_enum.BunchAaa){
+				if(hint.Type==pb_enum.PhzAaa ||
+				   hint.Type==pb_enum.PhzAaawei ||
+				   hint.Type==pb_enum.PhzAaachou ||
+				   hint.Type==pb_enum.PhzBbb){
 					MsgCNMeld msg=new MsgCNMeld();
 					msg.Mid=pb_msg.MsgCnMeld;
 					msg.Bunch=new bunch_t();
@@ -213,9 +243,14 @@ public class PaohuziPanel : GamePanel {
 	}
 	
 	public void OnAAAA(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
 			foreach(var hint in _hints){
-				if(hint.Type==pb_enum.BunchAaaa){
+				if(hint.Type==pb_enum.PhzAaaa ||
+				   hint.Type==pb_enum.PhzAaaadesk ||
+				   hint.Type==pb_enum.PhzAaaastart ||
+				   hint.Type==pb_enum.PhzBbbB ||
+				   hint.Type==pb_enum.PhzBbbbdesk){
 					MsgCNMeld msg=new MsgCNMeld();
 					msg.Mid=pb_msg.MsgCnMeld;
 					msg.Bunch=new bunch_t();
@@ -230,6 +265,7 @@ public class PaohuziPanel : GamePanel {
 	}
 	
 	public void OnWin(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.BunchWin){
@@ -247,6 +283,7 @@ public class PaohuziPanel : GamePanel {
 	}
 	
 	override public void OnPass(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		MsgCNMeld msg=new MsgCNMeld();
 		msg.Mid=pb_msg.MsgCnMeld;
 		msg.Bunch=new bunch_t();

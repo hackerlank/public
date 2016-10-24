@@ -10,7 +10,6 @@ public class MahJongPanel : GamePanel {
 	public GameObject	BtnA3,BtnA4,BtnWin;
 	public GameObject	BtnTong,BtnTiao,BtnWan;
 
-	GameObject[]		btnOps;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------

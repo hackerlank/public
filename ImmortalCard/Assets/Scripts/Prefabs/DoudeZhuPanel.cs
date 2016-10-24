@@ -8,7 +8,6 @@ public class DoudeZhuPanel : GamePanel {
 	public GameObject	BtnHint;
 	public GameObject	BtnDiscard,BtnCall,BtnDouble;
 
-	GameObject[]		btnOps;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
