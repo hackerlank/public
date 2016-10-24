@@ -473,7 +473,7 @@ message MsgCNCreate{
 
 pb_msg mid                  =1;
 pb_enum game                =2;
-repeated key_value option   =3; //anti,rounds
+repeated key_value options  =3; //anti,rounds
 };
 
 message MsgNCCreate{

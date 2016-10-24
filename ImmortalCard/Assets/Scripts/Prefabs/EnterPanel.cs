@@ -92,17 +92,23 @@ public class EnterPanel : MonoBehaviour {
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
 		opRound.Ivalue=Main.Round;
+
+		Main.Instance.MainPlayer.category=pb_enum.PhzSy;
+		var opCategory=new key_value();
+		opCategory.Ikey=pb_enum.OptionCategory;
+		opCategory.Ivalue=(int)Main.Instance.MainPlayer.category;
 		
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;
 		msgC.Game=Icon.GameId;
-		msgC.Option.Add(opRound);
+		msgC.Options.Add(opRound);
+		msgC.Options.Add(opCategory);
 
 		if(DefinedCards.text.Length>0){
 			var opCards=new key_value();
 			opCards.Ikey=pb_enum.OptionDefinedCards;
 			opCards.Value=DefinedCards.text;
-			msgC.Option.Add(opCards);
+			msgC.Options.Add(opCards);
 
 			//save
 			PlayerPrefs.SetString(Configs.PrefsKey_DefinedCards,DefinedCards.text);

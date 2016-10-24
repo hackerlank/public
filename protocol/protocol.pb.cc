@@ -12490,7 +12490,7 @@ void MsgNCEnter::clear_result() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCNCreate::kMidFieldNumber;
 const int MsgCNCreate::kGameFieldNumber;
-const int MsgCNCreate::kOptionFieldNumber;
+const int MsgCNCreate::kOptionsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MsgCNCreate::MsgCNCreate()
@@ -12579,7 +12579,7 @@ void MsgCNCreate::Clear() {
 #undef ZR_HELPER_
 #undef ZR_
 
-  option_.Clear();
+  options_.Clear();
 }
 
 bool MsgCNCreate::MergePartialFromCodedStream(
@@ -12619,22 +12619,22 @@ bool MsgCNCreate::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_option;
+        if (input->ExpectTag(26)) goto parse_options;
         break;
       }
 
-      // repeated .proto3.key_value option = 3;
+      // repeated .proto3.key_value options = 3;
       case 3: {
         if (tag == 26) {
-         parse_option:
+         parse_options:
           DO_(input->IncrementRecursionDepth());
-         parse_loop_option:
+         parse_loop_options:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_option()));
+                input, add_options()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_loop_option;
+        if (input->ExpectTag(26)) goto parse_loop_options;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
@@ -12676,10 +12676,10 @@ void MsgCNCreate::SerializeWithCachedSizes(
       2, this->game(), output);
   }
 
-  // repeated .proto3.key_value option = 3;
-  for (unsigned int i = 0, n = this->option_size(); i < n; i++) {
+  // repeated .proto3.key_value options = 3;
+  for (unsigned int i = 0, n = this->options_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->option(i), output);
+      3, this->options(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNCreate)
@@ -12701,12 +12701,12 @@ int MsgCNCreate::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->game());
   }
 
-  // repeated .proto3.key_value option = 3;
-  total_size += 1 * this->option_size();
-  for (int i = 0; i < this->option_size(); i++) {
+  // repeated .proto3.key_value options = 3;
+  total_size += 1 * this->options_size();
+  for (int i = 0; i < this->options_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->option(i));
+        this->options(i));
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -12725,7 +12725,7 @@ void MsgCNCreate::MergeFrom(const MsgCNCreate& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
-  option_.MergeFrom(from.option_);
+  options_.MergeFrom(from.options_);
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
@@ -12753,7 +12753,7 @@ void MsgCNCreate::Swap(MsgCNCreate* other) {
 void MsgCNCreate::InternalSwap(MsgCNCreate* other) {
   std::swap(mid_, other->mid_);
   std::swap(game_, other->game_);
-  option_.UnsafeArenaSwap(&other->option_);
+  options_.UnsafeArenaSwap(&other->options_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -12793,34 +12793,34 @@ void MsgCNCreate::clear_game() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.game)
 }
 
-// repeated .proto3.key_value option = 3;
-int MsgCNCreate::option_size() const {
-  return option_.size();
+// repeated .proto3.key_value options = 3;
+int MsgCNCreate::options_size() const {
+  return options_.size();
 }
-void MsgCNCreate::clear_option() {
-  option_.Clear();
+void MsgCNCreate::clear_options() {
+  options_.Clear();
 }
-const ::proto3::key_value& MsgCNCreate::option(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.option)
-  return option_.Get(index);
+const ::proto3::key_value& MsgCNCreate::options(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.options)
+  return options_.Get(index);
 }
-::proto3::key_value* MsgCNCreate::mutable_option(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCNCreate.option)
-  return option_.Mutable(index);
+::proto3::key_value* MsgCNCreate::mutable_options(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNCreate.options)
+  return options_.Mutable(index);
 }
-::proto3::key_value* MsgCNCreate::add_option() {
-  // @@protoc_insertion_point(field_add:proto3.MsgCNCreate.option)
-  return option_.Add();
+::proto3::key_value* MsgCNCreate::add_options() {
+  // @@protoc_insertion_point(field_add:proto3.MsgCNCreate.options)
+  return options_.Add();
 }
 ::google::protobuf::RepeatedPtrField< ::proto3::key_value >*
-MsgCNCreate::mutable_option() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNCreate.option)
-  return &option_;
+MsgCNCreate::mutable_options() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNCreate.options)
+  return &options_;
 }
 const ::google::protobuf::RepeatedPtrField< ::proto3::key_value >&
-MsgCNCreate::option() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgCNCreate.option)
-  return option_;
+MsgCNCreate::options() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgCNCreate.options)
+  return options_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

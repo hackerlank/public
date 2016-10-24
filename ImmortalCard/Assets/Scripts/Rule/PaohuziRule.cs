@@ -220,18 +220,16 @@ public class PaohuziRule: GameRule {
 			int MIN_SUITES=7;
 			if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
 			if(allSuites.Count>=MIN_SUITES){
-				/*
-				if(game.category==pb_enum.PhzPeghz){
+				if(Main.Instance.MainPlayer.category==pb_enum.PhzPeghz){
 					//碰胡子判胡
 					output.AddRange(allSuites);
 					return true;
 				}
 				var point=calcPoints(allSuites);
-				if(point>=winPoint(game.category)){
+				if(point>=winPoint(Main.Instance.MainPlayer.category)){
 					output.AddRange(allSuites);
 					return true;
 				}
-				*/
 			}
 		}
 		

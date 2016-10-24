@@ -17,6 +17,7 @@ public class Player {
 	public int				gameId=0;
 	public int				pos=0;
 	public play_t			playData=new play_t();
+	public pb_enum			category;
 
 
 	public MsgNCCreate	msgNCCreate;

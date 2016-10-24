@@ -3599,17 +3599,17 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_enum game() const;
   void set_game(::proto3::pb_enum value);
 
-  // repeated .proto3.key_value option = 3;
-  int option_size() const;
-  void clear_option();
-  static const int kOptionFieldNumber = 3;
-  const ::proto3::key_value& option(int index) const;
-  ::proto3::key_value* mutable_option(int index);
-  ::proto3::key_value* add_option();
+  // repeated .proto3.key_value options = 3;
+  int options_size() const;
+  void clear_options();
+  static const int kOptionsFieldNumber = 3;
+  const ::proto3::key_value& options(int index) const;
+  ::proto3::key_value* mutable_options(int index);
+  ::proto3::key_value* add_options();
   ::google::protobuf::RepeatedPtrField< ::proto3::key_value >*
-      mutable_option();
+      mutable_options();
   const ::google::protobuf::RepeatedPtrField< ::proto3::key_value >&
-      option() const;
+      options() const;
 
   // @@protoc_insertion_point(class_scope:proto3.MsgCNCreate)
  private:
@@ -3620,7 +3620,7 @@ class MsgCNCreate : public ::google::protobuf::MessageLite /* @@protoc_insertion
   bool _is_default_instance_;
   int mid_;
   int game_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::key_value > option_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::key_value > options_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -9018,34 +9018,34 @@ inline void MsgCNCreate::set_game(::proto3::pb_enum value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCNCreate.game)
 }
 
-// repeated .proto3.key_value option = 3;
-inline int MsgCNCreate::option_size() const {
-  return option_.size();
+// repeated .proto3.key_value options = 3;
+inline int MsgCNCreate::options_size() const {
+  return options_.size();
 }
-inline void MsgCNCreate::clear_option() {
-  option_.Clear();
+inline void MsgCNCreate::clear_options() {
+  options_.Clear();
 }
-inline const ::proto3::key_value& MsgCNCreate::option(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.option)
-  return option_.Get(index);
+inline const ::proto3::key_value& MsgCNCreate::options(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNCreate.options)
+  return options_.Get(index);
 }
-inline ::proto3::key_value* MsgCNCreate::mutable_option(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCNCreate.option)
-  return option_.Mutable(index);
+inline ::proto3::key_value* MsgCNCreate::mutable_options(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNCreate.options)
+  return options_.Mutable(index);
 }
-inline ::proto3::key_value* MsgCNCreate::add_option() {
-  // @@protoc_insertion_point(field_add:proto3.MsgCNCreate.option)
-  return option_.Add();
+inline ::proto3::key_value* MsgCNCreate::add_options() {
+  // @@protoc_insertion_point(field_add:proto3.MsgCNCreate.options)
+  return options_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::proto3::key_value >*
-MsgCNCreate::mutable_option() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNCreate.option)
-  return &option_;
+MsgCNCreate::mutable_options() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNCreate.options)
+  return &options_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::proto3::key_value >&
-MsgCNCreate::option() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgCNCreate.option)
-  return option_;
+MsgCNCreate::options() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgCNCreate.options)
+  return options_;
 }
 
 // -------------------------------------------------------------------

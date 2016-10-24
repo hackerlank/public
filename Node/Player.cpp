@@ -30,8 +30,11 @@ void Player::on_read(PBHelper& pb){
                 auto gameptr=Node::sNode->createGame(key,imsg);
                 if(gameptr){
                     int maxRound=1;
-                    for(auto kv:imsg.option()){
+                    for(auto kv:imsg.options()){
                         switch (kv.ikey()) {
+                            case pb_enum::OPTION_CATEGORY:
+                                gameptr->category=(pb_enum)kv.ivalue();
+                                break;
                             case pb_enum::OPTION_ROUND:
                                 maxRound=kv.ivalue();
                                 break;
