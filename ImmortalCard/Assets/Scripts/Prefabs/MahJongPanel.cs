@@ -20,7 +20,7 @@ public class MahJongPanel : GamePanel {
 			string[] Colors={"tong","tiao","wan"};
 			value=Rule.inverseTransformValue(value);
 			if(color<Colors.Length)
-				return string.Format("{0}{1:0}",Colors[color],value);
+				return CardPrefab+"/"+string.Format("{0}{1:0}",Colors[color],value);
 		}
 		return "";
 	}
@@ -207,13 +207,13 @@ public class MahJongPanel : GamePanel {
 		base.Awake();
 
 		var files=new List<string>();
-		files.Add("dong");
-		files.Add("nan");
-		files.Add("xi");
-		files.Add("bei");
-		files.Add("zhong");
-		files.Add("fa");
-		files.Add("bai");
+		files.Add(CardPrefab+"/"+"dong");
+		files.Add(CardPrefab+"/"+"nan");
+		files.Add(CardPrefab+"/"+"xi");
+		files.Add(CardPrefab+"/"+"bei");
+		files.Add(CardPrefab+"/"+"zhong");
+		files.Add(CardPrefab+"/"+"fa");
+		files.Add(CardPrefab+"/"+"bai");
 		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));

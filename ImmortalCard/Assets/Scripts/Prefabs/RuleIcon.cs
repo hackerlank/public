@@ -7,13 +7,13 @@ public class RuleIcon : MonoBehaviour {
 
 	public Image	Icon;
 	public Text		Name;
-	public pb_enum	GameId;
+	public pb_enum	Category;
 	public GameObject	OutLineEfx;
 
 	public void OnGame(){
+		if(EnterPanel.Instance.GameCategory!=null && EnterPanel.Instance.GameCategory!=this)
+			EnterPanel.Instance.GameCategory.OutLineEfx.SetActive(false);
 		OutLineEfx.SetActive(true);
-		if(EnterPanel.Instance.Icon!=null)
-			EnterPanel.Instance.Icon.OutLineEfx.SetActive(false);
-		EnterPanel.Instance.Icon=this;
+		EnterPanel.Instance.GameCategory=this;
 	}
 }

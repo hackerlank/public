@@ -18,7 +18,7 @@ public class PaohuziPanel : GamePanel {
 			string[] Colors={"b","s"};
 			value=Rule.inverseTransformValue(value);
 			if(color<Colors.Length)
-				return string.Format("{0}{1:00}",Colors[color],value);
+				return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
 		}
 		return "";
 	}
@@ -194,7 +194,7 @@ public class PaohuziPanel : GamePanel {
 		Rule=new PaohuziRule();
 
 		var files=new List<string>();
-		files.Add("back");
+		files.Add(CardPrefab+"/"+"back");
 		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));

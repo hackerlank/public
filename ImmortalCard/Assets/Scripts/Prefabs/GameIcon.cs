@@ -7,7 +7,7 @@ public class GameIcon : MonoBehaviour {
 
 	public Image	Icon;
 	public Text		Name;
-	public pb_enum	GameId;
+	public pb_enum	game;
 
 	public void OnGame(){
 		var canvas=gameObject.GetComponentInParent<Canvas>();

@@ -18,7 +18,7 @@ public class DoudeZhuPanel : GamePanel {
 			color-=1;
 			string[] Colors={"c","d","h","s"};
 			value=Rule.inverseTransformValue(value);
-			return string.Format("{0}{1:00}",Colors[color],value);
+			return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
 		}
 		return "";
 	}
@@ -83,9 +83,9 @@ public class DoudeZhuPanel : GamePanel {
 		base.Awake();
 
 		var files=new List<string>();
-		files.Add("back");
-		files.Add("c14");
-		files.Add("d15");
+		files.Add(CardPrefab+"/"+"back");
+		files.Add(CardPrefab+"/"+"c14");
+		files.Add(CardPrefab+"/"+"d15");
 		for(int j=1;j<=4;++j)
 			for(int i=1;i<=13;++i)
 				files.Add(Id2File(j,i));

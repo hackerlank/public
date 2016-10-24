@@ -14,16 +14,10 @@ public class LobbyPanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 
 	void Start(){
-		game_t game=new game_t();
-		int total=8;
-		game.Id=(int)pb_enum.GameDdz;
-		addGame(game);
-		game=new game_t();
-		game.Id=(int)pb_enum.GameMj;
-		addGame(game);
-		for(int i=0;i<total-2;++i){
-			game=new game_t();
-			game.Id=(int)pb_enum.GameMj;
+		var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
+		foreach(var id in games){
+			game_t game=new game_t();
+			game.Id=(int)id;
 			addGame(game);
 		}
 	}
@@ -31,8 +25,16 @@ public class LobbyPanel : MonoBehaviour {
 	void addGame(game_t game){
 		Utils.Load<GameIcon>(GameRoot,delegate(Component obj){
 			var icon=obj as GameIcon;
-			icon.GameId=(pb_enum)game.Id;
-			icon.Name.text=icon.GameId.ToString();
+			icon.game=(pb_enum)game.Id;
+			switch(icon.game){
+			case pb_enum.GameMj:
+				icon.Name.text="Mahjong";	break;
+			case pb_enum.GameDdz:
+				icon.Name.text="DoudeZhu";	break;
+			case pb_enum.GamePhz:
+			default:
+				icon.Name.text="Paohuzi";	break;
+			}
 		});
 	}
 

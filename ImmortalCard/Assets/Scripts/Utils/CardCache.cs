@@ -28,10 +28,9 @@ public class CardCache{
 		foreach(var f in files){
 			if(!sprites.ContainsKey(f)){
 				yield return null;
-				var url=path+"/"+f;
-				Utils.SpriteCreate(url,delegate(Sprite sprite) {
+				Utils.SpriteCreate(f,delegate(Sprite sprite) {
 					if(sprite==null)
-						Debug.LogError("load card failed "+url);
+						Debug.LogError("load card failed "+f);
 					sprites[f]=sprite;
 				});
 			}

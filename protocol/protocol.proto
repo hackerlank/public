@@ -493,8 +493,9 @@ message MsgNCJoin{
 
 pb_msg mid                  =1;
 pb_enum game                =2;
-repeated player_t players   =3;
-pb_enum result              =4;
+pb_enum category            =3;
+repeated player_t players   =4;
+pb_enum result              =5;
 };
 
 message MsgCNReady{

@@ -146,7 +146,7 @@ public class MahJongRule: GameRule {
 		cards.Add(card);
 		cards.Sort(Main.Instance.gameController.Rule.comparision);
 
-		var len=cards.Count;
+		var len=cards.Count-1;
 		for(int i=0;i<len;++i){
 			var A=cards[i+0];
 			var B=cards[i+1];

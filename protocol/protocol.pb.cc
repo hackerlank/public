@@ -13426,6 +13426,7 @@ void MsgCNJoin::clear_game_id() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCJoin::kMidFieldNumber;
 const int MsgNCJoin::kGameFieldNumber;
+const int MsgNCJoin::kCategoryFieldNumber;
 const int MsgNCJoin::kPlayersFieldNumber;
 const int MsgNCJoin::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -13453,6 +13454,7 @@ void MsgNCJoin::SharedCtor() {
   _cached_size_ = 0;
   mid_ = 0;
   game_ = 0;
+  category_ = 0;
   result_ = 0;
 }
 
@@ -13513,7 +13515,7 @@ void MsgNCJoin::Clear() {
 } while (0)
 
   ZR_(mid_, game_);
-  result_ = 0;
+  ZR_(category_, result_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -13558,13 +13560,29 @@ bool MsgNCJoin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_players;
+        if (input->ExpectTag(24)) goto parse_category;
         break;
       }
 
-      // repeated .proto3.player_t players = 3;
+      // optional .proto3.pb_enum category = 3;
       case 3: {
-        if (tag == 26) {
+        if (tag == 24) {
+         parse_category:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_category(static_cast< ::proto3::pb_enum >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_players;
+        break;
+      }
+
+      // repeated .proto3.player_t players = 4;
+      case 4: {
+        if (tag == 34) {
          parse_players:
           DO_(input->IncrementRecursionDepth());
          parse_loop_players:
@@ -13573,15 +13591,15 @@ bool MsgNCJoin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_loop_players;
+        if (input->ExpectTag(34)) goto parse_loop_players;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(32)) goto parse_result;
+        if (input->ExpectTag(40)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 4;
-      case 4: {
-        if (tag == 32) {
+      // optional .proto3.pb_enum result = 5;
+      case 5: {
+        if (tag == 40) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -13631,16 +13649,22 @@ void MsgNCJoin::SerializeWithCachedSizes(
       2, this->game(), output);
   }
 
-  // repeated .proto3.player_t players = 3;
-  for (unsigned int i = 0, n = this->players_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->players(i), output);
+  // optional .proto3.pb_enum category = 3;
+  if (this->category() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      3, this->category(), output);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // repeated .proto3.player_t players = 4;
+  for (unsigned int i = 0, n = this->players_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      4, this->players(i), output);
+  }
+
+  // optional .proto3.pb_enum result = 5;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->result(), output);
+      5, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCJoin)
@@ -13662,13 +13686,19 @@ int MsgNCJoin::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->game());
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum category = 3;
+  if (this->category() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->category());
+  }
+
+  // optional .proto3.pb_enum result = 5;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.player_t players = 3;
+  // repeated .proto3.player_t players = 4;
   total_size += 1 * this->players_size();
   for (int i = 0; i < this->players_size(); i++) {
     total_size +=
@@ -13699,6 +13729,9 @@ void MsgNCJoin::MergeFrom(const MsgNCJoin& from) {
   if (from.game() != 0) {
     set_game(from.game());
   }
+  if (from.category() != 0) {
+    set_category(from.category());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -13723,6 +13756,7 @@ void MsgNCJoin::Swap(MsgNCJoin* other) {
 void MsgNCJoin::InternalSwap(MsgNCJoin* other) {
   std::swap(mid_, other->mid_);
   std::swap(game_, other->game_);
+  std::swap(category_, other->category_);
   players_.UnsafeArenaSwap(&other->players_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -13764,7 +13798,21 @@ void MsgNCJoin::clear_game() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.game)
 }
 
-// repeated .proto3.player_t players = 3;
+// optional .proto3.pb_enum category = 3;
+void MsgNCJoin::clear_category() {
+  category_ = 0;
+}
+ ::proto3::pb_enum MsgNCJoin::category() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCJoin.category)
+  return static_cast< ::proto3::pb_enum >(category_);
+}
+ void MsgNCJoin::set_category(::proto3::pb_enum value) {
+  
+  category_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.category)
+}
+
+// repeated .proto3.player_t players = 4;
 int MsgNCJoin::players_size() const {
   return players_.size();
 }
@@ -13794,7 +13842,7 @@ MsgNCJoin::players() const {
   return players_;
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 5;
 void MsgNCJoin::clear_result() {
   result_ = 0;
 }
