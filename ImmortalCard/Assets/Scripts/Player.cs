@@ -18,7 +18,7 @@ public class Player {
 	public int				pos=0;
 	public play_t			playData=new play_t();
 	public pb_enum			category;
-
+	public List<int>		unpairedCards=new List<int>();
 
 	public MsgNCCreate	msgNCCreate;
 	public MsgNCJoin	msgNCJoin;

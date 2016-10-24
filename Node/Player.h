@@ -24,6 +24,9 @@ public:
     std::shared_ptr<Game>   game;
     proto3::play_t                                  playData;   //gameplay data
     std::shared_ptr<google::protobuf::MessageLite>  lastMsg;
+    
+    //special
+    std::vector<unit_id_t>  unpairedCards;
 private:
     std::shared_ptr<keye::svc_handler>              spsh;
 };

@@ -48,7 +48,7 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
-void Paohuzi::meld(Game& game,pos_t pos,unit_id_t card,proto3::bunch_t& bunch){
+void Paohuzi::meld(Game& game,pos_t pos,unit_id_t card,bunch_t& bunch){
     auto& player=*game.players[pos];
     //erase from hands
     auto& hands=*player.playData.mutable_hands();
@@ -70,7 +70,7 @@ void Paohuzi::meld(Game& game,pos_t pos,unit_id_t card,proto3::bunch_t& bunch){
     changePos(game,pos);
 }
 
-bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<proto3::bunch_t>& output){
+bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<bunch_t>& output){
     auto player=game.players[pos];
     auto& playdata=game.players[pos]->playData;
     auto& suite=*playdata.mutable_bunch();
@@ -501,7 +501,7 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
     }
 }
 
-bool Paohuzi::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
+bool Paohuzi::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,bunch_t& src_bunch){
     //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
    
     auto count=bunches.size();
@@ -601,27 +601,332 @@ bool Paohuzi::validId(uint id){
     return true;
 }
 
-int Paohuzi::winPoint(Game&,proto3::pb_enum){
-    return 1;
+void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
+    /*
+    card_t::eAchievment archievment=card_t::eAchievment::WIN_NORMAL;
+    auto& allCards=_desk->allCards;
+    //统计工作
+    int red=0,big=0,small=0;
+    auto pair=true;
+    auto last=false;
+    std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
+    for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
+        for(auto j=i->cards.begin(),jj=i->cards.end(); j!=jj; ++j){
+            //红牌
+            auto& A=allCards[*j];
+            auto v=A.value;
+            if(v==2||v==7||v==10){
+                ++red;
+                ++redmap[v];
+            }
+            //大小牌
+            if(A.small)++small;
+            else ++big;
+            //海底牌
+            if(_desk->_lastCard==*j)last=true;
+        }
+        //对子
+        int ops=i->ops;	ops=fixOps((pb_enum)ops);
+        if(pair&&(ops==pb_enum::AaA||ops==pb_enum::PHZ_ABC||ops==pb_enum::UNKNOWN))pair=false;
+    }
+    
+    //海胡
+    if(last){
+        if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_GX){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_LAST;
+            ach.multiple=nnn[ach.type][rule];
+        }
+    }
+    
+    //红乌
+    if(red>=10&&(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_XX_GHZ)){
+        avs.push_back(AchievementData());
+        auto& ach=avs.back();
+        if(red>=13){
+            ach.type=card_t::eAchievment::WIN_13RED;
+            ach.points=nnn[ach.type][rule];
+        } else{
+            ach.type=card_t::eAchievment::WIN_RED;
+            ach.multiple=nnn[ach.type][rule];
+        }
+    }
+    if(red>=10&&(rule==pb_enum::PHZ_SY)){
+        avs.push_back(AchievementData());
+        auto& ach=avs.back();
+        ach.type=card_t::eAchievment::WIN_RED;
+        ach.multiple=nnn[ach.type][rule];
+    }
+    //红胡
+    if(red>=10&&(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT)){
+        avs.push_back(AchievementData());
+        auto& ach=avs.back();
+        ach.type=card_t::eAchievment::WIN_RED;
+        ach.multiple=nnn[ach.type][rule];
+        ach.multiple+=(red-10);
+    }
+    if(rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_HHD){
+        if(red>=13&&rule!=pb_enum::PHZ_HH){
+            //红乌
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_13RED;
+            ach.multiple=nnn[ach.type][rule];
+        }else if(red>=10){
+            //红胡
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_RED;
+            ach.multiple=nnn[ach.type][rule];
+            if(rule==pb_enum::PHZ_HH)
+                ach.multiple+=(red-10);
+        }
+    }
+    if(red==2){
+        //双飘
+        if(rule==pb_enum::PHZ_CS){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_2RED_;
+            ach.multiple=nnn[ach.type][rule];
+        }
+    } else if(red==1){
+        //点胡
+        if(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT||
+           rule==pb_enum::PHZ_CD_HHD||rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_SINGLE;
+            ach.multiple=nnn[ach.type][rule];
+        }
+    } else if(red==0){
+        //黑胡
+        if(rule==pb_enum::PHZ_SY||rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH||
+           rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_CD_HHD||
+           rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_XX_GHZ){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_BLACK;
+            if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_XX_GHZ)
+                ach.points=nnn[ach.type][rule];
+            else
+                ach.multiple=nnn[ach.type][rule];
+        }
+    }
+    //二三四比
+    if(rule==pb_enum::PHZ_CS){
+        if(red==2&&(redmap[2]==2&&redmap[7]==0&&redmap[10]==0||
+                    redmap[2]==0&&redmap[7]==2&&redmap[10]==0||
+                    redmap[2]==0&&redmap[7]==0&&redmap[10]==2)){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_2RED;
+            ach.multiple=nnn[ach.type][rule];
+        }else if(red==3&&(redmap[2]==3&&redmap[7]==0&&redmap[10]==0||
+                          redmap[2]==0&&redmap[7]==3&&redmap[10]==0||
+                          redmap[2]==0&&redmap[7]==0&&redmap[10]==3)){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_3RED;
+            ach.multiple=nnn[ach.type][rule];
+        }else if(red==4&&(redmap[2]==4&&redmap[7]==0&&redmap[10]==0||
+                          redmap[2]==0&&redmap[7]==4&&redmap[10]==0||
+                          redmap[2]==0&&redmap[7]==0&&redmap[10]==4)){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_4RED;
+            ach.multiple=nnn[ach.type][rule];
+        }
+    }
+    //一块匾
+    int _count=0;
+    for(auto ic=suites.begin(),icc=suites.end();ic!=icc;++ic){
+        //考虑到可能最后是吃，碰，跑，提偎等赢的，应该首先把应的状态去掉在做下边的处理即可
+        auto res=fixOps(ic->ops);
+        if(res!=pb_enum::PHZ_ABC&&res!=pb_enum::AaA&&res!=pb_enum::PHZ_AAA&&res!=pb_enum::PHZ_AAAwei&&res!=pb_enum::PHZ_AAAchou&&res!=pb_enum::PHZ_BBB&&res!=pb_enum::PHZ_AAAA&&res!=pb_enum::PHZ_AAAAstart&&res!=pb_enum::PHZ_BBB_B&&res!=pb_enum::PHZ_AAAAdesk)
+            continue;
+        int count=0;
+        for(auto iv=ic->cards.begin(),ivv=ic->cards.end();iv!=ivv;++iv){
+            auto A=allCards[*iv];
+            if(A.value==2||A.value==7||A.value==10){
+                count++;
+            }
+        }
+        if((count==3||count==4)&&(red==3||red==4)){
+            _count++;
+        }
+    }
+    if(_count==1&&rule==pb_enum::PHZ_LD){
+        avs.push_back(AchievementData());
+        auto& ach=avs.back();
+        ach.type=card_t::eAchievment::WIN_PLATE;
+        ach.multiple=nnn[ach.type][rule];
+    }
+    //if((red==3||red==4)&&rule==pb_enum::PHZ_LD){
+    //if(redmap[2]==1&&redmap[7]==1&&redmap[10]==1||
+    //(redmap[2] ==3||redmap[2] ==4)&&redmap[7]==0&&redmap[10]==0||
+    //(redmap[7] ==3||redmap[7] ==4)&&redmap[2]==0&&redmap[10]==0||
+    //(redmap[10]==3||redmap[10]==4)&&redmap[2]==0&&redmap[7] ==0){
+    //进一步判断2,7,10是否是一个完整的组合，如果是则添加名堂，否则不添加名堂
+    //avs.push_back(AchievementData());
+    //auto& ach=avs.back();
+    //ach.type=card_t::eAchievment::WIN_PLATE;
+    //ach.multiple=nnn[ach.type][rule];
+    //}
+    //}
+    //大小胡
+    if(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_HH){
+        if(big>=18){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_BIG;
+            ach.multiple=nnn[ach.type][rule];
+            ach.multiple+=big-18;
+        }
+        int S=(rule==pb_enum::PHZ_CS?18:16);
+        if(small>=S){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_SMALL;
+            ach.multiple=nnn[ach.type][rule];
+            ach.multiple+=small-S;
+        }
+    }
+    //对胡
+    if(pair){
+        if(rule==pb_enum::PHZ_CS||
+           rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT){
+            avs.push_back(AchievementData());
+            auto& ach=avs.back();
+            ach.type=card_t::eAchievment::WIN_PAIR;
+            ach.multiple=nnn[ach.type][rule];
+        }
+    }
+    */
 }
-int Paohuzi::calcScore(Game&,proto3::pb_enum,int points){
-    return 1;
+
+int Paohuzi::winPoint(Game&,pb_enum rule){
+    int point=10;
+    switch(rule){
+        case pb_enum::PHZ_LD:		//娄底放炮
+        case pb_enum::PHZ_HH:		//怀化红拐弯
+        case pb_enum::PHZ_CD_QMT:	//常德全名堂
+        case pb_enum::PHZ_CD_HHD:	//常德红黑点
+        case pb_enum::PHZ_CS:		//长沙跑胡子
+        case pb_enum::PHZ_XX_GHZ:	//湘乡告胡子
+            point=15;	break;
+        case pb_enum::PHZ_CZ:		//郴州毛胡子
+            point=9;	break;
+        case pb_enum::PHZ_HY:		//衡阳六条枪
+            point=6;	break;
+        case pb_enum::PHZ_GX:		//广西
+            point=10;	break;
+        case pb_enum::PHZ_SY:		//邵阳字牌
+        case pb_enum::PHZ_SYBP:     //邵阳剥皮
+        default:
+            break;
+    }
+    return point;
 }
-int Paohuzi::calcPoints(Game&,std::vector<proto3::bunch_t>&){
-    return 1;
+
+int Paohuzi::calcScore(Game&,pb_enum rule,int points){
+    int score=0;
+    switch(rule){
+        case pb_enum::PHZ_HH:		//怀化红拐弯
+        case pb_enum::PHZ_CD_QMT:	//常德全名堂
+        case pb_enum::PHZ_CD_HHD:	//常德红黑点
+        case pb_enum::PHZ_CS:		//长沙跑胡子
+            score=(points-12)/3;	//(x-15)/3+1
+            break;
+        case pb_enum::PHZ_SY:		//邵阳字牌
+            score=(points-5)/5;		//(x-10)/5+1
+            if(pb_enum::PHZ_SY==rule&&score>0)
+                ++score;
+            break;
+        case pb_enum::PHZ_CZ: //郴州毛胡子
+            score=(points-6)/3;
+            break;
+        case pb_enum::PHZ_HY:		//衡阳六条枪
+            score=(points-3)/3;
+            break;
+        case pb_enum::PHZ_GX:		//广西
+            score=(points-5)/5;
+            break;
+        case pb_enum::PHZ_LD:		//娄底放炮
+        case pb_enum::PHZ_SYBP:	//邵阳剥皮
+        case pb_enum::PHZ_XX_GHZ: //湘乡告胡子
+        default:
+            score=points;
+            break;
+    }
+    if(score<0)score=0;
+    return score;
 }
-int Paohuzi::calcPoints(Game&,pos_t){
-    return 1;
+
+int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
+    int point=0;
+    for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
+        auto& suite=*i;
+        if(suite.pawns().empty())continue;
+        auto small=suite.pawns(0)/1000;
+        int pt=0;
+        switch(fixOps(suite.type())){
+            case pb_enum::PHZ_AAAA:
+            case pb_enum::PHZ_AAAAstart:
+            case pb_enum::PHZ_AAAAdesk:
+                pt+=(small?9:12);
+                break;
+            case pb_enum::PHZ_BBBBdesk:
+            case pb_enum::PHZ_BBB_B:
+                pt+=(small?6:9);
+                break;
+            case pb_enum::PHZ_AAAwei:
+            case pb_enum::PHZ_AAA:
+            case pb_enum::PHZ_AAAchou:
+                pt+=(small?3:6);
+                break;
+            case pb_enum::PHZ_BBB:
+                pt+=(small?1:3);
+                break;
+            case pb_enum::PHZ_ABC:{
+                std::vector<unit_id_t> sl(suite.pawns().begin(),suite.pawns().end());
+                std::sort(sl.begin(),sl.end());
+                auto A=sl[0];
+                auto B=sl[1];
+                if(A%100==1 || (A%100==2&&B%100==7))
+                    pt+=(small?3:6);
+                break;
+            }
+            default:
+                break;
+        }
+        point+=pt;
+        //log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
+    }
+    return point;
 }
-bool Paohuzi::chouWei(Game&,pos_t,proto3::bunch_t&){
-    return true;
+
+bool Paohuzi::chouWei(Game& game,pos_t pos,bunch_t& bunch){
+    auto player=game.players[pos];
+    //臭偎
+    auto& vp=player->unpairedCards;
+    auto n=bunch.pawns(0);
+    for(auto i=vp.begin(),ii=vp.end(); i!=ii; ++i){
+        auto m=*i;
+        if(m%100==n%100&&m/1000==n/1000){
+            //vp.erase(i);
+            return true;
+        }
+    }
+    return false;
 }
 
 void Paohuzi::test(){
     Paohuzi ddz;
     Game game;
     ddz.deal(game);
-    proto3::bunch_t A,B;
+    bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);
     std::vector<uint> va{5,6,7,8,9};

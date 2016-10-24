@@ -33,6 +33,7 @@ private:
     proto3::pb_enum         verifyBunch(Game&,proto3::bunch_t&);
     virtual void            meld(Game& game,pos_t,unit_id_t,proto3::bunch_t&);
     
+    void                    calcAchievement(Game&,proto3::pb_enum,const std::vector<proto3::bunch_t>&,std::vector<proto3::achv_t>&);
     int						winPoint(Game&,proto3::pb_enum);
     int						calcScore(Game&,proto3::pb_enum,int points);
     int						calcPoints(Game&,std::vector<proto3::bunch_t>&);

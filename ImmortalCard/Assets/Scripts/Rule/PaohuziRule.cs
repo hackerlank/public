@@ -359,7 +359,7 @@ public class PaohuziRule: GameRule {
 			else
 				hints.Type=(bDraw&&myself?pb_enum.PhzAaaa:pb_enum.PhzBbbB);
 			//臭偎
-			if(hints.Type==pb_enum.PhzAaawei&&chouWei(pos,hints))
+			if(hints.Type==pb_enum.PhzAaawei && chouWei(player,hints))
 				hints.Type=pb_enum.PhzAaachou;
 			return true;
 		}
@@ -613,19 +613,118 @@ public class PaohuziRule: GameRule {
 	}
 
 	int winPoint(pb_enum category){
-		return 1;
+		int point=10;
+		switch(category){
+		case pb_enum.PhzLd:		//娄底放炮
+		case pb_enum.PhzHh:		//怀化红拐弯
+		case pb_enum.PhzCdQmt:	//常德全名堂
+		case pb_enum.PhzCdHhd:	//常德红黑点
+		case pb_enum.PhzCs:		//长沙跑胡子
+		case pb_enum.PhzXxGhz:	//湘乡告胡子
+			point=15;	break;
+		case pb_enum.PhzCz:		//郴州毛胡子
+			point=9;	break;
+		case pb_enum.PhzHy:		//衡阳六条枪
+			point=6;	break;
+		case pb_enum.PhzGx:		//广西
+			point=10;	break;
+		case pb_enum.PhzSy:		//邵阳字牌
+		case pb_enum.PhzSybp:     //邵阳剥皮
+		default:
+			break;
+		}
+		return point;
 	}
+
 	int calcScore(pb_enum category,int points){
-		return 1;
+		int score=0;
+		switch(category){
+		case pb_enum.PhzHh:		//怀化红拐弯
+		case pb_enum.PhzCdQmt:	//常德全名堂
+		case pb_enum.PhzCdHhd:	//常德红黑点
+		case pb_enum.PhzCs:		//长沙跑胡子
+			score=(points-12)/3;	//(x-15)/3+1
+			break;
+		case pb_enum.PhzSy:		//邵阳字牌
+			score=(points-5)/5;		//(x-10)/5+1
+			if(score>0)
+				++score;
+			break;
+		case pb_enum.PhzCz: //郴州毛胡子
+			score=(points-6)/3;
+			break;
+		case pb_enum.PhzHy:		//衡阳六条枪
+			score=(points-3)/3;
+			break;
+		case pb_enum.PhzGx:		//广西
+			score=(points-5)/5;
+			break;
+		case pb_enum.PhzLd:		//娄底放炮
+		case pb_enum.PhzSybp:	//邵阳剥皮
+		case pb_enum.PhzXxGhz: //湘乡告胡子
+		default:
+			score=points;
+			break;
+		}
+		if(score<0)score=0;
+		return score;
 	}
-	int calcPoints(List<bunch_t> l){
-		return 1;
+
+	int calcPoints(List<bunch_t> allSuites){
+		int point=0;
+		foreach(var i in allSuites){
+			var suite=i;
+			if(suite.Pawns.Count<=0)continue;
+			var small=(1==suite.Pawns[0]/1000);
+			int pt=0;
+			switch(fixOps(suite.Type)){
+			case pb_enum.PhzAaaa:
+			case pb_enum.PhzAaaastart:
+			case pb_enum.PhzAaaadesk:
+				pt+=(small?9:12);
+				break;
+			case pb_enum.PhzBbbbdesk:
+			case pb_enum.PhzBbbB:
+				pt+=(small?6:9);
+				break;
+			case pb_enum.PhzAaawei:
+			case pb_enum.PhzAaa:
+			case pb_enum.PhzAaachou:
+				pt+=(small?3:6);
+				break;
+			case pb_enum.PhzBbb:
+				pt+=(small?1:3);
+				break;
+			case pb_enum.PhzAbc:{
+				List<int> sl=new List<int>(suite.Pawns);
+				sl.Sort(comparision);
+				var A=sl[0];
+				var B=sl[1];
+				if(A%100==1 || (A%100==2&&B%100==7))
+					pt+=(small?3:6);
+				break;
+			}
+			default:
+				break;
+			}
+			point+=pt;
+			//log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
+		}
+		return point;
 	}
-	int calcPoints(int pos){
-		return 1;
-	}
-	bool chouWei(int pos,bunch_t bunch){
-		return true;
+
+	bool chouWei(Player player,bunch_t bunch){
+		//臭偎
+		var vp=player.unpairedCards;
+		var n=bunch.Pawns[0];
+		foreach(var i in vp){
+			var m=i;
+			if(m%100==n%100&&m/1000==n/1000){
+				//vp.erase(i);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public override PlayerController AIController{
