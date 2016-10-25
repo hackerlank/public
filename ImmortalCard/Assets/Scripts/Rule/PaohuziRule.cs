@@ -36,7 +36,7 @@ public class PaohuziRule: GameRule {
 	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
-		var hands=player.playData.Hands;
+		var hands=new List<int>(player.playData.Hands);
 		if(player==null||src_bunch==null||hands.Count<=0)
 			return hints;
 
@@ -46,24 +46,30 @@ public class PaohuziRule: GameRule {
 			return hints;
 		}
 
-		/*
-		var id=src_bunch.Pawns[0];
-		var A=id;
-		List<bunch_t> output=new List<bunch_t>();
+		var card=src_bunch.Pawns[0];
+		var bDraw=src_bunch.Type==pb_enum.BunchA;
+
 		//hint3
-		if(hint3()){
-
-		}else if(hint2()){
-
-		}else if(IsGameOver(player,id,output)){
-			//game over
-			var bunch=new bunch_t();
-			bunch.Pos=pos;
-			bunch.Type=pb_enum.BunchWin;
-			bunch.Pawns.Add(id);
-			hints.Add(bunch);
+		var output=new bunch_t();
+		if(hint3(player,card,output,bDraw)){
+			hints.Add(output);
 		}
-		*/
+
+		//hint
+		if(!bDraw&&hint(card,hands,hints)){
+
+		}
+
+		var all=new List<bunch_t>();
+		if(IsGameOver(player,card,all,bDraw)){
+			//game over
+			output=new bunch_t();
+			output.Pos=pos;
+			output.Type=pb_enum.BunchWin;
+			output.Pawns.Add(card);
+			hints.Add(output);
+		}
+
 		var count=hints.Count;
 		if(count>0){
 			string str="hint "+count+",pos="+pos+",";
@@ -380,7 +386,7 @@ public class PaohuziRule: GameRule {
 		return false;
 	}
 	
-	void hint(int card,List<int> _hand,List<bunch_t> hints){
+	bool hint(int card,List<int> _hand,List<bunch_t> hints){
 		//这张牌可能的所有组合：句,绞
 		var jiao=new List<int>();
 		var same=new List<int>();
@@ -511,6 +517,7 @@ public class PaohuziRule: GameRule {
 				//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
 			}
 		}
+		return hints.Count>0;
 	}
 	
 

@@ -68,13 +68,6 @@ public class PaohuziAIController:PlayerController{
 
 				//discard
 				var discard=player.playData.Hands[0];
-				foreach(var hand in player.playData.Hands){
-					//huazhu
-					if(hand/1000==player.playData.SelectedCard/1000){
-						discard=hand;
-						break;
-					}
-				}
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				omsgDiscard.Bunch=new bunch_t();

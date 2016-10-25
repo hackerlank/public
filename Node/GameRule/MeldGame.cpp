@@ -196,8 +196,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     auto ops=pending.bunch.type();
     pending.bunch.CopyFrom(curr);
     //restore pending ops for draw
-    if(pending.bunch.type()==pb_enum::OP_PASS)
-        pending.bunch.set_type(ops);
+    //if(pending.bunch.type()==pb_enum::OP_PASS)pending.bunch.set_type(ops);
     
     int ready=0;
     for(auto& p:pendingMeld)if(p.arrived)++ready;

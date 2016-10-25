@@ -264,6 +264,8 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
                     bt=bunch.type();
             }
             break;
+        case pb_enum::OP_PASS:
+            bt=bunch.type();
         default:
             break;
     }
