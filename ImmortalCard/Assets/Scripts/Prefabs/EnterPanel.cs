@@ -82,6 +82,10 @@ public class EnterPanel : MonoBehaviour {
 
 	public void OnLog(){
 	}
+	
+	public void OnTest(){
+		DefinedCards.gameObject.SetActive(!DefinedCards.gameObject.activeSelf);
+	}
 
 	public void OnBack(){
 		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj){

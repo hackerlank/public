@@ -222,46 +222,6 @@ public class PaohuziPanel : GamePanel {
 				sorted.Add(new List<int>(all[j]));
 				all[i].Clear();
 				all[j].Clear();
-			}else if(all[i+1].Count>0 && all[i+6].Count>0 && all[i+9].Count>0){
-				//2,7,10
-				var b=new List<int>();
-				b.Add(all[i+1][0]);
-				b.Add(all[i+6][0]);
-				b.Add(all[i+9][0]);
-				all[i+1].RemoveAt(0);
-				all[i+6].RemoveAt(0);
-				all[i+9].RemoveAt(0);
-				sorted.Add(b);
-			}else if(all[j+1].Count>0 && all[j+6].Count>0 && all[j+9].Count>0){
-				//2,7,10
-				var b=new List<int>();
-				b.Add(all[j+1][0]);
-				b.Add(all[j+6][0]);
-				b.Add(all[j+9][0]);
-				all[j+1].RemoveAt(0);
-				all[j+6].RemoveAt(0);
-				all[j+9].RemoveAt(0);
-				sorted.Add(b);
-			}else if(all[i].Count>0 && all[i+1].Count>0 && all[i+2].Count>0){
-				//1,2,3
-				var b=new List<int>();
-				b.Add(all[i+0][0]);
-				b.Add(all[i+1][0]);
-				b.Add(all[i+2][0]);
-				all[i+1].RemoveAt(0);
-				all[i+6].RemoveAt(0);
-				all[i+9].RemoveAt(0);
-				sorted.Add(b);
-			}else if(all[j].Count>0 && all[j+1].Count>0 && all[j+2].Count>0){
-				//1,2,3
-				var b=new List<int>();
-				b.Add(all[j+0][0]);
-				b.Add(all[j+1][0]);
-				b.Add(all[j+2][0]);
-				all[i+0].RemoveAt(0);
-				all[i+1].RemoveAt(0);
-				all[i+2].RemoveAt(0);
-				sorted.Add(b);
 			}else if(all[i].Count==2){
 				//AA
 				sorted.Add(new List<int>(all[i]));
@@ -272,19 +232,68 @@ public class PaohuziPanel : GamePanel {
 				all[j].Clear();
 			}
 		}
+
+		int x=0;
+		var y=x+10;
+		if(all[x+1].Count>0 && all[x+6].Count>0 && all[x+9].Count>0){
+			//2,7,10
+			var b=new List<int>();
+			b.Add(all[x+1][0]);
+			b.Add(all[x+6][0]);
+			b.Add(all[x+9][0]);
+			all[x+1].RemoveAt(0);
+			all[x+6].RemoveAt(0);
+			all[x+9].RemoveAt(0);
+			sorted.Add(b);
+		}else if(all[y+1].Count>0 && all[y+6].Count>0 && all[y+9].Count>0){
+			//2,7,10
+			var b=new List<int>();
+			b.Add(all[y+1][0]);
+			b.Add(all[y+6][0]);
+			b.Add(all[y+9][0]);
+			all[y+1].RemoveAt(0);
+			all[y+6].RemoveAt(0);
+			all[y+9].RemoveAt(0);
+			sorted.Add(b);
+		}else if(all[x].Count>0 && all[x+1].Count>0 && all[x+2].Count>0){
+			//1,2,3
+			var b=new List<int>();
+			b.Add(all[x+0][0]);
+			b.Add(all[x+1][0]);
+			b.Add(all[x+2][0]);
+			all[x+0].RemoveAt(0);
+			all[x+1].RemoveAt(0);
+			all[x+2].RemoveAt(0);
+			sorted.Add(b);
+		}else if(all[y].Count>0 && all[y+1].Count>0 && all[y+2].Count>0){
+			//1,2,3
+			var b=new List<int>();
+			b.Add(all[y+0][0]);
+			b.Add(all[y+1][0]);
+			b.Add(all[y+2][0]);
+			all[y+0].RemoveAt(0);
+			all[y+1].RemoveAt(0);
+			all[y+2].RemoveAt(0);
+			sorted.Add(b);
+		}
+
 		//deliver the rest by average
 		List<int> rest=new List<int>();
 		for(int i=0;i<20;++i)if(all[i].Count>0)rest.Add(all[i][0]);
 
 		int iRest=0;
+		//emptyColume could not be 0: 20/2=10; cardsPerColume as well
 		int emptyColume=11-sorted.Count;
-		int cardsPerColume=rest.Count/emptyColume;
-		var first=rest.Count-cardsPerColume*emptyColume;
-		for(int i=0;i<emptyColume;++i){
-			var b=new List<int>();
-			int J=(i==0?first:cardsPerColume);
-			for(int j=0;j<J;++j)b.Add(iRest++);
-			sorted.Add(b);
+		int columes=Mathf.Min(rest.Count,emptyColume);
+		if(columes>0){
+			int cardsPerColume=rest.Count/columes;
+			for(int i=0;i<columes;++i){
+				var b=new List<int>();
+				int J=cardsPerColume;
+				if(i==0)J+=rest.Count-cardsPerColume*columes;
+				for(int j=0;j<J;++j)b.Add(rest[iRest++]);
+				sorted.Add(b);
+			}
 		}
 		//insert blank if need
 		foreach(var s in sorted)
