@@ -60,9 +60,9 @@ void DoudeZhu::initCard(Game& game){
     }
 }
 
-bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
+bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,Player& player,proto3::bunch_t& src_bunch){
     //C(17,8) = 24310; C(17,2) = 136
-    auto& hands=game.players[pos]->playData.hands();
+    auto& hands=player.playData.hands();
     auto& bunch=*bunches.Add();
     bunch.CopyFrom(src_bunch);
     
@@ -181,7 +181,7 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
     }
 
 
-    bunch.set_pos(pos);
+    bunch.set_pos(player.pos);
     if(!ids_.empty()){
         bunch.set_type(pb_enum::BUNCH_A);
         for(auto id:ids_)bunch.mutable_pawns()->Add(id);

@@ -22,7 +22,7 @@ protected:
     virtual int         maxHands();
     virtual int         bottom();
     
-    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,pos_t,proto3::bunch_t&);
+    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
 private:
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);

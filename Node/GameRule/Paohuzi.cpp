@@ -48,9 +48,9 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
-void Paohuzi::meld(Game& game,pos_t pos,unit_id_t card,bunch_t& bunch){
-    auto& player=*game.players[pos];
+void Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     //erase from hands
+    auto pos=player.pos;
     auto& hands=*player.playData.mutable_hands();
     for(auto j:bunch.pawns()){
         for(auto i=hands.begin();i!=hands.end();++i){
@@ -70,11 +70,11 @@ void Paohuzi::meld(Game& game,pos_t pos,unit_id_t card,bunch_t& bunch){
     changePos(game,pos);
 }
 
-bool Paohuzi::isGameOver(Game& game,pos_t pos,unit_id_t card,std::vector<bunch_t>& output){
-    auto player=game.players[pos];
+bool Paohuzi::isGameOver(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){
+    auto pos=player.pos;
     auto& playdata=game.players[pos]->playData;
     auto& suite=*playdata.mutable_bunch();
-    auto& hands=player->playData.hands();
+    auto& hands=player.playData.hands();
     if(hands.size()<2){
         KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
         return false;
@@ -327,9 +327,10 @@ bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bu
     return true;
 }
 
-bool Paohuzi::hint3(Game& game,pos_t pos,unit_id_t card,bunch_t& hints){
+bool Paohuzi::hint3(Game& game,Player& player,unit_id_t card,bunch_t& hints){
     //all possible AAA,AAAA,BBB,BBBB like
-    auto& playdata=game.players[pos]->playData;
+    auto& playdata=player.playData;
+    auto pos=player.pos;
     auto& hand=*playdata.mutable_hands();
     auto& suite=*playdata.mutable_bunch();
 
@@ -358,7 +359,7 @@ bool Paohuzi::hint3(Game& game,pos_t pos,unit_id_t card,bunch_t& hints){
         else
             hints.set_type((bDraw&&myself?pb_enum::PHZ_AAAA:pb_enum::PHZ_BBB_B));
         //臭偎
-        if(hints.type()==pb_enum::PHZ_AAAwei&&chouWei(game,pos,hints))
+        if(hints.type()==pb_enum::PHZ_AAAwei&&chouWei(game,player,hints))
             hints.set_type(pb_enum::PHZ_AAAchou);
         return true;
     }
@@ -510,9 +511,9 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
     }
 }
 
-bool Paohuzi::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,bunch_t& src_bunch){
+bool Paohuzi::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,Player& player,bunch_t& src_bunch){
     //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
-   
+    auto pos=player.pos;
     auto count=bunches.size();
     if(count>0){
         std::string str,ss;
@@ -916,10 +917,9 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
     return point;
 }
 
-bool Paohuzi::chouWei(Game& game,pos_t pos,bunch_t& bunch){
-    auto player=game.players[pos];
+bool Paohuzi::chouWei(Game& game,Player& player,bunch_t& bunch){
     //臭偎
-    auto& vp=player->unpairedCards;
+    auto& vp=player.unpairedCards;
     auto n=bunch.pawns(0);
     for(auto i=vp.begin(),ii=vp.end(); i!=ii; ++i){
         auto m=*i;

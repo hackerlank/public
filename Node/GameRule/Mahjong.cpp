@@ -31,7 +31,7 @@ int Mahjong::bottom(){
 }
 
 void Mahjong::deal(Game& game){
-    GameRule::deal(game);
+    MeldGame::deal(game);
     for(auto p:game.players)p->engaged=false;
 }
 
@@ -47,9 +47,9 @@ void Mahjong::initCard(Game& game){
     }
 }
 
-void Mahjong::meld(Game& game,pos_t pos,unit_id_t card,proto3::bunch_t& bunch){
+void Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
     auto ret=bunch.type();
-    auto& player=*game.players[pos];
+    auto pos=player.pos;
     if(ret==pb_enum::BUNCH_A){
         //collect after draw
         player.playData.mutable_hands()->Add(card);
@@ -80,9 +80,8 @@ void Mahjong::meld(Game& game,pos_t pos,unit_id_t card,proto3::bunch_t& bunch){
     }
 }
 
-bool Mahjong::isGameOver(Game& game,pos_t pos,unit_id_t id,std::vector<proto3::bunch_t>& output){
-    auto player=game.players[pos];
-    auto& hands=player->playData.hands();
+bool Mahjong::isGameOver(Game& game,Player& player,unit_id_t id,std::vector<proto3::bunch_t>& output){
+    auto& hands=player.playData.hands();
     if(hands.size()<2){
         KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
         return false;
@@ -156,15 +155,15 @@ bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
     return true;
 }
 
-bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,pos_t pos,proto3::bunch_t& src_bunch){
+bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,Player& player,proto3::bunch_t& src_bunch){
     //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
+    auto pos=player.pos;
     if(src_bunch.pawns_size()!=1){
         KEYE_LOG("hint wrong cards len=%d,pos=%d\n",src_bunch.pawns_size(),pos);
         return false;
     }
     auto id=src_bunch.pawns(0);
     auto A=id;
-    auto& player=*game.players[pos];
     auto& hands=player.playData.hands();
     
     //default color check
@@ -175,7 +174,7 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     
     //game over
     std::vector<bunch_t> output;
-    if(isGameOver(game,pos,id,output)){
+    if(isGameOver(game,player,id,output)){
         auto bunch=bunches.Add();
         bunch->set_pos(pos);
         bunch->set_type(pb_enum::BUNCH_WIN);

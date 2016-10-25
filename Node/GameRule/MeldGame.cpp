@@ -193,7 +193,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     //queue in
     std::string str;
     //KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,curr));
-    auto ops=pending.bunch.type();
+    //auto ops=pending.bunch.type();
     pending.bunch.CopyFrom(curr);
     //restore pending ops for draw
     //if(pending.bunch.type()==pb_enum::OP_PASS)pending.bunch.set_type(ops);
@@ -208,6 +208,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto& front=pendingMeld.front();
         auto& bunch=front.bunch;
         auto where=bunch.pos();
+        auto& who=*game.players[where];
 
         //ok,verify
         auto old_ops=bunch.type();
@@ -228,7 +229,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         switch(result){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
-                if(isGameOver(game,pos,card,output)){
+                if(isGameOver(game,who,card,output)){
                     player.playData.clear_hands();
                     if(GameRule::isGameOver(game))
                         changeState(game,Game::State::ST_SETTLE);
@@ -259,7 +260,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 break;
             default:
                 //meld or do some specials
-                meld(game,where,card,bunch);
+                meld(game,who,card,bunch);
                 //A,AAA,AAAA
                 changeState(game,Game::State::ST_DISCARD);
         }
@@ -288,6 +289,15 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             changeState(game,Game::State::ST_MELD);
         }
     }//if(ready>=queue.size())
+}
+
+void MeldGame::deal(Game& game){
+    GameRule::deal(game);
+    for(auto p:game.players){
+        if(isNaturalWin(game,*p)){
+            
+        }
+    }
 }
 
 void MeldGame::draw(Game& game){
@@ -322,7 +332,7 @@ void MeldGame::draw(Game& game){
     }
 }
 
-bool MeldGame::isNaturalWin(Game& game,pos_t pos){
+bool MeldGame::isNaturalWin(Game& game,Player& player){
     return false;
 }
 
