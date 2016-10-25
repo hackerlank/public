@@ -113,7 +113,7 @@ public class MahJongPanel : GamePanel {
 			A.DiscardTo(HandAreas[to],scalar);
 			A.Static=false;
 			A.state=Card.State.ST_NORMAL;
-			if(to==_pos)sortHands();
+			if(to==_pos)StartCoroutine(sortHands());
 			break;
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
@@ -186,7 +186,7 @@ public class MahJongPanel : GamePanel {
 		player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
 	}
 	
-	override protected void sortHands(){
+	override protected IEnumerator sortHands(){
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		var ids=new List<int>();
 		foreach(var card in hands)ids.Add(card.Value);
@@ -198,6 +198,7 @@ public class MahJongPanel : GamePanel {
 				break;
 			}
 		}
+		yield break;
 	}
 	
 	// ----------------------------------------------

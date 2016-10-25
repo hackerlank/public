@@ -53,17 +53,22 @@ public class PaohuziPanel : GamePanel {
 		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
 		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
 		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
+
+		StartCoroutine(sortHands());
 	}
 
 	List<bunch_t> _hints=null;
 	override protected void onMsgDiscard(MsgNCDiscard msg){
 		//show hints for others
-		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
-			var card=msg.Bunch.Pawns[0];
-			if(!showHints(card,false)){
-				StartCoroutine(passCo(card));
-				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
-			}
+		if(msg.Bunch.Pawns.Count>0){
+			if(Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
+				var card=msg.Bunch.Pawns[0];
+				if(!showHints(card,false)){
+					StartCoroutine(passCo(card));
+					Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
+				}
+			}else
+				StartCoroutine(sortHands());
 		}
 	}
 
@@ -116,6 +121,8 @@ public class PaohuziPanel : GamePanel {
 			foreach(var c in cards)
 				c.DiscardTo(MeldAreas[to],scalar);
 			A.state=Card.State.ST_MELD;
+
+			if(to==_pos)StartCoroutine(sortHands());
 			break;
 		default:
 			//abandon
@@ -173,16 +180,144 @@ public class PaohuziPanel : GamePanel {
 		player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
 	}
 	
-	override protected void sortHands(){
+	override protected IEnumerator sortHands(){
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
-		var ids=new List<int>();
-		foreach(var card in hands)ids.Add(card.Value);
-		ids.Sort(Rule.comparision);
+		List<List<int>> sorted=new List<List<int>>();
+		List<Card> emptyCards=new List<Card>();
+		List<Card> normalCards=new List<Card>();
+
+		//sort by value
+		List<int>[] all=new List<int>[20];
+		for(int i=0;i<20;++i)all[i]=new List<int>();
 		foreach(var card in hands){
-			for(int i=0;i<ids.Count;++i)
-				if(card.Value==ids[i]){
-				card.transform.SetSiblingIndex(i);
-				break;
+			var id=card.Value;
+			if(id>1000){
+				var j=(id/1000-1)*10+id%100-1;
+				all[j].Add(id);
+				normalCards.Add(card);
+			}else
+				emptyCards.Add(card);
+		}
+
+		//sort bunches
+		for(int i=0;i<10;++i){
+			var j=i+10;
+			if(all[i].Count==3){
+				//AAA
+				sorted.Add(new List<int>(all[i]));
+				all[i].Clear();
+			}else if(all[j].Count==3){
+				//AAA
+				sorted.Add(new List<int>(all[j]));
+				all[j].Clear();
+			}else if(all[i].Count==2&&all[j].Count==1){
+				//AAa
+				all[i].Add(all[j][0]);
+				sorted.Add(new List<int>(all[i]));
+				all[i].Clear();
+				all[j].Clear();
+			}else if(all[j].Count==2&&all[i].Count==1){
+				//AAa
+				all[j].Add(all[i][0]);
+				sorted.Add(new List<int>(all[j]));
+				all[i].Clear();
+				all[j].Clear();
+			}else if(all[i+1].Count>0 && all[i+6].Count>0 && all[i+9].Count>0){
+				//2,7,10
+				var b=new List<int>();
+				b.Add(all[i+1][0]);
+				b.Add(all[i+6][0]);
+				b.Add(all[i+9][0]);
+				all[i+1].RemoveAt(0);
+				all[i+6].RemoveAt(0);
+				all[i+9].RemoveAt(0);
+				sorted.Add(b);
+			}else if(all[j+1].Count>0 && all[j+6].Count>0 && all[j+9].Count>0){
+				//2,7,10
+				var b=new List<int>();
+				b.Add(all[j+1][0]);
+				b.Add(all[j+6][0]);
+				b.Add(all[j+9][0]);
+				all[j+1].RemoveAt(0);
+				all[j+6].RemoveAt(0);
+				all[j+9].RemoveAt(0);
+				sorted.Add(b);
+			}else if(all[i].Count>0 && all[i+1].Count>0 && all[i+2].Count>0){
+				//1,2,3
+				var b=new List<int>();
+				b.Add(all[i+0][0]);
+				b.Add(all[i+1][0]);
+				b.Add(all[i+2][0]);
+				all[i+1].RemoveAt(0);
+				all[i+6].RemoveAt(0);
+				all[i+9].RemoveAt(0);
+				sorted.Add(b);
+			}else if(all[j].Count>0 && all[j+1].Count>0 && all[j+2].Count>0){
+				//1,2,3
+				var b=new List<int>();
+				b.Add(all[j+0][0]);
+				b.Add(all[j+1][0]);
+				b.Add(all[j+2][0]);
+				all[i+0].RemoveAt(0);
+				all[i+1].RemoveAt(0);
+				all[i+2].RemoveAt(0);
+				sorted.Add(b);
+			}else if(all[i].Count==2){
+				//AA
+				sorted.Add(new List<int>(all[i]));
+				all[i].Clear();
+			}else if(all[j].Count==2){
+				//AA
+				sorted.Add(new List<int>(all[j]));
+				all[j].Clear();
+			}
+		}
+		//deliver the rest by average
+		List<int> rest=new List<int>();
+		for(int i=0;i<20;++i)if(all[i].Count>0)rest.Add(all[i][0]);
+
+		int iRest=0;
+		int emptyColume=11-sorted.Count;
+		int cardsPerColume=rest.Count/emptyColume;
+		var first=rest.Count-cardsPerColume*emptyColume;
+		for(int i=0;i<emptyColume;++i){
+			var b=new List<int>();
+			int J=(i==0?first:cardsPerColume);
+			for(int j=0;j<J;++j)b.Add(iRest++);
+			sorted.Add(b);
+		}
+		//insert blank if need
+		foreach(var s in sorted)
+			for(int i=s.Count;i<3;++i)
+				s.Insert(0,-1);
+
+		//add or remove empty cards
+		int wait=sorted.Count*3-hands.Length;
+		for(int i=hands.Length;i<sorted.Count*3;++i){
+			Card.Create(CardPrefab,-1,HandAreas[_pos],delegate(Card obj) {
+				emptyCards.Add(obj);
+				wait--;
+			});
+		}
+		while(wait>0)yield return null;
+
+		for(int i=sorted.Count*3;i<hands.Length;++i){
+			Destroy(emptyCards[0].gameObject);
+			emptyCards.RemoveAt(0);
+		}
+
+		int iempty=0;
+		int index=0;
+		foreach(var bun in sorted){
+			foreach(var id in bun){
+				if(id<1000)
+					emptyCards[iempty++].transform.SetSiblingIndex(index++);
+				else foreach(var card in normalCards){
+					if(card.Value==id){
+						card.transform.SetSiblingIndex(index++);
+						break;
+					}
+				}
 			}
 		}
 	}

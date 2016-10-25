@@ -317,7 +317,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
 	virtual protected void onMsgDraw(int card,int pos){}
 	virtual protected void onMsgMeld(bunch_t bunch){}
-	virtual protected void sortHands(){}
+	virtual protected IEnumerator sortHands(){yield break;}
 
 	protected void deselectAll(){
 		var copy=new List<Card>(_selection);
