@@ -159,6 +159,14 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         player.send(omsg);
 }
 
+bool DiscardGame::isGameOver(Game& game){
+    for(auto player:game.players){
+        if(player->playData.hands().size()<=0)
+            return true;
+    }
+    return false;
+}
+
 bool DiscardGame::comparision(uint x,uint y){
     return x%100<y%100;
 }

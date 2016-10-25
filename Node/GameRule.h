@@ -32,7 +32,6 @@ protected:
     virtual int         bottom()=0;
     
     virtual bool        settle(Game&);
-    virtual bool        isGameOver(Game&);
     
     virtual void        deal(Game&);
     void                changeState(Game&,Game::State);

@@ -23,15 +23,14 @@ protected:
     virtual bool            comparePending(Game::pending_t& x,Game::pending_t& y);
     
     //is game over with melt card
-    virtual bool            isGameOver(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&)=0;
-    virtual bool            isGameOver(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&)=0;
+    virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&)=0;
+    virtual bool            isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&)=0;
 
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&)=0;
 
     virtual void            deal(Game&);
     virtual void            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
-    virtual bool            isNaturalWin(Game&,Player&);
 };
 
 #endif /* MeldGame_h */

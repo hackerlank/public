@@ -229,10 +229,9 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         switch(result){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
-                if(isGameOver(game,who,card,output)){
+                if(isWin(game,who,card,output)){
                     player.playData.clear_hands();
-                    if(GameRule::isGameOver(game))
-                        changeState(game,Game::State::ST_SETTLE);
+                    changeState(game,Game::State::ST_SETTLE);
                 }else{
                     changeState(game,Game::State::ST_DISCARD);
                     ret=pb_enum::ERR_FAILED;
@@ -294,9 +293,15 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 void MeldGame::deal(Game& game){
     GameRule::deal(game);
     for(auto p:game.players){
-        if(isNaturalWin(game,*p)){
-            
-        }
+        auto hands=p->playData.mutable_hands();
+        auto card=hands->Get(hands->size()-1);
+        hands->RemoveLast();
+        std::vector<proto3::bunch_t> output;
+        if(isWin(game,*p,card,output)){
+            p->playData.clear_hands();
+            changeState(game,Game::State::ST_SETTLE);
+        }else
+            hands->Add(card);
     }
 }
 
@@ -330,10 +335,6 @@ void MeldGame::draw(Game& game){
         p->send(msg);
         p->lastMsg=std::make_shared<MsgNCDraw>(msg);
     }
-}
-
-bool MeldGame::isNaturalWin(Game& game,Player& player){
-    return false;
 }
 
 bool MeldGame::comparision(uint x,uint y){

@@ -80,10 +80,10 @@ void Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
     }
 }
 
-bool Mahjong::isGameOver(Game& game,Player& player,unit_id_t id,std::vector<proto3::bunch_t>& output){
+bool Mahjong::isWin(Game& game,Player& player,unit_id_t id,std::vector<proto3::bunch_t>& output){
     auto& hands=player.playData.hands();
     if(hands.size()<2){
-        KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
+        KEYE_LOG("isWin failed: len=%d\n",hands.size());
         return false;
     }
     std::vector<unit_id_t> cards;
@@ -99,7 +99,7 @@ bool Mahjong::isGameOver(Game& game,Player& player,unit_id_t id,std::vector<prot
         if(A/1000==B/1000&&A%100==B%100){
             std::vector<unit_id_t> tmp;
             for(size_t j=0;j!=cards.size();++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
-            if(isGameOverWithoutAA(tmp)){
+            if(isWinWithoutAA(tmp)){
                 return true;
             }
         }
@@ -107,11 +107,11 @@ bool Mahjong::isGameOver(Game& game,Player& player,unit_id_t id,std::vector<prot
     return false;
 }
 
-bool Mahjong::isGameOver(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&){
+bool Mahjong::isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&){
     return true;
 }
 
-bool Mahjong::isGameOverWithoutAA(std::vector<unit_id_t>& cards){
+bool Mahjong::isWinWithoutAA(std::vector<unit_id_t>& cards){
     auto len=cards.size();
     if(len%3!=0)
         return false;
@@ -174,7 +174,7 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     
     //game over
     std::vector<bunch_t> output;
-    if(isGameOver(game,player,id,output)){
+    if(isWin(game,player,id,output)){
         auto bunch=bunches.Add();
         bunch->set_pos(pos);
         bunch->set_type(pb_enum::BUNCH_WIN);

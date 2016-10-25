@@ -70,13 +70,13 @@ void Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     changePos(game,pos);
 }
 
-bool Paohuzi::isGameOver(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){
+bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){
     auto pos=player.pos;
     auto& playdata=game.players[pos]->playData;
     auto& suite=*playdata.mutable_bunch();
     auto& hands=player.playData.hands();
     if(hands.size()<2){
-        KEYE_LOG("isGameOver failed: len=%d\n",hands.size());
+        KEYE_LOG("isWin failed: len=%d\n",hands.size());
         return false;
     }
     std::vector<unit_id_t> cards;
@@ -186,8 +186,8 @@ bool Paohuzi::isGameOver(Game& game,Player& player,unit_id_t card,std::vector<bu
                 if(jiang.pawns(0)!=*it&&jiang.pawns(1)!=*it)
                     tmpHand.push_back(*it);
             //recursived
-            //over=isGameOver(tmpHand,allSuites);
-            over=isGameOver(game,tmpHand,tmpSuites);
+            //over=isWin(tmpHand,allSuites);
+            over=isWin(game,tmpHand,tmpSuites);
             if(over){
                 auto pt=calcPoints(game,tmpSuites);
                 if(pt>=PT){
@@ -209,7 +209,7 @@ bool Paohuzi::isGameOver(Game& game,Player& player,unit_id_t card,std::vector<bu
         }
     } else{
         //recursived
-        over=isGameOver(game,hand,allSuites);
+        over=isWin(game,hand,allSuites);
     }
     if(over){
         auto M=MaxPlayer();
@@ -232,14 +232,14 @@ bool Paohuzi::isGameOver(Game& game,Player& player,unit_id_t card,std::vector<bu
     return false;
 }
 
-bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bunch_t>& allSuites){
+bool Paohuzi::isWin(Game& game,std::vector<unit_id_t>& cards,std::vector<bunch_t>& allSuites){
     //recursive check if is game over
     std::vector<bunch_t> outSuites;
     std::vector<bunch_t> multiSuites;
     //copy hand
     std::vector<unit_id_t> _cards(cards);
     
-    //logCards(_cards,"-----isGameOver:");
+    //logCards(_cards,"-----isWin:");
     //先找每张牌的组合，如果没有则返回
     for(auto i=cards.begin(),ii=cards.end(); i!=ii; ++i){
         auto card=*i;
@@ -247,11 +247,11 @@ bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bu
         hint(game,card,_cards,hints);
         if(hints.empty()){
             //此牌无组合
-            //log("isGameOver no suite for card=%d:%d",card,allCards[card]%100);
+            //log("isWin no suite for card=%d:%d",card,allCards[card]%100);
             return false;
         } else if(hints.size()==1){
             //此牌唯一组合,剔除
-            //log("isGameOver single suite for card=%d:%d", card, allCards[card]%100);
+            //log("isWin single suite for card=%d:%d", card, allCards[card]%100);
             auto& ihint=hints.front();
             outSuites.push_back(ihint);
             multiSuites.clear();
@@ -268,7 +268,7 @@ bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bu
                 else ++k;
             }
             //递归
-            if(isGameOver(game,_cards,outSuites)){
+            if(isWin(game,_cards,outSuites)){
                 std::copy(outSuites.begin(),outSuites.end(),std::back_inserter(allSuites));
                 return true;
             } else
@@ -281,7 +281,7 @@ bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bu
     //存在多张组合的牌
     std::vector<std::vector<bunch_t>> vvm;
     if(!multiSuites.empty()){
-        //log("isGameOver cards=%d, multiSuites=%d", _cards.size(), multiSuites.size());
+        //log("isWin cards=%d, multiSuites=%d", _cards.size(), multiSuites.size());
         //copy temp hand
         std::vector<bunch_t> tmphints;
         
@@ -298,7 +298,7 @@ bool Paohuzi::isGameOver(Game& game,std::vector<unit_id_t>& cards,std::vector<bu
                     }
                 }
             vm.clear();
-            if(isGameOver(game,mcards,vm)){
+            if(isWin(game,mcards,vm)){
                 vm.push_back(*m);
                 vvm.push_back(vm);
             }

@@ -25,8 +25,8 @@ protected:
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
 private:
     //is game over with melt card
-    virtual bool            isGameOver(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);
-    virtual bool            isGameOver(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
+    virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);
+    virtual bool            isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
     bool                    hint3(Game&,Player&,unit_id_t,proto3::bunch_t&);
     void                    hint(Game&,unit_id_t,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
 

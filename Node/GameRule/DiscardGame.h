@@ -16,6 +16,7 @@ public:
     virtual void            OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void            OnMeld(Player&,const proto3::bunch_t&){};
 protected:
+    virtual bool            isGameOver(Game&);
     virtual bool            comparision(uint x,uint y);
     
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&)=0;

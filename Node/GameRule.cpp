@@ -94,14 +94,6 @@ void GameRule::deal(Game& game){
     game.pendingDiscard->bunch.set_pos(game.token);
 }
 
-bool GameRule::isGameOver(Game& game){
-    for(auto player:game.players){
-        if(player->playData.hands().size()<=0)
-            return true;
-    }
-    return false;
-}
-
 bool GameRule::settle(Game& game){
     pos_t pos=-1;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
