@@ -11,4 +11,8 @@ public class SummaryPanel : MonoBehaviour {
 		Destroy(gameObject);
 		if(Main.Instance.gameController!=null)Main.Instance.gameController.OnExit();
 	}
+
+	public void OnShare(){
+		Main.Instance.share.Share("Share","I'm fun!",cn.sharesdk.unity3d.ContentType.Image);
+	}
 }

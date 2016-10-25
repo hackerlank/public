@@ -45,7 +45,7 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnMail(){
-		Main.Instance.share.Share("Title","Hello Wechat!",cn.sharesdk.unity3d.ContentType.Image);
+		Main.Instance.share.Share("Share","I'm fun!",cn.sharesdk.unity3d.ContentType.Image);
 	}
 	
 	public void OnSettings(){
@@ -56,6 +56,6 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnShare(){
-		Main.Instance.share.Share("Title","Hello Wechat!",cn.sharesdk.unity3d.ContentType.Webpage,"http://www.baidu.com");
+		Main.Instance.share.Share("Share App","Hello Player!",cn.sharesdk.unity3d.ContentType.Webpage,"http://www.baidu.com");
 	}
 }
