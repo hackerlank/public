@@ -7,7 +7,7 @@ using Proto3;
 public class PaohuziPanel : GamePanel {
 	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
-	public GameObject	BtnABC,BtnA3,BtnA4,BtnWin;
+	public GameObject	BtnABC,BtnA3,BtnWin;
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
@@ -95,12 +95,19 @@ public class PaohuziPanel : GamePanel {
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
-		if(A!=null)
+		if(A==null)
+			return;
 		switch(bunch.Type){
 		case pb_enum.PhzAbc:
 		case pb_enum.PhzAbA:
-		case pb_enum.BunchAaa:
-		case pb_enum.BunchAaaa:
+		case pb_enum.PhzBbb:
+		case pb_enum.PhzAaawei:
+		case pb_enum.PhzAaachou:
+		case pb_enum.PhzAaaa:
+		case pb_enum.PhzAaaastart:
+		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzBbbB:
+		case pb_enum.PhzBbbbdesk:
 			//meld,make a bunch with constant 4 cards
 			List<Card> cards=new List<Card>();
 			//find cards in hands
@@ -111,18 +118,25 @@ public class PaohuziPanel : GamePanel {
 					cards.Add(card);
 			}
 			cards.Add(A);
+			System.Action<Card> handler=delegate(Card blank){
+				if(null!=blank)cards.Insert(0,blank);
+
+				//move to meld area
+				foreach(var c in cards)
+					c.DiscardTo(MeldAreas[to],scalar);
+				A.state=Card.State.ST_MELD;
+				
+				if(to==_pos)StartCoroutine(sortHands());
+			};
 			//add place holder
-			for(int i=cards.Count;i<4;++i){
-				var blank=new Card();
-				cards.Insert(0,blank);
+			if(cards.Count==4)
+				handler.Invoke(null);
+			else for(int i=cards.Count;i<4;++i){
+				Card.Create(CardPrefab,-1,MeldAreas[to],delegate(Card obj) {
+					handler.Invoke(obj);
+				});
 			}
 
-			//move to meld area
-			foreach(var c in cards)
-				c.DiscardTo(MeldAreas[to],scalar);
-			A.state=Card.State.ST_MELD;
-
-			if(to==_pos)StartCoroutine(sortHands());
 			break;
 		default:
 			//abandon
@@ -148,9 +162,21 @@ public class PaohuziPanel : GamePanel {
 			case pb_enum.BunchAbc:
 				if(!startup)BtnABC.SetActive(true);
 				break;
-			case pb_enum.BunchAaa:
+			case pb_enum.PhzBbb:
 				if(!startup)BtnA3.SetActive(true);
 				break;
+			case pb_enum.BunchAaa:
+			case pb_enum.PhzAaawei:
+			case pb_enum.PhzAaachou:
+			case pb_enum.PhzAaaa:
+				OnAAA();
+				return true;
+			case pb_enum.PhzAaaastart:
+			case pb_enum.PhzAaaadesk:
+			case pb_enum.PhzBbbB:
+			case pb_enum.PhzBbbbdesk:
+				OnAAAA();
+				return true;
 			case pb_enum.BunchWin:
 				if(!startup)BtnWin.SetActive(true);
 				break;

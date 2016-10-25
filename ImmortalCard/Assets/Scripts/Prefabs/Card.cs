@@ -100,8 +100,6 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 
 	public void DiscardTo(Transform group,float scalar){
 		_static=true;
-		if(transform==null||group==null)
-			return;
 		transform.SetParent(group);
 		transform.localScale=Vector3.one;
 		transform.localEulerAngles=Vector3.zero;
