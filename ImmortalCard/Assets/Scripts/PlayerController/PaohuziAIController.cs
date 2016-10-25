@@ -45,9 +45,9 @@ public class PaohuziAIController:PlayerController{
 					bunch=hints[0];
 				else{
 					bunch=new bunch_t();
-					bunch.Pos=player.pos;
 					bunch.Type=pb_enum.OpPass;
 				}
+				bunch.Pos=player.pos;
 				omsgMeld.Bunch=bunch;
 				
 				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);

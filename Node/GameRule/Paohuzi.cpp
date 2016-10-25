@@ -463,12 +463,17 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
     }
     //
     for ( int i = 0; i < 3; ++i ) {
-        hints.push_back(bunch_t());
-        auto& suite=hints.back();
-        suite.set_type(pb_enum::PHZ_ABC);
-        suite.add_pawns(FontABackID[i][0]);
-        suite.add_pawns(FontABackID[i+1][0]);
-        suite.add_pawns(card);
+        size_t count = std::min( FontABackID[i].size(), FontABackID[i+1].size() );
+        for ( size_t k = 0; k < count; ++k ) {
+            hints.push_back(bunch_t());
+            auto& suite=hints.back();
+            suite.set_type(pb_enum::PHZ_ABC);
+            suite.add_pawns(FontABackID[i][0]);
+            suite.add_pawns(FontABackID[i+1][0]);
+            suite.add_pawns(card);
+            if(k==0)
+                break;	//skip duplicated
+        }
     }
     
     //find same color and sort
@@ -489,14 +494,18 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
         if(mm.size()==2){
             auto& E=mm.begin()->second;
             auto& F=mm.rbegin()->second;
-
-            hints.push_back(bunch_t());
-            auto& suite=hints.back();
-            suite.set_type(pb_enum::PHZ_ABC);
-            suite.add_pawns(E[0]);
-            suite.add_pawns(F[0]);
-            suite.add_pawns(card);
-            //log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.pawns(0], suite.pawns(1], suite.pawns(2]);
+            
+            auto sz=std::min(E.size(),F.size());
+            for(int e=0;e<sz;++e){
+                hints.push_back(bunch_t());
+                auto& suite=hints.back();
+                suite.set_type(pb_enum::PHZ_ABC);
+                suite.add_pawns(E[0]);
+                suite.add_pawns(F[0]);
+                suite.add_pawns(card);
+                //log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.pawns(0], suite.pawns(1], suite.pawns(2]);
+                if(e==0)break;	//skip duplicated
+            }
         }
     }
 }

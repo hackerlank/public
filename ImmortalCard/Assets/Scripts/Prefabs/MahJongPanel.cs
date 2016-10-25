@@ -47,7 +47,8 @@ public class MahJongPanel : GamePanel {
 		var M=_pos;
 		var R=(M+1)%maxPlayer;
 		var O=(M+2)%maxPlayer;
-		var L=(M+m)%maxPlayer;
+		var L=(M+3)%maxPlayer;
+		if(L>MeldAreas.Length)L=MeldAreas.Length;
 		Transform[] tempM=new Transform[MeldAreas.Length];
 		Transform[] tempA=new Transform[AbandonAreas.Length];
 		MeldAreas.CopyTo(tempM,0);

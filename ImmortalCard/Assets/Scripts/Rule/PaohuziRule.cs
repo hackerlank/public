@@ -116,7 +116,7 @@ public class PaohuziRule: GameRule {
 		mc[1]=new List<List<int>>();
 		for(int l=0;l<10;++l){
 			mc[0].Add(new List<int>());
-			mc[0].Add(new List<int>());
+			mc[1].Add(new List<int>());
 		}
 		foreach(var it in hand){
 			var C=it;
@@ -399,7 +399,7 @@ public class PaohuziRule: GameRule {
 		mc[1]=new List<List<int>>();
 		for(int l=0;l<10;++l){
 			mc[0].Add(new List<int>());
-			mc[0].Add(new List<int>());
+			mc[1].Add(new List<int>());
 		}
 		foreach(var it in hand){
 			if(card==it)continue;	//跳过自己
@@ -477,12 +477,16 @@ public class PaohuziRule: GameRule {
 		}
 		//
 		for ( int i = 0; i < 3; ++i ) {
-			var suite=new bunch_t();
-			suite.Type=pb_enum.PhzAbc;
-			suite.Pawns.Add(FontABackID[i][0]);
-			suite.Pawns.Add(FontABackID[i+1][0]);
-			suite.Pawns.Add(card);
-			hints.Add(suite);
+			int count = Mathf.Min( FontABackID[i].Count, FontABackID[i+1].Count);
+			for ( int k = 0; k < count; ++k ) {
+				var suite=new bunch_t();
+				suite.Type=pb_enum.PhzAbc;
+				suite.Pawns.Add(FontABackID[i][0]);
+				suite.Pawns.Add(FontABackID[i+1][0]);
+				suite.Pawns.Add(card);
+				hints.Add(suite);
+				if(k==0)break;
+			}
 		}
 		
 		//find same color and sort
@@ -507,14 +511,17 @@ public class PaohuziRule: GameRule {
 				ll.AddRange(mm.Values);
 				var E=ll[0];
 				var F=ll[1];
-				
-				var suite=new bunch_t();
-				suite.Type=pb_enum.PhzAbc;
-				suite.Pawns.Add(E[0]);
-				suite.Pawns.Add(F[0]);
-				suite.Pawns.Add(card);
-				hints.Add(suite);
-				//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
+				var sz=Mathf.Min(E.Count,F.Count);
+				for(int e=0;e<sz;++e){
+					var suite=new bunch_t();
+					suite.Type=pb_enum.PhzAbc;
+					suite.Pawns.Add(E[0]);
+					suite.Pawns.Add(F[0]);
+					suite.Pawns.Add(card);
+					hints.Add(suite);
+					//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
+					if(e==0)break;
+				}
 			}
 		}
 		return hints.Count>0;

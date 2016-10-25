@@ -136,7 +136,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		var M=_pos;
 		var R=(M+1)%maxPlayer;
 		var O=(M+2)%maxPlayer;
-		var L=(M+m)%maxPlayer;
+		var L=(M+3)%maxPlayer;
+		if(L>DiscardAreas.Length)L=DiscardAreas.Length;
 		Transform[] tempD=new Transform[DiscardAreas.Length];	//MROL
 		Transform[] tempH=new Transform[HandAreas.Length];
 		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
