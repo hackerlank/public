@@ -30,10 +30,10 @@ public class PaohuziAIController:PlayerController{
 		}else if(msg is MsgNCDiscard){
 			//discard AI
 			var msgDiscard=msg as MsgNCDiscard;
+			var card=msgDiscard.Bunch.Pawns[0];
 			if(player.pos==msgDiscard.Bunch.Pos){
 				//remove from hands
-				foreach(var card in msgDiscard.Bunch.Pawns)
-					player.playData.Hands.Remove(card);
+				player.playData.Hands.Remove(card);
 			}else{
 				//meld only for others
 				var omsgMeld=new MsgCNMeld();
@@ -46,6 +46,7 @@ public class PaohuziAIController:PlayerController{
 				else{
 					bunch=new bunch_t();
 					bunch.Type=pb_enum.OpPass;
+					bunch.Pawns.Add(card);
 				}
 				bunch.Pos=player.pos;
 				omsgMeld.Bunch=bunch;
@@ -68,6 +69,10 @@ public class PaohuziAIController:PlayerController{
 
 				//discard
 				var discard=player.playData.Hands[0];
+				if(msgMeld.Bunch.Type==pb_enum.OpPass)
+					//was draw
+					discard=msgMeld.Bunch.Pawns[0];
+
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				omsgDiscard.Bunch=new bunch_t();
@@ -79,30 +84,8 @@ public class PaohuziAIController:PlayerController{
 			}
 
 		}else if(msg is MsgNCDraw){
-			var msgDraw=msg as MsgNCDraw;
-			if(player.pos==msgDraw.Pos){
-				//meld only for the drawer
-				var omsgMeld=new MsgCNMeld();
-				omsgMeld.Mid=pb_msg.MsgCnMeld;
-				
-				bunch_t bunch=new bunch_t();
-				bunch.Pos=player.pos;
-				bunch.Pawns.Add(msgDraw.Card);
+			//already handled in Panel
 
-				var hints=Main.Instance.gameController.Rule.Hint(player,bunch);
-				if(hints.Count>0)
-					bunch=hints[0];
-				else{
-					bunch=new bunch_t();
-					bunch.Pos=player.pos;
-					bunch.Type=pb_enum.OpPass;
-				}
-				omsgMeld.Bunch=bunch;
-				
-				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-				Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after self draw");
-			}
-			
 		}else if(msg is MsgNCSettle){
 			//var msgSettle=msg as MsgNCSettle;
 

@@ -185,22 +185,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
             return;
         }
-        //check hands
-        for(auto p:curr.pawns()){
-            if(p==card)
-                continue;
-            auto found=false;
-            for(auto h:player.playData.hands()){
-                if(h==p){
-                    found=true;
-                    break;
-                }
-            }
-            if(!found){
-                KEYE_LOG("OnMeld invalid hands pos=%d\n",pos);
-                return;
-            }
-        }
     }
 
     //queue in

@@ -32,8 +32,5 @@ public class Main : MonoBehaviour {
 	}
 
 	public Player MainPlayer=new Player();
-	public List<Player> players=new List<Player>();
-	public Player GetPlayer(int index){
-		return (index<players.Count?players[index]:null);
-	}
+	public List<Player> robots=new List<Player>();
 }

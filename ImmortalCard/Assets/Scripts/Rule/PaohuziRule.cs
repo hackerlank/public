@@ -81,6 +81,20 @@ public class PaohuziRule: GameRule {
 		return hints;
 	}
 
+	public override void Meld(Player player,bunch_t bunch){
+		switch(bunch.Type){
+		case pb_enum.BunchInvalid:
+		case pb_enum.OpPass:
+			break;
+		default:
+			foreach(var card in bunch.Pawns){
+				player.playData.Hands.Remove(card);
+				player.playData.Bunch.Add(bunch);
+			}
+			break;
+		}
+	}
+	
 	bool IsGameOver(Player player,int card,List<bunch_t> output,bool bDraw){
 		var pos=player.pos;
 		var playdata=player.playData;

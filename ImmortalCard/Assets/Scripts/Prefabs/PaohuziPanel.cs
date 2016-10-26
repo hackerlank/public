@@ -47,7 +47,7 @@ public class PaohuziPanel : GamePanel {
 			if(Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 				var card=msg.Bunch.Pawns[0];
 				if(!showHints(card,false)){
-					StartCoroutine(passCo(card));
+					StartCoroutine(passCo(Main.Instance.MainPlayer,card));
 					Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 				}
 			}else
@@ -64,11 +64,16 @@ public class PaohuziPanel : GamePanel {
 			card.state=Card.State.ST_DISCARD;
 		});
 
-		//show hints only for MainPlayer
-		if(pos==Main.Instance.MainPlayer.pos&&!showHints(id,true)){
-			StartCoroutine(passCo(id));
-			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
+		//immediately pass for the drawer,we only meld when discard
+		Player player=Main.Instance.MainPlayer;
+		if(player.pos!=pos)foreach(var robot in Main.Instance.robots){
+			if(robot.pos==pos){
+				player=robot;
+				break;
+			}
 		}
+		StartCoroutine(passCo(player,id,false));
+		Debug.Log(pos+" directly pass after self draw");
 	}
 
 	override protected IEnumerator OnMsgMeld(bunch_t bunch){
@@ -78,7 +83,9 @@ public class PaohuziPanel : GamePanel {
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
-		if(A==null)
+
+		var bDraw=(bunch.Type==pb_enum.OpPass&&to!=-1);
+		if(A==null&&!bDraw)
 			yield break;
 
 		switch(bunch.Type){
@@ -130,17 +137,36 @@ public class PaohuziPanel : GamePanel {
 				c.state=Card.State.ST_MELD;
 				c.DiscardTo(MeldAreas[to],scalar);
 			}
-			Debug.Log("----meld "+A.Value+" from "+from+" to "+to);
+			Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			
 			if(to==_pos)StartCoroutine(sortHands());
 			break;
 		default:
 			//abandon
-			if(to==-1)to=Rule.Token;
-			A.DiscardTo(AbandonAreas[to],AbandonScalar);
-			Debug.Log("----abandon "+A.Value+" from "+from+" to "+to);
-			A.state=Card.State.ST_ABANDON;
+			if(bunch.Type==pb_enum.OpPass&&-1!=to){
+				//was draw
+				if(to==_pos){
+					var card=bunch.Pawns[0];
+					MsgCNDiscard omsgDiscard=new MsgCNDiscard();
+					omsgDiscard.Mid=pb_msg.MsgCnDiscard;
+					omsgDiscard.Bunch=new bunch_t();
+					omsgDiscard.Bunch.Pos=_pos;
+					omsgDiscard.Bunch.Pawns.Add(card);
+					omsgDiscard.Bunch.Type=pb_enum.BunchA;
+					Main.Instance.MainPlayer.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
+					Debug.Log(_pos+" discard "+card+" after self draw");
+				}
+			}else if(A!=null){
+				if(to==-1)to=Rule.Token;
+				A.DiscardTo(AbandonAreas[to],AbandonScalar);
+				A.state=Card.State.ST_ABANDON;
+			}
 			break;
+		}
+		//remove from hands
+		var player=Main.Instance.MainPlayer;
+		if(player.pos==bunch.Pos){
+			Rule.Meld(player,bunch);
 		}
 	}
 	
@@ -186,11 +212,10 @@ public class PaohuziPanel : GamePanel {
 		return _hints.Count>0;
 	}
 
-	IEnumerator passCo(int card){
-		yield return new WaitForSeconds(Configs.OpsInterval);
+	IEnumerator passCo(Player player,int card,bool wait=true){
+		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
 
 		//pass discard or draw
-		var player=Main.Instance.MainPlayer;
 		var omsgMeld=new MsgCNMeld();
 		omsgMeld.Mid=pb_msg.MsgCnMeld;
 		

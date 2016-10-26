@@ -42,6 +42,7 @@ public class MahjongAIController:PlayerController{
 				else{
 					bunch=new bunch_t();
 					bunch.Pos=player.pos;
+					bunch.Pawns.Add(msgDiscard.Bunch.Pawns[0]);
 					bunch.Type=pb_enum.OpPass;
 				}
 				omsgMeld.Bunch=bunch;
@@ -96,6 +97,7 @@ public class MahjongAIController:PlayerController{
 				else{
 					bunch=new bunch_t();
 					bunch.Pos=player.pos;
+					bunch.Pawns.Add(msgDraw.Card);
 					bunch.Type=pb_enum.OpPass;
 				}
 				omsgMeld.Bunch=bunch;

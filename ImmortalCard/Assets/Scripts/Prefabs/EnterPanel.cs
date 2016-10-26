@@ -157,7 +157,7 @@ public class EnterPanel : MonoBehaviour {
 				for(uint i=0;i<nRobots;++i){
 					var robot=new Player();
 					robot.controllers.Add(panel.Rule.AIController);
-					Main.Instance.players.Add(robot);
+					Main.Instance.robots.Add(robot);
 					panel.StartCoroutine(robot.JoinGame(gameId));
 				}
 			}
