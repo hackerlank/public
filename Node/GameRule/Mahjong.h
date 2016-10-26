@@ -21,7 +21,7 @@ protected:
     virtual int             maxCards();
     virtual int             maxHands();
     virtual int             bottom();
-    virtual void            settle(Game&,proto3::MsgNCSettle&);
+    virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
 
@@ -29,7 +29,7 @@ protected:
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&);
     //is game over with melt card
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);
-    virtual bool            isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
+    bool                    isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
     //is game over against cards without AA
     bool                    isWinWithoutAA(std::vector<unit_id_t>&);
 

@@ -96,22 +96,25 @@ void GameRule::deal(Game& game){
 
 bool GameRule::settle(Game& game){
     //broadcast
-    MsgNCSettle msg;
-    msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    settle(game,msg);
+    if(!game.spSettle)return false;
     
+    //just send
+    auto& msg=*game.spSettle;
+    msg.set_mid(pb_msg::MSG_NC_SETTLE);
     for(auto p:game.players){
         p->send(msg);
-        p->lastMsg=std::make_shared<MsgNCSettle>(msg);
+        p->lastMsg=game.spSettle;
     }
     
     if(++game.round>=game.Round){
-        MsgNCFinish fin;
+        if(!game.spFinish)return false;
+        
+        auto& fin=*game.spFinish;
         fin.set_mid(pb_msg::MSG_NC_FINISH);
         fin.set_result(pb_enum::SUCCEESS);
         for(auto p:game.players){
             p->send(msg);
-            p->lastMsg=std::make_shared<MsgNCFinish>(fin);
+            p->lastMsg=game.spFinish;
         }
         return true;
     }

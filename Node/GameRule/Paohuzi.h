@@ -21,13 +21,13 @@ protected:
     virtual int             maxCards();
     virtual int             maxHands();
     virtual int             bottom();
-    virtual void            settle(Game&,proto3::MsgNCSettle&);
+    virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
 private:
     //is game over with melt card
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);
-    virtual bool            isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
+    bool                    isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
     bool                    hint3(Game&,Player&,unit_id_t,proto3::bunch_t&);
     void                    hint(Game&,unit_id_t,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
 

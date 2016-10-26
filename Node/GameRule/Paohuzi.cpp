@@ -611,7 +611,7 @@ bool Paohuzi::validId(uint id){
     return true;
 }
 
-void Paohuzi::settle(Game& game,proto3::MsgNCSettle& msg){
+void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuite,unit_id_t card){
     
 }
 

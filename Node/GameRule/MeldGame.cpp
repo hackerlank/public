@@ -29,7 +29,7 @@ void MeldGame::Tick(Game& game){
             //OnMeld
             break;
         case Game::State::ST_SETTLE:
-            if(settle(game))
+            if(GameRule::settle(game))
                 changeState(game,Game::State::ST_END);
             else
                 changeState(game,Game::State::ST_WAIT);
@@ -229,6 +229,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 std::vector<bunch_t> output;
                 if(isWin(game,who,card,output)){
                     player.playData.clear_hands();
+                    settle(player,output,card);
                     changeState(game,Game::State::ST_SETTLE);
                 }else{
                     changeState(game,Game::State::ST_DISCARD);
@@ -296,6 +297,7 @@ void MeldGame::deal(Game& game){
         std::vector<proto3::bunch_t> output;
         if(isWin(game,*p,card,output)){
             p->playData.clear_hands();
+            settle(*p,output,card);
             changeState(game,Game::State::ST_SETTLE);
         }else
             hands->Add(card);

@@ -32,7 +32,6 @@ protected:
     virtual int         bottom()=0;
     
     virtual bool        settle(Game&);
-    virtual void        settle(Game&,proto3::MsgNCSettle&)=0;
     
     virtual void        deal(Game&);
     void                changeState(Game&,Game::State);

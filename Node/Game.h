@@ -42,6 +42,9 @@ public:
     int                                 delay;
     std::shared_ptr<GameRule>           rule;
     
+    std::shared_ptr<proto3::MsgNCSettle>    spSettle;
+    std::shared_ptr<proto3::MsgNCFinish>    spFinish;
+
     Game()
     :id(-1)
     ,delay(0)

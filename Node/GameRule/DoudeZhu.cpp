@@ -192,16 +192,12 @@ bool DoudeZhu::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game
     }
 }
 
-void DoudeZhu::settle(Game& game,proto3::MsgNCSettle& msg){
-    pos_t pos=-1;
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.players[i]->playData;
-        if(gd.hands().size()<=0)
-            pos=i;
-    }
+void DoudeZhu::settle(Player& player){
+    Game& game=*player.game;
+    auto& msg=*game.spSettle;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
         auto play=msg.mutable_play(i);
-        play->set_win(i==pos?1:0);
+        play->set_win(i==player.pos?1:0);
         play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
         //auto player=msg.add_play();
     }
