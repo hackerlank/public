@@ -23,8 +23,6 @@ protected:
     virtual int             bottom();
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     
-    virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
-
     virtual bool            verifyDiscard(Game&,proto3::bunch_t&);
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&);
     //is game over with melt card

@@ -511,21 +511,6 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
     }
 }
 
-bool Paohuzi::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,Player& player,bunch_t& src_bunch){
-    //for: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
-    auto pos=player.pos;
-    auto count=bunches.size();
-    if(count>0){
-        std::string str,ss;
-        for(auto& bunch:bunches){
-            bunch2str(ss,bunch);
-            str+=ss;
-        }
-        KEYE_LOG("hint %d,pos=%d,%s\n",count,pos,str.c_str());
-    }
-    return count>0;
-}
-
 pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     auto type=fixOps(bunch.type());

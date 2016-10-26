@@ -23,7 +23,6 @@ protected:
     virtual int         bottom();
     
     virtual void        settle(Player&);
-    virtual bool        hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
 private:
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);

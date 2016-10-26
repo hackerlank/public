@@ -19,8 +19,6 @@ protected:
     virtual bool            isGameOver(Game&);
     virtual bool            comparision(uint x,uint y);
     virtual void            settle(Player&)=0;
-    
-    virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&)=0;
 private:
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool            compareBunch(proto3::bunch_t&,proto3::bunch_t&)=0;
