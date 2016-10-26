@@ -104,16 +104,15 @@ public class PaohuziRule: GameRule {
 			Debug.Log("isGameOver failed: len="+hands.Count);
 			return false;
 		}
-		List<int> cards=new List<int>(hands);
-		cards.Add(card);
-		cards.Sort(comparision);
 
 		//check desk
 		var myself=(pos==Token);
 		
 		List<bunch_t> allSuites=new List<bunch_t>(suite);
 		List<int> hand=new List<int>(hands);
-		
+		hand.Add(card);
+		hand.Sort(comparision);
+
 		//logHands(game,pos);
 		//是否需要将
 		bool needJiang=false;

@@ -192,44 +192,42 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 	IEnumerator OnMsgDiscard(MsgNCDiscard msg){
 		//discard any body's card
-		if(msg.Result!=pb_enum.Succeess){
-			yield break;
-		}
-
-		var pos=msg.Bunch.Pos;
-		changeToken(pos);
-		string str=pos+" discard ";
-		var cards=new int[msg.Bunch.Pawns.Count];
-		msg.Bunch.Pawns.CopyTo(cards,0);
-		if(pos==_pos){
-			//adjust by feedback
-			for(int i=0;i<cards.Length;++i){
-				var id=(int)cards[i];
-				str+=id+",";
+		if(msg.Result==pb_enum.Succeess){
+			var pos=msg.Bunch.Pos;
+			changeToken(pos);
+			string str=pos+" discard ";
+			var cards=new int[msg.Bunch.Pawns.Count];
+			msg.Bunch.Pawns.CopyTo(cards,0);
+			if(pos==_pos){
+				//adjust by feedback
+				for(int i=0;i<cards.Length;++i){
+					var id=(int)cards[i];
+					str+=id+",";
+				}
+			}else{
+				//remove discards
+				foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
+				for(int i=0;i<cards.Length;++i){
+					var id=cards[i];
+					var fin=false;
+					var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
+					Card.Create(CardPrefab,id,from,delegate(Card card) {
+						card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+						card.state=Card.State.ST_DISCARD;
+						fin=true;
+					});
+					yield return null;
+					str+=(int)id+",";
+					while(!fin)yield return null;
+				}
+				//yield return new WaitForSeconds(1);
 			}
-		}else{
-			//remove discards
-			foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
-			for(int i=0;i<cards.Length;++i){
-				var id=cards[i];
-				var fin=false;
-				var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
-				Card.Create(CardPrefab,id,from,delegate(Card card) {
-					card.DiscardTo(DiscardAreas[pos],DiscardScalar);
-					card.state=Card.State.ST_DISCARD;
-					fin=true;
-				});
-				yield return null;
-				str+=(int)id+",";
-				while(!fin)yield return null;
+			Debug.Log(str);
+			//record
+			if(pos<nHandCards.Length&&nHandCards[pos]!=null){
+				var nCards=int.Parse(nHandCards[pos].text)-1;
+				nHandCards[pos].text=nCards.ToString();
 			}
-			//yield return new WaitForSeconds(1);
-		}
-		Debug.Log(str);
-		//record
-		if(pos<nHandCards.Length&&nHandCards[pos]!=null){
-			var nCards=int.Parse(nHandCards[pos].text)-1;
-			nHandCards[pos].text=nCards.ToString();
 		}
 		onMsgDiscard(msg);
 	}

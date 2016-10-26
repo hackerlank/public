@@ -39,13 +39,7 @@ public class MahJongPanel : GamePanel {
 		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 		foreach(var btn in btns)btn.SetActive(false);
 		Main.Instance.MainPlayer.playData.SelectedCard=msg.Key;
-	}
-
-	override protected void onMsgStart(){
-		//transform position
-		transformComponent(MeldAreas);
-		transformComponent(AbandonAreas);
-
+		
 		//check natural win
 		var player=Main.Instance.MainPlayer;
 		var hands=player.playData.Hands;
@@ -53,6 +47,12 @@ public class MahJongPanel : GamePanel {
 		hands.RemoveAt(hands.Count-1);
 		showHints(last,true,true);
 		hands.Add(last);
+	}
+
+	override protected void onMsgStart(){
+		//transform position
+		transformComponent(MeldAreas);
+		transformComponent(AbandonAreas);
 	}
 
 	List<bunch_t> _hints=null;

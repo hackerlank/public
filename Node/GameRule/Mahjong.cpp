@@ -188,6 +188,7 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
             }
             break;
         case pb_enum::OP_PASS:
+        case pb_enum::BUNCH_WIN:
             bt=bunch.type();
         default:
             break;

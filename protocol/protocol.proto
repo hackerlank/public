@@ -115,45 +115,51 @@ WIN_Flush19             =16; //qing 19
 
 WIN_NORMAL =0           ;
 WIN_TIAN                =1;	//天胡
-WIN_DI                  =1;		//地胡
-WIN_LAST                =1;	//海胡
-WIN_TING                =1;	//听胡
+WIN_DI                  =2;		//地胡
+WIN_LAST                =3;	//海胡
+WIN_TING                =4;	//听胡
 
-WIN_13RED               =1;	//乌红
-WIN_RED                 =1;	//红胡
-WIN_BLACK               =1;	//黑胡
-WIN_BIG                 =1;	//大胡
-WIN_SMALL               =1;	//小胡
+WIN_13RED               =5;	//乌红
+WIN_RED                 =6;	//红胡
+WIN_BLACK               =7;	//黑胡
+WIN_BIG                 =8;	//大胡
+WIN_SMALL               =9;	//小胡
 
-WIN_SINGLE              =1;	//点胡
-WIN_PAIR                =1;	//对胡
-WIN_MONKEY              =1;	//耍猴
-WIN_YELLOW              =1;	//黄番
-WIN_SELF                =1;	//自摸
+WIN_SINGLE              =10;	//点胡
+WIN_PAIR                =11;	//对胡
+WIN_MONKEY              =12;	//耍猴
+WIN_YELLOW              =13;	//黄番
+WIN_SELF                =14;	//自摸
 
-WIN_30                  =1;		//30胡               =1;15
-WIN_20                  =1;		//20胡
-WIN_FIRE                =1;	//放炮
-WIN_PLATE               =1;	//一块匾
-WIN_2RED                =1;	//二比
+WIN_30                  =15;		//30胡               =1;15
+WIN_20                  =16;		//20胡
+WIN_FIRE                =17;	//放炮
+WIN_PLATE               =18;	//一块匾
+WIN_2RED                =19;	//二比
 
-WIN_3RED                =1;	//三比               =1;20
-WIN_4RED                =1;	//四比
-WIN_DOUBLE               =12;	//双飘    2RED_
-WIN_10RED               =1;	//十红，针对湘乡
+WIN_3RED                =20;	//三比               =1;20
+WIN_4RED                =21;	//四比
+WIN_DOUBLE              =22;	//双飘    2RED_
+WIN_10RED               =23;	//十红，针对湘乡
 
-WIN_5FU                 =1;	//五福，碰胡子用
-WIN_RUNDUAL             =1;//跑双
-WIN_7PAIR               =1;	//小七对
-WIN_DUALDRA             =1;//双龙
-WIN_REPEAT              =1;	//连胡
+WIN_5FU                 =24;	//五福，碰胡子用
+WIN_RUNDUAL             =25;//跑双
+WIN_7PAIR               =26;	//小七对
+WIN_DUALDRA             =27;//双龙
+WIN_REPEAT              =28;	//连胡
 
-WIN_MAX                 =1;
+WIN_MAX                 =29;
 
 // achievement
 ACHV_BOMB               =10;
 ACHV_HEAVEN             =11;
 ACHV_HELL               =12;
+
+// achievement key type
+ACHV_KEY_POINT          =0;
+ACHV_KEY_CHUNK          =1;
+ACHV_KEY_SCORE          =2;
+ACHV_KEY_MULTIPLE       =3;
 
 // game using
 DEF_MAX_NODES           =1000;
@@ -267,6 +273,10 @@ repeated bunch_t bunch  =4;
 int32 selected_card     =5; //default or selected card at startup
 int32 win               =6; //win sequence,minus means lose
 repeated int32 winby    =7; //others were win by me
+int32 point             =8;
+int32 chunk             =9;
+int32 multiple          =10;
+int32 score             =11;
 };
 
 message charge_t{
@@ -604,7 +614,7 @@ pb_enum result			=3;
 message MsgNCFinish{
 
 pb_msg mid				=1;
-repeated player_t play  =2;
+repeated play_t play    =2;
 pb_enum result			=3;
 };
 

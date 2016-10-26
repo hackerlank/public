@@ -218,6 +218,7 @@ bool pb_enum_IsValid(int value) {
     case 26:
     case 27:
     case 28:
+    case 29:
     case 100:
     case 101:
     case 102:
@@ -5117,6 +5118,10 @@ const int play_t::kBunchFieldNumber;
 const int play_t::kSelectedCardFieldNumber;
 const int play_t::kWinFieldNumber;
 const int play_t::kWinbyFieldNumber;
+const int play_t::kPointFieldNumber;
+const int play_t::kChunkFieldNumber;
+const int play_t::kMultipleFieldNumber;
+const int play_t::kScoreFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 play_t::play_t()
@@ -5149,6 +5154,10 @@ void play_t::SharedCtor() {
   player_ = NULL;
   selected_card_ = 0;
   win_ = 0;
+  point_ = 0;
+  chunk_ = 0;
+  multiple_ = 0;
+  score_ = 0;
 }
 
 play_t::~play_t() {
@@ -5211,6 +5220,8 @@ void play_t::Clear() {
   ZR_(selected_card_, win_);
   if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
   player_ = NULL;
+  point_ = 0;
+  ZR_(chunk_, score_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -5340,6 +5351,66 @@ bool play_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(64)) goto parse_point;
+        break;
+      }
+
+      // optional int32 point = 8;
+      case 8: {
+        if (tag == 64) {
+         parse_point:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &point_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(72)) goto parse_chunk;
+        break;
+      }
+
+      // optional int32 chunk = 9;
+      case 9: {
+        if (tag == 72) {
+         parse_chunk:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &chunk_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(80)) goto parse_multiple;
+        break;
+      }
+
+      // optional int32 multiple = 10;
+      case 10: {
+        if (tag == 80) {
+         parse_multiple:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &multiple_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(88)) goto parse_score;
+        break;
+      }
+
+      // optional int32 score = 11;
+      case 11: {
+        if (tag == 88) {
+         parse_score:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &score_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5420,6 +5491,26 @@ void play_t::SerializeWithCachedSizes(
       this->winby(i), output);
   }
 
+  // optional int32 point = 8;
+  if (this->point() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->point(), output);
+  }
+
+  // optional int32 chunk = 9;
+  if (this->chunk() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->chunk(), output);
+  }
+
+  // optional int32 multiple = 10;
+  if (this->multiple() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->multiple(), output);
+  }
+
+  // optional int32 score = 11;
+  if (this->score() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->score(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.play_t)
 }
 
@@ -5446,6 +5537,34 @@ int play_t::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->win());
+  }
+
+  // optional int32 point = 8;
+  if (this->point() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->point());
+  }
+
+  // optional int32 chunk = 9;
+  if (this->chunk() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->chunk());
+  }
+
+  // optional int32 multiple = 10;
+  if (this->multiple() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->multiple());
+  }
+
+  // optional int32 score = 11;
+  if (this->score() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->score());
   }
 
   // repeated int32 hands = 2;
@@ -5536,6 +5655,18 @@ void play_t::MergeFrom(const play_t& from) {
   if (from.win() != 0) {
     set_win(from.win());
   }
+  if (from.point() != 0) {
+    set_point(from.point());
+  }
+  if (from.chunk() != 0) {
+    set_chunk(from.chunk());
+  }
+  if (from.multiple() != 0) {
+    set_multiple(from.multiple());
+  }
+  if (from.score() != 0) {
+    set_score(from.score());
+  }
 }
 
 void play_t::CopyFrom(const play_t& from) {
@@ -5562,6 +5693,10 @@ void play_t::InternalSwap(play_t* other) {
   std::swap(selected_card_, other->selected_card_);
   std::swap(win_, other->win_);
   winby_.UnsafeArenaSwap(&other->winby_);
+  std::swap(point_, other->point_);
+  std::swap(chunk_, other->chunk_);
+  std::swap(multiple_, other->multiple_);
+  std::swap(score_, other->score_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -5761,6 +5896,62 @@ play_t::winby() const {
 play_t::mutable_winby() {
   // @@protoc_insertion_point(field_mutable_list:proto3.play_t.winby)
   return &winby_;
+}
+
+// optional int32 point = 8;
+void play_t::clear_point() {
+  point_ = 0;
+}
+ ::google::protobuf::int32 play_t::point() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.point)
+  return point_;
+}
+ void play_t::set_point(::google::protobuf::int32 value) {
+  
+  point_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.point)
+}
+
+// optional int32 chunk = 9;
+void play_t::clear_chunk() {
+  chunk_ = 0;
+}
+ ::google::protobuf::int32 play_t::chunk() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.chunk)
+  return chunk_;
+}
+ void play_t::set_chunk(::google::protobuf::int32 value) {
+  
+  chunk_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.chunk)
+}
+
+// optional int32 multiple = 10;
+void play_t::clear_multiple() {
+  multiple_ = 0;
+}
+ ::google::protobuf::int32 play_t::multiple() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.multiple)
+  return multiple_;
+}
+ void play_t::set_multiple(::google::protobuf::int32 value) {
+  
+  multiple_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.multiple)
+}
+
+// optional int32 score = 11;
+void play_t::clear_score() {
+  score_ = 0;
+}
+ ::google::protobuf::int32 play_t::score() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.score)
+  return score_;
+}
+ void play_t::set_score(::google::protobuf::int32 value) {
+  
+  score_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.score)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -18869,7 +19060,7 @@ bool MsgNCFinish::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .proto3.player_t play = 2;
+      // repeated .proto3.play_t play = 2;
       case 2: {
         if (tag == 18) {
          parse_play:
@@ -18932,7 +19123,7 @@ void MsgNCFinish::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // repeated .proto3.player_t play = 2;
+  // repeated .proto3.play_t play = 2;
   for (unsigned int i = 0, n = this->play_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       2, this->play(i), output);
@@ -18963,7 +19154,7 @@ int MsgNCFinish::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.player_t play = 2;
+  // repeated .proto3.play_t play = 2;
   total_size += 1 * this->play_size();
   for (int i = 0; i < this->play_size(); i++) {
     total_size +=
@@ -19041,31 +19232,31 @@ void MsgNCFinish::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCFinish.mid)
 }
 
-// repeated .proto3.player_t play = 2;
+// repeated .proto3.play_t play = 2;
 int MsgNCFinish::play_size() const {
   return play_.size();
 }
 void MsgNCFinish::clear_play() {
   play_.Clear();
 }
-const ::proto3::player_t& MsgNCFinish::play(int index) const {
+const ::proto3::play_t& MsgNCFinish::play(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCFinish.play)
   return play_.Get(index);
 }
-::proto3::player_t* MsgNCFinish::mutable_play(int index) {
+::proto3::play_t* MsgNCFinish::mutable_play(int index) {
   // @@protoc_insertion_point(field_mutable:proto3.MsgNCFinish.play)
   return play_.Mutable(index);
 }
-::proto3::player_t* MsgNCFinish::add_play() {
+::proto3::play_t* MsgNCFinish::add_play() {
   // @@protoc_insertion_point(field_add:proto3.MsgNCFinish.play)
   return play_.Add();
 }
-::google::protobuf::RepeatedPtrField< ::proto3::player_t >*
+::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
 MsgNCFinish::mutable_play() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCFinish.play)
   return &play_;
 }
-const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
+const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
 MsgNCFinish::play() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCFinish.play)
   return play_;

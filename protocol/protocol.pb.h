@@ -156,37 +156,41 @@ enum pb_enum {
   WIN_Flush19 = 16,
   WIN_NORMAL = 0,
   WIN_TIAN = 1,
-  WIN_DI = 1,
-  WIN_LAST = 1,
-  WIN_TING = 1,
-  WIN_13RED = 1,
-  WIN_RED = 1,
-  WIN_BLACK = 1,
-  WIN_BIG = 1,
-  WIN_SMALL = 1,
-  WIN_SINGLE = 1,
-  WIN_PAIR = 1,
-  WIN_MONKEY = 1,
-  WIN_YELLOW = 1,
-  WIN_SELF = 1,
-  WIN_30 = 1,
-  WIN_20 = 1,
-  WIN_FIRE = 1,
-  WIN_PLATE = 1,
-  WIN_2RED = 1,
-  WIN_3RED = 1,
-  WIN_4RED = 1,
-  WIN_DOUBLE = 12,
-  WIN_10RED = 1,
-  WIN_5FU = 1,
-  WIN_RUNDUAL = 1,
-  WIN_7PAIR = 1,
-  WIN_DUALDRA = 1,
-  WIN_REPEAT = 1,
-  WIN_MAX = 1,
+  WIN_DI = 2,
+  WIN_LAST = 3,
+  WIN_TING = 4,
+  WIN_13RED = 5,
+  WIN_RED = 6,
+  WIN_BLACK = 7,
+  WIN_BIG = 8,
+  WIN_SMALL = 9,
+  WIN_SINGLE = 10,
+  WIN_PAIR = 11,
+  WIN_MONKEY = 12,
+  WIN_YELLOW = 13,
+  WIN_SELF = 14,
+  WIN_30 = 15,
+  WIN_20 = 16,
+  WIN_FIRE = 17,
+  WIN_PLATE = 18,
+  WIN_2RED = 19,
+  WIN_3RED = 20,
+  WIN_4RED = 21,
+  WIN_DOUBLE = 22,
+  WIN_10RED = 23,
+  WIN_5FU = 24,
+  WIN_RUNDUAL = 25,
+  WIN_7PAIR = 26,
+  WIN_DUALDRA = 27,
+  WIN_REPEAT = 28,
+  WIN_MAX = 29,
   ACHV_BOMB = 10,
   ACHV_HEAVEN = 11,
   ACHV_HELL = 12,
+  ACHV_KEY_POINT = 0,
+  ACHV_KEY_CHUNK = 1,
+  ACHV_KEY_SCORE = 2,
+  ACHV_KEY_MULTIPLE = 3,
   DEF_MAX_NODES = 1000,
   DEF_MAX_GAMES_PER_NODE = 100000,
   ERR_FAILED = 100,
@@ -1578,6 +1582,30 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_winby();
 
+  // optional int32 point = 8;
+  void clear_point();
+  static const int kPointFieldNumber = 8;
+  ::google::protobuf::int32 point() const;
+  void set_point(::google::protobuf::int32 value);
+
+  // optional int32 chunk = 9;
+  void clear_chunk();
+  static const int kChunkFieldNumber = 9;
+  ::google::protobuf::int32 chunk() const;
+  void set_chunk(::google::protobuf::int32 value);
+
+  // optional int32 multiple = 10;
+  void clear_multiple();
+  static const int kMultipleFieldNumber = 10;
+  ::google::protobuf::int32 multiple() const;
+  void set_multiple(::google::protobuf::int32 value);
+
+  // optional int32 score = 11;
+  void clear_score();
+  static const int kScoreFieldNumber = 11;
+  ::google::protobuf::int32 score() const;
+  void set_score(::google::protobuf::int32 value);
+
   // @@protoc_insertion_point(class_scope:proto3.play_t)
  private:
 
@@ -1595,6 +1623,10 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::int32 win_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > winby_;
   mutable int _winby_cached_byte_size_;
+  ::google::protobuf::int32 point_;
+  ::google::protobuf::int32 chunk_;
+  ::google::protobuf::int32 multiple_;
+  ::google::protobuf::int32 score_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -5651,16 +5683,16 @@ class MsgNCFinish : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // repeated .proto3.player_t play = 2;
+  // repeated .proto3.play_t play = 2;
   int play_size() const;
   void clear_play();
   static const int kPlayFieldNumber = 2;
-  const ::proto3::player_t& play(int index) const;
-  ::proto3::player_t* mutable_play(int index);
-  ::proto3::player_t* add_play();
-  ::google::protobuf::RepeatedPtrField< ::proto3::player_t >*
+  const ::proto3::play_t& play(int index) const;
+  ::proto3::play_t* mutable_play(int index);
+  ::proto3::play_t* add_play();
+  ::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
       mutable_play();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
+  const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
       play() const;
 
   // optional .proto3.pb_enum result = 3;
@@ -5676,7 +5708,7 @@ class MsgNCFinish : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::player_t > play_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::play_t > play_;
   int mid_;
   int result_;
   mutable int _cached_size_;
@@ -7347,6 +7379,62 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 play_t::mutable_winby() {
   // @@protoc_insertion_point(field_mutable_list:proto3.play_t.winby)
   return &winby_;
+}
+
+// optional int32 point = 8;
+inline void play_t::clear_point() {
+  point_ = 0;
+}
+inline ::google::protobuf::int32 play_t::point() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.point)
+  return point_;
+}
+inline void play_t::set_point(::google::protobuf::int32 value) {
+  
+  point_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.point)
+}
+
+// optional int32 chunk = 9;
+inline void play_t::clear_chunk() {
+  chunk_ = 0;
+}
+inline ::google::protobuf::int32 play_t::chunk() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.chunk)
+  return chunk_;
+}
+inline void play_t::set_chunk(::google::protobuf::int32 value) {
+  
+  chunk_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.chunk)
+}
+
+// optional int32 multiple = 10;
+inline void play_t::clear_multiple() {
+  multiple_ = 0;
+}
+inline ::google::protobuf::int32 play_t::multiple() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.multiple)
+  return multiple_;
+}
+inline void play_t::set_multiple(::google::protobuf::int32 value) {
+  
+  multiple_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.multiple)
+}
+
+// optional int32 score = 11;
+inline void play_t::clear_score() {
+  score_ = 0;
+}
+inline ::google::protobuf::int32 play_t::score() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.score)
+  return score_;
+}
+inline void play_t::set_score(::google::protobuf::int32 value) {
+  
+  score_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.score)
 }
 
 // -------------------------------------------------------------------
@@ -10079,31 +10167,31 @@ inline void MsgNCFinish::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCFinish.mid)
 }
 
-// repeated .proto3.player_t play = 2;
+// repeated .proto3.play_t play = 2;
 inline int MsgNCFinish::play_size() const {
   return play_.size();
 }
 inline void MsgNCFinish::clear_play() {
   play_.Clear();
 }
-inline const ::proto3::player_t& MsgNCFinish::play(int index) const {
+inline const ::proto3::play_t& MsgNCFinish::play(int index) const {
   // @@protoc_insertion_point(field_get:proto3.MsgNCFinish.play)
   return play_.Get(index);
 }
-inline ::proto3::player_t* MsgNCFinish::mutable_play(int index) {
+inline ::proto3::play_t* MsgNCFinish::mutable_play(int index) {
   // @@protoc_insertion_point(field_mutable:proto3.MsgNCFinish.play)
   return play_.Mutable(index);
 }
-inline ::proto3::player_t* MsgNCFinish::add_play() {
+inline ::proto3::play_t* MsgNCFinish::add_play() {
   // @@protoc_insertion_point(field_add:proto3.MsgNCFinish.play)
   return play_.Add();
 }
-inline ::google::protobuf::RepeatedPtrField< ::proto3::player_t >*
+inline ::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
 MsgNCFinish::mutable_play() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCFinish.play)
   return &play_;
 }
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
 MsgNCFinish::play() const {
   // @@protoc_insertion_point(field_list:proto3.MsgNCFinish.play)
   return play_;

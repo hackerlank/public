@@ -290,18 +290,28 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 
 void MeldGame::deal(Game& game){
     GameRule::deal(game);
+
     for(auto p:game.players){
         auto hands=p->playData.mutable_hands();
         auto card=hands->Get(hands->size()-1);
         hands->RemoveLast();
         std::vector<proto3::bunch_t> output;
         if(isWin(game,*p,card,output)){
+            game.pendingMeld.push_back(Game::pending_t());
+            auto& pending=game.pendingMeld.back();
+            pending.bunch.set_pos(p->pos);
+            pending.bunch.add_pawns(card);
+/*
             p->playData.clear_hands();
             settle(*p,output,card);
             changeState(game,Game::State::ST_SETTLE);
-        }else
-            hands->Add(card);
+*/
+        }
+        //else hands->Add(card);
+        hands->Add(card);
     }
+    if(!game.pendingMeld.empty())
+        changeState(game,Game::State::ST_MELD);
 }
 
 void MeldGame::draw(Game& game){

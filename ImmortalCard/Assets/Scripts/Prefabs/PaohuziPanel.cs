@@ -38,6 +38,14 @@ public class PaohuziPanel : GamePanel {
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
 		StartCoroutine(sortHands());
+
+		//check natural win
+		var player=Main.Instance.MainPlayer;
+		var hands=player.playData.Hands;
+		var last=hands[hands.Count-1];
+		hands.RemoveAt(hands.Count-1);
+		showHints(last,true,true);
+		hands.Add(last);
 	}
 
 	List<bunch_t> _hints=null;

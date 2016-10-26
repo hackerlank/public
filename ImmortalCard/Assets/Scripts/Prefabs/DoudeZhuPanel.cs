@@ -25,6 +25,12 @@ public class DoudeZhuPanel : GamePanel {
 
 	override public float DiscardScalar{get{return .625f;}}
 
+	override protected void onMsgStart(){
+		BtnCall.SetActive(false);
+		BtnDouble.SetActive(false);
+		foreach(var btn in btnOps)btn.SetActive(true);
+	}
+
 	override protected void onMsgDiscard(MsgNCDiscard msg){
 		//set to next after discard
 		int pos=msg.Bunch.Pos;
