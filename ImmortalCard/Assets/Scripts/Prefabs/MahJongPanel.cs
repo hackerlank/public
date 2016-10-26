@@ -35,7 +35,7 @@ public class MahJongPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
-	override protected void onMsgEngage(MsgNCEngage msg){
+	override protected void OnMsgEngage(MsgNCEngage msg){
 		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 		foreach(var btn in btns)btn.SetActive(false);
 		Main.Instance.MainPlayer.playData.SelectedCard=msg.Key;
@@ -67,7 +67,7 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected void onMsgDraw(int id,int pos){
+	override protected void OnMsgDraw(int id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -83,7 +83,7 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected void onMsgMeld(bunch_t bunch){
+	override protected IEnumerator OnMsgMeld(bunch_t bunch){
 		_hints=null;
 		
 		var from=Rule.Token;
@@ -91,7 +91,7 @@ public class MahJongPanel : GamePanel {
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(A==null)
-			return;
+			yield break;
 
 		switch(bunch.Type){
 		case pb_enum.BunchA:
@@ -123,6 +123,7 @@ public class MahJongPanel : GamePanel {
 		if(player.pos==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
+		yield break;
 	}
 	
 	bool showHints(int card,bool bDraw,bool startup=false){

@@ -52,12 +52,13 @@ public class PaohuziRule: GameRule {
 		//hint3
 		var output=new bunch_t();
 		if(hint3(player,card,output,bDraw)){
+			output.Pos=pos;
 			hints.Add(output);
 		}
 
 		//hint
 		if(!bDraw&&hint(card,hands,hints)){
-
+			foreach(var hint_ in hints)hint_.Pos=pos;
 		}
 
 		var all=new List<bunch_t>();
@@ -72,7 +73,7 @@ public class PaohuziRule: GameRule {
 
 		var count=hints.Count;
 		if(count>0){
-			string str="hint "+count+",pos="+pos+",";
+			string str=count+" hints from pos="+pos+": ";
 			foreach(var bunch in hints)
 				str+=Player.bunch2str(bunch);
 			Debug.Log(str);
@@ -356,7 +357,7 @@ public class PaohuziRule: GameRule {
 			if(A/1000==B/1000 && A%100==B%100)
 				tmp.Add(B);
 		}
-		
+
 		if(tmp.Count>=2){
 			foreach(var it in tmp)hints.Pawns.Add(it);
 			hints.Pawns.Add(card);

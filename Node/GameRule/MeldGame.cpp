@@ -149,14 +149,11 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
 
     //pos
-    bool found=false;
     int i=0;
     for(;i<pendingMeld.size();++i)
-        if(pos==pendingMeld[i].bunch.pos()){
-            found=true;
+        if(pos==pendingMeld[i].bunch.pos())
             break;
-        }
-    if(!found){
+    if(i>=pendingMeld.size()){
         KEYE_LOG("OnMeld wrong player pos=%d\n",pos);
         return;
     }
@@ -181,12 +178,28 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
             return;
         }
-        card=*curr.pawns().rbegin();
         
+        card=*curr.pawns().rbegin();
         auto pcard=*pending.bunch.pawns().rbegin();
         if(card!=pcard){
             KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
             return;
+        }
+        //check hands
+        for(auto p:curr.pawns()){
+            if(p==card)
+                continue;
+            auto found=false;
+            for(auto h:player.playData.hands()){
+                if(h==p){
+                    found=true;
+                    break;
+                }
+            }
+            if(!found){
+                KEYE_LOG("OnMeld invalid hands pos=%d\n",pos);
+                return;
+            }
         }
     }
 
@@ -218,7 +231,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         //first deal as pass while invalid
         if(result==pb_enum::BUNCH_INVALID){
             std::string str;
-            KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,pos);
+            KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
             //result=pb_enum::BUNCH_INVALID;
             result=pb_enum::OP_PASS;
             ret=pb_enum::BUNCH_INVALID;
@@ -226,6 +239,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         
         auto needDraw=false;
         auto isDraw=(pendingMeld.size()==1);
+        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
         switch(result){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
@@ -268,7 +282,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(ret);
-        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
         msg.mutable_bunch()->CopyFrom(bunch);
         
         //clear after copy

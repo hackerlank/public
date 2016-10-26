@@ -55,7 +55,7 @@ public class PaohuziPanel : GamePanel {
 		}
 	}
 
-	override protected void onMsgDraw(int id,int pos){
+	override protected void OnMsgDraw(int id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -71,7 +71,7 @@ public class PaohuziPanel : GamePanel {
 		}
 	}
 
-	override protected void onMsgMeld(bunch_t bunch){
+	override protected IEnumerator OnMsgMeld(bunch_t bunch){
 		_hints=null;
 		
 		var from=Rule.Token;
@@ -79,7 +79,7 @@ public class PaohuziPanel : GamePanel {
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(A==null)
-			return;
+			yield break;
 
 		switch(bunch.Type){
 		case pb_enum.PhzAbc:
@@ -94,40 +94,51 @@ public class PaohuziPanel : GamePanel {
 		case pb_enum.PhzBbbbdesk:
 			//meld,make a bunch with constant 4 cards
 			List<Card> cards=new List<Card>();
-			//find cards in hands
-			var hands=HandAreas[to].GetComponentsInChildren<Card>();
-			foreach(var id in bunch.Pawns)
-			foreach(var card in hands){
-				if(card.Value==id)
-					cards.Add(card);
+			if(to==_pos){
+				//find my hands cards
+				var hands=HandAreas[to].GetComponentsInChildren<Card>();
+				foreach(var id in bunch.Pawns){
+					foreach(var card in hands){
+						if(card.Value==id)
+							cards.Add(card);
+					}
+				}
+				Debug.Log("----meld prepare my bunch size="+cards.Count);
+			}else{
+				//add meld cards for others
+				foreach(var id in bunch.Pawns){
+					if(A.Value!=id) Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card other){
+						if(null!=other)
+							cards.Add(other);
+					});
+				}
+				while(cards.Count<bunch.Pawns.Count-1)yield return null;
+				Debug.Log("----meld prepare other bunch size="+cards.Count);
 			}
 			cards.Add(A);
-			System.Action<Card> handler=delegate(Card blank){
-				if(null!=blank)cards.Add(blank);
 
-				//move to meld area
-				foreach(var c in cards)
-					c.DiscardTo(MeldAreas[to],scalar);
-				A.state=Card.State.ST_MELD;
-				Debug.Log("----meld card from "+from+" to "+to);
-				
-				if(to==_pos)StartCoroutine(sortHands());
-			};
 			//add place holder
-			if(cards.Count==4)
-				handler.Invoke(null);
-			else for(int i=cards.Count;i<4;++i){
-				Card.Create(CardPrefab,-1,MeldAreas[to],delegate(Card obj) {
-					handler.Invoke(obj);
-				});
-			}
+			if(cards.Count<4) Card.Create(CardPrefab,-1,MeldAreas[to],delegate(Card blank){
+				if(null!=blank)
+					cards.Add(blank);
+			});
+			while(cards.Count<4)yield return null;
+			Debug.Log("----meld final bunch size="+cards.Count);
 
+			//move to meld area
+			foreach(var c in cards){
+				c.state=Card.State.ST_MELD;
+				c.DiscardTo(MeldAreas[to],scalar);
+			}
+			Debug.Log("----meld "+A.Value+" from "+from+" to "+to);
+			
+			if(to==_pos)StartCoroutine(sortHands());
 			break;
 		default:
 			//abandon
 			if(to==-1)to=Rule.Token;
 			A.DiscardTo(AbandonAreas[to],AbandonScalar);
-			Debug.Log("----abandon card from "+from+" to "+to);
+			Debug.Log("----abandon "+A.Value+" from "+from+" to "+to);
 			A.state=Card.State.ST_ABANDON;
 			break;
 		}

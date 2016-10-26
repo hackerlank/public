@@ -83,7 +83,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
 			if(player.pos==msgEngage.Pos)
-				onMsgEngage(msgEngage);
+				OnMsgEngage(msgEngage);
 
 		}else if(msg is MsgNCStart){
 			var msgStart=msg as MsgNCStart;
@@ -95,14 +95,14 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 		}else if(msg is MsgNCMeld){
 			var msgMeld=msg as MsgNCMeld;
-			onMsgMeld(msgMeld.Bunch);
+			StartCoroutine(OnMsgMeld(msgMeld.Bunch));
 			changeToken(msgMeld.Bunch.Pos);
 
 		}else if(msg is MsgNCDraw){
 			var msgDraw=msg as MsgNCDraw;
 			Debug.Log(msgDraw.Pos+" draw "+(int)msgDraw.Card);
 			changeToken(msgDraw.Pos);
-			onMsgDraw(msgDraw.Card,msgDraw.Pos);
+			OnMsgDraw(msgDraw.Card,msgDraw.Pos);
 
 		}else if(msg is MsgNCSettle){
 			var msgSettle=msg as MsgNCSettle;
@@ -190,7 +190,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		yield break;
 	}
 
-	public IEnumerator OnMsgDiscard(MsgNCDiscard msg){
+	IEnumerator OnMsgDiscard(MsgNCDiscard msg){
 		//discard any body's card
 		if(msg.Result!=pb_enum.Succeess){
 			yield break;
@@ -305,11 +305,11 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		}
 	}
 
-	virtual protected void onMsgEngage(MsgNCEngage msg){}
+	virtual protected void OnMsgEngage(MsgNCEngage msg){}
 	virtual protected void onMsgStart(){}
 	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
-	virtual protected void onMsgDraw(int card,int pos){}
-	virtual protected void onMsgMeld(bunch_t bunch){}
+	virtual protected void OnMsgDraw(int card,int pos){}
+	virtual protected IEnumerator OnMsgMeld(bunch_t bunch){yield break;}
 	virtual protected IEnumerator sortHands(){yield break;}
 
 	protected void deselectAll(){
