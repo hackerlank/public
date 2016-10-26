@@ -43,24 +43,8 @@ public class MahJongPanel : GamePanel {
 
 	override protected void onMsgStart(){
 		//transform position
-		var m=maxPlayer-1;
-		var M=_pos;
-		var R=(M+1)%maxPlayer;
-		var O=(M+2)%maxPlayer;
-		var L=(M+3)%maxPlayer;
-		if(L>MeldAreas.Length)L=MeldAreas.Length;
-		Transform[] tempM=new Transform[MeldAreas.Length];
-		Transform[] tempA=new Transform[AbandonAreas.Length];
-		MeldAreas.CopyTo(tempM,0);
-		AbandonAreas.CopyTo(tempA,0);
-		if(MeldAreas.Length>0)MeldAreas[0]=tempM[M];
-		if(MeldAreas.Length>1)MeldAreas[1]=tempM[R];
-		if(MeldAreas.Length>2)MeldAreas[2]=tempM[O];
-		if(MeldAreas.Length>m)MeldAreas[m]=tempM[L];
-		if(AbandonAreas.Length>0)AbandonAreas[0]=tempA[M];
-		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
-		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
-		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
+		transformComponent(MeldAreas);
+		transformComponent(AbandonAreas);
 
 		//check natural win
 		var player=Main.Instance.MainPlayer;
@@ -106,7 +90,9 @@ public class MahJongPanel : GamePanel {
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
-		if(A!=null)
+		if(A==null)
+			return;
+
 		switch(bunch.Type){
 		case pb_enum.BunchA:
 			//collect

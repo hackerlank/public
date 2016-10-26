@@ -119,6 +119,29 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		}
 	}
 
+	protected void transformComponent(Component[] com){
+		/* position transform
+		*	  (O)
+		(R)          (L)
+		*	(M=_pos)
+		*/
+		var tempD=new Component[com.Length];	//MROL
+		com.CopyTo(tempD,0);
+
+		//turn components clockwise by _pos
+		var m=maxPlayer-1;
+		var maxArea=com.Length;
+		var M=(maxArea+0-_pos)%maxArea;
+		var R=(maxArea+1-_pos)%maxArea;
+		var O=(maxArea+2-_pos)%maxArea;
+		var L=(maxArea-1-_pos)%maxArea;
+		
+		if(com.Length>0)com[0]=tempD[M];
+		if(com.Length>1)com[1]=tempD[R];
+		if(com.Length>2)com[2]=tempD[O];
+		if(com.Length>m)com[m]=tempD[L];
+	}
+
 	public IEnumerator OnMsgStart(MsgNCStart msg){
 		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;
@@ -127,41 +150,11 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		Rule.Banker=msg.Banker;
 		Rule.Historical.Clear();
 		_selection.Clear();
-		/* position transform
-		*	  (O)
-		(R)          (L)
-		*	(M=_pos)
-		*/
-		var m=maxPlayer-1;
-		var M=_pos;
-		var R=(M+1)%maxPlayer;
-		var O=(M+2)%maxPlayer;
-		var L=(M+3)%maxPlayer;
-		if(L>DiscardAreas.Length)L=DiscardAreas.Length;
-		Transform[] tempD=new Transform[DiscardAreas.Length];	//MROL
-		Transform[] tempH=new Transform[HandAreas.Length];
-		PlayerIcon[] tempP=new PlayerIcon[Players.Length];
-		Text[] tempN=new Text[nHandCards.Length];
-		DiscardAreas.CopyTo(tempD,0);
-		HandAreas.CopyTo(tempH,0);
-		Players.CopyTo(tempP,0);
-		nHandCards.CopyTo(tempN,0);
-		if(DiscardAreas.Length>0)DiscardAreas[0]=tempD[M];
-		if(DiscardAreas.Length>1)DiscardAreas[1]=tempD[R];
-		if(DiscardAreas.Length>2)DiscardAreas[2]=tempD[O];
-		if(DiscardAreas.Length>m)DiscardAreas[m]=tempD[L];
-		if(HandAreas.Length>0)HandAreas[0]=tempH[M];
-		if(HandAreas.Length>1)HandAreas[1]=tempH[R];
-		if(HandAreas.Length>2)HandAreas[2]=tempH[O];
-		if(HandAreas.Length>m)HandAreas[m]=tempH[L];
-		if(Players.Length>0)Players[0]=tempP[M];
-		if(Players.Length>1)Players[1]=tempP[R];
-		if(Players.Length>2)Players[2]=tempP[O];
-		if(Players.Length>m)Players[m]=tempP[L];
-		if(nHandCards.Length>0)nHandCards[0]=tempN[M];
-		if(nHandCards.Length>1)nHandCards[1]=tempN[R];
-		if(nHandCards.Length>2)nHandCards[2]=tempN[O];
-		if(nHandCards.Length>m)nHandCards[m]=tempN[L];
+
+		transformComponent(DiscardAreas);
+		transformComponent(HandAreas);
+		transformComponent(Players);
+		transformComponent(nHandCards);
 
 		//sort
 		var hands=new List<int>(msg.Hands);

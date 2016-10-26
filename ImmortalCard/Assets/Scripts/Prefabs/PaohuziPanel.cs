@@ -15,7 +15,7 @@ public class PaohuziPanel : GamePanel {
 	override public string Id2File(int color,int value){
 		if(Rule!=null){
 			color-=1;
-			string[] Colors={"b","s"};
+			string[] Colors={"s","b"};
 			value=Rule.inverseTransformValue(value);
 			if(color<Colors.Length)
 				return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
@@ -35,25 +35,8 @@ public class PaohuziPanel : GamePanel {
 
 	override protected void onMsgStart(){
 		//transform position
-		var m=maxPlayer-1;
-		var M=_pos;
-		var R=(M+1)%maxPlayer;
-		var O=(M+2)%maxPlayer;
-		var L=(M+3)%maxPlayer;
-		if(L>MeldAreas.Length)L=MeldAreas.Length;
-		Transform[] tempM=new Transform[MeldAreas.Length];
-		Transform[] tempA=new Transform[AbandonAreas.Length];
-		MeldAreas.CopyTo(tempM,0);
-		AbandonAreas.CopyTo(tempA,0);
-		if(MeldAreas.Length>0)MeldAreas[0]=tempM[M];
-		if(MeldAreas.Length>1)MeldAreas[1]=tempM[R];
-		if(MeldAreas.Length>2)MeldAreas[2]=tempM[O];
-		if(MeldAreas.Length>m)MeldAreas[m]=tempM[L];
-		if(AbandonAreas.Length>0)AbandonAreas[0]=tempA[M];
-		if(AbandonAreas.Length>1)AbandonAreas[1]=tempA[R];
-		if(AbandonAreas.Length>2)AbandonAreas[2]=tempA[O];
-		if(AbandonAreas.Length>m)AbandonAreas[m]=tempA[L];
-
+		transformComponent(MeldAreas);
+		transformComponent(AbandonAreas);
 		StartCoroutine(sortHands());
 	}
 
@@ -97,6 +80,7 @@ public class PaohuziPanel : GamePanel {
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(A==null)
 			return;
+
 		switch(bunch.Type){
 		case pb_enum.PhzAbc:
 		case pb_enum.PhzAbA:
@@ -119,12 +103,13 @@ public class PaohuziPanel : GamePanel {
 			}
 			cards.Add(A);
 			System.Action<Card> handler=delegate(Card blank){
-				if(null!=blank)cards.Insert(0,blank);
+				if(null!=blank)cards.Add(blank);
 
 				//move to meld area
 				foreach(var c in cards)
 					c.DiscardTo(MeldAreas[to],scalar);
 				A.state=Card.State.ST_MELD;
+				Debug.Log("----meld card from "+from+" to "+to);
 				
 				if(to==_pos)StartCoroutine(sortHands());
 			};
@@ -142,6 +127,7 @@ public class PaohuziPanel : GamePanel {
 			//abandon
 			if(to==-1)to=Rule.Token;
 			A.DiscardTo(AbandonAreas[to],AbandonScalar);
+			Debug.Log("----abandon card from "+from+" to "+to);
 			A.state=Card.State.ST_ABANDON;
 			break;
 		}
