@@ -95,22 +95,10 @@ void GameRule::deal(Game& game){
 }
 
 bool GameRule::settle(Game& game){
-    pos_t pos=-1;
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto& gd=game.players[i]->playData;
-        if(gd.hands().size()<=0)
-            pos=i;
-    }
-    
     //broadcast
     MsgNCSettle msg;
     msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto play=msg.mutable_play(i);
-        play->set_win(i==pos?1:0);
-        play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
-        //auto player=msg.add_play();
-    }
+    settle(game,msg);
     
     for(auto p:game.players){
         p->send(msg);

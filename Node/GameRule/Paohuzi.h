@@ -21,6 +21,7 @@ protected:
     virtual int             maxCards();
     virtual int             maxHands();
     virtual int             bottom();
+    virtual void            settle(Game&,proto3::MsgNCSettle&);
     
     virtual bool            hint(google::protobuf::RepeatedField<proto3::bunch_t>&,Game&,Player&,proto3::bunch_t&);
 private:

@@ -611,6 +611,10 @@ bool Paohuzi::validId(uint id){
     return true;
 }
 
+void Paohuzi::settle(Game& game,proto3::MsgNCSettle& msg){
+    
+}
+
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
     /*
     card_t::eAchievment archievment=card_t::eAchievment::WIN_NORMAL;

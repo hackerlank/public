@@ -235,6 +235,10 @@ bool Mahjong::hint(google::protobuf::RepeatedField<bunch_t>& bunches,Game& game,
     return count>0;
 }
 
+void Mahjong::settle(Game& game,proto3::MsgNCSettle& msg){
+    
+}
+
 pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     switch (bunch.type()) {
