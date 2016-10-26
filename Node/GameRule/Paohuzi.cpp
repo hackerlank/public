@@ -8,7 +8,48 @@
 
 #include "../stdafx.h"
 #include "NodeFwd.h"
+#include <sstream>
+#include <algorithm>
+#include <cmath>
 using namespace proto3;
+
+int nnn[pb_enum::WIN_MAX][pb_enum::PHZ_MAX]={
+    //SY,SYBP,LD,   HH,CD_QMT,CD_HHD, CS,XX_GHZ,HY,  YZ_SBW,PEGHZ,SC_EQS,CZ,    GX
+    {0,0,0,				0,0,0,			0,0,0,			0,0,0,0,				0},		//平胡
+    {0,10,100,			4,6,0,			5,110,0,		0,20,0,2,				2},		//天胡
+    {0,10,100,			3,6,0,			5,100,0,		0,16,0,2,				2},		//地胡
+    {0,0,1,				2,6,0,			0,0,0,			0,0,0,0,				2},		//海胡
+    {0,0,0,				0,6,0,			0,0,0,			0,0,0,0,				0},		//听胡
+    
+    {0,0,100,			5,0,4,			0,100,0,		0,0,0,0,				0},		//红乌
+    {2,0,1,				2,3,2,			2,2,0,			0,0,0,0,				0},		//红胡
+    {2,0,100,			5,8,5,			5,100,0,		0,0,0,0,				0},		//黑胡
+    {0,0,0,				4,8,0,			5,0,0,			0,0,0,0,				0},		//大胡
+    {0,0,0,				4,10,0,			5,0,0,			0,0,0,0,				0},		//小胡
+    
+    {0,0,1,				3,6,3,			4,0,0,			0,0,0,0,				0},		//点胡
+    {0,0,0,				4,8,0,			5,0,0,			0,0,0,0,				0},		//对胡
+    {0,0,0,				0,8,0,			0,0,0,			0,0,0,0,				0},		//耍猴
+    {0,0,0,				0,2,0,			0,0,0,			0,0,0,0,				0},		//黄番
+    {0,10,1,			1,1,0,			0,10,2,			0,0,0,2,				2},		//自摸
+    
+    {0,0,100,			0,0,0,			0,2,0,			0,0,0,0,				0},		//30胡
+    {0,0,1,				0,0,0,			0,0,0,			0,0,0,0,				0},		//20胡
+    {0,0,-1,			0,0,0,			0,10,-1,		0,0,0,3,				0},		//放炮
+    {0,0,1,				0,0,0,			0,0,0,			0,0,0,0,				0},		//一块匾
+    {0,0,0,				0,0,0,			2,0,0,			0,0,0,0,				0},		//二比
+    
+    {0,0,0,				0,0,0,			3,0,0,			0,0,0,0,				0},		//三比
+    {0,0,0,				0,0,0,			4,0,0,			0,0,0,0,				0},		//四比
+    {0,0,0,				0,0,0,			2,0,0,			0,0,0,0,				0},		//双飘
+    {0,0,0,				0,0,0,			0,100,0,		0,0,0,0,				0},		//十红，湘乡
+    
+    {0,0,0,				0,0,0,			0,0,0,			0,40,0,0,				0},		//五福
+    {0,0,0,				0,0,0,			0,0,0,			0,8,0,0,				0},		//跑双
+    {0,0,0,				0,0,0,			0,0,0,			0,40,0,0,				0},		//小七对
+    {0,0,0,				0,0,0,			0,0,0,			0,40,0,0,				0},		//双龙
+    {0,0,0,				0,0,0,			0,0,0,			0,2,0,0,				0},		//连胡
+};
 
 pb_enum fixOps(pb_enum ops){
     if(ops>=pb_enum::BUNCH_WIN)
@@ -596,25 +637,644 @@ bool Paohuzi::validId(uint id){
     return true;
 }
 
-void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuite,unit_id_t card){
+void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
+    //只结算不判断
+    auto pos=player.pos;
+    auto& game=*player.game;
+    auto M=MaxPlayer();
+    std::stringstream ss;//广西跑胡子用
+    int _cardNum=0;//广西跑胡子用
+    //清洗缓冲区
+    ss.clear();
+    game.spSettle=std::make_shared<MsgNCSettle>();
+    auto& msg=*game.spSettle;
     
+    for(pos_t i=0;i<M;++i){
+        auto play=msg.add_play();
+        play->set_win(pos==i&&allSuites.size()>0?1:0);
+    }
+
+    if(!game.spFinish){
+        //prepare final end message
+        game.spFinish=std::make_shared<MsgNCFinish>();
+        for(pos_t i=0; i < M; ++i){
+            game.spFinish->add_play();
+        }
+    }
+    auto spFinalEnd=game.spFinish;
+    auto spGameEnd=game.spSettle;
+    auto& play=*msg.mutable_play(pos);
+    auto& playFinish=*spFinalEnd->mutable_play(pos);
+    
+    int point=0,score=0,multiple=0,chunk=0;
+    bool self=(pos==game.token&&game.pileMap.find(card)!=game.pileMap.end());
+    //如果天胡，card就被设置为-1(255)了，这里有漏洞则处理
+    bool bCardError=(card>80||card<0);//说明牌非法，不能用非法的牌做放炮判断
+    bool fire=(pos!=game.token&&!bCardError&&game.pileMap.find(card)!=game.pileMap.end()
+               &&(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_HY||
+                  game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
+                  game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
+    
+    //适配碰胡子算分规则
+    switch(game.category){
+        case pb_enum::PHZ_PEGHZ:
+            point=-1;//置此标示，以便碰胡子和其他玩法作区分后碰胡子能够单独计算名堂并算分
+            break;
+        default:
+            //胡息
+            point=calcPoints(game,allSuites);
+            break;
+    }
+    
+    //log("settle pos=%d, suites=%d, point=%d",pos,allSuites.size(),point);
+    
+    if(point>=winPoint(game,game.category)){
+        //胡了
+        
+        //先计名堂
+        std::vector<achv_t> achvs;
+        calcAchievement(game,game.category,allSuites,achvs);
+        
+        //地胡和放炮可能产生冲突，要先判断地胡后再对放炮做处理
+        //地胡，听胡
+        if(game.pile.size()>=19&&game.category!=pb_enum::PHZ_SY&&
+           game.category!=pb_enum::PHZ_CD_HHD&&game.category!=pb_enum::PHZ_HY){
+            //地胡：1，闲家；2，闲家无进张；3，牌堆满的
+            int drawCount=0;
+            for(auto& p:game.players)drawCount+=p->inputCount;
+            if(/*game._firstCard==card&&*/game.banker!=pos&&drawCount==0){
+                //地胡时，有时候会检测到放炮的名堂，但是是不允许的，这里在地胡处理中直接屏蔽
+                fire=false;
+                
+                achvs.push_back(achv_t());
+                auto& ach=achvs.back();
+                ach.set_type(pb_enum::WIN_DI);
+                auto nn=nnn[ach.type()][game.category];
+                if(game.category==pb_enum::PHZ_SYBP)
+                    ach.set_key(pb_enum::ACHV_KEY_SCORE);
+                else if(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)
+                    ach.set_key(pb_enum::ACHV_KEY_POINT);
+                else
+                    ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                ach.set_value(nn);
+            }
+        }
+        
+        //处理湘乡告胡子点炮时胡息加10的情况，以便后续翻番计算
+        int firePoint=0;
+        if(fire&&game.category==pb_enum::PHZ_XX_GHZ){
+            firePoint+=10;
+        }
+        //自摸
+        if(self){
+            if(game.category!=pb_enum::PHZ_SY&&game.category!=pb_enum::PHZ_CD_HHD&&
+               game.category!=pb_enum::PHZ_CS){
+                achvs.push_back(achv_t());
+                auto& ach=achvs.back();
+                ach.set_type(pb_enum::WIN_SELF);
+                auto nn=nnn[ach.type()][game.category];
+                if(game.category==pb_enum::PHZ_SYBP)
+                    ach.set_key(pb_enum::ACHV_KEY_SCORE);
+                else if(game.category==pb_enum::PHZ_CD_QMT||game.category==pb_enum::PHZ_HH)
+                    ach.set_key(pb_enum::ACHV_KEY_CHUNK);
+                else if(game.category==pb_enum::PHZ_XX_GHZ)
+                    ach.set_key(pb_enum::ACHV_KEY_POINT);
+                else
+                    ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                ach.set_value(nn);
+            }
+        }
+        
+        if(game.category==pb_enum::PHZ_CD_QMT){
+            //听胡
+            if(player.inputCount<=0){
+                achvs.push_back(achv_t());
+                auto& ach=achvs.back();
+                ach.set_type(pb_enum::WIN_TING);
+                ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                ach.set_value(nnn[ach.type()][game.category]);
+            }
+            //单调将
+            if(player.lastHand)
+                for(auto i=allSuites.begin(),ii=allSuites.end();i!=ii;++i){
+                    if(i->type()==pb_enum::PHZ_AA){
+                        for(auto j:i->pawns()){
+                            if(j==card){
+                                achvs.push_back(achv_t());
+                                auto& ach=achvs.back();
+                                ach.set_type(pb_enum::WIN_MONKEY);
+                                ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                                ach.set_value(nnn[ach.type()][game.category]);
+                                break;
+                            }
+                        }
+                    }
+                }
+        }
+        //荒番
+        if(game.noWinner>0&&game.category==pb_enum::PHZ_CD_QMT){
+            achvs.push_back(achv_t());
+            auto& ach=achvs.back();
+            ach.set_type(pb_enum::WIN_YELLOW);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][game.category]+game.noWinner-1);
+            //赢牌后重计荒庄次数
+            game.noWinner=0;
+        }
+        
+        
+        if(game.category==pb_enum::PHZ_LD){
+            //卡胡
+            if(point==30){
+                achvs.push_back(achv_t());
+                auto& ach=achvs.back();
+                ach.set_type(pb_enum::WIN_30);
+                ach.set_key(pb_enum::ACHV_KEY_POINT);
+                ach.set_value(nnn[ach.type()][game.category]);
+                point=nnn[ach.type()][game.category];
+            } else if(point==20){
+                achvs.push_back(achv_t());
+                auto& ach=achvs.back();
+                ach.set_type(pb_enum::WIN_20);
+                ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                ach.set_value(nnn[ach.type()][game.category]);
+            }
+        }
+        
+        //根据名堂算分算胡之前，先对七方门子是否达到30胡息做计算
+        //在湘乡告胡子中，标示30胡和红胡是否都有的情况：bN30Red-false存在，true不存在;bN13Red标示红乌
+        int pt=0;
+        bool bN30Red=true,bN13Red=true;
+        if(game.category==pb_enum::PHZ_XX_GHZ){
+            //湘乡30胡和30胡加10红
+            bool bRed_=false,bBlack=false,b13Red=false;//标示是否有红胡的名堂
+            std::vector<achv_t>::iterator iRed=achvs.end();
+            for(auto ia=achvs.begin(),iaa=achvs.end();ia!=iaa;++ia){
+                //检查是否有红胡，红乌，黑胡，三者互斥
+                if(ia->type()==pb_enum::WIN_RED){
+                    iRed=ia;
+                    bRed_=true;
+                    break;
+                } else if(ia->type()==pb_enum::WIN_BLACK){
+                    bBlack=true;
+                    break;
+                } else if(ia->type()==pb_enum::WIN_13RED){
+                    iRed=ia;
+                    b13Red=true;
+                }
+                
+            }
+            if(point>=30){
+                //30胡
+                if(bRed_||b13Red){
+                    //这里需要把红胡或者红乌的名堂去掉
+                    if(iRed!=achvs.end()){
+                        achvs.erase(iRed);
+                    }
+                    pt+=100;
+                    achvs.push_back(achv_t());
+                    auto& ach=achvs.back();
+                    ach.set_type(pb_enum::WIN_10RED);
+                } else{
+                    //只是达到30息及以上了，算两番
+                    achvs.push_back(achv_t());
+                    auto& ach=achvs.back();
+                    ach.set_type(pb_enum::WIN_30);
+                    ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                    ach.set_value(2);
+                }
+            }
+        }//pb_enum::PHZ_XX_GHZ
+        
+        //胡息
+        for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a){
+            if(a->type()==pb_enum::ACHV_KEY_POINT)
+                pt+=a->value();
+        }
+        
+        if((game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)&&pt>=100)
+            //pt>=100，因为对于湘乡告胡子，自摸是加10胡息，其他的明天都是>=100胡息的
+            point=pt;
+        else
+            point+=pt;
+        //这个加法是针对湘乡告胡子放炮加分的，保持流程统一，故放在此处
+        point+=firePoint;
+        
+        
+        //放炮最高100息
+        if(fire&&(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)&&point>100)point=100;
+        //囤数
+        chunk+=calcScore(game,game.category,point);
+        int mchunk=1;
+        for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a){
+            if(a->type()==pb_enum::ACHV_KEY_CHUNK)
+                chunk+=a->value();
+        }
+        //番数
+        for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a)
+            if(a->type()==pb_enum::ACHV_KEY_MULTIPLE)
+                multiple+=a->value();
+        
+        if(game.category!=pb_enum::PHZ_LD){
+            if(multiple==0)multiple=multiple=1;
+        }
+        else if(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ){
+            multiple=(int)std::pow(2,multiple);
+        }
+        //番数封顶判断
+        if(game.category==pb_enum::PHZ_HH||game.category==pb_enum::PHZ_CS){
+            //处理
+//            multiple=calcMultiOrScore(game,game.category,multiple);
+        }
+        
+        //分数
+        if(game.category!=pb_enum::PHZ_LD||game.category!=pb_enum::PHZ_XX_GHZ)
+            score=chunk*multiple;
+        else
+            //score=chunk*pow(2,multiple);
+            score=chunk*multiple;
+        for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a)
+            if(a->type()==pb_enum::ACHV_KEY_SCORE)
+                score+=a->value();
+        //log("end point=%d, chunk=%d, multiple=%d, score=%d",point,chunk,multiple,score);
+        
+        //换庄
+        game.bankerChanged=(game.banker!=pos);
+        game.banker=pos;
+        //点炮
+        if(fire){
+            achvs.push_back(achv_t());
+            auto& ach=achvs.back();
+            ach.set_type(pb_enum::WIN_FIRE);
+            ach.set_key(pb_enum::ACHV_KEY_SCORE);
+            ach.set_value(score);
+        }
+        
+        //所有名堂和分数计算完毕后处理广西跑胡子番醒
+        //对于广西跑胡子，因为有番醒，因此要在给客户端发送桌牌之前处理番醒
+        if(game.category==pb_enum::PHZ_GX){
+            //计算番醒
+//            calcCardScore(game,game.category,pos,ss,_cardNum);
+//            msg.m_xingStr=ss.str();//将番醒组合给客户端，以便展示使用
+            //算番结束将醒分加到基础分上
+            score+=_cardNum;//番醒只是胡牌者的分数
+        }
+        
+        //scores存当局分数变动，totalscores存累计分数
+        if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ){
+            //差额玩法
+            play.set_score(score);
+            playFinish.set_score(playFinish.score());
+//            msg.m_scores[pos]=score;
+//            spFinalEnd->m_total[pos].score+=score;
+            
+            if(fire){
+                //放炮，两人变动
+                msg.mutable_play(game.token)->set_score(-score);
+                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()-score);
+//                msg.m_scores[game.token]=-score;	//放炮这要扣分的，有番数
+//                spFinalEnd->m_total[game.token].score-=score;
+            }
+//            for(int i=0; i<M; ++i)
+//                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+        } else{
+            //两倍分数哦
+            if(fire){
+                //放炮
+                //适配郴州特殊算分规则和4人玩法
+                bool bMulti3=false;
+                switch(game.category){
+                    case pb_enum::PHZ_CZ:
+                    case pb_enum::PHZ_HY:
+                        bMulti3=true;	break;
+                    default:
+                        break;
+                }
+                play.set_score(bMulti3?score*3:score*2);
+                msg.mutable_play(game.token)->set_score(-(bMulti3?score*3:score*2));
+//                msg.m_scores[pos]=bMulti3?score*3:score*2;
+//                msg.m_scores[game.token]=-(bMulti3?score*3:score*2);
+            } else{
+                //适配4人玩法
+                int multi=M-1;
+                if(game.category==pb_enum::PHZ_CD_HHD||game.category==pb_enum::PHZ_CD_QMT)
+                {
+//                    score=calcMultiOrScore(game.category,score*multi);
+                    for(int i=0; i<M; ++i){
+                        msg.mutable_play(i)->set_score(i==pos?score:-(score/multi));
+//                        msg.m_scores[i]=(i==pos?score:-(score/multi));
+                    }
+                } else{
+                    for(int i=0; i<M; ++i)
+                        msg.mutable_play(i)->set_score(i==pos?score*multi:-score);
+//                        msg.m_scores[i]=(i==pos?score*multi:-score);
+                }
+            }
+            for(int i=0; i<M; ++i){
+                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()+msg.play(i).score());
+//                spFinalEnd->m_total[i].score+=msg.m_scores[i];
+//                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+            }
+        }
+    } else if(point>=0){
+        if(game.category==pb_enum::PHZ_CZ){
+            //郴州毛胡子玩法，荒庄需要换庄
+            auto M=MaxPlayer();
+            auto p=(game.banker+1)%M;
+            game.bankerChanged=true;
+            game.banker=p;
+            changePos(game,p);
+        }
+        
+        //荒庄
+        ++game.noWinner;
+        game.bankerChanged=false;
+        if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_XX_GHZ)
+            //剥皮和湘乡告胡子，庄家扣10分
+            msg.mutable_play(game.banker)->set_score(-10);
+        for(int i=0; i<M; ++i){
+            game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()+msg.play(i).score());
+//            spFinalEnd->m_total[i].score+=msg.m_scores[i];
+//            msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+        }
+    } else{
+        /*
+        //pb_enum::PHZ_PENGHUZI
+        
+        //地胡不能有进张的判断条件
+        auto markInput=0;
+        //放炮否
+        bool pfire=(pos!=game.token&&!bCardError&&game.pileMap.find(card)==game.pileMap.end()
+                    &&(game.category==pb_enum::PHZ_PEGHZ));
+        //地胡，听胡
+        for(auto i=0;i<M;++i){
+            if(i==game.banker)continue;
+            if(game.m_user[i]->inputCount==0) markInput++;
+        }
+        
+        //计算胡牌算分
+        if(game.m_winPeo>0&&pos!=pos_n){
+            //天胡，双龙，小七对也进来处理
+            if(game.pile.size()>=23){
+                //地胡：1，闲家；2，闲家无进张；3，牌堆满的；4，庄家出了一张牌
+                if(game.banker!=pos&&markInput==3&&game.m_user[game.banker]->handCards.size()==14){
+                    //地胡时，有时候会检测到放炮的名堂，但是是不允许的，这里在地胡处理中直接屏蔽
+                    pfire=false;
+                    achvs.push_back(achv_t());
+                    auto& ach=achvs.back();
+                    ach.set_type(pb_enum::WIN_DI;
+                                 ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                                 ach.set_value(2);
+                    auto nn=nnn[ach.type()][game.category];
+                    ach.score=nn;
+                }
+            }
+            //赢了，记录连胡次数,
+            game.m_winCount[pos]++;
+            //首先计算名堂
+            calcPengAchievement(game.category,allSuites,achvs,pos);
+            
+            auto winScore=0;
+            int lastScore=4;//胡牌基础分数4分
+            bool bTian=false,b5FU=false;//标示天胡，双龙，小七对，如果是这几种情况，则直接结算
+            bool b7DualLog=false;//标示有双龙或者小七对时，不计算起手提坎分数
+            
+            
+            //胡牌算分结束，计算名堂分数
+            for(auto iv=achvs.begin(),ivv=achvs.end();iv!=ivv;++iv){
+                if(iv->type==pb_enum::WIN_TIAN){
+                    //天胡
+                    bTian=true;
+                    lastScore=0;//不计算初始的4分
+                    lastScore=iv->score;
+                } else if(iv->type==pb_enum::WIN_7PAIR||iv->type==pb_enum::WIN_DUALDRA){
+                    //小七对,双龙
+                    bTian=true;
+                    lastScore=0;//不计算初始的4分
+                    b7DualLog=true;
+                    lastScore=iv->score;
+                } else if(iv->type==pb_enum::WIN_DI){
+                    //地胡
+                    if(pfire)
+                        pfire=false;//防止重复计算放炮名堂
+                    lastScore=0;//不计算初始的4分
+                    lastScore=iv->score;
+                } else if(iv->type==pb_enum::WIN_5FU){
+                    //五福
+                    b5FU=true;
+                    lastScore=iv->score;
+                }
+            }
+            if(!bTian&&!b5FU){
+                //处天胡，双龙，小七对之外的胡牌算分处理，否则直接结算
+                //放炮
+                if(pfire){
+                    achvs.push_back(achv_t());
+                    auto& ach=achvs.back();
+                    ach.set_type(pb_enum::WIN_FIRE;
+                                 ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                                 ach.set_value(2);
+                    ach.score=nnn[ach.type()][game.category];
+                    //放炮有偎，提，碰，跑，等情况，这里分别计分
+                    switch(game.m_winMark[pos]){
+                        case PengWinType::WINSAND:
+                            //到这里，能说明就是碰的胡的三大胡牌方式
+                            lastScore+=5;
+                            break;
+                        case PengWinType::WINSID:
+                            //到这里，能说明就是碰的四大胡牌方式
+                            lastScore+=9;
+                            break;
+                        case PengWinType::WINPENG:
+                            lastScore+=1;//最后在放炮出，处理结算
+                            break;
+                        case PengWinType::WINPPAO:
+                            //碰跑胡
+                            lastScore+=4;
+                            break;
+                        default:
+                            //平胡
+                            break;
+                    }
+                } else{
+                    //堆上胡牌
+                    switch(game.m_winMark[pos]){
+                        case PengWinType::WINSAND:
+                            //到这里，能说明就是偎的三大胡牌方式
+                            lastScore+=6;
+                            break;
+                        case PengWinType::WINSID:
+                            //到这里，能说明就是偎的四大胡牌方式
+                            lastScore+=10;
+                            break;
+                        case PengWinType::WINWEI:
+                            lastScore+=2;
+                            break;
+                        case PengWinType::WINTI:
+                            lastScore+=8;
+                            break;
+                        case PengWinType::WINPENG:
+                            lastScore+=1;//最后在放炮出，处理结算
+                            break;
+                        case PengWinType::WINWPAO:
+                            //偎坎跑胡
+                            lastScore+=4;
+                            break;
+                        case PengWinType::WINPPAO:
+                            //碰跑胡
+                            lastScore+=4;
+                            break;
+                        default:
+                            //平胡
+                            break;
+                    }
+                }
+            }
+            
+            //双龙不计起手提坎分数，这里处理掉
+            if(b7DualLog){
+                lastScore=40;
+                for(auto i=0;i<M;++i)
+                    game.m_score[i]=0;
+            }
+            
+            //胡牌番数含义：中庄x2:0 中庄翻番：1 连中：2   注：有5福名堂
+            if(pos==game.banker&&game.m_winCount[pos]>1&&!b5FU){
+                //只有庄家赢了才做，中庄X2，连胡，中庄翻番的限制计算
+                if(game._multiScore==0){
+                    //中庄算胡分
+                    //连胡处理
+                    lastScore*=2;
+                } else if(game._multiScore==1){
+                    //中庄翻番算胡分
+                    lastScore*=std::pow(2,game.m_winCount[pos]-1);
+                } else if(game._multiScore==2){
+                    //连中算胡分
+                    lastScore+=4;
+                }
+            }
+            
+            winScore+=lastScore;
+            //结算
+            if(pfire){
+                //放炮的结算
+                game.m_score[pos]+=winScore*(M-1);
+                game.m_score[game.token]-=winScore*(M-1);
+            } else{
+                game.m_score[pos]+=winScore*(M-1);
+                for(auto i=0;i<M;++i){
+                    if(pos==i)continue;
+                    game.m_score[i]-=winScore;
+                }
+            }
+            
+            //最后将没赢的其他玩家的连胡记录清零
+            for(auto i=0;i<M;++i){
+                if(pos==i)continue;
+                game.m_winCount[i]=0;
+            }
+            
+            
+            //封装消息
+            for(auto i=0;i<M;++i){
+                msg.m_scores[i]=game.m_score[i];
+            }
+            
+            //换庄
+            game.bankerChanged=(game.banker!=pos);
+            if(game.bankerChanged){
+                //说明庄家输了 ，连胡计数要归零
+                game.m_winCount[game.banker]=0;
+            }
+            game.banker=pos;
+            
+            for(int i=0; i<M; ++i){
+                spFinalEnd->m_total[i].score+=msg.m_scores[i];
+                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+            }
+        } else{
+            //荒庄后者输了，连胡记录都要清零从新计数
+            //到这里，pos可能非法，
+            for(auto i=0;i<M;++i)
+                game.m_winCount[i]=0;
+            game.bankerChanged=false;
+            for(int i=0; i<M; ++i){
+                spFinalEnd->m_total[i].score+=msg.m_scores[i];
+                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+            }
+        }
+        */
+    }//pb_enum::PHZ_PENGHUZI
+    /*
+    std::copy(game.pile.begin(),game.pile.end(),std::back_inserter(spGameEnd->m_deskCards));
+    msg.m_point=point;
+    msg.m_chunks=chunk;
+    msg.m_multiples=multiple;
+    if(game.category==pb_enum::PHZ_SYBP){	//专门为客户端显示做的
+        int s=(game.noWinner>0?-10:0);
+        for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a)
+            s+=a->score;
+        msg.m_multiples=s;
+    }
+    
+    std::copy(achvs.begin(),achvs.end(),std::back_inserter(msg.m_achievement));
+    for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
+        msg.m_allSuites.push_back(CardSuite());
+        auto& s=msg.m_allSuites.back();
+        s.type=i->ops;
+        s.cards.resize(i->cards.size());
+        std::copy(i->cards.begin(),i->cards.end(),s.cards.begin());
+        //log("end suites: %s",suite2String(*i).c_str());
+    }
+    for(int i=0; i<M; ++i){
+        //logHands(i);
+        auto user=game.m_user[i];
+        msg.m_allCards.push_back(CardList());
+        auto& l=msg.m_allCards.back();
+        
+        auto& hand=user->handCards;
+        l.cards.resize(hand.size());
+        std::copy(hand.begin(),hand.end(),l.cards.begin());
+        msg.m_nickname.push_back(user->m_userData.m_nike);
+        msg.m_Id.push_back(user->GetUserDataId());
+    }
+    
+    //the final end message
+    if (pos!=pos_n) {
+        //fill final end messasge
+        spFinalEnd->m_wins[pos] += 1;
+        if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_LD){
+            if(spFinalEnd->m_topScores[pos]<score)
+                spFinalEnd->m_topScores[pos]=score;
+        } else{
+            if(spFinalEnd->m_topScores[pos]<spGameEnd->m_scores[pos])
+                spFinalEnd->m_topScores[pos]=spGameEnd->m_scores[pos];
+        }
+        if (spFinalEnd->m_topPoints[pos] < point)
+            spFinalEnd->m_topPoints[pos] = point;
+        std::copy(spGameEnd->m_achievement.begin(),spGameEnd->m_achievement.end(),std::back_inserter(spFinalEnd->m_achievments[pos]));
+        spFinalEnd->m_total[pos].points+=point;
+        spFinalEnd->m_total[pos].chunk+=chunk;
+        spFinalEnd->m_total[pos].multiple+=multiple;
+    }
+    */
 }
 
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
     /*
-    card_t::eAchievment archievment=card_t::eAchievment::WIN_NORMAL;
-    auto& allCards=_desk->allCards;
-    //统计工作
-    int red=0,big=0,small=0;
-    auto pair=true;
-    auto last=false;
-    std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
-    for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
-        for(auto j=i->cards.begin(),jj=i->cards.end(); j!=jj; ++j){
-            //红牌
-            auto& A=allCards[*j];
-            auto v=A.value;
-            if(v==2||v==7||v==10){
+     pb_enum archievment=pb_enum::WIN_NORMAL;
+     auto& allCards=game.allCards;
+     //统计工作
+     int red=0,big=0,small=0;
+     auto pair=true;
+     auto last=false;
+     std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
+     for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
+     for(auto j=i->cards.begin(),jj=i->cards.end(); j!=jj; ++j){
+     //红牌
+     auto& A=allCards[*j];
+     auto v=A.value;
+     if(v==2||v==7||v==10){
                 ++red;
                 ++redmap[v];
             }
@@ -622,7 +1282,7 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
             if(A.small)++small;
             else ++big;
             //海底牌
-            if(_desk->_lastCard==*j)last=true;
+            if(game._lastCard==*j)last=true;
         }
         //对子
         int ops=i->ops;	ops=fixOps((pb_enum)ops);
@@ -632,52 +1292,52 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
     //海胡
     if(last){
         if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_GX){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_LAST;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_LAST;
+            ach.multiple=nnn[ach.type()][rule];
         }
     }
     
     //红乌
     if(red>=10&&(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_XX_GHZ)){
-        avs.push_back(AchievementData());
+        avs.push_back(achv_t());
         auto& ach=avs.back();
         if(red>=13){
-            ach.type=card_t::eAchievment::WIN_13RED;
-            ach.points=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_13RED;
+            ach.points=nnn[ach.type()][rule];
         } else{
-            ach.type=card_t::eAchievment::WIN_RED;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_RED;
+            ach.multiple=nnn[ach.type()][rule];
         }
     }
     if(red>=10&&(rule==pb_enum::PHZ_SY)){
-        avs.push_back(AchievementData());
+        avs.push_back(achv_t());
         auto& ach=avs.back();
-        ach.type=card_t::eAchievment::WIN_RED;
-        ach.multiple=nnn[ach.type][rule];
+        ach.set_type(pb_enum::WIN_RED;
+        ach.multiple=nnn[ach.type()][rule];
     }
     //红胡
     if(red>=10&&(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT)){
-        avs.push_back(AchievementData());
+        avs.push_back(achv_t());
         auto& ach=avs.back();
-        ach.type=card_t::eAchievment::WIN_RED;
-        ach.multiple=nnn[ach.type][rule];
+        ach.set_type(pb_enum::WIN_RED;
+        ach.multiple=nnn[ach.type()][rule];
         ach.multiple+=(red-10);
     }
     if(rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_HHD){
         if(red>=13&&rule!=pb_enum::PHZ_HH){
             //红乌
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_13RED;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_13RED;
+            ach.multiple=nnn[ach.type()][rule];
         }else if(red>=10){
             //红胡
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_RED;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_RED;
+            ach.multiple=nnn[ach.type()][rule];
             if(rule==pb_enum::PHZ_HH)
                 ach.multiple+=(red-10);
         }
@@ -685,32 +1345,32 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
     if(red==2){
         //双飘
         if(rule==pb_enum::PHZ_CS){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_2RED_;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_2RED_;
+            ach.multiple=nnn[ach.type()][rule];
         }
     } else if(red==1){
         //点胡
         if(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT||
            rule==pb_enum::PHZ_CD_HHD||rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_SINGLE;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_SINGLE;
+            ach.multiple=nnn[ach.type()][rule];
         }
     } else if(red==0){
         //黑胡
         if(rule==pb_enum::PHZ_SY||rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH||
            rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_CD_HHD||
            rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_XX_GHZ){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_BLACK;
+            ach.set_type(pb_enum::WIN_BLACK;
             if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_XX_GHZ)
-                ach.points=nnn[ach.type][rule];
+                ach.points=nnn[ach.type()][rule];
             else
-                ach.multiple=nnn[ach.type][rule];
+                ach.multiple=nnn[ach.type()][rule];
         }
     }
     //二三四比
@@ -718,24 +1378,24 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
         if(red==2&&(redmap[2]==2&&redmap[7]==0&&redmap[10]==0||
                     redmap[2]==0&&redmap[7]==2&&redmap[10]==0||
                     redmap[2]==0&&redmap[7]==0&&redmap[10]==2)){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_2RED;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_2RED;
+            ach.multiple=nnn[ach.type()][rule];
         }else if(red==3&&(redmap[2]==3&&redmap[7]==0&&redmap[10]==0||
                           redmap[2]==0&&redmap[7]==3&&redmap[10]==0||
                           redmap[2]==0&&redmap[7]==0&&redmap[10]==3)){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_3RED;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_3RED;
+            ach.multiple=nnn[ach.type()][rule];
         }else if(red==4&&(redmap[2]==4&&redmap[7]==0&&redmap[10]==0||
                           redmap[2]==0&&redmap[7]==4&&redmap[10]==0||
                           redmap[2]==0&&redmap[7]==0&&redmap[10]==4)){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_4RED;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_4RED;
+            ach.multiple=nnn[ach.type()][rule];
         }
     }
     //一块匾
@@ -757,10 +1417,10 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
         }
     }
     if(_count==1&&rule==pb_enum::PHZ_LD){
-        avs.push_back(AchievementData());
+        avs.push_back(achv_t());
         auto& ach=avs.back();
-        ach.type=card_t::eAchievment::WIN_PLATE;
-        ach.multiple=nnn[ach.type][rule];
+        ach.set_type(pb_enum::WIN_PLATE;
+        ach.multiple=nnn[ach.type()][rule];
     }
     //if((red==3||red==4)&&rule==pb_enum::PHZ_LD){
     //if(redmap[2]==1&&redmap[7]==1&&redmap[10]==1||
@@ -768,27 +1428,27 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
     //(redmap[7] ==3||redmap[7] ==4)&&redmap[2]==0&&redmap[10]==0||
     //(redmap[10]==3||redmap[10]==4)&&redmap[2]==0&&redmap[7] ==0){
     //进一步判断2,7,10是否是一个完整的组合，如果是则添加名堂，否则不添加名堂
-    //avs.push_back(AchievementData());
+    //avs.push_back(achv_t());
     //auto& ach=avs.back();
-    //ach.type=card_t::eAchievment::WIN_PLATE;
-    //ach.multiple=nnn[ach.type][rule];
+    //ach.set_type(pb_enum::WIN_PLATE;
+    //ach.multiple=nnn[ach.type()][rule];
     //}
     //}
     //大小胡
     if(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_HH){
         if(big>=18){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_BIG;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_BIG;
+            ach.multiple=nnn[ach.type()][rule];
             ach.multiple+=big-18;
         }
         int S=(rule==pb_enum::PHZ_CS?18:16);
         if(small>=S){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_SMALL;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_SMALL;
+            ach.multiple=nnn[ach.type()][rule];
             ach.multiple+=small-S;
         }
     }
@@ -796,10 +1456,10 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
     if(pair){
         if(rule==pb_enum::PHZ_CS||
            rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT){
-            avs.push_back(AchievementData());
+            avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.type=card_t::eAchievment::WIN_PAIR;
-            ach.multiple=nnn[ach.type][rule];
+            ach.set_type(pb_enum::WIN_PAIR;
+            ach.multiple=nnn[ach.type()][rule];
         }
     }
     */

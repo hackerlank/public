@@ -13,7 +13,9 @@ using namespace proto3;
 Player::Player(keye::svc_handler& sh)
 :pos(-1)
 ,ready(false)
-,engaged(true){
+,engaged(true)
+,inputCount(0)
+,lastHand(0){
     spsh=sh();
 }
 

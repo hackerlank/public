@@ -44,6 +44,10 @@ public:
     
     std::shared_ptr<proto3::MsgNCSettle>    spSettle;
     std::shared_ptr<proto3::MsgNCFinish>    spFinish;
+    
+    //special for phz
+    int     noWinner;
+    bool    bankerChanged;
 
     Game()
     :id(-1)
@@ -52,6 +56,9 @@ public:
     ,banker(0)
     ,token(0)
     ,round(0)
-    ,Round(1){}
+    ,Round(1)
+    ,noWinner(0)
+    ,bankerChanged(false)
+    {}
 };
 #endif /* Game_hpp */

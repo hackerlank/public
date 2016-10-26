@@ -25,8 +25,10 @@ public:
     proto3::play_t                                  playData;   //gameplay data
     std::shared_ptr<google::protobuf::MessageLite>  lastMsg;
     
-    //special
+    //special for phz
     std::vector<unit_id_t>  unpairedCards;
+    int     inputCount;         //draw count
+    int     lastHand;           //last card in hand
 private:
     std::shared_ptr<keye::svc_handler>              spsh;
 };
