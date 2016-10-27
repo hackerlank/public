@@ -1606,6 +1606,18 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::int32 score() const;
   void set_score(::google::protobuf::int32 value);
 
+  // repeated .proto3.achv_t achvs = 12;
+  int achvs_size() const;
+  void clear_achvs();
+  static const int kAchvsFieldNumber = 12;
+  const ::proto3::achv_t& achvs(int index) const;
+  ::proto3::achv_t* mutable_achvs(int index);
+  ::proto3::achv_t* add_achvs();
+  ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >*
+      mutable_achvs();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >&
+      achvs() const;
+
   // @@protoc_insertion_point(class_scope:proto3.play_t)
  private:
 
@@ -1627,6 +1639,7 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::int32 chunk_;
   ::google::protobuf::int32 multiple_;
   ::google::protobuf::int32 score_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::achv_t > achvs_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -5583,9 +5596,21 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
       play() const;
 
-  // optional .proto3.pb_enum result = 3;
+  // repeated int32 pile = 3;
+  int pile_size() const;
+  void clear_pile();
+  static const int kPileFieldNumber = 3;
+  ::google::protobuf::int32 pile(int index) const;
+  void set_pile(int index, ::google::protobuf::int32 value);
+  void add_pile(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      pile() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_pile();
+
+  // optional .proto3.pb_enum result = 4;
   void clear_result();
-  static const int kResultFieldNumber = 3;
+  static const int kResultFieldNumber = 4;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -5599,6 +5624,8 @@ class MsgNCSettle : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedPtrField< ::proto3::play_t > play_;
   int mid_;
   int result_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > pile_;
+  mutable int _pile_cached_byte_size_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -7435,6 +7462,36 @@ inline void play_t::set_score(::google::protobuf::int32 value) {
   
   score_ = value;
   // @@protoc_insertion_point(field_set:proto3.play_t.score)
+}
+
+// repeated .proto3.achv_t achvs = 12;
+inline int play_t::achvs_size() const {
+  return achvs_.size();
+}
+inline void play_t::clear_achvs() {
+  achvs_.Clear();
+}
+inline const ::proto3::achv_t& play_t::achvs(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.achvs)
+  return achvs_.Get(index);
+}
+inline ::proto3::achv_t* play_t::mutable_achvs(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.play_t.achvs)
+  return achvs_.Mutable(index);
+}
+inline ::proto3::achv_t* play_t::add_achvs() {
+  // @@protoc_insertion_point(field_add:proto3.play_t.achvs)
+  return achvs_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >*
+play_t::mutable_achvs() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.play_t.achvs)
+  return &achvs_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >&
+play_t::achvs() const {
+  // @@protoc_insertion_point(field_list:proto3.play_t.achvs)
+  return achvs_;
 }
 
 // -------------------------------------------------------------------
@@ -10137,7 +10194,37 @@ MsgNCSettle::play() const {
   return play_;
 }
 
-// optional .proto3.pb_enum result = 3;
+// repeated int32 pile = 3;
+inline int MsgNCSettle::pile_size() const {
+  return pile_.size();
+}
+inline void MsgNCSettle::clear_pile() {
+  pile_.Clear();
+}
+inline ::google::protobuf::int32 MsgNCSettle::pile(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.pile)
+  return pile_.Get(index);
+}
+inline void MsgNCSettle::set_pile(int index, ::google::protobuf::int32 value) {
+  pile_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.pile)
+}
+inline void MsgNCSettle::add_pile(::google::protobuf::int32 value) {
+  pile_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.pile)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+MsgNCSettle::pile() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.pile)
+  return pile_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+MsgNCSettle::mutable_pile() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.pile)
+  return &pile_;
+}
+
+// optional .proto3.pb_enum result = 4;
 inline void MsgNCSettle::clear_result() {
   result_ = 0;
 }

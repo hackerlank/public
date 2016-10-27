@@ -48,6 +48,7 @@ public:
     //special for phz
     int     noWinner;
     bool    bankerChanged;
+    unit_id_t   lastCard;
 
     Game()
     :id(-1)

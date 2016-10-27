@@ -671,6 +671,10 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     auto& play=*msg.mutable_play(pos);
     auto& playFinish=*spFinalEnd->mutable_play(pos);
     
+    //copy bunches
+    play.clear_bunch();
+    for(auto& bunch:allSuites)play.add_bunch()->CopyFrom(bunch);
+    
     int point=0,score=0,multiple=0,chunk=0;
     bool self=(pos==game.token&&game.pileMap.find(card)!=game.pileMap.end());
     //如果天胡，card就被设置为-1(255)了，这里有漏洞则处理
@@ -693,11 +697,11 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     
     //log("settle pos=%d, suites=%d, point=%d",pos,allSuites.size(),point);
     
+    std::vector<achv_t> achvs;
     if(point>=winPoint(game,game.category)){
         //胡了
         
         //先计名堂
-        std::vector<achv_t> achvs;
         calcAchievement(game,game.category,allSuites,achvs);
         
         //地胡和放炮可能产生冲突，要先判断地胡后再对放炮做处理
@@ -1210,88 +1214,67 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         }
         */
     }//pb_enum::PHZ_PENGHUZI
-    /*
-    std::copy(game.pile.begin(),game.pile.end(),std::back_inserter(spGameEnd->m_deskCards));
-    msg.m_point=point;
-    msg.m_chunks=chunk;
-    msg.m_multiples=multiple;
+    
+    for(auto c:game.pile)spGameEnd->mutable_pile()->Add(c);
+    play.set_point(point);
+    play.set_chunk(chunk);
+    play.set_multiple(multiple);
+/*
     if(game.category==pb_enum::PHZ_SYBP){	//专门为客户端显示做的
         int s=(game.noWinner>0?-10:0);
         for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a)
             s+=a->score;
         msg.m_multiples=s;
     }
-    
-    std::copy(achvs.begin(),achvs.end(),std::back_inserter(msg.m_achievement));
-    for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
-        msg.m_allSuites.push_back(CardSuite());
-        auto& s=msg.m_allSuites.back();
-        s.type=i->ops;
-        s.cards.resize(i->cards.size());
-        std::copy(i->cards.begin(),i->cards.end(),s.cards.begin());
-        //log("end suites: %s",suite2String(*i).c_str());
-    }
+*/
+    //achvs
+    for(auto& achv:achvs)play.add_achvs()->CopyFrom(achv);
+    //bunches and hands
     for(int i=0; i<M; ++i){
         //logHands(i);
-        auto user=game.m_user[i];
-        msg.m_allCards.push_back(CardList());
-        auto& l=msg.m_allCards.back();
+        auto& destPlay=*msg.mutable_play(i);
+        auto& srcPlay=game.players[i]->playData;
+        for(auto& src:srcPlay.bunch())
+            destPlay.add_bunch()->CopyFrom(src);
         
-        auto& hand=user->handCards;
-        l.cards.resize(hand.size());
-        std::copy(hand.begin(),hand.end(),l.cards.begin());
-        msg.m_nickname.push_back(user->m_userData.m_nike);
-        msg.m_Id.push_back(user->GetUserDataId());
+        for(auto& src:srcPlay.hands())
+            destPlay.add_hands(src);
     }
     
     //the final end message
-    if (pos!=pos_n) {
+    if (pos!=-1) {
         //fill final end messasge
-        spFinalEnd->m_wins[pos] += 1;
-        if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_LD){
-            if(spFinalEnd->m_topScores[pos]<score)
-                spFinalEnd->m_topScores[pos]=score;
-        } else{
-            if(spFinalEnd->m_topScores[pos]<spGameEnd->m_scores[pos])
-                spFinalEnd->m_topScores[pos]=spGameEnd->m_scores[pos];
-        }
-        if (spFinalEnd->m_topPoints[pos] < point)
-            spFinalEnd->m_topPoints[pos] = point;
-        std::copy(spGameEnd->m_achievement.begin(),spGameEnd->m_achievement.end(),std::back_inserter(spFinalEnd->m_achievments[pos]));
-        spFinalEnd->m_total[pos].points+=point;
-        spFinalEnd->m_total[pos].chunk+=chunk;
-        spFinalEnd->m_total[pos].multiple+=multiple;
+        playFinish.set_win(playFinish.win());
+        playFinish.set_point(playFinish.point()+point);
+        playFinish.set_chunk(playFinish.chunk()+chunk);
+        playFinish.set_multiple(playFinish.multiple()+multiple);
     }
-    */
 }
 
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
-    /*
-     pb_enum archievment=pb_enum::WIN_NORMAL;
-     auto& allCards=game.allCards;
-     //统计工作
-     int red=0,big=0,small=0;
-     auto pair=true;
-     auto last=false;
-     std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
-     for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
-     for(auto j=i->cards.begin(),jj=i->cards.end(); j!=jj; ++j){
-     //红牌
-     auto& A=allCards[*j];
-     auto v=A.value;
-     if(v==2||v==7||v==10){
+    //统计工作
+    int red=0,big=0,small=0;
+    auto pair=true;
+    auto last=false;
+    std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
+    for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
+        for(auto j:i->pawns()){
+            //红牌
+            auto A=j;
+            auto v=A%100;
+            if(v==2||v==7||v==10){
                 ++red;
                 ++redmap[v];
             }
             //大小牌
-            if(A.small)++small;
+            if(A/1000==1)++small;
             else ++big;
             //海底牌
-            if(game._lastCard==*j)last=true;
+            if(game.lastCard==j)last=true;
         }
         //对子
-        int ops=i->ops;	ops=fixOps((pb_enum)ops);
-        if(pair&&(ops==pb_enum::AaA||ops==pb_enum::PHZ_ABC||ops==pb_enum::UNKNOWN))pair=false;
+        int ops=i->type();	ops=fixOps((pb_enum)ops);
+        if(pair&&(ops==pb_enum::PHZ_AbA||ops==pb_enum::PHZ_ABC||ops==pb_enum::UNKNOWN))pair=false;
     }
     
     //海胡
@@ -1299,8 +1282,9 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
         if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_GX){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_LAST;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_LAST);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     }
     
@@ -1309,42 +1293,48 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
         avs.push_back(achv_t());
         auto& ach=avs.back();
         if(red>=13){
-            ach.set_type(pb_enum::WIN_13RED;
-            ach.points=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_13RED);
+            ach.set_key(pb_enum::ACHV_KEY_POINT);
+            ach.set_value(nnn[ach.type()][rule]);
         } else{
-            ach.set_type(pb_enum::WIN_RED;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_RED);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     }
     if(red>=10&&(rule==pb_enum::PHZ_SY)){
         avs.push_back(achv_t());
         auto& ach=avs.back();
-        ach.set_type(pb_enum::WIN_RED;
-        ach.multiple=nnn[ach.type()][rule];
+        ach.set_type(pb_enum::WIN_RED);
+        ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+        ach.set_value(nnn[ach.type()][rule]);
     }
     //红胡
     if(red>=10&&(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT)){
         avs.push_back(achv_t());
         auto& ach=avs.back();
-        ach.set_type(pb_enum::WIN_RED;
-        ach.multiple=nnn[ach.type()][rule];
-        ach.multiple+=(red-10);
+        ach.set_type(pb_enum::WIN_RED);
+        ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+        ach.set_value(nnn[ach.type()][rule]+red-10);
     }
     if(rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_HHD){
         if(red>=13&&rule!=pb_enum::PHZ_HH){
             //红乌
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_13RED;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_13RED);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }else if(red>=10){
             //红胡
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_RED;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_RED);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            auto v=nnn[ach.type()][rule];
             if(rule==pb_enum::PHZ_HH)
-                ach.multiple+=(red-10);
+                v+=(red-10);
+            ach.set_value(v);
         }
     }
     if(red==2){
@@ -1352,8 +1342,9 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
         if(rule==pb_enum::PHZ_CS){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_2RED_;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_DOUBLE);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     } else if(red==1){
         //点胡
@@ -1361,8 +1352,9 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
            rule==pb_enum::PHZ_CD_HHD||rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_SINGLE;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_SINGLE);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     } else if(red==0){
         //黑胡
@@ -1371,51 +1363,53 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
            rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_XX_GHZ){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_BLACK;
+            ach.set_type(pb_enum::WIN_BLACK);
             if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_XX_GHZ)
-                ach.points=nnn[ach.type()][rule];
+                ach.set_key(pb_enum::ACHV_KEY_POINT);
             else
-                ach.multiple=nnn[ach.type()][rule];
+                ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     }
     //二三四比
     if(rule==pb_enum::PHZ_CS){
-        if(red==2&&(redmap[2]==2&&redmap[7]==0&&redmap[10]==0||
-                    redmap[2]==0&&redmap[7]==2&&redmap[10]==0||
-                    redmap[2]==0&&redmap[7]==0&&redmap[10]==2)){
+        if(red==2&&((redmap[2]==2&&redmap[7]==0&&redmap[10]==0)||
+                    (redmap[2]==0&&redmap[7]==2&&redmap[10]==0)||
+                    (redmap[2]==0&&redmap[7]==0&&redmap[10]==2))){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_2RED;
-            ach.multiple=nnn[ach.type()][rule];
-        }else if(red==3&&(redmap[2]==3&&redmap[7]==0&&redmap[10]==0||
-                          redmap[2]==0&&redmap[7]==3&&redmap[10]==0||
-                          redmap[2]==0&&redmap[7]==0&&redmap[10]==3)){
+            ach.set_type(pb_enum::WIN_2RED);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
+        }else if(red==3&&((redmap[2]==3&&redmap[7]==0&&redmap[10]==0)||
+                          (redmap[2]==0&&redmap[7]==3&&redmap[10]==0)||
+                          (redmap[2]==0&&redmap[7]==0&&redmap[10]==3))){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_3RED;
-            ach.multiple=nnn[ach.type()][rule];
-        }else if(red==4&&(redmap[2]==4&&redmap[7]==0&&redmap[10]==0||
-                          redmap[2]==0&&redmap[7]==4&&redmap[10]==0||
-                          redmap[2]==0&&redmap[7]==0&&redmap[10]==4)){
+            ach.set_type(pb_enum::WIN_3RED);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
+        }else if(red==4&&((redmap[2]==4&&redmap[7]==0&&redmap[10]==0)||
+                          (redmap[2]==0&&redmap[7]==4&&redmap[10]==0)||
+                          (redmap[2]==0&&redmap[7]==0&&redmap[10]==4))){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_4RED;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_4RED);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     }
     //一块匾
     int _count=0;
     for(auto ic=suites.begin(),icc=suites.end();ic!=icc;++ic){
         //考虑到可能最后是吃，碰，跑，提偎等赢的，应该首先把应的状态去掉在做下边的处理即可
-        auto res=fixOps(ic->ops);
-        if(res!=pb_enum::PHZ_ABC&&res!=pb_enum::AaA&&res!=pb_enum::PHZ_AAA&&res!=pb_enum::PHZ_AAAwei&&res!=pb_enum::PHZ_AAAchou&&res!=pb_enum::PHZ_BBB&&res!=pb_enum::PHZ_AAAA&&res!=pb_enum::PHZ_AAAAstart&&res!=pb_enum::PHZ_BBB_B&&res!=pb_enum::PHZ_AAAAdesk)
+        auto res=fixOps(ic->type());
+        if(res!=pb_enum::PHZ_ABC&&res!=pb_enum::PHZ_AbA&&res!=pb_enum::PHZ_AAA&&res!=pb_enum::PHZ_AAAwei&&res!=pb_enum::PHZ_AAAchou&&res!=pb_enum::PHZ_BBB&&res!=pb_enum::PHZ_AAAA&&res!=pb_enum::PHZ_AAAAstart&&res!=pb_enum::PHZ_BBB_B&&res!=pb_enum::PHZ_AAAAdesk)
             continue;
         int count=0;
-        for(auto iv=ic->cards.begin(),ivv=ic->cards.end();iv!=ivv;++iv){
-            auto A=allCards[*iv];
-            if(A.value==2||A.value==7||A.value==10){
+        for(auto A:ic->pawns()){
+            if(A%100==2||A%100==7||A%100==10)
                 count++;
-            }
         }
         if((count==3||count==4)&&(red==3||red==4)){
             _count++;
@@ -1424,37 +1418,27 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
     if(_count==1&&rule==pb_enum::PHZ_LD){
         avs.push_back(achv_t());
         auto& ach=avs.back();
-        ach.set_type(pb_enum::WIN_PLATE;
-        ach.multiple=nnn[ach.type()][rule];
+        ach.set_type(pb_enum::WIN_PLATE);
+        ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+        ach.set_value(nnn[ach.type()][rule]);
     }
-    //if((red==3||red==4)&&rule==pb_enum::PHZ_LD){
-    //if(redmap[2]==1&&redmap[7]==1&&redmap[10]==1||
-    //(redmap[2] ==3||redmap[2] ==4)&&redmap[7]==0&&redmap[10]==0||
-    //(redmap[7] ==3||redmap[7] ==4)&&redmap[2]==0&&redmap[10]==0||
-    //(redmap[10]==3||redmap[10]==4)&&redmap[2]==0&&redmap[7] ==0){
-    //进一步判断2,7,10是否是一个完整的组合，如果是则添加名堂，否则不添加名堂
-    //avs.push_back(achv_t());
-    //auto& ach=avs.back();
-    //ach.set_type(pb_enum::WIN_PLATE;
-    //ach.multiple=nnn[ach.type()][rule];
-    //}
-    //}
+
     //大小胡
     if(rule==pb_enum::PHZ_CS||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_HH){
         if(big>=18){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_BIG;
-            ach.multiple=nnn[ach.type()][rule];
-            ach.multiple+=big-18;
+            ach.set_type(pb_enum::WIN_BIG);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]+big-18);
         }
         int S=(rule==pb_enum::PHZ_CS?18:16);
         if(small>=S){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_SMALL;
-            ach.multiple=nnn[ach.type()][rule];
-            ach.multiple+=small-S;
+            ach.set_type(pb_enum::WIN_SMALL);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]+small-S);
         }
     }
     //对胡
@@ -1463,11 +1447,11 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
            rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT){
             avs.push_back(achv_t());
             auto& ach=avs.back();
-            ach.set_type(pb_enum::WIN_PAIR;
-            ach.multiple=nnn[ach.type()][rule];
+            ach.set_type(pb_enum::WIN_PAIR);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][rule]);
         }
     }
-    */
 }
 
 int Paohuzi::winPoint(Game&,pb_enum rule){

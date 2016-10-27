@@ -277,6 +277,7 @@ int32 point             =8;
 int32 chunk             =9;
 int32 multiple          =10;
 int32 score             =11;
+repeated achv_t achvs   =12;
 };
 
 message charge_t{
@@ -607,7 +608,8 @@ message MsgNCSettle{
 
 pb_msg mid				=1;
 repeated play_t play    =2;
-pb_enum result			=3;
+repeated int32 pile     =3;
+pb_enum result			=4;
 };
 
 message MsgNCFinish{

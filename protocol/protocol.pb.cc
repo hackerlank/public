@@ -5122,6 +5122,7 @@ const int play_t::kPointFieldNumber;
 const int play_t::kChunkFieldNumber;
 const int play_t::kMultipleFieldNumber;
 const int play_t::kScoreFieldNumber;
+const int play_t::kAchvsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 play_t::play_t()
@@ -5230,6 +5231,7 @@ void play_t::Clear() {
   discards_.Clear();
   bunch_.Clear();
   winby_.Clear();
+  achvs_.Clear();
 }
 
 bool play_t::MergePartialFromCodedStream(
@@ -5411,6 +5413,23 @@ bool play_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(98)) goto parse_achvs;
+        break;
+      }
+
+      // repeated .proto3.achv_t achvs = 12;
+      case 12: {
+        if (tag == 98) {
+         parse_achvs:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_achvs:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_achvs()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(98)) goto parse_loop_achvs;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5509,6 +5528,12 @@ void play_t::SerializeWithCachedSizes(
   // optional int32 score = 11;
   if (this->score() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->score(), output);
+  }
+
+  // repeated .proto3.achv_t achvs = 12;
+  for (unsigned int i = 0, n = this->achvs_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      12, this->achvs(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.play_t)
@@ -5626,6 +5651,14 @@ int play_t::ByteSize() const {
     total_size += data_size;
   }
 
+  // repeated .proto3.achv_t achvs = 12;
+  total_size += 1 * this->achvs_size();
+  for (int i = 0; i < this->achvs_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->achvs(i));
+  }
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -5646,6 +5679,7 @@ void play_t::MergeFrom(const play_t& from) {
   discards_.MergeFrom(from.discards_);
   bunch_.MergeFrom(from.bunch_);
   winby_.MergeFrom(from.winby_);
+  achvs_.MergeFrom(from.achvs_);
   if (from.has_player()) {
     mutable_player()->::proto3::player_t::MergeFrom(from.player());
   }
@@ -5697,6 +5731,7 @@ void play_t::InternalSwap(play_t* other) {
   std::swap(chunk_, other->chunk_);
   std::swap(multiple_, other->multiple_);
   std::swap(score_, other->score_);
+  achvs_.UnsafeArenaSwap(&other->achvs_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -5952,6 +5987,36 @@ void play_t::clear_score() {
   
   score_ = value;
   // @@protoc_insertion_point(field_set:proto3.play_t.score)
+}
+
+// repeated .proto3.achv_t achvs = 12;
+int play_t::achvs_size() const {
+  return achvs_.size();
+}
+void play_t::clear_achvs() {
+  achvs_.Clear();
+}
+const ::proto3::achv_t& play_t::achvs(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.achvs)
+  return achvs_.Get(index);
+}
+::proto3::achv_t* play_t::mutable_achvs(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.play_t.achvs)
+  return achvs_.Mutable(index);
+}
+::proto3::achv_t* play_t::add_achvs() {
+  // @@protoc_insertion_point(field_add:proto3.play_t.achvs)
+  return achvs_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::achv_t >*
+play_t::mutable_achvs() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.play_t.achvs)
+  return &achvs_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >&
+play_t::achvs() const {
+  // @@protoc_insertion_point(field_list:proto3.play_t.achvs)
+  return achvs_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -18588,6 +18653,7 @@ void MsgNCDismissAck::clear_result() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCSettle::kMidFieldNumber;
 const int MsgNCSettle::kPlayFieldNumber;
+const int MsgNCSettle::kPileFieldNumber;
 const int MsgNCSettle::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -18678,6 +18744,7 @@ void MsgNCSettle::Clear() {
 #undef ZR_
 
   play_.Clear();
+  pile_.Clear();
 }
 
 bool MsgNCSettle::MergePartialFromCodedStream(
@@ -18718,13 +18785,31 @@ bool MsgNCSettle::MergePartialFromCodedStream(
         }
         if (input->ExpectTag(18)) goto parse_loop_play;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(24)) goto parse_result;
+        if (input->ExpectTag(26)) goto parse_pile;
         break;
       }
 
-      // optional .proto3.pb_enum result = 3;
+      // repeated int32 pile = 3;
       case 3: {
-        if (tag == 24) {
+        if (tag == 26) {
+         parse_pile:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_pile())));
+        } else if (tag == 24) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 26, input, this->mutable_pile())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_result;
+        break;
+      }
+
+      // optional .proto3.pb_enum result = 4;
+      case 4: {
+        if (tag == 32) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -18774,10 +18859,20 @@ void MsgNCSettle::SerializeWithCachedSizes(
       2, this->play(i), output);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // repeated int32 pile = 3;
+  if (this->pile_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(3, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_pile_cached_byte_size_);
+  }
+  for (int i = 0; i < this->pile_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->pile(i), output);
+  }
+
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->result(), output);
+      4, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCSettle)
@@ -18793,7 +18888,7 @@ int MsgNCSettle::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -18805,6 +18900,23 @@ int MsgNCSettle::ByteSize() const {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->play(i));
+  }
+
+  // repeated int32 pile = 3;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->pile_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->pile(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _pile_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -18824,6 +18936,7 @@ void MsgNCSettle::MergeFrom(const MsgNCSettle& from) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
   play_.MergeFrom(from.play_);
+  pile_.MergeFrom(from.pile_);
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
@@ -18851,6 +18964,7 @@ void MsgNCSettle::Swap(MsgNCSettle* other) {
 void MsgNCSettle::InternalSwap(MsgNCSettle* other) {
   std::swap(mid_, other->mid_);
   play_.UnsafeArenaSwap(&other->play_);
+  pile_.UnsafeArenaSwap(&other->pile_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -18907,7 +19021,37 @@ MsgNCSettle::play() const {
   return play_;
 }
 
-// optional .proto3.pb_enum result = 3;
+// repeated int32 pile = 3;
+int MsgNCSettle::pile_size() const {
+  return pile_.size();
+}
+void MsgNCSettle::clear_pile() {
+  pile_.Clear();
+}
+ ::google::protobuf::int32 MsgNCSettle::pile(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCSettle.pile)
+  return pile_.Get(index);
+}
+ void MsgNCSettle::set_pile(int index, ::google::protobuf::int32 value) {
+  pile_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.MsgNCSettle.pile)
+}
+ void MsgNCSettle::add_pile(::google::protobuf::int32 value) {
+  pile_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.MsgNCSettle.pile)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+MsgNCSettle::pile() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCSettle.pile)
+  return pile_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+MsgNCSettle::mutable_pile() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCSettle.pile)
+  return &pile_;
+}
+
+// optional .proto3.pb_enum result = 4;
 void MsgNCSettle::clear_result() {
   result_ = 0;
 }
