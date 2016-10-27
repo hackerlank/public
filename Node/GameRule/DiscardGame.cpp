@@ -19,8 +19,7 @@ void DiscardGame::Tick(Game& game){
             }
             break;
         case Game::State::ST_ENGAGE:
-            if(Engaged(game))
-                changeState(game,Game::State::ST_DISCARD);
+            //OnEngage
             break;
         case Game::State::ST_DISCARD:
             if(isGameOver(game))
@@ -37,6 +36,15 @@ void DiscardGame::Tick(Game& game){
         default:
             break;
     }
+}
+
+void DiscardGame::engage(Game& game){
+    //after engaged,wait discard
+    changeState(game,Game::State::ST_DISCARD);
+
+    //first discard
+    game.pendingDiscard=std::make_shared<Game::pending_t>();
+    game.pendingDiscard->bunch.set_pos(game.token);
 }
 
 void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){

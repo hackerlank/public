@@ -20,6 +20,7 @@ protected:
     virtual bool            comparision(uint x,uint y);
     virtual void            settle(Player&)=0;
 private:
+    virtual void            engage(Game&);
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool            compareBunch(proto3::bunch_t&,proto3::bunch_t&)=0;
 };

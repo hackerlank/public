@@ -15,16 +15,13 @@ public class PaohuziAIController:PlayerController{
 
 		//var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(msg is MsgNCEngage){
-			var msgEngage=msg as MsgNCEngage;
-			if(player.pos==msgEngage.Pos)
-				player.playData.SelectedCard=msgEngage.Key;
+			//var msgEngage=msg as MsgNCEngage;
 
 		}else if(msg is MsgNCStart){
 			//var msgStart=msg as MsgNCStart;
-			var key=MahJongRule.FindDefaultColor(player);
 			var omsgEngage=new MsgCNEngage();
 			omsgEngage.Mid=pb_msg.MsgCnEngage;
-			omsgEngage.Key=key;
+			omsgEngage.Key=0;
 			player.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 
 		}else if(msg is MsgNCDiscard){

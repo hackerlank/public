@@ -529,9 +529,8 @@ int32 key              =2;
 message MsgNCEngage{
 
 pb_msg mid              =1;
-int32 pos               =2;
-int32 key              =3;
-pb_enum result          =4;
+repeated int32 keys     =2;
+pb_enum result          =3;
 }
 
 message MsgNCStart{

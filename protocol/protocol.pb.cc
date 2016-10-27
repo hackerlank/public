@@ -14856,8 +14856,7 @@ void MsgCNEngage::clear_key() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCEngage::kMidFieldNumber;
-const int MsgNCEngage::kPosFieldNumber;
-const int MsgNCEngage::kKeyFieldNumber;
+const int MsgNCEngage::kKeysFieldNumber;
 const int MsgNCEngage::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -14883,8 +14882,6 @@ void MsgNCEngage::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  pos_ = 0;
-  key_ = 0;
   result_ = 0;
 }
 
@@ -14949,6 +14946,7 @@ void MsgNCEngage::Clear() {
 #undef ZR_HELPER_
 #undef ZR_
 
+  keys_.Clear();
 }
 
 bool MsgNCEngage::MergePartialFromCodedStream(
@@ -14972,43 +14970,31 @@ bool MsgNCEngage::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_pos;
+        if (input->ExpectTag(18)) goto parse_keys;
         break;
       }
 
-      // optional int32 pos = 2;
+      // repeated int32 keys = 2;
       case 2: {
-        if (tag == 16) {
-         parse_pos:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+        if (tag == 18) {
+         parse_keys:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &pos_)));
-
+                 input, this->mutable_keys())));
+        } else if (tag == 16) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 18, input, this->mutable_keys())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_key;
+        if (input->ExpectTag(24)) goto parse_result;
         break;
       }
 
-      // optional int32 key = 3;
+      // optional .proto3.pb_enum result = 3;
       case 3: {
         if (tag == 24) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(32)) goto parse_result;
-        break;
-      }
-
-      // optional .proto3.pb_enum result = 4;
-      case 4: {
-        if (tag == 32) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -15052,20 +15038,20 @@ void MsgNCEngage::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional int32 pos = 2;
-  if (this->pos() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->pos(), output);
+  // repeated int32 keys = 2;
+  if (this->keys_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_keys_cached_byte_size_);
+  }
+  for (int i = 0; i < this->keys_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->keys(i), output);
   }
 
-  // optional int32 key = 3;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->key(), output);
-  }
-
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->result(), output);
+      3, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCEngage)
@@ -15081,24 +15067,27 @@ int MsgNCEngage::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional int32 pos = 2;
-  if (this->pos() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->pos());
-  }
-
-  // optional int32 key = 3;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->key());
-  }
-
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+  }
+
+  // repeated int32 keys = 2;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->keys_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->keys(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _keys_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -15117,14 +15106,9 @@ void MsgNCEngage::MergeFrom(const MsgNCEngage& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
+  keys_.MergeFrom(from.keys_);
   if (from.mid() != 0) {
     set_mid(from.mid());
-  }
-  if (from.pos() != 0) {
-    set_pos(from.pos());
-  }
-  if (from.key() != 0) {
-    set_key(from.key());
   }
   if (from.result() != 0) {
     set_result(from.result());
@@ -15149,8 +15133,7 @@ void MsgNCEngage::Swap(MsgNCEngage* other) {
 }
 void MsgNCEngage::InternalSwap(MsgNCEngage* other) {
   std::swap(mid_, other->mid_);
-  std::swap(pos_, other->pos_);
-  std::swap(key_, other->key_);
+  keys_.UnsafeArenaSwap(&other->keys_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -15177,35 +15160,37 @@ void MsgNCEngage::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.mid)
 }
 
-// optional int32 pos = 2;
-void MsgNCEngage::clear_pos() {
-  pos_ = 0;
+// repeated int32 keys = 2;
+int MsgNCEngage::keys_size() const {
+  return keys_.size();
 }
- ::google::protobuf::int32 MsgNCEngage::pos() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.pos)
-  return pos_;
+void MsgNCEngage::clear_keys() {
+  keys_.Clear();
 }
- void MsgNCEngage::set_pos(::google::protobuf::int32 value) {
-  
-  pos_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.pos)
+ ::google::protobuf::int32 MsgNCEngage::keys(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.keys)
+  return keys_.Get(index);
+}
+ void MsgNCEngage::set_keys(int index, ::google::protobuf::int32 value) {
+  keys_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.keys)
+}
+ void MsgNCEngage::add_keys(::google::protobuf::int32 value) {
+  keys_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.MsgNCEngage.keys)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+MsgNCEngage::keys() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCEngage.keys)
+  return keys_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+MsgNCEngage::mutable_keys() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCEngage.keys)
+  return &keys_;
 }
 
-// optional int32 key = 3;
-void MsgNCEngage::clear_key() {
-  key_ = 0;
-}
- ::google::protobuf::int32 MsgNCEngage::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.key)
-  return key_;
-}
- void MsgNCEngage::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.key)
-}
-
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 3;
 void MsgNCEngage::clear_result() {
   result_ = 0;
 }

@@ -88,10 +88,6 @@ void GameRule::deal(Game& game){
         p->send(msg);
         hands->Clear();
     }
-    
-    //first discard
-    game.pendingDiscard=std::make_shared<Game::pending_t>();
-    game.pendingDiscard->bunch.set_pos(game.token);
 }
 
 bool GameRule::settle(Game& game){
@@ -136,24 +132,26 @@ void GameRule::OnReady(Player& player){
 
 void GameRule::OnEngage(Player& player,uint key){
     if(auto game=player.game){
-        if(player.engaged)return;
-        
-        player.engaged=true;
-        player.playData.set_selected_card(key);
-        
-        MsgNCEngage omsg;
-        omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
-        omsg.set_pos(player.pos);
-        omsg.set_key(key);
-        omsg.set_result(pb_enum::SUCCEESS);
-        for(auto& p:game->players)p->send(omsg);
-    }
-}
+        if(!player.engaged){
+            player.engaged=true;
+            player.playData.set_selected_card(key);
+        }
 
-bool GameRule::Engaged(Game& game){
-    int n=0;
-    for(auto p:game.players)if(p&&p->engaged)++n;
-    return n>=MaxPlayer();
+        int engaged=0;
+        for(auto& p:game->players)if(p->engaged)engaged++;
+
+        if(game->state==Game::State::ST_ENGAGE && engaged>=MaxPlayer()){
+            engage(*game);
+            
+            MsgNCEngage omsg;
+            omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
+            omsg.set_result(pb_enum::SUCCEESS);
+            for(auto& p:game->players)omsg.add_keys(p->playData.selected_card());
+
+            for(auto& p:game->players)p->send(omsg);
+            KEYE_LOG("all engaged\n");
+        }
+    }
 }
 
 bool GameRule::Ready(Game& game){

@@ -82,8 +82,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	public void onMessage(Player player,IMessage msg){
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
-			if(player.pos==msgEngage.Pos)
-				OnMsgEngage(msgEngage);
+			OnMsgEngage(msgEngage);
 
 		}else if(msg is MsgNCStart){
 			var msgStart=msg as MsgNCStart;

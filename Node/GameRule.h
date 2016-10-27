@@ -13,7 +13,6 @@ class GameRule{
 public:
     virtual             ~GameRule(){};
     bool                Ready(Game&);
-    bool                Engaged(Game&);
 
     virtual void        Tick(Game&)=0;
     virtual int         Type()=0;
@@ -33,7 +32,8 @@ protected:
     
     virtual bool        settle(Game&);
     
-    virtual void        deal(Game&);
+    virtual void        engage(Game&){};
+    void                deal(Game&);
     void                changeState(Game&,Game::State);
     void                changePos(Game&,pos_t);
 

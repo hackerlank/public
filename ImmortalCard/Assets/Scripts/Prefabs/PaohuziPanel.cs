@@ -33,21 +33,58 @@ public class PaohuziPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
+	override protected void OnMsgEngage(MsgNCEngage msg){
+		Debug.Log("Paohuzi Panel OnMsgEngage ");
+		//check natural win
+		var players=new List<Player>(Main.Instance.robots);
+		players.Add(Main.Instance.MainPlayer);
+		foreach(var player in players){
+			var hands=player.playData.Hands;
+			var last=hands[hands.Count-1];
+			hands.RemoveAt(hands.Count-1);
+			
+			bunch_t bunch=new bunch_t();
+			bunch.Pos=player.pos;
+			bunch.Type=pb_enum.BunchWin;
+			bunch.Pawns.Add(last);
+			
+			var win=false;
+			if(player==Main.Instance.MainPlayer){
+				win=showHints(last,true,true);
+			}else{
+				var hints=Rule.Hint(player,bunch);
+				foreach(var h in hints){
+					if(h.Type>=pb_enum.BunchWin){
+						win=true;
+						break;
+					}
+				}
+			}
+			hands.Add(last);
+			
+			if(!win)bunch.Type=pb_enum.OpPass;
+			else Debug.Log(player.pos+" natural win");
+			
+			var omsgMeld=new MsgCNMeld();
+			omsgMeld.Mid=pb_msg.MsgCnMeld;
+			omsgMeld.Bunch=bunch;
+			
+			player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+		}
+	}
+
 	override protected void onMsgStart(){
 		//transform position
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
 		StartCoroutine(sortHands());
 
-		//check natural win
-		var player=Main.Instance.MainPlayer;
-		var hands=player.playData.Hands;
-		var last=hands[hands.Count-1];
-		hands.RemoveAt(hands.Count-1);
-		showHints(last,true,true);
-		hands.Add(last);
+		var omsgEngage=new MsgCNEngage();
+		omsgEngage.Mid=pb_msg.MsgCnEngage;
+		omsgEngage.Key=0;
+		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
-
+	
 	List<bunch_t> _hints=null;
 	override protected void onMsgDiscard(MsgNCDiscard msg){
 		//show hints for others

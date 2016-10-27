@@ -4365,21 +4365,21 @@ class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional int32 pos = 2;
-  void clear_pos();
-  static const int kPosFieldNumber = 2;
-  ::google::protobuf::int32 pos() const;
-  void set_pos(::google::protobuf::int32 value);
+  // repeated int32 keys = 2;
+  int keys_size() const;
+  void clear_keys();
+  static const int kKeysFieldNumber = 2;
+  ::google::protobuf::int32 keys(int index) const;
+  void set_keys(int index, ::google::protobuf::int32 value);
+  void add_keys(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      keys() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_keys();
 
-  // optional int32 key = 3;
-  void clear_key();
-  static const int kKeyFieldNumber = 3;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
-
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 3;
   void clear_result();
-  static const int kResultFieldNumber = 4;
+  static const int kResultFieldNumber = 3;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -4390,9 +4390,9 @@ class MsgNCEngage : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > keys_;
+  mutable int _keys_cached_byte_size_;
   int mid_;
-  ::google::protobuf::int32 pos_;
-  ::google::protobuf::int32 key_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -9425,35 +9425,37 @@ inline void MsgNCEngage::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.mid)
 }
 
-// optional int32 pos = 2;
-inline void MsgNCEngage::clear_pos() {
-  pos_ = 0;
+// repeated int32 keys = 2;
+inline int MsgNCEngage::keys_size() const {
+  return keys_.size();
 }
-inline ::google::protobuf::int32 MsgNCEngage::pos() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.pos)
-  return pos_;
+inline void MsgNCEngage::clear_keys() {
+  keys_.Clear();
 }
-inline void MsgNCEngage::set_pos(::google::protobuf::int32 value) {
-  
-  pos_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.pos)
+inline ::google::protobuf::int32 MsgNCEngage::keys(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.keys)
+  return keys_.Get(index);
+}
+inline void MsgNCEngage::set_keys(int index, ::google::protobuf::int32 value) {
+  keys_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.keys)
+}
+inline void MsgNCEngage::add_keys(::google::protobuf::int32 value) {
+  keys_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.MsgNCEngage.keys)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+MsgNCEngage::keys() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCEngage.keys)
+  return keys_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+MsgNCEngage::mutable_keys() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCEngage.keys)
+  return &keys_;
 }
 
-// optional int32 key = 3;
-inline void MsgNCEngage::clear_key() {
-  key_ = 0;
-}
-inline ::google::protobuf::int32 MsgNCEngage::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.key)
-  return key_;
-}
-inline void MsgNCEngage::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.key)
-}
-
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 3;
 inline void MsgNCEngage::clear_result() {
   result_ = 0;
 }

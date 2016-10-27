@@ -29,6 +29,11 @@ public class DoudeZhuPanel : GamePanel {
 		BtnCall.SetActive(false);
 		BtnDouble.SetActive(false);
 		foreach(var btn in btnOps)btn.SetActive(true);
+
+		var omsgEngage=new MsgCNEngage();
+		omsgEngage.Mid=pb_msg.MsgCnEngage;
+		omsgEngage.Key=0;
+		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 
 	override protected void onMsgDiscard(MsgNCDiscard msg){

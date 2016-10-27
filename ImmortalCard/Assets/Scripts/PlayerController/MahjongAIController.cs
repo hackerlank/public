@@ -16,8 +16,9 @@ public class MahjongAIController:PlayerController{
 		//var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
-			if(player.pos==msgEngage.Pos)
-				player.playData.SelectedCard=msgEngage.Key;
+			for(int i=0;i<msgEngage.Keys.Count;++i)
+				if(player.pos==i)
+					player.playData.SelectedCard=msgEngage.Keys[i];
 
 		}else if(msg is MsgNCStart){
 			//var msgStart=msg as MsgNCStart;
