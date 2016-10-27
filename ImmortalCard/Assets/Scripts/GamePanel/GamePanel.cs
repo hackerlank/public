@@ -79,14 +79,14 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	// ----------------------------------------------
 	// messages
 	// ----------------------------------------------
-	public void onMessage(Player player,IMessage msg){
+	public IEnumerator onMessage(Player player,IMessage msg){
 		if(msg is MsgNCEngage){
 			var msgEngage=msg as MsgNCEngage;
 			OnMsgEngage(msgEngage);
 
 		}else if(msg is MsgNCStart){
 			var msgStart=msg as MsgNCStart;
-			StartCoroutine(OnMsgStart(msgStart));
+			yield return StartCoroutine(OnMsgStart(msgStart));
 
 		}else if(msg is MsgNCDiscard){
 			var msgDiscard=msg as MsgNCDiscard;

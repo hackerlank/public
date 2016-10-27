@@ -220,8 +220,8 @@ public class Player {
 		default:
 			break;
 		}
-		if(msg!=null)
-			foreach(var ctrl in controllers)ctrl.onMessage(this,msg);
+		if(msg!=null)foreach(var ctrl in controllers)
+			Main.Instance.StartCoroutine(ctrl.onMessage(this,msg));
 	}
 
 	public static string bunch2str(bunch_t bunch){
