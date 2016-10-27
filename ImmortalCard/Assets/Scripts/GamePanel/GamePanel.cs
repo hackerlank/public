@@ -48,13 +48,9 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 
 	virtual public void OnPass(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		deselectAll();
-		MsgCNDiscard msg=new MsgCNDiscard();
-		msg.Mid=pb_msg.MsgCnDiscard;
-		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=_pos;
-		msg.Bunch.Type=pb_enum.OpPass;
-		Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
+		StartCoroutine(passMeld(Main.Instance.MainPlayer,0,false));
 	}
 	
 	public void OnExit(){
@@ -139,6 +135,47 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		if(com.Length>1)com[1]=tempD[R];
 		if(com.Length>2)com[2]=tempD[O];
 		if(com.Length>m)com[m]=tempD[L];
+	}
+
+	protected void checkNaturalWin(){
+		//check natural win
+		var players=new List<Player>(Main.Instance.robots);
+		players.Add(Main.Instance.MainPlayer);
+		foreach(var player in players){
+			var hands=player.playData.Hands;
+			var last=hands[hands.Count-1];
+			hands.RemoveAt(hands.Count-1);
+			
+			bunch_t bunch=new bunch_t();
+			bunch.Pos=player.pos;
+			bunch.Type=pb_enum.BunchWin;
+			bunch.Pawns.Add(last);
+			
+			var win=false;
+			if(player==Main.Instance.MainPlayer){
+				win=showHints(last,true,true);
+			}else{
+				var hints=Rule.Hint(player,bunch);
+				foreach(var h in hints){
+					if(h.Type>=pb_enum.BunchWin){
+						win=true;
+						break;
+					}
+				}
+			}
+			hands.Add(last);
+			
+			if(player!=Main.Instance.MainPlayer||!win){
+				if(!win)bunch.Type=pb_enum.OpPass;
+				else Debug.Log(player.pos+" natural win");
+				
+				var omsgMeld=new MsgCNMeld();
+				omsgMeld.Mid=pb_msg.MsgCnMeld;
+				omsgMeld.Bunch=bunch;
+				
+				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+			}
+		}
 	}
 
 	public IEnumerator OnMsgStart(MsgNCStart msg){
@@ -308,6 +345,38 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual protected void OnMsgDraw(int card,int pos){}
 	virtual protected IEnumerator OnMsgMeld(bunch_t bunch){yield break;}
 	virtual protected IEnumerator sortHands(){yield break;}
+	virtual protected bool showHints(int card,bool bDraw,bool startup=false){return true;}
+
+	protected IEnumerator passDiscard(Player player,bool wait=true){
+		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
+		
+		//pass discard or draw
+		MsgCNDiscard msg=new MsgCNDiscard();
+		msg.Mid=pb_msg.MsgCnDiscard;
+
+		var bunch=new bunch_t();
+		bunch.Pos=player.pos;
+		bunch.Type=pb_enum.OpPass;
+		msg.Bunch=bunch;
+
+		Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
+	}
+
+	protected IEnumerator passMeld(Player player,int card=0,bool wait=true){
+		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
+		
+		//pass discard or draw
+		var msg=new MsgCNMeld();
+		msg.Mid=pb_msg.MsgCnMeld;
+		
+		bunch_t bunch=new bunch_t();
+		bunch.Pos=player.pos;
+		bunch.Pawns.Add(card);
+		bunch.Type=pb_enum.OpPass;
+		msg.Bunch=bunch;
+		
+		player.Send<MsgCNMeld>(msg.Mid,msg);
+	}
 
 	protected void deselectAll(){
 		var copy=new List<Card>(_selection);

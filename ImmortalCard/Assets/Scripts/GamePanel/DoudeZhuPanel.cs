@@ -30,6 +30,7 @@ public class DoudeZhuPanel : GamePanel {
 		BtnDouble.SetActive(false);
 		foreach(var btn in btnOps)btn.SetActive(true);
 
+		//test only; will call Dezhu here
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;
 		omsgEngage.Key=0;
@@ -47,8 +48,10 @@ public class DoudeZhuPanel : GamePanel {
 		if(_pos==Rule.Token){
 			if(showHints())
 				foreach(var btn in btnOps)btn.SetActive(true);
-			else
-				Invoke("OnPass",Configs.OpsInterval);
+			else{
+				foreach(var btn in btnOps)btn.SetActive(false);
+				StartCoroutine(passDiscard(Main.Instance.MainPlayer));
+			}
 		}
 	}
 
@@ -123,7 +126,8 @@ public class DoudeZhuPanel : GamePanel {
 	
 	override public void OnPass(){
 		foreach(var btn in btnOps)btn.SetActive(false);
-		base.OnPass();
+		deselectAll();
+		StartCoroutine(passDiscard(Main.Instance.MainPlayer,false));
 	}
 
 	public static void Create(System.Action<Component> handler=null){

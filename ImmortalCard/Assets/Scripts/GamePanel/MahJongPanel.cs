@@ -43,44 +43,7 @@ public class MahJongPanel : GamePanel {
 			if(Main.Instance.MainPlayer.pos==i)
 				Main.Instance.MainPlayer.playData.SelectedCard=msg.Keys[i];
 
-		//check natural win
-		var players=new List<Player>(Main.Instance.robots);
-		players.Add(Main.Instance.MainPlayer);
-		foreach(var player in players){
-			var hands=player.playData.Hands;
-			var last=hands[hands.Count-1];
-			hands.RemoveAt(hands.Count-1);
-			
-			bunch_t bunch=new bunch_t();
-			bunch.Pos=player.pos;
-			bunch.Type=pb_enum.BunchWin;
-			bunch.Pawns.Add(last);
-			
-			var win=false;
-			if(player==Main.Instance.MainPlayer){
-				win=showHints(last,true,true);
-			}else{
-				var hints=Rule.Hint(player,bunch);
-				foreach(var h in hints){
-					if(h.Type>=pb_enum.BunchWin){
-						win=true;
-						break;
-					}
-				}
-			}
-			hands.Add(last);
-
-			if(player!=Main.Instance.MainPlayer||!win){
-				if(!win)bunch.Type=pb_enum.OpPass;
-				else Debug.Log(player.pos+" natural win");
-
-				var omsgMeld=new MsgCNMeld();
-				omsgMeld.Mid=pb_msg.MsgCnMeld;
-				omsgMeld.Bunch=bunch;
-				
-				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-			}
-		}
+		checkNaturalWin();
 	}
 
 	override protected void onMsgStart(){
@@ -95,7 +58,7 @@ public class MahJongPanel : GamePanel {
 		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
 			if(!showHints(card,false)){
-				StartCoroutine(passCo(Main.Instance.MainPlayer,card));
+				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
 				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 			}
 		}
@@ -112,7 +75,7 @@ public class MahJongPanel : GamePanel {
 
 		//show hints only for MainPlayer
 		if(pos==Main.Instance.MainPlayer.pos&&!showHints(id,true)){
-			StartCoroutine(passCo(Main.Instance.MainPlayer,id));
+			StartCoroutine(passMeld(Main.Instance.MainPlayer,id));
 			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
 		}
 	}
@@ -160,7 +123,7 @@ public class MahJongPanel : GamePanel {
 		yield break;
 	}
 	
-	bool showHints(int card,bool bDraw,bool startup=false){
+	override protected bool showHints(int card,bool bDraw,bool startup=false){
 		var player=Main.Instance.MainPlayer;
 		var bunch=new bunch_t();
 		bunch.Pos=(bDraw?player.pos:(player.pos+1)%maxPlayer);
@@ -188,22 +151,6 @@ public class MahJongPanel : GamePanel {
 		if(_hints.Count>0)BtnPass.SetActive(true);
 
 		return _hints.Count>0;
-	}
-
-	IEnumerator passCo(Player player,int card){
-		yield return new WaitForSeconds(Configs.OpsInterval);
-
-		//pass discard or draw
-		var omsgMeld=new MsgCNMeld();
-		omsgMeld.Mid=pb_msg.MsgCnMeld;
-		
-		bunch_t bunch=new bunch_t();
-		bunch.Pos=player.pos;
-		bunch.Pawns.Add(card);
-		bunch.Type=pb_enum.OpPass;
-		omsgMeld.Bunch=bunch;
-		
-		player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
 	}
 	
 	override protected IEnumerator sortHands(){
@@ -316,16 +263,6 @@ public class MahJongPanel : GamePanel {
 				}
 			}
 		}
-	}
-	
-	override public void OnPass(){
-		foreach(var btn in btnOps)btn.SetActive(false);
-		MsgCNMeld msg=new MsgCNMeld();
-		msg.Mid=pb_msg.MsgCnMeld;
-		msg.Bunch=new bunch_t();
-		msg.Bunch.Pos=_pos;
-		msg.Bunch.Type=pb_enum.OpPass;
-		Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 	
 	public static void Create(System.Action<Component> handler=null){
