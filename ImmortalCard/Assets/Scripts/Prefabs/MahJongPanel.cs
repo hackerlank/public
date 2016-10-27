@@ -69,15 +69,17 @@ public class MahJongPanel : GamePanel {
 				}
 			}
 			hands.Add(last);
-			
-			if(!win)bunch.Type=pb_enum.OpPass;
-			else Debug.Log(player.pos+" natural win");
 
-			var omsgMeld=new MsgCNMeld();
-			omsgMeld.Mid=pb_msg.MsgCnMeld;
-			omsgMeld.Bunch=bunch;
-			
-			player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+			if(player!=Main.Instance.MainPlayer||!win){
+				if(!win)bunch.Type=pb_enum.OpPass;
+				else Debug.Log(player.pos+" natural win");
+
+				var omsgMeld=new MsgCNMeld();
+				omsgMeld.Mid=pb_msg.MsgCnMeld;
+				omsgMeld.Bunch=bunch;
+				
+				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+			}
 		}
 	}
 
@@ -183,7 +185,7 @@ public class MahJongPanel : GamePanel {
 				break;
 			}
 		}
-		if(_hints.Count>0&&(!startup||BtnWin.activeSelf))BtnPass.SetActive(true);
+		if(_hints.Count>0)BtnPass.SetActive(true);
 
 		return _hints.Count>0;
 	}

@@ -83,7 +83,12 @@ bool Mahjong::isWin(Game& game,Player& player,unit_id_t id,std::vector<proto3::b
     }
     std::vector<unit_id_t> cards;
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
-    cards.push_back(id);
+    
+    //insert into hand if not in
+    auto inhand=false;
+    for(auto i:cards)if(i==id){inhand=true;break;}
+    if(!inhand)cards.push_back(id);
+    
     auto sorter=std::bind(&Mahjong::comparision,this,std::placeholders::_1,std::placeholders::_2);
     std::sort(cards.begin(),cards.end(),sorter);
     
@@ -150,8 +155,26 @@ bool Mahjong::isWinWithoutAA(std::vector<unit_id_t>& cards){
     return true;
 }
 
-void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuite,unit_id_t card){
+void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
+    auto pos=player.pos;
+    auto& game=*player.game;
+    auto M=MaxPlayer();
+
+    game.spSettle=std::make_shared<MsgNCSettle>();
+    auto& msg=*game.spSettle;
     
+    for(pos_t i=0;i<M;++i){
+        auto play=msg.add_play();
+        play->set_win(pos==i&&allSuites.size()>0?1:0);
+    }
+    
+    if(!game.spFinish){
+        //prepare final end message
+        game.spFinish=std::make_shared<MsgNCFinish>();
+        for(pos_t i=0; i < M; ++i){
+            game.spFinish->add_play();
+        }
+    }
 }
 
 pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){

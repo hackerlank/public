@@ -198,7 +198,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     for(auto& p:pendingMeld)if(p.arrived)++ready;
     if(ready>=pendingMeld.size()){
         //sort
-        std::sort(pendingMeld.begin(),pendingMeld.end(),std::bind(&MeldGame::comparePending,this,std::placeholders::_1,std::placeholders::_2));
+        std::sort(pendingMeld.begin(),pendingMeld.end()
+                  ,std::bind(&MeldGame::comparePending,this,std::placeholders::_1,std::placeholders::_2));
         
         //priority
         auto& front=pendingMeld.front();

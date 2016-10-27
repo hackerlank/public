@@ -122,7 +122,12 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
     }
     std::vector<unit_id_t> cards;
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
-    cards.push_back(card);
+
+    //insert into hand if not in
+    auto inhand=false;
+    for(auto i:cards)if(i==card){inhand=true;break;}
+    if(!inhand)cards.push_back(card);
+
     auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
     std::sort(cards.begin(),cards.end(),sorter);
     
