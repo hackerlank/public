@@ -89,6 +89,54 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
+void Paohuzi::engage(Game& game){
+    //pick out AAAA,AAA
+    for(auto p:game.players){
+        auto& hands=*p->playData.mutable_hands();
+
+        //category hand card by color and value
+        std::vector<std::vector<unit_id_t>> mc[2];
+        mc[0].resize(10);
+        mc[1].resize(10);
+        for(auto C:hands){
+            int x=(C/1000==2?1:0);
+            mc[x][C%100-1].push_back(C);
+        }
+        //check cards more than 4 with same value and color
+        for(int j=0;j<2;++j){
+            auto& v=mc[j];
+            for(auto iv=v.begin(),ivv=v.end();iv!=ivv;++iv){
+                if(iv->size()>=3){
+                    bunch_t* pb=nullptr;
+                    if(iv->size()==4){
+                        //add to AAAA
+                        p->AAAA.push_back(bunch_t());
+                        pb=&p->AAAA.back();
+                        pb->set_type(pb_enum::PHZ_AAAAstart);
+                    }else if(iv->size()==3){
+                        //add to AAA
+                        p->AAA.push_back(bunch_t());
+                        pb=&p->AAA.back();
+                        pb->set_type(pb_enum::PHZ_AAA);
+                    }
+                    //the cards
+                    for(auto x=iv->begin(),xx=iv->end();x!=xx;++x){
+                        pb->add_pawns(*x);
+                        //remove from hands
+                        for(auto it=hands.begin(),iend=hands.end(); it!=iend; ++it)
+                            if(*x==*it){
+                                hands.erase(it);
+                                break;
+                            }
+                    }//for
+                }//>3
+            }//for iv
+        }//for j
+    }//for game players
+    
+    MeldGame::engage(game);
+}
+
 void Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     //erase from hands
     auto pos=player.pos;
@@ -105,9 +153,6 @@ void Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     //then meld
     auto h=player.playData.add_bunch();
     h->CopyFrom(bunch);
-    //pending discard
-    game.pendingDiscard=std::make_shared<Game::pending_t>();
-    game.pendingDiscard->bunch.set_pos(pos);
     changePos(game,pos);
 }
 
@@ -1643,6 +1688,32 @@ bool Paohuzi::chouWei(Game& game,Player& player,bunch_t& bunch){
         }
     }
     return false;
+}
+
+bool Paohuzi::prediscard(Player& player){
+    auto sz=player.playData.hands_size();
+    if(sz<=0)
+        return false;
+    
+    auto ret=true;
+    if(!player.AAAA.empty())
+        ret=(sz%3==1);
+    else{
+        auto aaaa=false;
+        auto& bunches=player.playData.bunch();
+        for(auto& bunch:bunches){
+            if(bunch.pawns_size()>3){
+                aaaa=true;
+                break;
+            }
+        }
+        ret=(sz%3==(aaaa?1:2));
+    }
+    
+    if(ret)
+        MeldGame::prediscard(player);
+    
+    return ret;
 }
 
 void Paohuzi::test(){

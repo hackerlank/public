@@ -26,11 +26,16 @@ public:
     std::shared_ptr<google::protobuf::MessageLite>  lastMsg;
     
     //special for phz
-    std::vector<unit_id_t>  unpairedCards;
+    std::vector<proto3::bunch_t>    AAAA,AAA;
+    std::vector<unit_id_t>          unpairedCards;
     int     inputCount;         //draw count
     int     lastHand;           //last card in hand
     int     winCount;           //win by continuous
     int     m_winMark;          //peng huzi win bunch type
+    
+    bool			m_bczArr;		//郴州，标示起手提是否>1--true:>1 false:<=1
+    bool			m_bdoubleTi;	//所有玩法，起手双提(重跑)标示，true:双提，false：0或1提
+    
 private:
     std::shared_ptr<keye::svc_handler>              spsh;
 };

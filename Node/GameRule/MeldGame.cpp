@@ -232,7 +232,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     settle(player,output,card);
                     changeState(game,Game::State::ST_SETTLE);
                 }else{
-                    changeState(game,Game::State::ST_DISCARD);
+                    needDraw=!prediscard(who);
                     ret=pb_enum::ERR_FAILED;
                 }
                 break;
@@ -243,10 +243,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     bunch.set_pos(game.token);
                     //draw pass to discard
                     //KEYE_LOG("OnMeld pass to discard\n");
-                    changeState(game,Game::State::ST_DISCARD);
-                    //pending discard
-                    game.pendingDiscard=std::make_shared<Game::pending_t>();
-                    game.pendingDiscard->bunch.set_pos(game.token);
+                    auto& currPlayer=*game.players[game.token];
+                    needDraw=!prediscard(currPlayer);
                 }else{
                     bunch.set_pos(-1);
                     //discard pass to draw,don't do it immediately!
@@ -260,7 +258,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 //meld or do some specials
                 meld(game,who,card,bunch);
                 //A,AAA,AAAA
-                changeState(game,Game::State::ST_DISCARD);
+                needDraw=!prediscard(who);
         }
 
         //change state before send message
@@ -295,14 +293,11 @@ void MeldGame::engage(Game& game){
     for(auto p:game.players){
         auto hands=p->playData.mutable_hands();
         auto card=hands->Get(hands->size()-1);
-        hands->RemoveLast();
         
         game.pendingMeld.push_back(Game::pending_t());
         auto& pending=game.pendingMeld.back();
         pending.bunch.set_pos(p->pos);
         pending.bunch.add_pawns(card);
-        
-        hands->Add(card);
     }
 }
 
@@ -350,4 +345,14 @@ bool MeldGame::comparePending(Game::pending_t& x,Game::pending_t& y){
     auto a=(int)x.bunch.type();
     auto b=(int)y.bunch.type();
     return a>b;
+}
+
+bool MeldGame::prediscard(Player& player){
+    auto& game=*player.game;
+    changeState(game,Game::State::ST_DISCARD);
+    //pending discard
+    game.pendingDiscard=std::make_shared<Game::pending_t>();
+    game.pendingDiscard->bunch.set_pos(player.pos);
+
+    return true;
 }

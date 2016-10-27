@@ -22,6 +22,7 @@ protected:
     virtual int             maxHands();
     virtual int             bottom();
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
+    virtual void            engage(Game&);
 private:
     //is game over with melt card
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);
@@ -29,6 +30,7 @@ private:
     bool                    hint3(Game&,Player&,unit_id_t,proto3::bunch_t&);
     void                    hint(Game&,unit_id_t,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
 
+    virtual bool            prediscard(Player&);  //check AAAA and AAA to decide discardable
     proto3::pb_enum         verifyBunch(Game&,proto3::bunch_t&);
     virtual void            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
     

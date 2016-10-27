@@ -48,9 +48,6 @@ void Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
     if(ret==pb_enum::BUNCH_A){
         //collect after draw
         player.playData.mutable_hands()->Add(card);
-        //pending discard
-        game.pendingDiscard=std::make_shared<Game::pending_t>();
-        game.pendingDiscard->bunch.set_pos(pos);
         //remove from pile map
         game.pileMap.erase(card);
     }else{
@@ -68,9 +65,6 @@ void Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
         //then meld
         auto h=player.playData.add_bunch();
         h->CopyFrom(bunch);
-        //pending discard
-        game.pendingDiscard=std::make_shared<Game::pending_t>();
-        game.pendingDiscard->bunch.set_pos(pos);
         changePos(game,pos);
     }
 }
