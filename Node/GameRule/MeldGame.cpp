@@ -255,10 +255,11 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 //checked already
                 break;
             default:
-                //meld or do some specials
-                meld(game,who,card,bunch);
-                //A,AAA,AAAA
-                needDraw=!prediscard(who);
+                //A,AAA,AAAA, meld or do some specials
+                if(meld(game,who,card,bunch))
+                    needDraw=!prediscard(who);
+                else
+                    needDraw=true;
         }
 
         //change state before send message

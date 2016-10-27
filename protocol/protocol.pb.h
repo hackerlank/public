@@ -4889,6 +4889,18 @@ class MsgCNMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::bunch_t* release_bunch();
   void set_allocated_bunch(::proto3::bunch_t* bunch);
 
+  // repeated .proto3.bunch_t extra = 3;
+  int extra_size() const;
+  void clear_extra();
+  static const int kExtraFieldNumber = 3;
+  const ::proto3::bunch_t& extra(int index) const;
+  ::proto3::bunch_t* mutable_extra(int index);
+  ::proto3::bunch_t* add_extra();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_extra();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      extra() const;
+
   // @@protoc_insertion_point(class_scope:proto3.MsgCNMeld)
  private:
 
@@ -4897,6 +4909,7 @@ class MsgCNMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
 
   bool _is_default_instance_;
   ::proto3::bunch_t* bunch_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > extra_;
   int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -9905,6 +9918,36 @@ inline void MsgCNMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
     
   }
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNMeld.bunch)
+}
+
+// repeated .proto3.bunch_t extra = 3;
+inline int MsgCNMeld::extra_size() const {
+  return extra_.size();
+}
+inline void MsgCNMeld::clear_extra() {
+  extra_.Clear();
+}
+inline const ::proto3::bunch_t& MsgCNMeld::extra(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNMeld.extra)
+  return extra_.Get(index);
+}
+inline ::proto3::bunch_t* MsgCNMeld::mutable_extra(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNMeld.extra)
+  return extra_.Mutable(index);
+}
+inline ::proto3::bunch_t* MsgCNMeld::add_extra() {
+  // @@protoc_insertion_point(field_add:proto3.MsgCNMeld.extra)
+  return extra_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgCNMeld::mutable_extra() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNMeld.extra)
+  return &extra_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgCNMeld::extra() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgCNMeld.extra)
+  return extra_;
 }
 
 // -------------------------------------------------------------------

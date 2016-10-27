@@ -576,6 +576,7 @@ message MsgCNMeld{
 
 pb_msg mid				=1;
 bunch_t bunch           =2;
+repeated bunch_t extra  =3;
 };
 
 message MsgNCMeld{

@@ -25,7 +25,7 @@ protected:
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t)=0;
 
     virtual void            engage(Game&);
-    virtual void            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
+    virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
     virtual bool            prediscard(Player&);  //check AAAA and AAA to decide discardable
 private:

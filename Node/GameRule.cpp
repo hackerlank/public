@@ -67,6 +67,9 @@ void GameRule::deal(Game& game){
     for(auto x=game.pile.begin(),xx=game.pile.end();x!=xx;++x)game.pileMap[*x]=0;
     for(auto i=0;i<MP;++i)logHands(game,i,"deal");
 
+    game.firstCard=*game.players[game.banker]->playData.hands().rbegin();
+    game.lastCard=game.pile.front();
+
     //broadcast
     MsgNCStart msg;
     msg.set_mid(pb_msg::MSG_NC_START);
@@ -80,10 +83,10 @@ void GameRule::deal(Game& game){
     for(auto p:game.players){
         msg.set_pos(p->pos);
         auto hands=msg.mutable_hands();
-        auto n=(int)game.players[p->pos]->playData.hands().size();
+        auto n=(int)p->playData.hands().size();
         hands->Resize(n,0);
         for(int j=0;j<n;++j)
-            hands->Set(j,game.players[p->pos]->playData.hands(j));
+            hands->Set(j,p->playData.hands(j));
         
         p->send(msg);
         hands->Clear();

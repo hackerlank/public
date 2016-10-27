@@ -31,7 +31,7 @@ protected:
     //is game over against cards without AA
     bool                    isWinWithoutAA(std::vector<unit_id_t>&);
 
-    virtual void            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
+    virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
 };
 
 #endif /* Mahjong_h */

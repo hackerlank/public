@@ -45,10 +45,10 @@ public:
     std::shared_ptr<proto3::MsgNCSettle>    spSettle;
     std::shared_ptr<proto3::MsgNCFinish>    spFinish;
     
+    unit_id_t       firstCard,lastCard;
     //special for phz
     int     noWinner;
     bool    bankerChanged;
-    unit_id_t   lastCard;
     int     m_winPeo;
     int						_multiScore;	//单局番数或者分数阈值
     int						_limitType;		//郴州，起手双提，控制能否继续吃碰，0：能，1：不能

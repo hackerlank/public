@@ -16626,6 +16626,7 @@ void MsgNCDiscard::clear_result() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCNMeld::kMidFieldNumber;
 const int MsgCNMeld::kBunchFieldNumber;
+const int MsgCNMeld::kExtraFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MsgCNMeld::MsgCNMeld()
@@ -16703,6 +16704,7 @@ void MsgCNMeld::Clear() {
   mid_ = 0;
   if (GetArenaNoVirtual() == NULL && bunch_ != NULL) delete bunch_;
   bunch_ = NULL;
+  extra_.Clear();
 }
 
 bool MsgCNMeld::MergePartialFromCodedStream(
@@ -16739,6 +16741,23 @@ bool MsgCNMeld::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(26)) goto parse_extra;
+        break;
+      }
+
+      // repeated .proto3.bunch_t extra = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_extra:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_extra:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_extra()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_extra;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -16779,6 +16798,12 @@ void MsgCNMeld::SerializeWithCachedSizes(
       2, *this->bunch_, output);
   }
 
+  // repeated .proto3.bunch_t extra = 3;
+  for (unsigned int i = 0, n = this->extra_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, this->extra(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNMeld)
 }
 
@@ -16799,6 +16824,14 @@ int MsgCNMeld::ByteSize() const {
         *this->bunch_);
   }
 
+  // repeated .proto3.bunch_t extra = 3;
+  total_size += 1 * this->extra_size();
+  for (int i = 0; i < this->extra_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->extra(i));
+  }
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -16815,6 +16848,7 @@ void MsgCNMeld::MergeFrom(const MsgCNMeld& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
+  extra_.MergeFrom(from.extra_);
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
@@ -16842,6 +16876,7 @@ void MsgCNMeld::Swap(MsgCNMeld* other) {
 void MsgCNMeld::InternalSwap(MsgCNMeld* other) {
   std::swap(mid_, other->mid_);
   std::swap(bunch_, other->bunch_);
+  extra_.UnsafeArenaSwap(&other->extra_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -16907,6 +16942,36 @@ void MsgCNMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
     
   }
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNMeld.bunch)
+}
+
+// repeated .proto3.bunch_t extra = 3;
+int MsgCNMeld::extra_size() const {
+  return extra_.size();
+}
+void MsgCNMeld::clear_extra() {
+  extra_.Clear();
+}
+const ::proto3::bunch_t& MsgCNMeld::extra(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNMeld.extra)
+  return extra_.Get(index);
+}
+::proto3::bunch_t* MsgCNMeld::mutable_extra(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNMeld.extra)
+  return extra_.Mutable(index);
+}
+::proto3::bunch_t* MsgCNMeld::add_extra() {
+  // @@protoc_insertion_point(field_add:proto3.MsgCNMeld.extra)
+  return extra_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgCNMeld::mutable_extra() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgCNMeld.extra)
+  return &extra_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgCNMeld::extra() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgCNMeld.extra)
+  return extra_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

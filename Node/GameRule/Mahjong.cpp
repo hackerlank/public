@@ -42,7 +42,7 @@ void Mahjong::initCard(Game& game){
     }
 }
 
-void Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
+bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
     auto ret=bunch.type();
     auto pos=player.pos;
     if(ret==pb_enum::BUNCH_A){
@@ -67,6 +67,7 @@ void Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
         h->CopyFrom(bunch);
         changePos(game,pos);
     }
+    return true;
 }
 
 bool Mahjong::isWin(Game& game,Player& player,unit_id_t id,std::vector<proto3::bunch_t>& output){

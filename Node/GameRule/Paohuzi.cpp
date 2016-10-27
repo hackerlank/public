@@ -137,7 +137,13 @@ void Paohuzi::engage(Game& game){
     MeldGame::engage(game);
 }
 
-void Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
+bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
+    //can't meld pass card( no win here )
+    if(std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end()){
+        KEYE_LOG("meld failed, past card");
+        return false;
+    }
+    
     //erase from hands
     auto pos=player.pos;
     auto& hands=*player.playData.mutable_hands();
@@ -154,6 +160,7 @@ void Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     auto h=player.playData.add_bunch();
     h->CopyFrom(bunch);
     changePos(game,pos);
+    return true;
 }
 
 bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){
@@ -165,6 +172,18 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
         KEYE_LOG("isWin failed: len=%d\n",hands.size());
         return false;
     }
+
+    //can't win hand card if not fire
+    auto fire=(pos!=game.token && game.pileMap.find(card)!=game.pileMap.end()
+            &&   (game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_HY||
+                  game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
+                  game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
+    auto pile=game.pileMap.find(card)!=game.pileMap.end();
+    if(!pile && !fire){
+        KEYE_LOG("isWin failed: not fire and not from pile\n");
+        return false;
+    }
+    
     std::vector<unit_id_t> cards;
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
 
@@ -756,7 +775,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             //地胡：1，闲家；2，闲家无进张；3，牌堆满的
             int drawCount=0;
             for(auto& p:game.players)drawCount+=p->inputCount;
-            if(/*game._firstCard==card&&*/game.banker!=pos&&drawCount==0){
+            if(game.firstCard==card && game.banker!=pos&&drawCount==0){
                 //地胡时，有时候会检测到放炮的名堂，但是是不允许的，这里在地胡处理中直接屏蔽
                 fire=false;
                 
