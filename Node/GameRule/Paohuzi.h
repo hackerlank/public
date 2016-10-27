@@ -33,13 +33,16 @@ private:
     virtual void            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
     
     void                    calcAchievement(Game&,proto3::pb_enum,const std::vector<proto3::bunch_t>&,std::vector<proto3::achv_t>&);
+    void                    calcPengAchievement(Game&,proto3::pb_enum,const std::vector<proto3::bunch_t>&,std::vector<proto3::achv_t>&,int);
     int						winPoint(Game&,proto3::pb_enum);
     int						calcScore(Game&,proto3::pb_enum,int points);
     int						calcPoints(Game&,std::vector<proto3::bunch_t>&);
     int						calcPoints(Game&,Player&);
     
     bool					chouWei(Game&,Player&,proto3::bunch_t&);
-    
+
+    int                     findSuiteKT(Game&,std::vector<unit_id_t> hands,int type,int pos);
+
 };
 
 #endif /* Paohuzi_h */

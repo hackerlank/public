@@ -150,6 +150,18 @@ WIN_REPEAT              =28;	//连胡
 
 WIN_MAX                 =29;
 
+//碰胡子标示胡牌类型
+WINWEI          =0;//偎胡
+WINTI          =1;//提胡
+WINSAND          =2;//三大胡
+WINSID          =3;//四大胡
+WINPENG          =4;//碰胡
+WINWPAO          =5;//偎坎跑胡
+WINPPAO          =6;//碰跑胡
+WINPING          =7;//平胡
+_WINMAX          =8;
+
+
 // achievement
 ACHV_BOMB               =10;
 ACHV_HEAVEN             =11;

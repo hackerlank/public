@@ -29,6 +29,8 @@ public:
     std::vector<unit_id_t>  unpairedCards;
     int     inputCount;         //draw count
     int     lastHand;           //last card in hand
+    int     winCount;           //win by continuous
+    int     m_winMark;          //peng huzi win bunch type
 private:
     std::shared_ptr<keye::svc_handler>              spsh;
 };

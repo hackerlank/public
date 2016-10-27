@@ -813,7 +813,6 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         //根据名堂算分算胡之前，先对七方门子是否达到30胡息做计算
         //在湘乡告胡子中，标示30胡和红胡是否都有的情况：bN30Red-false存在，true不存在;bN13Red标示红乌
         int pt=0;
-        bool bN30Red=true,bN13Red=true;
         if(game.category==pb_enum::PHZ_XX_GHZ){
             //湘乡30胡和30胡加10红
             bool bRed_=false,bBlack=false,b13Red=false;//标示是否有红胡的名堂
@@ -874,7 +873,6 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         if(fire&&(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)&&point>100)point=100;
         //囤数
         chunk+=calcScore(game,game.category,point);
-        int mchunk=1;
         for(auto a=achvs.begin(),aa=achvs.end();a!=aa;++a){
             if(a->type()==pb_enum::ACHV_KEY_CHUNK)
                 chunk+=a->value();
@@ -1007,7 +1005,6 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
 //            msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
         }
     } else{
-        /*
         //pb_enum::PHZ_PENGHUZI
         
         //地胡不能有进张的判断条件
@@ -1018,30 +1015,28 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         //地胡，听胡
         for(auto i=0;i<M;++i){
             if(i==game.banker)continue;
-            if(game.m_user[i]->inputCount==0) markInput++;
+            if(game.players[i]->inputCount==0) markInput++;
         }
         
         //计算胡牌算分
-        if(game.m_winPeo>0&&pos!=pos_n){
+        if(game.m_winPeo>0&&pos!=-1){
             //天胡，双龙，小七对也进来处理
             if(game.pile.size()>=23){
                 //地胡：1，闲家；2，闲家无进张；3，牌堆满的；4，庄家出了一张牌
-                if(game.banker!=pos&&markInput==3&&game.m_user[game.banker]->handCards.size()==14){
+                if(game.banker!=pos&&markInput==3&&game.players[game.banker]->playData.hands_size()==14){
                     //地胡时，有时候会检测到放炮的名堂，但是是不允许的，这里在地胡处理中直接屏蔽
                     pfire=false;
                     achvs.push_back(achv_t());
                     auto& ach=achvs.back();
-                    ach.set_type(pb_enum::WIN_DI;
-                                 ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
-                                 ach.set_value(2);
-                    auto nn=nnn[ach.type()][game.category];
-                    ach.score=nn;
+                    ach.set_type(pb_enum::WIN_DI);
+                    ach.set_key(pb_enum::ACHV_KEY_SCORE);
+                    ach.set_value(nnn[ach.type()][game.category]);
                 }
             }
             //赢了，记录连胡次数,
-            game.m_winCount[pos]++;
+            game.players[pos]->winCount++;
             //首先计算名堂
-            calcPengAchievement(game.category,allSuites,achvs,pos);
+            calcPengAchievement(game,game.category,allSuites,achvs,pos);
             
             auto winScore=0;
             int lastScore=4;//胡牌基础分数4分
@@ -1051,27 +1046,27 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             
             //胡牌算分结束，计算名堂分数
             for(auto iv=achvs.begin(),ivv=achvs.end();iv!=ivv;++iv){
-                if(iv->type==pb_enum::WIN_TIAN){
+                if(iv->type()==pb_enum::WIN_TIAN){
                     //天胡
                     bTian=true;
                     lastScore=0;//不计算初始的4分
-                    lastScore=iv->score;
-                } else if(iv->type==pb_enum::WIN_7PAIR||iv->type==pb_enum::WIN_DUALDRA){
+                    lastScore=iv->value();
+                } else if(iv->type()==pb_enum::WIN_7PAIR||iv->type()==pb_enum::WIN_DUALDRA){
                     //小七对,双龙
                     bTian=true;
                     lastScore=0;//不计算初始的4分
                     b7DualLog=true;
-                    lastScore=iv->score;
-                } else if(iv->type==pb_enum::WIN_DI){
+                    lastScore=iv->value();
+                } else if(iv->type()==pb_enum::WIN_DI){
                     //地胡
                     if(pfire)
                         pfire=false;//防止重复计算放炮名堂
                     lastScore=0;//不计算初始的4分
-                    lastScore=iv->score;
-                } else if(iv->type==pb_enum::WIN_5FU){
+                    lastScore=iv->value();
+                } else if(iv->type()==pb_enum::WIN_5FU){
                     //五福
                     b5FU=true;
-                    lastScore=iv->score;
+                    lastScore=iv->value();
                 }
             }
             if(!bTian&&!b5FU){
@@ -1080,24 +1075,23 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 if(pfire){
                     achvs.push_back(achv_t());
                     auto& ach=achvs.back();
-                    ach.set_type(pb_enum::WIN_FIRE;
-                                 ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
-                                 ach.set_value(2);
-                    ach.score=nnn[ach.type()][game.category];
+                    ach.set_type(pb_enum::WIN_FIRE);
+                    ach.set_key(pb_enum::ACHV_KEY_SCORE);
+                    ach.set_value(nnn[ach.type()][game.category]);
                     //放炮有偎，提，碰，跑，等情况，这里分别计分
-                    switch(game.m_winMark[pos]){
-                        case PengWinType::WINSAND:
+                    switch(game.players[pos]->m_winMark){
+                        case pb_enum::WINSAND:
                             //到这里，能说明就是碰的胡的三大胡牌方式
                             lastScore+=5;
                             break;
-                        case PengWinType::WINSID:
+                        case pb_enum::WINSID:
                             //到这里，能说明就是碰的四大胡牌方式
                             lastScore+=9;
                             break;
-                        case PengWinType::WINPENG:
+                        case pb_enum::WINPENG:
                             lastScore+=1;//最后在放炮出，处理结算
                             break;
-                        case PengWinType::WINPPAO:
+                        case pb_enum::WINPPAO:
                             //碰跑胡
                             lastScore+=4;
                             break;
@@ -1107,29 +1101,29 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                     }
                 } else{
                     //堆上胡牌
-                    switch(game.m_winMark[pos]){
-                        case PengWinType::WINSAND:
+                    switch(game.players[pos]->m_winMark){
+                        case pb_enum::WINSAND:
                             //到这里，能说明就是偎的三大胡牌方式
                             lastScore+=6;
                             break;
-                        case PengWinType::WINSID:
+                        case pb_enum::WINSID:
                             //到这里，能说明就是偎的四大胡牌方式
                             lastScore+=10;
                             break;
-                        case PengWinType::WINWEI:
+                        case pb_enum::WINWEI:
                             lastScore+=2;
                             break;
-                        case PengWinType::WINTI:
+                        case pb_enum::WINTI:
                             lastScore+=8;
                             break;
-                        case PengWinType::WINPENG:
+                        case pb_enum::WINPENG:
                             lastScore+=1;//最后在放炮出，处理结算
                             break;
-                        case PengWinType::WINWPAO:
+                        case pb_enum::WINWPAO:
                             //偎坎跑胡
                             lastScore+=4;
                             break;
-                        case PengWinType::WINPPAO:
+                        case pb_enum::WINPPAO:
                             //碰跑胡
                             lastScore+=4;
                             break;
@@ -1144,11 +1138,12 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             if(b7DualLog){
                 lastScore=40;
                 for(auto i=0;i<M;++i)
-                    game.m_score[i]=0;
+                    game.players[i]->playData.set_score(0);
+                    //game.m_score[i]=0;
             }
             
             //胡牌番数含义：中庄x2:0 中庄翻番：1 连中：2   注：有5福名堂
-            if(pos==game.banker&&game.m_winCount[pos]>1&&!b5FU){
+            if(pos==game.banker&&game.players[pos]->winCount>1&&!b5FU){
                 //只有庄家赢了才做，中庄X2，连胡，中庄翻番的限制计算
                 if(game._multiScore==0){
                     //中庄算胡分
@@ -1156,7 +1151,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                     lastScore*=2;
                 } else if(game._multiScore==1){
                     //中庄翻番算胡分
-                    lastScore*=std::pow(2,game.m_winCount[pos]-1);
+                    lastScore*=std::pow(2,game.players[pos]->winCount-1);
                 } else if(game._multiScore==2){
                     //连中算胡分
                     lastScore+=4;
@@ -1167,52 +1162,50 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             //结算
             if(pfire){
                 //放炮的结算
-                game.m_score[pos]+=winScore*(M-1);
-                game.m_score[game.token]-=winScore*(M-1);
+                game.players[pos]->playData.set_score(game.players[pos]->playData.score()+winScore*(M-1));
+                game.players[game.token]->playData.set_score(game.players[game.token]->playData.score()-winScore*(M-1));
             } else{
-                game.m_score[pos]+=winScore*(M-1);
+                game.players[pos]->playData.set_score(game.players[pos]->playData.score()+winScore*(M-1));
                 for(auto i=0;i<M;++i){
                     if(pos==i)continue;
-                    game.m_score[i]-=winScore;
+                    game.players[i]->playData.set_score(game.players[i]->playData.score()-winScore);
                 }
             }
             
             //最后将没赢的其他玩家的连胡记录清零
             for(auto i=0;i<M;++i){
                 if(pos==i)continue;
-                game.m_winCount[i]=0;
+                game.players[i]->winCount=0;
             }
             
             
             //封装消息
-            for(auto i=0;i<M;++i){
-                msg.m_scores[i]=game.m_score[i];
-            }
             
             //换庄
             game.bankerChanged=(game.banker!=pos);
             if(game.bankerChanged){
                 //说明庄家输了 ，连胡计数要归零
-                game.m_winCount[game.banker]=0;
+                game.players[game.banker]->winCount=0;
             }
             game.banker=pos;
             
             for(int i=0; i<M; ++i){
-                spFinalEnd->m_total[i].score+=msg.m_scores[i];
-                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+msg.play(i).score());
+                //spFinalEnd->m_total[i].score+=msg.m_scores[i];
+                //msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
         } else{
             //荒庄后者输了，连胡记录都要清零从新计数
             //到这里，pos可能非法，
             for(auto i=0;i<M;++i)
-                game.m_winCount[i]=0;
+                game.players[i]->winCount=0;
             game.bankerChanged=false;
             for(int i=0; i<M; ++i){
-                spFinalEnd->m_total[i].score+=msg.m_scores[i];
-                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+msg.play(i).score());
+                //spFinalEnd->m_total[i].score+=msg.m_scores[i];
+                //msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
         }
-        */
     }//pb_enum::PHZ_PENGHUZI
     
     for(auto c:game.pile)spGameEnd->mutable_pile()->Add(c);
@@ -1452,6 +1445,89 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
             ach.set_value(nnn[ach.type()][rule]);
         }
     }
+}
+
+//计算碰胡子的名堂
+void Paohuzi::calcPengAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs,int pos){
+    //TODO:碰胡子名堂计算
+    auto& h=game.players[pos]->playData.hands();
+    std::vector<unit_id_t> hand(h.begin(),h.end());
+    auto kNum=findSuiteKT(game,hand,0,pos);
+    bool bPaoDaul=false;//跑双标示
+    for(auto iv=suites.begin(),ivv=suites.end();iv!=ivv;++iv){
+        if(iv->type()==pb_enum::PHZ_AAAA||iv->type()==pb_enum::PHZ_AAAAdesk||iv->type()==pb_enum::PHZ_BBB_B||iv->type()==pb_enum::PHZ_BBBBdesk){
+            //判断是否跑双
+            bPaoDaul=true;
+        }
+    }
+    //五福
+    if(kNum==5/*&&_desk->m_alarm[pos]*/){
+        avs.push_back(achv_t());
+        auto& ach=avs.back();
+        ach.set_type(pb_enum::WIN_5FU);
+        ach.set_key(pb_enum::ACHV_KEY_SCORE);
+        ach.set_value(nnn[ach.type()][rule]);
+    }
+    
+    //跑双
+    //if(bPaoDaul){
+    //avs.push_back(AchievementData());
+    //auto& ach=avs.back();
+    //ach.type=card_t::eAchievment::WIN_RUNDUAL;
+    //ach.score=nnn[ach.type][rule];
+    //}
+    
+    //连胡名堂
+    if(game.players[pos]->winCount>1){
+        avs.push_back(achv_t());
+        auto& ach=avs.back();
+        //乘方算，这里静态数组中存放乘方的底数
+        ach.set_type(pb_enum::WIN_REPEAT);
+        ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+        ach.set_value(nnn[ach.type()][rule]);
+    }
+}
+
+int Paohuzi::findSuiteKT(Game& game,std::vector<unit_id_t> hands,int type,int pos){
+    auto kanNum=0,tpNum=0,res=0;
+    std::vector<std::vector<unit_id_t>> mc[2];
+    mc[0].resize(10);
+    mc[1].resize(10);
+    for(auto it=hands.begin(),iend=hands.end(); it!=iend; ++it){
+        auto C=*it;
+        int x=(C/1000==1?1:0);
+        auto& v=mc[x][C%100-1];
+        v.push_back(C);
+    }
+    for(auto i=0;i<2;++i){
+        //分别在大小牌中寻找坎牌
+        auto& v=mc[i];
+        for(auto iv=v.begin(),ivv=v.end();iv!=ivv;++iv){
+            if(iv->size()==3){
+                kanNum++;
+            }
+        }
+    }
+    if(pos>=0){
+        auto& suite=game.players[pos]->playData.bunch();
+        for(auto it=suite.begin(),itt=suite.end();it!=itt;++it){
+            auto resOps=fixOps(it->type());
+            if(it->pawns_size()==3&&(resOps==pb_enum::PHZ_BBB||resOps==pb_enum::PHZ_AAA||resOps==pb_enum::PHZ_AAAchou||resOps==pb_enum::PHZ_AAAwei)){
+                kanNum++;
+            } else if(it->pawns_size()==4&&(resOps==pb_enum::PHZ_AAAA||resOps==pb_enum::PHZ_AAAAstart||resOps==pb_enum::PHZ_AAAAdesk||resOps==pb_enum::PHZ_BBBBdesk||resOps==pb_enum::PHZ_BBB_B)){
+                tpNum++;
+            }
+        }
+    }
+    if(type==0){
+        //标示查看碰，坎，偎组合数量
+        res=kanNum;
+    }
+    if(type==1){
+        //标示查看提，跑组合数量
+        res=tpNum;
+    }
+    return res;
 }
 
 int Paohuzi::winPoint(Game&,pb_enum rule){
