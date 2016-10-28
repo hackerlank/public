@@ -49,8 +49,18 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 	virtual public void OnPass(){
 		foreach(var btn in btnOps)btn.SetActive(false);
+
+		int id=0;
+		var card=DiscardAreas[Rule.Token].GetComponentInChildren<Card>();
+		if(card!=null){
+			id=card.Value;
+			Main.Instance.MainPlayer.unpairedCards.Add(id);
+		}else{
+			Debug.LogError("no card found when pass");
+		}
+
 		deselectAll();
-		StartCoroutine(passMeld(Main.Instance.MainPlayer,0,false));
+		StartCoroutine(passMeld(Main.Instance.MainPlayer,id,false));
 	}
 	
 	public void OnExit(){

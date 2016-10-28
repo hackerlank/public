@@ -33,7 +33,7 @@ public class MahJongRule: GameRule {
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch,bool filtered=false){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
 		var hands=player.playData.Hands;

@@ -20,7 +20,9 @@ public class PaohuziAIController:AIController{
 			if(msg.Bunch.Type==pb_enum.OpPass)
 				//was draw
 				discard=msg.Bunch.Pawns[0];
-			
+
+			player.unpairedCards.Add(msg.Bunch.Pawns[0]);
+
 			MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 			omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 			omsgDiscard.Bunch=new bunch_t();

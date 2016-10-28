@@ -33,7 +33,7 @@ public class PaohuziRule: GameRule {
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch,bool filtered=false){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
 		var hands=new List<int>(player.playData.Hands);
@@ -50,26 +50,43 @@ public class PaohuziRule: GameRule {
 		var bDraw=src_bunch.Type==pb_enum.BunchA;
 
 		//hint3
-		var output=new bunch_t();
-		if(hint3(player,card,output,bDraw)){
-			output.Pos=pos;
-			hints.Add(output);
+		var output3=new bunch_t();
+		if(hint3(player,card,output3,bDraw)){
+			output3.Pos=pos;
 		}
 
 		//hint
-		if(!bDraw&&hint(card,hands,hints)){
-			foreach(var hint_ in hints)hint_.Pos=pos;
+		var output1=new List<bunch_t>();
+		if(!bDraw&&hint(card,hands,output1)){
+			foreach(var hint_ in output1)hint_.Pos=pos;
 		}
 
 		var all=new List<bunch_t>();
-		if(IsGameOver(player,card,all,bDraw)){
+		var win=IsGameOver(player,card,all,bDraw);
+		if(win){
 			//game over
-			output=new bunch_t();
+			var output=new bunch_t();
 			output.Pos=pos;
 			output.Type=pb_enum.BunchWin;
 			output.Pawns.Add(card);
 			hints.Add(output);
 		}
+
+		//TODO: baihuo
+
+		//handle past card
+		var past=false;
+		foreach(var c in player.unpairedCards)if(c/1000==card/1000 && c%100==card%100){
+			past=true;
+			break;
+		}
+		if(past){
+			output1.Clear();
+			if(output3.Pawns.Count==3)
+				output3.Pawns.Clear();
+		}
+		if(output3.Pawns.Count>0)hints.Add(output3);
+		if(output1.Count>0)hints.AddRange(output1);
 
 		var count=hints.Count;
 		if(count>0){

@@ -26,7 +26,7 @@ public class AIController:PlayerController{
 			omsgMeld.Mid=pb_msg.MsgCnMeld;
 			
 			bunch_t bunch=null;
-			var hints=Main.Instance.gameController.Rule.Hint(player,msg.Bunch);
+			var hints=Main.Instance.gameController.Rule.Hint(player,msg.Bunch,true);
 			if(hints.Count>0)
 				bunch=hints[0];
 			else{

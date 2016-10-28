@@ -59,8 +59,10 @@ public class PaohuziPanel : GamePanel {
 					StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
 					Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 				}
-			}else
+			}else{
 				StartCoroutine(sortHands());
+				Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
+			}
 		}
 	}
 
@@ -186,7 +188,7 @@ public class PaohuziPanel : GamePanel {
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(card);
 
-		_hints=Rule.Hint(player,bunch);
+		_hints=Rule.Hint(player,bunch,true);
 
 		//show/hide buttons
 		foreach(var b in _hints){
@@ -391,6 +393,7 @@ public class PaohuziPanel : GamePanel {
 	public void OnABC(){
 		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
+			//TODO: show selection for multiple hints
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.PhzAbc||
 					hint.Type==pb_enum.PhzAbA){
