@@ -30,6 +30,7 @@ private:
     bool                    hint3(Game&,Player&,unit_id_t,proto3::bunch_t&);
     void                    hint(Game&,unit_id_t,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
 
+    virtual bool            comparePending(Game&,Game::pending_t& x,Game::pending_t& y);
     virtual bool            prediscard(Player&);  //check AAAA and AAA to decide discardable
     proto3::pb_enum         verifyBunch(Game&,proto3::bunch_t&);
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);

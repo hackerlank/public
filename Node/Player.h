@@ -27,7 +27,7 @@ public:
     
     //special for phz
     std::vector<proto3::bunch_t>    AAAA,AAA;
-    std::vector<unit_id_t>          unpairedCards;
+    std::vector<unit_id_t>          unpairedCards,discardedCards;   //past and abandon cards
     int     inputCount;         //draw count
     int     lastHand;           //last card in hand
     int     winCount;           //win by continuous

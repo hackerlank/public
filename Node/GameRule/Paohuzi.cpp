@@ -140,8 +140,26 @@ void Paohuzi::engage(Game& game){
 bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     //can't meld pass card( no win here )
     if(std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end()){
-        KEYE_LOG("meld failed, past card");
+        KEYE_LOG("meld failed, past card\n");
         return false;
+    }
+    
+    //baihuo
+    if(pb_enum::PHZ_AbA==bunch.type()||pb_enum::PHZ_ABC==bunch.type()){
+        std::vector<unit_id_t> ids;
+        for(auto id:player.playData.hands())if(id/1000==card/1000 && id%100==card%100)ids.push_back(id);
+        
+        for(auto A:bunch.pawns()){
+            for(auto it=ids.begin(),iend=ids.end();it!=iend;++it)
+                if(A==*it){
+                    ids.erase(it);
+                    break;
+                }
+        }
+        if(!ids.empty()){
+            KEYE_LOG("meld failed, baihuo %d\n",card);
+            return false;
+        }
     }
     
     //erase from hands
@@ -157,8 +175,19 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
         }
     }
     //then meld
-    auto h=player.playData.add_bunch();
-    h->CopyFrom(bunch);
+    if(pb_enum::PHZ_AbA==bunch.type()||pb_enum::PHZ_ABC==bunch.type()){
+        for(int i=0;i<bunch.pawns_size()/3;++i){
+            auto h=player.playData.add_bunch();
+            h->set_pos(bunch.pos());
+            h->set_type(bunch.type());
+            h->add_pawns(bunch.pawns(i*3+0));
+            h->add_pawns(bunch.pawns(i*3+1));
+            h->add_pawns(bunch.pawns(i*3+2));
+        }
+    }else{
+        auto h=player.playData.add_bunch();
+        h->CopyFrom(bunch);
+    }
     changePos(game,pos);
     return true;
 }
@@ -624,12 +653,13 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
 pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     auto type=fixOps(bunch.type());
+    auto sz=bunch.pawns_size();
     switch(type) {
         case pb_enum::PHZ_AAA:
         case pb_enum::PHZ_AAAwei:
         case pb_enum::PHZ_AAAchou:
         case pb_enum::PHZ_BBB:
-            if(bunch.pawns_size()==3){
+            if(sz==3){
                 auto A=bunch.pawns(0);
                 auto B=bunch.pawns(1);
                 auto C=bunch.pawns(2);
@@ -643,7 +673,7 @@ pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
         case pb_enum::PHZ_AAAAdesk:
         case pb_enum::PHZ_BBB_B:
         case pb_enum::PHZ_BBBBdesk:
-            if(bunch.pawns_size()==4){
+            if(sz==4){
                 auto A=bunch.pawns(0);
                 auto B=bunch.pawns(1);
                 auto C=bunch.pawns(2);
@@ -654,33 +684,32 @@ pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
             }
             break;
         case pb_enum::PHZ_ABC:
-            if(bunch.pawns_size()==3){
-                std::vector<unit_id_t> cards;
-                std::copy(bunch.pawns().begin(),bunch.pawns().end(),std::back_inserter(cards));
-                auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
-                std::sort(cards.begin(),cards.end(),sorter);
-
-                auto A=cards[0];
-                auto B=cards[1];
-                auto C=cards[2];
-                if(A/1000==B/1000 && A/1000==C/1000 &&
-                   ((A%100+1==B%100 && A%100+2==C%100) ||
-                    (A%100==2 && B%100==7 && C%100==10)))
-                    bt=bunch.type();
-            }
-            break;
         case pb_enum::PHZ_AbA:
-            if(bunch.pawns_size()==3){
-                auto A=bunch.pawns(0);
-                auto B=bunch.pawns(1);
-                auto C=bunch.pawns(2);
-                if(A%100==B%100 && A%100==C%100 &&
-                    !(A/1000==B/1000 && A/1000==C/1000))
-                    bt=bunch.type();
+            if(sz%3==0){
+                auto it=bunch.pawns().begin();
+                auto ok=true;
+                for(auto i=0;i<sz/3;++i,it+=3){
+                    std::vector<unit_id_t> cards(it,it+3);
+                    auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
+                    std::sort(cards.begin(),cards.end(),sorter);
+                    
+                    auto A=cards[0];
+                    auto B=cards[1];
+                    auto C=cards[2];
+                    ok=(
+                        (A/1000==B/1000 && A/1000==C/1000 &&
+                         ((A%100+1==B%100 && A%100+2==C%100) || (A%100==2 && B%100==7 && C%100==10))
+                         ) ||
+                        
+                        (A%100==B%100 && A%100==C%100 && !(A/1000==B/1000 && A/1000==C/1000))
+                        );
+                    if(!ok)break;
+                }
+                if(ok)bt=bunch.type();
             }
             break;
         case pb_enum::PHZ_AA:
-            if(bunch.pawns_size()==2){
+            if(sz==2){
                 auto A=bunch.pawns(0);
                 auto B=bunch.pawns(1);
                 if(A/1000==B/1000 && A%100==B%100)
@@ -767,6 +796,25 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         
         //先计名堂
         calcAchievement(game,game.category,allSuites,achvs);
+        
+        //天胡
+        auto naturalWin=false;
+        if(naturalWin&&game.category!=pb_enum::PHZ_SY
+           &&game.category!=pb_enum::PHZ_CD_HHD&&game.category!=pb_enum::PHZ_HY){
+            //天胡
+            achvs.push_back(achv_t());
+            auto& ach=achvs.back();
+            ach.set_type(pb_enum::WIN_TIAN);
+            if(game.category==pb_enum::PHZ_SYBP)
+                ach.set_key(pb_enum::ACHV_KEY_SCORE);
+            else if(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)
+                ach.set_key(pb_enum::ACHV_KEY_POINT);
+            else if(game.category==pb_enum::PHZ_PEGHZ)
+                ach.set_key(pb_enum::ACHV_KEY_SCORE);
+            else
+                ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+            ach.set_value(nnn[ach.type()][game.category]);
+        }
         
         //地胡和放炮可能产生冲突，要先判断地胡后再对放炮做处理
         //地胡，听胡
@@ -1070,6 +1118,71 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         }
     } else{
         //pb_enum::PHZ_PENGHUZI
+        //碰胡子胡牌类型检查
+        if(game.category==pb_enum::PHZ_PEGHZ){
+            //记录碰牌胡和偎牌胡时候的三张组合牌的数量
+            auto& h=game.players[pos]->playData.hands();
+            std::vector<unit_id_t> hand(h.begin(),h.end());
+            auto kNum=findSuiteKT(game,hand,0,pos);
+            
+            auto ops=pb_enum::BUNCH_INVALID;
+            for(auto& bun:allSuites){
+                for(auto c:bun.pawns())if(c==card){
+                    ops=bun.type();
+                    break;
+                }
+                if(ops!=pb_enum::BUNCH_INVALID)
+                    break;
+            }
+            auto resSuite=fixOps(ops);
+            //if-else 结构处理，因为三大，四大，偎碰胡之间存在优先级关系
+            if(resSuite==pb_enum::PHZ_AAAwei||resSuite==pb_enum::PHZ_AAAchou){
+                if(kNum==4){
+                    //四大 胡
+                    game.players[pos]->m_winMark=pb_enum::WINSID;
+                } else if(kNum==3){
+                    //三大 胡
+                    game.players[pos]->m_winMark=pb_enum::WINSAND;//3标示三大胡
+                }else{
+                    //偎胡
+                    game.players[pos]->m_winMark=pb_enum::WINWEI;
+                }
+            } else if(resSuite==pb_enum::PHZ_BBB){
+                if(kNum==4){
+                    //四大 胡
+                    game.players[pos]->m_winMark=pb_enum::WINSID;
+                } else if(kNum==3){
+                    //三大 胡
+                    game.players[pos]->m_winMark=pb_enum::WINSAND;//3标示三大胡
+                } else{
+                    //碰胡
+                    game.players[pos]->m_winMark=pb_enum::WINPENG;
+                }
+            }else if(resSuite==pb_enum::PHZ_BBB_B||resSuite==pb_enum::PHZ_BBBBdesk){
+                //跑牌胡
+                bool bWei=true;//checkWeiPengAct(suite,pos,card);//true:偎坎牌跑胡，false:碰牌跑胡
+                if(resSuite==pb_enum::PHZ_BBB_B){
+                    game.players[pos]->m_winMark=pb_enum::WINWPAO;//偎坎跑胡
+                } else if(resSuite==pb_enum::PHZ_BBBBdesk){
+                    if(bWei){
+                        //偎坎跑胡
+                        game.players[pos]->m_winMark=pb_enum::WINWPAO;//偎坎跑胡
+                    } else{
+                        //碰跑胡
+                        game.players[pos]->m_winMark=pb_enum::WINPPAO;//碰跑胡
+                    }
+                }
+            }else if(resSuite==pb_enum::PHZ_AAAA||resSuite==pb_enum::PHZ_AAAAdesk||resSuite==pb_enum::PHZ_AAAAstart){
+                //提牌胡
+                game.players[pos]->m_winMark=pb_enum::WINTI;
+            } else{
+                //平胡
+                game.players[pos]->m_winMark=pb_enum::WINPING;
+            }
+            
+            //记录胡牌次数
+            //_desk->m_winCount[pos]++;
+        }
         
         //地胡不能有进张的判断条件
         auto markInput=0;
@@ -1537,7 +1650,7 @@ void Paohuzi::calcPengAchievement(Game& game,pb_enum rule,const std::vector<bunc
     //if(bPaoDaul){
     //avs.push_back(AchievementData());
     //auto& ach=avs.back();
-    //ach.type=card_t::eAchievment::WIN_RUNDUAL;
+    //ach.type=pb_enum::WIN_RUNDUAL;
     //ach.score=nnn[ach.type][rule];
     //}
     
@@ -1733,6 +1846,71 @@ bool Paohuzi::prediscard(Player& player){
         MeldGame::prediscard(player);
     
     return ret;
+}
+
+int opWeight(pb_enum op){
+    int i=0;
+    auto ops=op;
+    op=fixOps(op);
+    switch(op){
+        case pb_enum::PHZ_ABC:
+        case pb_enum::PHZ_AbA:
+            i=1;break;
+        case pb_enum::PHZ_BBB:
+        case pb_enum::PHZ_AAA:
+        case pb_enum::PHZ_AAAwei:
+        case pb_enum::PHZ_AAAchou:
+            i=2;break;
+        case pb_enum::PHZ_BBB_B:
+        case pb_enum::PHZ_BBBBdesk:
+        case pb_enum::PHZ_AAAAstart:
+        case pb_enum::PHZ_AAAA:
+        case pb_enum::PHZ_AAAAdesk:
+            i=3;break;
+        case pb_enum::UNKNOWN:
+        case pb_enum::PHZ_AA:
+        //case pb_enum::OP_PASS:
+        //case pb_enum::PLAY:
+        default:
+            i=0;break;
+    }
+    return (ops>pb_enum::BUNCH_WIN?i+(ops/pb_enum::BUNCH_WIN*pb_enum::BUNCH_WIN):i);
+}
+
+bool Paohuzi::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
+    auto a=x.bunch.type();
+    auto b=y.bunch.type();
+
+    if(a<pb_enum::BUNCH_WIN||b<pb_enum::BUNCH_WIN){
+        auto of0=fixOps(a);
+        auto of1=fixOps(b);
+        if((of0==pb_enum::PHZ_AAAwei||of0==pb_enum::PHZ_AAAchou||of0==pb_enum::PHZ_AAAAdesk||of0==pb_enum::PHZ_AAAA)&&b>pb_enum::BUNCH_WIN)
+            return true;
+        else if((of1==pb_enum::PHZ_AAAwei||of1==pb_enum::PHZ_AAAchou||of1==pb_enum::PHZ_AAAAdesk||of1==pb_enum::PHZ_AAAA)&&a>pb_enum::BUNCH_WIN)
+            return false;
+        auto o0=opWeight(a);
+        auto o1=opWeight(b);
+        return o0 > o1;
+    }
+    //同级别或胡牌情况的优先级处理
+    auto M=MaxPlayer();
+    auto startIndex=(game.token+1)%M;//记录当前打牌人的下一个位置，作为开始位置,兼容四人玩法
+    auto p=x.bunch.pos();
+    auto q=y.bunch.pos();
+    if(p==game.token)
+        return true;	//本人
+    else if(q==game.token)
+        return false;
+    else if(p==(game.token+1)%M)
+        return true;	//下手
+    else if(q==(game.token+1)%M)
+        return false;	//下手
+    else if(M==4&&p==(startIndex+1)%M)
+        return false;	//四人玩法中的下下手
+    else if(M==4&&q==(startIndex+1)%M)
+        return false;	//四人玩法的下下手
+    else
+        return true;
 }
 
 void Paohuzi::test(){

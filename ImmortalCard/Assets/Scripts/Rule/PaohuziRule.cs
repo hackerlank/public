@@ -87,10 +87,11 @@ public class PaohuziRule: GameRule {
 		case pb_enum.OpPass:
 			break;
 		default:
-			foreach(var card in bunch.Pawns){
-				player.playData.Hands.Remove(card);
+			foreach(var card in bunch.Pawns)player.playData.Hands.Remove(card);
+			if(bunch.Type==pb_enum.PhzAbA||bunch.Type==pb_enum.PhzAbc){
+				//for(var i=0;i<bunch.Pawns.Count/3;++i){}
+			}else
 				player.playData.Bunch.Add(bunch);
-			}
 			break;
 		}
 	}
@@ -575,28 +576,30 @@ public class PaohuziRule: GameRule {
 			}
 			break;
 		case pb_enum.PhzAbc:
-			if(bunch.Pawns.Count==3){
-				List<int> cards=new List<int>();
-				cards.AddRange(bunch.Pawns);
-				cards.Sort(comparision);
-				
-				var A=cards[0];
-				var B=cards[1];
-				var C=cards[2];
-				if(A/1000==B/1000 && A/1000==C/1000 &&
-				   ((A%100+1==B%100 && A%100+2==C%100) ||
-				 (A%100==2 && B%100==7 && C%100==10)))
-					bt=bunch.Type;
-			}
-			break;
 		case pb_enum.PhzAbA:
-			if(bunch.Pawns.Count==3){
-				var A=bunch.Pawns[0];
-				var B=bunch.Pawns[1];
-				var C=bunch.Pawns[2];
-				if(A%100==B%100 && A%100==C%100 &&
-				   !(A/1000==B/1000 && A/1000==C/1000))
-					bt=bunch.Type;
+			if(bunch.Pawns.Count%3==0){
+				var ok=true;
+				for(var i=0;i<bunch.Pawns.Count/3;++i){
+					var j=i*3;
+					List<int> cards=new List<int>();
+					cards.Add(bunch.Pawns[j+0]);
+					cards.Add(bunch.Pawns[j+1]);
+					cards.Add(bunch.Pawns[j+2]);
+					cards.Sort(comparision);
+					
+					var A=cards[0];
+					var B=cards[1];
+					var C=cards[2];
+					ok=(
+						(A/1000==B/1000 && A/1000==C/1000 &&
+					 ((A%100+1==B%100 && A%100+2==C%100) || (A%100==2 && B%100==7 && C%100==10))
+					 ) ||
+						
+						(A%100==B%100 && A%100==C%100 && !(A/1000==B/1000 && A/1000==C/1000))
+						);
+					if(!ok)break;
+				}
+				if(ok)bt=bunch.Type;
 			}
 			break;
 		case pb_enum.PhzAa:

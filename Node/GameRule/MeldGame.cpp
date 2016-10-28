@@ -96,6 +96,10 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
                 }
             }
         }
+        
+        //pass card
+        player.unpairedCards.push_back(card);
+
         //logHands(*game,player.pos,"OnDiscard");
         omsg.set_result(pb_enum::SUCCEESS);
         omsg.mutable_bunch()->CopyFrom(msg.bunch());
@@ -170,14 +174,14 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         return;
     }
 
-    //card or just pass
+    //need card except pass
     int card=-1;
-    if(curr.type()!=pb_enum::OP_PASS){
-        if(curr.pawns().empty()){
+    if(curr.pawns().empty()){
+        if(curr.type()!=pb_enum::OP_PASS){
             KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
             return;
         }
-        
+    }else{
         card=*curr.pawns().rbegin();
         auto pcard=*pending.bunch.pawns().rbegin();
         if(card!=pcard){
@@ -185,6 +189,9 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             return;
         }
     }
+    //DOTO: use pb_enum::INVALID instead of pb_enum::OP_PASS
+    if(curr.type()==pb_enum::OP_PASS && game.pileMap.find(card)==game.pileMap.end())
+        player.unpairedCards.push_back(card);
 
     //queue in
     std::string str;
@@ -199,7 +206,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     if(ready>=pendingMeld.size()){
         //sort
         std::sort(pendingMeld.begin(),pendingMeld.end()
-                  ,std::bind(&MeldGame::comparePending,this,std::placeholders::_1,std::placeholders::_2));
+                  ,std::bind(&MeldGame::comparePending,this,game,std::placeholders::_1,std::placeholders::_2));
         
         //priority
         auto& front=pendingMeld.front();
@@ -246,6 +253,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     auto& currPlayer=*game.players[game.token];
                     needDraw=!prediscard(currPlayer);
                 }else{
+                    who.discardedCards.push_back(card);
+                    
                     bunch.set_pos(-1);
                     //discard pass to draw,don't do it immediately!
                     needDraw=true;
@@ -342,7 +351,7 @@ bool MeldGame::comparision(uint x,uint y){
     else return false;
 }
 
-bool MeldGame::comparePending(Game::pending_t& x,Game::pending_t& y){
+bool MeldGame::comparePending(Game&,Game::pending_t& x,Game::pending_t& y){
     auto a=(int)x.bunch.type();
     auto b=(int)y.bunch.type();
     return a>b;
