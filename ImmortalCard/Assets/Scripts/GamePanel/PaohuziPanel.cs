@@ -34,6 +34,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected void OnMsgEngage(MsgNCEngage msg){
+		PaohuziRule.prepareAAAA(Main.Instance.MainPlayer);
 		checkNaturalWin();
 	}
 
@@ -99,6 +100,8 @@ public class PaohuziPanel : GamePanel {
 		if(A==null&&!bDraw)
 			yield break;
 
+		//TODO Vic: deal BBBB
+
 		switch(bunch.Type){
 		case pb_enum.PhzAbc:
 		case pb_enum.PhzAbA:
@@ -150,7 +153,6 @@ public class PaohuziPanel : GamePanel {
 			}
 			Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			
-			if(to==_pos)StartCoroutine(sortHands());
 			break;
 		default:
 			//abandon
@@ -179,6 +181,7 @@ public class PaohuziPanel : GamePanel {
 		if(player.pos==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
+		if(to==_pos)StartCoroutine(sortHands());
 	}
 	
 	override protected bool showHints(int card,bool bDraw,bool startup=false){
@@ -343,7 +346,7 @@ public class PaohuziPanel : GamePanel {
 			for(int i=s.Count;i<3;++i)
 				s.Insert(0,-1);
 
-		//add or remove empty cards
+		//add more empty cards
 		int wait=sorted.Count*3-hands.Length;
 		for(int i=hands.Length;i<sorted.Count*3;++i){
 			Card.Create(CardPrefab,-1,HandAreas[_pos],delegate(Card obj) {
@@ -353,6 +356,7 @@ public class PaohuziPanel : GamePanel {
 		}
 		while(wait>0)yield return null;
 
+		//or remove extra empty cards
 		for(int i=sorted.Count*3;i<hands.Length;++i){
 			Destroy(emptyCards[0].gameObject);
 			emptyCards.RemoveAt(0);

@@ -5,12 +5,18 @@ using Google.Protobuf;
 
 public class PaohuziAIController:AIController{
 
+	override protected void onMsgEngage(Player player,MsgNCEngage msg){
+		PaohuziRule.prepareAAAA(player);
+	}
+
 	override protected void onMsgMeld(Player player,MsgNCMeld msg){
 		//do nothing if all pass discard,because draw message will come
 		if(msg.Bunch.Pos==-1&&msg.Bunch.Type==pb_enum.OpPass)
 			return;
 		
 		if(player.pos==msg.Bunch.Pos){
+			//TODO Vic:	deal BBBB
+
 			//remove from hands
 			foreach(var card in msg.Bunch.Pawns)
 				player.playData.Hands.Remove(card);

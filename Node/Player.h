@@ -26,7 +26,7 @@ public:
     std::shared_ptr<google::protobuf::MessageLite>  lastMsg;
     
     //special for phz
-    std::vector<proto3::bunch_t>    AAAA,AAA;
+    std::vector<proto3::bunch_t>    AAAAs,AAAs;
     std::vector<unit_id_t>          unpairedCards,discardedCards;   //past and abandon cards
     int     inputCount;         //draw count
     int     lastHand;           //last card in hand

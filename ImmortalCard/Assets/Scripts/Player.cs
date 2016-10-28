@@ -18,7 +18,11 @@ public class Player {
 	public int				pos=0;
 	public play_t			playData=new play_t();
 	public pb_enum			category;
+
+	//phz
 	public List<int>		unpairedCards=new List<int>();
+	public List<bunch_t>	AAAAs=new List<bunch_t>();
+	public List<bunch_t>	AAAs=new List<bunch_t>();
 
 	public MsgNCCreate	msgNCCreate;
 	public MsgNCJoin	msgNCJoin;

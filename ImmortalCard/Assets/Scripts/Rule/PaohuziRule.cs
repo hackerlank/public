@@ -119,6 +119,7 @@ public class PaohuziRule: GameRule {
 		default:
 			foreach(var card in bunch.Pawns)player.playData.Hands.Remove(card);
 			if(bunch.Type==pb_enum.PhzAbA||bunch.Type==pb_enum.PhzAbc){
+				//TODO Vic: baihuo bunches
 				//for(var i=0;i<bunch.Pawns.Count/3;++i){}
 			}else
 				player.playData.Bunch.Add(bunch);
@@ -136,12 +137,35 @@ public class PaohuziRule: GameRule {
 			return false;
 		}
 
+		if(player.AAAAs.Count>=3 || player.AAAs.Count>=5){
+			output.AddRange(player.AAAs);
+			output.AddRange(player.AAAAs);
+			//no need other cards
+			return true;
+		}
+
+		//can't win hand card if not fire
+		var category=Main.Instance.MainPlayer.category;
+		var pile=Pile.Contains(card);
+		var fire=(pos!=Token && !pile
+		          && (category==pb_enum.PhzLd||category==pb_enum.PhzHy||
+		      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
+		      category==pb_enum.PhzGx));
+		if(!pile && !fire){
+			Debug.Log("isWin failed: not fire and not from pile");
+			return false;
+		}
+
 		//check desk
 		var myself=(pos==Token);
 		
 		List<bunch_t> allSuites=new List<bunch_t>(suite);
 		List<int> hand=new List<int>(hands);
-		hand.Add(card);
+
+		var inhand=false;
+		foreach(var i in hand)if(i==card){inhand=true;break;}
+		if(!inhand)hand.Add(card);
+
 		hand.Sort(comparision);
 
 		//logHands(game,pos);
@@ -271,15 +295,20 @@ public class PaohuziRule: GameRule {
 			int MIN_SUITES=7;
 			if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
 			if(allSuites.Count>=MIN_SUITES){
+				var win=false;
 				if(Main.Instance.MainPlayer.category==pb_enum.PhzPeghz){
 					//碰胡子判胡
-					output.AddRange(allSuites);
-					return true;
+					win=true;
+				}else{
+					var point=calcPoints(allSuites);
+					point+=calcPoints(player.AAAs);
+					if(point>=winPoint(Main.Instance.MainPlayer.category)){
+						win=true;
+					}
 				}
-				var point=calcPoints(allSuites);
-				if(point>=winPoint(Main.Instance.MainPlayer.category)){
+				if(win){
 					output.AddRange(allSuites);
-					return true;
+					output.AddRange(player.AAAs);
 				}
 			}
 		}
@@ -824,6 +853,46 @@ public class PaohuziRule: GameRule {
 			}
 		}
 		return false;
+	}
+
+	public static void prepareAAAA(Player player){
+		List<List<int>>[] mc=new List<List<int>>[2];
+		mc[0]=new List<List<int>>();
+		mc[1]=new List<List<int>>();
+		for(int l=0;l<10;++l){
+			mc[0].Add(new List<int>());
+			mc[1].Add(new List<int>());
+		}
+		foreach(var it in player.playData.Hands){
+			var C=it;
+			int x=C/1000-1;
+			var v=mc[x][C%100-1];
+			v.Add(C);
+		}
+		
+		for(int j=0; j<2; ++j){
+			var v=mc[j];
+			foreach(var iv in v){
+				if(iv.Count>=3){
+					var bunch=new bunch_t();
+					//the cards
+					foreach(var x in iv){
+						bunch.Pawns.Add(x);
+						//remove from hands
+						player.playData.Hands.Remove(x);
+					}//for
+					if(iv.Count==4){
+						//add to AAAA
+						bunch.Type=pb_enum.PhzAaaastart;
+						player.AAAAs.Add(bunch);
+					}else if(iv.Count==3){
+						//add to AAA
+						bunch.Type=pb_enum.PhzAaaastart;
+						player.AAAs.Add(bunch);
+					}
+				}//>3
+			}//for iv
+		}//for j
 	}
 
 	public override PlayerController AIController{

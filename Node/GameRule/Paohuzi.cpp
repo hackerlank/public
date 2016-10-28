@@ -110,13 +110,13 @@ void Paohuzi::engage(Game& game){
                     bunch_t* pb=nullptr;
                     if(iv->size()==4){
                         //add to AAAA
-                        p->AAAA.push_back(bunch_t());
-                        pb=&p->AAAA.back();
+                        p->AAAAs.push_back(bunch_t());
+                        pb=&p->AAAAs.back();
                         pb->set_type(pb_enum::PHZ_AAAAstart);
                     }else if(iv->size()==3){
                         //add to AAA
-                        p->AAA.push_back(bunch_t());
-                        pb=&p->AAA.back();
+                        p->AAAs.push_back(bunch_t());
+                        pb=&p->AAAs.back();
                         pb->set_type(pb_enum::PHZ_AAA);
                     }
                     //the cards
@@ -174,6 +174,32 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
             }
         }
     }
+    //or erase from desk,AAAs
+    switch (bunch.type()) {
+        case pb_enum::PHZ_BBB_B:
+        case pb_enum::PHZ_AAAA:
+            for(auto it=player.AAAs.begin(),iend=player.AAAs.end();it!=iend;++it){
+                auto A=it->pawns(0);
+                if(A/1000==card/1000 && A%100==card%100){
+                    player.AAAs.erase(it);
+                    break;
+                }
+            }
+            break;
+        case pb_enum::PHZ_BBBBdesk:
+        case pb_enum::PHZ_AAAAdesk:
+            for(auto it=player.playData.mutable_bunch()->begin(),iend=player.playData.mutable_bunch()->end();it!=iend;++it){
+                auto A=it->pawns(0);
+                if(A/1000==card/1000 && A%100==card%100){
+                    player.playData.mutable_bunch()->erase(it);
+                    break;
+                }
+            }
+            break;
+        default:
+            break;
+    }
+
     //then meld
     if(pb_enum::PHZ_AbA==bunch.type()||pb_enum::PHZ_ABC==bunch.type()){
         for(int i=0;i<bunch.pawns_size()/3;++i){
@@ -196,18 +222,85 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
     auto pos=player.pos;
     auto& playdata=game.players[pos]->playData;
     auto& suite=*playdata.mutable_bunch();
-    auto& hands=player.playData.hands();
+    auto& hands=*player.playData.mutable_hands();
     if(hands.size()<2){
         KEYE_LOG("isWin failed: len=%d\n",hands.size());
         return false;
     }
 
+    if(player.AAAAs.size()>=3 || player.AAAs.size()>=5){
+        std::copy(player.AAAs.begin(),player.AAAs.end(),std::back_inserter(output));
+        std::copy(player.AAAAs.begin(),player.AAAAs.end(),std::back_inserter(output));
+        
+        //add other cards for special type
+        //meld [2,7,10] [1,2,3]
+        std::vector<unit_id_t> all[2],two[2];
+        for(auto it=hands.begin(),iend=hands.end(); it!=iend; ++it){
+            auto C=*it;
+            int x=(C/1000==2?1:0);
+            if(C%100==1||C%100==3||C%100==7||C%100==10){
+                all[x].push_back(C);
+            } else if(C%100==2){
+                two[x].push_back(C);
+            }
+        }
+        for(int i=0;i<2;++i){
+            //按大小分
+            for(auto i2=two[i].begin();i2!=two[i].end();){
+                //找一张二的组合
+                std::vector<bunch_t> suites;
+                hint(game,*i2,all[i],suites);
+                if(suites.empty())
+                    //没有，完事儿
+                    i2=two[i].end();
+                else{
+                    //加入到算分，剔除
+                    output.push_back(suites.front());
+                    auto& cards=output.front().pawns();
+                    for(auto ih=cards.begin(),ihh=cards.end();ih!=ihh;++ih)
+                        for(auto a=all[i].begin(),aa=all[i].end();a!=aa;++a)
+                            if(*ih==*a){
+                                all[i].erase(a);
+                                break;
+                            }
+                    //下一张二
+                    ++i2;
+                }
+            }
+        }
+        
+        // 从手牌中删除成
+        for(auto s=output.begin(),ss=output.end();s!=ss;++s)
+            for(auto j:s->pawns()){
+                for(auto k=hands.begin(),kk=hands.end();k!=kk;++k)
+                    if(j==*k){
+                        hands.erase(k);
+                        break;
+                    }
+            }
+        //剩下的随便组吧
+        auto sz=hands.size();
+        if(sz>0){
+            auto I=(sz+2)/3;
+            std::vector<bunch_t> suites(I);
+            for(int i=0;i<sz;++i){
+                auto x=i/3;
+                auto& suite=suites[x];
+                suite.set_type(pb_enum::UNKNOWN);
+                suite.add_pawns(hands.Get(i));
+            }
+            std::copy(suites.begin(),suites.end(),std::back_inserter(output));
+        }
+        
+        return true;
+    }
+    
     //can't win hand card if not fire
-    auto fire=(pos!=game.token && game.pileMap.find(card)!=game.pileMap.end()
+    auto pile=game.pileMap.find(card)!=game.pileMap.end();
+    auto fire=(pos!=game.token && !pile
             &&   (game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_HY||
                   game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
                   game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
-    auto pile=game.pileMap.find(card)!=game.pileMap.end();
     if(!pile && !fire){
         KEYE_LOG("isWin failed: not fire and not from pile\n");
         return false;
@@ -355,16 +448,20 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
         int MIN_SUITES=7;
         if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
         if(allSuites.size()>=MIN_SUITES){
-            if(game.category==pb_enum::PHZ_PEGHZ){
+            auto win=false;
+            if(game.category==pb_enum::PHZ_PEGHZ)
                 //碰胡子判胡
-                std::copy(allSuites.begin(),allSuites.end(),std::back_inserter(output));
-                return true;
+                win=true;
+            else{
+                auto point=calcPoints(game,allSuites);
+                point+=calcPoints(game,player.AAAs);
+                if(point>=winPoint(game,game.category))
+                win=true;
             }
-            if(auto point=calcPoints(game,allSuites))
-                if(point>=winPoint(game,game.category)){
-                    std::copy(allSuites.begin(),allSuites.end(),std::back_inserter(output));
-                    return true;
-                }
+            if(win){
+                std::copy(allSuites.begin(),allSuites.end(),std::back_inserter(output));
+                std::copy(player.AAAs.begin(),player.AAAs.end(),std::back_inserter(output));
+            }
         }
     }
     
@@ -1828,7 +1925,7 @@ bool Paohuzi::prediscard(Player& player){
         return false;
     
     auto ret=true;
-    if(!player.AAAA.empty())
+    if(!player.AAAAs.empty())
         ret=(sz%3==1);
     else{
         auto aaaa=false;
