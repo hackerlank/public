@@ -56,9 +56,24 @@ public class PaohuziRule: GameRule {
 		}
 
 		//hint
+		bool meltable=(Token==pos&&bDraw)||pos==(Token+1)%MaxPlayer;
 		var output1=new List<bunch_t>();
-		if(!bDraw&&hint(card,hands,output1)){
-			foreach(var hint_ in output1)hint_.Pos=pos;
+		if(meltable && hint(card,hands,output1)){
+			//baihuo
+			List<bunch_t> tmp=new List<bunch_t>(output1);
+			List<int> sameCard=new List<int>();
+			foreach(var C in hands)
+				if(card/1000==C/1000&&C%100==card%100&&card!=C)
+					sameCard.Add(C);
+
+			sameCard.Add(card);
+
+			output1.Clear();
+			foreach(var j in tmp)
+				if(checkBaihuo(hands,sameCard,j))
+					output1.Add(j);
+
+			foreach(var o in output1)o.Pos=pos;
 		}
 
 		var all=new List<bunch_t>();
@@ -71,8 +86,6 @@ public class PaohuziRule: GameRule {
 			output.Pawns.Add(card);
 			hints.Add(output);
 		}
-
-		//TODO: baihuo
 
 		//handle past card
 		var past=false;
@@ -770,6 +783,44 @@ public class PaohuziRule: GameRule {
 			if(m%100==n%100&&m/1000==n/1000){
 				//vp.erase(i);
 				return true;
+			}
+		}
+		return false;
+	}
+
+	bool checkBaihuo(List<int> hand,List<int> sameCard,bunch_t suite){
+		if(sameCard.Count<=0)return true;
+		//检查是否够将sameCard从hand全部摆出去
+		var tmpHand=new List<int>(hand);
+		var tmpSame=new List<int>(sameCard);
+		//用掉这张
+		tmpSame.RemoveAt(tmpSame.Count-1);
+		if(tmpSame.Count<=0)return true;
+		//拷贝手牌并删除这个组合的牌
+		var tmp=suite.Pawns;
+		foreach(var it in tmp){
+			foreach(var u in tmpHand){
+				if(it==u){
+					tmpHand.Remove(u);
+					break;
+				}
+			}
+			//用掉这张
+			foreach(var u in tmpSame){
+				if(it==u){
+					tmpSame.Remove(u);
+					break;
+				}
+			}
+		}
+		if(tmpSame.Count<=0)
+			return true;
+		else{
+			List<bunch_t> tmpHint=new List<bunch_t>();
+			hint(tmpSame[tmpSame.Count-1],tmpHand,tmpHint);
+			foreach(var j in tmpHint){
+				if(checkBaihuo(tmpHand,tmpSame,j))
+					return true;
 			}
 		}
 		return false;
