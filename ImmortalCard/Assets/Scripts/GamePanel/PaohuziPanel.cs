@@ -8,6 +8,8 @@ public class PaohuziPanel : GamePanel {
 	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
 	public GameObject	BtnABC,BtnA3,BtnWin;
+	public GameObject	BaihuoPanel;
+	public Transform[]	BaihuoLayers;	//max 3 layers
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
