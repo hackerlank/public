@@ -112,19 +112,50 @@ public class PaohuziRule: GameRule {
 	}
 
 	public override void Meld(Player player,bunch_t bunch){
-		switch(bunch.Type){
-		case pb_enum.BunchInvalid:
-		case pb_enum.OpPass:
+		//remove from hand
+		foreach(var card in bunch.Pawns)player.playData.Hands.Remove(card);
+
+		var B=bunch.Pawns[0];
+		//remove from desk or AAAA
+		switch (bunch.Type) {
+		case pb_enum.PhzBbbB:
+		case pb_enum.PhzAaaa:
+			foreach(var AAA in player.AAAs){
+				var A=AAA.Pawns[0];
+				if(A/1000==B/1000 && A%100==B%100){
+					player.AAAs.Remove(AAA);
+					break;
+				}
+			}
+			break;
+		case pb_enum.PhzBbbbdesk:
+		case pb_enum.PhzAaaadesk:
+			foreach(var bun in player.playData.Bunch){
+				var A=bun.Pawns[0];
+				if(A/1000==B/1000 && A%100==B%100){
+					player.playData.Bunch.Remove(bun);
+					break;
+				}
+			}
 			break;
 		default:
-			foreach(var card in bunch.Pawns)player.playData.Hands.Remove(card);
-			if(bunch.Type==pb_enum.PhzAbA||bunch.Type==pb_enum.PhzAbc){
-				//TODO Vic: baihuo bunches
-				//for(var i=0;i<bunch.Pawns.Count/3;++i){}
-			}else
-				player.playData.Bunch.Add(bunch);
 			break;
 		}
+
+		//add to bunches
+		if(bunch.Type==pb_enum.PhzAbA||bunch.Type==pb_enum.PhzAbc){
+			//baihuo bunches
+			for(var i=0;i<bunch.Pawns.Count/3;++i){
+				var bun=new bunch_t();
+				bun.Pos=bunch.Pos;
+				bun.Type=bunch.Type;
+				bun.Pawns.Add(bunch.Pawns[i*3+0]);
+				bun.Pawns.Add(bunch.Pawns[i*3+1]);
+				bun.Pawns.Add(bunch.Pawns[i*3+2]);
+				player.playData.Bunch.Add(bun);
+			}
+		}else
+			player.playData.Bunch.Add(bunch);
 	}
 	
 	bool IsGameOver(Player player,int card,List<bunch_t> output,bool bDraw){

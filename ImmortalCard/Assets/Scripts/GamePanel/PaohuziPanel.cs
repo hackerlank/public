@@ -100,59 +100,85 @@ public class PaohuziPanel : GamePanel {
 		if(A==null&&!bDraw)
 			yield break;
 
-		//TODO Vic: deal BBBB
-
+		//construct bunches
+		var melds=new List<bunch_t>();
+		List<Card> cards=new List<Card>();
 		switch(bunch.Type){
+		case pb_enum.PhzAbc:
+		case pb_enum.PhzAbA:
+			for(var i=0;i<bunch.Pawns.Count/3;++i){
+				var bun=new bunch_t();
+				bun.Pos=bunch.Pos;
+				bun.Type=bunch.Type;
+				bun.Pawns.Add(bunch.Pawns[i*3+0]);
+				bun.Pawns.Add(bunch.Pawns[i*3+1]);
+				bun.Pawns.Add(bunch.Pawns[i*3+2]);
+				bun.Pawns.Add(0);
+				melds.Add(bun);
+			}
+			break;
+		default:
+			melds.Add(bunch);
+			break;
+		}
+
+		//then move cards
+		switch(bunch.Type){
+		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzBbbbdesk:
+			//modify the 4th card by discard
+			var meldBunch=MeldAreas[to].GetComponentsInChildren<Card>();
+			meldBunch[3].Value=A.Value;
+			break;
 		case pb_enum.PhzAbc:
 		case pb_enum.PhzAbA:
 		case pb_enum.PhzBbb:
 		case pb_enum.PhzAaawei:
 		case pb_enum.PhzAaachou:
 		case pb_enum.PhzAaaa:
-		case pb_enum.PhzAaaastart:
-		case pb_enum.PhzAaaadesk:
 		case pb_enum.PhzBbbB:
-		case pb_enum.PhzBbbbdesk:
-			//meld,make a bunch with constant 4 cards
-			List<Card> cards=new List<Card>();
-			if(to==_pos){
-				//find my hands cards
-				var hands=HandAreas[to].GetComponentsInChildren<Card>();
-				foreach(var id in bunch.Pawns){
-					foreach(var card in hands){
-						if(card.Value==id)
-							cards.Add(card);
+			//move cards from hands and discard to meld area
+			foreach(var melt in melds){
+				//meld area: add bunches with constant 4 cards
+				if(to==_pos){
+					//find my hands cards
+					var hands=HandAreas[to].GetComponentsInChildren<Card>();
+					foreach(var id in melt.Pawns){
+						foreach(var card in hands){
+							if(card.Value==id)
+								cards.Add(card);
+						}
 					}
+					Debug.Log("----meld prepare my bunch size="+cards.Count);
+				}else{
+					//add meld cards for others
+					foreach(var id in melt.Pawns){
+						if(A.Value!=id) Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card other){
+							if(null!=other)
+								cards.Add(other);
+						});
+					}
+					while(cards.Count<melt.Pawns.Count-1)yield return null;
+					Debug.Log("----meld prepare other bunch size="+cards.Count);
 				}
-				Debug.Log("----meld prepare my bunch size="+cards.Count);
-			}else{
-				//add meld cards for others
-				foreach(var id in bunch.Pawns){
-					if(A.Value!=id) Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card other){
-						if(null!=other)
-							cards.Add(other);
-					});
+				cards.Add(A);
+				
+				//add place holder
+				if(cards.Count<4) Card.Create(CardPrefab,-1,MeldAreas[to],delegate(Card blank){
+					if(null!=blank)
+						cards.Add(blank);
+				});
+				while(cards.Count<4)yield return null;
+				Debug.Log("----meld final bunch size="+cards.Count);
+				
+				//move to meld area
+				foreach(var c in cards){
+					c.state=Card.State.ST_MELD;
+					c.DiscardTo(MeldAreas[to],scalar);
 				}
-				while(cards.Count<bunch.Pawns.Count-1)yield return null;
-				Debug.Log("----meld prepare other bunch size="+cards.Count);
+				Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			}
-			cards.Add(A);
 
-			//add place holder
-			if(cards.Count<4) Card.Create(CardPrefab,-1,MeldAreas[to],delegate(Card blank){
-				if(null!=blank)
-					cards.Add(blank);
-			});
-			while(cards.Count<4)yield return null;
-			Debug.Log("----meld final bunch size="+cards.Count);
-
-			//move to meld area
-			foreach(var c in cards){
-				c.state=Card.State.ST_MELD;
-				c.DiscardTo(MeldAreas[to],scalar);
-			}
-			Debug.Log("meld "+A.Value+" from "+from+" to "+to);
-			
 			break;
 		default:
 			//abandon

@@ -15,12 +15,8 @@ public class PaohuziAIController:AIController{
 			return;
 		
 		if(player.pos==msg.Bunch.Pos){
-			//TODO Vic:	deal BBBB
+			Main.Instance.gameController.Rule.Meld(player,msg.Bunch);
 
-			//remove from hands
-			foreach(var card in msg.Bunch.Pawns)
-				player.playData.Hands.Remove(card);
-			
 			//discard
 			var discard=player.playData.Hands[0];
 			if(msg.Bunch.Type==pb_enum.OpPass)
