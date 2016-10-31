@@ -3,25 +3,17 @@ using UnityEngine.UI;
 using System.Collections;
 using Proto3;
 
-public class SettleItem : MonoBehaviour {
+public abstract class SettleItem : MonoBehaviour {
 	public PlayerIcon	Players;
 	public Transform	Cards;
 	public Text			Point,Score,Achvs;
 
-	public MsgNCSettle Value{
+	virtual public play_t Value{
 		set{
-
-		}
-	}
-
-	public void OnClose(){
-		Destroy(gameObject);
-		if(Main.Instance.gameController.Round>=Main.Round){
-			Utils.Load<SummaryPanel>(Main.Instance.transform);
-		}else{
-			MsgCNReady msg=new MsgCNReady();
-			msg.Mid=pb_msg.MsgCnReady;
-			Main.Instance.MainPlayer.Send<MsgCNReady>(msg.Mid,msg);
+			Score.text=value.Score.ToString();
+			Point.text=value.Point.ToString();
+			string achvs="Achvs";
+			Achvs.text=achvs;
 		}
 	}
 }
