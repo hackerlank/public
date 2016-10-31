@@ -3,9 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 using Proto3;
 
-public class SettlePopup : MonoBehaviour {
-	public SettleItem[]	Items;
-	public Transform	Pile;
+public class SettleItem : MonoBehaviour {
+	public PlayerIcon	Players;
+	public Transform	Cards;
+	public Text			Point,Score,Achvs;
 
 	public MsgNCSettle Value{
 		set{

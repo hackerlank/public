@@ -152,7 +152,14 @@ public class MahJongPanel : GamePanel {
 
 		return _hints.Count>0;
 	}
-	
+
+	override protected void showSettle(MsgNCSettle msg){
+		Utils.Load<MahjongSettle>(Main.Instance.transform,delegate(Component obj) {
+			var popup=obj as SettlePopup;
+			popup.Value=msg;
+		});
+	}
+
 	override protected IEnumerator sortHands(){
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		var ids=new List<int>();

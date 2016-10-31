@@ -276,7 +276,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	public void OnMsgSettle(MsgNCSettle msg){
 		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
-		Utils.Load<SettlePopup>(Main.Instance.transform);
+		showSettle(msg);
 	}
 
 	public void OnMsgFinish(MsgNCFinish msg){
@@ -351,6 +351,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual protected IEnumerator OnMsgMeld(bunch_t bunch){yield break;}
 	virtual protected IEnumerator sortHands(){yield break;}
 	virtual protected bool showHints(int card,bool bDraw,bool startup=false){return true;}
+	virtual protected void showSettle(MsgNCSettle msg){}
 
 	protected IEnumerator passDiscard(Player player,bool wait=true){
 		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);

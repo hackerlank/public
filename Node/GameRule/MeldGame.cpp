@@ -229,7 +229,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto result=verifyBunch(game,bunch);
         auto ret=pb_enum::SUCCEESS;
         
-        //first deal as pass while invalid
+        //deal invalid as pass
         if(result==pb_enum::BUNCH_INVALID){
             std::string str;
             KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);

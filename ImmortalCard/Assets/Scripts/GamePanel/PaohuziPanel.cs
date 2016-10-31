@@ -254,6 +254,13 @@ public class PaohuziPanel : GamePanel {
 		return _hints.Count>0;
 	}
 
+	override protected void showSettle(MsgNCSettle msg){
+		Utils.Load<PaohuziSettle>(Main.Instance.transform,delegate(Component obj) {
+			var popup=obj as SettlePopup;
+			popup.Value=msg;
+		});
+	}
+
 	override protected IEnumerator sortHands(){
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		List<List<int>> sorted=new List<List<int>>();

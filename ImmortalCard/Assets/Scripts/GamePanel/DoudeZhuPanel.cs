@@ -89,6 +89,13 @@ public class DoudeZhuPanel : GamePanel {
 		return _hints.Count>0;
 	}
 
+	override protected void showSettle(MsgNCSettle msg){
+		Utils.Load<DoudeZhuSettle>(Main.Instance.transform,delegate(Component obj) {
+			var popup=obj as SettlePopup;
+			popup.Value=msg;
+		});
+	}
+
 	// ----------------------------------------------
 	// events
 	// ----------------------------------------------
