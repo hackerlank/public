@@ -20,6 +20,7 @@ typedef short pos_t;
 typedef short color_t;
 typedef short value_t;
 typedef unsigned game_id_t;
+static const unit_id_t invalid_card=-1; //more reliable than 0
 
 #include "Player.h"
 #include "Game.h"

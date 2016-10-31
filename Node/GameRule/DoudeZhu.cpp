@@ -62,9 +62,10 @@ void DoudeZhu::initCard(Game& game){
 
 void DoudeZhu::settle(Player& player){
     Game& game=*player.game;
+    game.spSettle=std::make_shared<MsgNCSettle>();
     auto& msg=*game.spSettle;
     for(uint i=0,ii=MaxPlayer();i!=ii;++i){
-        auto play=msg.mutable_play(i);
+        auto play=msg.add_play();
         play->set_win(i==player.pos?1:0);
         play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
         //auto player=msg.add_play();

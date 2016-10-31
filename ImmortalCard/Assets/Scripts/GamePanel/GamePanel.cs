@@ -152,18 +152,14 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		var players=new List<Player>(Main.Instance.robots);
 		players.Add(Main.Instance.MainPlayer);
 		foreach(var player in players){
-			var hands=player.playData.Hands;
-			var last=hands[hands.Count-1];
-			hands.RemoveAt(hands.Count-1);
-			
 			bunch_t bunch=new bunch_t();
 			bunch.Pos=player.pos;
 			bunch.Type=pb_enum.BunchWin;
-			bunch.Pawns.Add(last);
+			bunch.Pawns.Add(Configs.invalidCard);
 			
 			var win=false;
 			if(player==Main.Instance.MainPlayer){
-				win=showHints(last,true,true);
+				win=showHints(Configs.invalidCard,true,true);
 			}else{
 				var hints=Rule.Hint(player,bunch);
 				foreach(var h in hints){
@@ -173,8 +169,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 					}
 				}
 			}
-			hands.Add(last);
-			
+
 			if(player!=Main.Instance.MainPlayer||!win){
 				if(!win)bunch.Type=pb_enum.OpPass;
 				else Debug.Log(player.pos+" natural win");

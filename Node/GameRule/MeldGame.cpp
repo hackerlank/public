@@ -174,8 +174,9 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         return;
     }
 
-    //need card except pass
     int card=-1;
+    /*
+    //need card except pass
     if(curr.pawns().empty()){
         if(curr.type()!=pb_enum::OP_PASS){
             KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
@@ -189,6 +190,15 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             return;
         }
     }
+    */
+    //force card check
+    card=*curr.pawns().rbegin();
+    auto pcard=*pending.bunch.pawns().rbegin();
+    if(card!=pcard){
+        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
+        return;
+    }
+
     //DOTO: use pb_enum::INVALID instead of pb_enum::OP_PASS
     if(curr.type()==pb_enum::OP_PASS && game.pileMap.find(card)==game.pileMap.end())
         player.unpairedCards.push_back(card);
@@ -301,13 +311,10 @@ void MeldGame::engage(Game& game){
     changeState(game,Game::State::ST_MELD);
     
     for(auto p:game.players){
-        auto hands=p->playData.mutable_hands();
-        auto card=hands->Get(hands->size()-1);
-        
         game.pendingMeld.push_back(Game::pending_t());
         auto& pending=game.pendingMeld.back();
         pending.bunch.set_pos(p->pos);
-        pending.bunch.add_pawns(card);
+        pending.bunch.add_pawns(invalid_card);
     }
 }
 

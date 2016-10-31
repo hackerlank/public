@@ -70,7 +70,7 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
     return true;
 }
 
-bool Mahjong::isWin(Game& game,Player& player,unit_id_t id,std::vector<proto3::bunch_t>& output){
+bool Mahjong::isWin(Game& game,Player& player,unit_id_t card,std::vector<proto3::bunch_t>& output){
     auto& hands=player.playData.hands();
     if(hands.size()<2){
         KEYE_LOG("isWin failed: len=%d\n",hands.size());
@@ -80,9 +80,11 @@ bool Mahjong::isWin(Game& game,Player& player,unit_id_t id,std::vector<proto3::b
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
     
     //insert into hand if not in
-    auto inhand=false;
-    for(auto i:cards)if(i==id){inhand=true;break;}
-    if(!inhand)cards.push_back(id);
+    if(validId(card)){
+        auto inhand=false;
+        for(auto i:cards)if(i==card){inhand=true;break;}
+        if(!inhand)cards.push_back(card);
+    }
     
     auto sorter=std::bind(&Mahjong::comparision,this,std::placeholders::_1,std::placeholders::_2);
     std::sort(cards.begin(),cards.end(),sorter);

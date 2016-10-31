@@ -177,12 +177,11 @@ public class PaohuziRule: GameRule {
 
 		//can't win hand card if not fire
 		var category=Main.Instance.MainPlayer.category;
-		var pile=Pile.Contains(card);
-		var fire=(pos!=Token && !pile
+		var fire=(pos!=Token && !bDraw
 		          && (category==pb_enum.PhzLd||category==pb_enum.PhzHy||
 		      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
 		      category==pb_enum.PhzGx));
-		if(!pile && !fire){
+		if(!bDraw && !fire){
 			Debug.Log("isWin failed: not fire and not from pile");
 			return false;
 		}
@@ -193,9 +192,11 @@ public class PaohuziRule: GameRule {
 		List<bunch_t> allSuites=new List<bunch_t>(suite);
 		List<int> hand=new List<int>(hands);
 
-		var inhand=false;
-		foreach(var i in hand)if(i==card){inhand=true;break;}
-		if(!inhand)hand.Add(card);
+		if(card>0){
+			var inhand=false;
+			foreach(var i in hand)if(i==card){inhand=true;break;}
+			if(!inhand)hand.Add(card);
+		}
 
 		hand.Sort(comparision);
 

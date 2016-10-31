@@ -143,7 +143,11 @@ public class MahJongRule: GameRule {
 
 		List<int> cards=new List<int>();
 		cards.AddRange(hands);
-		cards.Add(card);
+		if(card>0){
+			var inhand=false;
+			foreach(var i in cards)if(i==card){inhand=true;break;}
+			if(!inhand)cards.Add(card);
+		}
 		cards.Sort(Main.Instance.gameController.Rule.comparision);
 
 		var len=cards.Count-1;

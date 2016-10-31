@@ -296,12 +296,12 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
     }
     
     //can't win hand card if not fire
-    auto pile=game.pileMap.find(card)!=game.pileMap.end();
-    auto fire=(pos!=game.token && !pile
+    auto bDraw=(!validId(card)||game.pileMap.find(card)!=game.pileMap.end());
+    auto fire=(pos!=game.token && !bDraw
             &&   (game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_HY||
                   game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
                   game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
-    if(!pile && !fire){
+    if(!bDraw && !fire){
         KEYE_LOG("isWin failed: not fire and not from pile\n");
         return false;
     }
@@ -310,15 +310,16 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
     std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
 
     //insert into hand if not in
-    auto inhand=false;
-    for(auto i:cards)if(i==card){inhand=true;break;}
-    if(!inhand)cards.push_back(card);
+    if(validId(card)){
+        auto inhand=false;
+        for(auto i:cards)if(i==card){inhand=true;break;}
+        if(!inhand)cards.push_back(card);
+    }
 
     auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
     std::sort(cards.begin(),cards.end(),sorter);
     
     //check desk
-    auto bDraw=game.pileMap.find(card)!=game.pileMap.end();
     auto myself=(pos==game.token);
     
     std::vector<bunch_t> allSuites(suite.begin(),suite.end());
