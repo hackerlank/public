@@ -56,7 +56,7 @@ public class MahJongRule: GameRule {
 
 		//game over
 		List<bunch_t> output=new List<bunch_t>();
-		if(IsGameOver(player,id,output)){
+		if(IsWin(player,id,output)){
 			var bunch=new bunch_t();
 			bunch.Pos=pos;
 			bunch.Type=pb_enum.BunchWin;
@@ -136,7 +136,7 @@ public class MahJongRule: GameRule {
 		}
 	}
 
-	public bool IsGameOver(Player player,int card,List<bunch_t> output=null){
+	public bool IsWin(Player player,int card,List<bunch_t> output=null){
 		var hands=player.playData.Hands;
 		if(hands.Count<2)
 			return false;
@@ -157,14 +157,14 @@ public class MahJongRule: GameRule {
 			if(A/1000==B/1000&&A%100==B%100){
 				List<int> tmp=new List<int>();
 				for(int j=0;j!=cards.Count;++j)if(j!=i&&j!=i+1)tmp.Add(cards[j]);
-				if(isGameOverWithoutAA(tmp))
+				if(isWinWithoutAA(tmp))
 					return true;
 			}
 		}
 		return false;
 	}
 	
-	bool isGameOverWithoutAA(List<int> cards){
+	bool isWinWithoutAA(List<int> cards){
 		var len=cards.Count;
 		if(len%3!=0)
 			return false;

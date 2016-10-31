@@ -427,6 +427,11 @@ public class DoudeZhuRule: GameRule {
 		else             return val;
 	}
 
+	public static bool prediscard(Player player){
+		var ret=true;
+		return ret;
+	}
+
 	public override PlayerController AIController{
 		get{
 			if(aiController==null)aiController=new DoudeZhuAIController();

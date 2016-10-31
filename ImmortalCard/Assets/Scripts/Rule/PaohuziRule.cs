@@ -77,7 +77,7 @@ public class PaohuziRule: GameRule {
 		}
 
 		var all=new List<bunch_t>();
-		var win=IsGameOver(player,card,all,bDraw);
+		var win=IsWin(player,card,all,bDraw);
 		if(win){
 			//game over
 			var output=new bunch_t();
@@ -158,7 +158,7 @@ public class PaohuziRule: GameRule {
 			player.playData.Bunch.Add(bunch);
 	}
 	
-	bool IsGameOver(Player player,int card,List<bunch_t> output,bool bDraw){
+	bool IsWin(Player player,int card,List<bunch_t> output,bool bDraw){
 		var pos=player.pos;
 		var playdata=player.playData;
 		var suite=playdata.Bunch;
@@ -298,7 +298,7 @@ public class PaohuziRule: GameRule {
 					if(jiang.Pawns[0]!=it&&jiang.Pawns[1]!=it)
 						tmpHand.Add(it);
 				//recursived
-				over=isGameOver(tmpHand,tmpSuites);
+				over=isWin(tmpHand,tmpSuites);
 				if(over){
 					var pt=calcPoints(tmpSuites);
 					if(pt>=PT){
@@ -320,7 +320,7 @@ public class PaohuziRule: GameRule {
 			}
 		} else{
 			//recursived
-			over=isGameOver(hand,allSuites);
+			over=isWin(hand,allSuites);
 		}
 		if(over){
 			var M=MaxPlayer;
@@ -348,7 +348,7 @@ public class PaohuziRule: GameRule {
 		return false;
 	}
 	
-	bool isGameOver(List<int> cards,List<bunch_t> allSuites){
+	bool isWin(List<int> cards,List<bunch_t> allSuites){
 		//recursive check if is game over
 		List<bunch_t> outSuites=new List<bunch_t>();
 		List<bunch_t> multiSuites=new List<bunch_t>();
@@ -381,7 +381,7 @@ public class PaohuziRule: GameRule {
 				}
 				foreach(var rm in toRm)_cards.Remove(rm);
 				//递归
-				if(isGameOver(_cards,outSuites)){
+				if(isWin(_cards,outSuites)){
 					allSuites.AddRange(outSuites);
 					return true;
 				} else
@@ -411,7 +411,7 @@ public class PaohuziRule: GameRule {
 					}
 				}
 				vm.Clear();
-				if(isGameOver(mcards,vm)){
+				if(isWin(mcards,vm)){
 					vm.Add(m);
 					vvm.Add(vm);
 				}
@@ -925,6 +925,29 @@ public class PaohuziRule: GameRule {
 				}//>3
 			}//for iv
 		}//for j
+	}
+
+	public static bool prediscard(Player player){
+		var sz=player.playData.Hands.Count;
+		if(sz<=0)
+			return false;
+		
+		var ret=true;
+		if(player.AAAAs.Count<=0)
+			ret=(sz%3==1);
+		else{
+			var aaaa=false;
+			var bunches=player.playData.Bunch;
+			foreach(var bunch in bunches){
+				if(bunch.Pawns.Count>3){
+					aaaa=true;
+					break;
+				}
+			}
+			ret=(sz%3==(aaaa?1:2));
+		}
+		
+		return ret;
 	}
 
 	public override PlayerController AIController{

@@ -17,22 +17,26 @@ public class PaohuziAIController:AIController{
 		if(player.pos==msg.Bunch.Pos){
 			Main.Instance.gameController.Rule.Meld(player,msg.Bunch);
 
-			//discard
-			var discard=player.playData.Hands[0];
-			if(msg.Bunch.Type==pb_enum.OpPass)
-				//was draw
-				discard=msg.Bunch.Pawns[0];
-
-			player.unpairedCards.Add(msg.Bunch.Pawns[0]);
-
-			MsgCNDiscard omsgDiscard=new MsgCNDiscard();
-			omsgDiscard.Mid=pb_msg.MsgCnDiscard;
-			omsgDiscard.Bunch=new bunch_t();
-			omsgDiscard.Bunch.Pos=player.pos;
-			omsgDiscard.Bunch.Pawns.Add(discard);
-			omsgDiscard.Bunch.Type=pb_enum.BunchA;
-			player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-			Debug.Log(player.pos+" discard "+discard+" after self "+(int)msg.Bunch.Type);
+			if(PaohuziRule.prediscard(player)){
+				//discard
+				var discard=player.playData.Hands[0];
+				if(msg.Bunch.Type==pb_enum.OpPass)
+					//was draw
+					discard=msg.Bunch.Pawns[0];
+				
+				player.unpairedCards.Add(msg.Bunch.Pawns[0]);
+				
+				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
+				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
+				omsgDiscard.Bunch=new bunch_t();
+				omsgDiscard.Bunch.Pos=player.pos;
+				omsgDiscard.Bunch.Pawns.Add(discard);
+				omsgDiscard.Bunch.Type=pb_enum.BunchA;
+				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
+				Debug.Log(player.pos+" discard "+discard+" after self "+(int)msg.Bunch.Type);
+			}else{
+				//next draw
+			}
 		}
 	}
 }
