@@ -144,6 +144,11 @@ public class Player {
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){
+				var rule=Main.Instance.gameController.Rule;
+				var M=rule.MaxPlayer;
+				//clear rule data
+				rule.nHands=new int[M];
+				for(int i=0;i<M;++i)rule.nHands[i]=msgStart.Count[i];
 				//clear player data
 				playData.Hands.Clear();
 				playData.Discards.Clear();
@@ -171,6 +176,8 @@ public class Player {
 				}
 				//remove discards from hands
 				if(pos==msgDiscard.Bunch.Pos){
+					var rule=Main.Instance.gameController.Rule;
+					rule.nHands[pos]-=msgDiscard.Bunch.Pawns.Count;
 					foreach(var card in msgDiscard.Bunch.Pawns)
 						playData.Hands.Remove(card);
 				}

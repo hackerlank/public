@@ -5,7 +5,7 @@ using Proto3;
 
 public abstract class GameRule {
 	public List<int> Pile;
-	public List<int>[] Hands;
+	public int[] nHands;
 	public List<bunch_t> Historical=new List<bunch_t>(); //historical game data
 	public int Token,Banker;
 	protected PlayerController aiController;

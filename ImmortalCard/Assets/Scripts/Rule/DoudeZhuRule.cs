@@ -26,7 +26,7 @@ public class DoudeZhuRule: GameRule {
 		for(int i=0;i<20;++i)
 			msg.Hands.Add(Pile[i]);
 		//other hands
-		Hands=new List<int>[2]{new List<int>(),new List<int>()};
+		var Hands=new List<int>[2]{new List<int>(),new List<int>()};
 		for(int i=20;i<20+17;++i)
 			Hands[0].Add(Pile[i]);
 		for(int i=20+17;i<20+17*2;++i)
@@ -429,6 +429,10 @@ public class DoudeZhuRule: GameRule {
 
 	public static bool prediscard(Player player){
 		var ret=true;
+		foreach(var n in Main.Instance.gameController.Rule.nHands)if(n<=0){
+			ret=false;
+			break;
+		}
 		return ret;
 	}
 
