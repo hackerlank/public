@@ -9,7 +9,13 @@ public class ZipaiBunch : MonoBehaviour {
 
 	public bool ShowType=false;
 
+	public System.Action<ZipaiBunch> onTap=delegate(ZipaiBunch bunch){};
+
+	bunch_t _bunch=null;
 	public bunch_t Value{
+		get{
+			return _bunch;
+		}
 		set{
 			//type and score
 			if(ShowType){
@@ -20,8 +26,11 @@ public class ZipaiBunch : MonoBehaviour {
 			}
 			//cards
 			var ctrl=Main.Instance.gameController as GamePanel;
-			foreach(var card in value.Pawns)
-				Card.Create(ctrl.CardPrefab,card,transform);
+			foreach(var card in value.Pawns){
+				Card.Create(ctrl.CardPrefab,card,transform,delegate(Card obj) {
+					obj.state=Card.State.ST_MELD;
+				});
+			}
 		}
 	}
 }

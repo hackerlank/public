@@ -239,7 +239,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         }
         
         auto needDraw=false;
-        auto isDraw=(pendingMeld.size()==1);
+        auto isDraw=(pendingMeld.size()==1||(bunch.pawns_size()==1&&bunch.pawns(0)==invalid_card));
         KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
         switch(result){
             case pb_enum::BUNCH_WIN:{

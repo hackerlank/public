@@ -146,14 +146,20 @@ public class Player {
 			if(msgStart.Result==pb_enum.Succeess){
 				var rule=Main.Instance.gameController.Rule;
 				var M=rule.MaxPlayer;
+
 				//clear rule data
 				rule.nHands=new int[M];
 				for(int i=0;i<M;++i)rule.nHands[i]=msgStart.Count[i];
+
 				//clear player data
 				playData.Hands.Clear();
 				playData.Discards.Clear();
 				playData.Bunch.Clear();
 				playData.SelectedCard=-1;
+				AAAs.Clear();
+				AAAAs.Clear();
+				unpairedCards.Clear();
+
 				//copy data
 				msg=msgStart;
 				pos=msgStart.Pos;

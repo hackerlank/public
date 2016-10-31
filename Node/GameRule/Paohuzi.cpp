@@ -448,7 +448,7 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
         auto M=MaxPlayer();
         int MIN_SUITES=7;
         if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
-        if(allSuites.size()>=MIN_SUITES){
+        if(allSuites.size()+player.AAAs.size()>=MIN_SUITES){
             auto win=false;
             if(game.category==pb_enum::PHZ_PEGHZ)
                 //碰胡子判胡
@@ -457,12 +457,13 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
                 auto point=calcPoints(game,allSuites);
                 point+=calcPoints(game,player.AAAs);
                 if(point>=winPoint(game,game.category))
-                win=true;
+                    win=true;
             }
             if(win){
                 std::copy(allSuites.begin(),allSuites.end(),std::back_inserter(output));
                 std::copy(player.AAAs.begin(),player.AAAs.end(),std::back_inserter(output));
             }
+            return win;
         }
     }
     
@@ -1927,7 +1928,7 @@ bool Paohuzi::prediscard(Player& player){
     
     auto ret=true;
     if(!player.AAAAs.empty())
-        ret=(sz%3==1);
+        ret=(sz%3==2);
     else{
         auto aaaa=false;
         auto& bunches=player.playData.bunch();
@@ -1937,7 +1938,7 @@ bool Paohuzi::prediscard(Player& player){
                 break;
             }
         }
-        ret=(sz%3==(aaaa?1:2));
+        ret=(sz%3==(aaaa?2:0));
     }
     
     if(ret)

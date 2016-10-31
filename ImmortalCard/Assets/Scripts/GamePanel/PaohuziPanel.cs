@@ -287,15 +287,21 @@ public class PaohuziPanel : GamePanel {
 				//AAA
 				sorted.Add(new List<int>(all[i]));
 				all[i].Clear();
-			}else if(all[j].Count==3){
-				//AAA
-				sorted.Add(new List<int>(all[j]));
-				all[j].Clear();
 			}else if(all[i].Count==2&&all[j].Count==1){
 				//AAa
 				all[i].Add(all[j][0]);
 				sorted.Add(new List<int>(all[i]));
 				all[i].Clear();
+				all[j].Clear();
+			}else if(all[i].Count==2){
+				//AA
+				sorted.Add(new List<int>(all[i]));
+				all[i].Clear();
+			}
+
+			if(all[j].Count==3){
+				//AAA
+				sorted.Add(new List<int>(all[j]));
 				all[j].Clear();
 			}else if(all[j].Count==2&&all[i].Count==1){
 				//AAa
@@ -303,10 +309,6 @@ public class PaohuziPanel : GamePanel {
 				sorted.Add(new List<int>(all[j]));
 				all[i].Clear();
 				all[j].Clear();
-			}else if(all[i].Count==2){
-				//AA
-				sorted.Add(new List<int>(all[i]));
-				all[i].Clear();
 			}else if(all[j].Count==2){
 				//AA
 				sorted.Add(new List<int>(all[j]));
@@ -326,7 +328,8 @@ public class PaohuziPanel : GamePanel {
 			all[x+6].RemoveAt(0);
 			all[x+9].RemoveAt(0);
 			sorted.Add(b);
-		}else if(all[y+1].Count>0 && all[y+6].Count>0 && all[y+9].Count>0){
+		}
+		if(all[y+1].Count>0 && all[y+6].Count>0 && all[y+9].Count>0){
 			//2,7,10
 			var b=new List<int>();
 			b.Add(all[y+1][0]);
@@ -336,7 +339,8 @@ public class PaohuziPanel : GamePanel {
 			all[y+6].RemoveAt(0);
 			all[y+9].RemoveAt(0);
 			sorted.Add(b);
-		}else if(all[x].Count>0 && all[x+1].Count>0 && all[x+2].Count>0){
+		}
+		if(all[x].Count>0 && all[x+1].Count>0 && all[x+2].Count>0){
 			//1,2,3
 			var b=new List<int>();
 			b.Add(all[x+0][0]);
@@ -346,7 +350,8 @@ public class PaohuziPanel : GamePanel {
 			all[x+1].RemoveAt(0);
 			all[x+2].RemoveAt(0);
 			sorted.Add(b);
-		}else if(all[y].Count>0 && all[y+1].Count>0 && all[y+2].Count>0){
+		}
+		if(all[y].Count>0 && all[y+1].Count>0 && all[y+2].Count>0){
 			//1,2,3
 			var b=new List<int>();
 			b.Add(all[y+0][0]);
@@ -376,6 +381,7 @@ public class PaohuziPanel : GamePanel {
 				sorted.Add(b);
 			}
 		}
+
 		//insert blank if need
 		foreach(var s in sorted)
 			for(int i=s.Count;i<3;++i)
@@ -401,9 +407,9 @@ public class PaohuziPanel : GamePanel {
 		int index=0;
 		foreach(var bun in sorted){
 			foreach(var id in bun){
-				if(id<1000)
+				if(id<1000){
 					emptyCards[iempty++].transform.SetSiblingIndex(index++);
-				else foreach(var card in normalCards){
+				}else foreach(var card in normalCards){
 					if(card.Value==id){
 						card.transform.SetSiblingIndex(index++);
 						break;
@@ -432,21 +438,77 @@ public class PaohuziPanel : GamePanel {
 	public void OnABC(){
 		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
-			//TODO: show selection for multiple hints
-			foreach(var hint in _hints){
-				if(hint.Type==pb_enum.PhzAbc||
-					hint.Type==pb_enum.PhzAbA){
-					MsgCNMeld msg=new MsgCNMeld();
-					msg.Mid=pb_msg.MsgCnMeld;
-					msg.Bunch=new bunch_t();
-					msg.Bunch.Pos=_pos;
-					msg.Bunch.Type=hint.Type;
-					msg.Bunch.MergeFrom(hint);
-					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
-					break;
-				}
-			}
+			StartCoroutine(onABC());
 		}
+	}
+
+	IEnumerator onABC(){
+		bunch_t[] bunchLayers=new bunch_t[3];
+
+		System.Action<ZipaiBunch> onTap=delegate(ZipaiBunch zpbunch){
+			if(zpbunch.transform.parent==BaihuoLayers[2]){
+				bunchLayers[2]=zpbunch.Value;
+			}else if(zpbunch.transform.parent==BaihuoLayers[1]){
+				bunchLayers[2]=null;
+				bunchLayers[1]=zpbunch.Value;
+			}else{
+				bunchLayers[2]=null;
+				bunchLayers[1]=null;
+				bunchLayers[0]=zpbunch.Value;
+			}
+		};
+
+		List<List<bunch_t>> abcs=new List<List<bunch_t>>(); 
+		for(int i=0;i<_hints.Count;++i){
+			var bunch=_hints[i];
+			if(bunch.Type!=pb_enum.PhzAbc &&
+			   bunch.Type!=pb_enum.PhzAbA)
+				continue;
+
+			var list=new List<bunch_t>();
+			//baihuo bunches
+			for(var j=0;j<bunch.Pawns.Count/3;++j){
+				var bun=new bunch_t();
+				bun.Pos=bunch.Pos;
+				bun.Type=bunch.Type;
+				bun.Pawns.Add(bunch.Pawns[j*3+0]);
+				bun.Pawns.Add(bunch.Pawns[j*3+1]);
+				bun.Pawns.Add(bunch.Pawns[j*3+2]);
+				list.Add(bun);
+			}
+			abcs.Add(list);
+
+			ZipaiBunch zipaiBunch=null;
+			Utils.Load<ZipaiBunch>(BaihuoLayers[0],delegate(Component obj) {
+				zipaiBunch=obj as ZipaiBunch;
+			});
+			while(zipaiBunch==null)yield return null;
+			zipaiBunch.Value=bunch;
+			zipaiBunch.onTap=onTap;
+
+			BaihuoPanel.SetActive(true);
+		}
+		//test
+		if(abcs.Count>0)bunchLayers[0]=abcs[0][0];
+		//end test
+
+		bunch_t obunch=null;
+		foreach(var bl in bunchLayers){
+			if(null==obunch)obunch=bl;
+			if(bl==null)break;
+			foreach(var p in bl.Pawns)bl.Pawns.Add(p);
+		}
+
+		if(obunch!=null){
+			MsgCNMeld msg=new MsgCNMeld();
+			msg.Mid=pb_msg.MsgCnMeld;
+			msg.Bunch=new bunch_t();
+			msg.Bunch.Pos=_pos;
+			msg.Bunch.Type=obunch.Type;
+			msg.Bunch.MergeFrom(obunch);
+			Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+		}
+		yield break;
 	}
 	
 	public void OnAAA(){

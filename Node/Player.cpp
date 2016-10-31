@@ -187,5 +187,13 @@ int Player::getKey(){
 
 void Player::reset(){
     playData.Clear();
+    unpairedCards.clear();
+    AAAs.clear();
+    AAAAs.clear();
     lastMsg.reset();
+    inputCount=0;
+    lastHand=invalid_card;
+    m_winMark=0;
+    m_bczArr=false;
+    m_bdoubleTi=false;
 }

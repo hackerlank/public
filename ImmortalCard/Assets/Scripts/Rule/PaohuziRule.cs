@@ -47,7 +47,10 @@ public class PaohuziRule: GameRule {
 		}
 
 		var card=src_bunch.Pawns[0];
-		var bDraw=src_bunch.Type==pb_enum.BunchA;
+		var bDraw=(src_bunch.Type==pb_enum.BunchA||card==Configs.invalidCard);
+		if(bDraw){
+			Debug.Log("-------drawing "+card);
+		}
 
 		//hint3
 		var output3=new bunch_t();
@@ -326,7 +329,7 @@ public class PaohuziRule: GameRule {
 			var M=MaxPlayer;
 			int MIN_SUITES=7;
 			if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
-			if(allSuites.Count>=MIN_SUITES){
+			if(allSuites.Count+player.AAAs.Count>=MIN_SUITES){
 				var win=false;
 				if(Main.Instance.MainPlayer.category==pb_enum.PhzPeghz){
 					//碰胡子判胡
@@ -342,6 +345,7 @@ public class PaohuziRule: GameRule {
 					output.AddRange(allSuites);
 					output.AddRange(player.AAAs);
 				}
+				return win;
 			}
 		}
 		
@@ -723,12 +727,12 @@ public class PaohuziRule: GameRule {
 	public override int transformValue(int val){
 		return val;
 	}
-	
+
 	public override int inverseTransformValue(int val){
 		return val;
 	}
 
-	pb_enum fixOps(pb_enum ops){
+	static pb_enum fixOps(pb_enum ops){
 		if(ops>=pb_enum.BunchWin)
 			ops=(pb_enum)((int)ops%(int)pb_enum.BunchWin);
 		return ops;
@@ -796,9 +800,17 @@ public class PaohuziRule: GameRule {
 		int point=0;
 		foreach(var i in allSuites){
 			var suite=i;
-			if(suite.Pawns.Count<=0)continue;
+			point+=CalcPoints(suite);
+			//log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
+		}
+		return point;
+	}
+
+	public static int CalcPoints(bunch_t suite){
+		int pt=0;
+		var rule=Main.Instance.gameController.Rule;
+		if(suite.Pawns.Count>0){
 			var small=(1==suite.Pawns[0]/1000);
-			int pt=0;
 			switch(fixOps(suite.Type)){
 			case pb_enum.PhzAaaa:
 			case pb_enum.PhzAaaastart:
@@ -819,7 +831,7 @@ public class PaohuziRule: GameRule {
 				break;
 			case pb_enum.PhzAbc:{
 				List<int> sl=new List<int>(suite.Pawns);
-				sl.Sort(comparision);
+				sl.Sort(rule.comparision);
 				var A=sl[0];
 				var B=sl[1];
 				if(A%100==1 || (A%100==2&&B%100==7))
@@ -829,10 +841,8 @@ public class PaohuziRule: GameRule {
 			default:
 				break;
 			}
-			point+=pt;
-			//log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
 		}
-		return point;
+		return pt;
 	}
 
 	bool chouWei(Player player,bunch_t bunch){
@@ -934,7 +944,7 @@ public class PaohuziRule: GameRule {
 		
 		var ret=true;
 		if(player.AAAAs.Count<=0)
-			ret=(sz%3==1);
+			ret=(sz%3==2);
 		else{
 			var aaaa=false;
 			var bunches=player.playData.Bunch;
@@ -944,7 +954,7 @@ public class PaohuziRule: GameRule {
 					break;
 				}
 			}
-			ret=(sz%3==(aaaa?1:2));
+			ret=(sz%3==(aaaa?2:0));
 		}
 		
 		return ret;
