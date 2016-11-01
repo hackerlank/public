@@ -145,7 +145,7 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     }
     
     //baihuo
-    if(pb_enum::PHZ_AbA==bunch.type()||pb_enum::PHZ_ABC==bunch.type()){
+    if(pb_enum::PHZ_ABC==bunch.type()){
         std::vector<unit_id_t> ids;
         for(auto id:player.playData.hands())if(id/1000==card/1000 && id%100==card%100)ids.push_back(id);
         
@@ -201,7 +201,7 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     }
 
     //then meld
-    if(pb_enum::PHZ_AbA==bunch.type()||pb_enum::PHZ_ABC==bunch.type()){
+    if(pb_enum::PHZ_ABC==bunch.type()){
         for(int i=0;i<bunch.pawns_size()/3;++i){
             auto h=player.playData.add_bunch();
             h->set_pos(bunch.pos());
@@ -663,7 +663,7 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
         //绞，append to hints: Bbb
         hints.push_back(bunch_t());
         auto& suite=hints.back();
-        suite.set_type(pb_enum::PHZ_AbA);
+        suite.set_type(pb_enum::PHZ_ABC);
         for(auto c:jiao)suite.add_pawns(c);
         suite.add_pawns(card);
         //log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.pawns(0], suite.pawns(1], suite.pawns(2]);
@@ -672,7 +672,7 @@ void Paohuzi::hint(Game& game,unit_id_t card,std::vector<unit_id_t>& _hand,std::
         //绞，append to hints: BBb
         hints.push_back(bunch_t());
         auto& suite=hints.back();
-        suite.set_type(pb_enum::PHZ_AbA);
+        suite.set_type(pb_enum::PHZ_ABC);
         for(auto it=same.begin(),iend=same.end();it!=iend;++it)
             if(card!=*it){
                 //别把自己放进去
@@ -783,7 +783,6 @@ pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
             }
             break;
         case pb_enum::PHZ_ABC:
-        case pb_enum::PHZ_AbA:
             if(sz%3==0){
                 auto it=bunch.pawns().begin();
                 auto ok=true;
@@ -1543,7 +1542,7 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
         }
         //对子
         int ops=i->type();	ops=fixOps((pb_enum)ops);
-        if(pair&&(ops==pb_enum::PHZ_AbA||ops==pb_enum::PHZ_ABC||ops==pb_enum::UNKNOWN))pair=false;
+        if(pair&&(ops==pb_enum::PHZ_ABC||ops==pb_enum::UNKNOWN))pair=false;
     }
     
     //海胡
@@ -1673,7 +1672,7 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
     for(auto ic=suites.begin(),icc=suites.end();ic!=icc;++ic){
         //考虑到可能最后是吃，碰，跑，提偎等赢的，应该首先把应的状态去掉在做下边的处理即可
         auto res=fixOps(ic->type());
-        if(res!=pb_enum::PHZ_ABC&&res!=pb_enum::PHZ_AbA&&res!=pb_enum::PHZ_AAA&&res!=pb_enum::PHZ_AAAwei&&res!=pb_enum::PHZ_AAAchou&&res!=pb_enum::PHZ_BBB&&res!=pb_enum::PHZ_AAAA&&res!=pb_enum::PHZ_AAAAstart&&res!=pb_enum::PHZ_BBB_B&&res!=pb_enum::PHZ_AAAAdesk)
+        if(res!=pb_enum::PHZ_ABC&&res!=pb_enum::PHZ_AAA&&res!=pb_enum::PHZ_AAAwei&&res!=pb_enum::PHZ_AAAchou&&res!=pb_enum::PHZ_BBB&&res!=pb_enum::PHZ_AAAA&&res!=pb_enum::PHZ_AAAAstart&&res!=pb_enum::PHZ_BBB_B&&res!=pb_enum::PHZ_AAAAdesk)
             continue;
         int count=0;
         for(auto A:ic->pawns()){
@@ -1953,7 +1952,6 @@ int opWeight(pb_enum op){
     op=fixOps(op);
     switch(op){
         case pb_enum::PHZ_ABC:
-        case pb_enum::PHZ_AbA:
             i=1;break;
         case pb_enum::PHZ_BBB:
         case pb_enum::PHZ_AAA:

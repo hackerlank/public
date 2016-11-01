@@ -205,8 +205,9 @@ public class Player {
 		case pb_msg.MsgNcSettle:
 			MsgNCSettle msgSettle=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(msgSettle.Result==pb_enum.Succeess){
-				msg=msgSettle;
-				if(this!=Main.Instance.MainPlayer){
+				if(this==Main.Instance.MainPlayer)
+					msg=msgSettle;
+				else{
 					//robots
 					var omsgReady=new MsgCNReady();
 					omsgReady.Mid=pb_msg.MsgCnReady;

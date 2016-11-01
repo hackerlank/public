@@ -146,7 +146,7 @@ public class PaohuziRule: GameRule {
 		}
 
 		//add to bunches
-		if(bunch.Type==pb_enum.PhzAbA||bunch.Type==pb_enum.PhzAbc){
+		if(bunch.Type==pb_enum.PhzAbc){
 			//baihuo bunches
 			for(var i=0;i<bunch.Pawns.Count/3;++i){
 				var bun=new bunch_t();
@@ -555,7 +555,7 @@ public class PaohuziRule: GameRule {
 		if(jiao.Count==2){
 			//绞，append to hints: Bbb
 			var suite=new bunch_t();
-			suite.Type=pb_enum.PhzAbA;
+			suite.Type=pb_enum.PhzAbc;
 			foreach(var c in jiao)suite.Pawns.Add(c);
 			suite.Pawns.Add(card);
 			hints.Add(suite);
@@ -564,7 +564,7 @@ public class PaohuziRule: GameRule {
 		if(same.Count>0&&jiao.Count>0){
 			//绞，append to hints: BBb
 			var suite=new bunch_t();
-			suite.Type=pb_enum.PhzAbA;
+			suite.Type=pb_enum.PhzAbc;
 			foreach(var it in same)
 			if(card!=it){
 				//别把自己放进去
@@ -680,7 +680,6 @@ public class PaohuziRule: GameRule {
 			}
 			break;
 		case pb_enum.PhzAbc:
-		case pb_enum.PhzAbA:
 			if(bunch.Pawns.Count%3==0){
 				var ok=true;
 				for(var i=0;i<bunch.Pawns.Count/3;++i){

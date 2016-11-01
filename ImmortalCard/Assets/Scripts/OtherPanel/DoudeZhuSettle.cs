@@ -11,6 +11,6 @@ public class DoudeZhuSettle : SettlePopup {
 	}
 	
 	override protected void createItem(Transform parent,play_t play){
-		createItem<PaohuziSettle>(parent,play);
+		createItem<PaohuziSettleItem>(parent,play);
 	}
 }

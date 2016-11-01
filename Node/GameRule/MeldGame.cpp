@@ -316,39 +316,42 @@ void MeldGame::engage(Game& game){
 void MeldGame::draw(Game& game){
     if(game.pile.empty()){
         //dismiss
+        KEYE_LOG("dismiss while pile empty, pos=%d\n",game.token);
         changeState(game,Game::State::ST_SETTLE);
         auto tokenPlayer=game.players[game.token];
         std::vector<bunch_t> output;
         settle(*tokenPlayer,output,invalid_card);
-    }
-    changePos(game,game.token+1);
-    auto player=game.players[game.token];
-    auto card=game.pile.back();
-    game.pile.pop_back();
-    KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
-
-    //game.pendingMeld.clear();
-    game.pendingMeld.push_back(Game::pending_t());
-
-    MsgNCDraw msg;
-    msg.set_mid(pb_msg::MSG_NC_DRAW);
-    msg.set_pos(game.token);
-    for(int i=0;i<MaxPlayer();++i){
-        auto p=game.players[i];
-        if(i==game.token){
-            msg.set_card(card);
-
-            //pending meld
-            auto& pending=game.pendingMeld.back();
-            pending.bunch.set_pos(game.token);
-            pending.bunch.set_type(pb_enum::BUNCH_A);   //default ops
-            pending.bunch.add_pawns(card);
-        }else{
-            msg.set_card(card);
-//            msg.set_card(-1);
+    }else{
+        changePos(game,game.token+1);
+        auto player=game.players[game.token];
+        
+        auto card=game.pile.back();
+        game.pile.pop_back();
+        KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
+        
+        //game.pendingMeld.clear();
+        game.pendingMeld.push_back(Game::pending_t());
+        
+        MsgNCDraw msg;
+        msg.set_mid(pb_msg::MSG_NC_DRAW);
+        msg.set_pos(game.token);
+        for(int i=0;i<MaxPlayer();++i){
+            auto p=game.players[i];
+            if(i==game.token){
+                msg.set_card(card);
+                
+                //pending meld
+                auto& pending=game.pendingMeld.back();
+                pending.bunch.set_pos(game.token);
+                pending.bunch.set_type(pb_enum::BUNCH_A);   //default ops
+                pending.bunch.add_pawns(card);
+            }else{
+                msg.set_card(card);
+                //msg.set_card(-1); //should hide for others
+            }
+            p->send(msg);
+            p->lastMsg=std::make_shared<MsgNCDraw>(msg);
         }
-        p->send(msg);
-        p->lastMsg=std::make_shared<MsgNCDraw>(msg);
     }
 }
 

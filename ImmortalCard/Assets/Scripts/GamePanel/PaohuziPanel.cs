@@ -107,7 +107,6 @@ public class PaohuziPanel : GamePanel {
 		List<Card> cards=new List<Card>();
 		switch(bunch.Type){
 		case pb_enum.PhzAbc:
-		case pb_enum.PhzAbA:
 			for(var i=0;i<bunch.Pawns.Count/3;++i){
 				var bun=new bunch_t();
 				bun.Pos=bunch.Pos;
@@ -131,9 +130,9 @@ public class PaohuziPanel : GamePanel {
 			//modify the 4th card by discard
 			var meldBunch=MeldAreas[to].GetComponentsInChildren<Card>();
 			meldBunch[3].Value=A.Value;
+			Destroy(A.gameObject);
 			break;
 		case pb_enum.PhzAbc:
-		case pb_enum.PhzAbA:
 		case pb_enum.PhzBbb:
 		case pb_enum.PhzAaawei:
 		case pb_enum.PhzAaachou:
@@ -224,14 +223,13 @@ public class PaohuziPanel : GamePanel {
 		//show/hide buttons
 		foreach(var b in _hints){
 			switch(b.Type){
-			case pb_enum.BunchAbc:
-			case pb_enum.PhzAbA:
+			case pb_enum.PhzAbc:
 				if(!startup)BtnABC.SetActive(true);
 				break;
 			case pb_enum.PhzBbb:
 				if(!startup)BtnA3.SetActive(true);
 				break;
-			case pb_enum.BunchAaa:
+			case pb_enum.PhzAaa:
 			case pb_enum.PhzAaawei:
 			case pb_enum.PhzAaachou:
 				OnAAA();
@@ -377,7 +375,7 @@ public class PaohuziPanel : GamePanel {
 			for(int i=0;i<columes;++i){
 				var b=new List<int>();
 				int J=cardsPerColume;
-				if(i==0)J+=rest.Count-cardsPerColume*columes;
+				if(i<rest.Count%columes)++J;
 				for(int j=0;j<J;++j)b.Add(rest[iRest++]);
 				sorted.Add(b);
 			}
@@ -444,6 +442,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	IEnumerator onABC(){
+		/*
 		bunch_t[] bunchLayers=new bunch_t[3];
 
 		System.Action<ZipaiBunch> onTap=delegate(ZipaiBunch zpbunch){
@@ -462,8 +461,7 @@ public class PaohuziPanel : GamePanel {
 		List<List<bunch_t>> abcs=new List<List<bunch_t>>(); 
 		for(int i=0;i<_hints.Count;++i){
 			var bunch=_hints[i];
-			if(bunch.Type!=pb_enum.PhzAbc &&
-			   bunch.Type!=pb_enum.PhzAbA)
+			if(bunch.Type!=pb_enum.PhzAbc)
 				continue;
 
 			var list=new List<bunch_t>();
@@ -498,6 +496,15 @@ public class PaohuziPanel : GamePanel {
 			if(null==obunch)obunch=bl;
 			if(bl==null)break;
 			foreach(var p in bl.Pawns)bl.Pawns.Add(p);
+		}
+*/
+		bunch_t obunch=null;
+		for(int i=0;i<_hints.Count;++i){
+			var bunch=_hints[i];
+			if(bunch.Type==pb_enum.PhzAbc){
+				obunch=bunch;
+				break;
+			}
 		}
 
 		if(obunch!=null){

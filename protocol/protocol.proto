@@ -81,8 +81,7 @@ BUNCH_AAAB              =16;
 BUNCH_ABC               =17;
 
 PHZ_AA                  =12;  //jiang
-PHZ_ABC                 =18;  //ju
-PHZ_AbA                 =19;	//jiao  AaA
+PHZ_ABC                 =18;  //ju,jiao
 PHZ_BBB                 =20;	//peng  BB_B
 PHZ_AAA                 =21;	//kan
 PHZ_AAAwei              =22;	//wei   AA_A
