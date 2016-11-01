@@ -273,6 +273,7 @@ message bunch_t{
 pb_enum type            =1;
 int32 pos               =2; //easy to use -1
 repeated int32 pawns    =3;
+repeated bunch_t child  =4; //to build bunch tree
 };
 
 message play_t{

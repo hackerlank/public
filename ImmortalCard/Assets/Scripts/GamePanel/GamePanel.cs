@@ -200,8 +200,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		//sort
 		var hands=new List<int>(msg.Hands);
 		hands.Sort(Rule.comparision);
+
 		//deal
-		
 		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
 		for(int i=0;i<hands.Count;++i){
 			var id=hands[i];

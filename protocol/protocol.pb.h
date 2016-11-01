@@ -1432,6 +1432,18 @@ class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_pawns();
 
+  // repeated .proto3.bunch_t child = 4;
+  int child_size() const;
+  void clear_child();
+  static const int kChildFieldNumber = 4;
+  const ::proto3::bunch_t& child(int index) const;
+  ::proto3::bunch_t* mutable_child(int index);
+  ::proto3::bunch_t* add_child();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_child();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      child() const;
+
   // @@protoc_insertion_point(class_scope:proto3.bunch_t)
  private:
 
@@ -1443,6 +1455,7 @@ class bunch_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::int32 pos_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > pawns_;
   mutable int _pawns_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > child_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -7246,6 +7259,36 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 bunch_t::mutable_pawns() {
   // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.pawns)
   return &pawns_;
+}
+
+// repeated .proto3.bunch_t child = 4;
+inline int bunch_t::child_size() const {
+  return child_.size();
+}
+inline void bunch_t::clear_child() {
+  child_.Clear();
+}
+inline const ::proto3::bunch_t& bunch_t::child(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.bunch_t.child)
+  return child_.Get(index);
+}
+inline ::proto3::bunch_t* bunch_t::mutable_child(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.bunch_t.child)
+  return child_.Mutable(index);
+}
+inline ::proto3::bunch_t* bunch_t::add_child() {
+  // @@protoc_insertion_point(field_add:proto3.bunch_t.child)
+  return child_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+bunch_t::mutable_child() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.child)
+  return &child_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+bunch_t::child() const {
+  // @@protoc_insertion_point(field_list:proto3.bunch_t.child)
+  return child_;
 }
 
 // -------------------------------------------------------------------

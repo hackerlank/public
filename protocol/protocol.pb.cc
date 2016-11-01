@@ -4761,6 +4761,7 @@ lobby_t::games() const {
 const int bunch_t::kTypeFieldNumber;
 const int bunch_t::kPosFieldNumber;
 const int bunch_t::kPawnsFieldNumber;
+const int bunch_t::kChildFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 bunch_t::bunch_t()
@@ -4850,6 +4851,7 @@ void bunch_t::Clear() {
 #undef ZR_
 
   pawns_.Clear();
+  child_.Clear();
 }
 
 bool bunch_t::MergePartialFromCodedStream(
@@ -4906,6 +4908,23 @@ bool bunch_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(34)) goto parse_child;
+        break;
+      }
+
+      // repeated .proto3.bunch_t child = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_child:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_child:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_child()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_loop_child;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -4955,6 +4974,12 @@ void bunch_t::SerializeWithCachedSizes(
       this->pawns(i), output);
   }
 
+  // repeated .proto3.bunch_t child = 4;
+  for (unsigned int i = 0, n = this->child_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      4, this->child(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.bunch_t)
 }
 
@@ -4992,6 +5017,14 @@ int bunch_t::ByteSize() const {
     total_size += data_size;
   }
 
+  // repeated .proto3.bunch_t child = 4;
+  total_size += 1 * this->child_size();
+  for (int i = 0; i < this->child_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->child(i));
+  }
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -5009,6 +5042,7 @@ void bunch_t::MergeFrom(const bunch_t& from) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
   pawns_.MergeFrom(from.pawns_);
+  child_.MergeFrom(from.child_);
   if (from.type() != 0) {
     set_type(from.type());
   }
@@ -5037,6 +5071,7 @@ void bunch_t::InternalSwap(bunch_t* other) {
   std::swap(type_, other->type_);
   std::swap(pos_, other->pos_);
   pawns_.UnsafeArenaSwap(&other->pawns_);
+  child_.UnsafeArenaSwap(&other->child_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -5104,6 +5139,36 @@ bunch_t::pawns() const {
 bunch_t::mutable_pawns() {
   // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.pawns)
   return &pawns_;
+}
+
+// repeated .proto3.bunch_t child = 4;
+int bunch_t::child_size() const {
+  return child_.size();
+}
+void bunch_t::clear_child() {
+  child_.Clear();
+}
+const ::proto3::bunch_t& bunch_t::child(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.bunch_t.child)
+  return child_.Get(index);
+}
+::proto3::bunch_t* bunch_t::mutable_child(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.bunch_t.child)
+  return child_.Mutable(index);
+}
+::proto3::bunch_t* bunch_t::add_child() {
+  // @@protoc_insertion_point(field_add:proto3.bunch_t.child)
+  return child_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+bunch_t::mutable_child() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.bunch_t.child)
+  return &child_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+bunch_t::child() const {
+  // @@protoc_insertion_point(field_list:proto3.bunch_t.child)
+  return child_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
