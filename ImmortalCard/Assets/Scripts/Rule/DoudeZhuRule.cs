@@ -427,7 +427,7 @@ public class DoudeZhuRule: GameRule {
 		else             return val;
 	}
 
-	public override bool checkDiscard(Player player){
+	public override bool checkDiscard(Player player,int drawCard){
 		var ret=true;
 		foreach(var n in Main.Instance.gameController.Rule.nHands)if(n<=0){
 			ret=false;

@@ -31,7 +31,7 @@ private:
     void                    hint(Game&,unit_id_t,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
 
     virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
-    virtual bool            checkDiscard(Player&);  //check AAAA and AAA to decide discardable
+    virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
     proto3::pb_enum         verifyBunch(Game&,proto3::bunch_t&);
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
     

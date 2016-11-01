@@ -47,7 +47,7 @@ public abstract class GameRule {
 	protected virtual pb_enum verifyBunch(bunch_t bunch){return pb_enum.BunchA;}
 	protected virtual bool compareBunch(bunch_t bunch,bunch_t hist){return true;}
 	public virtual bool verifyDiscard(Player player,bunch_t bunch){return true;}
-	public virtual bool checkDiscard(Player player){return true;}
+	public virtual bool checkDiscard(Player player,int drawCard){return true;}
 	public abstract int comparision(int x,int y);
 	public virtual int transformValue(int val){return val;}
 	public virtual int inverseTransformValue(int val){return val;}

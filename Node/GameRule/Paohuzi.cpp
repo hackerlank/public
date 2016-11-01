@@ -1921,7 +1921,7 @@ bool Paohuzi::chouWei(Game& game,Player& player,bunch_t& bunch){
     return false;
 }
 
-bool Paohuzi::checkDiscard(Player& player){
+bool Paohuzi::checkDiscard(Player& player,unit_id_t drawCard){
     auto sz=player.playData.hands_size();
     if(sz<=0)
         return false;
@@ -1937,9 +1937,12 @@ bool Paohuzi::checkDiscard(Player& player){
         }
     }
 
+    if(drawCard!=invalid_card)sz++;
     auto ret=(sz%3==(aaaa?2:0));
-    if(ret)
-        MeldGame::checkDiscard(player);
+    if(ret){
+        MeldGame::checkDiscard(player,drawCard);
+        player.game->pendingDiscard->bunch.add_pawns(drawCard);
+    }
     
     return ret;
 }

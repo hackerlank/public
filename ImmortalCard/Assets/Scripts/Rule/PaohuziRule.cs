@@ -459,9 +459,18 @@ public class PaohuziRule: GameRule {
 		
 		//skip self
 		if(myself&&!bDraw)return false;
-		
+
+		//find same cards in AAA
+		foreach(var it in player.AAAs){
+			var B=it.Pawns[0];
+			if(A/1000==B/1000 && A%100==B%100){
+				foreach(var c in it.Pawns)
+					tmp.Add(c);
+			}
+		}
+
 		//find same cards in hands
-		foreach(var it in hand){
+		if(tmp.Count<=0)foreach(var it in hand){
 			var B=it;
 			if(A/1000==B/1000 && A%100==B%100)
 				tmp.Add(B);
@@ -937,7 +946,7 @@ public class PaohuziRule: GameRule {
 		}//for j
 	}
 
-	public override bool checkDiscard(Player player){
+	public override bool checkDiscard(Player player,int drawCard){
 		var sz=player.playData.Hands.Count;
 		if(sz<=0)
 			return false;
@@ -952,6 +961,7 @@ public class PaohuziRule: GameRule {
 				}
 			}
 		}
+		if(drawCard!=-1)++sz;
 		return (sz%3==(aaaa?2:0));
 	}
 

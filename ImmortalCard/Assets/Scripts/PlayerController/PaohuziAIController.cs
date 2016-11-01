@@ -18,10 +18,11 @@ public class PaohuziAIController:AIController{
 			var rule=Main.Instance.gameController.Rule;
 			rule.Meld(player,msg.Bunch);
 
-			if(rule.checkDiscard(player)){
+			var bDraw=(msg.Bunch.Type==pb_enum.OpPass);
+			if(rule.checkDiscard(player,bDraw?msg.Bunch.Pawns[0]:Configs.invalidCard)){
 				//discard
 				var discard=player.playData.Hands[0];
-				if(msg.Bunch.Type==pb_enum.OpPass)
+				if(bDraw)
 					//was draw
 					discard=msg.Bunch.Pawns[0];
 				

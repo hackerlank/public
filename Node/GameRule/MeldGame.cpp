@@ -240,6 +240,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         }
         
         KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
+        auto bDraw=pendingMeld.size()==1;
         switch(result){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
@@ -256,7 +257,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             }
             case pb_enum::OP_PASS:
                 //handle pass, ensure token
-                if(pendingMeld.size()==1){
+                if(bDraw){
                     //isDraw, pass to discard
                     bunch.set_pos(game.token);
                 }else{
@@ -292,10 +293,10 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         }
         
         //then draw or discard
-        if(tokenPlayer && !checkDiscard(*tokenPlayer)){
+        if(tokenPlayer && !checkDiscard(*tokenPlayer,bDraw?card:invalid_card)){
             //KEYE_LOG("OnMeld pass to draw\n");
-            draw(game);
             changeState(game,Game::State::ST_MELD);
+            draw(game);
         }
     }//if(ready>=queue.size())
 }
@@ -313,6 +314,13 @@ void MeldGame::engage(Game& game){
 }
 
 void MeldGame::draw(Game& game){
+    if(game.pile.empty()){
+        //dismiss
+        changeState(game,Game::State::ST_SETTLE);
+        auto tokenPlayer=game.players[game.token];
+        std::vector<bunch_t> output;
+        settle(*tokenPlayer,output,invalid_card);
+    }
     changePos(game,game.token+1);
     auto player=game.players[game.token];
     auto card=game.pile.back();
@@ -358,7 +366,7 @@ bool MeldGame::comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pen
     return a>b;
 }
 
-bool MeldGame::checkDiscard(Player& player){
+bool MeldGame::checkDiscard(Player& player,unit_id_t drawCard){
     auto& game=*player.game;
     changeState(game,Game::State::ST_DISCARD);
     //pending discard

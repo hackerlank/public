@@ -9,7 +9,7 @@ public class DoudeZhuAIController:AIController {
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(player.pos==(msg.Bunch.Pos+1)%maxPlayer){
 			var rule=Main.Instance.gameController.Rule;
-			if(rule.checkDiscard(player)){
+			if(rule.checkDiscard(player,0)){
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				

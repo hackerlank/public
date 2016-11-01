@@ -225,6 +225,7 @@ public class PaohuziPanel : GamePanel {
 		foreach(var b in _hints){
 			switch(b.Type){
 			case pb_enum.BunchAbc:
+			case pb_enum.PhzAbA:
 				if(!startup)BtnABC.SetActive(true);
 				break;
 			case pb_enum.PhzBbb:
@@ -233,9 +234,9 @@ public class PaohuziPanel : GamePanel {
 			case pb_enum.BunchAaa:
 			case pb_enum.PhzAaawei:
 			case pb_enum.PhzAaachou:
-			case pb_enum.PhzAaaa:
 				OnAAA();
 				return true;
+			case pb_enum.PhzAaaa:
 			case pb_enum.PhzAaaastart:
 			case pb_enum.PhzAaaadesk:
 			case pb_enum.PhzBbbB:
