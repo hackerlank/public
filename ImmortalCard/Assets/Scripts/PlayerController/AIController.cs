@@ -34,6 +34,17 @@ public class AIController:PlayerController{
 				bunch.Type=pb_enum.OpPass;
 				bunch.Pawns.Add(card);
 			}
+			if(bunch.Type==pb_enum.PhzAbc){
+				//packed bunch
+				if(bunch.Child.Count>0){
+					var child=bunch.Child[0];
+					foreach(var ch0 in child.Pawns)bunch.Pawns.Add(ch0);
+					if(child.Child.Count>0){
+						child=child.Child[0];
+						foreach(var ch1 in child.Pawns)bunch.Pawns.Add(ch1);
+					}
+				}
+			}
 			bunch.Pos=player.pos;
 			omsgMeld.Bunch=bunch;
 			

@@ -154,6 +154,8 @@ public class MahJongPanel : GamePanel {
 	}
 
 	override protected void showSettle(MsgNCSettle msg){
+		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
+		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
 		Utils.Load<MahjongSettle>(Main.Instance.transform,delegate(Component obj) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;

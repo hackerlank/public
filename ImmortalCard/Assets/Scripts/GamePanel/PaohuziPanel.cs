@@ -281,6 +281,8 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected void showSettle(MsgNCSettle msg){
+		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
+		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
 		Utils.Load<PaohuziSettle>(Main.Instance.transform,delegate(Component obj) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
@@ -468,70 +470,76 @@ public class PaohuziPanel : GamePanel {
 		}
 	}
 
-	IEnumerator onABC(){
-		/*
-		bunch_t[] bunchLayers=new bunch_t[3];
+	bool onTap(bunch_t[] bunchLayers,ZipaiBunch zpbunch){
+		int layer=0;
+		if(zpbunch.transform.parent==BaihuoLayers[2]){
+			layer=2;
+			bunchLayers[2]=zpbunch.Value;
+		}else if(zpbunch.transform.parent==BaihuoLayers[1]){
+			layer=1;
+			bunchLayers[2]=null;
+			bunchLayers[1]=zpbunch.Value;
+		}else{
+			layer=0;
+			bunchLayers[2]=null;
+			bunchLayers[1]=null;
+			bunchLayers[0]=zpbunch.Value;
+		}
+		
+		//expand children
+		var child=zpbunch.Value.Child;
+		if(child.Count>0){
+			var children=new List<bunch_t>(child);
+			StartCoroutine(expandSelectPanel(bunchLayers,children,layer+1));
+			return false;
+		}else
+			return true;
+	}
 
-		System.Action<ZipaiBunch> onTap=delegate(ZipaiBunch zpbunch){
-			if(zpbunch.transform.parent==BaihuoLayers[2]){
-				bunchLayers[2]=zpbunch.Value;
-			}else if(zpbunch.transform.parent==BaihuoLayers[1]){
-				bunchLayers[2]=null;
-				bunchLayers[1]=zpbunch.Value;
-			}else{
-				bunchLayers[2]=null;
-				bunchLayers[1]=null;
-				bunchLayers[0]=zpbunch.Value;
-			}
-		};
-
-		List<List<bunch_t>> abcs=new List<List<bunch_t>>(); 
-		for(int i=0;i<_hints.Count;++i){
-			var bunch=_hints[i];
+	IEnumerator expandSelectPanel(bunch_t[] bunchLayers,List<bunch_t> list,int layer){
+		var abcs=new List<bunch_t>(); 
+		for(int i=0;i<list.Count;++i){
+			var bunch=list[i];
 			if(bunch.Type!=pb_enum.PhzAbc)
 				continue;
-
-			var list=new List<bunch_t>();
-			//baihuo bunches
-			for(var j=0;j<bunch.Pawns.Count/3;++j){
-				var bun=new bunch_t();
-				bun.Pos=bunch.Pos;
-				bun.Type=bunch.Type;
-				bun.Pawns.Add(bunch.Pawns[j*3+0]);
-				bun.Pawns.Add(bunch.Pawns[j*3+1]);
-				bun.Pawns.Add(bunch.Pawns[j*3+2]);
-				list.Add(bun);
-			}
-			abcs.Add(list);
-
+			
+			abcs.Add(bunch);
 			ZipaiBunch zipaiBunch=null;
-			Utils.Load<ZipaiBunch>(BaihuoLayers[0],delegate(Component obj) {
+			Utils.Load<ZipaiBunch>(BaihuoLayers[layer],delegate(Component obj) {
 				zipaiBunch=obj as ZipaiBunch;
 			});
 			while(zipaiBunch==null)yield return null;
 			zipaiBunch.Value=bunch;
-			zipaiBunch.onTap=onTap;
-
-			BaihuoPanel.SetActive(true);
+			zipaiBunch.onTap=delegate(ZipaiBunch obj) {
+				_baihuoReady=onTap(bunchLayers,obj);
+			};
 		}
-		//test
-		if(abcs.Count>0)bunchLayers[0]=abcs[0][0];
-		//end test
+	}
+
+	bool _baihuoReady=true;
+	IEnumerator onABC(){
+		bunch_t[] bunchLayers=new bunch_t[3];
+
+		var abcs=new List<bunch_t>(); 
+		for(int i=0;i<_hints.Count;++i){
+			var bunch=_hints[i];
+			if(bunch.Type==pb_enum.PhzAbc)
+				abcs.Add(bunch);
+		}
+		_baihuoReady=false;
+		yield return StartCoroutine(expandSelectPanel(bunchLayers,abcs,0));
+		BaihuoPanel.SetActive(true);
+
+		while(!_baihuoReady)yield return null;
+		BaihuoPanel.SetActive(false);
 
 		bunch_t obunch=null;
 		foreach(var bl in bunchLayers){
-			if(null==obunch)obunch=bl;
 			if(bl==null)break;
-			foreach(var p in bl.Pawns)bl.Pawns.Add(p);
-		}
-*/
-		bunch_t obunch=null;
-		for(int i=0;i<_hints.Count;++i){
-			var bunch=_hints[i];
-			if(bunch.Type==pb_enum.PhzAbc){
-				obunch=bunch;
-				break;
-			}
+			if(null==obunch)
+				obunch=bl;
+			else
+				foreach(var p in bl.Pawns)obunch.Pawns.Add(p);
 		}
 
 		if(obunch!=null){
