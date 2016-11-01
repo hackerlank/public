@@ -222,7 +222,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto& front=pendingMeld.front();
         auto& bunch=front.bunch;
         auto where=bunch.pos();
-        auto& who=*game.players[where];
+        auto who=game.players[where];
+        auto tokenPlayer=game.players[game.token];
 
         //ok,verify
         auto old_ops=bunch.type();
@@ -238,47 +239,40 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             ret=pb_enum::BUNCH_INVALID;
         }
         
-        auto needDraw=false;
-        auto isDraw=(pendingMeld.size()==1||(bunch.pawns_size()==1&&bunch.pawns(0)==invalid_card));
         KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
         switch(result){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
-                if(isWin(game,who,card,output)){
-                    player.playData.clear_hands();
-                    settle(player,output,card);
+                if(isWin(game,*who,card,output)){
+                    who->playData.clear_hands();
+                    settle(*who,output,card);
                     changeState(game,Game::State::ST_SETTLE);
+                    tokenPlayer.reset();
                 }else{
-                    needDraw=!prediscard(who);
+                    //tokenPlayer=who;
                     ret=pb_enum::ERR_FAILED;
                 }
                 break;
             }
             case pb_enum::OP_PASS:
                 //handle pass, ensure token
-                if(isDraw){
+                if(pendingMeld.size()==1){
+                    //isDraw, pass to discard
                     bunch.set_pos(game.token);
-                    //draw pass to discard
-                    //KEYE_LOG("OnMeld pass to discard\n");
-                    auto& currPlayer=*game.players[game.token];
-                    needDraw=!prediscard(currPlayer);
                 }else{
-                    who.discardedCards.push_back(card);
-                    
+                    //discard, pass to draw,don't do it immediately!
+                    who->discardedCards.push_back(card);
                     bunch.set_pos(-1);
-                    //discard pass to draw,don't do it immediately!
-                    needDraw=true;
                 }
                 break;
             case pb_enum::BUNCH_INVALID:
                 //checked already
+                //tokenPlayer.reset();
                 break;
             default:
                 //A,AAA,AAAA, meld or do some specials
-                if(meld(game,who,card,bunch))
-                    needDraw=!prediscard(who);
-                else
-                    needDraw=true;
+                if(meld(game,*who,card,bunch))
+                    tokenPlayer=who;
         }
 
         //change state before send message
@@ -297,8 +291,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             p->lastMsg=std::make_shared<MsgNCMeld>(msg);
         }
         
-        //then draw
-        if(needDraw){
+        //then draw or discard
+        if(tokenPlayer && !checkDiscard(*tokenPlayer)){
             //KEYE_LOG("OnMeld pass to draw\n");
             draw(game);
             changeState(game,Game::State::ST_MELD);
@@ -364,7 +358,7 @@ bool MeldGame::comparePending(Game&,Game::pending_t& x,Game::pending_t& y){
     return a>b;
 }
 
-bool MeldGame::prediscard(Player& player){
+bool MeldGame::checkDiscard(Player& player){
     auto& game=*player.game;
     changeState(game,Game::State::ST_DISCARD);
     //pending discard

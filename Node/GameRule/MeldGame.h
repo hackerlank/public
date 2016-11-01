@@ -27,7 +27,7 @@ protected:
     virtual void            engage(Game&);
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
-    virtual bool            prediscard(Player&);  //check AAAA and AAA to decide discardable
+    virtual bool            checkDiscard(Player&);  //check AAAA and AAA to decide discardable
 private:
     //game over here
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&)=0;

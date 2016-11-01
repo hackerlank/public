@@ -1921,16 +1921,13 @@ bool Paohuzi::chouWei(Game& game,Player& player,bunch_t& bunch){
     return false;
 }
 
-bool Paohuzi::prediscard(Player& player){
+bool Paohuzi::checkDiscard(Player& player){
     auto sz=player.playData.hands_size();
     if(sz<=0)
         return false;
     
-    auto ret=true;
-    if(!player.AAAAs.empty())
-        ret=(sz%3==2);
-    else{
-        auto aaaa=false;
+    auto aaaa=(!player.AAAAs.empty());
+    if(!aaaa){
         auto& bunches=player.playData.bunch();
         for(auto& bunch:bunches){
             if(bunch.pawns_size()>3){
@@ -1938,11 +1935,11 @@ bool Paohuzi::prediscard(Player& player){
                 break;
             }
         }
-        ret=(sz%3==(aaaa?2:0));
     }
-    
+
+    auto ret=(sz%3==(aaaa?2:0));
     if(ret)
-        MeldGame::prediscard(player);
+        MeldGame::checkDiscard(player);
     
     return ret;
 }

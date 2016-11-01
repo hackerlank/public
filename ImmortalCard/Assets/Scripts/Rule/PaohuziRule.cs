@@ -937,16 +937,13 @@ public class PaohuziRule: GameRule {
 		}//for j
 	}
 
-	public static bool prediscard(Player player){
+	public override bool checkDiscard(Player player){
 		var sz=player.playData.Hands.Count;
 		if(sz<=0)
 			return false;
 		
-		var ret=true;
-		if(player.AAAAs.Count<=0)
-			ret=(sz%3==2);
-		else{
-			var aaaa=false;
+		var aaaa=(player.AAAAs.Count>0);
+		if(!aaaa){
 			var bunches=player.playData.Bunch;
 			foreach(var bunch in bunches){
 				if(bunch.Pawns.Count>3){
@@ -954,10 +951,8 @@ public class PaohuziRule: GameRule {
 					break;
 				}
 			}
-			ret=(sz%3==(aaaa?2:0));
 		}
-		
-		return ret;
+		return (sz%3==(aaaa?2:0));
 	}
 
 	public override PlayerController AIController{

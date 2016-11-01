@@ -15,9 +15,10 @@ public class PaohuziAIController:AIController{
 			return;
 		
 		if(player.pos==msg.Bunch.Pos){
-			Main.Instance.gameController.Rule.Meld(player,msg.Bunch);
+			var rule=Main.Instance.gameController.Rule;
+			rule.Meld(player,msg.Bunch);
 
-			if(PaohuziRule.prediscard(player)){
+			if(rule.checkDiscard(player)){
 				//discard
 				var discard=player.playData.Hands[0];
 				if(msg.Bunch.Type==pb_enum.OpPass)

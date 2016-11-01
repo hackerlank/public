@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Proto3;
 using Google.Protobuf;
@@ -8,12 +8,13 @@ public class DoudeZhuAIController:AIController {
 		//discard AI
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(player.pos==(msg.Bunch.Pos+1)%maxPlayer){
-			if(DoudeZhuRule.prediscard(player)){
+			var rule=Main.Instance.gameController.Rule;
+			if(rule.checkDiscard(player)){
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				
 				bunch_t bunch=null;
-				var hints=Main.Instance.gameController.Rule.Hint(player,msg.Bunch);
+				var hints=rule.Hint(player,msg.Bunch);
 				if(hints.Count>0)
 					bunch=hints[0];
 				else{
