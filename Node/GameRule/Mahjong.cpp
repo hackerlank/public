@@ -42,6 +42,10 @@ void Mahjong::initCard(Game& game){
     }
 }
 
+void Mahjong::engage(Game& game,MsgNCEngage& msg){
+    for(auto& p:game.players)msg.set_keys(p->pos,p->playData.selected_card());
+}
+
 bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
     auto ret=bunch.type();
     auto pos=player.pos;

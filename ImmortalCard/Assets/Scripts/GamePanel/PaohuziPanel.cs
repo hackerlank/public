@@ -36,7 +36,35 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected void OnMsgEngage(MsgNCEngage msg){
+		StartCoroutine(engage(msg));
+	}
+	IEnumerator engage(MsgNCEngage msg){
 		PaohuziRule.prepareAAAA(Main.Instance.MainPlayer);
+		//display all AAAA
+		for(int i=0;i<maxPlayer;++i){
+			if(i==_pos)continue;
+			
+			var bunch=msg.Bunch[i];
+			foreach(var c in bunch.Pawns){
+				Card card=null;
+				Card.Create(CardPrefab,c,MeldAreas[i],delegate(Card obj){
+					card=obj;
+				});
+				while(card==null)yield return null;
+				card.DiscardTo(MeldAreas[i],DiscardScalar);
+			}
+		}
+		
+		//remove AAAA from hands
+		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
+		foreach(var id in msg.Bunch[_pos].Pawns){
+			foreach(var card in hands){
+				if(card.Value==id)
+					card.DiscardTo(MeldAreas[_pos],DiscardScalar);
+			}
+		}
+		
+		yield return StartCoroutine(sortHands());
 		checkNaturalWin();
 	}
 
@@ -44,7 +72,6 @@ public class PaohuziPanel : GamePanel {
 		//transform position
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
-		StartCoroutine(sortHands());
 
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;

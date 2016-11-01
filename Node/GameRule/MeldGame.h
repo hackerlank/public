@@ -24,7 +24,7 @@ protected:
     
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t)=0;
 
-    virtual void            engage(Game&);
+    virtual void            engage(Game&,proto3::MsgNCEngage&);
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable

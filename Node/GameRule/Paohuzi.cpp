@@ -89,8 +89,8 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
-void Paohuzi::engage(Game& game){
-    //pick out AAAA,AAA
+void Paohuzi::engage(Game& game,MsgNCEngage& msg){
+    //pick out AAAA,AAA;these process should be after engage,not at start time
     for(auto p:game.players){
         auto& hands=*p->playData.mutable_hands();
 
@@ -134,7 +134,18 @@ void Paohuzi::engage(Game& game){
         }//for j
     }//for game players
     
-    MeldGame::engage(game);
+    //packed AAAAs into message
+    for(auto p:game.players){
+        if(!p->AAAAs.empty()){
+            auto bunch=msg.mutable_bunch(p->pos);
+            bunch->set_pos(p->pos);
+            bunch->set_type(pb_enum::PHZ_AAAAstart);
+            for(auto& aaaa:p->AAAAs)
+                for(auto c:aaaa.pawns())bunch->add_pawns(c);
+        }
+    }
+    
+    MeldGame::engage(game,msg);
 }
 
 bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){

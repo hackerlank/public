@@ -60,6 +60,9 @@ void DoudeZhu::initCard(Game& game){
     }
 }
 
+void DoudeZhu::engage(Game& game,MsgNCEngage&){
+}
+
 void DoudeZhu::settle(Player& player){
     Game& game=*player.game;
     game.spSettle=std::make_shared<MsgNCSettle>();

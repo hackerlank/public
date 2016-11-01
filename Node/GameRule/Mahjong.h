@@ -22,6 +22,7 @@ protected:
     virtual int             maxHands();
     virtual int             bottom();
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
+    virtual void            engage(Game&,proto3::MsgNCEngage&);
     
     virtual bool            verifyDiscard(Game&,proto3::bunch_t&);
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&);

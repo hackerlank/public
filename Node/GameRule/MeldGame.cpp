@@ -301,7 +301,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     }//if(ready>=queue.size())
 }
 
-void MeldGame::engage(Game& game){
+void MeldGame::engage(Game& game,MsgNCEngage&){
     //after engaged,wait meld to check natural win
     changeState(game,Game::State::ST_MELD);
     

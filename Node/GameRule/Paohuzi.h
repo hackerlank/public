@@ -22,7 +22,7 @@ protected:
     virtual int             maxHands();
     virtual int             bottom();
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
-    virtual void            engage(Game&);
+    virtual void            engage(Game&,proto3::MsgNCEngage&);
 private:
     //is game over with melt card
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);

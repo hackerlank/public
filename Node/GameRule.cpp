@@ -144,12 +144,11 @@ void GameRule::OnEngage(Player& player,uint key){
         for(auto& p:game->players)if(p->engaged)engaged++;
 
         if(game->state==Game::State::ST_ENGAGE && engaged>=MaxPlayer()){
-            engage(*game);
-            
             MsgNCEngage omsg;
             omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
             omsg.set_result(pb_enum::SUCCEESS);
-            for(auto& p:game->players)omsg.add_keys(p->playData.selected_card());
+            for(int i=0;i<MaxPlayer();++i)omsg.add_bunch();
+            engage(*game,omsg);
 
             for(auto& p:game->players)p->send(omsg);
             KEYE_LOG("all engaged\n");

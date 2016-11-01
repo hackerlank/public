@@ -38,7 +38,7 @@ void DiscardGame::Tick(Game& game){
     }
 }
 
-void DiscardGame::engage(Game& game){
+void DiscardGame::engage(Game& game,MsgNCEngage&){
     //after engaged,wait discard
     changeState(game,Game::State::ST_DISCARD);
 

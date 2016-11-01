@@ -32,7 +32,7 @@ protected:
     
     virtual bool        settle(Game&);
     
-    virtual void        engage(Game&){};
+    virtual void        engage(Game&,proto3::MsgNCEngage&){};
     void                deal(Game&);
     void                changeState(Game&,Game::State);
     void                changePos(Game&,pos_t);

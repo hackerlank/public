@@ -48,9 +48,9 @@ void protobuf_ShutdownFile_protocol_2eproto() {
   delete MsgNCJoin::default_instance_;
   delete MsgCNReady::default_instance_;
   delete MsgNCReady::default_instance_;
+  delete MsgNCStart::default_instance_;
   delete MsgCNEngage::default_instance_;
   delete MsgNCEngage::default_instance_;
-  delete MsgNCStart::default_instance_;
   delete MsgCNDiscard::default_instance_;
   delete MsgNCDiscard::default_instance_;
   delete MsgCNMeld::default_instance_;
@@ -109,9 +109,9 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgNCJoin::default_instance_ = new MsgNCJoin();
   MsgCNReady::default_instance_ = new MsgCNReady();
   MsgNCReady::default_instance_ = new MsgNCReady();
+  MsgNCStart::default_instance_ = new MsgNCStart();
   MsgCNEngage::default_instance_ = new MsgCNEngage();
   MsgNCEngage::default_instance_ = new MsgNCEngage();
-  MsgNCStart::default_instance_ = new MsgNCStart();
   MsgCNDiscard::default_instance_ = new MsgCNDiscard();
   MsgNCDiscard::default_instance_ = new MsgNCDiscard();
   MsgCNMeld::default_instance_ = new MsgCNMeld();
@@ -155,9 +155,9 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgNCJoin::default_instance_->InitAsDefaultInstance();
   MsgCNReady::default_instance_->InitAsDefaultInstance();
   MsgNCReady::default_instance_->InitAsDefaultInstance();
+  MsgNCStart::default_instance_->InitAsDefaultInstance();
   MsgCNEngage::default_instance_->InitAsDefaultInstance();
   MsgNCEngage::default_instance_->InitAsDefaultInstance();
-  MsgNCStart::default_instance_->InitAsDefaultInstance();
   MsgCNDiscard::default_instance_->InitAsDefaultInstance();
   MsgNCDiscard::default_instance_->InitAsDefaultInstance();
   MsgCNMeld::default_instance_->InitAsDefaultInstance();
@@ -14646,634 +14646,6 @@ void MsgNCReady::clear_result() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgCNEngage::kMidFieldNumber;
-const int MsgCNEngage::kKeyFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-MsgCNEngage::MsgCNEngage()
-  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgCNEngage)
-}
-
-void MsgCNEngage::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
-}
-
-MsgCNEngage::MsgCNEngage(const MsgCNEngage& from)
-  : ::google::protobuf::MessageLite(),
-    _arena_ptr_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNEngage)
-}
-
-void MsgCNEngage::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  mid_ = 0;
-  key_ = 0;
-}
-
-MsgCNEngage::~MsgCNEngage() {
-  // @@protoc_insertion_point(destructor:proto3.MsgCNEngage)
-  SharedDtor();
-}
-
-void MsgCNEngage::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void MsgCNEngage::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const MsgCNEngage& MsgCNEngage::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_protocol_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
-#endif
-  return *default_instance_;
-}
-
-MsgCNEngage* MsgCNEngage::default_instance_ = NULL;
-
-MsgCNEngage* MsgCNEngage::New(::google::protobuf::Arena* arena) const {
-  MsgCNEngage* n = new MsgCNEngage;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
-
-void MsgCNEngage::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgCNEngage)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgCNEngage, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgCNEngage*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(mid_, key_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
-}
-
-bool MsgCNEngage::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgCNEngage)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .proto3.pb_msg mid = 1;
-      case 1: {
-        if (tag == 8) {
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_mid(static_cast< ::proto3::pb_msg >(value));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(16)) goto parse_key;
-        break;
-      }
-
-      // optional int32 key = 2;
-      case 2: {
-        if (tag == 16) {
-         parse_key:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &key_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgCNEngage)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgCNEngage)
-  return false;
-#undef DO_
-}
-
-void MsgCNEngage::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgCNEngage)
-  // optional .proto3.pb_msg mid = 1;
-  if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->mid(), output);
-  }
-
-  // optional int32 key = 2;
-  if (this->key() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->key(), output);
-  }
-
-  // @@protoc_insertion_point(serialize_end:proto3.MsgCNEngage)
-}
-
-int MsgCNEngage::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNEngage)
-  int total_size = 0;
-
-  // optional .proto3.pb_msg mid = 1;
-  if (this->mid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
-  }
-
-  // optional int32 key = 2;
-  if (this->key() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->key());
-  }
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void MsgCNEngage::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgCNEngage*>(&from));
-}
-
-void MsgCNEngage::MergeFrom(const MsgCNEngage& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNEngage)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) {
-    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
-  }
-  if (from.mid() != 0) {
-    set_mid(from.mid());
-  }
-  if (from.key() != 0) {
-    set_key(from.key());
-  }
-}
-
-void MsgCNEngage::CopyFrom(const MsgCNEngage& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNEngage)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgCNEngage::IsInitialized() const {
-
-  return true;
-}
-
-void MsgCNEngage::Swap(MsgCNEngage* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void MsgCNEngage::InternalSwap(MsgCNEngage* other) {
-  std::swap(mid_, other->mid_);
-  std::swap(key_, other->key_);
-  _unknown_fields_.Swap(&other->_unknown_fields_);
-  std::swap(_cached_size_, other->_cached_size_);
-}
-
-::std::string MsgCNEngage::GetTypeName() const {
-  return "proto3.MsgCNEngage";
-}
-
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgCNEngage
-
-// optional .proto3.pb_msg mid = 1;
-void MsgCNEngage::clear_mid() {
-  mid_ = 0;
-}
- ::proto3::pb_msg MsgCNEngage::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.mid)
-  return static_cast< ::proto3::pb_msg >(mid_);
-}
- void MsgCNEngage::set_mid(::proto3::pb_msg value) {
-  
-  mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.mid)
-}
-
-// optional int32 key = 2;
-void MsgCNEngage::clear_key() {
-  key_ = 0;
-}
- ::google::protobuf::int32 MsgCNEngage::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.key)
-  return key_;
-}
- void MsgCNEngage::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.key)
-}
-
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
-
-// ===================================================================
-
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgNCEngage::kMidFieldNumber;
-const int MsgNCEngage::kKeysFieldNumber;
-const int MsgNCEngage::kResultFieldNumber;
-#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
-
-MsgNCEngage::MsgNCEngage()
-  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgNCEngage)
-}
-
-void MsgNCEngage::InitAsDefaultInstance() {
-  _is_default_instance_ = true;
-}
-
-MsgNCEngage::MsgNCEngage(const MsgNCEngage& from)
-  : ::google::protobuf::MessageLite(),
-    _arena_ptr_(NULL) {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCEngage)
-}
-
-void MsgNCEngage::SharedCtor() {
-    _is_default_instance_ = false;
-  _cached_size_ = 0;
-  mid_ = 0;
-  result_ = 0;
-}
-
-MsgNCEngage::~MsgNCEngage() {
-  // @@protoc_insertion_point(destructor:proto3.MsgNCEngage)
-  SharedDtor();
-}
-
-void MsgNCEngage::SharedDtor() {
-  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  if (this != &default_instance()) {
-  #else
-  if (this != default_instance_) {
-  #endif
-  }
-}
-
-void MsgNCEngage::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const MsgNCEngage& MsgNCEngage::default_instance() {
-#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
-  protobuf_AddDesc_protocol_2eproto();
-#else
-  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
-#endif
-  return *default_instance_;
-}
-
-MsgNCEngage* MsgNCEngage::default_instance_ = NULL;
-
-MsgNCEngage* MsgNCEngage::New(::google::protobuf::Arena* arena) const {
-  MsgNCEngage* n = new MsgNCEngage;
-  if (arena != NULL) {
-    arena->Own(n);
-  }
-  return n;
-}
-
-void MsgNCEngage::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgNCEngage)
-#if defined(__clang__)
-#define ZR_HELPER_(f) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgNCEngage, f) \
-  _Pragma("clang diagnostic pop")
-#else
-#define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgNCEngage*>(16)->f)
-#endif
-
-#define ZR_(first, last) do {\
-  ::memset(&first, 0,\
-           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
-} while (0)
-
-  ZR_(mid_, result_);
-
-#undef ZR_HELPER_
-#undef ZR_
-
-  keys_.Clear();
-}
-
-bool MsgNCEngage::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgNCEngage)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .proto3.pb_msg mid = 1;
-      case 1: {
-        if (tag == 8) {
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_mid(static_cast< ::proto3::pb_msg >(value));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(18)) goto parse_keys;
-        break;
-      }
-
-      // repeated int32 keys = 2;
-      case 2: {
-        if (tag == 18) {
-         parse_keys:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_keys())));
-        } else if (tag == 16) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 18, input, this->mutable_keys())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_result;
-        break;
-      }
-
-      // optional .proto3.pb_enum result = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_result:
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_result(static_cast< ::proto3::pb_enum >(value));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgNCEngage)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgNCEngage)
-  return false;
-#undef DO_
-}
-
-void MsgNCEngage::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgNCEngage)
-  // optional .proto3.pb_msg mid = 1;
-  if (this->mid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->mid(), output);
-  }
-
-  // repeated int32 keys = 2;
-  if (this->keys_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_keys_cached_byte_size_);
-  }
-  for (int i = 0; i < this->keys_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
-      this->keys(i), output);
-  }
-
-  // optional .proto3.pb_enum result = 3;
-  if (this->result() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->result(), output);
-  }
-
-  // @@protoc_insertion_point(serialize_end:proto3.MsgNCEngage)
-}
-
-int MsgNCEngage::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCEngage)
-  int total_size = 0;
-
-  // optional .proto3.pb_msg mid = 1;
-  if (this->mid() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
-  }
-
-  // optional .proto3.pb_enum result = 3;
-  if (this->result() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
-  }
-
-  // repeated int32 keys = 2;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->keys_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->keys(i));
-    }
-    if (data_size > 0) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
-    }
-    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _keys_cached_byte_size_ = data_size;
-    GOOGLE_SAFE_CONCURRENT_WRITES_END();
-    total_size += data_size;
-  }
-
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void MsgNCEngage::CheckTypeAndMergeFrom(
-    const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgNCEngage*>(&from));
-}
-
-void MsgNCEngage::MergeFrom(const MsgNCEngage& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCEngage)
-  if (GOOGLE_PREDICT_FALSE(&from == this)) {
-    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
-  }
-  keys_.MergeFrom(from.keys_);
-  if (from.mid() != 0) {
-    set_mid(from.mid());
-  }
-  if (from.result() != 0) {
-    set_result(from.result());
-  }
-}
-
-void MsgNCEngage::CopyFrom(const MsgNCEngage& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCEngage)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgNCEngage::IsInitialized() const {
-
-  return true;
-}
-
-void MsgNCEngage::Swap(MsgNCEngage* other) {
-  if (other == this) return;
-  InternalSwap(other);
-}
-void MsgNCEngage::InternalSwap(MsgNCEngage* other) {
-  std::swap(mid_, other->mid_);
-  keys_.UnsafeArenaSwap(&other->keys_);
-  std::swap(result_, other->result_);
-  _unknown_fields_.Swap(&other->_unknown_fields_);
-  std::swap(_cached_size_, other->_cached_size_);
-}
-
-::std::string MsgNCEngage::GetTypeName() const {
-  return "proto3.MsgNCEngage";
-}
-
-#if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgNCEngage
-
-// optional .proto3.pb_msg mid = 1;
-void MsgNCEngage::clear_mid() {
-  mid_ = 0;
-}
- ::proto3::pb_msg MsgNCEngage::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.mid)
-  return static_cast< ::proto3::pb_msg >(mid_);
-}
- void MsgNCEngage::set_mid(::proto3::pb_msg value) {
-  
-  mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.mid)
-}
-
-// repeated int32 keys = 2;
-int MsgNCEngage::keys_size() const {
-  return keys_.size();
-}
-void MsgNCEngage::clear_keys() {
-  keys_.Clear();
-}
- ::google::protobuf::int32 MsgNCEngage::keys(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.keys)
-  return keys_.Get(index);
-}
- void MsgNCEngage::set_keys(int index, ::google::protobuf::int32 value) {
-  keys_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.keys)
-}
- void MsgNCEngage::add_keys(::google::protobuf::int32 value) {
-  keys_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgNCEngage.keys)
-}
- const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgNCEngage::keys() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCEngage.keys)
-  return keys_;
-}
- ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgNCEngage::mutable_keys() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCEngage.keys)
-  return &keys_;
-}
-
-// optional .proto3.pb_enum result = 3;
-void MsgNCEngage::clear_result() {
-  result_ = 0;
-}
- ::proto3::pb_enum MsgNCEngage::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.result)
-  return static_cast< ::proto3::pb_enum >(result_);
-}
- void MsgNCEngage::set_result(::proto3::pb_enum value) {
-  
-  result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.result)
-}
-
-#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
-
-// ===================================================================
-
-#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCStart::kMidFieldNumber;
 const int MsgNCStart::kBankerFieldNumber;
 const int MsgNCStart::kPosFieldNumber;
@@ -15517,13 +14889,13 @@ bool MsgNCStart::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(72)) goto parse_result;
+        if (input->ExpectTag(80)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 9;
-      case 9: {
-        if (tag == 72) {
+      // optional .proto3.pb_enum result = 10;
+      case 10: {
+        if (tag == 80) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -15617,10 +14989,10 @@ void MsgNCStart::SerializeWithCachedSizes(
       this->count(i), output);
   }
 
-  // optional .proto3.pb_enum result = 9;
+  // optional .proto3.pb_enum result = 10;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      9, this->result(), output);
+      10, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCStart)
@@ -15664,7 +15036,7 @@ int MsgNCStart::ByteSize() const {
         this->multiple());
   }
 
-  // optional .proto3.pb_enum result = 9;
+  // optional .proto3.pb_enum result = 10;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -15957,7 +15329,7 @@ MsgNCStart::mutable_count() {
   return &count_;
 }
 
-// optional .proto3.pb_enum result = 9;
+// optional .proto3.pb_enum result = 10;
 void MsgNCStart::clear_result() {
   result_ = 0;
 }
@@ -15969,6 +15341,699 @@ void MsgNCStart::clear_result() {
   
   result_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCStart.result)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgCNEngage::kMidFieldNumber;
+const int MsgCNEngage::kKeyFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgCNEngage::MsgCNEngage()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.MsgCNEngage)
+}
+
+void MsgCNEngage::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+MsgCNEngage::MsgCNEngage(const MsgCNEngage& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNEngage)
+}
+
+void MsgCNEngage::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  mid_ = 0;
+  key_ = 0;
+}
+
+MsgCNEngage::~MsgCNEngage() {
+  // @@protoc_insertion_point(destructor:proto3.MsgCNEngage)
+  SharedDtor();
+}
+
+void MsgCNEngage::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void MsgCNEngage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const MsgCNEngage& MsgCNEngage::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+MsgCNEngage* MsgCNEngage::default_instance_ = NULL;
+
+MsgCNEngage* MsgCNEngage::New(::google::protobuf::Arena* arena) const {
+  MsgCNEngage* n = new MsgCNEngage;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void MsgCNEngage::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgCNEngage)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgCNEngage, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgCNEngage*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, key_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool MsgCNEngage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.MsgCNEngage)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .proto3.pb_msg mid = 1;
+      case 1: {
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_key;
+        break;
+      }
+
+      // optional int32 key = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_key:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &key_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.MsgCNEngage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.MsgCNEngage)
+  return false;
+#undef DO_
+}
+
+void MsgCNEngage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.MsgCNEngage)
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
+  }
+
+  // optional int32 key = 2;
+  if (this->key() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->key(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.MsgCNEngage)
+}
+
+int MsgCNEngage::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNEngage)
+  int total_size = 0;
+
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional int32 key = 2;
+  if (this->key() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->key());
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgCNEngage::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MsgCNEngage*>(&from));
+}
+
+void MsgCNEngage::MergeFrom(const MsgCNEngage& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNEngage)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  if (from.mid() != 0) {
+    set_mid(from.mid());
+  }
+  if (from.key() != 0) {
+    set_key(from.key());
+  }
+}
+
+void MsgCNEngage::CopyFrom(const MsgCNEngage& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNEngage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgCNEngage::IsInitialized() const {
+
+  return true;
+}
+
+void MsgCNEngage::Swap(MsgCNEngage* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgCNEngage::InternalSwap(MsgCNEngage* other) {
+  std::swap(mid_, other->mid_);
+  std::swap(key_, other->key_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string MsgCNEngage::GetTypeName() const {
+  return "proto3.MsgCNEngage";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MsgCNEngage
+
+// optional .proto3.pb_msg mid = 1;
+void MsgCNEngage::clear_mid() {
+  mid_ = 0;
+}
+ ::proto3::pb_msg MsgCNEngage::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+ void MsgCNEngage::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.mid)
+}
+
+// optional int32 key = 2;
+void MsgCNEngage::clear_key() {
+  key_ = 0;
+}
+ ::google::protobuf::int32 MsgCNEngage::key() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNEngage.key)
+  return key_;
+}
+ void MsgCNEngage::set_key(::google::protobuf::int32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNEngage.key)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgNCEngage::kMidFieldNumber;
+const int MsgNCEngage::kKeysFieldNumber;
+const int MsgNCEngage::kBunchFieldNumber;
+const int MsgNCEngage::kResultFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgNCEngage::MsgNCEngage()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.MsgNCEngage)
+}
+
+void MsgNCEngage::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+MsgNCEngage::MsgNCEngage(const MsgNCEngage& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCEngage)
+}
+
+void MsgNCEngage::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  mid_ = 0;
+  result_ = 0;
+}
+
+MsgNCEngage::~MsgNCEngage() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCEngage)
+  SharedDtor();
+}
+
+void MsgNCEngage::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void MsgNCEngage::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const MsgNCEngage& MsgNCEngage::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+MsgNCEngage* MsgNCEngage::default_instance_ = NULL;
+
+MsgNCEngage* MsgNCEngage::New(::google::protobuf::Arena* arena) const {
+  MsgNCEngage* n = new MsgNCEngage;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void MsgNCEngage::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCEngage)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgNCEngage, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgNCEngage*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, result_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+  keys_.Clear();
+  bunch_.Clear();
+}
+
+bool MsgNCEngage::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCEngage)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .proto3.pb_msg mid = 1;
+      case 1: {
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_keys;
+        break;
+      }
+
+      // repeated int32 keys = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_keys:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_keys())));
+        } else if (tag == 16) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 18, input, this->mutable_keys())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_bunch;
+        break;
+      }
+
+      // repeated .proto3.bunch_t bunch = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_bunch:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_bunch:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_bunch()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_bunch;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(48)) goto parse_result;
+        break;
+      }
+
+      // optional .proto3.pb_enum result = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_result:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_result(static_cast< ::proto3::pb_enum >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCEngage)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCEngage)
+  return false;
+#undef DO_
+}
+
+void MsgNCEngage::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCEngage)
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
+  }
+
+  // repeated int32 keys = 2;
+  if (this->keys_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_keys_cached_byte_size_);
+  }
+  for (int i = 0; i < this->keys_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->keys(i), output);
+  }
+
+  // repeated .proto3.bunch_t bunch = 3;
+  for (unsigned int i = 0, n = this->bunch_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, this->bunch(i), output);
+  }
+
+  // optional .proto3.pb_enum result = 6;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      6, this->result(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCEngage)
+}
+
+int MsgNCEngage::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCEngage)
+  int total_size = 0;
+
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional .proto3.pb_enum result = 6;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+  }
+
+  // repeated int32 keys = 2;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->keys_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->keys(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _keys_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated .proto3.bunch_t bunch = 3;
+  total_size += 1 * this->bunch_size();
+  for (int i = 0; i < this->bunch_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->bunch(i));
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgNCEngage::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCEngage*>(&from));
+}
+
+void MsgNCEngage::MergeFrom(const MsgNCEngage& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCEngage)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  keys_.MergeFrom(from.keys_);
+  bunch_.MergeFrom(from.bunch_);
+  if (from.mid() != 0) {
+    set_mid(from.mid());
+  }
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+}
+
+void MsgNCEngage::CopyFrom(const MsgNCEngage& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCEngage)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgNCEngage::IsInitialized() const {
+
+  return true;
+}
+
+void MsgNCEngage::Swap(MsgNCEngage* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgNCEngage::InternalSwap(MsgNCEngage* other) {
+  std::swap(mid_, other->mid_);
+  keys_.UnsafeArenaSwap(&other->keys_);
+  bunch_.UnsafeArenaSwap(&other->bunch_);
+  std::swap(result_, other->result_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string MsgNCEngage::GetTypeName() const {
+  return "proto3.MsgNCEngage";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MsgNCEngage
+
+// optional .proto3.pb_msg mid = 1;
+void MsgNCEngage::clear_mid() {
+  mid_ = 0;
+}
+ ::proto3::pb_msg MsgNCEngage::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+ void MsgNCEngage::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.mid)
+}
+
+// repeated int32 keys = 2;
+int MsgNCEngage::keys_size() const {
+  return keys_.size();
+}
+void MsgNCEngage::clear_keys() {
+  keys_.Clear();
+}
+ ::google::protobuf::int32 MsgNCEngage::keys(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.keys)
+  return keys_.Get(index);
+}
+ void MsgNCEngage::set_keys(int index, ::google::protobuf::int32 value) {
+  keys_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.keys)
+}
+ void MsgNCEngage::add_keys(::google::protobuf::int32 value) {
+  keys_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.MsgNCEngage.keys)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+MsgNCEngage::keys() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCEngage.keys)
+  return keys_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+MsgNCEngage::mutable_keys() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCEngage.keys)
+  return &keys_;
+}
+
+// repeated .proto3.bunch_t bunch = 3;
+int MsgNCEngage::bunch_size() const {
+  return bunch_.size();
+}
+void MsgNCEngage::clear_bunch() {
+  bunch_.Clear();
+}
+const ::proto3::bunch_t& MsgNCEngage::bunch(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.bunch)
+  return bunch_.Get(index);
+}
+::proto3::bunch_t* MsgNCEngage::mutable_bunch(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCEngage.bunch)
+  return bunch_.Mutable(index);
+}
+::proto3::bunch_t* MsgNCEngage::add_bunch() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCEngage.bunch)
+  return bunch_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+MsgNCEngage::mutable_bunch() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCEngage.bunch)
+  return &bunch_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+MsgNCEngage::bunch() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCEngage.bunch)
+  return bunch_;
+}
+
+// optional .proto3.pb_enum result = 6;
+void MsgNCEngage::clear_result() {
+  result_ = 0;
+}
+ ::proto3::pb_enum MsgNCEngage::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCEngage.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+ void MsgNCEngage::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCEngage.result)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

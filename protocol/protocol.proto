@@ -532,19 +532,6 @@ int32 pos               =2;
 pb_enum result          =3;
 }
 
-message MsgCNEngage{
-
-pb_msg mid              =1;
-int32 key              =2;
-}
-
-message MsgNCEngage{
-
-pb_msg mid              =1;
-repeated int32 keys     =2;
-pb_enum result          =3;
-}
-
 message MsgNCStart{
 
 pb_msg mid              =1;
@@ -555,8 +542,22 @@ int32 multiple          =5;
 repeated int32 hands    =6;
 repeated int32 bottom   =7;
 repeated int32 count    =8; //hands count
-pb_enum result			=9;
+pb_enum result			=10;
 };
+
+message MsgCNEngage{
+
+pb_msg mid              =1;
+int32 key              =2;
+}
+
+message MsgNCEngage{
+
+pb_msg mid              =1;
+repeated int32 keys     =2;
+repeated bunch_t bunch  =3;
+pb_enum result          =6;
+}
 
 message MsgCNDiscard{
 

@@ -48,9 +48,6 @@ public class PaohuziRule: GameRule {
 
 		var card=src_bunch.Pawns[0];
 		var bDraw=(src_bunch.Type==pb_enum.BunchA||card==Configs.invalidCard);
-		if(bDraw){
-			Debug.Log("-------drawing "+card);
-		}
 
 		//hint3
 		var output3=new bunch_t();

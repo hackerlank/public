@@ -23,6 +23,7 @@ protected:
     virtual int         bottom();
     
     virtual void        settle(Player&);
+    virtual void        engage(Game&,proto3::MsgNCEngage&);
 private:
     proto3::pb_enum     verifyBunch(proto3::bunch_t&);
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
