@@ -122,7 +122,6 @@ public class PaohuziPanel : GamePanel {
 		
 		var from=Rule.Token;
 		var to=bunch.Pos;
-		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 
 		var bDraw=(bunch.Type==pb_enum.OpPass&&to!=-1);
@@ -131,7 +130,6 @@ public class PaohuziPanel : GamePanel {
 
 		//construct bunches
 		var melds=new List<bunch_t>();
-		List<Card> cards=new List<Card>();
 		switch(bunch.Type){
 		case pb_enum.PhzAbc:
 			for(var i=0;i<bunch.Pawns.Count/3;++i){
@@ -145,6 +143,30 @@ public class PaohuziPanel : GamePanel {
 				melds.Add(bun);
 			}
 			break;
+		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzBbbbdesk:
+			//remove bunch from desk
+			var meldBunch=MeldAreas[to].GetComponentsInChildren<ZipaiBunch>();
+			foreach(var mb in meldBunch){
+				var found=false;
+				var val=mb.Value;
+				foreach(var b in val.Pawns){
+					foreach(var a in bunch.Pawns){
+						if(a==b){
+							found=true;
+							break;
+						}
+					}
+					if(found)break;
+				}
+				if(found){
+					Destroy(mb.gameObject);
+					break;
+				}
+			}
+			Destroy(A.gameObject);
+			melds.Add(bunch);
+			break;
 		default:
 			melds.Add(bunch);
 			break;
@@ -154,11 +176,6 @@ public class PaohuziPanel : GamePanel {
 		switch(bunch.Type){
 		case pb_enum.PhzAaaadesk:
 		case pb_enum.PhzBbbbdesk:
-			//modify the 4th card by discard
-			var meldBunch=MeldAreas[to].GetComponentsInChildren<Card>();
-			meldBunch[3].Value=A.Value;
-			Destroy(A.gameObject);
-			break;
 		case pb_enum.PhzAbc:
 		case pb_enum.PhzBbb:
 		case pb_enum.PhzAaawei:
@@ -167,43 +184,26 @@ public class PaohuziPanel : GamePanel {
 		case pb_enum.PhzBbbB:
 			//move cards from hands and discard to meld area
 			foreach(var melt in melds){
-				//meld area: add bunches with constant 4 cards
+				ZipaiBunch zb=null;
+				Utils.Load<ZipaiBunch>(MeldAreas[to],delegate(Component obj) {
+					zb=obj as ZipaiBunch;
+				});
+				while(zb==null)yield return null;
+				zb.Value=melt;
+
 				if(to==_pos){
 					//find my hands cards
 					var hands=HandAreas[to].GetComponentsInChildren<Card>();
 					foreach(var id in melt.Pawns){
 						foreach(var card in hands){
-							if(card.Value==id)
-								cards.Add(card);
+							if(card.Value==id){
+								Destroy(card.gameObject);
+								break;
+							}
 						}
 					}
-					Debug.Log("----meld prepare my bunch size="+cards.Count);
-				}else{
-					//add meld cards for others
-					foreach(var id in melt.Pawns){
-						if(A.Value!=id) Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card other){
-							if(null!=other)
-								cards.Add(other);
-						});
-					}
-					while(cards.Count<melt.Pawns.Count-1)yield return null;
-					Debug.Log("----meld prepare other bunch size="+cards.Count);
 				}
-				cards.Add(A);
-				
-				//add place holder
-				if(cards.Count<4) Card.Create(CardPrefab,-1,MeldAreas[to],delegate(Card blank){
-					if(null!=blank)
-						cards.Add(blank);
-				});
-				while(cards.Count<4)yield return null;
-				Debug.Log("----meld final bunch size="+cards.Count);
-				
-				//move to meld area
-				foreach(var c in cards){
-					c.state=Card.State.ST_MELD;
-					c.DiscardTo(MeldAreas[to],scalar);
-				}
+
 				Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			}
 
