@@ -20,7 +20,7 @@ protected:
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&)=0;
 
     virtual bool            comparision(uint x,uint y);
-    virtual bool            comparePending(Game&,Game::pending_t& x,Game::pending_t& y);
+    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
     
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t)=0;
 

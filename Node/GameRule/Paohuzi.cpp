@@ -1973,7 +1973,7 @@ int opWeight(pb_enum op){
     return (ops>pb_enum::BUNCH_WIN?i+(ops/pb_enum::BUNCH_WIN*pb_enum::BUNCH_WIN):i);
 }
 
-bool Paohuzi::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
+bool Paohuzi::comparePending(std::shared_ptr<Game> game,Game::pending_t& x,Game::pending_t& y){
     auto a=x.bunch.type();
     auto b=y.bunch.type();
 
@@ -1990,16 +1990,16 @@ bool Paohuzi::comparePending(Game& game,Game::pending_t& x,Game::pending_t& y){
     }
     //同级别或胡牌情况的优先级处理
     auto M=MaxPlayer();
-    auto startIndex=(game.token+1)%M;//记录当前打牌人的下一个位置，作为开始位置,兼容四人玩法
+    auto startIndex=(game->token+1)%M;//记录当前打牌人的下一个位置，作为开始位置,兼容四人玩法
     auto p=x.bunch.pos();
     auto q=y.bunch.pos();
-    if(p==game.token)
+    if(p==game->token)
         return true;	//本人
-    else if(q==game.token)
+    else if(q==game->token)
         return false;
-    else if(p==(game.token+1)%M)
+    else if(p==(game->token+1)%M)
         return true;	//下手
-    else if(q==(game.token+1)%M)
+    else if(q==(game->token+1)%M)
         return false;	//下手
     else if(M==4&&p==(startIndex+1)%M)
         return false;	//四人玩法中的下下手
