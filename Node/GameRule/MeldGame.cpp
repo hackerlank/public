@@ -275,6 +275,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 if(meld(game,*who,card,bunch))
                     tokenPlayer=who;
         }
+        onMeld(game,*who,card,bunch);
 
         //change state before send message
         MsgNCMeld msg;

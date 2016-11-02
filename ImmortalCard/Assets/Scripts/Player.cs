@@ -21,8 +21,10 @@ public class Player {
 
 	//phz
 	public List<int>		unpairedCards=new List<int>();
+	public List<int>		dodgeCards=new List<int>();
 	public List<bunch_t>	AAAAs=new List<bunch_t>();
 	public List<bunch_t>	AAAs=new List<bunch_t>();
+	public bool				conflictMeld=false;
 
 	public MsgNCCreate	msgNCCreate;
 	public MsgNCJoin	msgNCJoin;
@@ -159,6 +161,8 @@ public class Player {
 				AAAs.Clear();
 				AAAAs.Clear();
 				unpairedCards.Clear();
+				dodgeCards.Clear();
+				conflictMeld=false;
 
 				//copy data
 				msg=msgStart;
@@ -177,7 +181,7 @@ public class Player {
 				//append historical
 				var hist=Main.Instance.gameController.Rule.Historical;
 				if(hist.Count<=0||hist[hist.Count-1].Pos!=msgDiscard.Bunch.Pos){
-					Debug.Log("add historical "+Player.bunch2str(msgDiscard.Bunch));
+					Debug.Log("add historical for "+msgDiscard.Bunch.Pos+" "+Player.bunch2str(msgDiscard.Bunch));
 					hist.Add(msgDiscard.Bunch);
 				}
 				//remove discards from hands
@@ -243,7 +247,7 @@ public class Player {
 	}
 
 	public static string bunch2str(bunch_t bunch){
-		string str="ops="+(int)bunch.Type+",pos="+bunch.Pos;
+		string str="ops="+(int)bunch.Type;
 		if(bunch.Pawns.Count<=0)
 			str+=",empty";
 		else{

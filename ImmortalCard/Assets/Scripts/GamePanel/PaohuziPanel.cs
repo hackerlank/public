@@ -195,9 +195,9 @@ public class PaohuziPanel : GamePanel {
 					//find my hands cards
 					var hands=HandAreas[to].GetComponentsInChildren<Card>();
 					foreach(var id in melt.Pawns){
-						foreach(var card in hands){
-							if(card.Value==id){
-								Destroy(card.gameObject);
+						foreach(var h in hands){
+							if(h.Value==id){
+								Destroy(h.gameObject);
 								break;
 							}
 						}
@@ -210,10 +210,10 @@ public class PaohuziPanel : GamePanel {
 			break;
 		default:
 			//abandon
+			var card=bunch.Pawns[0];
 			if(bunch.Type==pb_enum.OpPass&&-1!=to){
 				//was draw
 				if(to==_pos){
-					var card=bunch.Pawns[0];
 					MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 					omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 					omsgDiscard.Bunch=new bunch_t();
@@ -228,6 +228,22 @@ public class PaohuziPanel : GamePanel {
 				A.DiscardTo(AbandonAreas[to],AbandonScalar);
 				A.state=Card.State.ST_ABANDON;
 			}
+
+			//record past and dodge cards
+			var me=Main.Instance.MainPlayer;
+			if(me.pos==bunch.Pos){
+				var past=false;
+				var dodge=false;
+				foreach(var b in bunch.Child){
+					if(b.Type==pb_enum.PhzAbc){
+						past=true;
+					}else if(b.Type==pb_enum.PhzBbb){
+						dodge=true;
+					}
+				}
+				if(past)me.unpairedCards.Add(card);
+				if(dodge)me.dodgeCards.Add(card);
+			}
 			break;
 		}
 		//remove from hands
@@ -237,7 +253,47 @@ public class PaohuziPanel : GamePanel {
 		}
 		if(to==_pos)StartCoroutine(sortHands());
 	}
-	
+
+	override protected IEnumerator passMeld(Player player,int card=0,bool wait=true){
+		//send past and dodge operation,record when message back
+		player.unpairedCards.Remove(card);
+		var past=false;
+		var dodge=false;
+		foreach(var b in _hints){
+			if(b.Type==pb_enum.PhzAbc){
+				past=true;
+				Debug.Log(player.pos+" past "+card);
+			}else if(b.Type==pb_enum.PhzBbb){
+				dodge=true;
+				Debug.Log(player.pos+" dodge "+card);
+			}
+		}
+
+		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
+		
+		//pass discard or draw message
+		var msg=new MsgCNMeld();
+		msg.Mid=pb_msg.MsgCnMeld;
+		
+		bunch_t bunch=new bunch_t();
+		bunch.Pos=player.pos;
+		bunch.Pawns.Add(card);
+		bunch.Type=pb_enum.OpPass;
+		if(past){
+			bunch_t bpast=new bunch_t();
+			bpast.Type=pb_enum.PhzAbc;
+			bunch.Child.Add(bpast);
+		}
+		if(dodge){
+			bunch_t bpast=new bunch_t();
+			bpast.Type=pb_enum.PhzBbb;
+			bunch.Child.Add(bpast);
+		}
+		msg.Bunch=bunch;
+		
+		player.Send<MsgCNMeld>(msg.Mid,msg);
+	}
+
 	override protected bool showHints(int card,bool bDraw,bool startup=false){
 		var player=Main.Instance.MainPlayer;
 		var bunch=new bunch_t();

@@ -149,10 +149,20 @@ void Paohuzi::engage(Game& game,MsgNCEngage& msg){
 }
 
 bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
-    //can't meld pass card( no win here )
-    if(std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end()){
-        KEYE_LOG("meld failed, past card\n");
-        return false;
+    //past,dodge and conflict
+    auto past=std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end();
+    if(past||player.conflictMeld){
+        if(pb_enum::PHZ_ABC==bunch.type()||pb_enum::PHZ_BBB==bunch.type()){
+            KEYE_LOG("meld failed, past card or conflict\n");
+            return false;
+        }
+    }
+    auto dodge=std::find(player.dodgeCards.begin(),player.dodgeCards.end(),card)!=player.dodgeCards.end();
+    if(dodge){
+        if(pb_enum::PHZ_BBB==bunch.type()){
+            KEYE_LOG("meld failed, dodge card\n");
+            return false;
+        }
     }
     
     //baihuo
@@ -227,6 +237,22 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     }
     changePos(game,pos);
     return true;
+}
+
+void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
+    //record past and dodge cards
+    std::remove(player.unpairedCards.begin(),player.unpairedCards.end(),card);
+    auto past=false;
+    auto dodge=false;
+    for(auto b : bunch.child()){
+        if(b.type()==pb_enum::PHZ_ABC){
+            past=true;
+        }else if(b.type()==pb_enum::PHZ_BBB){
+            dodge=true;
+        }
+    }
+    if(past)player.unpairedCards.push_back(card);
+    if(dodge)player.dodgeCards.push_back(card);
 }
 
 bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){

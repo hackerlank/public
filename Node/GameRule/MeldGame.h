@@ -28,6 +28,8 @@ protected:
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
+
+    virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&){};
 private:
     //game over here
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&)=0;

@@ -188,6 +188,8 @@ int Player::getKey(){
 void Player::reset(){
     playData.Clear();
     unpairedCards.clear();
+    dodgeCards.clear();
+    conflictMeld=false;
     AAAs.clear();
     AAAAs.clear();
     lastMsg.reset();

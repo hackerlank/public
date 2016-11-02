@@ -112,7 +112,7 @@ public class MahJongRule: GameRule {
 		
 		var count=hints.Count;
 		if(count>0){
-			string str="hint "+count+",pos="+pos+",";
+			string str=count+" hints for "+pos+": ";
 			foreach(var bunch in hints)
 				str+=Player.bunch2str(bunch);
 			Debug.Log(str);

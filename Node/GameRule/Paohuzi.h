@@ -23,6 +23,8 @@ protected:
     virtual int             bottom();
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     virtual void            engage(Game&,proto3::MsgNCEngage&);
+
+    virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
 private:
     //is game over with melt card
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);

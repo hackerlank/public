@@ -48,18 +48,36 @@ public class PaohuziRule: GameRule {
 
 		var card=src_bunch.Pawns[0];
 		var bDraw=(src_bunch.Type==pb_enum.BunchA||card==Configs.invalidCard);
+		//handle past card
+		var past=false;
+		var dodge=false;
+		foreach(var c in player.dodgeCards)if(c/1000==card/1000 && c%100==card%100){
+			dodge=true;
+			break;
+		}
+		foreach(var c in player.unpairedCards)if(c/1000==card/1000 && c%100==card%100){
+			past=true;
+			break;
+		}
 
 		//hint3
 		var output3=new bunch_t();
 		if(hint3(player,card,output3,bDraw)){
-			output3.Pos=pos;
+			if(output3.Type==pb_enum.PhzBbb){
+				if(past||dodge||player.conflictMeld)
+					output3.Pawns.Clear();
+			}else
+				output3.Pos=pos;
 		}
 
 		//hint
-		bool meltable=(Token==pos&&bDraw)||pos==(Token+1)%MaxPlayer;
+		bool meltable=(!player.conflictMeld) && (!past)
+			&& ((Token==pos&&bDraw) || (pos==(Token+1)%MaxPlayer));
 		var output1=new List<bunch_t>();
 		if(meltable)
 			hint(player,card,output1);
+		Debug.Log("----Hint for "+pos+",draw="+bDraw+",past="+past+",dodge="+dodge
+		          +",conflict="+player.conflictMeld+",melt="+meltable);
 
 		var all=new List<bunch_t>();
 		var win=IsWin(player,card,all,bDraw);
@@ -72,23 +90,12 @@ public class PaohuziRule: GameRule {
 			hints.Add(output);
 		}
 
-		//handle past card
-		var past=false;
-		foreach(var c in player.unpairedCards)if(c/1000==card/1000 && c%100==card%100){
-			past=true;
-			break;
-		}
-		if(past){
-			output1.Clear();
-			if(output3.Pawns.Count==3)
-				output3.Pawns.Clear();
-		}
 		if(output3.Pawns.Count>0)hints.Add(output3);
 		if(output1.Count>0)hints.AddRange(output1);
 
 		var count=hints.Count;
 		if(count>0){
-			string str=count+" hints from pos="+pos+": ";
+			string str=count+" hints for "+pos+": ";
 			foreach(var bunch in hints)
 				str+=Player.bunch2str(bunch);
 			Debug.Log(str);
@@ -899,7 +906,7 @@ public class PaohuziRule: GameRule {
 
 	bool chouWei(Player player,bunch_t bunch){
 		//臭偎
-		var vp=player.unpairedCards;
+		var vp=player.dodgeCards;
 		var n=bunch.Pawns[0];
 		foreach(var i in vp){
 			var m=i;

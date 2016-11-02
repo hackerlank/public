@@ -49,7 +49,7 @@ public class DoudeZhuRule: GameRule {
 				if(hist.Type==pb_enum.OpPass&&H>1)
 					hist=Historical[H-2];
 				var type=(pb_enum)hist.Type;
-				Debug.Log("Hint by "+Player.bunch2str(hist));
+				Debug.Log("hint for "+player.pos+" "+Player.bunch2str(hist));
 				if(type==pb_enum.OpPass){
 					var b=new bunch_t();
 					b.Type=pb_enum.BunchA;
