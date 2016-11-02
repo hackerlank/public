@@ -94,14 +94,21 @@ public class PaohuziPanel : GamePanel {
 		}
 	}
 
-	override protected void OnMsgDraw(int id,int pos){
+	override protected IEnumerator OnMsgDraw(int id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
-		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
-			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
-			card.state=Card.State.ST_DISCARD;
+		Card card=null;
+		Card.Create(CardPrefab,1000,Pile,delegate(Card obj) {
+			card=obj;
 		});
+		while(card==null)yield return null;
+
+		card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+		card.state=Card.State.ST_DISCARD;
+
+		yield return new WaitForSeconds(Configs.OpsInterval/2f);
+		card.Value=id;
 
 		//immediately pass for the drawer,we only meld when discard
 		Player player=Main.Instance.MainPlayer;

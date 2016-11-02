@@ -107,7 +107,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			var msgDraw=msg as MsgNCDraw;
 			Debug.Log(msgDraw.Pos+" draw "+(int)msgDraw.Card);
 			changeToken(msgDraw.Pos);
-			OnMsgDraw(msgDraw.Card,msgDraw.Pos);
+			StartCoroutine(OnMsgDraw(msgDraw.Card,msgDraw.Pos));
 
 		}else if(msg is MsgNCSettle){
 			var msgSettle=msg as MsgNCSettle;
@@ -347,7 +347,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual protected void OnMsgEngage(MsgNCEngage msg){}
 	virtual protected void onMsgStart(){}
 	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
-	virtual protected void OnMsgDraw(int card,int pos){}
+	virtual protected IEnumerator OnMsgDraw(int card,int pos){yield break;}
 	virtual protected IEnumerator OnMsgMeld(bunch_t bunch){yield break;}
 	virtual protected IEnumerator sortHands(){yield break;}
 	virtual protected bool showHints(int card,bool bDraw,bool startup=false){return true;}

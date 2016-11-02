@@ -64,7 +64,7 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected void OnMsgDraw(int id,int pos){
+	override protected IEnumerator OnMsgDraw(int id,int pos){
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -78,6 +78,7 @@ public class MahJongPanel : GamePanel {
 			StartCoroutine(passMeld(Main.Instance.MainPlayer,id));
 			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
 		}
+		yield break;
 	}
 
 	override protected IEnumerator OnMsgMeld(bunch_t bunch){

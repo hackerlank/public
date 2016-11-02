@@ -12,7 +12,7 @@ public class Configs{
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 
-	public static float OpsInterval=1f;
+	public static float OpsInterval=1.6f;
 	public static int invalidCard=-1;
 
 	public static void Load(){
