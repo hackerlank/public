@@ -10,30 +10,8 @@ public class PaohuziPanel : GamePanel {
 	public GameObject	BtnABC,BtnA3,BtnWin;
 	public GameObject	BaihuoPanel;
 	public Transform[]	BaihuoLayers;	//max 3 layers
-	// ----------------------------------------------
-	// logic
-	// ----------------------------------------------
-	override public string CardPrefab{get{return "Zipai";}}
-	override public string Id2File(int color,int value){
-		if(Rule!=null){
-			color-=1;
-			string[] Colors={"s","b"};
-			value=Rule.inverseTransformValue(value);
-			if(color<Colors.Length)
-				return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
-		}
-		return "";
-	}
 
-	float AbandonScalar{get{return 1f;}}
-	override public float DiscardScalar{get{return 1f;}}
-
-	public override void TapCard(Card card,bool select=true){
-		var selected=false;
-		foreach(var old in _selection)if(old==card)selected=true;
-		deselectAll();
-		if(!selected)base.TapCard(card,select);
-	}
+	List<bunch_t> _hints=new List<bunch_t>();
 
 	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
 		yield return StartCoroutine(base.OnMsgStart(player,msg));
@@ -75,20 +53,25 @@ public class PaohuziPanel : GamePanel {
 		checkNaturalWin();
 	}
 	
-	List<bunch_t> _hints=new List<bunch_t>();
 	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
-		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
+		//should execute immediately before remove card from hands
+		StartCoroutine(base.OnMsgDiscard(player,msg));
+
+		if(Main.Instance.MainPlayer!=player)yield break;
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0){
-			if(Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
-				var card=msg.Bunch.Pawns[0];
-				if(!showHints(card,false)){
+			var fromSelf=false;
+			var card=msg.Bunch.Pawns[0];
+			foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
+			Debug.Log("-- check hands when discard, fromSelf="+fromSelf+",card="+card);
+			if(fromSelf){
+				StartCoroutine(sortHands());
+				Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
+			}else{
+				if(!showHints(card,!fromSelf)){
 					StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
 					Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 				}
-			}else{
-				StartCoroutine(sortHands());
-				Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
 			}
 		}
 	}
@@ -147,7 +130,6 @@ public class PaohuziPanel : GamePanel {
 				bun.Pawns.Add(bunch.Pawns[i*3+0]);
 				bun.Pawns.Add(bunch.Pawns[i*3+1]);
 				bun.Pawns.Add(bunch.Pawns[i*3+2]);
-				bun.Pawns.Add(0);
 				melds.Add(bun);
 			}
 			break;
@@ -686,7 +668,31 @@ public class PaohuziPanel : GamePanel {
 			}
 		}
 	}
+	// ----------------------------------------------
+	// logic
+	// ----------------------------------------------
+	override public string CardPrefab{get{return "Zipai";}}
+	override public string Id2File(int color,int value){
+		if(Rule!=null){
+			color-=1;
+			string[] Colors={"s","b"};
+			value=Rule.inverseTransformValue(value);
+			if(color<Colors.Length)
+				return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
+		}
+		return "";
+	}
 	
+	float AbandonScalar{get{return 1f;}}
+	override public float DiscardScalar{get{return 1f;}}
+	
+	public override void TapCard(Card card,bool select=true){
+		var selected=false;
+		foreach(var old in _selection)if(old==card)selected=true;
+		deselectAll();
+		if(!selected)base.TapCard(card,select);
+	}
+
 	public static void Create(System.Action<Component> handler=null){
 		Utils.Load<PaohuziPanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);

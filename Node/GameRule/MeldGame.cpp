@@ -109,16 +109,18 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         
         //ready for meld
         changeState(*player.game,Game::State::ST_MELD);
+        auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
         //pending meld
         for(int i=0;i<MaxPlayer();++i){
             auto p=game->players[i];
-            if(i!=player.pos){
+            if(bDraw||i!=player.pos){
                 //only pending others
                 game->pendingMeld.push_back(Game::pending_t());
                 auto& pending=game->pendingMeld.back();
                 pending.bunch.set_pos(i);
                 pending.bunch.add_pawns(card);
             }
+            //but send to all
             p->send(omsg);
             p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
         }
@@ -175,27 +177,12 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
 
     int card=-1;
-    /*
-    //need card except pass
-    if(curr.pawns().empty()){
-        if(curr.type()!=pb_enum::OP_PASS){
-            KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
-            return;
-        }
-    }else{
-        card=*curr.pawns().rbegin();
-        auto pcard=*pending.bunch.pawns().rbegin();
-        if(card!=pcard){
-            KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
-            return;
-        }
-    }
-    */
+
     //force card check
-    card=*curr.pawns().rbegin();
-    auto pcard=*pending.bunch.pawns().rbegin();
+    card=*curr.pawns().begin();
+    auto pcard=*pending.bunch.pawns().begin();
     if(card!=pcard){
-        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",pcard,card,pos);
+        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",card,pcard,pos);
         return;
     }
 

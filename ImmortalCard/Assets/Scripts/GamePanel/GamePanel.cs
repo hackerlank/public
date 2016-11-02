@@ -27,123 +27,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 	public MsgNCFinish	Summary=null;
 	// ----------------------------------------------
-	// events
-	// ----------------------------------------------
-	virtual public void Awake(){
-		Main.Instance.gameController=this;
-		Main.Instance.MainPlayer.controllers.Add(this);
-	}
-
-	IEnumerator Start(){
-		maxPlayer=rule.MaxPlayer;
-		while(!CardCache.Ready)yield return null;
-	}
-
-	void OnDestroy(){
-		Main.Instance.MainPlayer.Disconnect();
-		foreach(var robot in Main.Instance.robots)robot.Disconnect();
-		Main.Instance.robots.Clear();
-		Main.Instance.MainPlayer.controllers.Clear();
-		Main.Instance.gameController=null;
-	}
-
-	virtual public void OnPass(){
-		foreach(var btn in btnOps)btn.SetActive(false);
-
-		int id=0;
-		var card=DiscardAreas[Rule.Token].GetComponentInChildren<Card>();
-		if(card!=null){
-			id=card.Value;
-			Main.Instance.MainPlayer.unpairedCards.Add(id);
-		}else{
-			Debug.LogError("no card found when pass");
-		}
-
-		deselectAll();
-		StartCoroutine(passMeld(Main.Instance.MainPlayer,id,false));
-	}
-	
-	public void OnExit(){
-		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj) {
-			Destroy(gameObject);
-		});
-	}
-
-	bool pointerDown=false;
-	public void OnPointerDown (PointerEventData eventData){
-		pointerDown=true;
-	}
-
-	public void OnPointerUp (PointerEventData eventData){
-		pointerDown=false;
-	}
-
-	public void OnCardEnter(Card card){
-		if(pointerDown)
-			TapCard(card,card.state!=Card.State.ST_SELECT);
-	}
-	// ----------------------------------------------
 	// messages
 	// ----------------------------------------------
-	protected void transformComponent(Component[] com){
-		/* position transform
-		*	  (O)
-		(R)          (L)
-		*	(M=_pos)
-		*/
-		var tempD=new Component[com.Length];	//MROL
-		com.CopyTo(tempD,0);
-
-		//turn components clockwise by _pos
-		var m=maxPlayer-1;
-		var maxArea=com.Length;
-		var M=(maxArea+0-_pos)%maxArea;
-		var R=(maxArea+1-_pos)%maxArea;
-		var O=(maxArea+2-_pos)%maxArea;
-		var L=(maxArea-1-_pos)%maxArea;
-		
-		if(com.Length>0)com[0]=tempD[M];
-		if(com.Length>1)com[1]=tempD[R];
-		if(com.Length>2)com[2]=tempD[O];
-		if(com.Length>m)com[m]=tempD[L];
-	}
-
-	protected void checkNaturalWin(){
-		//check natural win
-		var players=new List<Player>(Main.Instance.robots);
-		players.Add(Main.Instance.MainPlayer);
-		foreach(var player in players){
-			bunch_t bunch=new bunch_t();
-			bunch.Pos=player.pos;
-			bunch.Type=pb_enum.BunchWin;
-			bunch.Pawns.Add(Configs.invalidCard);
-			
-			var win=false;
-			if(player==Main.Instance.MainPlayer){
-				win=showHints(Configs.invalidCard,true,true);
-			}else{
-				var hints=Rule.Hint(player,bunch);
-				foreach(var h in hints){
-					if(h.Type>=pb_enum.BunchWin){
-						win=true;
-						break;
-					}
-				}
-			}
-
-			if(player!=Main.Instance.MainPlayer||!win){
-				if(!win)bunch.Type=pb_enum.OpPass;
-				else Debug.Log(player.pos+" natural win");
-				
-				var omsgMeld=new MsgCNMeld();
-				omsgMeld.Mid=pb_msg.MsgCnMeld;
-				omsgMeld.Bunch=bunch;
-				
-				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-			}
-		}
-	}
-
 	virtual public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
 		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;
@@ -210,6 +95,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			}else{
 				//remove discards
 				foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
+
+				//show new discards
 				for(int i=0;i<cards.Length;++i){
 					var id=cards[i];
 					var fin=false;
@@ -223,7 +110,6 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 					str+=(int)id+",";
 					while(!fin)yield return null;
 				}
-				//yield return new WaitForSeconds(1);
 			}
 			Debug.Log(str);
 			//record
@@ -253,6 +139,121 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual public IEnumerator OnMsgFinish(Player player,MsgNCFinish msg){
 		Summary=msg;
 		yield break;
+	}
+
+	protected void transformComponent(Component[] com){
+		/* position transform
+		*	  (O)
+		(R)          (L)
+		*	(M=_pos)
+		*/
+		var tempD=new Component[com.Length];	//MROL
+		com.CopyTo(tempD,0);
+		
+		//turn components clockwise by _pos
+		var m=maxPlayer-1;
+		var maxArea=com.Length;
+		var M=(maxArea+0-_pos)%maxArea;
+		var R=(maxArea+1-_pos)%maxArea;
+		var O=(maxArea+2-_pos)%maxArea;
+		var L=(maxArea-1-_pos)%maxArea;
+		
+		if(com.Length>0)com[0]=tempD[M];
+		if(com.Length>1)com[1]=tempD[R];
+		if(com.Length>2)com[2]=tempD[O];
+		if(com.Length>m)com[m]=tempD[L];
+	}
+	
+	protected void checkNaturalWin(){
+		//check natural win
+		var players=new List<Player>(Main.Instance.robots);
+		players.Add(Main.Instance.MainPlayer);
+		foreach(var player in players){
+			bunch_t bunch=new bunch_t();
+			bunch.Pos=player.pos;
+			bunch.Type=pb_enum.BunchWin;
+			bunch.Pawns.Add(Configs.invalidCard);
+			
+			var win=false;
+			if(player==Main.Instance.MainPlayer){
+				win=showHints(Configs.invalidCard,true,true);
+			}else{
+				var hints=Rule.Hint(player,bunch);
+				foreach(var h in hints){
+					if(h.Type>=pb_enum.BunchWin){
+						win=true;
+						break;
+					}
+				}
+			}
+			
+			if(player!=Main.Instance.MainPlayer||!win){
+				if(!win)bunch.Type=pb_enum.OpPass;
+				else Debug.Log(player.pos+" natural win");
+				
+				var omsgMeld=new MsgCNMeld();
+				omsgMeld.Mid=pb_msg.MsgCnMeld;
+				omsgMeld.Bunch=bunch;
+				
+				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
+			}
+		}
+	}
+	// ----------------------------------------------
+	// events
+	// ----------------------------------------------
+	virtual public void Awake(){
+		Main.Instance.gameController=this;
+		Main.Instance.MainPlayer.controllers.Add(this);
+	}
+	
+	IEnumerator Start(){
+		maxPlayer=rule.MaxPlayer;
+		while(!CardCache.Ready)yield return null;
+	}
+	
+	void OnDestroy(){
+		Main.Instance.MainPlayer.Disconnect();
+		foreach(var robot in Main.Instance.robots)robot.Disconnect();
+		Main.Instance.robots.Clear();
+		Main.Instance.MainPlayer.controllers.Clear();
+		Main.Instance.gameController=null;
+	}
+	
+	virtual public void OnPass(){
+		foreach(var btn in btnOps)btn.SetActive(false);
+		
+		int id=0;
+		var card=DiscardAreas[Rule.Token].GetComponentInChildren<Card>();
+		if(card!=null){
+			id=card.Value;
+			Main.Instance.MainPlayer.unpairedCards.Add(id);
+		}else{
+			Debug.LogError("no card found when pass");
+		}
+		
+		deselectAll();
+		StartCoroutine(passMeld(Main.Instance.MainPlayer,id,false));
+	}
+	
+	public void OnExit(){
+		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj) {
+			Destroy(gameObject);
+		});
+	}
+	
+	bool pointerDown=false;
+	public void OnPointerDown (PointerEventData eventData){
+		pointerDown=true;
+	}
+	
+	public void OnPointerUp (PointerEventData eventData){
+		pointerDown=false;
+	}
+	
+	public void OnCardEnter(Card card){
+		if(pointerDown)
+			TapCard(card,card.state!=Card.State.ST_SELECT);
 	}
 	// ----------------------------------------------
 	// logic

@@ -10,31 +10,6 @@ public class MahJongPanel : GamePanel {
 	public GameObject	BtnA3,BtnA4,BtnWin;
 	public GameObject	BtnTong,BtnTiao,BtnWan;
 
-	// ----------------------------------------------
-	// logic
-	// ----------------------------------------------
-	override public string CardPrefab{get{return "Mahjong";}}
-	override public string Id2File(int color,int value){
-		if(Rule!=null){
-			color-=1;
-			string[] Colors={"tong","tiao","wan"};
-			value=Rule.inverseTransformValue(value);
-			if(color<Colors.Length)
-				return CardPrefab+"/"+string.Format("{0}{1:0}",Colors[color],value);
-		}
-		return "";
-	}
-
-	float AbandonScalar{get{return .7f;}}
-	override public float DiscardScalar{get{return 1f;}}
-	
-	public override void TapCard(Card card,bool select=true){
-		var selected=false;
-		foreach(var old in _selection)if(old==card)selected=true;
-		deselectAll();
-		if(!selected)base.TapCard(card,select);
-	}
-
 	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
 		yield return StartCoroutine(base.OnMsgStart(player,msg));
 		//transform position
@@ -282,6 +257,30 @@ public class MahJongPanel : GamePanel {
 				}
 			}
 		}
+	}
+	// ----------------------------------------------
+	// logic
+	// ----------------------------------------------
+	override public string CardPrefab{get{return "Mahjong";}}
+	override public string Id2File(int color,int value){
+		if(Rule!=null){
+			color-=1;
+			string[] Colors={"tong","tiao","wan"};
+			value=Rule.inverseTransformValue(value);
+			if(color<Colors.Length)
+				return CardPrefab+"/"+string.Format("{0}{1:0}",Colors[color],value);
+		}
+		return "";
+	}
+	
+	float AbandonScalar{get{return .7f;}}
+	override public float DiscardScalar{get{return 1f;}}
+	
+	public override void TapCard(Card card,bool select=true){
+		var selected=false;
+		foreach(var old in _selection)if(old==card)selected=true;
+		deselectAll();
+		if(!selected)base.TapCard(card,select);
 	}
 	
 	public static void Create(System.Action<Component> handler=null){

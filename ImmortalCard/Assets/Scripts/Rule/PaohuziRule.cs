@@ -466,8 +466,8 @@ public class PaohuziRule: GameRule {
 		}
 
 		if(tmp.Count>=2){
-			foreach(var it in tmp)hints.Pawns.Add(it);
 			hints.Pawns.Add(card);
+			foreach(var it in tmp)hints.Pawns.Add(it);
 			if(tmp.Count==2)
 				hints.Type=bDraw&&myself?pb_enum.PhzAaawei:pb_enum.PhzBbb;
 			else
@@ -483,9 +483,9 @@ public class PaohuziRule: GameRule {
 			if(i.Type==pb_enum.PhzAaawei||i.Type==pb_enum.PhzAaachou||(i.Type==pb_enum.PhzBbb&&bDraw)){
 				var B=i.Pawns[0];
 				if(A%100==B%100 && A/1000==B/1000 && A!=B){
+					hints.Pawns.Add(card);
 					hints.Pawns.AddRange(i.Pawns);
 					//for(var c in i.Pawns)hints.Pawns.Add(c);
-					hints.Pawns.Add(card);
 					hints.Type=(i.Type==pb_enum.PhzAaawei && bDraw && myself?pb_enum.PhzAaaadesk:pb_enum.PhzBbbbdesk);
 					return true;
 				}
@@ -567,8 +567,8 @@ public class PaohuziRule: GameRule {
 			//绞，append to hints: Bbb
 			var suite=new bunch_t();
 			suite.Type=pb_enum.PhzAbc;
-			foreach(var c in jiao)suite.Pawns.Add(c);
 			suite.Pawns.Add(card);
+			foreach(var c in jiao)suite.Pawns.Add(c);
 			hints.Add(suite);
 			//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
 		}
@@ -576,14 +576,13 @@ public class PaohuziRule: GameRule {
 			//绞，append to hints: BBb
 			var suite=new bunch_t();
 			suite.Type=pb_enum.PhzAbc;
-			foreach(var it in same)
-			if(card!=it){
+			suite.Pawns.Add(card);
+			foreach(var it in same)if(card!=it){
 				//别把自己放进去
 				suite.Pawns.Add(it);
 				break;
 			}
 			suite.Pawns.Add(jiao[0]);
-			suite.Pawns.Add(card);
 			hints.Add(suite);
 			//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
 		}
@@ -611,9 +610,9 @@ public class PaohuziRule: GameRule {
 			for ( int k = 0; k < count; ++k ) {
 				var suite=new bunch_t();
 				suite.Type=pb_enum.PhzAbc;
+				suite.Pawns.Add(card);
 				suite.Pawns.Add(FontABackID[i][0]);
 				suite.Pawns.Add(FontABackID[i+1][0]);
-				suite.Pawns.Add(card);
 				hints.Add(suite);
 				if(k==0)break;
 			}
@@ -645,9 +644,9 @@ public class PaohuziRule: GameRule {
 				for(int e=0;e<sz;++e){
 					var suite=new bunch_t();
 					suite.Type=pb_enum.PhzAbc;
+					suite.Pawns.Add(card);
 					suite.Pawns.Add(E[0]);
 					suite.Pawns.Add(F[0]);
-					suite.Pawns.Add(card);
 					hints.Add(suite);
 					//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
 					if(e==0)break;

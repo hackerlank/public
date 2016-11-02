@@ -8,23 +8,6 @@ public class DoudeZhuPanel : GamePanel {
 	public GameObject	BtnHint;
 	public GameObject	BtnDiscard,BtnCall,BtnDouble;
 
-	// ----------------------------------------------
-	// logic
-	// ----------------------------------------------
-	override public bool CardDrag{get{return false;}}
-	override public string CardPrefab{get{return "Card";}}
-	override public string Id2File(int color,int value){
-		if(Rule!=null){
-			color-=1;
-			string[] Colors={"c","d","h","s"};
-			value=Rule.inverseTransformValue(value);
-			return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
-		}
-		return "";
-	}
-
-	override public float DiscardScalar{get{return .625f;}}
-
 	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
 		yield return StartCoroutine(base.OnMsgStart(player,msg));
 		BtnCall.SetActive(false);
@@ -140,7 +123,23 @@ public class DoudeZhuPanel : GamePanel {
 		deselectAll();
 		StartCoroutine(passDiscard(Main.Instance.MainPlayer,false));
 	}
-
+	// ----------------------------------------------
+	// logic
+	// ----------------------------------------------
+	override public bool CardDrag{get{return false;}}
+	override public string CardPrefab{get{return "Card";}}
+	override public string Id2File(int color,int value){
+		if(Rule!=null){
+			color-=1;
+			string[] Colors={"c","d","h","s"};
+			value=Rule.inverseTransformValue(value);
+			return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
+		}
+		return "";
+	}
+	
+	override public float DiscardScalar{get{return .625f;}}
+	
 	public static void Create(System.Action<Component> handler=null){
 		Utils.Load<DoudeZhuPanel>(Main.Instance.transform,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);

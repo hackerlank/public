@@ -176,6 +176,7 @@ public class Player {
 			
 		case pb_msg.MsgNcDiscard:
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 			if(msgDiscard.Result==pb_enum.Succeess){
 				//append historical
 				var hist=Main.Instance.gameController.Rule.Historical;
@@ -189,10 +190,10 @@ public class Player {
 					rule.nHands[pos]-=msgDiscard.Bunch.Pawns.Count;
 					foreach(var card in msgDiscard.Bunch.Pawns)
 						playData.Hands.Remove(card);
+					Debug.Log("-- remove hands when discard, card="+msgDiscard.Bunch.Pawns[0]);
 				}
 			}else
 				Debug.LogError("discard error: "+msgDiscard.Result);
-			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 			break;
 		case pb_msg.MsgNcMeld:
 			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
