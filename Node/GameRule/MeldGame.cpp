@@ -100,16 +100,17 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //pass card
         player.unpairedCards.push_back(card);
 
+        auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
         //logHands(*game,player.pos,"OnDiscard");
         omsg.set_result(pb_enum::SUCCEESS);
         omsg.mutable_bunch()->CopyFrom(msg.bunch());
 
         //game->pendingMeld.clear();
         omsg.mutable_bunch()->set_pos(player.pos);
+        omsg.mutable_bunch()->set_type(bDraw?pb_enum::BUNCH_A:pb_enum::UNKNOWN);
         
         //ready for meld
         changeState(*player.game,Game::State::ST_MELD);
-        auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
         //pending meld
         for(int i=0;i<MaxPlayer();++i){
             auto p=game->players[i];
@@ -192,7 +193,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 
     //queue in
     std::string str;
-    //KEYE_LOG("OnMeld queue in,pos=%d,%s\n",pos,bunch2str(str,curr));
+    KEYE_LOG("OnMeld queue in(total %lu),pos=%d,%s\n",pendingMeld.size(),pos,bunch2str(str,curr));
     //auto ops=pending.bunch.type();
     pending.bunch.CopyFrom(curr);
     //restore pending ops for draw

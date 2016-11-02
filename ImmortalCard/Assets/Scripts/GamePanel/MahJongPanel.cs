@@ -35,7 +35,7 @@ public class MahJongPanel : GamePanel {
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
-			if(!showHints(card,false)){
+			if(!showHints(msg.Bunch)){
 				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
 				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 			}
@@ -56,7 +56,11 @@ public class MahJongPanel : GamePanel {
 		});
 
 		//show hints only for MainPlayer
-		if(pos==Main.Instance.MainPlayer.pos&&!showHints(id,true)){
+		bunch_t bunch=new bunch_t();
+		bunch.Pos=msg.Pos;
+		bunch.Type=pb_enum.BunchA;
+		bunch.Pawns.Add(id);
+		if(pos==Main.Instance.MainPlayer.pos&&!showHints(bunch)){
 			StartCoroutine(passMeld(Main.Instance.MainPlayer,id));
 			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
 		}
@@ -117,12 +121,9 @@ public class MahJongPanel : GamePanel {
 		});
 	}
 
-	override protected bool showHints(int card,bool bDraw,bool startup=false){
+	override protected bool showHints(bunch_t bunch,bool startup=false){
 		var player=Main.Instance.MainPlayer;
-		var bunch=new bunch_t();
-		bunch.Pos=(bDraw?player.pos:(player.pos+1)%maxPlayer);
-		bunch.Type=pb_enum.BunchA;
-		bunch.Pawns.Add(card);
+//		bunch.Pos=(bDraw?player.pos:(player.pos+1)%maxPlayer);
 
 		_hints=Rule.Hint(player,bunch);
 

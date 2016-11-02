@@ -171,12 +171,12 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		foreach(var player in players){
 			bunch_t bunch=new bunch_t();
 			bunch.Pos=player.pos;
-			bunch.Type=pb_enum.BunchWin;
+			bunch.Type=pb_enum.BunchA;
 			bunch.Pawns.Add(Configs.invalidCard);
 			
 			var win=false;
 			if(player==Main.Instance.MainPlayer){
-				win=showHints(Configs.invalidCard,true,true);
+				win=showHints(bunch,true);
 			}else{
 				var hints=Rule.Hint(player,bunch);
 				foreach(var h in hints){
@@ -318,7 +318,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 
 	virtual protected IEnumerator sortHands(){yield break;}
-	virtual protected bool showHints(int card,bool bDraw,bool startup=false){return true;}
+	virtual protected bool showHints(bunch_t bunch,bool startup=false){return true;}
 
 	protected IEnumerator passDiscard(Player player,bool wait=true){
 		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);

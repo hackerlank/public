@@ -19,9 +19,14 @@ public class AIController:PlayerController{
 	}
 
 	virtual public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
-		//discard AI
+		//should execute immediately before remove card from hands
+		if(Main.Instance.MainPlayer==player)yield break;
+
+		var fromSelf=false;
 		var card=msg.Bunch.Pawns[0];
-		if(player.pos==msg.Bunch.Pos){
+		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
+
+		if(fromSelf){
 			//remove from hands
 			player.playData.Hands.Remove(card);
 		}else{

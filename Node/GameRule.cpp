@@ -66,6 +66,11 @@ void GameRule::deal(Game& game){
     game.pile.erase(game.pile.begin(),game.pile.begin()+BK+MH*(MP-1));
     for(auto x=game.pile.begin(),xx=game.pile.end();x!=xx;++x)game.pileMap[*x]=0;
     for(auto i=0;i<MP;++i)logHands(game,i,"deal");
+    
+    std::string str;
+    google::protobuf::RepeatedField<int> pbpile(game.pile.begin(),game.pile.end());
+    cards2str(str,pbpile);
+    KEYE_LOG("pile: %s\n",str.c_str());
 
     game.firstCard=*game.players[game.banker]->playData.hands().rbegin();
     game.lastCard=game.pile.front();

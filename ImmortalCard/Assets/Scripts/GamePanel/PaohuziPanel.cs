@@ -58,20 +58,18 @@ public class PaohuziPanel : GamePanel {
 		StartCoroutine(base.OnMsgDiscard(player,msg));
 
 		if(Main.Instance.MainPlayer!=player)yield break;
-		//show hints for others
-		if(msg.Bunch.Pawns.Count>0){
-			var fromSelf=false;
-			var card=msg.Bunch.Pawns[0];
-			foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
-			Debug.Log("-- check hands when discard, fromSelf="+fromSelf+",card="+card);
-			if(fromSelf){
-				StartCoroutine(sortHands());
-				Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
-			}else{
-				if(!showHints(card,!fromSelf)){
-					StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
-					Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
-				}
+		//show hints
+		var fromSelf=false;
+		var card=msg.Bunch.Pawns[0];
+		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
+		Debug.Log("-- check hands when discard, fromSelf="+fromSelf+",card="+card);
+		if(fromSelf){
+			StartCoroutine(sortHands());
+			Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
+		}else{
+			if(!showHints(msg.Bunch)){
+				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
+				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
 			}
 		}
 	}
@@ -301,12 +299,8 @@ public class PaohuziPanel : GamePanel {
 		player.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 
-	override protected bool showHints(int card,bool bDraw,bool startup=false){
+	override protected bool showHints(bunch_t bunch,bool startup=false){
 		var player=Main.Instance.MainPlayer;
-		var bunch=new bunch_t();
-		bunch.Pos=(bDraw?player.pos:player.pos+1);
-		bunch.Type=bDraw?pb_enum.BunchA:pb_enum.Unknown;
-		bunch.Pawns.Add(card);
 
 		_hints=Rule.Hint(player,bunch,true);
 
@@ -667,6 +661,11 @@ public class PaohuziPanel : GamePanel {
 				}
 			}
 		}
+	}
+
+	public void OnCancelABC(){
+		BaihuoPanel.SetActive(false);
+		OnPass();
 	}
 	// ----------------------------------------------
 	// logic

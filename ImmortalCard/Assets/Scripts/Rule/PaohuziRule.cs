@@ -174,7 +174,7 @@ public class PaohuziRule: GameRule {
 		      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
 		      category==pb_enum.PhzGx));
 		if(!bDraw && !fire){
-			Debug.Log("isWin failed: not fire and not from pile");
+			Debug.Log("isWin for "+player.pos+" failed: not fire and not from pile");
 			return false;
 		}
 
@@ -308,11 +308,13 @@ public class PaohuziRule: GameRule {
 				allSuites.Clear();
 				allSuites.AddRange(resSuites);
 			}else{
+				Debug.Log("-- win for "+player.pos+" failed 0");
 				return false;
 			}
 		} else{
 			//recursived
 			over=isWin(hand,allSuites);
+			Debug.Log("-- win for "+player.pos+" failed 1");
 		}
 		if(over){
 			var M=MaxPlayer;
@@ -328,7 +330,8 @@ public class PaohuziRule: GameRule {
 					point+=calcPoints(player.AAAs);
 					if(point>=winPoint(Main.Instance.MainPlayer.category)){
 						win=true;
-					}
+					}else
+						Debug.Log("-- win for "+player.pos+" failed less points");
 				}
 				if(win){
 					output.AddRange(allSuites);
@@ -356,7 +359,7 @@ public class PaohuziRule: GameRule {
 			buildBunch(card,_cards,hints);
 			if(hints.Count<=0){
 				//此牌无组合
-				//log("isGameOver no suite for card=%d:%d",card,allCards[card]%100);
+				Debug.Log("isGameOver no suite for card=%d"+card);
 				return false;
 			} else if(hints.Count==1){
 				//此牌唯一组合,剔除
@@ -777,9 +780,9 @@ public class PaohuziRule: GameRule {
 	public override int comparision(int x,int y){
 		var cx=(int)x/1000;
 		var cy=(int)y/1000;
-		if(cx<cy)return 1;
-		else if(cx==cy)return (int)y%100-(int)x%100;
-		else return -1;
+
+		if(cx==cy)return (int)x%100-(int)y%100;
+		else return cx-cy;
 	}
 
 	public override int transformValue(int val){
@@ -857,9 +860,9 @@ public class PaohuziRule: GameRule {
 	int calcPoints(List<bunch_t> allSuites){
 		int point=0;
 		foreach(var i in allSuites){
-			var suite=i;
-			point+=CalcPoints(suite);
-			//log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
+			var pt=CalcPoints(i);
+			point+=pt;
+			Debug.Log("bunch point="+pt+",ops="+Player.bunch2str(i));
 		}
 		return point;
 	}
