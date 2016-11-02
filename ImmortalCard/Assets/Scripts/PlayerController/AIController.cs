@@ -1,26 +1,32 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Proto3;
 using Google.Protobuf;
 
 public class AIController:PlayerController{
 
-	virtual protected void onMsgStart(Player player,MsgNCStart msg){
+	virtual public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+		yield return new WaitForSeconds(Configs.OpsInterval);
+
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;
 		omsgEngage.Key=0;
 		player.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 
-	virtual protected void onMsgEngage(Player player,MsgNCEngage msg){}
+	virtual public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
+		yield break;
+	}
 
-	virtual protected void onMsgDiscard(Player player,MsgNCDiscard msg){
+	virtual public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		//discard AI
 		var card=msg.Bunch.Pawns[0];
 		if(player.pos==msg.Bunch.Pos){
 			//remove from hands
 			player.playData.Hands.Remove(card);
 		}else{
+			yield return new WaitForSeconds(Configs.OpsInterval);
+
 			//meld only for others
 			var omsgMeld=new MsgCNMeld();
 			omsgMeld.Mid=pb_msg.MsgCnMeld;
@@ -52,42 +58,20 @@ public class AIController:PlayerController{
 			Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after "+msg.Bunch.Pos+" discard");
 		}
 	}
+	
+	virtual public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
+		yield break;
+	}
 
-	virtual protected void onMsgMeld(Player player,MsgNCMeld msg){}
+	virtual public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
+		yield break;
+	}
 
-	virtual protected void onMsgDraw(Player player,MsgNCDraw msg){}
-
-	public IEnumerator onMessage(Player player,IMessage msg){
-		if(Main.Instance.gameController==null)yield break;
-		
-		yield return new WaitForSeconds(Configs.OpsInterval);
-		
-		//var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
-		if(msg is MsgNCStart){
-			onMsgStart(player,msg as MsgNCStart);
-
-		}else if(msg is MsgNCEngage){
-			onMsgEngage(player,msg as MsgNCEngage);
-
-		}else if(msg is MsgNCDiscard){
-			onMsgDiscard(player,msg as MsgNCDiscard);
-
-		}else if(msg is MsgNCMeld){
-			onMsgMeld(player,msg as MsgNCMeld);
-
-		}else if(msg is MsgNCDraw){
-			onMsgDraw(player,msg as MsgNCDraw);
-			
-		}else if(msg is MsgNCSettle){
-			//var msgSettle=msg as MsgNCSettle;
-			
-		}else if(msg is MsgNCFinish){
-			//var msgFinish=msg as MsgNCFinish;
-			
-		}else if(msg is MsgNCDismissSync){
-			
-		}else if(msg is MsgNCDismissAck){
-			
-		}
+	virtual public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		yield break;
+	}
+	
+	virtual public IEnumerator OnMsgFinish(Player player,MsgNCFinish msg){
+		yield break;
 	}
 }

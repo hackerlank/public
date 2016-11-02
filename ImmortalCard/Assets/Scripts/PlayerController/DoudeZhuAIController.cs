@@ -4,12 +4,14 @@ using Proto3;
 using Google.Protobuf;
 
 public class DoudeZhuAIController:AIController {
-	override protected void onMsgDiscard(Player player,MsgNCDiscard msg){
+	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		//discard AI
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
 		if(player.pos==(msg.Bunch.Pos+1)%maxPlayer){
 			var rule=Main.Instance.gameController.Rule;
 			if(rule.checkDiscard(player,0)){
+				yield return new WaitForSeconds(Configs.OpsInterval);
+
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				

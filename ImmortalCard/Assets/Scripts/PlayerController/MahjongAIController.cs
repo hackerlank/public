@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Proto3;
 using Google.Protobuf;
 
 public class MahjongAIController:AIController{
 
-	override protected void onMsgStart(Player player,MsgNCStart msg){
+	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+		yield return new WaitForSeconds(Configs.OpsInterval);
+
 		var key=MahJongRule.FindDefaultColor(player);
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;
@@ -13,18 +15,21 @@ public class MahjongAIController:AIController{
 		player.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 
-	override protected void onMsgEngage(Player player,MsgNCEngage msg){
+	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		for(int i=0;i<msg.Keys.Count;++i)
 			if(player.pos==i)
 				player.playData.SelectedCard=msg.Keys[i];
+		yield break;
 	}
 
-	override protected void onMsgMeld(Player player,MsgNCMeld msg){
+	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		//do nothing if all pass discard,because draw message will come
 		if(msg.Bunch.Pos==-1&&msg.Bunch.Type==pb_enum.OpPass)
-			return;
+			yield break;
 		
 		if(player.pos==msg.Bunch.Pos){
+			yield return new WaitForSeconds(Configs.OpsInterval);
+
 			Main.Instance.gameController.Rule.Meld(player,msg.Bunch);
 			
 			//discard
@@ -47,8 +52,10 @@ public class MahjongAIController:AIController{
 		}
 	}
 
-	override protected void onMsgDraw(Player player,MsgNCDraw msg){
+	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
 		if(player.pos==msg.Pos){
+			yield return new WaitForSeconds(Configs.OpsInterval);
+
 			//meld only for the drawer
 			var omsgMeld=new MsgCNMeld();
 			omsgMeld.Mid=pb_msg.MsgCnMeld;

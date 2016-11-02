@@ -5,16 +5,19 @@ using Google.Protobuf;
 
 public class PaohuziAIController:AIController{
 
-	override protected void onMsgEngage(Player player,MsgNCEngage msg){
+	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		PaohuziRule.prepareAAAA(player);
+		yield break;
 	}
 
-	override protected void onMsgMeld(Player player,MsgNCMeld msg){
+	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		//do nothing if all pass discard,because draw message will come
 		if(msg.Bunch.Pos==-1&&msg.Bunch.Type==pb_enum.OpPass)
-			return;
+			yield break;
 		
 		if(player.pos==msg.Bunch.Pos){
+			yield return Main.Instance.StartCoroutine(base.OnMsgMeld(player,msg));
+
 			var rule=Main.Instance.gameController.Rule;
 			rule.Meld(player,msg.Bunch);
 

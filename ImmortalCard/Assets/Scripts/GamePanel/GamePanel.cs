@@ -85,45 +85,6 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	// ----------------------------------------------
 	// messages
 	// ----------------------------------------------
-	public IEnumerator onMessage(Player player,IMessage msg){
-		if(msg is MsgNCEngage){
-			var msgEngage=msg as MsgNCEngage;
-			OnMsgEngage(msgEngage);
-
-		}else if(msg is MsgNCStart){
-			var msgStart=msg as MsgNCStart;
-			yield return StartCoroutine(OnMsgStart(msgStart));
-
-		}else if(msg is MsgNCDiscard){
-			var msgDiscard=msg as MsgNCDiscard;
-			StartCoroutine(OnMsgDiscard(msgDiscard));
-
-		}else if(msg is MsgNCMeld){
-			var msgMeld=msg as MsgNCMeld;
-			StartCoroutine(OnMsgMeld(msgMeld.Bunch));
-			changeToken(msgMeld.Bunch.Pos);
-
-		}else if(msg is MsgNCDraw){
-			var msgDraw=msg as MsgNCDraw;
-			Debug.Log(msgDraw.Pos+" draw "+(int)msgDraw.Card);
-			changeToken(msgDraw.Pos);
-			StartCoroutine(OnMsgDraw(msgDraw.Card,msgDraw.Pos));
-
-		}else if(msg is MsgNCSettle){
-			var msgSettle=msg as MsgNCSettle;
-			OnMsgSettle(msgSettle);
-
-		}else if(msg is MsgNCFinish){
-			var msgFinish=msg as MsgNCFinish;
-			OnMsgFinish(msgFinish);
-
-		}else if(msg is MsgNCDismissSync){
-
-		}else if(msg is MsgNCDismissAck){
-
-		}
-	}
-
 	protected void transformComponent(Component[] com){
 		/* position transform
 		*	  (O)
@@ -183,7 +144,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		}
 	}
 
-	public IEnumerator OnMsgStart(MsgNCStart msg){
+	virtual public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
 		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;
 		_pos=msg.Pos;
@@ -226,12 +187,13 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		if(Players[Rule.Banker].gameTimer!=null)
 			Players[Rule.Banker].gameTimer.On();
 		Debug.Log(str);
+	}
 
-		onMsgStart();
+	virtual public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		yield break;
 	}
 
-	IEnumerator OnMsgDiscard(MsgNCDiscard msg){
+	virtual public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		//discard any body's card
 		if(msg.Result==pb_enum.Succeess){
 			var pos=msg.Bunch.Pos;
@@ -270,17 +232,27 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 				nHandCards[pos].text=nCards.ToString();
 			}
 		}
-		onMsgDiscard(msg);
-	}
-	
-	public void OnMsgSettle(MsgNCSettle msg){
-		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
-		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
-		showSettle(msg);
 	}
 
-	public void OnMsgFinish(MsgNCFinish msg){
+	virtual public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
+		changeToken(msg.Pos);
+		yield break;
+	}
+	
+	virtual public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
+		changeToken(msg.Bunch.Pos);
+		yield break;
+	}
+	
+	virtual public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
+		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
+		yield break;
+	}
+
+	virtual public IEnumerator OnMsgFinish(Player player,MsgNCFinish msg){
 		Summary=msg;
+		yield break;
 	}
 	// ----------------------------------------------
 	// logic
@@ -344,14 +316,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		}
 	}
 
-	virtual protected void OnMsgEngage(MsgNCEngage msg){}
-	virtual protected void onMsgStart(){}
-	virtual protected void onMsgDiscard(MsgNCDiscard msg){}
-	virtual protected IEnumerator OnMsgDraw(int card,int pos){yield break;}
-	virtual protected IEnumerator OnMsgMeld(bunch_t bunch){yield break;}
 	virtual protected IEnumerator sortHands(){yield break;}
 	virtual protected bool showHints(int card,bool bDraw,bool startup=false){return true;}
-	virtual protected void showSettle(MsgNCSettle msg){}
 
 	protected IEnumerator passDiscard(Player player,bool wait=true){
 		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);

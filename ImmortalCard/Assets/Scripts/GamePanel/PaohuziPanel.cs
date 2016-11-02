@@ -35,10 +35,19 @@ public class PaohuziPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
-	override protected void OnMsgEngage(MsgNCEngage msg){
-		StartCoroutine(engage(msg));
+	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+		yield return StartCoroutine(base.OnMsgStart(player,msg));
+		//transform position
+		transformComponent(MeldAreas);
+		transformComponent(AbandonAreas);
+
+		var omsgEngage=new MsgCNEngage();
+		omsgEngage.Mid=pb_msg.MsgCnEngage;
+		omsgEngage.Key=0;
+		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
-	IEnumerator engage(MsgNCEngage msg){
+	
+	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		PaohuziRule.prepareAAAA(Main.Instance.MainPlayer);
 		//display all AAAA
 		for(int i=0;i<maxPlayer;++i){
@@ -65,20 +74,10 @@ public class PaohuziPanel : GamePanel {
 		yield return StartCoroutine(sortHands());
 		checkNaturalWin();
 	}
-
-	override protected void onMsgStart(){
-		//transform position
-		transformComponent(MeldAreas);
-		transformComponent(AbandonAreas);
-
-		var omsgEngage=new MsgCNEngage();
-		omsgEngage.Mid=pb_msg.MsgCnEngage;
-		omsgEngage.Key=0;
-		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
-	}
 	
 	List<bunch_t> _hints=new List<bunch_t>();
-	override protected void onMsgDiscard(MsgNCDiscard msg){
+	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
+		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0){
 			if(Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
@@ -93,8 +92,12 @@ public class PaohuziPanel : GamePanel {
 			}
 		}
 	}
+	
+	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
+		yield return StartCoroutine(base.OnMsgDraw(player,msg));
 
-	override protected IEnumerator OnMsgDraw(int id,int pos){
+		var id=msg.Card;
+		var pos=msg.Pos;
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -111,7 +114,6 @@ public class PaohuziPanel : GamePanel {
 		card.Value=id;
 
 		//immediately pass for the drawer,we only meld when discard
-		Player player=Main.Instance.MainPlayer;
 		if(player.pos!=pos)foreach(var robot in Main.Instance.robots){
 			if(robot.pos==pos){
 				player=robot;
@@ -122,9 +124,10 @@ public class PaohuziPanel : GamePanel {
 		Debug.Log(pos+" directly pass after self draw");
 	}
 
-	override protected IEnumerator OnMsgMeld(bunch_t bunch){
+	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		_hints.Clear();
-		
+
+		var bunch=msg.Bunch;
 		var from=Rule.Token;
 		var to=bunch.Pos;
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
@@ -257,11 +260,23 @@ public class PaohuziPanel : GamePanel {
 			break;
 		}
 		//remove from hands
-		var player=Main.Instance.MainPlayer;
 		if(player.pos==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
 		if(to==_pos)StartCoroutine(sortHands());
+
+		yield return StartCoroutine(base.OnMsgMeld(player,msg));
+	}
+
+	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		yield return StartCoroutine(base.OnMsgSettle(player,msg));
+
+		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
+		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
+		Utils.Load<PaohuziSettle>(Main.Instance.transform,delegate(Component obj) {
+			var popup=obj as SettlePopup;
+			popup.Value=msg;
+		});
 	}
 
 	override protected IEnumerator passMeld(Player player,int card=0,bool wait=true){
@@ -344,15 +359,6 @@ public class PaohuziPanel : GamePanel {
 		if(_hints.Count>0)BtnPass.SetActive(true);
 
 		return _hints.Count>0;
-	}
-
-	override protected void showSettle(MsgNCSettle msg){
-		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
-		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
-		Utils.Load<PaohuziSettle>(Main.Instance.transform,delegate(Component obj) {
-			var popup=obj as SettlePopup;
-			popup.Value=msg;
-		});
 	}
 
 	override protected IEnumerator sortHands(){

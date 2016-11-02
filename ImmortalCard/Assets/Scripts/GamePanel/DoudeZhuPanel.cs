@@ -25,7 +25,8 @@ public class DoudeZhuPanel : GamePanel {
 
 	override public float DiscardScalar{get{return .625f;}}
 
-	override protected void onMsgStart(){
+	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+		yield return StartCoroutine(base.OnMsgStart(player,msg));
 		BtnCall.SetActive(false);
 		BtnDouble.SetActive(false);
 		foreach(var btn in btnOps)btn.SetActive(true);
@@ -37,7 +38,8 @@ public class DoudeZhuPanel : GamePanel {
 		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 
-	override protected void onMsgDiscard(MsgNCDiscard msg){
+	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
+		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
 		//set to next after discard
 		int pos=msg.Bunch.Pos;
 		changeToken(pos+1);
@@ -53,6 +55,15 @@ public class DoudeZhuPanel : GamePanel {
 				StartCoroutine(passDiscard(Main.Instance.MainPlayer));
 			}
 		}
+	}
+
+	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		yield return StartCoroutine(base.OnMsgSettle(player,msg));
+		
+		Utils.Load<DoudeZhuSettle>(Main.Instance.transform,delegate(Component obj) {
+			var popup=obj as SettlePopup;
+			popup.Value=msg;
+		});
 	}
 
 	int _nhints=0;
@@ -87,13 +98,6 @@ public class DoudeZhuPanel : GamePanel {
 			_nhints=(_nhints+1)%_hints.Count;
 		}
 		return _hints.Count>0;
-	}
-
-	override protected void showSettle(MsgNCSettle msg){
-		Utils.Load<DoudeZhuSettle>(Main.Instance.transform,delegate(Component obj) {
-			var popup=obj as SettlePopup;
-			popup.Value=msg;
-		});
 	}
 
 	// ----------------------------------------------

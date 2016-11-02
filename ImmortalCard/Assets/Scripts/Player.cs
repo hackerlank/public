@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Proto3;
@@ -100,7 +100,6 @@ public class Player {
 	public void onMessage(pb_msg mid,byte[] bytes){
 		//receive and handle logic which PlayerController indenpendent
 		//Debug.Log("OnMessage "+mid);
-		IMessage msg=null;
 		switch(mid){
 		case pb_msg.MsgScLogin:
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
@@ -138,9 +137,9 @@ public class Player {
 		case pb_msg.MsgNcEngage:
 			MsgNCEngage msgEngage=MsgNCEngage.Parser.ParseFrom(bytes);
 			if(msgEngage.Result==pb_enum.Succeess){
-				msg=msgEngage;
 			}else
 				Debug.LogError("engage error: "+msgEngage.Result);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgEngage(this,msgEngage));
 			break;
 			
 		case pb_msg.MsgNcStart:
@@ -165,7 +164,6 @@ public class Player {
 				conflictMeld=false;
 
 				//copy data
-				msg=msgStart;
 				pos=msgStart.Pos;
 				playData.Hands.AddRange(msgStart.Hands);
 				var str="deal "+pos+":";
@@ -173,6 +171,7 @@ public class Player {
 				Debug.Log(str);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgStart(this,msgStart));
 			break;
 			
 		case pb_msg.MsgNcDiscard:
@@ -191,14 +190,13 @@ public class Player {
 					foreach(var card in msgDiscard.Bunch.Pawns)
 						playData.Hands.Remove(card);
 				}
-				msg=msgDiscard;
 			}else
 				Debug.LogError("discard error: "+msgDiscard.Result);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 			break;
 		case pb_msg.MsgNcMeld:
 			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
 			if(msgMeld.Result==pb_enum.Succeess){
-				msg=msgMeld;
 				//record conflict meld
 				var rule=Main.Instance.gameController.Rule;
 				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk&&pos==rule.Token&&pos!=msgMeld.Bunch.Pos){
@@ -207,17 +205,16 @@ public class Player {
 				}
 			}else
 				Debug.LogError("meld error: "+msgMeld.Result);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgMeld(this,msgMeld));
 			break;
 		case pb_msg.MsgNcDraw:
 			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
-			msg=msgDraw;
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDraw(this,msgDraw));
 			break;
 		case pb_msg.MsgNcSettle:
 			MsgNCSettle msgSettle=MsgNCSettle.Parser.ParseFrom(bytes);
 			if(msgSettle.Result==pb_enum.Succeess){
-				if(this==Main.Instance.MainPlayer)
-					msg=msgSettle;
-				else{
+				if(this!=Main.Instance.MainPlayer){
 					//robots
 					var omsgReady=new MsgCNReady();
 					omsgReady.Mid=pb_msg.MsgCnReady;
@@ -225,31 +222,32 @@ public class Player {
 				}
 			}else
 				Debug.LogError("settle error: "+msgSettle.Result);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgSettle(this,msgSettle));
 			break;
 		case pb_msg.MsgNcFinish:
 			MsgNCFinish msgFinish=MsgNCFinish.Parser.ParseFrom(bytes);
 			if(msgFinish.Result==pb_enum.Succeess){
-				msg=msgFinish;
 			}else
 				Debug.LogError("finish error: "+msgFinish.Result);
+			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgFinish(this,msgFinish));
 			break;
 		case pb_msg.MsgNcDismissSync:
 			MsgNCDismissSync msgDismissSync=MsgNCDismissSync.Parser.ParseFrom(bytes);
 			if(msgDismissSync.Result==pb_enum.Succeess){
 			}else
 				Debug.LogError("dismiss sync error: "+msgDismissSync.Result);
+			//foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMessage(this,msg));
 			break;
 		case pb_msg.MsgNcDismissAck:
 			MsgNCDismissAck msgDismissAck=MsgNCDismissAck.Parser.ParseFrom(bytes);
 			if(msgDismissAck.Result==pb_enum.Succeess){
 			}else
 				Debug.LogError("dismiss ack error: "+msgDismissAck.Result);
+			//foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMessage(this,msg));
 			break;
 		default:
 			break;
 		}
-		if(msg!=null)foreach(var ctrl in controllers)
-			Main.Instance.StartCoroutine(ctrl.onMessage(this,msg));
 	}
 
 	public static string bunch2str(bunch_t bunch){

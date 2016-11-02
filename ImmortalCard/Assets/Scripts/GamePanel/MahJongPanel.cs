@@ -35,25 +35,28 @@ public class MahJongPanel : GamePanel {
 		if(!selected)base.TapCard(card,select);
 	}
 
-	override protected void OnMsgEngage(MsgNCEngage msg){
-		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
-		foreach(var btn in btns)btn.SetActive(false);
-
-		for(int i=0;i<msg.Keys.Count;++i)
-			if(Main.Instance.MainPlayer.pos==i)
-				Main.Instance.MainPlayer.playData.SelectedCard=msg.Keys[i];
-
-		checkNaturalWin();
-	}
-
-	override protected void onMsgStart(){
+	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+		yield return StartCoroutine(base.OnMsgStart(player,msg));
 		//transform position
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
 	}
 
+	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
+		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
+		foreach(var btn in btns)btn.SetActive(false);
+		
+		for(int i=0;i<msg.Keys.Count;++i)
+			if(Main.Instance.MainPlayer.pos==i)
+				Main.Instance.MainPlayer.playData.SelectedCard=msg.Keys[i];
+		
+		checkNaturalWin();
+		yield break;
+	}
+
 	List<bunch_t> _hints=null;
-	override protected void onMsgDiscard(MsgNCDiscard msg){
+	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
+		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
@@ -64,7 +67,11 @@ public class MahJongPanel : GamePanel {
 		}
 	}
 
-	override protected IEnumerator OnMsgDraw(int id,int pos){
+	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
+		yield return StartCoroutine(base.OnMsgDraw(player,msg));
+
+		var id=msg.Card;
+		var pos=msg.Pos;
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -78,12 +85,12 @@ public class MahJongPanel : GamePanel {
 			StartCoroutine(passMeld(Main.Instance.MainPlayer,id));
 			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
 		}
-		yield break;
 	}
 
-	override protected IEnumerator OnMsgMeld(bunch_t bunch){
+	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		_hints=null;
 		
+		var bunch=msg.Bunch;
 		var from=Rule.Token;
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
@@ -117,13 +124,24 @@ public class MahJongPanel : GamePanel {
 			break;
 		}
 		//remove from hands
-		var player=Main.Instance.MainPlayer;
 		if(player.pos==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
-		yield break;
+
+		yield return StartCoroutine(base.OnMsgMeld(player,msg));
 	}
-	
+
+	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		yield return StartCoroutine(base.OnMsgSettle(player,msg));
+
+		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
+		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
+		Utils.Load<MahjongSettle>(Main.Instance.transform,delegate(Component obj) {
+			var popup=obj as SettlePopup;
+			popup.Value=msg;
+		});
+	}
+
 	override protected bool showHints(int card,bool bDraw,bool startup=false){
 		var player=Main.Instance.MainPlayer;
 		var bunch=new bunch_t();
@@ -152,15 +170,6 @@ public class MahJongPanel : GamePanel {
 		if(_hints.Count>0)BtnPass.SetActive(true);
 
 		return _hints.Count>0;
-	}
-
-	override protected void showSettle(MsgNCSettle msg){
-		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
-		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
-		Utils.Load<MahjongSettle>(Main.Instance.transform,delegate(Component obj) {
-			var popup=obj as SettlePopup;
-			popup.Value=msg;
-		});
 	}
 
 	override protected IEnumerator sortHands(){
