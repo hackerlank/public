@@ -45,14 +45,12 @@ public class PaohuziPanel : GamePanel {
 			if(i==_pos)continue;
 			
 			var bunch=msg.Bunch[i];
-			foreach(var c in bunch.Pawns){
-				Card card=null;
-				Card.Create(CardPrefab,c,MeldAreas[i],delegate(Card obj){
-					card=obj;
-				});
-				while(card==null)yield return null;
-				card.DiscardTo(MeldAreas[i],DiscardScalar);
-			}
+			ZipaiBunch zb=null;
+			Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj) {
+				zb=obj as ZipaiBunch;
+			});
+			while(zb==null)yield return null;
+			zb.Value=bunch;
 		}
 		
 		//remove AAAA from hands
@@ -79,7 +77,7 @@ public class PaohuziPanel : GamePanel {
 		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 	
-	List<bunch_t> _hints=null;
+	List<bunch_t> _hints=new List<bunch_t>();
 	override protected void onMsgDiscard(MsgNCDiscard msg){
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0){
@@ -118,7 +116,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected IEnumerator OnMsgMeld(bunch_t bunch){
-		_hints=null;
+		_hints.Clear();
 		
 		var from=Rule.Token;
 		var to=bunch.Pos;
@@ -164,8 +162,12 @@ public class PaohuziPanel : GamePanel {
 					break;
 				}
 			}
-			Destroy(A.gameObject);
 			melds.Add(bunch);
+
+			//mark conflict meld
+			if(bunch.Pos!=Rule.Token){
+				//Rule.Token conflict
+			}
 			break;
 		default:
 			melds.Add(bunch);
@@ -206,6 +208,7 @@ public class PaohuziPanel : GamePanel {
 
 				Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			}
+			Destroy(A.gameObject);
 
 			break;
 		default:
@@ -298,7 +301,7 @@ public class PaohuziPanel : GamePanel {
 		var player=Main.Instance.MainPlayer;
 		var bunch=new bunch_t();
 		bunch.Pos=(bDraw?player.pos:player.pos+1);
-		bunch.Type=pb_enum.BunchA;
+		bunch.Type=bDraw?pb_enum.BunchA:pb_enum.Unknown;
 		bunch.Pawns.Add(card);
 
 		_hints=Rule.Hint(player,bunch,true);
@@ -521,7 +524,7 @@ public class PaohuziPanel : GamePanel {
 
 	public void OnABC(){
 		foreach(var btn in btnOps)btn.SetActive(false);
-		if(_hints!=null&&_hints.Count>0){
+		if(_hints.Count>0){
 			StartCoroutine(onABC());
 		}
 	}
@@ -612,7 +615,7 @@ public class PaohuziPanel : GamePanel {
 	
 	public void OnAAA(){
 		foreach(var btn in btnOps)btn.SetActive(false);
-		if(_hints!=null&&_hints.Count>0){
+		if(_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.PhzAaa ||
 				   hint.Type==pb_enum.PhzAaawei ||
@@ -633,7 +636,7 @@ public class PaohuziPanel : GamePanel {
 	
 	public void OnAAAA(){
 		foreach(var btn in btnOps)btn.SetActive(false);
-		if(_hints!=null&&_hints.Count>0){
+		if(_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.PhzAaaa ||
 				   hint.Type==pb_enum.PhzAaaadesk ||
@@ -655,7 +658,7 @@ public class PaohuziPanel : GamePanel {
 	
 	public void OnWin(){
 		foreach(var btn in btnOps)btn.SetActive(false);
-		if(_hints!=null&&_hints.Count>0){
+		if(_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.BunchWin){
 					MsgCNMeld msg=new MsgCNMeld();

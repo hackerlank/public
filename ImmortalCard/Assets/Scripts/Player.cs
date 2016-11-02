@@ -199,6 +199,12 @@ public class Player {
 			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
 			if(msgMeld.Result==pb_enum.Succeess){
 				msg=msgMeld;
+				//record conflict meld
+				var rule=Main.Instance.gameController.Rule;
+				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk&&pos==rule.Token&&pos!=msgMeld.Bunch.Pos){
+					conflictMeld=true;
+					Debug.Log(pos+" conflict meld");
+				}
 			}else
 				Debug.LogError("meld error: "+msgMeld.Result);
 			break;

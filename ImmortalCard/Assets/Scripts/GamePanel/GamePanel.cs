@@ -322,7 +322,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			msg.Mid=pb_msg.MsgCnDiscard;
 			msg.Bunch=new bunch_t();
 			msg.Bunch.Pos=_pos;
-			msg.Bunch.Type=pb_enum.BunchA;
+			msg.Bunch.Type=pb_enum.Unknown;
 			if(card!=null){
 				deselectAll();
 				card.DiscardTo(DiscardAreas[_pos],DiscardScalar);

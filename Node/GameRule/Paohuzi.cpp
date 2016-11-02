@@ -240,19 +240,32 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
 }
 
 void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
-    //record past and dodge cards
-    std::remove(player.unpairedCards.begin(),player.unpairedCards.end(),card);
-    auto past=false;
-    auto dodge=false;
-    for(auto b : bunch.child()){
-        if(b.type()==pb_enum::PHZ_ABC){
-            past=true;
-        }else if(b.type()==pb_enum::PHZ_BBB){
-            dodge=true;
+    switch (bunch.type()) {
+        case proto3::OP_PASS:{
+            //record past and dodge cards
+            std::remove(player.unpairedCards.begin(),player.unpairedCards.end(),card);
+            auto past=false;
+            auto dodge=false;
+            for(auto b : bunch.child()){
+                if(b.type()==pb_enum::PHZ_ABC){
+                    past=true;
+                }else if(b.type()==pb_enum::PHZ_BBB){
+                    dodge=true;
+                }
+            }
+            if(past)player.unpairedCards.push_back(card);
+            if(dodge)player.dodgeCards.push_back(card);
+            break;
         }
+        case proto3::PHZ_BBBBdesk:
+            //record conflict meld
+            if(game.token!=player.pos){
+                game.players[game.token]->conflictMeld=true;
+            }
+            break;
+        default:
+            break;
     }
-    if(past)player.unpairedCards.push_back(card);
-    if(dodge)player.dodgeCards.push_back(card);
 }
 
 bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){
