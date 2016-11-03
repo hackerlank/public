@@ -219,7 +219,7 @@ public class PaohuziPanel : GamePanel {
 				A.state=Card.State.ST_ABANDON;
 			}
 
-			//record past and dodge cards
+			//remember past and dodge cards
 			var me=Main.Instance.MainPlayer;
 			if(me.pos==bunch.Pos){
 				var past=false;
@@ -257,7 +257,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected IEnumerator passMeld(Player player,int card=0,bool wait=true){
-		//send past and dodge operation,record when message back
+		//send past and dodge operation,remember when message back
 		player.unpairedCards.Remove(card);
 		var past=false;
 		var dodge=false;

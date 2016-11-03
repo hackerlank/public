@@ -112,7 +112,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 				}
 			}
 			Debug.Log(str);
-			//record
+			//remember
 			if(pos<nHandCards.Length&&nHandCards[pos]!=null){
 				var nCards=int.Parse(nHandCards[pos].text)-1;
 				nHandCards[pos].text=nCards.ToString();

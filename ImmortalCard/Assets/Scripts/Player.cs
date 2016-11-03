@@ -197,11 +197,13 @@ public class Player {
 		case pb_msg.MsgNcMeld:
 			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
 			if(msgMeld.Result==pb_enum.Succeess){
-				//record conflict meld
+				//remember conflict meld
 				var rule=Main.Instance.gameController.Rule;
 				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk&&pos==rule.Token&&pos!=msgMeld.Bunch.Pos){
-					conflictMeld=true;
-					Debug.Log(pos+" conflict meld");
+					if(rule.Pile.IndexOf(msgMeld.Bunch.Pawns[0])==-1){
+						conflictMeld=true;
+						Debug.Log(pos+" conflict "+msgMeld.Bunch.Pawns[0]);
+					}
 				}
 			}else
 				Debug.LogError("meld error: "+msgMeld.Result);
@@ -209,6 +211,7 @@ public class Player {
 			break;
 		case pb_msg.MsgNcDraw:
 			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
+			Main.Instance.gameController.Rule.Pile.Add(msgDraw.Card);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDraw(this,msgDraw));
 			break;
 		case pb_msg.MsgNcSettle:

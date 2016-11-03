@@ -235,7 +235,6 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
         auto h=player.playData.add_bunch();
         h->CopyFrom(bunch);
     }
-    changePos(game,pos);
     return true;
 }
 
@@ -276,7 +275,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                 }
             }
             
-            //record past and dodge cards
+            //remember past and dodge cards
             if(past!=-1){
                 game.players[past]->unpairedCards.push_back(card);
                 KEYE_LOG("%d past meld %d\n",past,card);
@@ -288,9 +287,10 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
             break;
         }
         case proto3::PHZ_BBBBdesk:
-            //record conflict meld
-            if(game.token!=player.pos){
+            //remember conflict meld
+            if(game.token!=player.pos && game.pileMap.find(card)==game.pileMap.end()){
                 game.players[game.token]->conflictMeld=true;
+                KEYE_LOG("%d conflict %d\n",game.token,card);
             }
             break;
         default:

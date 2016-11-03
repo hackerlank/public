@@ -69,7 +69,6 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
         //then meld
         auto h=player.playData.add_bunch();
         h->CopyFrom(bunch);
-        changePos(game,pos);
     }
     return true;
 }

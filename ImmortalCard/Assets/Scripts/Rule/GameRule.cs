@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using Proto3;
 
 public abstract class GameRule {
-	public List<int> Pile;
 	public int[] nHands;
+	public List<int> Pile=new List<int>();				 //remember draw cards
 	public List<bunch_t> Historical=new List<bunch_t>(); //historical game data
 	public int Token,Banker;
 	protected PlayerController aiController;
@@ -18,8 +18,6 @@ public abstract class GameRule {
 	public virtual void Meld(Player player,bunch_t bunch){}
 
 	public MsgNCStart Deal(){
-		Pile=new List<int>();
-
 		var msg=new MsgNCStart();
 		msg.Mid=pb_msg.MsgNcStart;
 		msg.Banker=0;

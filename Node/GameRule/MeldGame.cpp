@@ -286,10 +286,13 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         }
         
         //then draw or discard
-        if(tokenPlayer && !checkDiscard(*tokenPlayer,bDraw?card:invalid_card)){
-            //KEYE_LOG("OnMeld pass to draw\n");
-            changeState(game,Game::State::ST_MELD);
-            draw(game);
+        if(tokenPlayer){
+            changePos(game,tokenPlayer->pos);
+            if(!checkDiscard(*tokenPlayer,bDraw?card:invalid_card)){
+                //KEYE_LOG("OnMeld pass to draw\n");
+                changeState(game,Game::State::ST_MELD);
+                draw(game);
+            }
         }
     }//if(ready>=queue.size())
 }
