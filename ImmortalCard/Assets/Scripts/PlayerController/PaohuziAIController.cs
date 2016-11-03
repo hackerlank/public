@@ -38,7 +38,6 @@ public class PaohuziAIController:AIController{
 				omsgDiscard.Bunch.Pawns.Add(discard);
 				omsgDiscard.Bunch.Type=bDraw?pb_enum.BunchA:pb_enum.Unknown;
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-				Debug.Log(player.pos+" discard "+discard+" after self "+(int)msg.Bunch.Type);
 			}else{
 				//next draw
 			}

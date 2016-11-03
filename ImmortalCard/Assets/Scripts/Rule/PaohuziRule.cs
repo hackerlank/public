@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Proto3;
@@ -125,6 +125,7 @@ public class PaohuziRule: GameRule {
 			foreach(var bun in player.playData.Bunch){
 				var A=bun.Pawns[0];
 				if(A/1000==B/1000 && A%100==B%100){
+					Debug.Log(player.pos+" meld bbbb desk remove "+Player.bunch2str(bun));
 					player.playData.Bunch.Remove(bun);
 					break;
 				}
@@ -145,15 +146,17 @@ public class PaohuziRule: GameRule {
 				bun.Pawns.Add(bunch.Pawns[i*3+1]);
 				bun.Pawns.Add(bunch.Pawns[i*3+2]);
 				player.playData.Bunch.Add(bun);
+				Debug.Log(player.pos+" meld "+Player.bunch2str(bun));
 			}
-		}else
+		}else if(bunch.Type>pb_enum.PhzAbc){
+			Debug.Log(player.pos+" meld "+Player.bunch2str(bunch));
 			player.playData.Bunch.Add(bunch);
+		}
 	}
 	
 	bool IsWin(Player player,int card,List<bunch_t> output,bool bDraw){
 		var pos=player.pos;
-		var playdata=player.playData;
-		var suite=playdata.Bunch;
+		var suite=player.playData.Bunch;
 		var hands=player.playData.Hands;
 		if(hands.Count<2){
 			Debug.Log("isGameOver failed: len="+hands.Count);
@@ -252,6 +255,7 @@ public class PaohuziRule: GameRule {
 					}
 					//处理坎牌
 					//add to stratagy suite
+					Debug.LogError("---- still has AAA");
 					var kan=new bunch_t();
 					var bAAA=true;
 					foreach(var x in iv){
@@ -272,6 +276,7 @@ public class PaohuziRule: GameRule {
 				}
 			}
 		}
+		if(player.pos==0)Debug.Log("bunches 0("+allSuites.Count+"): "+Player.bunches2str(allSuites));
 		//提坎已剔除，只剩绞，句
 		bool over=false;
 		if(needJiang){
@@ -307,6 +312,7 @@ public class PaohuziRule: GameRule {
 				resSuites.Add(tmpJiang);
 				allSuites.Clear();
 				allSuites.AddRange(resSuites);
+				if(player.pos==0)Debug.Log("bunches 1("+allSuites.Count+"): "+Player.bunches2str(allSuites));
 			}else{
 				Debug.Log("-- win for "+player.pos+" failed 0");
 				return false;
@@ -314,7 +320,7 @@ public class PaohuziRule: GameRule {
 		} else{
 			//recursived
 			over=isWin(hand,allSuites);
-			Debug.Log("-- win for "+player.pos+" failed 1");
+			if(player.pos==0)Debug.Log("bunches 2("+allSuites.Count+"): "+Player.bunches2str(allSuites));
 		}
 		if(over){
 			var M=MaxPlayer;
@@ -359,7 +365,8 @@ public class PaohuziRule: GameRule {
 			buildBunch(card,_cards,hints);
 			if(hints.Count<=0){
 				//此牌无组合
-				Debug.Log("isGameOver no suite for card=%d"+card);
+				Debug.Log("isGameOver no suite for card "+card);
+				buildBunch(card,_cards,hints);	//debug
 				return false;
 			} else if(hints.Count==1){
 				//此牌唯一组合,剔除
@@ -439,9 +446,8 @@ public class PaohuziRule: GameRule {
 	bool hint3(Player player,int card,bunch_t hints,bool bDraw){
 		//all possible AAA,AAAA,BBB,BBBB like
 		var pos=player.pos;
-		var playdata=player.playData;
-		var hand=playdata.Hands;
-		var suite=playdata.Bunch;
+		var hand=player.playData.Hands;
+		var suite=player.playData.Bunch;
 		
 		var A=card;
 		List<int> tmp=new List<int>();
@@ -862,7 +868,7 @@ public class PaohuziRule: GameRule {
 		foreach(var i in allSuites){
 			var pt=CalcPoints(i);
 			point+=pt;
-			Debug.Log("bunch point="+pt+",ops="+Player.bunch2str(i));
+			//Debug.Log("bunch point="+pt+",ops="+Player.bunch2str(i));
 		}
 		return point;
 	}

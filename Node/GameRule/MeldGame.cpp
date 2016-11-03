@@ -97,8 +97,11 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
         }
         
-        //pass card
-        player.unpairedCards.push_back(card);
+        //pass discard card
+        if(msg.bunch().type()!=pb_enum::BUNCH_A){
+            player.unpairedCards.push_back(card);
+            KEYE_LOG("%d past discard %d\n",player.pos,card);
+        }
 
         auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
         //logHands(*game,player.pos,"OnDiscard");
@@ -188,6 +191,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     }
 
     //DOTO: use pb_enum::INVALID instead of pb_enum::OP_PASS
+    //anyway, push to past list
     if(curr.type()==pb_enum::OP_PASS && game.pileMap.find(card)==game.pileMap.end())
         player.unpairedCards.push_back(card);
 

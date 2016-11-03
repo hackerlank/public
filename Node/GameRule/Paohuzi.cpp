@@ -240,21 +240,51 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
 }
 
 void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
+    //remove all past cards,deal it below
+    for(auto pm:game.pendingMeld){
+        auto i=pm.bunch.pos();
+        if(i==-1)i=player.pos;
+        auto p=game.players[i];
+        p->unpairedCards.resize(std::remove(p->unpairedCards.begin(),p->unpairedCards.end(),card)-p->unpairedCards.begin());
+    }
+
     switch (bunch.type()) {
         case proto3::OP_PASS:{
-            //record past and dodge cards
-            std::remove(player.unpairedCards.begin(),player.unpairedCards.end(),card);
-            auto past=false;
-            auto dodge=false;
-            for(auto b : bunch.child()){
-                if(b.type()==pb_enum::PHZ_ABC){
-                    past=true;
-                }else if(b.type()==pb_enum::PHZ_BBB){
-                    dodge=true;
+            //clients bring all hints even pass,handle here
+            int dodge=-1,past=-1;
+            std::vector<int> pasts(MaxPlayer());
+            for(auto pm:game.pendingMeld){
+                auto i=pm.bunch.pos();
+                if(i==-1)i=player.pos;
+                for(auto child:pm.bunch.child()){
+                    auto type=child.type();
+                    if(type==pb_enum::PHZ_ABC){
+                        pasts[i]=1;
+                    }
+                    if(type==pb_enum::PHZ_BBB){
+                        dodge=i;
+                    }
                 }
             }
-            if(past)player.unpairedCards.push_back(card);
-            if(dodge)player.dodgeCards.push_back(card);
+            
+            //then find the highest one to be the responsible
+            for(int i=game.token;i<game.token+MaxPlayer();++i){
+                auto j=i%MaxPlayer();
+                if(pasts[j]==1){
+                    past=j;
+                    break;
+                }
+            }
+            
+            //record past and dodge cards
+            if(past!=-1){
+                game.players[past]->unpairedCards.push_back(card);
+                KEYE_LOG("%d past meld %d\n",past,card);
+            }
+            if(dodge!=-1){
+                game.players[dodge]->dodgeCards.push_back(card);
+                KEYE_LOG("%d dodge %d\n",dodge,card);
+            }
             break;
         }
         case proto3::PHZ_BBBBdesk:

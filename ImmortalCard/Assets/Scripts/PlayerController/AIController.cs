@@ -60,7 +60,7 @@ public class AIController:PlayerController{
 			omsgMeld.Bunch=bunch;
 			
 			player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-			Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after "+msg.Bunch.Pos+" discard");
+			//Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after "+msg.Bunch.Pos+" discard");
 		}
 	}
 	

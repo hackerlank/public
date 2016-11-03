@@ -190,7 +190,6 @@ public class Player {
 					rule.nHands[pos]-=msgDiscard.Bunch.Pawns.Count;
 					foreach(var card in msgDiscard.Bunch.Pawns)
 						playData.Hands.Remove(card);
-					Debug.Log("-- remove hands when discard, card="+msgDiscard.Bunch.Pawns[0]);
 				}
 			}else
 				Debug.LogError("discard error: "+msgDiscard.Result);
@@ -261,6 +260,18 @@ public class Player {
 				str+=card+",";
 			str+=")";
 		}
+		return str;
+	}
+	
+	public static string bunches2str(List<bunch_t> bunches){
+		var str="";
+		foreach(var bunch in bunches)str+=bunch2str(bunch);
+		return str;
+	}
+
+	public static string bunches2str(global::Google.Protobuf.Collections.RepeatedField<bunch_t> bunches){
+		var str="";
+		foreach(var bunch in bunches)str+=bunch2str(bunch);
 		return str;
 	}
 }

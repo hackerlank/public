@@ -216,11 +216,10 @@ public class MahJongRule: GameRule {
 		}
 		if(bunch.Pawns.Count<=0)return false;
 
-		var gdata=player.playData;
-		var B=gdata.SelectedCard;
+		var B=player.playData.SelectedCard;
 		var A=bunch.Pawns[0];
 		if(A/1000!=B/1000){
-			foreach(var card in gdata.Hands){
+			foreach(var card in player.playData.Hands){
 				if(card/1000==B/1000)
 					return false;
 			}

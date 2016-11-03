@@ -7,7 +7,7 @@ using Proto3;
 public class PaohuziPanel : GamePanel {
 	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
-	public GameObject	BtnABC,BtnA3,BtnWin;
+	public GameObject	BtnABC,BtnA3,BtnA4,BtnWin;
 	public GameObject	BaihuoPanel;
 	public Transform[]	BaihuoLayers;	//max 3 layers
 
@@ -62,7 +62,6 @@ public class PaohuziPanel : GamePanel {
 		var fromSelf=false;
 		var card=msg.Bunch.Pawns[0];
 		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
-		Debug.Log("-- check hands when discard, fromSelf="+fromSelf+",card="+card);
 		if(fromSelf){
 			StartCoroutine(sortHands());
 			Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
@@ -102,7 +101,7 @@ public class PaohuziPanel : GamePanel {
 			}
 		}
 		StartCoroutine(passMeld(player,id,false));
-		Debug.Log(pos+" directly pass after self draw");
+		Debug.Log(pos+" draw "+id);
 	}
 
 	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
@@ -196,7 +195,7 @@ public class PaohuziPanel : GamePanel {
 					}
 				}
 
-				Debug.Log("meld "+A.Value+" from "+from+" to "+to);
+				//Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			}
 			Destroy(A.gameObject);
 
@@ -214,7 +213,7 @@ public class PaohuziPanel : GamePanel {
 					omsgDiscard.Bunch.Pawns.Add(card);
 					omsgDiscard.Bunch.Type=pb_enum.BunchA;
 					Main.Instance.MainPlayer.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-					Debug.Log(_pos+" discard "+card+" after self draw");
+					//Debug.Log(_pos+" discard "+card+" after self draw");
 				}
 			}else if(A!=null){
 				if(to==-1)to=Rule.Token;
@@ -305,32 +304,53 @@ public class PaohuziPanel : GamePanel {
 		_hints=Rule.Hint(player,bunch,true);
 
 		//show/hide buttons
+		var abc=false;
+		var bbb=false;
+		var bbbb=false;
+		var win=false;
 		foreach(var b in _hints){
 			switch(b.Type){
 			case pb_enum.PhzAbc:
-				if(!startup)BtnABC.SetActive(true);
+				abc=true;
 				break;
 			case pb_enum.PhzBbb:
-				if(!startup)BtnA3.SetActive(true);
+				bbb=true;
 				break;
 			case pb_enum.PhzAaa:
 			case pb_enum.PhzAaawei:
 			case pb_enum.PhzAaachou:
+				//auto meld
 				OnAAA();
 				return true;
 			case pb_enum.PhzAaaa:
 			case pb_enum.PhzAaaastart:
 			case pb_enum.PhzAaaadesk:
-			case pb_enum.PhzBbbB:
-			case pb_enum.PhzBbbbdesk:
+				//auto meld
 				OnAAAA();
 				return true;
+			case pb_enum.PhzBbbB:
+			case pb_enum.PhzBbbbdesk:
+				bbbb=true;
+				break;
 			case pb_enum.BunchWin:
-				BtnWin.SetActive(true);
+				win=true;
 				break;
 			default:
 				break;
 			}
+		}
+		if(win)
+			BtnWin.SetActive(true);
+		else if(bbbb){
+			//auto meld
+			OnAAAA();
+			return true;
+		}
+
+		if(!startup){
+			if(abc)BtnABC.SetActive(true);
+			if(bbb)BtnA3.SetActive(true);
+			if(bbbb)BtnA4.SetActive(true);
 		}
 		if(_hints.Count>0)BtnPass.SetActive(true);
 
