@@ -386,25 +386,34 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
         return false;
     }
     
-    std::vector<unit_id_t> cards;
-    std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
+    std::vector<bunch_t> allSuites(suite.begin(),suite.end());
+    std::vector<unit_id_t> hand(hands.begin(),hands.end());
 
     //insert into hand if not in
     if(validId(card)){
         auto inhand=false;
-        for(auto i:cards)if(i==card){inhand=true;break;}
-        if(!inhand)cards.push_back(card);
+        for(auto i:hand)if(i==card){inhand=true;break;}
+        if(!inhand)hand.push_back(card);
     }
 
     auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
-    std::sort(cards.begin(),cards.end(),sorter);
-    
+    std::sort(hand.begin(),hand.end(),sorter);
+
     //check desk
     auto myself=(pos==game.token);
     
-    std::vector<bunch_t> allSuites(suite.begin(),suite.end());
-    std::vector<unit_id_t> hand(hands.begin(),hands.end());
-    
+    //handle AAA first
+    auto AAAs=player.AAAs.end();
+    for(auto i=player.AAAs.begin(),ii=player.AAAs.end();i!=ii;++i){
+        auto a=i->pawns(0);
+        if(a/1000==card/1000 && a%100==card%100){
+            std::copy(i->pawns().begin(),i->pawns().end(),std::back_inserter(hand));
+            AAAs=i;
+            player.AAAs.erase(i);
+            break;
+        }
+    }
+
     logHands(game,pos);
     //是否需要将
     bool needJiang=false;
@@ -513,41 +522,39 @@ bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t
             }
         }
         over=btmpOver;
-        if(btmpOver){
+        if(over){
             resSuites.push_back(*tmpJiang);
             allSuites.clear();
             std::copy(resSuites.begin(),resSuites.end(),std::back_inserter(allSuites));
-        }else{
-            return false;
         }
     } else{
         //recursived
         over=isWin(game,hand,allSuites);
     }
     if(over){
+        over=false;
         auto M=MaxPlayer();
         int MIN_SUITES=7;
         if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
         if(allSuites.size()+player.AAAs.size()>=MIN_SUITES){
-            auto win=false;
             if(game.category==pb_enum::PHZ_PEGHZ)
                 //碰胡子判胡
-                win=true;
+                over=true;
             else{
                 auto point=calcPoints(game,allSuites);
                 point+=calcPoints(game,player.AAAs);
                 if(point>=winPoint(game,game.category))
-                    win=true;
+                    over=true;
             }
-            if(win){
+            if(over){
                 std::copy(allSuites.begin(),allSuites.end(),std::back_inserter(output));
                 std::copy(player.AAAs.begin(),player.AAAs.end(),std::back_inserter(output));
             }
-            return win;
         }
     }
     
-    return false;
+    if(!over && AAAs!=player.AAAs.end())player.AAAs.push_back(*AAAs);
+    return over;
 }
 
 bool Paohuzi::isWin(Game& game,std::vector<unit_id_t>& cards,std::vector<bunch_t>& allSuites){

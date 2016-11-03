@@ -31,6 +31,7 @@ public class AIController:PlayerController{
 			player.playData.Hands.Remove(card);
 		}else{
 			yield return new WaitForSeconds(Configs.OpsInterval);
+			if(Main.Instance.gameController==null)yield break;
 
 			//meld only for others
 			var omsgMeld=new MsgCNMeld();

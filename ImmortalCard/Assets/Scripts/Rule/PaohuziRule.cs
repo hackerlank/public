@@ -187,6 +187,18 @@ public class PaohuziRule: GameRule {
 		List<bunch_t> allSuites=new List<bunch_t>(suite);
 		List<int> hand=new List<int>(hands);
 
+		//handle AAA first
+		bunch_t AAAs=null;
+		foreach(var aaa in player.AAAs){
+			var a=aaa.Pawns[0];
+			if(a/1000==card/1000 && a%100==card%100){
+				hand.AddRange(aaa.Pawns);
+				AAAs=aaa;
+				player.AAAs.Remove(aaa);
+				break;
+			}
+		}
+		
 		if(card>0){
 			var inhand=false;
 			foreach(var i in hand)if(i==card){inhand=true;break;}
@@ -255,7 +267,6 @@ public class PaohuziRule: GameRule {
 					}
 					//处理坎牌
 					//add to stratagy suite
-					Debug.LogError("---- still has AAA");
 					var kan=new bunch_t();
 					var bAAA=true;
 					foreach(var x in iv){
@@ -308,14 +319,11 @@ public class PaohuziRule: GameRule {
 				}
 			}
 			over=btmpOver;
-			if(btmpOver){
+			if(over){
 				resSuites.Add(tmpJiang);
 				allSuites.Clear();
 				allSuites.AddRange(resSuites);
 				if(player.pos==0)Debug.Log("bunches 1("+allSuites.Count+"): "+Player.bunches2str(allSuites));
-			}else{
-				Debug.Log("-- win for "+player.pos+" failed 0");
-				return false;
 			}
 		} else{
 			//recursived
@@ -323,31 +331,29 @@ public class PaohuziRule: GameRule {
 			if(player.pos==0)Debug.Log("bunches 2("+allSuites.Count+"): "+Player.bunches2str(allSuites));
 		}
 		if(over){
+			over=false;
 			var M=MaxPlayer;
 			int MIN_SUITES=7;
 			if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
 			if(allSuites.Count+player.AAAs.Count>=MIN_SUITES){
-				var win=false;
 				if(Main.Instance.MainPlayer.category==pb_enum.PhzPeghz){
 					//碰胡子判胡
-					win=true;
+					over=true;
 				}else{
 					var point=calcPoints(allSuites);
 					point+=calcPoints(player.AAAs);
-					if(point>=winPoint(Main.Instance.MainPlayer.category)){
-						win=true;
-					}else
-						Debug.Log("-- win for "+player.pos+" failed less points");
+					if(point>=winPoint(Main.Instance.MainPlayer.category))
+						over=true;
 				}
-				if(win){
+				if(over){
 					output.AddRange(allSuites);
 					output.AddRange(player.AAAs);
 				}
-				return win;
 			}
 		}
-		
-		return false;
+		if(!over && AAAs!=null)player.AAAs.Add(AAAs);
+
+		return over;
 	}
 	
 	bool isWin(List<int> cards,List<bunch_t> allSuites){
@@ -956,6 +962,8 @@ public class PaohuziRule: GameRule {
 						//add to AAAA
 						bunch.Type=pb_enum.PhzAaaastart;
 						player.AAAAs.Add(bunch);
+						var rule=Main.Instance.gameController.Rule;
+						rule.nHands[player.pos]-=4;
 					}else if(iv.Count==3){
 						//add to AAA
 						bunch.Type=pb_enum.PhzAaaastart;

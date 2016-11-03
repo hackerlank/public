@@ -26,29 +26,36 @@ public class PaohuziPanel : GamePanel {
 	}
 	
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
-		PaohuziRule.prepareAAAA(Main.Instance.MainPlayer);
+		PaohuziRule.prepareAAAA(player);
+
 		//display all AAAA
 		for(int i=0;i<maxPlayer;++i){
-			if(i==_pos)continue;
-			
-			var bunch=msg.Bunch[i];
-			ZipaiBunch zb=null;
-			Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj) {
-				zb=obj as ZipaiBunch;
-			});
-			while(zb==null)yield return null;
-			zb.Value=bunch;
-		}
-		
-		//remove AAAA from hands
-		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
-		foreach(var id in msg.Bunch[_pos].Pawns){
-			foreach(var card in hands){
-				if(card.Value==id)
-					card.DiscardTo(MeldAreas[_pos],DiscardScalar);
+			bunch_t bunch=msg.Bunch[i];
+			for(int j=0;j<bunch.Pawns.Count/4;++j){
+				var val=new bunch_t();
+				for(int k=j*4;k<(j+1)*4;++k)val.Pawns.Add(bunch.Pawns[k]);
+				ZipaiBunch zb=null;
+				Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj) {
+					zb=obj as ZipaiBunch;
+				});
+				while(zb==null)yield return null;
+				zb.Value=val;
 			}
 		}
 		
+		//remove AAAA from my hands
+		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
+		foreach(var id in msg.Bunch[_pos].Pawns){
+			foreach(var card in hands){
+				if(card.Value==id){
+					Destroy(card.gameObject);
+					//card.DiscardTo(MeldAreas[_pos],DiscardScalar);
+				}
+			}
+		}
+
+		yield return null;
+		yield return null;
 		yield return StartCoroutine(sortHands());
 		checkNaturalWin();
 	}
@@ -100,7 +107,7 @@ public class PaohuziPanel : GamePanel {
 				break;
 			}
 		}
-		StartCoroutine(passMeld(player,id,false));
+		if(this!=null)StartCoroutine(passMeld(player,id,false));
 		Debug.Log(pos+" draw "+id);
 	}
 
@@ -526,7 +533,7 @@ public class PaohuziPanel : GamePanel {
 			files.Add(Id2File(k,i));
 		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
 
-		btnOps=new GameObject[]{BtnABC,BtnA3,BtnWin,BtnPass};
+		btnOps=new GameObject[]{BtnABC,BtnA3,BtnA4,BtnWin,BtnPass};
 	}
 
 	public void OnABC(){
