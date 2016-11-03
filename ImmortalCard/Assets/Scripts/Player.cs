@@ -22,7 +22,7 @@ public class Player {
 	//phz
 	public List<int>		unpairedCards=new List<int>();
 	public List<int>		dodgeCards=new List<int>();
-	public List<bunch_t>	AAAAs=new List<bunch_t>();
+	public List<bunch_t>	AAAAs=new List<bunch_t>();	//startup AAAA,does not copy to desk bunches
 	public List<bunch_t>	AAAs=new List<bunch_t>();
 	public bool				conflictMeld=false;
 
@@ -211,7 +211,8 @@ public class Player {
 			break;
 		case pb_msg.MsgNcDraw:
 			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
-			Main.Instance.gameController.Rule.Pile.Add(msgDraw.Card);
+			if(this==Main.Instance.MainPlayer)
+				Main.Instance.gameController.Rule.Pile.Add(msgDraw.Card);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDraw(this,msgDraw));
 			break;
 		case pb_msg.MsgNcSettle:

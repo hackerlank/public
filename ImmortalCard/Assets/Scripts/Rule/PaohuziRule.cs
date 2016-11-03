@@ -47,7 +47,7 @@ public class PaohuziRule: GameRule {
 		}
 
 		var card=src_bunch.Pawns[0];
-		var bDraw=(src_bunch.Type==pb_enum.BunchA||card==Configs.invalidCard);
+		var bDraw=(Pile.IndexOf(card)!=-1/*src_bunch.Type==pb_enum.BunchA*/||card==Configs.invalidCard);
 		//handle past card
 		var past=false;
 		var dodge=false;
@@ -209,7 +209,8 @@ public class PaohuziRule: GameRule {
 
 		//logHands(game,pos);
 		//是否需要将
-		bool needJiang=false;
+		bool needJiang=(player.AAAAs.Count>0);
+		if(!needJiang)
 		foreach(var iv in suite){
 			var ops=fixOps(iv.Type);
 			if(ops==pb_enum.PhzAaaa||ops==pb_enum.PhzAaaastart||ops==pb_enum.PhzBbbB||ops==pb_enum.PhzBbbbdesk||ops==pb_enum.PhzAaaadesk){

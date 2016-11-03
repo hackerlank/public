@@ -22,6 +22,7 @@ public class PaohuziAIController:AIController{
 			rule.Meld(player,msg.Bunch);
 
 			var bDraw=(msg.Bunch.Type==pb_enum.OpPass);
+			//var bDraw=rule.Pile.IndexOf(msg.Bunch.Pawns[0])!=-1;
 			if(rule.checkDiscard(player,bDraw?msg.Bunch.Pawns[0]:Configs.invalidCard)){
 				//discard
 				var discard=player.playData.Hands[0];

@@ -117,7 +117,7 @@ public class PaohuziPanel : GamePanel {
 		var to=bunch.Pos;
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 
-		var bDraw=(bunch.Type==pb_enum.OpPass&&to!=-1);
+		var bDraw=Rule.Pile.IndexOf(bunch.Pawns[0])!=-1;//(bunch.Type==pb_enum.OpPass&&to!=-1);
 		if(A==null&&!bDraw)
 			yield break;
 
