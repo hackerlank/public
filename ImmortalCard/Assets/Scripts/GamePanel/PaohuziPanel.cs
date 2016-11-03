@@ -105,8 +105,6 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
-		_hints.Clear();
-
 		var bunch=msg.Bunch;
 		var from=Rule.Token;
 		var to=bunch.Pos;
@@ -532,10 +530,8 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	public void OnABC(){
-		foreach(var btn in btnOps)btn.SetActive(false);
-		if(_hints.Count>0){
+		if(_hints.Count>0)
 			StartCoroutine(onABC());
-		}
 	}
 
 	bool onTap(bunch_t[] bunchLayers,ZipaiBunch zpbunch){
@@ -586,6 +582,7 @@ public class PaohuziPanel : GamePanel {
 
 	bool _baihuoReady=true;
 	IEnumerator onABC(){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		bunch_t[] bunchLayers=new bunch_t[3];
 
 		var abcs=new List<bunch_t>(); 
@@ -599,7 +596,7 @@ public class PaohuziPanel : GamePanel {
 		BaihuoPanel.SetActive(true);
 
 		while(!_baihuoReady)yield return null;
-		BaihuoPanel.SetActive(false);
+		cancelABC();
 
 		bunch_t obunch=null;
 		foreach(var bl in bunchLayers){
@@ -619,11 +616,10 @@ public class PaohuziPanel : GamePanel {
 			msg.Bunch.MergeFrom(obunch);
 			Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
 		}
-		yield break;
+		_hints.Clear();
 	}
 	
 	public void OnAAA(){
-		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.PhzAaa ||
@@ -641,10 +637,11 @@ public class PaohuziPanel : GamePanel {
 				}
 			}
 		}
+		foreach(var btn in btnOps)btn.SetActive(false);
+		_hints.Clear();
 	}
 	
 	public void OnAAAA(){
-		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.PhzAaaa ||
@@ -663,10 +660,11 @@ public class PaohuziPanel : GamePanel {
 				}
 			}
 		}
+		foreach(var btn in btnOps)btn.SetActive(false);
+		_hints.Clear();
 	}
 	
 	public void OnWin(){
-		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints.Count>0){
 			foreach(var hint in _hints){
 				if(hint.Type==pb_enum.BunchWin){
@@ -681,11 +679,22 @@ public class PaohuziPanel : GamePanel {
 				}
 			}
 		}
+		foreach(var btn in btnOps)btn.SetActive(false);
+		_hints.Clear();
 	}
 
 	public void OnCancelABC(){
-		BaihuoPanel.SetActive(false);
 		OnPass();
+		cancelABC();
+		foreach(var btn in btnOps)btn.SetActive(false);
+		_hints.Clear();
+	}
+
+	void cancelABC(){
+		BaihuoPanel.SetActive(false);
+		foreach(var panel in BaihuoLayers)
+			foreach(Transform trans in panel)
+				Destroy(trans.gameObject);
 	}
 	// ----------------------------------------------
 	// logic
