@@ -4360,6 +4360,12 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_count();
 
+  // optional int32 piles = 9;
+  void clear_piles();
+  static const int kPilesFieldNumber = 9;
+  ::google::protobuf::int32 piles() const;
+  void set_piles(::google::protobuf::int32 value);
+
   // optional .proto3.pb_enum result = 10;
   void clear_result();
   static const int kResultFieldNumber = 10;
@@ -4382,9 +4388,10 @@ class MsgNCStart : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > bottom_;
   mutable int _bottom_cached_byte_size_;
   ::google::protobuf::int32 multiple_;
-  int result_;
+  ::google::protobuf::int32 piles_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > count_;
   mutable int _count_cached_byte_size_;
+  int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -9671,6 +9678,20 @@ inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
 MsgNCStart::mutable_count() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.count)
   return &count_;
+}
+
+// optional int32 piles = 9;
+inline void MsgNCStart::clear_piles() {
+  piles_ = 0;
+}
+inline ::google::protobuf::int32 MsgNCStart::piles() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCStart.piles)
+  return piles_;
+}
+inline void MsgNCStart::set_piles(::google::protobuf::int32 value) {
+  
+  piles_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCStart.piles)
 }
 
 // optional .proto3.pb_enum result = 10;

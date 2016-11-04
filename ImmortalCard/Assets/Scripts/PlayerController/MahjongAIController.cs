@@ -55,6 +55,7 @@ public class MahjongAIController:AIController{
 	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
 		if(player.pos==msg.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
+			if(null==Main.Instance.gameController)yield break;
 
 			//meld only for the drawer
 			var omsgMeld=new MsgCNMeld();

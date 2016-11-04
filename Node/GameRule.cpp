@@ -84,6 +84,7 @@ void GameRule::deal(Game& game){
     for(int i=0;i<MP;++i)
         msg.mutable_count()->Add((int)game.players[i]->playData.hands().size());
     msg.mutable_bottom()->CopyFrom(bottom.pawns());
+    msg.set_piles((int)game.pile.size());
     
     for(auto p:game.players){
         msg.set_pos(p->pos);

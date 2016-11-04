@@ -212,6 +212,7 @@ public class Player {
 		case pb_msg.MsgNcDraw:
 			MsgNCDraw msgDraw=MsgNCDraw.Parser.ParseFrom(bytes);
 			if(this==Main.Instance.MainPlayer)
+				//should modify before all controllers
 				Main.Instance.gameController.Rule.Pile.Add(msgDraw.Card);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDraw(this,msgDraw));
 			break;

@@ -7,6 +7,7 @@ using Proto3;
 using Google.Protobuf;
 
 public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandler,IPointerUpHandler{
+	public TokenIcon	tokenIcon;
 	public Card[]		BottomCards;
 	public Transform	Pile;
 	public Transform[]	HandAreas;
@@ -69,8 +70,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			if(i<BottomCards.Length&&BottomCards[i]!=null)
 				BottomCards[i].Value=msg.Bottom[i];
 		}
-		if(Players[Rule.Banker].gameTimer!=null)
-			Players[Rule.Banker].gameTimer.On();
+		tokenIcon.Token=rule.Banker;
+		tokenIcon.Pile=msg.Piles;
 		Debug.Log(str);
 	}
 
@@ -122,6 +123,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 	virtual public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
 		changeToken(msg.Pos);
+		tokenIcon.Pile=tokenIcon.Pile-1;
 		yield break;
 	}
 	
@@ -367,11 +369,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		if(pos==-1)return;
 		var old=Rule.Token;
 		Rule.Token=pos%maxPlayer;
-		if(old!=Rule.Token){
-			if(Players[old].gameTimer!=null)
-				Players[old].gameTimer.On(false);
-			if(Players[Rule.Token].gameTimer!=null)
-				Players[Rule.Token].gameTimer.On();
-		}
+		if(old!=Rule.Token)
+			tokenIcon.Token=Rule.Token;
 	}
 }

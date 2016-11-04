@@ -14719,6 +14719,7 @@ const int MsgNCStart::kMultipleFieldNumber;
 const int MsgNCStart::kHandsFieldNumber;
 const int MsgNCStart::kBottomFieldNumber;
 const int MsgNCStart::kCountFieldNumber;
+const int MsgNCStart::kPilesFieldNumber;
 const int MsgNCStart::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -14748,6 +14749,7 @@ void MsgNCStart::SharedCtor() {
   pos_ = 0;
   ante_ = 0;
   multiple_ = 0;
+  piles_ = 0;
   result_ = 0;
 }
 
@@ -14809,6 +14811,7 @@ void MsgNCStart::Clear() {
 
   ZR_(mid_, ante_);
   multiple_ = 0;
+  piles_ = 0;
   result_ = 0;
 
 #undef ZR_HELPER_
@@ -14954,6 +14957,21 @@ bool MsgNCStart::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(72)) goto parse_piles;
+        break;
+      }
+
+      // optional int32 piles = 9;
+      case 9: {
+        if (tag == 72) {
+         parse_piles:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &piles_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectTag(80)) goto parse_result;
         break;
       }
@@ -15054,6 +15072,11 @@ void MsgNCStart::SerializeWithCachedSizes(
       this->count(i), output);
   }
 
+  // optional int32 piles = 9;
+  if (this->piles() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->piles(), output);
+  }
+
   // optional .proto3.pb_enum result = 10;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -15099,6 +15122,13 @@ int MsgNCStart::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->multiple());
+  }
+
+  // optional int32 piles = 9;
+  if (this->piles() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->piles());
   }
 
   // optional .proto3.pb_enum result = 10;
@@ -15192,6 +15222,9 @@ void MsgNCStart::MergeFrom(const MsgNCStart& from) {
   if (from.multiple() != 0) {
     set_multiple(from.multiple());
   }
+  if (from.piles() != 0) {
+    set_piles(from.piles());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -15222,6 +15255,7 @@ void MsgNCStart::InternalSwap(MsgNCStart* other) {
   hands_.UnsafeArenaSwap(&other->hands_);
   bottom_.UnsafeArenaSwap(&other->bottom_);
   count_.UnsafeArenaSwap(&other->count_);
+  std::swap(piles_, other->piles_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -15392,6 +15426,20 @@ MsgNCStart::count() const {
 MsgNCStart::mutable_count() {
   // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCStart.count)
   return &count_;
+}
+
+// optional int32 piles = 9;
+void MsgNCStart::clear_piles() {
+  piles_ = 0;
+}
+ ::google::protobuf::int32 MsgNCStart::piles() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCStart.piles)
+  return piles_;
+}
+ void MsgNCStart::set_piles(::google::protobuf::int32 value) {
+  
+  piles_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCStart.piles)
 }
 
 // optional .proto3.pb_enum result = 10;
