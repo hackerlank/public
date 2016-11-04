@@ -55,9 +55,9 @@ public class MahJongRule: GameRule {
 		}
 
 		//game over
+		var bunch=new bunch_t();
 		List<bunch_t> output=new List<bunch_t>();
 		if(IsWin(player,id,output)){
-			var bunch=new bunch_t();
 			bunch.Pos=pos;
 			bunch.Type=pb_enum.BunchWin;
 			bunch.Pawns.Add(id);
@@ -71,24 +71,22 @@ public class MahJongRule: GameRule {
 			if(B/1000==A/1000&&B%100==A%100)
 				sel.Add(hand);
 		}
+
+		bunch.Pos=pos;
+		bunch.Pawns.Add(id);
+
 		var len=sel.Count;
 		if(len>=2){
 			if(len>=3){
 				//BUNCH_AAAA
-				var bunch=new bunch_t();
-				bunch.Pos=pos;
 				bunch.Type=pb_enum.BunchAaaa;
 				for(int i=0;i<3;++i)bunch.Pawns.Add(sel[i]);
-				bunch.Pawns.Add(id);
 				hints.Add(bunch);
 			}
 			if(src_bunch.Pos!=pos){
 				//BUNCH_AAA, not for self
-				var bunch=new bunch_t();
-				bunch.Pos=pos;
 				bunch.Type=pb_enum.BunchAaa;
 				for(int i=0;i<2;++i)bunch.Pawns.Add(sel[i]);
-				bunch.Pawns.Add(id);
 				hints.Add(bunch);
 			}
 		}else if(src_bunch.Pos==pos){
@@ -98,11 +96,8 @@ public class MahJongRule: GameRule {
 					var C=melt.Pawns[0];
 					if(C/1000==A/1000&&C%100==A%100){
 						//BUNCH_AAAA
-						var bunch=new bunch_t();
-						bunch.Pos=pos;
 						bunch.Type=pb_enum.BunchAaaa;
 						bunch.Pawns.AddRange(melt.Pawns);
-						bunch.Pawns.Add(id);
 						hints.Add(bunch);
 						break;
 					}
@@ -113,8 +108,8 @@ public class MahJongRule: GameRule {
 		var count=hints.Count;
 		if(count>0){
 			string str=count+" hints for "+pos+": ";
-			foreach(var bunch in hints)
-				str+=Player.bunch2str(bunch);
+			foreach(var bun in hints)
+				str+=Player.bunch2str(bun);
 			Debug.Log(str);
 		}
 		return hints;
