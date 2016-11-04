@@ -120,6 +120,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 				if(parent!=null){
 					card.transform.SetParent(parent);
 					card.transform.localScale=Vector3.one;
+					card.transform.localEulerAngles=Vector3.zero;
 				}
 			}
 			if(handler!=null)

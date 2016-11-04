@@ -66,6 +66,14 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
             break;
         }
+        
+        //this will fix the type of bunch
+        auto bt=verifyBunch(*msg.mutable_bunch());
+        if(pb_enum::BUNCH_INVALID==bt){
+            KEYE_LOG("OnDiscard invalid bunch\n");
+            break;
+        }
+        
         //just pass
         if(msg.bunch().type()==pb_enum::OP_PASS){
             omsg.set_result(pb_enum::SUCCEESS);
@@ -73,12 +81,6 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             break;
         }
 
-        auto bt=verifyBunch(*msg.mutable_bunch());
-        if(pb_enum::BUNCH_INVALID==bt){
-            KEYE_LOG("OnDiscard invalid bunch\n");
-            break;
-        }
-        
         //verify
         auto& pawns=msg.bunch().pawns();
         std::vector<uint32> cards(pawns.begin(),pawns.end());

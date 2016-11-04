@@ -13,7 +13,7 @@ public class TokenIcon : MonoBehaviour {
 		}
 		set{
 			_pile=value;
-			pile.text=value.ToString();
+			pile.text=value>0?value.ToString():"";
 		}
 	}
 

@@ -60,7 +60,8 @@ void DoudeZhu::initCard(Game& game){
     }
 }
 
-void DoudeZhu::engage(Game& game,MsgNCEngage&){
+void DoudeZhu::engage(Game& game,MsgNCEngage& msg){
+    DiscardGame::engage(game,msg);
 }
 
 void DoudeZhu::settle(Player& player){
@@ -86,6 +87,9 @@ pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     for(auto c:ids)cards.push_back(c);
     //verify by length
     switch (len) {
+        case 0:
+            bt=pb_enum::OP_PASS;
+            break;
         case 1:
             bt=pb_enum::BUNCH_A;
             break;

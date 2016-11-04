@@ -62,6 +62,24 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			if((i+1)%6==0)str+="\n";
 			while(!fin)yield return null;
 		}
+		//the other player
+		for(int i=0;i<maxPlayer;++i){
+			if(i==_pos)continue;
+			if(i<HandAreas.Length && HandAreas[i]!=null &&
+			   HandAreas[i].gameObject.activeSelf){
+				var n=msg.Count[i];
+				for(int j=0;j<n;++j){
+					var fin=false;
+					Card.Create(CardPrefab,1000,HandAreas[i],delegate(Card card) {
+						fin=true;
+					});
+					yield return null;
+					while(!fin)yield return null;
+				}
+			}
+		}
+
+		//other informations
 		Ante.text=string.Format("Ante: {0}",msg.Ante);
 		Multiples.text=string.Format("Multiple: {0}",msg.Multiple);
 		for(int i=0;i<msg.Count.Count;++i)
@@ -276,6 +294,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 
 	public IEnumerator Discard(Card card=null){
+		foreach(var btn in btnOps)btn.SetActive(false);
 		//discard my card
 		if(null==card&&_selection.Count<=0){
 			Debug.Log("Discard invalid card");

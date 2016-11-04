@@ -85,6 +85,12 @@ public class MahJongPanel : GamePanel {
 		switch(bunch.Type){
 		case pb_enum.BunchA:
 			//collect
+			if(_pos!=to){
+				//remove extra card of other player
+				var hand=HandAreas[to].GetComponentInChildren<Card>();
+				if(hand!=null)
+					Destroy(hand.gameObject);
+			}
 			A.DiscardTo(HandAreas[to],scalar);
 			A.Static=false;
 			A.state=Card.State.ST_NORMAL;
@@ -94,11 +100,28 @@ public class MahJongPanel : GamePanel {
 		case pb_enum.BunchAaaa:
 			//meld
 			A.DiscardTo(MeldAreas[to],scalar);
-			var hands=HandAreas[to].GetComponentsInChildren<Card>();
-			foreach(var id in bunch.Pawns)
-			foreach(var card in hands){
-				if(card.Value==id)
-					card.DiscardTo(MeldAreas[to],scalar);
+			if(_pos==to){
+				//move cards to meld area
+				var hands=HandAreas[to].GetComponentsInChildren<Card>();
+				foreach(var id in bunch.Pawns)
+				foreach(var card in hands){
+					if(card.Value==id)
+						card.DiscardTo(MeldAreas[to],scalar);
+				}
+			}else{
+				//remove extra cards of other player
+				var hands=HandAreas[to].GetComponentsInChildren<Card>();
+				var rm=Mathf.Min(hands.Length,bunch.Pawns.Count-1);
+				for(int i=0;i<rm;++i){
+					var hand=hands[i];
+					Destroy(hand.gameObject);
+				}
+				//the add melds
+				foreach(var id in bunch.Pawns){
+					if(id==A.Value)continue;
+					Card.Create(CardPrefab,id,MeldAreas[to]);
+					yield return null;
+				}
 			}
 			break;
 		default:

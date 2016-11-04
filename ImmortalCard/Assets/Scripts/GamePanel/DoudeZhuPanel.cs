@@ -9,12 +9,14 @@ public class DoudeZhuPanel : GamePanel {
 	public GameObject	BtnDiscard,BtnCall,BtnDouble;
 
 	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+		tokenIcon.Pile=0;
 		yield return StartCoroutine(base.OnMsgStart(player,msg));
+
+		//test only; will call Dezhu here
 		BtnCall.SetActive(false);
 		BtnDouble.SetActive(false);
 		foreach(var btn in btnOps)btn.SetActive(true);
-
-		//test only; will call Dezhu here
+		
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;
 		omsgEngage.Key=0;
