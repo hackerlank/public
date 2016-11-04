@@ -57,12 +57,17 @@ public class MahJongPanel : GamePanel {
 
 		//show hints only for MainPlayer
 		bunch_t bunch=new bunch_t();
-		bunch.Pos=msg.Pos;
+		bunch.Pos=pos;
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(id);
 		if(pos==Main.Instance.MainPlayer.pos&&!showHints(bunch)){
-			StartCoroutine(passMeld(Main.Instance.MainPlayer,id));
-			Debug.Log(Main.Instance.MainPlayer.pos+" pass after self draw");
+			//collect
+			var omsg=new MsgCNMeld();
+			omsg.Mid=pb_msg.MsgCnMeld;
+			omsg.Bunch=bunch;
+			
+			player.Send<MsgCNMeld>(omsg.Mid,omsg);
+			Debug.Log(pos+" collect "+id);
 		}
 	}
 

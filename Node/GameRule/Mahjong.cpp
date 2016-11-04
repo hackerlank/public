@@ -44,6 +44,7 @@ void Mahjong::initCard(Game& game){
 
 void Mahjong::engage(Game& game,MsgNCEngage& msg){
     for(auto& p:game.players)msg.set_keys(p->pos,p->playData.selected_card());
+    MeldGame::engage(game,msg);
 }
 
 bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
@@ -213,6 +214,20 @@ pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
     }
     bunch.set_type(bt);
     return bt;
+}
+
+bool Mahjong::checkDiscard(Player& player,unit_id_t drawCard){
+    auto sz=player.playData.hands_size();
+    if(sz<=0)
+        return false;
+    
+    auto ret=(sz%3==2);
+    if(ret){
+        MeldGame::checkDiscard(player,drawCard);
+        player.game->pendingDiscard->bunch.add_pawns(drawCard);
+    }
+    
+    return ret;
 }
 
 bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){

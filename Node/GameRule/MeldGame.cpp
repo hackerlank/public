@@ -365,7 +365,7 @@ bool MeldGame::comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pen
     return a>b;
 }
 
-bool MeldGame::checkDiscard(Player& player,unit_id_t drawCard){
+bool MeldGame::checkDiscard(Player& player,unit_id_t){
     auto& game=*player.game;
     changeState(game,Game::State::ST_DISCARD);
     //pending discard

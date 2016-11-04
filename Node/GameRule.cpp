@@ -152,6 +152,7 @@ void GameRule::OnEngage(Player& player,uint key){
             MsgNCEngage omsg;
             omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
             omsg.set_result(pb_enum::SUCCEESS);
+            omsg.mutable_keys()->Resize(MaxPlayer(),1001);
             for(int i=0;i<MaxPlayer();++i)omsg.add_bunch();
             engage(*game,omsg);
 
@@ -172,8 +173,11 @@ bool GameRule::Ready(Game& game){
 
 void GameRule::changePos(Game& game,pos_t pos){
     auto old=game.token;
-    game.token=pos%game.rule->MaxPlayer();
-    KEYE_LOG("token: %d=>%d\n",old,game.token);
+    pos=pos%game.rule->MaxPlayer();
+    if(game.token!=pos){
+        game.token=pos;
+        KEYE_LOG("token: %d=>%d\n",old,game.token);
+    }
 }
 
 void GameRule::changeState(Game& game,Game::State state){

@@ -68,15 +68,15 @@ public class MahjongAIController:AIController{
 			if(hints.Count>0)
 				bunch=hints[0];
 			else{
+				//collect
 				bunch=new bunch_t();
 				bunch.Pos=player.pos;
 				bunch.Pawns.Add(msg.Card);
-				bunch.Type=pb_enum.OpPass;
+				bunch.Type=pb_enum.BunchA;
 			}
 			omsgMeld.Bunch=bunch;
 			
 			player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-			Debug.Log(player.pos+(hints.Count>0?(" meld "+bunch.Pawns[0]):" pass")+" after self draw");
 		}
 	}
 }
