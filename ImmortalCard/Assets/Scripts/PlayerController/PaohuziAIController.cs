@@ -16,7 +16,7 @@ public class PaohuziAIController:AIController{
 			yield break;
 		
 		if(player.pos==msg.Bunch.Pos){
-			yield return Main.Instance.StartCoroutine(base.OnMsgMeld(player,msg));
+			yield return new WaitForSeconds(Configs.OpsInterval);
 
 			var rule=Main.Instance.gameController.Rule;
 			rule.Meld(player,msg.Bunch);
@@ -40,7 +40,7 @@ public class PaohuziAIController:AIController{
 				omsgDiscard.Bunch.Type=bDraw?pb_enum.BunchA:pb_enum.Unknown;
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
 			}else{
-				//next draw
+				//wait for next draw
 			}
 		}
 	}

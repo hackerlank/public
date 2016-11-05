@@ -33,7 +33,7 @@ public class MahJongRule: GameRule {
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,bunch_t src_bunch,bool filtered=false){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
 		var hands=player.playData.Hands;
@@ -72,19 +72,22 @@ public class MahJongRule: GameRule {
 				sel.Add(hand);
 		}
 
-		bunch.Pos=pos;
-		bunch.Pawns.Add(id);
-
 		var len=sel.Count;
 		if(len>=2){
 			if(len>=3){
 				//BUNCH_AAAA
+				bunch=new bunch_t();
+				bunch.Pos=pos;
+				bunch.Pawns.Add(id);
 				bunch.Type=pb_enum.BunchAaaa;
 				for(int i=0;i<3;++i)bunch.Pawns.Add(sel[i]);
 				hints.Add(bunch);
 			}
 			if(src_bunch.Pos!=pos){
 				//BUNCH_AAA, not for self
+				bunch=new bunch_t();
+				bunch.Pos=pos;
+				bunch.Pawns.Add(id);
 				bunch.Type=pb_enum.BunchAaa;
 				for(int i=0;i<2;++i)bunch.Pawns.Add(sel[i]);
 				hints.Add(bunch);
@@ -96,6 +99,9 @@ public class MahJongRule: GameRule {
 					var C=melt.Pawns[0];
 					if(C/1000==A/1000&&C%100==A%100){
 						//BUNCH_AAAA
+						bunch=new bunch_t();
+						bunch.Pos=pos;
+						bunch.Pawns.Add(id);
 						bunch.Type=pb_enum.BunchAaaa;
 						bunch.Pawns.AddRange(melt.Pawns);
 						hints.Add(bunch);
@@ -225,7 +231,15 @@ public class MahJongRule: GameRule {
 	protected override pb_enum verifyBunch(bunch_t bunch){
 		return pb_enum.BunchA;
 	}
-	
+
+	public override bool checkDiscard(Player player,int drawCard){
+		var sz=player.playData.Hands.Count;
+		if(sz<=0)
+			return false;
+		
+		return (sz%3==2);
+	}
+
 	public override int comparision(int x,int y){
 		var cx=(int)x/1000;
 		var cy=(int)y/1000;

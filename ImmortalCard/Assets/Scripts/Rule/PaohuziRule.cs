@@ -33,7 +33,7 @@ public class PaohuziRule: GameRule {
 		*/
 	}
 
-	public override List<bunch_t> Hint(Player player,bunch_t src_bunch,bool filtered=false){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
 		var hints=new List<bunch_t>();
 		var hands=new List<int>(player.playData.Hands);
@@ -369,6 +369,8 @@ public class PaohuziRule: GameRule {
 		foreach(var i in cards){
 			var card=i;
 			List<bunch_t> hints=new List<bunch_t>();
+			//TODO:need handle BBBB,BBBBdesk,BBB and AAA etc.
+
 			buildBunch(card,_cards,hints);
 			if(hints.Count<=0){
 				//此牌无组合

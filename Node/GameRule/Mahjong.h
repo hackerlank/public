@@ -24,6 +24,8 @@ protected:
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     virtual void            engage(Game&,proto3::MsgNCEngage&);
     
+    virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
+
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
     virtual bool            verifyDiscard(Game&,proto3::bunch_t&);
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&);

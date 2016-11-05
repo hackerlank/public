@@ -30,25 +30,33 @@ public class MahjongAIController:AIController{
 		if(player.pos==msg.Bunch.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
 
-			Main.Instance.gameController.Rule.Meld(player,msg.Bunch);
-			
-			//discard
-			var discard=player.playData.Hands[0];
-			foreach(var hand in player.playData.Hands){
-				//huazhu
-				if(hand/1000==player.playData.SelectedCard/1000){
-					discard=hand;
-					break;
+			var rule=Main.Instance.gameController.Rule;
+			rule.Meld(player,msg.Bunch);
+
+			if(rule.checkDiscard(player,msg.Bunch.Pawns[0])){
+				//discard
+				var discard=player.playData.Hands[0];
+				foreach(var hand in player.playData.Hands){
+					//huazhu
+					if(hand/1000==player.playData.SelectedCard/1000){
+						discard=hand;
+						break;
+					}
 				}
+
+				player.unpairedCards.Add(msg.Bunch.Pawns[0]);
+				
+				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
+				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
+				omsgDiscard.Bunch=new bunch_t();
+				omsgDiscard.Bunch.Pos=player.pos;
+				omsgDiscard.Bunch.Pawns.Add(discard);
+				omsgDiscard.Bunch.Type=pb_enum.BunchA;
+				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
+				Debug.Log(player.pos+" discard "+discard);
+			}else{
+				//wait for draw
 			}
-			MsgCNDiscard omsgDiscard=new MsgCNDiscard();
-			omsgDiscard.Mid=pb_msg.MsgCnDiscard;
-			omsgDiscard.Bunch=new bunch_t();
-			omsgDiscard.Bunch.Pos=player.pos;
-			omsgDiscard.Bunch.Pawns.Add(discard);
-			omsgDiscard.Bunch.Type=pb_enum.BunchA;
-			player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-			Debug.Log(player.pos+" discard "+discard+" after self "+(int)msg.Bunch.Type);
 		}
 	}
 

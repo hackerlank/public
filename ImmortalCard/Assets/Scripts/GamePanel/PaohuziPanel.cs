@@ -306,7 +306,7 @@ public class PaohuziPanel : GamePanel {
 	override protected bool showHints(bunch_t bunch,bool startup=false){
 		var player=Main.Instance.MainPlayer;
 
-		_hints=Rule.Hint(player,bunch,true);
+		_hints=Rule.Hint(player,bunch);
 
 		//show/hide buttons
 		var abc=false;
@@ -357,7 +357,8 @@ public class PaohuziPanel : GamePanel {
 			if(bbb)BtnA3.SetActive(true);
 			if(bbbb)BtnA4.SetActive(true);
 		}
-		if(_hints.Count>0)BtnPass.SetActive(true);
+		if(win||
+		   !startup && (bbbb||bbb||abc))BtnPass.SetActive(true);
 
 		return _hints.Count>0;
 	}

@@ -49,7 +49,7 @@ void Mahjong::engage(Game& game,MsgNCEngage& msg){
 
 bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
     auto ret=bunch.type();
-    auto pos=player.pos;
+    //auto pos=player.pos;
     if(ret==pb_enum::BUNCH_A){
         //collect after draw
         player.playData.mutable_hands()->Add(card);
@@ -72,6 +72,13 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
         h->CopyFrom(bunch);
     }
     return true;
+}
+
+void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
+    if(bunch.type()==pb_enum::BUNCH_AAAA){
+        //fix position for self draw
+        changePos(game,(game.token+MaxPlayer()-1)%MaxPlayer());
+    }
 }
 
 bool Mahjong::isWin(Game& game,Player& player,unit_id_t card,std::vector<proto3::bunch_t>& output){

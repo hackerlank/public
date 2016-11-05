@@ -264,8 +264,10 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 break;
             default:
                 //A,AAA,AAAA, meld or do some specials
-                if(meld(game,*who,card,bunch))
+                if(meld(game,*who,card,bunch)){
                     tokenPlayer=who;
+                    changePos(game,who->pos);
+                }
         }
         onMeld(game,*who,card,bunch);
 
@@ -287,7 +289,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         
         //then draw or discard
         if(tokenPlayer){
-            changePos(game,tokenPlayer->pos);
             if(!checkDiscard(*tokenPlayer,bDraw?card:invalid_card)){
                 //KEYE_LOG("OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);

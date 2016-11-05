@@ -151,27 +151,33 @@ public class MahJongPanel : GamePanel {
 
 	override protected bool showHints(bunch_t bunch,bool startup=false){
 		var player=Main.Instance.MainPlayer;
-//		bunch.Pos=(bDraw?player.pos:(player.pos+1)%maxPlayer);
 
 		_hints=Rule.Hint(player,bunch);
 
 		//show/hide buttons
+		var bbb=false;
+		var bbbb=false;
+		var win=false;
 		foreach(var b in _hints){
 			switch(b.Type){
 			case pb_enum.BunchAaa:
-				if(!startup)BtnA3.SetActive(true);
+				bbb=true;
 				break;
 			case pb_enum.BunchAaaa:
-				if(!startup)BtnA4.SetActive(true);
+				bbbb=true;
 				break;
 			case pb_enum.BunchWin:
-				BtnWin.SetActive(true);
+				win=true;
 				break;
 			default:
 				break;
 			}
 		}
-		if(_hints.Count>0)BtnPass.SetActive(true);
+		if(win)BtnWin.SetActive(true);
+		if(bbbb)BtnA4.SetActive(true);
+		if(bbb&&!startup)BtnA3.SetActive(true);
+
+		if(win||bbbb||bbb&&!startup)BtnPass.SetActive(true);
 
 		return _hints.Count>0;
 	}
