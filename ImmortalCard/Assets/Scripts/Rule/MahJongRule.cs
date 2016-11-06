@@ -45,72 +45,74 @@ public class MahJongRule: GameRule {
 			Debug.Log("hint wrong cards len="+src_bunch.Pawns.Count+",pos="+pos);
 			return hints;
 		}
-		var id=src_bunch.Pawns[0];
-		var A=id;
+		var A=src_bunch.Pawns[0];
 
 		//default color check
 		if(A/1000==player.playData.SelectedCard){
 			Debug.Log("hint default color,pos="+pos);
 			return hints;
 		}
-
+		
 		//game over
 		var bunch=new bunch_t();
 		List<bunch_t> output=new List<bunch_t>();
-		if(IsWin(player,id,output)){
+		if(IsWin(player,A,output)){
 			bunch.Pos=pos;
 			bunch.Type=pb_enum.BunchWin;
-			bunch.Pawns.Add(id);
+			bunch.Pawns.Add(A);
 			hints.Add(bunch);
 		}
 		
-		//select color
-		List<int> sel=new List<int>();
-		foreach(var hand in hands){
-			var B=hand;
-			if(B/1000==A/1000&&B%100==A%100)
-				sel.Add(hand);
-		}
-
-		var len=sel.Count;
-		if(len>=2){
-			if(len>=3){
-				//BUNCH_AAAA
-				bunch=new bunch_t();
-				bunch.Pos=pos;
-				bunch.Pawns.Add(id);
-				bunch.Type=pb_enum.BunchAaaa;
-				for(int i=0;i<3;++i)bunch.Pawns.Add(sel[i]);
-				hints.Add(bunch);
+		//normal check
+		if(A>1000){
+			//select color
+			List<int> sel=new List<int>();
+			foreach(var hand in hands){
+				var B=hand;
+				if(B/1000==A/1000&&B%100==A%100)
+					sel.Add(hand);
 			}
-			if(src_bunch.Pos!=pos){
-				//BUNCH_AAA, not for self
-				bunch=new bunch_t();
-				bunch.Pos=pos;
-				bunch.Pawns.Add(id);
-				bunch.Type=pb_enum.BunchAaa;
-				for(int i=0;i<2;++i)bunch.Pawns.Add(sel[i]);
-				hints.Add(bunch);
-			}
-		}else if(src_bunch.Pos==pos){
-			//BUNCH_AAAA, only for self
-			foreach(var melt in player.playData.Bunch){
-				if(melt.Type==pb_enum.BunchAaa){
-					var C=melt.Pawns[0];
-					if(C/1000==A/1000&&C%100==A%100){
-						//BUNCH_AAAA
-						bunch=new bunch_t();
-						bunch.Pos=pos;
-						bunch.Pawns.Add(id);
-						bunch.Type=pb_enum.BunchAaaa;
-						bunch.Pawns.AddRange(melt.Pawns);
-						hints.Add(bunch);
-						break;
+			
+			var len=sel.Count;
+			if(len>=2){
+				if(len>=3){
+					//BUNCH_AAAA
+					bunch=new bunch_t();
+					bunch.Pos=pos;
+					bunch.Pawns.Add(A);
+					bunch.Type=pb_enum.BunchAaaa;
+					for(int i=0;i<3;++i)bunch.Pawns.Add(sel[i]);
+					hints.Add(bunch);
+				}
+				if(src_bunch.Pos!=pos){
+					//BUNCH_AAA, not for self
+					bunch=new bunch_t();
+					bunch.Pos=pos;
+					bunch.Pawns.Add(A);
+					bunch.Type=pb_enum.BunchAaa;
+					for(int i=0;i<2;++i)bunch.Pawns.Add(sel[i]);
+					hints.Add(bunch);
+				}
+			}else if(src_bunch.Pos==pos){
+				//BUNCH_AAAA, only for self
+				foreach(var melt in player.playData.Bunch){
+					if(melt.Type==pb_enum.BunchAaa){
+						var C=melt.Pawns[0];
+						if(C/1000==A/1000&&C%100==A%100){
+							//BUNCH_AAAA
+							bunch=new bunch_t();
+							bunch.Pos=pos;
+							bunch.Pawns.Add(A);
+							bunch.Type=pb_enum.BunchAaaa;
+							bunch.Pawns.AddRange(melt.Pawns);
+							hints.Add(bunch);
+							break;
+						}
 					}
 				}
 			}
 		}
-		
+
 		var count=hints.Count;
 		if(count>0){
 			string str=count+" hints for "+pos+": ";
@@ -238,6 +240,36 @@ public class MahJongRule: GameRule {
 			return false;
 		
 		return (sz%3==2);
+	}
+
+	public static void prepareAAAA(Player player){
+		//check aditional AAAA
+		var hands=player.playData.Hands;
+		int M=3;
+		List<List<int>>[] mc=new List<List<int>>[M];
+		for(int i=0;i<M;++i){
+			mc[i]=new List<List<int>>();
+			for(int l=0;l<9;++l)mc[i].Add(new List<int>());
+		}
+		foreach(var B in hands){
+			if(B/1000==player.playData.SelectedCard)continue;
+			
+			int x=B/1000-1;
+			mc[x][B%100-1].Add(B);
+		}
+		for(int j=0; j<M; ++j){
+			var v=mc[j];
+			foreach(var iv in v){
+				if(iv.Count==4){
+					//BUNCH_AAAA
+					var bunch=new bunch_t();
+					bunch.Pos=player.pos;
+					bunch.Type=pb_enum.BunchAaaa;
+					foreach(var x in iv)bunch.Pawns.Add(x);
+					player.AAAAs.Add(bunch);
+				}
+			}
+		}
 	}
 
 	public override int comparision(int x,int y){

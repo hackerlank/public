@@ -19,6 +19,7 @@ public class MahjongAIController:AIController{
 		for(int i=0;i<msg.Keys.Count;++i)
 			if(player.pos==i)
 				player.playData.SelectedCard=msg.Keys[i];
+		MahJongRule.prepareAAAA(player);
 		yield break;
 	}
 

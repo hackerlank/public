@@ -180,17 +180,17 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         return;
     }
 
-    int card=-1;
+    int card=invalid_card;
 
     //force card check
     card=*curr.pawns().begin();
     auto pcard=*pending.bunch.pawns().begin();
-    if(card!=pcard){
+    if(pcard!=invalid_card && card!=pcard){
         KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",card,pcard,pos);
         return;
     }
 
-    //DOTO: use pb_enum::INVALID instead of pb_enum::OP_PASS
+    //TODO: use pb_enum::INVALID instead of pb_enum::OP_PASS
     //anyway, push to past list
     if(curr.type()==pb_enum::OP_PASS && game.pileMap.find(card)==game.pileMap.end())
         player.unpairedCards.push_back(card);

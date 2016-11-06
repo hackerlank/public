@@ -25,6 +25,7 @@ public class MahJongPanel : GamePanel {
 			if(Main.Instance.MainPlayer.pos==i)
 				Main.Instance.MainPlayer.playData.SelectedCard=msg.Keys[i];
 		
+		MahJongRule.prepareAAAA(player);
 		checkNaturalWin();
 		yield break;
 	}
@@ -79,6 +80,18 @@ public class MahJongPanel : GamePanel {
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
+		if(bunch.Type==pb_enum.BunchAaaa){
+			//could be startup AAAA
+			if(A==null){
+				var hands=HandAreas[to].GetComponentsInChildren<Card>();
+				foreach(var card in hands){
+					if(card.Value==bunch.Pawns[0]){
+						A=card;
+						break;
+					}
+				}
+			}
+		}
 		if(A==null)
 			yield break;
 
@@ -105,7 +118,7 @@ public class MahJongPanel : GamePanel {
 				var hands=HandAreas[to].GetComponentsInChildren<Card>();
 				foreach(var id in bunch.Pawns)
 				foreach(var card in hands){
-					if(card.Value==id)
+					if(card.Value==id && A.Value!=id)
 						melds.Add(card);
 				}
 			}else{
@@ -170,6 +183,8 @@ public class MahJongPanel : GamePanel {
 		var player=Main.Instance.MainPlayer;
 
 		_hints=Rule.Hint(player,bunch);
+		if(startup)
+			_hints.AddRange(player.AAAAs);
 
 		//show/hide buttons
 		var bbb=false;
