@@ -37,12 +37,14 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 			return _value;
 		}set{
 			if(Main.Instance.gameController!=null){
-				var Clr=(int)value/1000;
-				var Val=(int)value%100;
-
-				var file=Main.Instance.gameController.Id2File(Clr,Val);
-				if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
-					image.sprite=CardCache.sprites[file];
+				if(value>1000){
+					var Clr=(int)value/1000;
+					var Val=(int)value%100;
+					
+					var file=Main.Instance.gameController.Id2File(Clr,Val);
+					if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
+						image.sprite=CardCache.sprites[file];
+				}
 				_value=value;
 			}
 		}

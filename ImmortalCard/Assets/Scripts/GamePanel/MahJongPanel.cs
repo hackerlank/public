@@ -45,8 +45,8 @@ public class MahJongPanel : GamePanel {
 	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
 		yield return StartCoroutine(base.OnMsgDraw(player,msg));
 
-		var id=msg.Card;
 		var pos=msg.Pos;
+		var id=(pos==_pos?msg.Card:-1);
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
@@ -99,14 +99,14 @@ public class MahJongPanel : GamePanel {
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
 			//meld
-			A.DiscardTo(MeldAreas[to],scalar);
+			var melds=new List<Card>();
 			if(_pos==to){
 				//move cards to meld area
 				var hands=HandAreas[to].GetComponentsInChildren<Card>();
 				foreach(var id in bunch.Pawns)
 				foreach(var card in hands){
 					if(card.Value==id)
-						card.DiscardTo(MeldAreas[to],scalar);
+						melds.Add(card);
 				}
 			}else{
 				//remove extra cards of other player
@@ -119,10 +119,27 @@ public class MahJongPanel : GamePanel {
 				//the add melds
 				foreach(var id in bunch.Pawns){
 					if(id==A.Value)continue;
-					Card.Create(CardPrefab,id,MeldAreas[to]);
-					yield return null;
+					Card meld=null;
+					Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card obj) {
+						meld=obj;
+					});
+					while(meld==null)yield return null;
+					melds.Add(meld);
 				}
 			}
+			foreach(var meld in melds)
+				meld.DiscardTo(MeldAreas[to],scalar);
+			if(bunch.Type==pb_enum.BunchAaaa){
+				A.DiscardTo(melds[1].transform,scalar);
+				yield return null;
+				var rt=A.transform as RectTransform;
+				rt.anchorMin=rt.anchorMax=Vector2.one*0.5f;
+				//rt.anchoredPosition=Vector2.one*0.5f;
+				rt.sizeDelta=(melds[1].transform as RectTransform).sizeDelta;
+				rt.localScale=Vector3.one;
+				rt.localPosition=10*Vector3.up;
+			}else
+				A.DiscardTo(MeldAreas[to],scalar);
 			break;
 		default:
 			//abandon
