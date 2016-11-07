@@ -149,8 +149,8 @@ public class MahJongPanel : GamePanel {
 					Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card obj) {
 						card=obj;
 					});
-					while(meld==null)yield return null;
-					melds.Add(meld);
+					while(card==null)yield return null;
+					melds.Add(card);
 				}
 			}
 			foreach(var m in melds)
@@ -310,6 +310,12 @@ public class MahJongPanel : GamePanel {
 				if(hint.Type==pb_enum.BunchAaaa)
 					bunch=hint;
 				else if(hint.Type==pb_enum.BunchA&&hint.Child.Count>0){
+					//only support one currently
+					//TODO: selection for multiples
+					var ch0=hint.Child[0];
+					hint.Child.Clear();
+					hint.Child.Add(ch0);
+
 					bunchA=hint;
 				}
 			}
