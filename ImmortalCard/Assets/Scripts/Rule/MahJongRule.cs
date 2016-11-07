@@ -47,6 +47,18 @@ public class MahJongRule: GameRule {
 		}
 		var A=src_bunch.Pawns[0];
 
+		//draw with AAAA,merge them
+		var bunch=new bunch_t();
+		if(src_bunch.Type==pb_enum.BunchA){
+			if(player.AAAAs.Count>0){
+				bunch.Pos=pos;
+				bunch.Type=pb_enum.BunchA;
+				bunch.Pawns.Add(A);
+				bunch.Child.Add(player.AAAAs);
+				hints.Add(bunch);
+			}
+		}
+
 		//default color check
 		if(A/1000==player.playData.SelectedCard){
 			Debug.Log("hint default color,pos="+pos);
@@ -54,7 +66,7 @@ public class MahJongRule: GameRule {
 		}
 		
 		//game over
-		var bunch=new bunch_t();
+		bunch=new bunch_t();
 		List<bunch_t> output=new List<bunch_t>();
 		if(IsWin(player,A,output)){
 			bunch.Pos=pos;
@@ -124,21 +136,34 @@ public class MahJongRule: GameRule {
 	}
 
 	public override void Meld(Player player,bunch_t bunch){
+		List<bunch_t> melds=new List<bunch_t>();
 		switch(bunch.Type){
 		case pb_enum.BunchA:
-			foreach(var card in bunch.Pawns)
-				player.playData.Hands.Add(card);
+			player.playData.Hands.Add(bunch.Pawns[0]);
+			//draw with AAAA
+			melds.AddRange(bunch.Child);
 			break;
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
-			foreach(var card in bunch.Pawns){
-				player.playData.Hands.Remove(card);
-				player.playData.Bunch.Add(bunch);
-			}
+			melds.Add(bunch);
 			break;
 		}
+		foreach(var meld in melds){
+			foreach(var card in meld.Pawns){
+				player.playData.Hands.Remove(card);
+				player.playData.Bunch.Add(meld);
+			}
+			var A=meld.Pawns[0];
+			foreach(var a in player.AAAAs){
+				var B=a.Pawns[0];
+				if(B/1000==A/1000 && B%100==A%100){
+					player.AAAAs.Remove(a);
+					break;
+				}
+			}
+		}
 	}
-
+	
 	public bool IsWin(Player player,int card,List<bunch_t> output=null){
 		var hands=player.playData.Hands;
 		if(hands.Count<2)

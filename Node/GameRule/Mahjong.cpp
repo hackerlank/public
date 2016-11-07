@@ -48,28 +48,44 @@ void Mahjong::engage(Game& game,MsgNCEngage& msg){
 }
 
 bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
-    auto ret=bunch.type();
-    //auto pos=player.pos;
-    if(ret==pb_enum::BUNCH_A){
-        //collect after draw
-        player.playData.mutable_hands()->Add(card);
-        //remove from pile map
-        game.pileMap.erase(card);
-    }else{
-        //erase from hands
-        auto& hands=*player.playData.mutable_hands();
-        for(auto j:bunch.pawns()){
-            for(auto i=hands.begin();i!=hands.end();++i){
-                if(j==*i){
-                    //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
-                    hands.erase(i);
-                    break;
+    //could AAAA anywhere with draw
+    std::vector<const bunch_t*> v;
+    //unpack children
+    v.push_back(&bunch);
+    for(auto& ch:bunch.child())v.push_back(&ch);
+    
+    //meld all
+    for(auto bun:v){
+        auto ret=bun->type();
+        std::vector<const bunch_t*> meldBunch;
+
+        if(ret==pb_enum::BUNCH_A){
+            //collect after draw
+            player.playData.mutable_hands()->Add(card);
+            //remove from pile map
+            game.pileMap.erase(card);
+            //draw with AAAA
+            for(auto b:bun->child())
+                meldBunch.push_back(&b);
+        }else
+            meldBunch.push_back(bun);
+        
+        for(auto b:meldBunch){
+            //erase from hands
+            auto& hands=*player.playData.mutable_hands();
+            for(auto j:b->pawns()){
+                for(auto i=hands.begin();i!=hands.end();++i){
+                    if(j==*i){
+                        //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
+                        hands.erase(i);
+                        break;
+                    }
                 }
             }
+            //then meld
+            auto h=player.playData.add_bunch();
+            h->CopyFrom(*b);
         }
-        //then meld
-        auto h=player.playData.add_bunch();
-        h->CopyFrom(bunch);
     }
     return true;
 }

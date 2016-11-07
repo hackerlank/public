@@ -180,16 +180,15 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         return;
     }
 
-    int card=invalid_card;
+    int card=*curr.pawns().begin();
 
     //force card check
-    card=*curr.pawns().begin();
     auto pcard=*pending.bunch.pawns().begin();
     if(pcard!=invalid_card && card!=pcard){
         KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",card,pcard,pos);
         return;
     }
-
+    
     //TODO: use pb_enum::INVALID instead of pb_enum::OP_PASS
     //anyway, push to past list
     if(curr.type()==pb_enum::OP_PASS && game.pileMap.find(card)==game.pileMap.end())
@@ -302,12 +301,10 @@ void MeldGame::engage(Game& game,MsgNCEngage&){
     //after engaged,wait meld to check natural win
     changeState(game,Game::State::ST_MELD);
     
-    for(auto p:game.players){
-        game.pendingMeld.push_back(Game::pending_t());
-        auto& pending=game.pendingMeld.back();
-        pending.bunch.set_pos(p->pos);
-        pending.bunch.add_pawns(invalid_card);
-    }
+    game.pendingMeld.push_back(Game::pending_t());
+    auto& pending=game.pendingMeld.back();
+    pending.bunch.set_pos(game.banker);
+    pending.bunch.add_pawns(invalid_card);
 }
 
 void MeldGame::draw(Game& game){

@@ -74,14 +74,14 @@ public class MahJongPanel : GamePanel {
 
 	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		_hints=null;
-		
+
 		var bunch=msg.Bunch;
 		var from=Rule.Token;
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(bunch.Type==pb_enum.BunchAaaa){
-			//could be startup AAAA
+			//could be startup AAAA,where A==null
 			if(A==null){
 				var hands=HandAreas[to].GetComponentsInChildren<Card>();
 				foreach(var card in hands){
@@ -95,6 +95,7 @@ public class MahJongPanel : GamePanel {
 		if(A==null)
 			yield break;
 
+		List<bunch_t> meldBunch=new List<bunch_t>();
 		switch(bunch.Type){
 		case pb_enum.BunchA:
 			//collect
@@ -108,15 +109,27 @@ public class MahJongPanel : GamePanel {
 			A.Static=false;
 			A.state=Card.State.ST_NORMAL;
 			if(to==_pos)StartCoroutine(sortHands());
+			//draw with AAAA,unpack
+			meldBunch.AddRange(bunch.Child);
 			break;
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
 			//meld
+			meldBunch.Add(bunch);
+			break;
+		default:
+			//abandon
+			if(to==-1)to=Rule.Token;
+			A.DiscardTo(AbandonAreas[to],AbandonScalar);
+			break;
+		}
+		//do meld
+		foreach(var meld in meldBunch){
 			var melds=new List<Card>();
 			if(_pos==to){
 				//move cards to meld area
 				var hands=HandAreas[to].GetComponentsInChildren<Card>();
-				foreach(var id in bunch.Pawns)
+				foreach(var id in meld.Pawns)
 				foreach(var card in hands){
 					if(card.Value==id && A.Value!=id)
 						melds.Add(card);
@@ -124,25 +137,25 @@ public class MahJongPanel : GamePanel {
 			}else{
 				//remove extra cards of other player
 				var hands=HandAreas[to].GetComponentsInChildren<Card>();
-				var rm=Mathf.Min(hands.Length,bunch.Pawns.Count-1);
+				var rm=Mathf.Min(hands.Length,meld.Pawns.Count-1);
 				for(int i=0;i<rm;++i){
 					var hand=hands[i];
 					Destroy(hand.gameObject);
 				}
 				//the add melds
-				foreach(var id in bunch.Pawns){
+				foreach(var id in meld.Pawns){
 					if(id==A.Value)continue;
-					Card meld=null;
+					Card card=null;
 					Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card obj) {
-						meld=obj;
+						card=obj;
 					});
 					while(meld==null)yield return null;
 					melds.Add(meld);
 				}
 			}
-			foreach(var meld in melds)
-				meld.DiscardTo(MeldAreas[to],scalar);
-			if(bunch.Type==pb_enum.BunchAaaa){
+			foreach(var m in melds)
+				m.DiscardTo(MeldAreas[to],scalar);
+			if(meld.Type==pb_enum.BunchAaaa){
 				A.DiscardTo(melds[1].transform,scalar);
 				yield return null;
 				var rt=A.transform as RectTransform;
@@ -153,13 +166,8 @@ public class MahJongPanel : GamePanel {
 				rt.localPosition=10*Vector3.up;
 			}else
 				A.DiscardTo(MeldAreas[to],scalar);
-			break;
-		default:
-			//abandon
-			if(to==-1)to=Rule.Token;
-			A.DiscardTo(AbandonAreas[to],AbandonScalar);
-			break;
 		}
+
 		//remove from hands
 		if(player.pos==bunch.Pos){
 			Rule.Meld(player,bunch);
@@ -183,8 +191,6 @@ public class MahJongPanel : GamePanel {
 		var player=Main.Instance.MainPlayer;
 
 		_hints=Rule.Hint(player,bunch);
-		if(startup)
-			_hints.AddRange(player.AAAAs);
 
 		//show/hide buttons
 		var bbb=false;
@@ -192,6 +198,11 @@ public class MahJongPanel : GamePanel {
 		var win=false;
 		foreach(var b in _hints){
 			switch(b.Type){
+			case pb_enum.BunchA:
+				//draw with AAAA
+				if(b.Child.Count>0)
+					bbbb=true;
+				break;
 			case pb_enum.BunchAaa:
 				bbb=true;
 				break;
@@ -293,18 +304,26 @@ public class MahJongPanel : GamePanel {
 	public void OnAAAA(){
 		foreach(var btn in btnOps)btn.SetActive(false);
 		if(_hints!=null&&_hints.Count>0){
+			bunch_t bunch=null;
+			bunch_t bunchA=null;
 			foreach(var hint in _hints){
-				if(hint.Type==pb_enum.BunchAaaa){
-					MsgCNMeld msg=new MsgCNMeld();
-					msg.Mid=pb_msg.MsgCnMeld;
-					msg.Bunch=new bunch_t();
-					msg.Bunch.Pos=_pos;
-					msg.Bunch.Type=hint.Type;
-					msg.Bunch.MergeFrom(hint);
-					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
-					break;
+				if(hint.Type==pb_enum.BunchAaaa)
+					bunch=hint;
+				else if(hint.Type==pb_enum.BunchA&&hint.Child.Count>0){
+					bunchA=hint;
 				}
 			}
+			if(bunch==null)bunch=bunchA;
+			if(bunch!=null){
+				MsgCNMeld msg=new MsgCNMeld();
+				msg.Mid=pb_msg.MsgCnMeld;
+				msg.Bunch=new bunch_t();
+				msg.Bunch.Pos=_pos;
+				msg.Bunch.Type=bunch.Type;
+				msg.Bunch.MergeFrom(bunch);
+				Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
+			}
+
 		}
 	}
 	

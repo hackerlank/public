@@ -185,38 +185,44 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	protected void checkNaturalWin(){
-		//check natural win
+		//check natural win for banker
 		var players=new List<Player>(Main.Instance.robots);
 		players.Add(Main.Instance.MainPlayer);
 		foreach(var player in players){
+			if(player.pos!=Rule.Banker)continue;
+
 			bunch_t bunch=new bunch_t();
 			bunch.Pos=player.pos;
 			bunch.Type=pb_enum.BunchA;
 			bunch.Pawns.Add(Configs.invalidCard);
 			
-			var win=false;
+			var meld=true;
 			if(player==Main.Instance.MainPlayer){
-				win=showHints(bunch,true);
+				meld=showHints(bunch,true);
 			}else{
+				//robots
 				var hints=Rule.Hint(player,bunch);
+				bunch_t bun=null;
 				foreach(var h in hints){
 					if(h.Type>=pb_enum.BunchWin){
-						win=true;
+						bun=h;
 						break;
+					}else if(h.Type==pb_enum.BunchAaaa){
+						bun=h;
 					}
+				}
+				if(bun!=null){
+					meld=true;
+
+					var msg=new MsgCNMeld();
+					msg.Mid=pb_msg.MsgCnMeld;
+					msg.Bunch=bun;
+					player.Send<MsgCNMeld>(msg.Mid,msg);
 				}
 			}
 			
-			if(player!=Main.Instance.MainPlayer||!win){
-				if(!win)bunch.Type=pb_enum.OpPass;
-				else Debug.Log(player.pos+" natural win");
-				
-				var omsgMeld=new MsgCNMeld();
-				omsgMeld.Mid=pb_msg.MsgCnMeld;
-				omsgMeld.Bunch=bunch;
-				
-				player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
-			}
+			if(!meld)
+				StartCoroutine(passMeld(player,Configs.invalidCard,true));
 		}
 	}
 	// ----------------------------------------------
