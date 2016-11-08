@@ -178,7 +178,7 @@ public class PaohuziRule: GameRule {
 					if(abcs.Count>0){
 						var same=new List<int>();
 						foreach(var B in copy)
-							if(card!=B && B%100==card%100 && B/1000!=card/1000)
+							if(card!=B && B%100==card%100 && B/1000==card/1000)
 								same.Add(B);
 						same.Add(card);
 						
@@ -677,161 +677,10 @@ public class PaohuziRule: GameRule {
 				}
 			}
 		}
-/*
-		//baihuo
-		if(output.Count>0){
-			var tmp=new List<bunch_t>(output);
-			same.Add(A);
-			
-			output.Clear();
-			foreach(bunch_t j in tmp)
-				if(checkBaihuo(cards,same,j))
-					output.Add(j);
-		}
-*/
+
 		return output;
 	}
 
-	bool buildBunch(int card,List<int> _hand,List<bunch_t> hints){
-		//这张牌可能的所有组合：句,绞
-		var jiao=new List<int>();
-		var same=new List<int>();
-		var A=card;
-		
-		List<int> hand=new List<int>(_hand);
-		//按颜色和点数排序
-		List<List<int>>[] mc=new List<List<int>>[2];
-		mc[0]=new List<List<int>>();
-		mc[1]=new List<List<int>>();
-		for(int l=0;l<10;++l){
-			mc[0].Add(new List<int>());
-			mc[1].Add(new List<int>());
-		}
-		foreach(var it in hand){
-			if(card==it)continue;	//跳过自己
-			var C=it;
-			int x=C/1000-1;
-			mc[x][C%100-1].Add(C);
-		}
-		
-		//坎牌剔除
-		for(int j=0; j<2; ++j){
-			var v=mc[j];
-			foreach(var iv in v){
-				if(iv.Count==3){
-					foreach(var x in iv){
-						foreach(var it in hand)
-						if(x==it){
-							hand.Remove(it);
-							break;
-						}
-					}
-				}
-			}
-		}
-		
-		//找相同点数牌
-		foreach(var it in hand){
-			if(card==it)continue;	//跳过自己
-			var B=it;
-			if(B%100==A%100){
-				if(B/1000!=A/1000)jiao.Add(it);
-				else same.Add(it);
-			}
-		}
-		if(jiao.Count==2){
-			//绞，append to hints: Bbb
-			var suite=new bunch_t();
-			suite.Type=pb_enum.PhzAbc;
-			suite.Pawns.Add(card);
-			foreach(var c in jiao)suite.Pawns.Add(c);
-			hints.Add(suite);
-			//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
-		}
-		if(same.Count>0&&jiao.Count>0){
-			//绞，append to hints: BBb
-			var suite=new bunch_t();
-			suite.Type=pb_enum.PhzAbc;
-			suite.Pawns.Add(card);
-			foreach(var it in same)if(card!=it){
-				//别把自己放进去
-				suite.Pawns.Add(it);
-				break;
-			}
-			suite.Pawns.Add(jiao[0]);
-			hints.Add(suite);
-			//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
-		}
-		
-		//句 首先查找与A相临 前面两张牌和后面两张牌的id 和数量 -1表示存在
-		List<int>[] FontABackID=new List<int>[4];	// CBBC
-		for(int f=0;f<4;++f)FontABackID[f]=new List<int>();
-		foreach(var it in hand){
-			var B=it;
-			if( B/1000 != A/1000 ) {
-				continue;	// 颜色不一样 直接跳过
-			}
-			int off = B%100 - A%100;
-			if ( off == 0 ) {
-				continue;
-			}
-			off += (off > 0 ? 1 : 2);		// 计算这个牌的坐标
-			if ( off >= 0 && off <= 3 ) {
-				FontABackID[off].Add( it );
-			}
-		}
-		//
-		for ( int i = 0; i < 3; ++i ) {
-			int count = Mathf.Min( FontABackID[i].Count, FontABackID[i+1].Count);
-			for ( int k = 0; k < count; ++k ) {
-				var suite=new bunch_t();
-				suite.Type=pb_enum.PhzAbc;
-				suite.Pawns.Add(card);
-				suite.Pawns.Add(FontABackID[i][0]);
-				suite.Pawns.Add(FontABackID[i+1][0]);
-				hints.Add(suite);
-				if(k==0)break;
-			}
-		}
-		
-		//find same color and sort
-		var color=new List<int>();
-		foreach(var it in hand){
-			if(card==it)continue;	//跳过自己
-			var B=it;
-			if(B/1000==A/1000)color.Add(it);
-		}
-		//2,7,10
-		var mm=new Dictionary<int,List<int>>();	//[value,ids]
-		if(A%100==2||A%100==7||A%100==10){
-			foreach(var it in color){
-				var B=it;
-				if(B%100!=A%100&&(B%100==2||B%100==7||B%100==10)){
-					if(!mm.ContainsKey(B%100))mm[B%100]=new List<int>();
-					mm[B%100].Add(B);
-				}
-			}
-			if(mm.Count==2){
-				var ll=new List<List<int>>();
-				ll.AddRange(mm.Values);
-				var E=ll[0];
-				var F=ll[1];
-				var sz=Mathf.Min(E.Count,F.Count);
-				for(int e=0;e<sz;++e){
-					var suite=new bunch_t();
-					suite.Type=pb_enum.PhzAbc;
-					suite.Pawns.Add(card);
-					suite.Pawns.Add(E[0]);
-					suite.Pawns.Add(F[0]);
-					hints.Add(suite);
-					//log("hint ops=%s, cards=%d, %d, %d", ops2String(suite.ops).c_str(), suite.Pawns[0], suite.Pawns[1], suite.Pawns[2]);
-					if(e==0)break;
-				}
-			}
-		}
-		return hints.Count>0;
-	}
-	
 	bool checkBaihuo(List<int> hand,List<int> sameCard,bunch_t suite){
 		if(sameCard.Count<=0)return true;
 		//检查是否够将sameCard从hand全部摆出去
@@ -860,9 +709,7 @@ public class PaohuziRule: GameRule {
 		if(tmpSame.Count<=0)
 			return true;
 		else{
-			List<bunch_t> tmpHint=new List<bunch_t>();
-			//TODO: use hintABC
-			buildBunch(tmpSame[tmpSame.Count-1],tmpHand,tmpHint);
+			var tmpHint=hintABC(tmpHand,tmpSame[tmpSame.Count-1]);
 			var ok=false;
 			foreach(var j in tmpHint){
 				if(checkBaihuo(tmpHand,tmpSame,j)){

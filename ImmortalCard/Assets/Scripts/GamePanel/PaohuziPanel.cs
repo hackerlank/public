@@ -340,6 +340,9 @@ public class PaohuziPanel : GamePanel {
 			case pb_enum.BunchWin:
 				win=true;
 				break;
+			case pb_enum.OpPass:
+				BtnPass.SetActive(true);
+				break;
 			default:
 				break;
 			}
@@ -357,10 +360,9 @@ public class PaohuziPanel : GamePanel {
 			if(bbb)BtnA3.SetActive(true);
 			if(bbbb)BtnA4.SetActive(true);
 		}
-		if(win||
-		   !startup && (bbbb||bbb||abc))BtnPass.SetActive(true);
 
-		return _hints.Count>0;
+		return(win||
+		   !startup && (bbbb||bbb||abc));
 	}
 
 	override protected IEnumerator sortHands(){
