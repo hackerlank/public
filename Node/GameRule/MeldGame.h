@@ -33,6 +33,7 @@ protected:
 private:
     //game over here
     virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&)=0;
+    virtual bool            isWin(Game&,proto3::bunch_t&,std::vector<proto3::bunch_t>&){return false;}
 };
 
 #endif /* MeldGame_h */

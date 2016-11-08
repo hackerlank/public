@@ -298,6 +298,77 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
     }
 }
 
+bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
+    auto M=MaxPlayer();
+    int MIN_SUITES=7;
+    if(M==4)MIN_SUITES=5;
+    if(bunch.type()<pb_enum::BUNCH_WIN || bunch.child_size()<MIN_SUITES){
+        KEYE_LOG("isWin failed: wrong bunch size %d\n",bunch.child_size());
+        return false;
+    }
+    
+    auto pos=bunch.pos();
+    auto card=bunch.pawns(0);
+    auto& player=*game.players[pos];
+    auto& playdata=game.players[pos]->playData;
+    auto& suite=*playdata.mutable_bunch();
+    auto& hands=*player.playData.mutable_hands();
+    
+    //logHands(game,pos);
+
+    //can't win hand card if not fire
+    auto bDraw=(!validId(card)||game.pileMap.find(card)!=game.pileMap.end()||game.firstCard==card);
+    auto fire=(pos!=game.token && !bDraw
+               &&   (game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_HY||
+                     game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
+                     game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
+    if(!bDraw && !fire){
+        KEYE_LOG("isWin failed: not fire and not from pile\n");
+        return false;
+    }
+    
+    //build a hand cards map
+    std::map<unit_id_t,int> cmap;
+    for(auto& a4:player.AAAAs)for(auto c:a4.pawns())cmap[c]=1;
+    for(auto& a4:player.AAAs)for(auto c:a4.pawns())cmap[c]=1;
+    for(auto& a4:suite)for(auto c:a4.pawns())cmap[c]=1;
+    for(auto c:hands)cmap[c]=1;
+    
+    //check cards exists
+    for(auto& b:bunch.child()){
+        for(auto c:b.pawns()){
+            if(cmap.find(c)!=cmap.end())
+                --cmap[c];
+            else if(c!=card){
+                KEYE_LOG("isWin failed: card %d not exists\n",c);
+                return false;
+            }
+        }
+    }
+    for(auto& kv:cmap)if(kv.second!=0){
+        KEYE_LOG("isWin failed: card %d missing\n",kv.first);
+        return false;
+    }
+    
+    //verify bunch
+    for(auto& b:*bunch.mutable_child()){
+        if(!verifyBunch(game,b)){
+            std::string str;
+            KEYE_LOG("isWin failed: invalid bunch %s\n",bunch2str(str,b));
+            return false;
+        }
+    }
+
+    std::copy(bunch.child().begin(),bunch.child().end(),std::back_inserter(output));
+    auto point=calcPoints(game,output);
+    if(point<winPoint(game,game.category)){
+        KEYE_LOG("isWin failed: not enough points %d\n",point);
+        output.clear();
+        return false;
+    }
+    return true;
+}
+
 bool Paohuzi::isWin(Game& game,Player& player,unit_id_t card,std::vector<bunch_t>& output){
     auto pos=player.pos;
     auto& playdata=game.players[pos]->playData;
@@ -1955,7 +2026,7 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
     for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
         auto& suite=*i;
         if(suite.pawns().empty())continue;
-        auto small=suite.pawns(0)/1000;
+        auto small=(1==suite.pawns(0)/1000);
         int pt=0;
         switch(fixOps(suite.type())){
             case pb_enum::PHZ_AAAA:

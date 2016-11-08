@@ -209,9 +209,12 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         std::sort(pendingMeld.begin(),pendingMeld.end()
                   ,std::bind(&MeldGame::comparePending,this,spgame,std::placeholders::_1,std::placeholders::_2));
         
+        //TODO: handle multiple winner
+        
         //priority
         auto& front=pendingMeld.front();
         auto& bunch=front.bunch;
+        auto which=*bunch.pawns().begin();
         auto where=bunch.pos();
         auto who=game.players[where];
         auto tokenPlayer=game.players[game.token];
@@ -235,9 +238,10 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         switch(result){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
-                if(isWin(game,*who,card,output)){
+                if(isWin(game,bunch,output)){
+                //if(isWin(game,*who,card,output)){
                     who->playData.clear_hands();
-                    settle(*who,output,card);
+                    settle(*who,output,which);
                     changeState(game,Game::State::ST_SETTLE);
                     tokenPlayer.reset();
                 }else{
@@ -253,7 +257,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     bunch.set_pos(game.token);
                 }else{
                     //discard, pass to draw,don't do it immediately!
-                    who->discardedCards.push_back(card);
+                    who->discardedCards.push_back(which);
                     bunch.set_pos(-1);
                 }
                 break;
@@ -263,12 +267,12 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 break;
             default:
                 //A,AAA,AAAA, meld or do some specials
-                if(meld(game,*who,card,bunch)){
+                if(meld(game,*who,which,bunch)){
                     tokenPlayer=who;
                     changePos(game,who->pos);
                 }
         }
-        onMeld(game,*who,card,bunch);
+        onMeld(game,*who,which,bunch);
 
         //change state before send message
         MsgNCMeld msg;
@@ -288,7 +292,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         
         //then draw or discard
         if(tokenPlayer){
-            if(!checkDiscard(*tokenPlayer,bDraw?card:invalid_card)){
+            if(!checkDiscard(*tokenPlayer,bDraw?which:invalid_card)){
                 //KEYE_LOG("OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);
                 draw(game);
