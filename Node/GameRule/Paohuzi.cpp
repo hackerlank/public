@@ -351,7 +351,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     
     //verify bunch
     for(auto& b:*bunch.mutable_child()){
-        if(!verifyBunch(game,b)){
+        if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
             std::string str;
             KEYE_LOG("isWin failed: invalid bunch %s\n",bunch2str(str,b));
             return false;

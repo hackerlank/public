@@ -361,8 +361,10 @@ public class PaohuziPanel : GamePanel {
 			if(bbbb)BtnA4.SetActive(true);
 		}
 
-		return(win||
+		var ret=(win||
 		   !startup && (bbbb||bbb||abc));
+		BtnPass.SetActive(ret);
+		return ret;
 	}
 
 	override protected IEnumerator sortHands(){

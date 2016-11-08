@@ -37,6 +37,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		changeToken(msg.Pos);
 		Rule.Banker=msg.Banker;
 		Rule.Historical.Clear();
+		Rule.Pile.Clear();
 		_selection.Clear();
 
 		transformComponent(DiscardAreas);

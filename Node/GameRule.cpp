@@ -19,6 +19,7 @@ void GameRule::deal(Game& game){
     changePos(game,game.banker);
     game.banker=game.token;
     game.pile.clear();
+    game.pileMap.clear();
     game.historical.clear();
     game.pendingMeld.clear();
     game.pendingDiscard.reset();
@@ -233,8 +234,9 @@ const char* GameRule::bunch2str(std::string& str,const proto3::bunch_t& bunch){
         str+="{";
         for(auto& ch:bunch.child()){
             sprintf(buf,"ops=%d,card=",(int)ch.type());
-            cards2str(str,ch.pawns());
-            str+=buf+str;
+            std::string str0;
+            cards2str(str0,ch.pawns());
+            str+=buf+str0;
         }
         str+="}";
     }

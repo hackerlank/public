@@ -34,7 +34,7 @@ public class PaohuziRule: GameRule {
 			return output;
 		}
 		var card=src_bunch.Pawns[0];
-		
+
 		if(card==Configs.invalidCard){
 			//check natural win at startup
 			var win=isWin(player,copy,card);
@@ -187,12 +187,6 @@ public class PaohuziRule: GameRule {
 							if(checkBaihuo(copy,same,j))
 								abcs.Add(j);
 						output.AddRange(abcs);
-						
-						//add pass option
-						var pass=new bunch_t();
-						pass.Type=pb_enum.OpPass;
-						pass.Pawns.Add(card);
-						output.Add(pass);
 					}
 				}
 			}
@@ -320,22 +314,38 @@ public class PaohuziRule: GameRule {
 					}
 				}
 				//剩下的随便组吧
+				int MIN_SUITES=(MaxPlayer==4?5:7);
+				int J=MIN_SUITES-bunches.Count-player.AAAs.Count-player.AAAAs.Count;
 				var sz=hands.Count;
 				if(sz>0){
 					var I=(sz+2)/3;
-					var suites=new List<bunch_t>(I);
-					for(int i=0;i<sz;++i){
-						var x=i/3;
-						var suite=suites[x];
-						suite.Type=pb_enum.Unknown;
-						suite.Pawns.Add(hands[i]);
+					for(int i=0;i<I;++i){
+						var suite=new bunch_t();
+						suite.Type=pb_enum.OpPass;	//must be OpPass
+						for(int j=0;j<3;++j)if(i*3+j<sz)suite.Pawns.Add(hands[i*3+j]);
+						bunches.Add(suite);
 					}
-					bunches.AddRange(suites);
+					for(int i=I;i<J;++i){
+						var suite=new bunch_t();
+						suite.Type=pb_enum.OpPass;	//must be OpPass
+						bunches.Add(suite);
+					}
 				}
 			}else
 				//BBB,ABC
 				bunches=buildABC(hands,needAA);
-		}else{
+		}else do{
+			var category=pb_enum.PhzSy;
+			var draw=Pile.IndexOf(card)!=-1;
+			var fire=(player.pos!=Token && !draw
+			           &&   (category==pb_enum.PhzLd||category==pb_enum.PhzHy||
+			      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
+			      category==pb_enum.PhzHy||category==pb_enum.PhzGx));
+			if(!fire && !draw){
+				Debug.Log("win failed, not fire and draw");
+				break;
+			}
+
 			//could BBBB
 			bunch_t BBBB=null;
 			//check AAAs
@@ -404,7 +414,7 @@ public class PaohuziRule: GameRule {
 			bunches=(p0>p1?out0:out1);
 			if(bunches.Count>0)
 				bunches.AddRange(desks);
-		}
+		}while(false);
 
 		if(bunches.Count>0){
 			bunches.AddRange(player.AAAAs);
@@ -413,7 +423,7 @@ public class PaohuziRule: GameRule {
 			output=new bunch_t();
 			output.Type=pb_enum.BunchWin;
 			output.Pos=player.pos;
-			output.Pawns.Add(card==Configs.invalidCard?player.playData.Hands[0]:card);
+			output.Pawns.Add(card);
 			output.Child.Add(bunches);
 		}
 
