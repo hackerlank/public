@@ -20,20 +20,9 @@ public class PaohuziRule: GameRule {
 		}
 		//shuffle
 		Pile=shuffle(Pile);
-		/*
-		//deal
-		for(int i=0;i<14;++i)
-			msg.Hands.Add(Pile[i]);
-		//other hands
-		Hands=new List<int>[2]{new List<int>(),new List<int>()};
-		for(int i=14;i<14+13;++i)
-			Hands[0].Add(Pile[i]);
-		for(int i=14+13;i<14+13*2;++i)
-			Hands[1].Add(Pile[i]);
-		*/
 	}
 
-	public List<bunch_t> newHint(Player player,bunch_t src_bunch){
+	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
 		var output=new List<bunch_t>();
 		var copy=new List<int>(player.playData.Hands);
 		if(player==null||src_bunch==null||copy.Count<=0)
@@ -45,10 +34,10 @@ public class PaohuziRule: GameRule {
 			return output;
 		}
 		var card=src_bunch.Pawns[0];
-
+		
 		if(card==Configs.invalidCard){
 			//check natural win at startup
-			var win=newIsWin(player,copy,card);
+			var win=isWin(player,copy,card);
 			if(win!=null)
 				output.Add(win);
 		}else{
@@ -65,7 +54,7 @@ public class PaohuziRule: GameRule {
 				past=true;
 				break;
 			}
-
+			
 			//AAA & AAAA first
 			bunch_t AAAAs=null;
 			bunch_t paaa=null;
@@ -80,7 +69,7 @@ public class PaohuziRule: GameRule {
 						AAAAs.Type=pb_enum.PhzAaaa;
 						AAAAs.Pawns.Add(card);
 						AAAAs.Pawns.AddRange(aaas.Pawns);
-
+						
 						paaa=aaas;
 						break;
 					}
@@ -95,7 +84,7 @@ public class PaohuziRule: GameRule {
 								AAAAs.Type=pb_enum.PhzAaaadesk;
 								AAAAs.Pawns.Add(card);
 								AAAAs.Pawns.Add(desk.Pawns);
-
+								
 								pdesk=desk;
 								break;
 							}
@@ -124,9 +113,9 @@ public class PaohuziRule: GameRule {
 					output.Add(AAAAs);
 				}
 			}
-
+			
 			//then win
-			var win=newIsWin(player,copy,card,needAA);
+			var win=isWin(player,copy,card,needAA);
 			if(win!=null){
 				if(AAAAs!=null){
 					//AAAs win
@@ -140,7 +129,7 @@ public class PaohuziRule: GameRule {
 				win.Pawns[0]=src_bunch.Pawns[0];
 				output.Add(win);
 			}
-
+			
 			bunch_t BBBB=null;
 			if(AAAAs==null){
 				//then BBBB
@@ -183,7 +172,7 @@ public class PaohuziRule: GameRule {
 							tmp.Add(abc);
 						}
 					}
-
+					
 					//baihuo
 					abcs=new List<bunch_t>(tmp);
 					if(abcs.Count>0){
@@ -198,7 +187,7 @@ public class PaohuziRule: GameRule {
 							if(checkBaihuo(copy,same,j))
 								abcs.Add(j);
 						output.AddRange(abcs);
-
+						
 						//add pass option
 						var pass=new bunch_t();
 						pass.Type=pb_enum.OpPass;
@@ -209,7 +198,7 @@ public class PaohuziRule: GameRule {
 			}
 		}
 		foreach(var o in output)o.Pos=player.pos;
-
+		
 		var count=output.Count;
 		if(count>0){
 			string str=count+" hints for "+pos+": ";
@@ -224,77 +213,6 @@ public class PaohuziRule: GameRule {
 			Debug.Log(str);
 		}
 		return output;
-	}
-		
-	public override List<bunch_t> Hint(Player player,bunch_t src_bunch){
-		return newHint(player,src_bunch);
-		//for meld: BUNCH_AAA,BUNCH_AAAA,BUNCH_WIN; no BUNCH_ABC no BUNCH_WIN
-		var hints=new List<bunch_t>();
-		var hands=new List<int>(player.playData.Hands);
-		if(player==null||src_bunch==null||hands.Count<=0)
-			return hints;
-
-		int pos=player.pos;
-		if(src_bunch.Pawns.Count!=1){
-			Debug.Log("hint wrong cards len="+src_bunch.Pawns.Count+",pos="+pos);
-			return hints;
-		}
-
-		var card=src_bunch.Pawns[0];
-		var bDraw=(Pile.IndexOf(card)!=-1/*src_bunch.Type==pb_enum.BunchA*/||card==Configs.invalidCard);
-		//handle past card
-		var past=false;
-		var dodge=false;
-		foreach(var c in player.dodgeCards)if(c/1000==card/1000 && c%100==card%100){
-			dodge=true;
-			break;
-		}
-		foreach(var c in player.unpairedCards)if(c/1000==card/1000 && c%100==card%100){
-			past=true;
-			break;
-		}
-
-		//hint3
-		var output3=new bunch_t();
-		if(hint3(player,card,output3,bDraw)){
-			if(output3.Type==pb_enum.PhzBbb){
-				if(past||dodge||player.conflictMeld)
-					output3.Pawns.Clear();
-			}else
-				output3.Pos=pos;
-		}
-
-		//hint
-		bool meltable=(!player.conflictMeld) && (!past)
-			&& ((Token==pos&&bDraw) || (pos==(Token+1)%MaxPlayer));
-		var output1=new List<bunch_t>();
-		if(meltable)
-			hint(player,card,output1);
-		Debug.Log("----Hint for "+pos+",draw="+bDraw+",past="+past+",dodge="+dodge
-		          +",conflict="+player.conflictMeld+",melt="+meltable);
-
-		var all=new List<bunch_t>();
-		var win=IsWin(player,card,all,bDraw);
-		if(win){
-			//game over
-			var output=new bunch_t();
-			output.Pos=pos;
-			output.Type=pb_enum.BunchWin;
-			output.Pawns.Add(card);
-			hints.Add(output);
-		}
-
-		if(output3.Pawns.Count>0)hints.Add(output3);
-		if(output1.Count>0)hints.AddRange(output1);
-
-		var count=hints.Count;
-		if(count>0){
-			string str=count+" hints for "+pos+": ";
-			foreach(var bunch in hints)
-				str+=Player.bunch2str(bunch);
-			Debug.Log(str);
-		}
-		return hints;
 	}
 
 	public override void Meld(Player player,bunch_t bunch){
@@ -347,387 +265,8 @@ public class PaohuziRule: GameRule {
 			player.playData.Bunch.Add(bunch);
 		}
 	}
-	
-	bool IsWin(Player player,int card,List<bunch_t> output,bool bDraw){
-		var pos=player.pos;
-		var suite=player.playData.Bunch;
-		var hands=player.playData.Hands;
-		if(hands.Count<2){
-			Debug.Log("isGameOver failed: len="+hands.Count);
-			return false;
-		}
 
-		if(player.AAAAs.Count>=3 || player.AAAs.Count>=5){
-			output.AddRange(player.AAAs);
-			output.AddRange(player.AAAAs);
-			//no need other cards
-			return true;
-		}
-
-		//can't win hand card if not fire
-		var category=Main.Instance.MainPlayer.category;
-		var fire=(pos!=Token && !bDraw
-		          && (category==pb_enum.PhzLd||category==pb_enum.PhzHy||
-		      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
-		      category==pb_enum.PhzGx));
-		if(!bDraw && !fire){
-			Debug.Log("isWin for "+player.pos+" failed: not fire and not from pile");
-			return false;
-		}
-
-		//check desk
-		var myself=(pos==Token);
-		
-		List<bunch_t> allSuites=new List<bunch_t>(suite);
-		List<int> hand=new List<int>(hands);
-
-		//handle AAA first
-		bunch_t AAAs=null;
-		foreach(var aaa in player.AAAs){
-			var a=aaa.Pawns[0];
-			if(a/1000==card/1000 && a%100==card%100){
-				hand.AddRange(aaa.Pawns);
-				AAAs=aaa;
-				player.AAAs.Remove(aaa);
-				break;
-			}
-		}
-		
-		if(card>0){
-			var inhand=false;
-			foreach(var i in hand)if(i==card){inhand=true;break;}
-			if(!inhand)hand.Add(card);
-		}
-
-		hand.Sort(comparision);
-
-		//logHands(game,pos);
-		//是否需要将
-		bool needJiang=(player.AAAAs.Count>0);
-		if(!needJiang)
-		foreach(var iv in suite){
-			var ops=fixOps(iv.Type);
-			if(ops==pb_enum.PhzAaaa||ops==pb_enum.PhzAaaastart||ops==pb_enum.PhzBbbB||ops==pb_enum.PhzBbbbdesk||ops==pb_enum.PhzAaaadesk){
-				needJiang=true;
-				break;
-			}
-		}
-		
-		//按颜色和点数排序
-		List<List<int>>[] mc=new List<List<int>>[2];
-		mc[0]=new List<List<int>>();
-		mc[1]=new List<List<int>>();
-		for(int l=0;l<10;++l){
-			mc[0].Add(new List<int>());
-			mc[1].Add(new List<int>());
-		}
-		foreach(var it in hand){
-			var C=it;
-			int x=C/1000-1;
-			var v=mc[x][C%100-1];
-			v.Add(C);
-			//可能刚跑，仍检查手牌
-			if(v.Count>=4)needJiang=true;
-		}
-		
-		//坎牌剔除，记录所有将
-		List<bunch_t> jiangs=new List<bunch_t>();
-		for(int j=0; j<2; ++j){
-			var v=mc[j];
-			foreach(var iv in v){
-				if(needJiang&&iv.Count==2){
-					//add to suite
-					var su=new bunch_t();
-					su.Type=pb_enum.PhzAa;
-					foreach(var it in iv)su.Pawns.Add(it);
-					jiangs.Add(su);
-				} else if(iv.Count>=3){
-					//处理3cards中不是坎的情况
-					bool btmp=false;
-					foreach(var x in iv){
-						if((bDraw||!myself)&&card==x&&iv.Count==3){
-							btmp=true;
-							break;
-						}
-					}
-					if(btmp){
-						//allSuites.pop_back();
-						List<int> tmpCards=new List<int>(iv);
-						var su=new bunch_t();
-						su.Type=pb_enum.PhzAa;
-						tmpCards.RemoveAt(tmpCards.Count-1);
-						foreach(var it in tmpCards)su.Pawns.Add(it);
-						jiangs.Add(su);
-						break;
-					}
-					//处理坎牌
-					//add to stratagy suite
-					var kan=new bunch_t();
-					var bAAA=true;
-					foreach(var x in iv){
-						if(card==x)bAAA=false;
-						kan.Pawns.Add(x);
-						//remove from hands
-						foreach(var it in hand)
-						if(x==it){
-							hand.Remove(it);
-							break;
-						}
-					}
-					if(iv.Count==3)
-						kan.Type=(bAAA?pb_enum.PhzAaa:(bDraw&&myself?pb_enum.PhzAaawei:pb_enum.PhzBbb));
-					else
-						kan.Type=(bDraw&&myself?pb_enum.PhzAaaa:pb_enum.PhzBbbB);
-					allSuites.Add(kan);
-				}
-			}
-		}
-		if(player.pos==0)Debug.Log("bunches 0("+allSuites.Count+"): "+Player.bunches2str(allSuites));
-		//提坎已剔除，只剩绞，句
-		bool over=false;
-		if(needJiang){
-			//优先剔除将
-			if(jiangs.Count<1)return false;
-			int PT=0;
-			bool btmpOver=false;
-			List<bunch_t> resSuites=new List<bunch_t>();
-			var tmpJiang=jiangs[jiangs.Count-1];
-			foreach(var ij in jiangs){
-				List<bunch_t> tmpSuites=new List<bunch_t>(allSuites);
-				var jiang=ij;
-				//make a temp hand cards
-				List<int> tmpHand=new List<int>();
-				foreach(var it in hand)
-					if(jiang.Pawns[0]!=it&&jiang.Pawns[1]!=it)
-						tmpHand.Add(it);
-				//recursived
-				over=isWin(tmpHand,tmpSuites);
-				if(over){
-					var pt=calcPoints(tmpSuites);
-					if(pt>=PT){
-						resSuites.Clear();
-						PT=pt;
-						btmpOver=over;
-						tmpJiang=ij;
-						resSuites.AddRange(tmpSuites);
-					}
-				}
-			}
-			over=btmpOver;
-			if(over){
-				resSuites.Add(tmpJiang);
-				allSuites.Clear();
-				allSuites.AddRange(resSuites);
-				if(player.pos==0)Debug.Log("bunches 1("+allSuites.Count+"): "+Player.bunches2str(allSuites));
-			}
-		} else{
-			//recursived
-			over=isWin(hand,allSuites);
-			if(player.pos==0)Debug.Log("bunches 2("+allSuites.Count+"): "+Player.bunches2str(allSuites));
-		}
-		if(over){
-			over=false;
-			var M=MaxPlayer;
-			int MIN_SUITES=7;
-			if(M==4)MIN_SUITES=5;//衡阳，碰胡子玩法
-			if(allSuites.Count+player.AAAs.Count>=MIN_SUITES){
-				if(Main.Instance.MainPlayer.category==pb_enum.PhzPeghz){
-					//碰胡子判胡
-					over=true;
-				}else{
-					var point=calcPoints(allSuites);
-					point+=calcPoints(player.AAAs);
-					if(point>=winPoint(Main.Instance.MainPlayer.category))
-						over=true;
-				}
-				if(over){
-					output.AddRange(allSuites);
-					output.AddRange(player.AAAs);
-				}
-			}
-		}
-		if(!over && AAAs!=null)player.AAAs.Add(AAAs);
-
-		return over;
-	}
-	
-	bool isWin(List<int> cards,List<bunch_t> allSuites){
-		//recursive check if is game over
-		List<bunch_t> outSuites=new List<bunch_t>();
-		List<bunch_t> multiSuites=new List<bunch_t>();
-		//copy hand
-		List<int> _cards=new List<int>(cards);
-		
-		//logCards(_cards,"-----isGameOverr:");
-		//先找每张牌的组合，如果没有则返回
-		foreach(var i in cards){
-			var card=i;
-			List<bunch_t> hints=new List<bunch_t>();
-
-			buildBunch(card,_cards,hints);
-			if(hints.Count<=0){
-				//此牌无组合
-				Debug.Log("isGameOver no suite for card "+card);
-				buildBunch(card,_cards,hints);	//debug
-				return false;
-			} else if(hints.Count==1){
-				//此牌唯一组合,剔除
-				//log("isGameOver single suite for card=%d:%d", card, allCards[card]%100);
-				var ihint=hints[0];
-				outSuites.Add(ihint);
-				multiSuites.Clear();
-				var toRm=new List<int>();
-				foreach(var k in _cards){
-					foreach(var j in ihint.Pawns)
-					if(k==j){
-						toRm.Add(j);
-						break;
-					}
-				}
-				foreach(var rm in toRm)_cards.Remove(rm);
-				//递归
-				if(isWin(_cards,outSuites)){
-					allSuites.AddRange(outSuites);
-					return true;
-				} else
-					return false;
-			} else{
-				multiSuites.AddRange(hints);
-			}
-		}
-		
-		//存在多张组合的牌
-		List<List<bunch_t>> vvm=new List<List<bunch_t>>();
-		if(multiSuites.Count>0){
-			//log("isGameOver cards=%d, multiSuites=%d", _cards.Count, multiSuites.Count);
-			//copy temp hand
-			//List<bunch_t> tmphints=new List<bunch_t>();
-			
-			//遍历每个组合
-			List<bunch_t> vm=new List<bunch_t>();
-			foreach(var m in multiSuites){
-				List<int> mcards=new List<int>(_cards);
-				//此组合的牌从临时手牌移除，并加入临时suites
-				foreach(var l in m.Pawns)
-				foreach(var k in mcards){
-					if(k==l){
-						mcards.Remove(k);
-						break;
-					}
-				}
-				vm.Clear();
-				if(isWin(mcards,vm)){
-					vm.Add(m);
-					vvm.Add(vm);
-				}
-			}
-			if(vvm.Count>0){
-				int PT=0;
-				List<bunch_t> iwin=null;
-				foreach(var ivvm in vvm){
-					var pt=calcPoints(ivvm);
-					if(pt>=PT){
-						PT=pt;
-						iwin=ivvm;
-					}
-				}
-				if(iwin!=null){
-					//最优胡牌组合
-					allSuites.AddRange(outSuites);
-					allSuites.AddRange(iwin);
-					return true;
-				}
-			}
-			return false;
-		}
-		
-		//all cards past
-		return true;
-	}
-	
-	bool hint3(Player player,int card,bunch_t hints,bool bDraw){
-		//all possible AAA,AAAA,BBB,BBBB like
-		var pos=player.pos;
-		var hand=player.playData.Hands;
-		var suite=player.playData.Bunch;
-		
-		var A=card;
-		List<int> tmp=new List<int>();
-		
-		//check desk
-		var myself=(pos==Token);
-		
-		//skip self
-		if(myself&&!bDraw)return false;
-
-		//find same cards in AAA
-		foreach(var it in player.AAAs){
-			var B=it.Pawns[0];
-			if(A/1000==B/1000 && A%100==B%100){
-				foreach(var c in it.Pawns)
-					tmp.Add(c);
-			}
-		}
-
-		//find same cards in hands
-		if(tmp.Count<=0)foreach(var it in hand){
-			var B=it;
-			if(A/1000==B/1000 && A%100==B%100)
-				tmp.Add(B);
-		}
-
-		if(tmp.Count>=2){
-			hints.Pawns.Add(card);
-			foreach(var it in tmp)hints.Pawns.Add(it);
-			if(tmp.Count==2)
-				hints.Type=bDraw&&myself?pb_enum.PhzAaawei:pb_enum.PhzBbb;
-			else
-				hints.Type=(bDraw&&myself?pb_enum.PhzAaaa:pb_enum.PhzBbbB);
-			//臭偎
-			if(hints.Type==pb_enum.PhzAaawei && chouWei(player,hints))
-				hints.Type=pb_enum.PhzAaachou;
-			return true;
-		}
-
-		foreach(var i in suite){
-			//检测桌面牌组：偎子直接跑，碰子须抓的才能跑
-			if(i.Type==pb_enum.PhzAaawei||i.Type==pb_enum.PhzAaachou||(i.Type==pb_enum.PhzBbb&&bDraw)){
-				var B=i.Pawns[0];
-				if(A%100==B%100 && A/1000==B/1000 && A!=B){
-					hints.Pawns.Add(card);
-					hints.Pawns.AddRange(i.Pawns);
-					//for(var c in i.Pawns)hints.Pawns.Add(c);
-					hints.Type=(i.Type==pb_enum.PhzAaawei && bDraw && myself?pb_enum.PhzAaaadesk:pb_enum.PhzBbbbdesk);
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	bool hint(Player player,int card,List<bunch_t> hints){
-		var hands=new List<int>(player.playData.Hands);
-		if(buildBunch(card,hands,hints)){
-			//baihuo
-			List<bunch_t> tmp=new List<bunch_t>(hints);
-			List<int> sameCard=new List<int>();
-			foreach(var C in hands)
-				if(card/1000==C/1000&&C%100==card%100&&card!=C)
-					sameCard.Add(C);
-			
-			sameCard.Add(card);
-			
-			hints.Clear();
-			foreach(bunch_t j in tmp)
-				if(checkBaihuo(hands,sameCard,j))
-					hints.Add(j);
-
-			foreach(var o in hints)o.Pos=player.pos;
-		}
-		return hints.Count>0;
-	}
-
-	bunch_t newIsWin(Player player,List<int> hands,int card,bool needAA=false){
+	bunch_t isWin(Player player,List<int> hands,int card,bool needAA=false){
 		//already cullout AAA & AAAA outside in Hint
 		bunch_t output=null;
 		var bunches=new List<bunch_t>();
@@ -1322,6 +861,7 @@ public class PaohuziRule: GameRule {
 			return true;
 		else{
 			List<bunch_t> tmpHint=new List<bunch_t>();
+			//TODO: use hintABC
 			buildBunch(tmpSame[tmpSame.Count-1],tmpHand,tmpHint);
 			var ok=false;
 			foreach(var j in tmpHint){
