@@ -196,7 +196,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			bunch.Type=pb_enum.BunchA;
 			bunch.Pawns.Add(Configs.invalidCard);
 			
-			var meld=true;
+			var meld=false;
 			if(player==Main.Instance.MainPlayer){
 				meld=showHints(bunch,true);
 			}else{

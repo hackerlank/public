@@ -26,7 +26,7 @@ public class PaohuziAIController:AIController{
 			if(rule.checkDiscard(player,bDraw?msg.Bunch.Pawns[0]:Configs.invalidCard)){
 				//discard
 				var discard=player.playData.Hands[0];
-				if(bDraw)
+				if(bDraw && Configs.invalidCard!=msg.Bunch.Pawns[0])
 					//was draw
 					discard=msg.Bunch.Pawns[0];
 				

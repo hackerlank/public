@@ -679,9 +679,17 @@ public class PaohuziPanel : GamePanel {
 					MsgCNMeld msg=new MsgCNMeld();
 					msg.Mid=pb_msg.MsgCnMeld;
 					msg.Bunch=new bunch_t();
-					msg.Bunch.Pos=_pos;
-					msg.Bunch.Type=hint.Type;
 					msg.Bunch.MergeFrom(hint);
+
+					string str="when win:";
+					str+=Player.bunch2str(msg.Bunch);
+					if(msg.Bunch.Child.Count>0){
+						str+="{";
+						foreach(var ch in msg.Bunch.Child)str+=Player.bunch2str(ch);
+						str+="}\n";
+					}
+					Debug.Log(str);
+
 					Main.Instance.MainPlayer.Send<MsgCNMeld>(msg.Mid,msg);
 					break;
 				}

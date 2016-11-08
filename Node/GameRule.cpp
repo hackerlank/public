@@ -60,6 +60,8 @@ void GameRule::deal(Game& game){
         size_t pos=(game.banker+i)%MP;
         size_t ibeg=(i==0?0:BK+MH*(i-1));
         size_t iend=+BK+MH*i;
+        if(pos==game.banker)
+            game.firstCard=*(game.pile.begin()+iend-1);
         std::sort( game.pile.begin()+ibeg,    game.pile.begin()+iend, sorter);
         for(auto x=game.pile.begin()+ibeg, xx=game.pile.begin()+iend; x!=xx;++x)game.players[pos]->playData.mutable_hands()->Add(*x);
     }
@@ -72,7 +74,6 @@ void GameRule::deal(Game& game){
     cards2str(str,pbpile);
     KEYE_LOG("pile: %s\n",str.c_str());
 
-    game.firstCard=*game.players[game.banker]->playData.hands().rbegin();
     game.lastCard=game.pile.front();
 
     //broadcast
@@ -85,7 +86,7 @@ void GameRule::deal(Game& game){
         msg.mutable_count()->Add((int)game.players[i]->playData.hands().size());
     msg.mutable_bottom()->CopyFrom(bottom.pawns());
     msg.set_piles((int)game.pile.size());
-    
+
     for(auto p:game.players){
         msg.set_pos(p->pos);
         auto hands=msg.mutable_hands();
@@ -228,6 +229,15 @@ const char* GameRule::bunch2str(std::string& str,const proto3::bunch_t& bunch){
     sprintf(buf,"ops=%d,card=",(int)bunch.type());
     cards2str(str,bunch.pawns());
     str=buf+str;
+    if(bunch.child_size()>0){
+        str+="{";
+        for(auto& ch:bunch.child()){
+            sprintf(buf,"ops=%d,card=",(int)ch.type());
+            cards2str(str,ch.pawns());
+            str+=buf+str;
+        }
+        str+="}";
+    }
     return str.c_str();
 }
 

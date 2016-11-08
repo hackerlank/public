@@ -114,13 +114,18 @@ public class EnterPanel : MonoBehaviour {
 		msgC.Options.Add(opCategory);
 
 		if(DefinedCards.text.Length>0){
+			//preprocess
+			var cards=DefinedCards.text;
+			cards.Replace(" ","");
+			cards.Replace("\n","");
+
 			var opCards=new key_value();
 			opCards.Ikey=pb_enum.OptionDefinedCards;
-			opCards.Value=DefinedCards.text;
+			opCards.Value=cards;
 			msgC.Options.Add(opCards);
 
 			//save
-			PlayerPrefs.SetString(Configs.PrefsKey_DefinedCards,DefinedCards.text);
+			PlayerPrefs.SetString(Configs.PrefsKey_DefinedCards,cards);
 			PlayerPrefs.Save();
 		}
 		
