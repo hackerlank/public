@@ -28,10 +28,6 @@ protected:
 private:
     //is game over with melt card
     virtual bool            isWin(Game&,proto3::bunch_t&,std::vector<proto3::bunch_t>&);
-    virtual bool            isWin(Game&,Player&,unit_id_t,std::vector<proto3::bunch_t>&);
-    bool                    isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
-    bool                    hint3(Game&,Player&,unit_id_t,proto3::bunch_t&);
-    void                    hint(Game&,unit_id_t,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&);
 
     virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
@@ -43,7 +39,6 @@ private:
     int						winPoint(Game&,proto3::pb_enum);
     int						calcScore(Game&,proto3::pb_enum,int points);
     int						calcPoints(Game&,std::vector<proto3::bunch_t>&);
-    int						calcPoints(Game&,Player&);
     
     bool					chouWei(Game&,Player&,proto3::bunch_t&);
 

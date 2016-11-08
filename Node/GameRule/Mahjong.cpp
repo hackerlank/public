@@ -97,7 +97,11 @@ void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
     }
 }
 
-bool Mahjong::isWin(Game& game,Player& player,unit_id_t card,std::vector<proto3::bunch_t>& output){
+bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
+    auto pos=bunch.pos();
+    auto card=bunch.pawns(0);
+    auto& player=*game.players[pos];
+
     auto& hands=player.playData.hands();
     if(hands.size()<2){
         KEYE_LOG("isWin failed: len=%d\n",hands.size());

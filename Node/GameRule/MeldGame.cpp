@@ -239,7 +239,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             case pb_enum::BUNCH_WIN:{
                 std::vector<bunch_t> output;
                 if(isWin(game,bunch,output)){
-                //if(isWin(game,*who,card,output)){
                     who->playData.clear_hands();
                     settle(*who,output,which);
                     changeState(game,Game::State::ST_SETTLE);
