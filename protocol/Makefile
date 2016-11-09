@@ -143,14 +143,14 @@ echo:
 ##############################################################################
 # Object file rules.
 ##############################################################################
-OBJS=$(patsubst %.cpp,%.o,$(wildcard $(SRCS)))
+OBJS=$(patsubst %.cc,%.o,$(wildcard $(SRCS)))
 $(SRCS):$(INCS)
 
 %.o: %.c
 	$(E) "CC        $@"
 	$(Q)$(TARGET_CC) $(TARGET_XCFLAGS) -c -o $@ $<
 
-%.o: %.cpp
+%.o: %.cc
 	$(E) "CXX       $@"
 	$(Q)$(TARGET_CXX) $(TARGET_XCFLAGS) -c -o $@ $<
 

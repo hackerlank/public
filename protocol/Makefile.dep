@@ -1,0 +1,11 @@
+NAME= protocol
+DEPENDENCIES=../sdks
+BUILDMODE=dynamic
+CCDEBUG+= -g
+CCOPT+= -O0
+#CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -DBOOST_ALL_NO_LIB
+CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
+CFLAGS+= -I$(DEPENDENCIES)/include -I../sdks/include/
+LDFLAGS+= -L$(DEPENDENCIES)/libs -Wl,-rpath-link=$(DEPENDENCIES)/libs -Wl,--no-as-needed
+SRCS= protocol.pb.cc
+INCS= protocol.pb.h

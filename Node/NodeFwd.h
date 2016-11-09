@@ -10,6 +10,7 @@
 #define login_fwd_h
 
 #include <keye/htio/htio_demo.h>
+#include <algorithm>
 
 #include "protocol.pb.h"
 

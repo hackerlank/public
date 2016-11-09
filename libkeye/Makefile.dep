@@ -1,4 +1,5 @@
 NAME= keye
+DEPENDENCIES=../sdks
 BUILDMODE=dynamic
 CCDEBUG+= -g
 CCOPT+= -O0
@@ -6,7 +7,7 @@ CCOPT+= -O0
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
 CFLAGS+= -I$(DEPENDENCIES)/include -I$(DEPENDENCIES)/include/mysql -Ikeye/htio/
 LDFLAGS+= -L$(DEPENDENCIES)/libs -Wl,-rpath-link=$(DEPENDENCIES)/libs -Wl,--no-as-needed
-LIBS+= -lboost_system -lboost_date_time -lz
+LIBS+= -lboost_system -lboost_date_time
 SRCS= $(wildcard keye/htio/*.cpp) \
 	$(wildcard keye/utility/*.cpp) \
 	$(wildcard keye/*.cpp)

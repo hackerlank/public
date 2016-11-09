@@ -7,7 +7,9 @@
 //
 
 #include "../stdafx.h"
+#include <algorithm>
 #include "NodeFwd.h"
+
 using namespace proto3;
 
 void DiscardGame::Tick(Game& game){

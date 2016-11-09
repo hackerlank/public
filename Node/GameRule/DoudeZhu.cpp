@@ -7,6 +7,7 @@
 //
 
 #include "../stdafx.h"
+#include <algorithm>
 #include "NodeFwd.h"
 using namespace proto3;
 
