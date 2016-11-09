@@ -238,7 +238,7 @@ public class MahJongRule: GameRule {
 			output.Type=pb_enum.BunchWin;
 			output.Pos=player.pos;
 			output.Pawns.Add(card);
-			output.Child=bunches;
+			foreach(var bunch in bunches)output.Child.Add(bunch);
 			return output;
 		}
 		return null;

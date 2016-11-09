@@ -266,6 +266,16 @@ public class PaohuziRule: GameRule {
 		var bunches=new List<bunch_t>();
 		var AAAs=new List<bunch_t>(player.AAAs);
 		needAA=(needAA||player.AAAAs.Count>0);
+		var desks=new List<bunch_t>(player.playData.Bunch);
+		if(!needAA){
+			foreach(var bbbb in desks){
+				if(bbbb.Pawns.Count>=4){
+					needAA=true;
+					break;
+				}
+			}
+		}
+
 		if(card==Configs.invalidCard){
 			//natural win: AAAs
 			if(player.AAAAs.Count>=3 || player.AAAs.Count>=5){
@@ -365,7 +375,6 @@ public class PaohuziRule: GameRule {
 			}
 			//check desk
 			bunch_t pdesk=null;
-			var desks=new List<bunch_t>(player.playData.Bunch);
 			if(BBBB==null){
 				foreach(var desk in desks){
 					if(desk.Type==pb_enum.PhzAaawei){
@@ -393,14 +402,6 @@ public class PaohuziRule: GameRule {
 			}
 
 			//build without BBBB
-			if(!needAA){
-				foreach(var bbbb in player.playData.Bunch){
-					if(bbbb.Pawns.Count>=4){
-						needAA=true;
-						break;
-					}
-				}
-			}
 			hands.Add(card);
 			var out1=buildABC(hands,needAA);
 			if(out1.Count>0){
@@ -412,13 +413,12 @@ public class PaohuziRule: GameRule {
 			var p0=calcPoints(out0);
 			var p1=calcPoints(out1);
 			bunches=(p0>p1?out0:out1);
-			if(bunches.Count>0)
-				bunches.AddRange(desks);
 		}while(false);
 
 		if(bunches.Count>0){
 			bunches.AddRange(player.AAAAs);
 			bunches.AddRange(AAAs);
+			bunches.AddRange(desks);
 
 			output=new bunch_t();
 			output.Type=pb_enum.BunchWin;
