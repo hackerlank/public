@@ -98,88 +98,54 @@ void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
 }
 
 bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
+    if(bunch.type()<pb_enum::BUNCH_WIN){
+        KEYE_LOG("isWin failed: wrong bunch type\n");
+        return false;
+    }
+
     auto pos=bunch.pos();
     auto card=bunch.pawns(0);
     auto& player=*game.players[pos];
-
     auto& hands=player.playData.hands();
-    if(hands.size()<2){
+    auto& suite=*player.playData.mutable_bunch();
+
+    if(hands.size()<1){
         KEYE_LOG("isWin failed: len=%d\n",hands.size());
         return false;
     }
-    std::vector<unit_id_t> cards;
-    std::copy(hands.begin(),hands.end(),std::back_inserter(cards));
     
-    //insert into hand if not in
-    if(validId(card)){
-        auto inhand=false;
-        for(auto i:cards)if(i==card){inhand=true;break;}
-        if(!inhand)cards.push_back(card);
-    }
+    //build a hand cards map
+    std::map<unit_id_t,int> cmap;
+    for(auto& a4:player.AAAAs)for(auto c:a4.pawns())cmap[c]=1;
+    for(auto& a4:player.AAAs)for(auto c:a4.pawns())cmap[c]=1;
+    for(auto& a4:suite)for(auto c:a4.pawns())cmap[c]=1;
+    for(auto c:hands)cmap[c]=1;
     
-    auto sorter=std::bind(&Mahjong::comparision,this,std::placeholders::_1,std::placeholders::_2);
-    std::sort(cards.begin(),cards.end(),sorter);
-    
-    auto len=cards.size()-1;
-    for(size_t i=0;i!=len;++i){
-        auto A=cards[i+0];
-        auto B=cards[i+1];
-        if(A/1000==B/1000&&A%100==B%100){
-            std::vector<unit_id_t> tmp;
-            for(size_t j=0;j!=cards.size();++j)if(j!=i&&j!=i+1)tmp.push_back(cards[j]);
-            if(isWinWithoutAA(tmp)){
-                return true;
+    //check cards exists
+    for(auto& b:bunch.child()){
+        for(auto c:b.pawns()){
+            if(cmap.find(c)!=cmap.end())
+                --cmap[c];
+            else if(c!=card){
+                KEYE_LOG("isWin failed: card %d not exists\n",c);
+                return false;
             }
         }
     }
-    return false;
-}
-
-bool Mahjong::isWin(Game&,std::vector<unit_id_t>&,std::vector<proto3::bunch_t>&){
-    return true;
-}
-
-bool Mahjong::isWinWithoutAA(std::vector<unit_id_t>& cards){
-    auto len=cards.size();
-    if(len%3!=0)
-        return false;
-    
-    size_t i=0;
-    while(i<len){
-        //next 3 continuous cards
-        auto A=cards[i+0];
-        auto B=cards[i+1];
-        auto C=cards[i+2];
-        
-        if(A/1000 == B/1000 && A/1000 == C/1000){
-            //same color
-            A%=100;B%=100;C%=100;
-            
-            if((A+1==B && B+1==C) || (A==B && A==C)){
-                //great values
-                i+=3;
-                continue;
-            }else if(i+6<=len){
-                //next 6 continuous cards
-                auto D=cards[i+3];
-                auto E=cards[i+4];
-                auto F=cards[i+5];
-                
-                if(D/1000 == E/1000 && D/1000 == F/1000){
-                    //same color
-                    D%=100;E%=100;F%=100;
-                    if(A==B && C==D && E==F && B+1==C && D+1==E){
-                        //great values
-                        i+=6;
-                        continue;
-                    }
-                }
-            }
-        }
-        //other wise
+    for(auto& kv:cmap)if(kv.second!=0){
+        KEYE_LOG("isWin failed: card %d missing\n",kv.first);
         return false;
     }
     
+    //verify bunch
+    for(auto& b:*bunch.mutable_child()){
+        if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
+            std::string str;
+            KEYE_LOG("isWin failed: invalid bunch %s\n",bunch2str(str,b));
+            return false;
+        }
+    }
+
     return true;
 }
 
@@ -205,12 +171,60 @@ void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     }
 }
 
+void Mahjong::calcAchievement(Player& player,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
+    Game& game=*player.game;
+    //统计工作
+    int red=0,big=0,small=0;
+    auto pair=true;
+    auto last=false;
+    std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
+    for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
+        for(auto j:i->pawns()){
+            //红牌
+            auto A=j;
+            auto v=A%100;
+            if(v==2||v==7||v==10){
+                ++red;
+                ++redmap[v];
+            }
+            //大小牌
+            if(A/1000==1)++small;
+            else ++big;
+            //海底牌
+            if(game.lastCard==j)last=true;
+        }
+        //对子
+//        int ops=i->type();	ops=fixOps((pb_enum)ops);
+//        if(pair&&(ops==pb_enum::PHZ_ABC||ops==pb_enum::UNKNOWN))pair=false;
+    }
+    
+    //海胡
+    pb_enum rule=game.category;
+    if(last){
+        if(rule==pb_enum::PHZ_LD||rule==pb_enum::PHZ_HH||rule==pb_enum::PHZ_CD_QMT||rule==pb_enum::PHZ_GX){
+            avs.push_back(achv_t());
+            auto& ach=avs.back();
+            ach.set_type(pb_enum::WIN_LAST);
+            ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+//            ach.set_value(nnn[ach.type()][rule]);
+        }
+    }
+}
+
 pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     switch (bunch.type()) {
         case pb_enum::BUNCH_A:
             if(bunch.pawns_size()==1)
                 bt=bunch.type();
+            break;
+        case pb_enum::BUNCH_AA:
+            if(bunch.pawns_size()==2){
+                auto A=bunch.pawns(0);
+                auto B=bunch.pawns(1);
+                if(A/1000==B/1000 && A%100==B%100)
+                    bt=bunch.type();
+            }
             break;
         case pb_enum::BUNCH_AAA:
             if(bunch.pawns_size()==3){

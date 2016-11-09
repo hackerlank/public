@@ -309,8 +309,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     auto pos=bunch.pos();
     auto card=bunch.pawns(0);
     auto& player=*game.players[pos];
-    auto& playdata=game.players[pos]->playData;
-    auto& suite=*playdata.mutable_bunch();
+    auto& suite=*player.playData.mutable_bunch();
     auto& hands=*player.playData.mutable_hands();
     
     //logHands(game,pos);
