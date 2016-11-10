@@ -53,11 +53,24 @@ public:
             }
 
 			// Listen on port
-			_server.listen(port);
-			// Queues a connection accept operation
-			_server.start_accept();
-			// Start the Asio io_service run loop in different thread
-			_thread.reset(new std::thread(boost::bind(&server_type::run, &_server)));
+            try{
+                _server.listen(port);
+            }catch(const std::exception & e) {
+                KEYE_LOG("%s\n",e.what());
+                try{
+                    _server.listen(websocketpp::lib::asio::ip::tcp::v4(), port);
+                }catch(const std::exception & e) {
+                    KEYE_LOG("%s\n",e.what());
+                }
+            }
+            try{
+                // Queues a connection accept operation
+                _server.start_accept();
+                // Start the Asio io_service run loop in different thread
+                _thread.reset(new std::thread(boost::bind(&server_type::run, &_server)));
+            }catch(const std::exception& e){
+                KEYE_LOG("%s\n",e.what());
+            }
 		}
 	}
 	void	close(){
