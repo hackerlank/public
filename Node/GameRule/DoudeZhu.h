@@ -12,15 +12,15 @@
 class DoudeZhu: public DiscardGame{
 public:
     virtual int         Type();
-    virtual int         MaxPlayer();
+    virtual int         MaxPlayer(Game&);
 
     static void         test();
 protected:
     virtual void        initCard(Game&);
     virtual bool        validId(uint);
-    virtual int         maxCards();
-    virtual int         maxHands();
-    virtual int         bottom();
+    virtual int         maxCards(Game& game);
+    virtual int         maxHands(Game& game);
+    virtual int         bottom(Game& game);
     
     virtual void        settle(Player&);
     virtual void        engage(Game&,proto3::MsgNCEngage&);

@@ -115,7 +115,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //ready for meld
         changeState(*player.game,Game::State::ST_MELD);
         //pending meld
-        for(int i=0;i<MaxPlayer();++i){
+        for(int i=0;i<MaxPlayer(*game);++i){
             auto p=game->players[i];
             if(bDraw||i!=player.pos){
                 //only pending others
@@ -332,7 +332,7 @@ void MeldGame::draw(Game& game){
         MsgNCDraw msg;
         msg.set_mid(pb_msg::MSG_NC_DRAW);
         msg.set_pos(game.token);
-        for(int i=0;i<MaxPlayer();++i){
+        for(int i=0;i<MaxPlayer(game);++i){
             auto p=game.players[i];
             if(i==game.token){
                 msg.set_card(card);

@@ -16,7 +16,7 @@ public:
 
     virtual void        Tick(Game&)=0;
     virtual int         Type()=0;
-    virtual int         MaxPlayer()=0;
+    virtual int         MaxPlayer(Game&)=0;
 
     void                OnEngage(Player&,uint);
     void                OnReady(Player&);
@@ -26,9 +26,9 @@ protected:
     virtual void        initCard(Game&)=0;
     virtual bool        validId(uint)=0;
     virtual bool        comparision(uint x,uint y)=0;
-    virtual int         maxCards()=0;
-    virtual int         maxHands()=0;
-    virtual int         bottom()=0;
+    virtual int         maxCards(Game& game)=0;
+    virtual int         maxHands(Game& game)=0;
+    virtual int         bottom(Game& game)=0;
     
     virtual bool        settle(Game&);
     

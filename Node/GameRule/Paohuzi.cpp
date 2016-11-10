@@ -61,19 +61,19 @@ int Paohuzi::Type(){
     return pb_enum::GAME_PHZ;
 }
 
-int Paohuzi::MaxPlayer(){
+int Paohuzi::MaxPlayer(Game& game){
     return 3;
 }
 
-int Paohuzi::maxCards(){
+int Paohuzi::maxCards(Game& game){
     return 80;
 }
 
-int Paohuzi::maxHands(){
+int Paohuzi::maxHands(Game& game){
     return 20;
 }
 
-int Paohuzi::bottom(){
+int Paohuzi::bottom(Game& game){
     return 1;
 }
 
@@ -250,7 +250,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
         case proto3::OP_PASS:{
             //clients bring all hints even pass,handle here
             int dodge=-1,past=-1;
-            std::vector<int> pasts(MaxPlayer());
+            std::vector<int> pasts(MaxPlayer(game));
             for(auto pm:game.pendingMeld){
                 auto i=pm.bunch.pos();
                 if(i==-1)i=player.pos;
@@ -266,8 +266,8 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
             }
             
             //then find the highest one to be the responsible
-            for(int i=game.token;i<game.token+MaxPlayer();++i){
-                auto j=i%MaxPlayer();
+            for(int i=game.token;i<game.token+MaxPlayer(game);++i){
+                auto j=i%MaxPlayer(game);
                 if(pasts[j]==1){
                     past=j;
                     break;
@@ -298,7 +298,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
 }
 
 bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
-    auto M=MaxPlayer();
+    auto M=MaxPlayer(game);
     int MIN_SUITES=7;
     if(M==4)MIN_SUITES=5;
     if(bunch.type()<pb_enum::BUNCH_WIN || bunch.child_size()<MIN_SUITES){
@@ -455,7 +455,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     //只结算不判断
     auto pos=player.pos;
     auto& game=*player.game;
-    auto M=MaxPlayer();
+    auto M=MaxPlayer(game);
     std::stringstream ss;//广西跑胡子用
     int _cardNum=0;//广西跑胡子用
     //清洗缓冲区
@@ -814,7 +814,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     } else if(point>=0){
         if(game.category==pb_enum::PHZ_CZ){
             //郴州毛胡子玩法，荒庄需要换庄
-            auto M=MaxPlayer();
+            auto M=MaxPlayer(game);
             auto p=(game.banker+1)%M;
             game.bankerChanged=true;
             game.banker=p;
@@ -1608,7 +1608,7 @@ bool Paohuzi::comparePending(std::shared_ptr<Game> game,Game::pending_t& x,Game:
         return o0 > o1;
     }
     //同级别或胡牌情况的优先级处理
-    auto M=MaxPlayer();
+    auto M=MaxPlayer(*game);
     auto startIndex=(game->token+1)%M;//记录当前打牌人的下一个位置，作为开始位置,兼容四人玩法
     auto p=x.bunch.pos();
     auto q=y.bunch.pos();

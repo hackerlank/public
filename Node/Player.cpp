@@ -51,7 +51,7 @@ void Player::on_read(PBHelper& pb){
                     game=gameptr;
                     game->players.push_back(shared_from_this());
                     game->Round=maxRound;
-                    //game->banker=game->rule->MaxPlayer()-1; //test change banker
+                    //game->banker=game->rule->MaxPlayer(*game)-1; //test change banker
                     ready=true;
                     pos=game->players.size()-1;
                     //fill data

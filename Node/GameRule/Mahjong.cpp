@@ -14,19 +14,29 @@ int Mahjong::Type(){
     return pb_enum::GAME_MJ;
 }
 
-int Mahjong::MaxPlayer(){
+int Mahjong::MaxPlayer(Game& game){
     return 4;
 }
 
-int Mahjong::maxCards(){
+int Mahjong::maxCards(Game& game){
+    switch (game.category) {
+        case pb_enum::MJ_SICHUAN:
+            return 108;
+        case pb_enum::MJ_HUNAN:
+            return 108;
+        case pb_enum::MJ_GUANGDONG:
+            return 136;
+        default:
+            break;
+    }
     return 108;
 }
 
-int Mahjong::maxHands(){
+int Mahjong::maxHands(Game& game){
     return 13;
 }
 
-int Mahjong::bottom(){
+int Mahjong::bottom(Game& game){
     return 1;
 }
 
@@ -39,6 +49,40 @@ void Mahjong::initCard(Game& game){
                 game.pile.push_back(id);
             }
         }
+    }
+    switch (game.category) {
+        case pb_enum::MJ_GUANGDONG:
+        case pb_enum::MJ_FUJIAN:
+            //East,South,West,North
+            for(int i=1;i<=4;++i){      //1-4
+                for(int k=0;k<4;++k){   //xxxx
+                    unit_id_t id=4000+k*100+i;
+                    game.pile.push_back(id);
+                }
+            }
+            //Zhong,Fa,Bai
+            for(int i=1;i<=3;++i){      //1-3
+                for(int k=0;k<4;++k){   //xxxx
+                    unit_id_t id=5000+k*100+i;
+                    game.pile.push_back(id);
+                }
+            }
+            break;
+        case pb_enum::MJ_SICHUAN:
+        case pb_enum::MJ_HUNAN:
+        default:
+            break;
+    }
+    switch (game.category) {
+        case pb_enum::MJ_FUJIAN:
+            //Spring,Summer,...
+            for(int i=1;i<=8;++i){      //1-8
+                unit_id_t id=6000+i;
+                game.pile.push_back(id);
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -93,7 +137,7 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
 void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
     if(bunch.type()==pb_enum::BUNCH_AAAA){
         //fix position for self draw
-        changePos(game,(game.token+MaxPlayer()-1)%MaxPlayer());
+        changePos(game,(game.token+MaxPlayer(game)-1)%MaxPlayer(game));
     }
 }
 
@@ -152,7 +196,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
 void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
     auto pos=player.pos;
     auto& game=*player.game;
-    auto M=MaxPlayer();
+    auto M=MaxPlayer(game);
 
     game.spSettle=std::make_shared<MsgNCSettle>();
     auto& msg=*game.spSettle;

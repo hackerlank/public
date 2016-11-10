@@ -45,6 +45,11 @@ CATEGORY_EASY           =10;
 CATEGORY_NORMAL         =11;
 CATEGORY_HARD           =12;
 
+MJ_SICHUAN              =0;
+MJ_GUANGDONG            =1;
+MJ_HUNAN                =2;
+MJ_FUJIAN               =3;
+
 PHZ_SY                  =0;	//邵阳字牌
 PHZ_SYBP                =1;	//邵阳剥皮
 PHZ_LD                  =2;//娄底放炮

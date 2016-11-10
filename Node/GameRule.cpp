@@ -51,9 +51,9 @@ void GameRule::deal(Game& game){
     }
     
     //deal: fixed position,movable banker
-    auto MP=MaxPlayer();
-    auto MH=maxHands();
-    auto BK=MH+bottom();
+    auto MP=MaxPlayer(game);
+    auto MH=maxHands(game);
+    auto BK=MH+bottom(game);
     bunch_t bottom;
     auto sorter=std::bind(&GameRule::comparision,this,std::placeholders::_1,std::placeholders::_2);
     for(auto x=game.pile.begin()+MH,xx=game.pile.begin()+BK;x!=xx;++x)bottom.add_pawns(*x);
@@ -151,12 +151,12 @@ void GameRule::OnEngage(Player& player,uint key){
         int engaged=0;
         for(auto& p:game->players)if(p->engaged)engaged++;
 
-        if(game->state==Game::State::ST_ENGAGE && engaged>=MaxPlayer()){
+        if(game->state==Game::State::ST_ENGAGE && engaged>=MaxPlayer(*game)){
             MsgNCEngage omsg;
             omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
             omsg.set_result(pb_enum::SUCCEESS);
-            omsg.mutable_keys()->Resize(MaxPlayer(),1001);
-            for(int i=0;i<MaxPlayer();++i)omsg.add_bunch();
+            omsg.mutable_keys()->Resize(MaxPlayer(*game),1001);
+            for(int i=0;i<MaxPlayer(*game);++i)omsg.add_bunch();
             engage(*game,omsg);
 
             for(auto& p:game->players)p->send(omsg);
@@ -168,7 +168,7 @@ void GameRule::OnEngage(Player& player,uint key){
 bool GameRule::Ready(Game& game){
     int n=0;
     for(auto p:game.players)if(p&&p->ready)++n;
-    auto ready=(n>=MaxPlayer());
+    auto ready=(n>=MaxPlayer(game));
     //reset after all ready
     if(ready)for(auto p:game.players)if(p)p->ready=false;
     return ready;
@@ -176,7 +176,7 @@ bool GameRule::Ready(Game& game){
 
 void GameRule::changePos(Game& game,pos_t pos){
     auto old=game.token;
-    pos=pos%game.rule->MaxPlayer();
+    pos=pos%game.rule->MaxPlayer(game);
     if(game.token!=pos){
         game.token=pos;
         KEYE_LOG("token: %d=>%d\n",old,game.token);

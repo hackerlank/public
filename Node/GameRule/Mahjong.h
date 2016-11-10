@@ -12,15 +12,15 @@
 class Mahjong: public MeldGame{
 public:
     virtual int             Type();
-    virtual int             MaxPlayer();
+    virtual int             MaxPlayer(Game& game);
 
     static void             test();
 protected:
     virtual void            initCard(Game&);
     virtual bool            validId(uint);
-    virtual int             maxCards();
-    virtual int             maxHands();
-    virtual int             bottom();
+    virtual int             maxCards(Game& game);
+    virtual int             maxHands(Game& game);
+    virtual int             bottom(Game& game);
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     virtual void            engage(Game&,proto3::MsgNCEngage&);
     

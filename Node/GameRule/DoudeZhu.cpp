@@ -31,19 +31,19 @@ int DoudeZhu::Type(){
     return pb_enum::GAME_DDZ;
 }
 
-int DoudeZhu::MaxPlayer(){
+int DoudeZhu::MaxPlayer(Game& game){
     return 3;
 }
 
-int DoudeZhu::maxCards(){
+int DoudeZhu::maxCards(Game& game){
     return 54;
 }
 
-int DoudeZhu::maxHands(){
+int DoudeZhu::maxHands(Game& game){
     return 17;
 }
 
-int DoudeZhu::bottom(){
+int DoudeZhu::bottom(Game& game){
     return 3;
 }
 
@@ -69,7 +69,7 @@ void DoudeZhu::settle(Player& player){
     Game& game=*player.game;
     game.spSettle=std::make_shared<MsgNCSettle>();
     auto& msg=*game.spSettle;
-    for(uint i=0,ii=MaxPlayer();i!=ii;++i){
+    for(uint i=0,ii=MaxPlayer(game);i!=ii;++i){
         auto play=msg.add_play();
         play->set_win(i==player.pos?1:0);
         play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
