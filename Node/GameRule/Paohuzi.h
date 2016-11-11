@@ -14,6 +14,7 @@ public:
     virtual int             Type();
     virtual int             MaxPlayer(Game& game);
     
+    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
     static void             test();
 protected:
     virtual void            initCard(Game&);
@@ -26,10 +27,10 @@ protected:
 
     virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
 private:
+    virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>&);
     //is game over with melt card
     virtual bool            isWin(Game&,proto3::bunch_t&,std::vector<proto3::bunch_t>&);
 
-    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
     proto3::pb_enum         verifyBunch(Game&,proto3::bunch_t&);
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);

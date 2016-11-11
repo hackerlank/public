@@ -15,12 +15,12 @@ public:
 
     virtual void            OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void            OnMeld(Player&,const proto3::bunch_t&);
+    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
 protected:
     virtual bool            verifyDiscard(Game&,proto3::bunch_t&){return true;}
     virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&)=0;
 
     virtual bool            comparision(uint x,uint y);
-    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
     
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t)=0;
 
@@ -30,6 +30,7 @@ protected:
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
 
     virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&){};
+    virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>&);
 private:
     //game over here
     virtual bool            isWin(Game&,proto3::bunch_t&,std::vector<proto3::bunch_t>&)=0;

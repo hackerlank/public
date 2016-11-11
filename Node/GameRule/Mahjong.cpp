@@ -215,6 +215,14 @@ void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     }
 }
 
+void Mahjong::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::bunch_t>& pending){
+    MeldGame::sortPendingMeld(spgame,pending);
+    for(auto i=spgame->pendingMeld.begin()+1,iend=spgame->pendingMeld.end();i!=iend;++i){
+        if(i->bunch.type()>=pb_enum::BUNCH_WIN)
+            pending.push_back(i->bunch);
+    }
+}
+
 void Mahjong::calcAchievement(Player& player,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
     Game& game=*player.game;
     //统计工作

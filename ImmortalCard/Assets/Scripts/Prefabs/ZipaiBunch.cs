@@ -22,8 +22,8 @@ public class ZipaiBunch : MonoBehaviour{
 			_bunch=value;
 			//type and score
 			if(ShowType){
-				Type.text="K";
-				Score.text="9";
+				Type.text=type2str(value.Type);
+				Score.text=PaohuziRule.CalcPoints(value).ToString();
 				Type.gameObject.SetActive(true);
 				Score.gameObject.SetActive(true);
 			}
@@ -34,6 +34,31 @@ public class ZipaiBunch : MonoBehaviour{
 					obj.state=Card.State.ST_MELD;
 				});
 			}
+		}
+	}
+
+	string type2str(pb_enum type){
+		switch(type){
+		case pb_enum.PhzAa:
+			return "将";
+		case pb_enum.PhzAbc:
+			return "吃";
+		case pb_enum.PhzAaawei:
+		case pb_enum.PhzAaachou:
+			return "偎";
+		case pb_enum.PhzAaaa:
+		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzAaaastart:
+			return "提";
+		case pb_enum.PhzBbb:
+			return "碰";
+		case pb_enum.PhzBbbB:
+		case pb_enum.PhzBbbbdesk:
+			return "跑";
+		case pb_enum.PhzAaa:
+			return "坎";
+		default:
+			return "";
 		}
 	}
 

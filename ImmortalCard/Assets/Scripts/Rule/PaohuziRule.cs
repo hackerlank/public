@@ -278,70 +278,9 @@ public class PaohuziRule: GameRule {
 
 		if(card==Configs.invalidCard){
 			//natural win: AAAs
-			if(player.AAAAs.Count>=3 || player.AAAs.Count>=5){
-				//add other cards [2,7,10] [1,2,3]
-				var all=new List<int>[2]{new List<int>(),new List<int>()};
-				var two=new List<int>[2]{new List<int>(),new List<int>()};
-				foreach(var C in hands){
-					int x=(C/1000==2?1:0);
-					if(C%100==1||C%100==3||C%100==7||C%100==10){
-						all[x].Add(C);
-					} else if(C%100==2){
-						two[x].Add(C);
-					}
-				}
-
-				for(int i=0;i<2;++i){
-					//按大小分
-					foreach(var i2 in two[i]){
-						//找一张二的组合
-						var suites=hintABC(all[i],i2);
-						if(suites.Count<=0)
-							//没有，完事儿
-							break;
-						else{
-							//加入到算分，剔除
-							var bunch=suites[0];
-							bunches.Add(bunch);
-							foreach(var ih in bunch.Pawns)
-								foreach(var a in all[i])
-								if(ih==a){
-									all[i].Remove(a);
-									break;
-								}
-							//下一张二
-						}
-					}
-				}
-				
-				// 从手牌中删除成
-				foreach(var s in bunches)
-				foreach(var j in s.Pawns){
-					foreach(var k in hands)
-					if(j==k){
-						hands.Remove(k);
-						break;
-					}
-				}
-				//剩下的随便组吧
-				int MIN_SUITES=(MaxPlayer==4?5:7);
-				int J=MIN_SUITES-bunches.Count-player.AAAs.Count-player.AAAAs.Count;
-				var sz=hands.Count;
-				if(sz>0){
-					var I=(sz+2)/3;
-					for(int i=0;i<I;++i){
-						var suite=new bunch_t();
-						suite.Type=pb_enum.OpPass;	//must be OpPass
-						for(int j=0;j<3;++j)if(i*3+j<sz)suite.Pawns.Add(hands[i*3+j]);
-						bunches.Add(suite);
-					}
-					for(int i=I;i<J;++i){
-						var suite=new bunch_t();
-						suite.Type=pb_enum.OpPass;	//must be OpPass
-						bunches.Add(suite);
-					}
-				}
-			}else
+			if(player.AAAAs.Count>=3 || player.AAAs.Count>=5)
+				bunches=buildFrees(hands,player.AAAs.Count+player.AAAAs.Count);
+			else
 				//BBB,ABC
 				bunches=buildABC(hands,needAA);
 		}else do{
@@ -568,8 +507,77 @@ public class PaohuziRule: GameRule {
 		//all cards pass
 		return true;
 	}
+
+	public static List<bunch_t> buildFrees(List<int> hands,int nBunches){
+		var bunches=new List<bunch_t>();
+
+		//add other cards [2,7,10] [1,2,3]
+		var all=new List<int>[2]{new List<int>(),new List<int>()};
+		var two=new List<int>[2]{new List<int>(),new List<int>()};
+		foreach(var C in hands){
+			int x=(C/1000==2?1:0);
+			if(C%100==1||C%100==3||C%100==7||C%100==10){
+				all[x].Add(C);
+			} else if(C%100==2){
+				two[x].Add(C);
+			}
+		}
+		
+		for(int i=0;i<2;++i){
+			//按大小分
+			foreach(var i2 in two[i]){
+				//找一张二的组合
+				var suites=hintABC(all[i],i2);
+				if(suites.Count<=0)
+					//没有，完事儿
+					break;
+				else{
+					//加入到算分，剔除
+					var bunch=suites[0];
+					bunches.Add(bunch);
+					foreach(var ih in bunch.Pawns)
+						foreach(var a in all[i])
+						if(ih==a){
+							all[i].Remove(a);
+							break;
+						}
+					//下一张二
+				}
+			}
+		}
+		
+		// 从手牌中删除成
+		foreach(var s in bunches)
+		foreach(var j in s.Pawns){
+			foreach(var k in hands)
+			if(j==k){
+				hands.Remove(k);
+				break;
+			}
+		}
+		//剩下的随便组吧
+		var M=Main.Instance.gameController.Rule.MaxPlayer;
+		int MIN_SUITES=(M==4?5:7);
+		int J=MIN_SUITES-bunches.Count-nBunches;
+		var sz=hands.Count;
+		if(sz>0){
+			var I=(sz+2)/3;
+			for(int i=0;i<I;++i){
+				var suite=new bunch_t();
+				suite.Type=pb_enum.OpPass;	//must be OpPass
+				for(int j=0;j<3;++j)if(i*3+j<sz)suite.Pawns.Add(hands[i*3+j]);
+				bunches.Add(suite);
+			}
+			for(int i=I;i<J;++i){
+				var suite=new bunch_t();
+				suite.Type=pb_enum.OpPass;	//must be OpPass
+				bunches.Add(suite);
+			}
+		}
+		return bunches;
+	}
 	
-	List<bunch_t> hintABC(List<int> cards,int A){
+	static List<bunch_t> hintABC(List<int> cards,int A){
 		//all BBB,ABC for card against cards
 		var output=new List<bunch_t>();
 

@@ -206,78 +206,82 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     for(auto& p:pendingMeld)if(p.arrived)++ready;
     if(ready>=pendingMeld.size()){
         //sort
-        std::sort(pendingMeld.begin(),pendingMeld.end()
-                  ,std::bind(&MeldGame::comparePending,this,spgame,std::placeholders::_1,std::placeholders::_2));
-        
-        //TODO: handle multiple winner
-        
-        //priority
-        auto& front=pendingMeld.front();
-        auto& bunch=front.bunch;
-        auto which=*bunch.pawns().begin();
-        auto where=bunch.pos();
-        auto who=game.players[where];
-        auto tokenPlayer=game.players[game.token];
+        std::vector<bunch_t> bunches;
+        sortPendingMeld(spgame,bunches);
 
-        //ok,verify
-        auto old_ops=bunch.type();
-        auto result=verifyBunch(game,bunch);
-        auto ret=pb_enum::SUCCEESS;
-        
-        //deal invalid as pass
-        if(result==pb_enum::BUNCH_INVALID){
-            std::string str;
-            KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,bunch),old_ops,where);
-            //result=pb_enum::BUNCH_INVALID;
-            result=pb_enum::OP_PASS;
-            ret=pb_enum::BUNCH_INVALID;
-        }
-        
-        KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,bunch),game.token);
         auto bDraw=pendingMeld.size()==1;
-        switch(result){
-            case pb_enum::BUNCH_WIN:{
-                std::vector<bunch_t> output;
-                if(isWin(game,bunch,output)){
-                    who->playData.clear_hands();
-                    settle(*who,output,which);
-                    changeState(game,Game::State::ST_SETTLE);
-                    tokenPlayer.reset();
-                }else{
-                    //tokenPlayer=who;
-                    ret=pb_enum::ERR_FAILED;
-                }
-                break;
+        auto tokenPlayer=game.players[game.token];
+        auto ret=pb_enum::SUCCEESS;
+
+        //the highest priority
+        auto& front=bunches.front();
+        auto which=*front.pawns().begin();
+        auto where=front.pos();
+        auto who=game.players[where];
+
+        for(auto& what:bunches){
+            //ok,verify
+            auto old_ops=what.type();
+            auto result=verifyBunch(game,what);
+            
+            //deal invalid as pass
+            if(result==pb_enum::BUNCH_INVALID){
+                std::string str;
+                KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,what),old_ops,where);
+                //result=pb_enum::BUNCH_INVALID;
+                result=pb_enum::OP_PASS;
+                ret=pb_enum::BUNCH_INVALID;
             }
-            case pb_enum::OP_PASS:
-                //handle pass, ensure token
-                if(bDraw){
-                    //isDraw, pass to discard
-                    bunch.set_pos(game.token);
-                }else{
-                    //discard, pass to draw,don't do it immediately!
-                    who->discardedCards.push_back(which);
-                    bunch.set_pos(-1);
+            
+            KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,what),game.token);
+            switch(result){
+                case pb_enum::BUNCH_WIN:{
+                    std::vector<bunch_t> output;
+                    if(isWin(game,what,output)){
+                        auto localPos=what.pos();
+                        auto localPlayer=game.players[localPos];
+                        localPlayer->playData.clear_hands();
+                        settle(*localPlayer,output,which);
+                        if(localPos==where){
+                            changeState(game,Game::State::ST_SETTLE);
+                            tokenPlayer.reset();
+                        }
+                    }else{
+                        //tokenPlayer=who;
+                        ret=pb_enum::ERR_FAILED;
+                    }
+                    break;
                 }
-                break;
-            case pb_enum::BUNCH_INVALID:
-                //checked already
-                //tokenPlayer.reset();
-                break;
-            default:
-                //A,AAA,AAAA, meld or do some specials
-                if(meld(game,*who,which,bunch)){
-                    tokenPlayer=who;
-                    changePos(game,who->pos);
-                }
+                case pb_enum::OP_PASS:
+                    //handle pass, ensure token
+                    if(bDraw){
+                        //isDraw, pass to discard
+                        what.set_pos(game.token);
+                    }else{
+                        //discard, pass to draw,don't do it immediately!
+                        who->discardedCards.push_back(which);
+                        what.set_pos(-1);
+                    }
+                    break;
+                case pb_enum::BUNCH_INVALID:
+                    //checked already
+                    //tokenPlayer.reset();
+                    break;
+                default:
+                    //A,AAA,AAAA, meld or do some specials
+                    if(meld(game,*who,which,what)){
+                        tokenPlayer=who;
+                        changePos(game,who->pos);
+                    }
+            }
+            onMeld(game,*who,which,what);
         }
-        onMeld(game,*who,which,bunch);
 
         //change state before send message
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(ret);
-        msg.mutable_bunch()->CopyFrom(bunch);
+        msg.mutable_bunch()->CopyFrom(front);
         
         //clear after copy
         game.pendingMeld.clear();
@@ -350,6 +354,12 @@ void MeldGame::draw(Game& game){
             p->lastMsg=std::make_shared<MsgNCDraw>(msg);
         }
     }
+}
+
+void MeldGame::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::bunch_t>& pending){
+    std::sort(spgame->pendingMeld.begin(),spgame->pendingMeld.end()
+              ,std::bind(&MeldGame::comparePending,this,spgame,std::placeholders::_1,std::placeholders::_2));
+    pending.push_back(spgame->pendingMeld.front().bunch);
 }
 
 bool MeldGame::comparision(uint x,uint y){

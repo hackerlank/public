@@ -464,8 +464,20 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     auto& msg=*game.spSettle;
     
     for(pos_t i=0;i<M;++i){
-        auto play=msg.add_play();
-        play->set_win(pos==i&&allSuites.size()>0?1:0);
+        play_t* play=nullptr;
+        if(msg.play_size()<M)
+            play=msg.add_play();
+        else
+            play=msg.mutable_play(i);
+        //copy bunches
+        if(pos==i&&allSuites.size()>0){
+            play->set_win(1);
+            play->clear_bunch();
+            for(auto& bunch:allSuites)play->add_bunch()->CopyFrom(bunch);
+        }else if(play->bunch_size()<=0){
+            auto other=game.players[i];
+            for(auto& bunch:other->AAAs)play->add_bunch()->CopyFrom(bunch);
+        }
     }
 
     if(!game.spFinish){
@@ -479,10 +491,6 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     auto spGameEnd=game.spSettle;
     auto& play=*msg.mutable_play(pos);
     auto& playFinish=*spFinalEnd->mutable_play(pos);
-    
-    //copy bunches
-    play.clear_bunch();
-    for(auto& bunch:allSuites)play.add_bunch()->CopyFrom(bunch);
     
     int point=0,score=0,multiple=0,chunk=0;
     bool self=(pos==game.token&&game.pileMap.find(card)!=game.pileMap.end());
@@ -1421,6 +1429,15 @@ int Paohuzi::findSuiteKT(Game& game,std::vector<unit_id_t> hands,int type,int po
         res=tpNum;
     }
     return res;
+}
+
+void Paohuzi::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::bunch_t>& pending){
+    MeldGame::sortPendingMeld(spgame,pending);
+    if(spgame->category==pb_enum::PHZ_GX)
+        for(auto i=spgame->pendingMeld.begin()+1,iend=spgame->pendingMeld.end();i!=iend;++i){
+            if(i->bunch.type()>=pb_enum::BUNCH_WIN)
+                pending.push_back(i->bunch);
+        }
 }
 
 int Paohuzi::winPoint(Game&,pb_enum rule){
