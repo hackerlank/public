@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using Proto3;
 
 public class EnterPanel : MonoBehaviour {
@@ -24,36 +25,33 @@ public class EnterPanel : MonoBehaviour {
 	int nRobots=0;
 
 	void Start(){
-		var categories=new pb_enum[]{
-			pb_enum.PhzSy,
-			pb_enum.PhzCdQmt,
-			pb_enum.PhzCdHhd,
-			pb_enum.PhzPeghz,
-		};
-		foreach(var category in categories){
-			addGame(category);
-		}
-	}
-	
-	void addGame(pb_enum category){
-		Utils.Load<RuleIcon>(GameRoot,delegate(Component obj){
-			var icon=obj as RuleIcon;
-			icon.Category=category;
-			switch(category){
-			case pb_enum.PhzSy:
-				icon.Name.text="Shao yang";break;
-			case pb_enum.PhzCdQmt:
-				icon.Name.text="Quan ming tang";break;
-			case pb_enum.PhzCdHhd:
-				icon.Name.text="Hong hei dian";break;
-			case pb_enum.PhzPeghz:
-				icon.Name.text="Peng huzi";break;
-			}
-			if(GameCategory==null){
-				GameCategory=icon;
-				GameCategory.OnGame();
-			}
-		});
+		Dictionary<pb_enum,string> categories=new Dictionary<pb_enum, string>();
+		categories[pb_enum.PhzSy]="邵阳字牌";
+		categories[pb_enum.PhzSybp]="邵阳剥皮";
+		categories[pb_enum.PhzLd]="娄底放炮";
+		categories[pb_enum.PhzHh]="怀化红拐弯";
+		categories[pb_enum.PhzCdQmt]="常德全名堂";
+		categories[pb_enum.PhzCdHhd]="常德红黑点";
+		categories[pb_enum.PhzCs]="长沙";
+		categories[pb_enum.PhzXxGhz]="湘乡告胡子";
+		categories[pb_enum.PhzHy]="衡阳六条枪";
+		categories[pb_enum.PhzYzSbw]="永州双霸王";
+		categories[pb_enum.PhzPeghz]="碰胡子";
+		categories[pb_enum.PhzScEqs]="四川二七十";
+		categories[pb_enum.PhzCz]="郴州跑胡子";
+		categories[pb_enum.PhzGx]="广西跑胡子";
+
+		foreach(var kv in categories)
+			Utils.Load<RuleIcon>(GameRoot,delegate(Component obj){
+				var category=kv.Key;
+				var icon=obj as RuleIcon;
+				icon.Category=category;
+				icon.Name.text=categories[category];
+				if(GameCategory==null){
+					GameCategory=icon;
+					GameCategory.OnGame();
+				}
+			});
 	}
 
 	public void OnCreate(){

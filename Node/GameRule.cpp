@@ -15,6 +15,7 @@ using namespace proto3;
 inline void parseCardsByString(std::vector<int>& o,std::string& line);
 
 void GameRule::deal(Game& game){
+    auto MP=MaxPlayer(game);
     //clear
     changePos(game,game.banker);
     game.banker=game.token;
@@ -24,6 +25,14 @@ void GameRule::deal(Game& game){
     game.pendingMeld.clear();
     game.pendingDiscard.reset();
     for(auto& player:game.players)if(player)player->reset();
+    
+    game.spSettle=std::make_shared<MsgNCSettle>();
+    for(pos_t i=0;i<MP;++i)game.spSettle->add_play();
+    if(!game.spFinish){
+        //prepare final end message
+        game.spFinish=std::make_shared<MsgNCFinish>();
+        for(pos_t i=0; i < MP; ++i)game.spFinish->add_play();
+    }
     
     //init cards
     initCard(game);
@@ -51,7 +60,6 @@ void GameRule::deal(Game& game){
     }
     
     //deal: fixed position,movable banker
-    auto MP=MaxPlayer(game);
     auto MH=maxHands(game);
     auto BK=MH+bottom(game);
     bunch_t bottom;

@@ -196,11 +196,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 
     //queue in
     std::string str;
-    KEYE_LOG("OnMeld queue in(total %lu),pos=%d,%s\n",pendingMeld.size(),pos,bunch2str(str,curr));
-    //auto ops=pending.bunch.type();
+    //KEYE_LOG("OnMeld queue in(total %lu),pos=%d,%s\n",pendingMeld.size(),pos,bunch2str(str,curr));
     pending.bunch.CopyFrom(curr);
-    //restore pending ops for draw
-    //if(pending.bunch.type()==pb_enum::OP_PASS)pending.bunch.set_type(ops);
     
     int ready=0;
     for(auto& p:pendingMeld)if(p.arrived)++ready;
@@ -223,25 +220,33 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             //ok,verify
             auto old_ops=what.type();
             auto result=verifyBunch(game,what);
+            auto localPos=what.pos();
+            auto localPlayer=game.players[localPos];
             
             //deal invalid as pass
             if(result==pb_enum::BUNCH_INVALID){
                 std::string str;
-                KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,what),old_ops,where);
+                KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,what),old_ops,localPos);
                 //result=pb_enum::BUNCH_INVALID;
                 result=pb_enum::OP_PASS;
                 ret=pb_enum::BUNCH_INVALID;
             }
             
-            KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",where,bunch2str(str,what),game.token);
+            KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",what.pos(),bunch2str(str,what),game.token);
             switch(result){
                 case pb_enum::BUNCH_WIN:{
                     std::vector<bunch_t> output;
                     if(isWin(game,what,output)){
-                        auto localPos=what.pos();
-                        auto localPlayer=game.players[localPos];
+                        //settle player
                         localPlayer->playData.clear_hands();
                         settle(*localPlayer,output,which);
+                        
+                        //reset player bunches
+                        localPlayer->playData.clear_bunch();
+                        localPlayer->AAAs.clear();
+                        localPlayer->AAAAs.clear();
+                        for(auto& o:output)localPlayer->playData.mutable_bunch()->Add()->CopyFrom(o);
+
                         if(localPos==where){
                             changeState(game,Game::State::ST_SETTLE);
                             tokenPlayer.reset();
@@ -274,7 +279,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                         changePos(game,who->pos);
                     }
             }
-            onMeld(game,*who,which,what);
+            onMeld(game,*localPlayer,which,what);
         }
 
         //change state before send message
@@ -293,13 +298,31 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             p->lastMsg=std::make_shared<MsgNCMeld>(msg);
         }
         
-        //then draw or discard
         if(tokenPlayer){
+            //then draw or discard
             if(!checkDiscard(*tokenPlayer,bDraw?which:invalid_card)){
                 //KEYE_LOG("OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);
                 draw(game);
             }
+        }else{
+            //or win: copy bunches,hands and pile after settle
+            for(int i=0; i<MaxPlayer(game); ++i){
+                auto localPlayer=game.players[i];
+                auto& play=*game.spSettle->mutable_play(i);
+                //the loser
+                for(auto& aaa:localPlayer->AAAAs)
+                    play.add_bunch()->CopyFrom(aaa);
+                for(auto& aaa:localPlayer->AAAs)
+                    play.add_bunch()->CopyFrom(aaa);
+                for(auto& src:localPlayer->playData.bunch())
+                    play.add_bunch()->CopyFrom(src);
+                
+                for(auto& src:localPlayer->playData.hands())
+                    play.add_hands(src);
+            }
+            //copy pile
+            for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
         }
     }//if(ready>=queue.size())
 }

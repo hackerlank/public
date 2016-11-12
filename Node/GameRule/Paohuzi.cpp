@@ -460,43 +460,15 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     int _cardNum=0;//广西跑胡子用
     //清洗缓冲区
     ss.clear();
-    game.spSettle=std::make_shared<MsgNCSettle>();
-    auto& msg=*game.spSettle;
-    
-    for(pos_t i=0;i<M;++i){
-        play_t* play=nullptr;
-        if(msg.play_size()<M)
-            play=msg.add_play();
-        else
-            play=msg.mutable_play(i);
-        //copy bunches
-        if(pos==i&&allSuites.size()>0){
-            play->set_win(1);
-            play->clear_bunch();
-            for(auto& bunch:allSuites)play->add_bunch()->CopyFrom(bunch);
-        }else if(play->bunch_size()<=0){
-            auto other=game.players[i];
-            for(auto& bunch:other->AAAs)play->add_bunch()->CopyFrom(bunch);
-        }
-    }
-
-    if(!game.spFinish){
-        //prepare final end message
-        game.spFinish=std::make_shared<MsgNCFinish>();
-        for(pos_t i=0; i < M; ++i){
-            game.spFinish->add_play();
-        }
-    }
     auto spFinalEnd=game.spFinish;
     auto spGameEnd=game.spSettle;
+    auto& msg=*game.spSettle;
     auto& play=*msg.mutable_play(pos);
     auto& playFinish=*spFinalEnd->mutable_play(pos);
-    
+
     int point=0,score=0,multiple=0,chunk=0;
     bool self=(pos==game.token&&game.pileMap.find(card)!=game.pileMap.end());
-    //如果天胡，card就被设置为-1(255)了，这里有漏洞则处理
-    bool bCardError=(card>80||card<0);//说明牌非法，不能用非法的牌做放炮判断
-    bool fire=(pos!=game.token&&!bCardError&&game.pileMap.find(card)!=game.pileMap.end()
+    bool fire=(pos!=game.token&&invalid_card!=card&&game.pileMap.find(card)!=game.pileMap.end()
                &&(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_HY||
                   game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
                   game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
@@ -517,6 +489,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     std::vector<achv_t> achvs;
     if(point>=winPoint(game,game.category)){
         //胡了
+        play.set_win(1);
         
         //先计名堂
         calcAchievement(game,game.category,allSuites,achvs);
@@ -911,7 +884,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         //地胡不能有进张的判断条件
         auto markInput=0;
         //放炮否
-        bool pfire=(pos!=game.token&&!bCardError&&game.pileMap.find(card)==game.pileMap.end()
+        bool pfire=(pos!=game.token&&card!=invalid_card&&game.pileMap.find(card)==game.pileMap.end()
                     &&(game.category==pb_enum::PHZ_PEGHZ));
         //地胡，听胡
         for(auto i=0;i<M;++i){
@@ -1109,7 +1082,6 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         }
     }//pb_enum::PHZ_PENGHUZI
     
-    for(auto c:game.pile)spGameEnd->mutable_pile()->Add(c);
     play.set_point(point);
     play.set_chunk(chunk);
     play.set_multiple(multiple);
@@ -1123,17 +1095,6 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
 */
     //achvs
     for(auto& achv:achvs)play.add_achvs()->CopyFrom(achv);
-    //bunches and hands
-    for(int i=0; i<M; ++i){
-        //logHands(i);
-        auto& destPlay=*msg.mutable_play(i);
-        auto& srcPlay=game.players[i]->playData;
-        for(auto& src:srcPlay.bunch())
-            destPlay.add_bunch()->CopyFrom(src);
-        
-        for(auto& src:srcPlay.hands())
-            destPlay.add_hands(src);
-    }
     
     //the final end message
     if (pos!=-1) {

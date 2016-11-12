@@ -17,6 +17,7 @@ public class PaohuziSettleItem : SettleItem {
 			var bunches=new List<bunch_t>(value.Bunch);
 			//hands
 			var hands=new List<int>(value.Hands);
+			Debug.Log("settle "+bunches[0].Pos+" bunches="+bunches.Count+",hands="+hands.Count);
 			bunches.AddRange(PaohuziRule.buildFrees(hands,bunches.Count));
 
 			foreach(var bunch in bunches){

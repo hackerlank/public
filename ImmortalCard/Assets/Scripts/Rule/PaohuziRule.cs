@@ -284,14 +284,14 @@ public class PaohuziRule: GameRule {
 				//BBB,ABC
 				bunches=buildABC(hands,needAA);
 		}else do{
-			var category=pb_enum.PhzSy;
+			var category=Main.Instance.MainPlayer.category;
 			var draw=Pile.IndexOf(card)!=-1;
 			var fire=(player.pos!=Token && !draw
 			           &&   (category==pb_enum.PhzLd||category==pb_enum.PhzHy||
 			      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
 			      category==pb_enum.PhzHy||category==pb_enum.PhzGx));
 			if(!fire && !draw){
-				Debug.Log("win failed, not fire and draw");
+				Debug.Log(player.pos+" win failed,draw="+draw+",fire="+fire+",category="+(int)category+",token="+Token);
 				break;
 			}
 
