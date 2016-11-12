@@ -461,9 +461,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     //清洗缓冲区
     ss.clear();
     auto spFinalEnd=game.spFinish;
-    auto spGameEnd=game.spSettle;
-    auto& msg=*game.spSettle;
-    auto& play=*msg.mutable_play(pos);
+    auto& play=player.playData;
     auto& playFinish=*spFinalEnd->mutable_play(pos);
 
     int point=0,score=0,multiple=0,chunk=0;
@@ -746,7 +744,8 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             
             if(fire){
                 //放炮，两人变动
-                msg.mutable_play(game.token)->set_score(-score);
+//                msg.mutable_play(game.token)->set_score(-score);
+                game.players[game.token]->playData.set_score(-score);
                 game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()-score);
 //                msg.m_scores[game.token]=-score;	//放炮这要扣分的，有番数
 //                spFinalEnd->m_total[game.token].score-=score;
@@ -767,7 +766,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                         break;
                 }
                 play.set_score(bMulti3?score*3:score*2);
-                msg.mutable_play(game.token)->set_score(-(bMulti3?score*3:score*2));
+                game.players[game.token]->playData.set_score(-(bMulti3?score*3:score*2));
 //                msg.m_scores[pos]=bMulti3?score*3:score*2;
 //                msg.m_scores[game.token]=-(bMulti3?score*3:score*2);
             } else{
@@ -777,17 +776,17 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 {
 //                    score=calcMultiOrScore(game.category,score*multi);
                     for(int i=0; i<M; ++i){
-                        msg.mutable_play(i)->set_score(i==pos?score:-(score/multi));
+                        game.players[i]->playData.set_score(i==pos?score:-(score/multi));
 //                        msg.m_scores[i]=(i==pos?score:-(score/multi));
                     }
                 } else{
                     for(int i=0; i<M; ++i)
-                        msg.mutable_play(i)->set_score(i==pos?score*multi:-score);
+                        game.players[i]->playData.set_score(i==pos?score*multi:-score);
 //                        msg.m_scores[i]=(i==pos?score*multi:-score);
                 }
             }
             for(int i=0; i<M; ++i){
-                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()+msg.play(i).score());
+                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()+game.players[i]->playData.score());
 //                spFinalEnd->m_total[i].score+=msg.m_scores[i];
 //                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
@@ -807,9 +806,9 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         game.bankerChanged=false;
         if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_XX_GHZ)
             //剥皮和湘乡告胡子，庄家扣10分
-            msg.mutable_play(game.banker)->set_score(-10);
+            game.players[game.banker]->playData.set_score(-10);
         for(int i=0; i<M; ++i){
-            game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()+msg.play(i).score());
+            game.players[game.token]->playData.set_score(game.spFinish->mutable_play(game.token)->score()+game.players[i]->playData.score());
 //            spFinalEnd->m_total[i].score+=msg.m_scores[i];
 //            msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
         }
@@ -1064,7 +1063,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             game.banker=pos;
             
             for(int i=0; i<M; ++i){
-                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+msg.play(i).score());
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
                 //spFinalEnd->m_total[i].score+=msg.m_scores[i];
                 //msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
@@ -1075,7 +1074,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 game.players[i]->winCount=0;
             game.bankerChanged=false;
             for(int i=0; i<M; ++i){
-                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+msg.play(i).score());
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
                 //spFinalEnd->m_total[i].score+=msg.m_scores[i];
                 //msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }

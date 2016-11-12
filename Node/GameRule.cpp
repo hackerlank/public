@@ -26,8 +26,6 @@ void GameRule::deal(Game& game){
     game.pendingDiscard.reset();
     for(auto& player:game.players)if(player)player->reset();
     
-    game.spSettle=std::make_shared<MsgNCSettle>();
-    for(pos_t i=0;i<MP;++i)game.spSettle->add_play();
     if(!game.spFinish){
         //prepare final end message
         game.spFinish=std::make_shared<MsgNCFinish>();
@@ -111,13 +109,14 @@ void GameRule::deal(Game& game){
 
 bool GameRule::settle(Game& game){
     //broadcast
-    if(!game.spSettle)return false;
+    game.spSettle=std::make_shared<MsgNCSettle>();
+    game.spSettle->clear_play();
     
-    for(int i=0;i<MaxPlayer(game);++i){
-        auto play=game.spSettle->play(i);
-        auto player=game.players[i];
-        play.mutable_player();
-    }
+    //copy game data
+    for(int i=0;i<MaxPlayer(game);++i)game.spSettle->add_play()->CopyFrom(game.players[i]->playData);
+    //copy pile
+    for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
+    
     //just send
     auto& msg=*game.spSettle;
     msg.set_mid(pb_msg::MSG_NC_SETTLE);

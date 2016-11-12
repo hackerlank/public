@@ -80,13 +80,15 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
         MsgNCEnter omsg;
         if(pb.Parse(imsg)){
             omsg.set_result(proto3::pb_enum::SUCCEESS);
-            auto game=omsg.mutable_player();
-            game->set_level(168);
-            game->set_uid("vic-game");
-            game->set_currency(1000);
+            auto player=omsg.mutable_player();
+            player->set_level(168);
+            player->set_uid("vic-game");
+            player->set_currency(1000);
             KEYE_LOG("client entered\n");
             
-            players[shid]=std::make_shared<Player>(sh);
+            auto spplayer=std::make_shared<Player>(sh);
+            spplayer->playData.mutable_player()->CopyFrom(*player);
+            players[shid]=spplayer;
         }else{
             KEYE_LOG("message error id=%zd\n",mid);
             omsg.set_result(proto3::pb_enum::ERR_FAILED);

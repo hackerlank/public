@@ -306,23 +306,15 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 draw(game);
             }
         }else{
-            //or win: copy bunches,hands and pile after settle
+            //or win: copy bunches after settle
             for(int i=0; i<MaxPlayer(game); ++i){
                 auto localPlayer=game.players[i];
-                auto& play=*game.spSettle->mutable_play(i);
                 //the loser
                 for(auto& aaa:localPlayer->AAAAs)
-                    play.add_bunch()->CopyFrom(aaa);
+                    localPlayer->playData.add_bunch()->CopyFrom(aaa);
                 for(auto& aaa:localPlayer->AAAs)
-                    play.add_bunch()->CopyFrom(aaa);
-                for(auto& src:localPlayer->playData.bunch())
-                    play.add_bunch()->CopyFrom(src);
-                
-                for(auto& src:localPlayer->playData.hands())
-                    play.add_hands(src);
+                    localPlayer->playData.add_bunch()->CopyFrom(aaa);
             }
-            //copy pile
-            for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
         }
     }//if(ready>=queue.size())
 }
