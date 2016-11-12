@@ -95,7 +95,7 @@ void GameRule::deal(Game& game){
     msg.set_piles((int)game.pile.size());
 
     for(auto p:game.players){
-        msg.set_pos(p->pos);
+        msg.set_pos(p->playData.seat());
         auto hands=msg.mutable_hands();
         auto n=(int)p->playData.hands().size();
         hands->Resize(n,0);
@@ -147,7 +147,7 @@ void GameRule::OnReady(Player& player){
         player.ready=true;
         MsgNCReady omsg;
         omsg.set_mid(pb_msg::MSG_NC_READY);
-        omsg.set_pos(player.pos);
+        omsg.set_pos(player.playData.seat());
         omsg.set_result(pb_enum::SUCCEESS);
         for(auto& p:game->players)p->send(omsg);
     }

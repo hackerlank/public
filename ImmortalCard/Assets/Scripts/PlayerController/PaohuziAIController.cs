@@ -15,7 +15,7 @@ public class PaohuziAIController:AIController{
 		if(msg.Bunch.Pos==-1&&msg.Bunch.Type==pb_enum.OpPass)
 			yield break;
 		
-		if(player.pos==msg.Bunch.Pos){
+		if(player.playData.Seat==msg.Bunch.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
 
 			var rule=Main.Instance.gameController.Rule;
@@ -38,7 +38,7 @@ public class PaohuziAIController:AIController{
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				omsgDiscard.Bunch=new bunch_t();
-				omsgDiscard.Bunch.Pos=player.pos;
+				omsgDiscard.Bunch.Pos=player.playData.Seat;
 				omsgDiscard.Bunch.Pawns.Add(discard);
 				omsgDiscard.Bunch.Type=bDraw?pb_enum.BunchA:pb_enum.Unknown;
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);

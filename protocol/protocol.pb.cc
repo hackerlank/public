@@ -5188,6 +5188,7 @@ const int play_t::kChunkFieldNumber;
 const int play_t::kMultipleFieldNumber;
 const int play_t::kScoreFieldNumber;
 const int play_t::kAchvsFieldNumber;
+const int play_t::kSeatFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 play_t::play_t()
@@ -5224,6 +5225,7 @@ void play_t::SharedCtor() {
   chunk_ = 0;
   multiple_ = 0;
   score_ = 0;
+  seat_ = 0;
 }
 
 play_t::~play_t() {
@@ -5288,6 +5290,7 @@ void play_t::Clear() {
   player_ = NULL;
   point_ = 0;
   ZR_(chunk_, score_);
+  seat_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -5495,6 +5498,21 @@ bool play_t::MergePartialFromCodedStream(
         }
         if (input->ExpectTag(98)) goto parse_loop_achvs;
         input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(104)) goto parse_seat;
+        break;
+      }
+
+      // optional int32 seat = 13;
+      case 13: {
+        if (tag == 104) {
+         parse_seat:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &seat_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -5601,6 +5619,11 @@ void play_t::SerializeWithCachedSizes(
       12, this->achvs(i), output);
   }
 
+  // optional int32 seat = 13;
+  if (this->seat() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->seat(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.play_t)
 }
 
@@ -5655,6 +5678,13 @@ int play_t::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->score());
+  }
+
+  // optional int32 seat = 13;
+  if (this->seat() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->seat());
   }
 
   // repeated int32 hands = 2;
@@ -5766,6 +5796,9 @@ void play_t::MergeFrom(const play_t& from) {
   if (from.score() != 0) {
     set_score(from.score());
   }
+  if (from.seat() != 0) {
+    set_seat(from.seat());
+  }
 }
 
 void play_t::CopyFrom(const play_t& from) {
@@ -5797,6 +5830,7 @@ void play_t::InternalSwap(play_t* other) {
   std::swap(multiple_, other->multiple_);
   std::swap(score_, other->score_);
   achvs_.UnsafeArenaSwap(&other->achvs_);
+  std::swap(seat_, other->seat_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -6082,6 +6116,20 @@ const ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >&
 play_t::achvs() const {
   // @@protoc_insertion_point(field_list:proto3.play_t.achvs)
   return achvs_;
+}
+
+// optional int32 seat = 13;
+void play_t::clear_seat() {
+  seat_ = 0;
+}
+ ::google::protobuf::int32 play_t::seat() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.seat)
+  return seat_;
+}
+ void play_t::set_seat(::google::protobuf::int32 value) {
+  
+  seat_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.seat)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

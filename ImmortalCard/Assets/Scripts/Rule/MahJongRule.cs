@@ -40,7 +40,7 @@ public class MahJongRule: GameRule {
 		if(player==null||src_bunch==null||hands.Count<=0)
 			return hints;
 
-		int pos=player.pos;
+		int pos=player.playData.Seat;
 		if(src_bunch.Pawns.Count!=1){
 			Debug.Log("hint wrong cards len="+src_bunch.Pawns.Count+",pos="+pos);
 			return hints;
@@ -116,7 +116,7 @@ public class MahJongRule: GameRule {
 				}
 			}
 		}
-		foreach(var hint in hints)hint.Pos=player.pos;
+		foreach(var hint in hints)hint.Pos=player.playData.Seat;
 
 		var count=hints.Count;
 		if(count>0){
@@ -236,7 +236,7 @@ public class MahJongRule: GameRule {
 		if(win){
 			var output=new bunch_t();
 			output.Type=pb_enum.BunchWin;
-			output.Pos=player.pos;
+			output.Pos=player.playData.Seat;
 			output.Pawns.Add(card);
 			foreach(var bunch in bunches)output.Child.Add(bunch);
 			return output;
@@ -306,7 +306,7 @@ public class MahJongRule: GameRule {
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
 		//huazhu check
-		if(player.pos!=Token%MaxPlayer){
+		if(player.playData.Seat!=Token%MaxPlayer){
 			Debug.Log("Discard invalid turn");
 			return false;
 		}
@@ -356,7 +356,7 @@ public class MahJongRule: GameRule {
 				if(iv.Count==4){
 					//BUNCH_AAAA
 					var bunch=new bunch_t();
-					bunch.Pos=player.pos;
+					bunch.Pos=player.playData.Seat;
 					bunch.Type=pb_enum.BunchAaaa;
 					foreach(var x in iv)bunch.Pawns.Add(x);
 					player.AAAAs.Add(bunch);

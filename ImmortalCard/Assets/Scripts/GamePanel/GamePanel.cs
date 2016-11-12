@@ -190,10 +190,10 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		var players=new List<Player>(Main.Instance.robots);
 		players.Add(Main.Instance.MainPlayer);
 		foreach(var player in players){
-			if(player.pos!=Rule.Banker)continue;
+			if(player.playData.Seat!=Rule.Banker)continue;
 
 			bunch_t bunch=new bunch_t();
-			bunch.Pos=player.pos;
+			bunch.Pos=player.playData.Seat;
 			bunch.Type=pb_enum.BunchA;
 			bunch.Pawns.Add(Configs.invalidCard);
 			
@@ -356,7 +356,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		msg.Mid=pb_msg.MsgCnDiscard;
 
 		var bunch=new bunch_t();
-		bunch.Pos=player.pos;
+		bunch.Pos=player.playData.Seat;
 		bunch.Type=pb_enum.OpPass;
 		msg.Bunch=bunch;
 
@@ -371,7 +371,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		msg.Mid=pb_msg.MsgCnMeld;
 		
 		bunch_t bunch=new bunch_t();
-		bunch.Pos=player.pos;
+		bunch.Pos=player.playData.Seat;
 		bunch.Pawns.Add(card);
 		bunch.Type=pb_enum.OpPass;
 		msg.Bunch=bunch;

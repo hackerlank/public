@@ -87,7 +87,7 @@ void Mahjong::initCard(Game& game){
 }
 
 void Mahjong::engage(Game& game,MsgNCEngage& msg){
-    for(auto& p:game.players)msg.set_keys(p->pos,p->playData.selected_card());
+    for(auto& p:game.players)msg.set_keys(p->playData.seat(),p->playData.selected_card());
     MeldGame::engage(game,msg);
 }
 
@@ -194,7 +194,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
 }
 
 void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
-    auto pos=player.pos;
+    auto pos=player.playData.seat();
     auto& game=*player.game;
     auto M=MaxPlayer(game);
 

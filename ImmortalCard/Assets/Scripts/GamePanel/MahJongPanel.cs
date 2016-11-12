@@ -22,7 +22,7 @@ public class MahJongPanel : GamePanel {
 		foreach(var btn in btns)btn.SetActive(false);
 		
 		for(int i=0;i<msg.Keys.Count;++i)
-			if(Main.Instance.MainPlayer.pos==i)
+			if(Main.Instance.MainPlayer.playData.Seat==i)
 				Main.Instance.MainPlayer.playData.SelectedCard=msg.Keys[i];
 		
 		MahJongRule.prepareAAAA(player);
@@ -34,11 +34,11 @@ public class MahJongPanel : GamePanel {
 	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
 		//show hints for others
-		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.pos!=msg.Bunch.Pos){
+		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.playData.Seat!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];
 			if(!showHints(msg.Bunch)){
 				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
-				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
+				Debug.Log(Main.Instance.MainPlayer.playData.Seat+" pass after "+msg.Bunch.Pos+" discard");
 			}
 		}
 	}
@@ -61,7 +61,7 @@ public class MahJongPanel : GamePanel {
 		bunch.Pos=pos;
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(id);
-		if(pos==Main.Instance.MainPlayer.pos&&!showHints(bunch)){
+		if(pos==Main.Instance.MainPlayer.playData.Seat&&!showHints(bunch)){
 			//collect
 			var omsg=new MsgCNMeld();
 			omsg.Mid=pb_msg.MsgCnMeld;
@@ -169,7 +169,7 @@ public class MahJongPanel : GamePanel {
 		}
 
 		//remove from hands
-		if(player.pos==bunch.Pos){
+		if(player.playData.Seat==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
 

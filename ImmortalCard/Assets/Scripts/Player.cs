@@ -15,7 +15,6 @@ public class Player {
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
 	public int				gameId=0;
-	public int				pos=0;
 	public play_t			playData=new play_t();
 	public pb_enum			category;
 
@@ -164,9 +163,9 @@ public class Player {
 				conflictMeld=false;
 
 				//copy data
-				pos=msgStart.Pos;
+				playData.Seat=msgStart.Pos;
 				playData.Hands.AddRange(msgStart.Hands);
-				var str="deal "+pos+":";
+				var str="deal "+playData.Seat+":";
 				foreach(var hand in msgStart.Hands)str+=hand+",";
 				Debug.Log(str);
 			}else
@@ -185,9 +184,9 @@ public class Player {
 					hist.Add(msgDiscard.Bunch);
 				}
 				//remove discards from hands
-				if(pos==msgDiscard.Bunch.Pos){
+				if(playData.Seat==msgDiscard.Bunch.Pos){
 					var rule=Main.Instance.gameController.Rule;
-					rule.nHands[pos]-=msgDiscard.Bunch.Pawns.Count;
+					rule.nHands[playData.Seat]-=msgDiscard.Bunch.Pawns.Count;
 					foreach(var card in msgDiscard.Bunch.Pawns)
 						playData.Hands.Remove(card);
 				}
@@ -199,10 +198,10 @@ public class Player {
 			if(msgMeld.Result==pb_enum.Succeess){
 				//remember conflict meld
 				var rule=Main.Instance.gameController.Rule;
-				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk&&pos==rule.Token&&pos!=msgMeld.Bunch.Pos){
+				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk&&playData.Seat==rule.Token&&playData.Seat!=msgMeld.Bunch.Pos){
 					if(rule.Pile.IndexOf(msgMeld.Bunch.Pawns[0])==-1){
 						conflictMeld=true;
-						Debug.Log(pos+" conflict "+msgMeld.Bunch.Pawns[0]);
+						Debug.Log(playData.Seat+" conflict "+msgMeld.Bunch.Pawns[0]);
 					}
 				}
 			}else

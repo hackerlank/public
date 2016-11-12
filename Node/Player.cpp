@@ -11,12 +11,12 @@
 using namespace proto3;
 
 Player::Player(keye::svc_handler& sh)
-:pos(-1)
-,ready(false)
+:ready(false)
 ,engaged(false)
 ,inputCount(0)
 ,lastHand(0){
     spsh=sh();
+    playData.set_seat(-1);
 }
 
 void Player::on_read(PBHelper& pb){
@@ -53,7 +53,7 @@ void Player::on_read(PBHelper& pb){
                     game->Round=maxRound;
                     //game->banker=game->rule->MaxPlayer(*game)-1; //test change banker
                     ready=true;
-                    pos=game->players.size()-1;
+                    playData.set_seat((int)game->players.size()-1);
                     //fill data
                 
                     omsg.set_game_id((int)game->id);
@@ -83,7 +83,7 @@ void Player::on_read(PBHelper& pb){
                         game=gameptr;
                         game->players.push_back(shared_from_this());
                         ready=true;
-                        pos=game->players.size()-1;
+                        playData.set_seat((int)game->players.size()-1);
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
                         KEYE_LOG("game joined,gid=%d\n",gid);
                     }else{
@@ -187,7 +187,10 @@ int Player::getKey(){
 }
 
 void Player::reset(){
+    auto seat=playData.seat();
     playData.Clear();
+    playData.set_seat(seat);
+    
     unpairedCards.clear();
     dodgeCards.clear();
     conflictMeld=false;

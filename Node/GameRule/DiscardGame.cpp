@@ -54,6 +54,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
     omsg.set_result(pb_enum::ERR_FAILED);
     
+    auto pos=player.playData.seat();
     do{
         auto game=player.game;
         if(!game){
@@ -61,11 +62,11 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             break;
         }
         if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
+            KEYE_LOG("OnDiscard wrong state pos %d\n",pos);
             break;
         }
-        if(game->token!=player.pos){
-            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
+        if(game->token!=pos){
+            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",pos,game->token);
             break;
         }
         
@@ -79,7 +80,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //just pass
         if(msg.bunch().type()==pb_enum::OP_PASS){
             omsg.set_result(pb_enum::SUCCEESS);
-            KEYE_LOG("OnDiscard pos=%d pass\n",player.pos);
+            KEYE_LOG("OnDiscard pos=%d pass\n",pos);
             break;
         }
 
@@ -106,7 +107,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
             //exists check
             auto exist=false;
-            for(auto h:game->players[player.pos]->playData.hands()){
+            for(auto h:game->players[pos]->playData.hands()){
                 if(h==c){
                     exist=true;
                     break;
@@ -139,33 +140,33 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         
         std::string str;
         cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
+        KEYE_LOG("OnDiscard pos=%d,cards %s\n",pos,str.c_str());
         //remove hands
-        auto& hands=*game->players[player.pos]->playData.mutable_hands();
+        auto& hands=*game->players[pos]->playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    KEYE_LOG("OnDiscard pos=%d, erase card %d\n",player.pos,*i);
+                    KEYE_LOG("OnDiscard pos=%d, erase card %d\n",pos,*i);
                     hands.erase(i);
                     break;
                 }
             }
         }
-        logHands(*game,player.pos);
+        logHands(*game,pos);
         omsg.set_result(pb_enum::SUCCEESS);
         omsg.mutable_bunch()->CopyFrom(msg.bunch());
     }while(false);
     
     if(pb_enum::SUCCEESS==omsg.result()){
         auto game=player.game;
-        omsg.mutable_bunch()->set_pos(player.pos);
+        omsg.mutable_bunch()->set_pos(pos);
         for(auto& p:game->players)p->send(omsg);
         
         //historic
         game->historical.push_back(msg.bunch());
 
         //pass token
-        if(game->players[player.pos]->playData.hands().size()>0)
+        if(game->players[pos]->playData.hands().size()>0)
             changePos(*game,game->token+1);
     }else
         player.send(omsg);

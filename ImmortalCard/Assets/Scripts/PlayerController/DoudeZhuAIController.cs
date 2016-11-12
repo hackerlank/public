@@ -7,7 +7,7 @@ public class DoudeZhuAIController:AIController {
 	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		//discard AI
 		var maxPlayer=Main.Instance.gameController.Rule.MaxPlayer;
-		if(player.pos==(msg.Bunch.Pos+1)%maxPlayer){
+		if(player.playData.Seat==(msg.Bunch.Pos+1)%maxPlayer){
 			var rule=Main.Instance.gameController.Rule;
 			if(rule.checkDiscard(player,0)){
 				yield return new WaitForSeconds(Configs.OpsInterval);
@@ -21,7 +21,7 @@ public class DoudeZhuAIController:AIController {
 					bunch=hints[0];
 				else{
 					bunch=new bunch_t();
-					bunch.Pos=player.pos;
+					bunch.Pos=player.playData.Seat;
 					bunch.Type=pb_enum.OpPass;
 				}
 				omsgDiscard.Bunch=bunch;

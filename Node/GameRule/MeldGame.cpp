@@ -45,22 +45,23 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     omsg.set_mid(pb_msg::MSG_NC_DISCARD);
     omsg.set_result(pb_enum::ERR_FAILED);
     
+    auto pos=player.playData.seat();
     do{
         auto game=player.game;
         if(!game){
             KEYE_LOG("OnDiscard no game\n");
             break;
         }
-        if(game->token!=player.pos){
-            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",player.pos,game->token);
+        if(game->token!=pos){
+            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",pos,game->token);
             break;
         }
         
         if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",player.pos);
+            KEYE_LOG("OnDiscard wrong state pos %d\n",pos);
             break;
         }
-        msg.mutable_bunch()->set_pos(player.pos);
+        msg.mutable_bunch()->set_pos(pos);
         
         if(!verifyDiscard(*game,*msg.mutable_bunch())){
             KEYE_LOG("OnDiscard invalid bunch\n");
@@ -84,13 +85,13 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
 
         std::string str;
         cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("OnDiscard pos=%d,cards %s\n",player.pos,str.c_str());
+        KEYE_LOG("OnDiscard pos=%d,cards %s\n",pos,str.c_str());
         //remove hands
         auto& hands=*player.playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    //KEYE_LOG("OnDiscard pos=%d,erase card %d\n",player.pos,*i);
+                    //KEYE_LOG("OnDiscard pos=%d,erase card %d\n",pos,*i);
                     hands.erase(i);
                     break;
                 }
@@ -100,16 +101,16 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //pass discard card
         if(msg.bunch().type()!=pb_enum::BUNCH_A){
             player.unpairedCards.push_back(card);
-            KEYE_LOG("%d past discard %d\n",player.pos,card);
+            KEYE_LOG("%d past discard %d\n",pos,card);
         }
 
         auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
-        //logHands(*game,player.pos,"OnDiscard");
+        //logHands(*game,pos,"OnDiscard");
         omsg.set_result(pb_enum::SUCCEESS);
         omsg.mutable_bunch()->CopyFrom(msg.bunch());
 
         //game->pendingMeld.clear();
-        omsg.mutable_bunch()->set_pos(player.pos);
+        omsg.mutable_bunch()->set_pos(pos);
         omsg.mutable_bunch()->set_type(bDraw?pb_enum::BUNCH_A:pb_enum::UNKNOWN);
         
         //ready for meld
@@ -117,7 +118,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //pending meld
         for(int i=0;i<MaxPlayer(*game);++i){
             auto p=game->players[i];
-            if(bDraw||i!=player.pos){
+            if(bDraw||i!=pos){
                 //only pending others
                 game->pendingMeld.push_back(Game::pending_t());
                 auto& pending=game->pendingMeld.back();
@@ -137,7 +138,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
 }
 
 void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
-    auto pos=player.pos;
+    auto pos=player.playData.seat();
     auto spgame=player.game;
     if(!spgame){
         KEYE_LOG("OnMeld no game\n");
@@ -276,7 +277,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     //A,AAA,AAAA, meld or do some specials
                     if(meld(game,*who,which,what)){
                         tokenPlayer=who;
-                        changePos(game,who->pos);
+                        changePos(game,who->playData.seat());
                     }
             }
             onMeld(game,*localPlayer,which,what);
@@ -396,7 +397,7 @@ bool MeldGame::checkDiscard(Player& player,unit_id_t){
     changeState(game,Game::State::ST_DISCARD);
     //pending discard
     game.pendingDiscard=std::make_shared<Game::pending_t>();
-    game.pendingDiscard->bunch.set_pos(player.pos);
+    game.pendingDiscard->bunch.set_pos(player.playData.seat());
 
     return true;
 }

@@ -57,7 +57,7 @@ public class AIController:PlayerController{
 					}
 				}
 			}
-			bunch.Pos=player.pos;
+			bunch.Pos=player.playData.Seat;
 			omsgMeld.Bunch=bunch;
 			
 			player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);

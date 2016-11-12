@@ -75,7 +75,7 @@ public class PaohuziPanel : GamePanel {
 		}else{
 			if(!showHints(msg.Bunch)){
 				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
-				Debug.Log(Main.Instance.MainPlayer.pos+" pass after "+msg.Bunch.Pos+" discard");
+				Debug.Log(Main.Instance.MainPlayer.playData.Seat+" pass after "+msg.Bunch.Pos+" discard");
 			}
 		}
 	}
@@ -101,8 +101,8 @@ public class PaohuziPanel : GamePanel {
 		card.Value=id;
 
 		//immediately pass for the drawer,we only meld when discard
-		if(player.pos!=pos)foreach(var robot in Main.Instance.robots){
-			if(robot.pos==pos){
+		if(player.playData.Seat!=pos)foreach(var robot in Main.Instance.robots){
+			if(robot.playData.Seat==pos){
 				player=robot;
 				break;
 			}
@@ -228,7 +228,7 @@ public class PaohuziPanel : GamePanel {
 
 			//remember past and dodge cards
 			var me=Main.Instance.MainPlayer;
-			if(me.pos==bunch.Pos){
+			if(me.playData.Seat==bunch.Pos){
 				var past=false;
 				var dodge=false;
 				foreach(var b in bunch.Child){
@@ -244,7 +244,7 @@ public class PaohuziPanel : GamePanel {
 			break;
 		}
 		//remove from hands
-		if(player.pos==bunch.Pos){
+		if(player.playData.Seat==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
 		if(to==_pos)StartCoroutine(sortHands());
@@ -271,10 +271,10 @@ public class PaohuziPanel : GamePanel {
 		foreach(var b in _hints){
 			if(b.Type==pb_enum.PhzAbc){
 				past=true;
-				Debug.Log(player.pos+" past "+card);
+				Debug.Log(player.playData.Seat+" past "+card);
 			}else if(b.Type==pb_enum.PhzBbb){
 				dodge=true;
-				Debug.Log(player.pos+" dodge "+card);
+				Debug.Log(player.playData.Seat+" dodge "+card);
 			}
 		}
 
@@ -285,7 +285,7 @@ public class PaohuziPanel : GamePanel {
 		msg.Mid=pb_msg.MsgCnMeld;
 		
 		bunch_t bunch=new bunch_t();
-		bunch.Pos=player.pos;
+		bunch.Pos=player.playData.Seat;
 		bunch.Pawns.Add(card);
 		bunch.Type=pb_enum.OpPass;
 		if(past){

@@ -71,7 +71,7 @@ void DoudeZhu::settle(Player& player){
     auto& msg=*game.spSettle;
     for(uint i=0,ii=MaxPlayer(game);i!=ii;++i){
         auto play=msg.add_play();
-        play->set_win(i==player.pos?1:0);
+        play->set_win(i==player.playData.seat()?1:0);
         play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
         //auto player=msg.add_play();
     }

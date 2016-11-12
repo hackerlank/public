@@ -59,7 +59,7 @@ public class DoudeZhuPanel : GamePanel {
 			bunch_t bunch=null;
 			if(Rule.Historical.Count<=0){
 				bunch=new bunch_t();
-				bunch.Pos=player.pos;
+				bunch.Pos=player.playData.Seat;
 				bunch.Type=pb_enum.OpPass;
 			}else{
 				bunch=Rule.Historical[Rule.Historical.Count-1];
@@ -72,7 +72,7 @@ public class DoudeZhuPanel : GamePanel {
 		if(_hints.Count>0){
 			var hints=_hints[_nhints];
 			_selection.Clear();
-			foreach(Transform ch in HandAreas[player.pos].transform){
+			foreach(Transform ch in HandAreas[player.playData.Seat].transform){
 				var card=ch.gameObject.GetComponent<Card>();
 				if(card!=null)foreach(var id in hints.Pawns)
 				if(card.Value==id){

@@ -19,7 +19,6 @@ public:
     void                    send(google::protobuf::MessageLite& msg);
     void                    on_read(PBHelper&);
     
-    pos_t                   pos;
     bool                    ready,engaged;
     std::shared_ptr<Game>   game;
     proto3::play_t          playData;   //gameplay data

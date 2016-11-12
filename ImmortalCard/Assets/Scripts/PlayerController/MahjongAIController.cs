@@ -17,7 +17,7 @@ public class MahjongAIController:AIController{
 
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		for(int i=0;i<msg.Keys.Count;++i)
-			if(player.pos==i)
+			if(player.playData.Seat==i)
 				player.playData.SelectedCard=msg.Keys[i];
 		MahJongRule.prepareAAAA(player);
 		yield break;
@@ -28,7 +28,7 @@ public class MahjongAIController:AIController{
 		if(msg.Bunch.Pos==-1&&msg.Bunch.Type==pb_enum.OpPass)
 			yield break;
 		
-		if(player.pos==msg.Bunch.Pos){
+		if(player.playData.Seat==msg.Bunch.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
 
 			var rule=Main.Instance.gameController.Rule;
@@ -50,11 +50,11 @@ public class MahjongAIController:AIController{
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;
 				omsgDiscard.Bunch=new bunch_t();
-				omsgDiscard.Bunch.Pos=player.pos;
+				omsgDiscard.Bunch.Pos=player.playData.Seat;
 				omsgDiscard.Bunch.Pawns.Add(discard);
 				omsgDiscard.Bunch.Type=pb_enum.BunchA;
 				player.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-				Debug.Log(player.pos+" discard "+discard);
+				Debug.Log(player.playData.Seat+" discard "+discard);
 			}else{
 				//wait for draw
 			}
@@ -62,7 +62,7 @@ public class MahjongAIController:AIController{
 	}
 
 	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
-		if(player.pos==msg.Pos){
+		if(player.playData.Seat==msg.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
 			if(null==Main.Instance.gameController)yield break;
 
@@ -71,7 +71,7 @@ public class MahjongAIController:AIController{
 			omsgMeld.Mid=pb_msg.MsgCnMeld;
 			
 			bunch_t bunch=new bunch_t();
-			bunch.Pos=player.pos;
+			bunch.Pos=player.playData.Seat;
 			bunch.Pawns.Add(msg.Card);
 			
 			var hints=Main.Instance.gameController.Rule.Hint(player,bunch);
@@ -80,7 +80,7 @@ public class MahjongAIController:AIController{
 			else{
 				//collect
 				bunch=new bunch_t();
-				bunch.Pos=player.pos;
+				bunch.Pos=player.playData.Seat;
 				bunch.Pawns.Add(msg.Card);
 				bunch.Type=pb_enum.BunchA;
 			}

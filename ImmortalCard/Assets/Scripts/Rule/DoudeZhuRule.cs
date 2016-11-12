@@ -49,7 +49,7 @@ public class DoudeZhuRule: GameRule {
 				if(hist.Type==pb_enum.OpPass&&H>1)
 					hist=Historical[H-2];
 				var type=(pb_enum)hist.Type;
-				Debug.Log("hint for "+player.pos+" "+Player.bunch2str(hist));
+				Debug.Log("hint for "+player.playData.Seat+" "+Player.bunch2str(hist));
 				if(type==pb_enum.OpPass){
 					var b=new bunch_t();
 					b.Type=pb_enum.BunchA;
@@ -169,7 +169,7 @@ public class DoudeZhuRule: GameRule {
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
 		//discard my card
-		if(player.pos!=Token%MaxPlayer){
+		if(player.playData.Seat!=Token%MaxPlayer){
 			Debug.Log("Discard invalid turn");
 			return false;
 		}

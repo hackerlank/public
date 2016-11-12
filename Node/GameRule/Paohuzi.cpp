@@ -137,8 +137,8 @@ void Paohuzi::engage(Game& game,MsgNCEngage& msg){
     //packed AAAAs into message
     for(auto p:game.players){
         if(!p->AAAAs.empty()){
-            auto bunch=msg.mutable_bunch(p->pos);
-            bunch->set_pos(p->pos);
+            auto bunch=msg.mutable_bunch(p->playData.seat());
+            bunch->set_pos(p->playData.seat());
             bunch->set_type(pb_enum::PHZ_AAAAstart);
             for(auto& aaaa:p->AAAAs)
                 for(auto c:aaaa.pawns())bunch->add_pawns(c);
@@ -239,9 +239,10 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
 
 void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
     //remove all past cards,deal it below
+    auto pos=player.playData.seat();
     for(auto pm:game.pendingMeld){
         auto i=pm.bunch.pos();
-        if(i==-1)i=player.pos;
+        if(i==-1)i=pos;
         auto p=game.players[i];
         p->unpairedCards.resize(std::remove(p->unpairedCards.begin(),p->unpairedCards.end(),card)-p->unpairedCards.begin());
     }
@@ -253,7 +254,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
             std::vector<int> pasts(MaxPlayer(game));
             for(auto pm:game.pendingMeld){
                 auto i=pm.bunch.pos();
-                if(i==-1)i=player.pos;
+                if(i==-1)i=pos;
                 for(auto child:pm.bunch.child()){
                     auto type=child.type();
                     if(type==pb_enum::PHZ_ABC){
@@ -287,7 +288,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
         }
         case proto3::PHZ_BBBBdesk:
             //remember conflict meld
-            if(game.token!=player.pos && game.pileMap.find(card)==game.pileMap.end()){
+            if(game.token!=pos && game.pileMap.find(card)==game.pileMap.end()){
                 game.players[game.token]->conflictMeld=true;
                 KEYE_LOG("%d conflict %d\n",game.token,card);
             }
@@ -453,7 +454,7 @@ bool Paohuzi::validId(uint id){
 
 void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
     //只结算不判断
-    auto pos=player.pos;
+    auto pos=player.playData.seat();
     auto& game=*player.game;
     auto M=MaxPlayer(game);
     std::stringstream ss;//广西跑胡子用

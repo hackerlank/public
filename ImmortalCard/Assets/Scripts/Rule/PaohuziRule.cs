@@ -28,7 +28,7 @@ public class PaohuziRule: GameRule {
 		if(player==null||src_bunch==null||copy.Count<=0)
 			return output;
 		
-		int pos=player.pos;
+		int pos=player.playData.Seat;
 		if(src_bunch.Pawns.Count!=1){
 			Debug.Log("hint wrong cards len="+src_bunch.Pawns.Count+",pos="+pos);
 			return output;
@@ -191,7 +191,7 @@ public class PaohuziRule: GameRule {
 				}
 			}
 		}
-		foreach(var o in output)o.Pos=player.pos;
+		foreach(var o in output)o.Pos=player.playData.Seat;
 		
 		var count=output.Count;
 		if(count>0){
@@ -231,7 +231,7 @@ public class PaohuziRule: GameRule {
 			foreach(var bun in player.playData.Bunch){
 				var A=bun.Pawns[0];
 				if(A/1000==B/1000 && A%100==B%100){
-					Debug.Log(player.pos+" meld bbbb desk remove "+Player.bunch2str(bun));
+					Debug.Log(player.playData.Seat+" meld bbbb desk remove "+Player.bunch2str(bun));
 					player.playData.Bunch.Remove(bun);
 					break;
 				}
@@ -252,10 +252,10 @@ public class PaohuziRule: GameRule {
 				bun.Pawns.Add(bunch.Pawns[i*3+1]);
 				bun.Pawns.Add(bunch.Pawns[i*3+2]);
 				player.playData.Bunch.Add(bun);
-				Debug.Log(player.pos+" meld "+Player.bunch2str(bun));
+				Debug.Log(player.playData.Seat+" meld "+Player.bunch2str(bun));
 			}
 		}else if(bunch.Type>pb_enum.PhzAbc){
-			Debug.Log(player.pos+" meld "+Player.bunch2str(bunch));
+			Debug.Log(player.playData.Seat+" meld "+Player.bunch2str(bunch));
 			player.playData.Bunch.Add(bunch);
 		}
 	}
@@ -286,12 +286,12 @@ public class PaohuziRule: GameRule {
 		}else do{
 			var category=Main.Instance.MainPlayer.category;
 			var draw=Pile.IndexOf(card)!=-1;
-			var fire=(player.pos!=Token && !draw
+			var fire=(player.playData.Seat!=Token && !draw
 			           &&   (category==pb_enum.PhzLd||category==pb_enum.PhzHy||
 			      category==pb_enum.PhzXxGhz||category==pb_enum.PhzCz||
 			      category==pb_enum.PhzHy||category==pb_enum.PhzGx));
 			if(!fire && !draw){
-				Debug.Log(player.pos+" win failed,draw="+draw+",fire="+fire+",category="+(int)category+",token="+Token);
+				Debug.Log(player.playData.Seat+" win failed,draw="+draw+",fire="+fire+",category="+(int)category+",token="+Token);
 				break;
 			}
 
@@ -361,7 +361,7 @@ public class PaohuziRule: GameRule {
 
 			output=new bunch_t();
 			output.Type=pb_enum.BunchWin;
-			output.Pos=player.pos;
+			output.Pos=player.playData.Seat;
 			output.Pawns.Add(card);
 			output.Child.Add(bunches);
 		}
@@ -990,7 +990,7 @@ public class PaohuziRule: GameRule {
 						bunch.Type=pb_enum.PhzAaaastart;
 						player.AAAAs.Add(bunch);
 						var rule=Main.Instance.gameController.Rule;
-						rule.nHands[player.pos]-=4;
+						rule.nHands[player.playData.Seat]-=4;
 					}else if(iv.Count==3){
 						//add to AAA
 						bunch.Type=pb_enum.PhzAaa;
