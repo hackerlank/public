@@ -359,11 +359,14 @@ public class PaohuziRule: GameRule {
 			bunches.AddRange(AAAs);
 			bunches.AddRange(desks);
 
-			output=new bunch_t();
-			output.Type=pb_enum.BunchWin;
-			output.Pos=player.playData.Seat;
-			output.Pawns.Add(card);
-			output.Child.Add(bunches);
+			var pt=calcPoints(bunches);
+			if(pt>=winPoint(Main.Instance.MainPlayer.category)){
+				output=new bunch_t();
+				output.Type=pb_enum.BunchWin;
+				output.Pos=player.playData.Seat;
+				output.Pawns.Add(card);
+				output.Child.Add(bunches);
+			}
 		}
 
 		return output;

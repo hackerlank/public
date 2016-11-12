@@ -132,7 +132,7 @@ bool GameRule::settle(Game& game){
         fin.set_mid(pb_msg::MSG_NC_FINISH);
         fin.set_result(pb_enum::SUCCEESS);
         for(auto p:game.players){
-            p->send(msg);
+            p->send(fin);
             p->lastMsg=game.spFinish;
         }
         return true;

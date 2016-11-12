@@ -49,6 +49,10 @@ MJ_SICHUAN              =0;
 MJ_GUANGDONG            =1;
 MJ_HUNAN                =2;
 MJ_FUJIAN               =3;
+MJ_ZHEJIANG             =4;
+
+DDZ_CLASIC              =0;
+DDZ_FOR4                =1;
 
 PHZ_SY                  =0;	//邵阳字牌
 PHZ_SYBP                =1;	//邵阳剥皮
