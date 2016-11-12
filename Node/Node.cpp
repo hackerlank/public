@@ -6,6 +6,8 @@
 
 #ifdef WIN32
 #include <conio.h>
+#else
+#include <unistd.h>
 #endif
 
 using namespace keye;
@@ -154,8 +156,8 @@ int main(int argc, char* argv[]) {
 
     //DoudeZhu::test();
     
-    KEYE_LOG("++++server start at %d\n", port);
-	std::getchar();
+    KEYE_LOG("server start at %d\n", port);
+    while(true)usleep(100);
 
 	return 0;
 }

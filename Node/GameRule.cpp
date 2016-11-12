@@ -113,6 +113,11 @@ bool GameRule::settle(Game& game){
     //broadcast
     if(!game.spSettle)return false;
     
+    for(int i=0;i<MaxPlayer(game);++i){
+        auto play=game.spSettle->play(i);
+        auto player=game.players[i];
+        play.mutable_player();
+    }
     //just send
     auto& msg=*game.spSettle;
     msg.set_mid(pb_msg::MSG_NC_SETTLE);

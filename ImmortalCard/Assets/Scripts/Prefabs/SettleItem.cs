@@ -12,6 +12,10 @@ public abstract class SettleItem : MonoBehaviour {
 		set{
 			Score.text=value.Score.ToString();
 			Point.text=value.Point.ToString();
+			Players.Score.text=Score.text;
+			Players.Name.text="Player "+0;
+			Players.Win.gameObject.SetActive(value.Win>0);
+
 			string achvs="Achvs";
 			Achvs.text=achvs;
 		}

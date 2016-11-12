@@ -22,7 +22,7 @@ public:
     pos_t                   pos;
     bool                    ready,engaged;
     std::shared_ptr<Game>   game;
-    proto3::play_t                                  playData;   //gameplay data
+    proto3::play_t          playData;   //gameplay data
     std::shared_ptr<google::protobuf::MessageLite>  lastMsg;
     
     //special for phz
