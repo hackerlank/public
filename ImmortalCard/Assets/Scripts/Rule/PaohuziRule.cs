@@ -92,7 +92,9 @@ public class PaohuziRule: GameRule {
 					}
 				}
 				//check hands
-				if(AAAAs==null){
+				if(AAAAs!=null)
+					needAA=true;
+				else if(pos==Token){
 					List<int> aa=new List<int>();
 					foreach(var h in copy)if(h/1000==card/1000 && h%100==card%100)aa.Add(h);
 					if(aa.Count==2){
@@ -105,8 +107,7 @@ public class PaohuziRule: GameRule {
 						//force remove from copied hands
 						foreach(var a in aa)copy.Remove(a);
 					}
-				}else
-					needAA=true;
+				}
 				//also set card to invalid
 				if(AAAAs!=null){
 					card=Configs.invalidCard;

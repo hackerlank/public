@@ -276,13 +276,14 @@ public class PaohuziPanel : GamePanel {
 				bunch=obj as ZipaiHandBunch;
 			});
 			while(!bunch)yield return null;
-			for(int j=0;j<3;++j)
-			if(j<hands.Count){
+			for(int j=0;j<3;++j){
 				var idx=i*3+j;
-				var id=hands[idx];
-				bunch.Add(id);
-				str+=id.ToString()+",";
-				if((idx+1)%6==0)str+="\n";
+				if(idx<hands.Count){
+					var id=hands[idx];
+					bunch.Add(id);
+					str+=id.ToString()+",";
+					if((idx+1)%6==0)str+="\n";
+				}
 			}
 		}
 		Debug.Log(str);
