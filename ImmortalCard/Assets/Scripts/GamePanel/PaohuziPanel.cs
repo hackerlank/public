@@ -75,7 +75,7 @@ public class PaohuziPanel : GamePanel {
 		}else{
 			if(!showHints(msg.Bunch)){
 				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
-				Debug.Log(Main.Instance.MainPlayer.playData.Seat+" pass after "+msg.Bunch.Pos+" discard");
+				//Debug.Log(Main.Instance.MainPlayer.playData.Seat+" pass after "+msg.Bunch.Pos+" discard");
 			}
 		}
 	}
@@ -263,6 +263,32 @@ public class PaohuziPanel : GamePanel {
 		});
 	}
 
+	override protected IEnumerator deal(MsgNCStart msg){
+		var hands=new List<int>(msg.Hands);
+		//hands.Sort(Rule.comparision);
+		
+		//deal
+		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
+		int rest=hands.Count%3;
+		int col=hands.Count/3+(rest==0?0:1);
+		for(int i=0;i<col;++i){
+			ZipaiHandBunch bunch=null;
+			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
+				bunch=obj as ZipaiHandBunch;
+			});
+			while(!bunch)yield return null;
+			for(int j=0;j<3;++j)
+			if(j<hands.Count){
+				var idx=i*3+j;
+				var id=hands[idx];
+				bunch.Add(id);
+				str+=id.ToString()+",";
+				if((idx+1)%6==0)str+="\n";
+			}
+		}
+		Debug.Log(str);
+	}
+
 	override protected IEnumerator passMeld(Player player,int card=0,bool wait=true){
 		//send past and dodge operation,remember when message back
 		player.unpairedCards.Remove(card);
@@ -368,6 +394,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected IEnumerator sortHands(){
+		yield break;
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		List<List<int>> sorted=new List<List<int>>();
 		List<Card> emptyCards=new List<Card>();

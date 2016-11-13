@@ -937,7 +937,7 @@ public class PaohuziRule: GameRule {
 				sl.Sort(rule.comparision);
 				var A=sl[0];
 				var B=sl[1];
-				if(A%100==1 || (A%100==2&&B%100==7))
+				if(A/1000==B/1000 && (A%100==1 || (A%100==2&&B%100==7)))
 					pt+=(small?3:6);
 				break;
 			}

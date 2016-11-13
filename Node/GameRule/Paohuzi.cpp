@@ -1460,6 +1460,7 @@ int Paohuzi::calcScore(Game&,pb_enum rule,int points){
 }
 
 int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
+    auto sorter=std::bind(&Paohuzi::comparision,this,std::placeholders::_1,std::placeholders::_2);
     int point=0;
     for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
         auto& suite=*i;
@@ -1486,10 +1487,10 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
                 break;
             case pb_enum::PHZ_ABC:{
                 std::vector<unit_id_t> sl(suite.pawns().begin(),suite.pawns().end());
-                std::sort(sl.begin(),sl.end());
+                std::sort(sl.begin(),sl.end(),sorter);
                 auto A=sl[0];
                 auto B=sl[1];
-                if(A%100==1 || (A%100==2&&B%100==7))
+                if(A/1000==B/1000 && (A%100==1 || (A%100==2&&B%100==7)))
                     pt+=(small?3:6);
                 break;
             }

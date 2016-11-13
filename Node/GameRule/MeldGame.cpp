@@ -53,7 +53,8 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             break;
         }
         if(game->token!=pos){
-            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",pos,game->token);
+            auto card=(unit_id_t)msg.bunch().pawns(0);
+            KEYE_LOG("OnDiscard %d wrong pos %d(need %d)\n",card,pos,game->token);
             break;
         }
         
@@ -85,7 +86,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
 
         std::string str;
         cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("OnDiscard pos=%d,cards %s\n",pos,str.c_str());
+        KEYE_LOG("%d OnDiscard %s\n",pos,str.c_str());
         //remove hands
         auto& hands=*player.playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
@@ -233,7 +234,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 ret=pb_enum::BUNCH_INVALID;
             }
             
-            KEYE_LOG("OnMeld pos=%d,%s,token=%d\n",what.pos(),bunch2str(str,what),game.token);
+            KEYE_LOG("%d OnMeld %s,token=%d\n",what.pos(),bunch2str(str,what),game.token);
             switch(result){
                 case pb_enum::BUNCH_WIN:{
                     std::vector<bunch_t> output;
@@ -344,7 +345,7 @@ void MeldGame::draw(Game& game){
         
         auto card=game.pile.back();
         game.pile.pop_back();
-        KEYE_LOG("draw pos=%d, card %d\n",game.token,card);
+        KEYE_LOG("%d draw %d\n",game.token,card);
         
         //game.pendingMeld.clear();
         game.pendingMeld.push_back(Game::pending_t());

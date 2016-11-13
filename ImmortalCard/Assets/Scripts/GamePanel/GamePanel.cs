@@ -46,23 +46,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		transformComponent(nHandCards);
 
 		//sort
-		var hands=new List<int>(msg.Hands);
-		hands.Sort(Rule.comparision);
+		yield return StartCoroutine(deal(msg));
 
-		//deal
-		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
-		for(int i=0;i<hands.Count;++i){
-			var id=hands[i];
-			var fin=false;
-			Card.Create(CardPrefab,id,HandAreas[0],delegate(Card card) {
-				card.Static=false;
-				fin=true;
-			});
-			yield return null;
-			str+=id.ToString()+",";
-			if((i+1)%6==0)str+="\n";
-			while(!fin)yield return null;
-		}
 		//the other player
 		for(int i=0;i<maxPlayer;++i){
 			if(i==_pos)continue;
@@ -91,7 +76,6 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		}
 		tokenIcon.Token=rule.Banker;
 		tokenIcon.Pile=msg.Piles;
-		Debug.Log(str);
 	}
 
 	virtual public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
@@ -160,6 +144,27 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual public IEnumerator OnMsgFinish(Player player,MsgNCFinish msg){
 		Summary=msg;
 		yield break;
+	}
+
+	virtual protected IEnumerator deal(MsgNCStart msg){
+		var hands=new List<int>(msg.Hands);
+		hands.Sort(Rule.comparision);
+		
+		//deal
+		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
+		for(int i=0;i<hands.Count;++i){
+			var id=hands[i];
+			var fin=false;
+			Card.Create(CardPrefab,id,HandAreas[0],delegate(Card card) {
+				card.Static=false;
+				fin=true;
+			});
+			yield return null;
+			str+=id.ToString()+",";
+			if((i+1)%6==0)str+="\n";
+			while(!fin)yield return null;
+		}
+		Debug.Log(str);
 	}
 
 	protected void transformComponent(Component[] com){
