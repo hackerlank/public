@@ -122,12 +122,10 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 
 			System.Action<Transform> discard=delegate(Transform target){
 				if(target!=parent){
-					var sibling=parent.GetComponentsInChildren<Card>().Length;
 					DiscardTo(target,Main.Instance.gameController.DiscardScalar);
 					Static=false;
-					if(sibling<=1)
-						Destroy(parent.gameObject);
-				}
+				}else
+					self.localPosition=beginDragLocalPosition;
 			};
 			var nx=nearest.transform.position.x;
 			var nd=Mathf.Abs(nx-transform.position.x);
@@ -168,6 +166,8 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 	}
 
 	public void DiscardTo(Transform group,float scalar){
+		var parent=GetComponentInParent<ZipaiHandBunch>();
+
 		_static=true;
 		transform.SetParent(group);
 		transform.localScale=Vector3.one;
@@ -176,6 +176,20 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		le.preferredWidth*=scalar;
 		le.minHeight*=scalar;
 		le.preferredHeight*=scalar;
+
+		if(parent==null)return;
+		var sibling=parent.GetComponentsInChildren<Card>().Length;
+		if(sibling<=0)
+			Destroy(parent.gameObject);
+	}
+
+	public void RemoveFromHand(){
+		var parent=GetComponentInParent<ZipaiHandBunch>();
+		if(parent==null)return;
+		var sibling=parent.GetComponentsInChildren<Card>().Length;
+		if(sibling<=1)
+			Destroy(parent.gameObject);
+		DestroyImmediate(gameObject);
 	}
 
 	public static void Create(string path,int data=0,Transform parent=null,System.Action<Card> handler=null){

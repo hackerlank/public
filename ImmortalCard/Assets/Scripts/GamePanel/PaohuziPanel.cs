@@ -48,12 +48,11 @@ public class PaohuziPanel : GamePanel {
 		foreach(var id in msg.Bunch[_pos].Pawns){
 			foreach(var card in hands){
 				if(card.Value==id){
-					Destroy(card.gameObject);
+					card.RemoveFromHand();
 					//card.DiscardTo(MeldAreas[_pos],DiscardScalar);
 				}
 			}
 		}
-
 		yield return null;
 		yield return null;
 		yield return StartCoroutine(sortHands());
@@ -70,7 +69,7 @@ public class PaohuziPanel : GamePanel {
 		var card=msg.Bunch.Pawns[0];
 		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
 		if(fromSelf){
-			StartCoroutine(sortHands());
+			//StartCoroutine(sortHands());
 			Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
 		}else{
 			if(!showHints(msg.Bunch)){
@@ -193,7 +192,7 @@ public class PaohuziPanel : GamePanel {
 					foreach(var id in melt.Pawns){
 						foreach(var h in hands){
 							if(h.Value==id){
-								Destroy(h.gameObject);
+								h.RemoveFromHand();
 								break;
 							}
 						}
@@ -247,7 +246,7 @@ public class PaohuziPanel : GamePanel {
 		if(player.playData.Seat==bunch.Pos){
 			Rule.Meld(player,bunch);
 		}
-		if(to==_pos)StartCoroutine(sortHands());
+		//if(to==_pos)StartCoroutine(sortHands());
 
 		yield return StartCoroutine(base.OnMsgMeld(player,msg));
 	}
