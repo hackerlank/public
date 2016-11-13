@@ -461,9 +461,8 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     int _cardNum=0;//广西跑胡子用
     //清洗缓冲区
     ss.clear();
-    auto spFinalEnd=game.spFinish;
     auto& play=player.playData;
-    auto& playFinish=*spFinalEnd->mutable_play(pos);
+    auto& playFinish=*game.spFinish->mutable_play(pos);
 
     int point=0,score=0,multiple=0,chunk=0;
     bool self=(pos==game.token&&game.pileMap.find(card)!=game.pileMap.end());
@@ -494,33 +493,34 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         calcAchievement(game,game.category,allSuites,achvs);
         
         //天胡
-        auto naturalWin=false;
+        auto naturalWin=true;
+        if(game.pile.size()<19)
+            naturalWin=false;
+        for(auto p:game.players){
+            if(p->playData.bunch_size()>0 ||
+               p->playData.discards_size()>0){
+                naturalWin=false;
+                break;
+            }
+        }
         if(naturalWin&&game.category!=pb_enum::PHZ_SY
            &&game.category!=pb_enum::PHZ_CD_HHD&&game.category!=pb_enum::PHZ_HY){
-            //天胡
-            achvs.push_back(achv_t());
-            auto& ach=achvs.back();
-            ach.set_type(pb_enum::WIN_TIAN);
-            if(game.category==pb_enum::PHZ_SYBP)
-                ach.set_key(pb_enum::ACHV_KEY_SCORE);
-            else if(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)
-                ach.set_key(pb_enum::ACHV_KEY_POINT);
-            else if(game.category==pb_enum::PHZ_PEGHZ)
-                ach.set_key(pb_enum::ACHV_KEY_SCORE);
-            else
-                ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
-            ach.set_value(nnn[ach.type()][game.category]);
-        }
-        
-        //地胡和放炮可能产生冲突，要先判断地胡后再对放炮做处理
-        //地胡，听胡
-        if(game.pile.size()>=19&&game.category!=pb_enum::PHZ_SY&&
-           game.category!=pb_enum::PHZ_CD_HHD&&game.category!=pb_enum::PHZ_HY){
-            //地胡：1，闲家；2，闲家无进张；3，牌堆满的
-            int drawCount=0;
-            for(auto& p:game.players)drawCount+=p->inputCount;
-            if(game.firstCard==card && game.banker!=pos&&drawCount==0){
-                //地胡时，有时候会检测到放炮的名堂，但是是不允许的，这里在地胡处理中直接屏蔽
+            if(pos==game.banker){
+                //天胡
+                achvs.push_back(achv_t());
+                auto& ach=achvs.back();
+                ach.set_type(pb_enum::WIN_TIAN);
+                if(game.category==pb_enum::PHZ_SYBP)
+                    ach.set_key(pb_enum::ACHV_KEY_SCORE);
+                else if(game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ)
+                    ach.set_key(pb_enum::ACHV_KEY_POINT);
+                else if(game.category==pb_enum::PHZ_PEGHZ)
+                    ach.set_key(pb_enum::ACHV_KEY_SCORE);
+                else
+                    ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
+                ach.set_value(nnn[ach.type()][game.category]);
+            }else{
+                //地胡，有时候会检测到放炮的名堂，但是是不允许的，这里在地胡处理中直接屏蔽
                 fire=false;
                 
                 achvs.push_back(achv_t());
@@ -536,7 +536,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 ach.set_value(nn);
             }
         }
-        
+    
         //处理湘乡告胡子点炮时胡息加10的情况，以便后续翻番计算
         int firePoint=0;
         if(fire&&game.category==pb_enum::PHZ_XX_GHZ){
@@ -787,7 +787,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 }
             }
             for(int i=0; i<M; ++i){
-                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()+game.players[i]->playData.score());
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
 //                spFinalEnd->m_total[i].score+=msg.m_scores[i];
 //                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
@@ -809,7 +809,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             //剥皮和湘乡告胡子，庄家扣10分
             game.players[game.banker]->playData.set_score(-10);
         for(int i=0; i<M; ++i){
-            game.players[game.token]->playData.set_score(game.spFinish->mutable_play(game.token)->score()+game.players[i]->playData.score());
+            game.players[i]->playData.set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
 //            spFinalEnd->m_total[i].score+=msg.m_scores[i];
 //            msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
         }

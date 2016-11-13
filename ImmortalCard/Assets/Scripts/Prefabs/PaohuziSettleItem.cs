@@ -17,7 +17,7 @@ public class PaohuziSettleItem : SettleItem {
 			var bunches=new List<bunch_t>(value.Bunch);
 			//hands
 			var hands=new List<int>(value.Hands);
-			Debug.Log("settle "+bunches[0].Pos+" bunches="+bunches.Count+",hands="+hands.Count);
+			Debug.Log("settle "+value.Seat+" bunches="+bunches.Count+",hands="+hands.Count);
 			bunches.AddRange(PaohuziRule.buildFrees(hands,bunches.Count));
 
 			foreach(var bunch in bunches){
@@ -27,6 +27,19 @@ public class PaohuziSettleItem : SettleItem {
 					zi.Value=bunch;
 				});
 			}
+			
+			//achievments
+			string ach="";
+			foreach(var achv in value.Achvs){
+				//TODO: phz achivements
+				ach+=((int)achv.Type).ToString()+"\n";
+				switch(achv.Type){
+				case pb_enum.AchvHeaven:
+					break;
+				}
+			}
+
+			if(ach.Length>1)Achvs.text=ach;
 		}
 	}
 }
