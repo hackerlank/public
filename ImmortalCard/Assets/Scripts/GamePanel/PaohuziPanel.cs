@@ -394,7 +394,6 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected IEnumerator sortHands(){
-		yield break;
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		List<List<int>> sorted=new List<List<int>>();
 		List<Card> emptyCards=new List<Card>();
@@ -515,40 +514,15 @@ public class PaohuziPanel : GamePanel {
 			}
 		}
 
-		//insert blank if need
-		foreach(var s in sorted)
-			for(int i=s.Count;i<3;++i)
-				s.Insert(0,-1);
-
-		//add more empty cards
-		int wait=sorted.Count*3-hands.Length;
-		for(int i=hands.Length;i<sorted.Count*3;++i){
-			Card.Create(CardPrefab,-1,HandAreas[_pos],delegate(Card obj) {
-				emptyCards.Add(obj);
-				wait--;
+		foreach(Transform trans in HandAreas[0])Destroy(trans.gameObject);
+		yield return null;
+		foreach(var cards in sorted){
+			ZipaiHandBunch bunch=null;
+			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
+				bunch=obj as ZipaiHandBunch;
 			});
-		}
-		while(wait>0)yield return null;
-
-		//or remove extra empty cards
-		for(int i=sorted.Count*3;i<hands.Length;++i){
-			Destroy(emptyCards[0].gameObject);
-			emptyCards.RemoveAt(0);
-		}
-
-		int iempty=0;
-		int index=0;
-		foreach(var bun in sorted){
-			foreach(var id in bun){
-				if(id<1000){
-					emptyCards[iempty++].transform.SetSiblingIndex(index++);
-				}else foreach(var card in normalCards){
-					if(card.Value==id){
-						card.transform.SetSiblingIndex(index++);
-						break;
-					}
-				}
-			}
+			while(!bunch)yield return null;
+			foreach(var id in cards)bunch.Add(id);
 		}
 	}
 	

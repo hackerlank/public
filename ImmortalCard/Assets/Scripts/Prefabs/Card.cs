@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
+public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		,IPointerEnterHandler,IPointerDownHandler,IPointerUpHandler{
 
 	public LayoutElement le;
@@ -89,9 +89,76 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler
 		panel.OnCardEnter(this);
 	}
 
+	Vector3 beginDragLocalPosition=Vector3.zero;
+	public void OnBeginDrag (PointerEventData eventData){
+		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
+
+		beginDragLocalPosition=eventData.pointerDrag.transform.localPosition;
+	}
+
 	public void OnEndDrag (PointerEventData eventData){
 		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
-		Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
+
+		var self=eventData.pointerDrag.transform;
+		var parent=self.parent;
+		var area=parent.parent;
+		var rect=(area as RectTransform).rect;
+		if(self.localPosition.y>rect.height+64)
+			//pass the line,discard
+			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
+		else{
+			//find the nearest bunch
+			var bunches=area.GetComponentsInChildren<ZipaiHandBunch>();
+			float dist=1000000;
+			ZipaiHandBunch nearest=null;
+			foreach(var target in bunches){
+				var x=target.transform.position.x;
+				var delta=Mathf.Abs(x-transform.position.x);
+				if(dist>delta){
+					dist=delta;
+					nearest=target;
+				}
+			}
+
+			System.Action<Transform> discard=delegate(Transform target){
+				if(target!=parent){
+					var sibling=parent.GetComponentsInChildren<Card>().Length;
+					DiscardTo(target,Main.Instance.gameController.DiscardScalar);
+					Static=false;
+					if(sibling<=1)
+						Destroy(parent.gameObject);
+				}
+			};
+			var nx=nearest.transform.position.x;
+			var nd=Mathf.Abs(nx-transform.position.x);
+			if(nd<=(parent.transform as RectTransform).rect.width){
+				//inside bunch area
+				var children=nearest.GetComponentsInChildren<Card>();
+				if(children.Length>=3)
+					//but no space
+					nearest=null;
+			}else{
+				//out of bunch area
+				if(bunches.Length<11){
+					//has bunches space
+					Utils.Load<ZipaiHandBunch>(area,delegate(Component obj){
+						if(nx>transform.position.x)
+							//left side
+							obj.transform.SetSiblingIndex(0);
+						discard.Invoke(obj.transform);
+					});
+					return;
+				}else
+					nearest=null;
+			}
+
+			if(null==nearest)
+				//put back
+				self.localPosition=beginDragLocalPosition;
+			else
+				//reparent
+				discard.Invoke(nearest.transform);
+		}
 	}
 	
 	public void OnDrag(PointerEventData eventData){
