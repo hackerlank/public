@@ -7,6 +7,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		,IPointerEnterHandler,IPointerDownHandler,IPointerUpHandler{
 
 	public LayoutElement le;
+	public Image tint;
 	public Image image;
 
 	public enum State{

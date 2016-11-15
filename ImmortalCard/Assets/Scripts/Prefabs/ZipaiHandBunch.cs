@@ -22,12 +22,14 @@ public class ZipaiHandBunch : MonoBehaviour{
 			}
 		}
 	}
-	public void Add(int card){
+	public void Add(int card,bool bStatic=false){
 		//cards
 		var ctrl=Main.Instance.gameController as GamePanel;
 		Card.Create(ctrl.CardPrefab,card,transform,delegate(Card obj) {
 			obj.state=Card.State.ST_NORMAL;
-			obj.Static=false;
+			obj.Static=bStatic;
+			if(bStatic)
+				obj.tint.color=Color.gray;
 		});
 	}
 }

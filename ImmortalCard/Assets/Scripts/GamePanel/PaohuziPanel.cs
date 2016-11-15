@@ -416,6 +416,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	override protected IEnumerator sortHands(){
+		var player=Main.Instance.MainPlayer;
 		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
 		List<List<int>> sorted=new List<List<int>>();
 		List<Card> emptyCards=new List<Card>();
@@ -439,7 +440,7 @@ public class PaohuziPanel : GamePanel {
 			var j=i+10;
 			if(all[i].Count==3){
 				//AAA
-				sorted.Add(new List<int>(all[i]));
+				//sorted.Add(new List<int>(all[i]));
 				all[i].Clear();
 			}else if(all[i].Count==2&&all[j].Count==1){
 				//AAa
@@ -455,7 +456,7 @@ public class PaohuziPanel : GamePanel {
 
 			if(all[j].Count==3){
 				//AAA
-				sorted.Add(new List<int>(all[j]));
+				//sorted.Add(new List<int>(all[j]));
 				all[j].Clear();
 			}else if(all[j].Count==2&&all[i].Count==1){
 				//AAa
@@ -523,7 +524,7 @@ public class PaohuziPanel : GamePanel {
 
 		int iRest=0;
 		//emptyColume could not be 0: 20/2=10; cardsPerColume as well
-		int emptyColume=11-sorted.Count;
+		int emptyColume=11-sorted.Count-player.AAAs.Count;
 		int columes=Mathf.Min(rest.Count,emptyColume);
 		if(columes>0){
 			int cardsPerColume=rest.Count/columes;
@@ -538,6 +539,15 @@ public class PaohuziPanel : GamePanel {
 
 		foreach(Transform trans in HandAreas[0])Destroy(trans.gameObject);
 		yield return null;
+
+		foreach(var aaa in player.AAAs){
+			ZipaiHandBunch bunch=null;
+			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
+				bunch=obj as ZipaiHandBunch;
+			});
+			while(!bunch)yield return null;
+			foreach(var id in aaa.Pawns)bunch.Add(id,true);
+		}
 		foreach(var cards in sorted){
 			ZipaiHandBunch bunch=null;
 			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
