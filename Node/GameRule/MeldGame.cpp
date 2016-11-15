@@ -208,7 +208,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         std::vector<bunch_t> bunches;
         sortPendingMeld(spgame,bunches);
 
-        auto bDraw=pendingMeld.size()==1;
+        auto bDraw=game.pileMap.find(card)!=game.pileMap.end();
         auto tokenPlayer=game.players[game.token];
         auto ret=pb_enum::SUCCEESS;
 
@@ -225,6 +225,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             auto localPos=what.pos();
             auto localPlayer=game.players[localPos];
             
+            if(result>pb_enum::BUNCH_WIN)result=pb_enum::BUNCH_WIN;
             //deal invalid as pass
             if(result==pb_enum::BUNCH_INVALID){
                 std::string str;
@@ -299,7 +300,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         
         if(tokenPlayer){
             //then draw or discard
-            if(!checkDiscard(*tokenPlayer,bDraw?which:invalid_card)){
+            if(!checkDiscard(*tokenPlayer,invalid_card)){
                 //KEYE_LOG("OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);
                 draw(game);

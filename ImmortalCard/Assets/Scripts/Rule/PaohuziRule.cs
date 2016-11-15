@@ -362,6 +362,7 @@ public class PaohuziRule: GameRule {
 
 			var pt=calcPoints(bunches);
 			if(pt>=winPoint(Main.Instance.MainPlayer.category)){
+				//could add bunch type to win here
 				output=new bunch_t();
 				output.Type=pb_enum.BunchWin;
 				output.Pos=player.playData.Seat;

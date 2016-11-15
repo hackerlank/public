@@ -499,6 +499,7 @@ pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
                     bt=bunch.type();
             }
             break;
+        case pb_enum::BUNCH_WIN:
         case pb_enum::OP_PASS:
             bt=bunch.type();
             break;
@@ -1634,7 +1635,7 @@ int opWeight(pb_enum op){
         default:
             i=0;break;
     }
-    return (ops>pb_enum::BUNCH_WIN?i+(ops/pb_enum::BUNCH_WIN*pb_enum::BUNCH_WIN):i);
+    return (ops>=pb_enum::BUNCH_WIN?i+(ops/pb_enum::BUNCH_WIN*pb_enum::BUNCH_WIN):i);
 }
 
 bool Paohuzi::comparePending(std::shared_ptr<Game> game,Game::pending_t& x,Game::pending_t& y){
@@ -1644,9 +1645,9 @@ bool Paohuzi::comparePending(std::shared_ptr<Game> game,Game::pending_t& x,Game:
     if(a<pb_enum::BUNCH_WIN||b<pb_enum::BUNCH_WIN){
         auto of0=fixOps(a);
         auto of1=fixOps(b);
-        if((of0==pb_enum::PHZ_AAAwei||of0==pb_enum::PHZ_AAAchou||of0==pb_enum::PHZ_AAAAdesk||of0==pb_enum::PHZ_AAAA)&&b>pb_enum::BUNCH_WIN)
+        if(of0==pb_enum::PHZ_AAAwei||of0==pb_enum::PHZ_AAAchou||of0==pb_enum::PHZ_AAAAdesk||of0==pb_enum::PHZ_AAAA)
             return true;
-        else if((of1==pb_enum::PHZ_AAAwei||of1==pb_enum::PHZ_AAAchou||of1==pb_enum::PHZ_AAAAdesk||of1==pb_enum::PHZ_AAAA)&&a>pb_enum::BUNCH_WIN)
+        else if(of1==pb_enum::PHZ_AAAwei||of1==pb_enum::PHZ_AAAchou||of1==pb_enum::PHZ_AAAAdesk||of1==pb_enum::PHZ_AAAA)
             return false;
         auto o0=opWeight(a);
         auto o1=opWeight(b);
