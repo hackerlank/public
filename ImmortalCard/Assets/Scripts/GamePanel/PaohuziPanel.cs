@@ -216,7 +216,6 @@ public class PaohuziPanel : GamePanel {
 			break;
 		case pb_enum.OpPass:
 			//abandon
-			var card=bunch.Pawns[0];
 			if(A!=null){
 				if(to==-1)to=Rule.Token;
 				A.DiscardTo(AbandonAreas[to],AbandonScalar);
@@ -388,15 +387,31 @@ public class PaohuziPanel : GamePanel {
 			return true;
 		}
 
+		var forceWin=false;
 		if(!startup){
 			if(abc)BtnABC.SetActive(true);
 			if(bbb)BtnA3.SetActive(true);
 			if(bbbb)BtnA4.SetActive(true);
+		}else if(win){
+			//force win 3 AAAA
+			foreach(var b in _hints){
+				if(b.Type==pb_enum.BunchWin){
+					var A4=0;
+					foreach(var hint in b.Child){
+						if(hint.Type==pb_enum.PhzAaaastart)
+							++A4;
+					}
+					if(A4>=3){
+						forceWin=true;
+						break;
+					}
+				}
+			}
 		}
 
 		var ret=(win||
 		   !startup && (bbbb||bbb||abc));
-		BtnPass.SetActive(ret);
+		BtnPass.SetActive(ret && !forceWin);
 		return ret;
 	}
 

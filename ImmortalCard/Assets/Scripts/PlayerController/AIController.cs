@@ -22,6 +22,9 @@ public class AIController:PlayerController{
 		//should execute immediately before remove card from hands
 		if(Main.Instance.MainPlayer==player)yield break;
 
+		//some errors
+		if(msg.Bunch.Pawns.Count<=0)yield break;
+
 		var fromSelf=false;
 		var card=msg.Bunch.Pawns[0];
 		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}

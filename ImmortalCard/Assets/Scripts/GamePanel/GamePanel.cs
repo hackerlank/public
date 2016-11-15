@@ -255,7 +255,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual public void OnPass(){
 		foreach(var btn in btnOps)btn.SetActive(false);
 		
-		int id=0;
+		int id=Configs.invalidCard;
 		var card=DiscardAreas[Rule.Token].GetComponentInChildren<Card>();
 		if(card!=null){
 			id=card.Value;
@@ -368,7 +368,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 
-	virtual protected IEnumerator passMeld(Player player,int card=0,bool wait=true){
+	virtual protected IEnumerator passMeld(Player player,int card,bool wait=true){
 		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
 		
 		//pass discard or draw
