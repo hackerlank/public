@@ -12,10 +12,11 @@ public class PaohuziAIController:AIController{
 
 	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		var rule=Main.Instance.gameController.Rule;
-		var bDraw=rule.Pile.IndexOf(msg.Bunch.Pawns[0])!=-1;
+		var card=msg.Bunch.Pawns[0];
+		var bDraw=rule.Pile.IndexOf(card)!=-1;
 
 		//do nothing if all pass discard,because draw message will come
-		if(msg.Bunch.Type==pb_enum.OpPass && !bDraw)
+		if(msg.Bunch.Type==pb_enum.OpPass && !bDraw && card!=Configs.invalidCard)
 			yield break;
 		
 		if(player.playData.Seat==msg.Bunch.Pos){
@@ -30,7 +31,7 @@ public class PaohuziAIController:AIController{
 				//discard
 				var discard=player.playData.Hands[0];
 
-				player.unpairedCards.Add(msg.Bunch.Pawns[0]);
+				player.unpairedCards.Add(card);
 				
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;

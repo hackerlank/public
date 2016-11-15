@@ -148,7 +148,7 @@ public class PaohuziRule: GameRule {
 				//check desk
 				if(BBBB==null){
 					foreach(var desk in player.playData.Bunch){
-						if(desk.Type==pb_enum.PhzAaawei){
+						if(desk.Type==pb_enum.PhzBbb){
 							var h=desk.Pawns[0];
 							if(h/1000==card/1000 && h%100==card%100){
 								BBBB=new bunch_t();
