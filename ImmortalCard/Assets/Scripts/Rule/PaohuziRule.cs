@@ -435,7 +435,7 @@ public class PaohuziRule: GameRule {
 			copy.Add(card);
 			if(hints.Count<=0){
 				//此牌无组合
-				Debug.Log("isGameOver no suite for card "+card);
+				//Debug.Log("isGameOver no suite for card "+card);
 				return false;
 			} else if(hints.Count==1){
 				//此牌唯一组合,剔除

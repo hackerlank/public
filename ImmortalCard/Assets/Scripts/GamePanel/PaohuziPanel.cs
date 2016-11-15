@@ -70,7 +70,7 @@ public class PaohuziPanel : GamePanel {
 		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
 		if(fromSelf){
 			//StartCoroutine(sortHands());
-			Main.Instance.MainPlayer.unpairedCards.Add(msg.Bunch.Pawns[0]);
+			Main.Instance.MainPlayer.unpairedCards.Add(card);
 		}else{
 			if(!showHints(msg.Bunch)){
 				StartCoroutine(passMeld(Main.Instance.MainPlayer,card));
@@ -96,18 +96,28 @@ public class PaohuziPanel : GamePanel {
 		card.DiscardTo(DiscardAreas[pos],DiscardScalar);
 		card.state=Card.State.ST_DISCARD;
 
-		yield return new WaitForSeconds(Configs.OpsInterval/2f);
-		card.Value=id;
-
-		//immediately pass for the drawer,we only meld when discard
-		if(player.playData.Seat!=pos)foreach(var robot in Main.Instance.robots){
-			if(robot.playData.Seat==pos){
-				player=robot;
-				break;
-			}
-		}
-		if(this!=null)StartCoroutine(passMeld(player,id,false));
 		Debug.Log(pos+" draw "+id);
+		yield return new WaitForSeconds(Configs.OpsInterval/2f);
+
+		//immediately discard,we only meld when discard
+		if(this!=null){
+			card.Value=id;
+			
+			if(player.playData.Seat!=pos)foreach(var robot in Main.Instance.robots){
+				if(robot.playData.Seat==pos){
+					player=robot;
+					break;
+				}
+			}
+			var omsg=new MsgCNDiscard();
+			omsg.Mid=pb_msg.MsgCnDiscard;
+			bunch_t bunch=new bunch_t();
+			bunch.Pos=player.playData.Seat;
+			bunch.Pawns.Add(id);
+			bunch.Type=pb_enum.BunchA;
+			omsg.Bunch=bunch;
+			player.Send<MsgCNDiscard>(omsg.Mid,omsg);
+		}
 	}
 
 	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
@@ -116,7 +126,7 @@ public class PaohuziPanel : GamePanel {
 		var to=bunch.Pos;
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 
-		var bDraw=Rule.Pile.IndexOf(bunch.Pawns[0])!=-1;//(bunch.Type==pb_enum.OpPass&&to!=-1);
+		var bDraw=Rule.Pile.IndexOf(bunch.Pawns[0])!=-1;
 		if(A==null&&!bDraw)
 			yield break;
 
@@ -204,42 +214,39 @@ public class PaohuziPanel : GamePanel {
 			Destroy(A.gameObject);
 
 			break;
-		default:
+		case pb_enum.OpPass:
 			//abandon
 			var card=bunch.Pawns[0];
-			if(bunch.Type==pb_enum.OpPass&&-1!=to){
-				//was draw
-				if(to==_pos){
-					MsgCNDiscard omsgDiscard=new MsgCNDiscard();
-					omsgDiscard.Mid=pb_msg.MsgCnDiscard;
-					omsgDiscard.Bunch=new bunch_t();
-					omsgDiscard.Bunch.Pos=_pos;
-					omsgDiscard.Bunch.Pawns.Add(card);
-					omsgDiscard.Bunch.Type=pb_enum.BunchA;
-					Main.Instance.MainPlayer.Send<MsgCNDiscard>(omsgDiscard.Mid,omsgDiscard);
-					//Debug.Log(_pos+" discard "+card+" after self draw");
-				}
-			}else if(A!=null){
+			if(A!=null){
 				if(to==-1)to=Rule.Token;
 				A.DiscardTo(AbandonAreas[to],AbandonScalar);
 				A.state=Card.State.ST_ABANDON;
 			}
-
+			break;
+		default:
+			break;
+		}
+		//handle pass and dodge
+		switch(bunch.Type){
+		case pb_enum.PhzAbc:
+		case pb_enum.OpPass:
 			//remember past and dodge cards
+			var card=bunch.Pawns[0];
 			var me=Main.Instance.MainPlayer;
-			if(me.playData.Seat==bunch.Pos){
-				var past=false;
-				var dodge=false;
-				foreach(var b in bunch.Child){
-					if(b.Type==pb_enum.PhzAbc){
-						past=true;
-					}else if(b.Type==pb_enum.PhzBbb){
+			//by the hints in children
+			var past=false;
+			var dodge=false;
+			foreach(var hint in bunch.Child){
+				if(me.playData.Seat==hint.Pos){
+					if(hint.Type==pb_enum.PhzBbb)
 						dodge=true;
-					}
+					if(hint.Type==pb_enum.PhzAbc)
+						past=true;
 				}
-				if(past)me.unpairedCards.Add(card);
-				if(dodge)me.dodgeCards.Add(card);
 			}
+			if(past)Debug.Log("----pass "+card.ToString()+" when pass meld return");
+			if(dodge)me.dodgeCards.Add(card);
+			else if(past)me.unpairedCards.Add(card);
 			break;
 		}
 		//remove from hands
@@ -297,7 +304,7 @@ public class PaohuziPanel : GamePanel {
 		foreach(var b in _hints){
 			if(b.Type==pb_enum.PhzAbc){
 				past=true;
-				Debug.Log(player.playData.Seat+" past "+card);
+				Debug.Log(player.playData.Seat+" pass "+card);
 			}else if(b.Type==pb_enum.PhzBbb){
 				dodge=true;
 				Debug.Log(player.playData.Seat+" dodge "+card);

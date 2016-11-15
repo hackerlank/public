@@ -148,6 +148,18 @@ void Paohuzi::engage(Game& game,MsgNCEngage& msg){
     MeldGame::engage(game,msg);
 }
 
+void Paohuzi::draw(Game& game){
+    auto card=game.pile.empty()?invalid_card:game.pile.back();
+
+    MeldGame::draw(game);
+    
+    if(card!=invalid_card){
+        //no pending meld,just pending discard
+        checkDiscard(*game.players[game.token],card);
+        game.pendingMeld.clear();
+    }
+}
+
 bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     //past,dodge and conflict
     auto past=std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end();
@@ -249,19 +261,78 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
 
     switch (bunch.type()) {
         case proto3::OP_PASS:{
+            //means all players passed,should mark all of them
             //clients bring all hints even pass,handle here
-            int dodge=-1,past=-1;
-            std::vector<int> pasts(MaxPlayer(game));
             for(auto pm:game.pendingMeld){
+                auto dodge=false,past=false;
                 auto i=pm.bunch.pos();
                 if(i==-1)i=pos;
                 for(auto child:pm.bunch.child()){
                     auto type=child.type();
                     if(type==pb_enum::PHZ_ABC){
-                        pasts[i]=1;
+                        past=true;
                     }
                     if(type==pb_enum::PHZ_BBB){
-                        dodge=i;
+                        dodge=true;
+                    }
+                }
+                
+                //remember past and dodge cards
+                if(dodge){
+                    game.players[i]->dodgeCards.push_back(card);
+
+                    auto chBunch=bunch.mutable_child()->Add();
+                    chBunch->set_pos(i);
+                    chBunch->set_type(pb_enum::PHZ_BBB);
+                    KEYE_LOG("%d dodge %d\n",dodge,card);
+                }else if(past){
+                    game.players[i]->unpairedCards.push_back(card);
+                    
+                    auto chBunch=bunch.mutable_child()->Add();
+                    chBunch->set_pos(i);
+                    chBunch->set_type(pb_enum::PHZ_ABC);
+                    KEYE_LOG("%d past meld %d\n",past,card);
+                }
+            }
+   
+            break;
+        }
+        case proto3::PHZ_ABC:{
+            //still have somebody pass!!
+            auto hasPass=false;
+            for(auto pm:game.pendingMeld){
+                if(pm.bunch.type()==pb_enum::OP_PASS){
+                    hasPass=true;
+                    break;
+                }
+            }
+            if(!hasPass)break;
+
+            std::vector<int> pasts(MaxPlayer(game));
+            for(auto it=game.pendingMeld.begin();it!=game.pendingMeld.end();++it){
+                auto& pm=*it;
+                if(pm.bunch.type()==pb_enum::OP_PASS){
+                    auto dodge=false;
+                    auto i=pm.bunch.pos();
+                    if(i==-1)i=pos;
+                    for(auto child:pm.bunch.child()){
+                        auto type=child.type();
+                        if(type==pb_enum::PHZ_ABC){
+                            pasts[i]=1;
+                        }
+                        if(type==pb_enum::PHZ_BBB){
+                            dodge=true;
+                        }
+                    }
+                    //handle dodge directly
+                    if(dodge){
+                        pasts[i]=0;
+                        game.players[i]->dodgeCards.push_back(card);
+                        
+                        auto chBunch=bunch.mutable_child()->Add();
+                        chBunch->set_pos(i);
+                        chBunch->set_type(pb_enum::PHZ_BBB);
+                        KEYE_LOG("%d dodge %d\n",i,card);
                     }
                 }
             }
@@ -269,20 +340,15 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
             //then find the highest one to be the responsible
             for(int i=game.token;i<game.token+MaxPlayer(game);++i){
                 auto j=i%MaxPlayer(game);
-                if(pasts[j]==1){
-                    past=j;
+                if(pasts[j]==0)
                     break;
-                }
-            }
-            
-            //remember past and dodge cards
-            if(past!=-1){
-                game.players[past]->unpairedCards.push_back(card);
-                KEYE_LOG("%d past meld %d\n",past,card);
-            }
-            if(dodge!=-1){
-                game.players[dodge]->dodgeCards.push_back(card);
-                KEYE_LOG("%d dodge %d\n",dodge,card);
+                
+                //else all of then were pass
+                game.players[j]->unpairedCards.push_back(card);
+                
+                bunch.mutable_child()->Add()->set_pos(j);
+                bunch.mutable_child()->Add()->set_type(pb_enum::PHZ_ABC);
+                KEYE_LOG("%d past meld %d\n",j,card);
             }
             break;
         }

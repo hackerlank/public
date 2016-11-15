@@ -59,7 +59,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         }
         
         if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",pos);
+            KEYE_LOG("OnDiscard wrong state %d,pos=%d\n",game->state,pos);
             break;
         }
         msg.mutable_bunch()->set_pos(pos);
@@ -261,14 +261,10 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 }
                 case pb_enum::OP_PASS:
                     //handle pass, ensure token
-                    if(bDraw){
-                        //isDraw, pass to discard
-                        what.set_pos(game.token);
-                    }else{
-                        //discard, pass to draw,don't do it immediately!
+                    what.set_pos(game.token);
+                    if(!bDraw)
                         who->discardedCards.push_back(which);
-                        what.set_pos(-1);
-                    }
+                    onMeld(game,*localPlayer,which,what);
                     break;
                 case pb_enum::BUNCH_INVALID:
                     //checked already
@@ -277,11 +273,12 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 default:
                     //A,AAA,AAAA, meld or do some specials
                     if(meld(game,*who,which,what)){
+                        onMeld(game,*localPlayer,which,what);
                         tokenPlayer=who;
                         changePos(game,who->playData.seat());
-                    }
+                    }else
+                        onMeld(game,*localPlayer,which,what);
             }
-            onMeld(game,*localPlayer,which,what);
         }
 
         //change state before send message

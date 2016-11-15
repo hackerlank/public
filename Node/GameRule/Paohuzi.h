@@ -34,6 +34,7 @@ private:
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
     proto3::pb_enum         verifyBunch(Game&,proto3::bunch_t&);
     virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
+    virtual void            draw(Game& game);
     
     void                    calcAchievement(Game&,proto3::pb_enum,const std::vector<proto3::bunch_t>&,std::vector<proto3::achv_t>&);
     void                    calcPengAchievement(Game&,proto3::pb_enum,const std::vector<proto3::bunch_t>&,std::vector<proto3::achv_t>&,int);
