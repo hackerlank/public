@@ -66,7 +66,7 @@ void Node::removeGame(game_id_t id){
 }
 
 void Node::on_open(svc_handler&) {
-//    Logger<<"on_open\n");
+    Logger<<"on_open\n";
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 

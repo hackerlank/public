@@ -52,7 +52,7 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnProxy(){
-		Utils.Load<ChargePanel>(gameObject.transform.parent);
+		Utils.Load<ChargePanel>(Main.Instance.RootPanel);
 	}
 	
 	public void OnShare(){

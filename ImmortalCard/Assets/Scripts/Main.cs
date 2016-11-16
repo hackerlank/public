@@ -6,10 +6,11 @@ public class Main : MonoBehaviour {
 
 	public static Main		Instance=null;
 
-	public const int		Round=2;
+	public const int		Round=1;
 	public GameController	gameController=null;
 	public ShareAPI			share;
 
+	public Transform		RootPanel;
 	public Animator			spinner;
 
 	public enum Mode{

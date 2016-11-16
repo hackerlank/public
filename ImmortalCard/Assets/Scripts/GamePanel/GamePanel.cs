@@ -245,6 +245,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	void OnDestroy(){
+		Debug.Log("----- close game panel");
 		Main.Instance.MainPlayer.Disconnect();
 		foreach(var robot in Main.Instance.robots)robot.Disconnect();
 		Main.Instance.robots.Clear();
@@ -269,7 +270,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnExit(){
-		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj) {
+		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj) {
 			Destroy(gameObject);
 		});
 	}

@@ -108,14 +108,15 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnBack(){
-		Utils.Load<LobbyPanel>(gameObject.transform.parent,delegate(Component obj){
+		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj){
 			Destroy(gameObject);
 		});
 	}
 	
 	IEnumerator createCo(){
+		Debug.Log("----- connect to node");
 		Main.Instance.MainPlayer.Connect();
-		while(!Main.Instance.MainPlayer.Entered)yield return null;
+		while(!Main.Instance.MainPlayer.InGame)yield return null;
 
 		nRobots=4;
 		var opRound=new key_value();

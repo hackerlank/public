@@ -10,8 +10,7 @@ public class GameIcon : MonoBehaviour {
 	public pb_enum	game;
 
 	public void OnGame(){
-		var canvas=gameObject.GetComponentInParent<Canvas>();
-		Utils.Load<EnterPanel>(canvas.transform,delegate(Component obj){
+		Utils.Load<EnterPanel>(Main.Instance.RootPanel,delegate(Component obj){
 			var panel=obj as EnterPanel;
 			panel.CurrentGame=this;
 			if(LobbyPanel.Instance)Destroy(LobbyPanel.Instance.gameObject);

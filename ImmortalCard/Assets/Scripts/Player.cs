@@ -7,11 +7,11 @@ using Google.Protobuf;
 public class Player {
 	//networking
 	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
-	public bool				Entered=false;
 	public HttpProxy		http;
 	WSProxy					ws;
-
 	bool					connected=false;
+
+	public bool				InGame=false;
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
 	public int				gameId=0;
@@ -57,6 +57,7 @@ public class Player {
 	}
 
 	public void Disconnect(){
+		InGame=false;
 		if(connected)
 			ws.Close();
 	}
@@ -68,7 +69,7 @@ public class Player {
 	public IEnumerator JoinGame(int id){
 		gameId=id;
 		Connect(gameId);
-		while(!Entered)yield return null;
+		while(!InGame)yield return null;
 		
 		MsgCNJoin msgJ=new MsgCNJoin();
 		msgJ.Mid=pb_msg.MsgCnJoin;
@@ -110,11 +111,13 @@ public class Player {
 			break;
 		case pb_msg.MsgNcEnter:
 			MsgNCEnter msgEnter=MsgNCEnter.Parser.ParseFrom(bytes);
-			//Debug.Log("entered");
+			Debug.Log("entered node");
 			if(msgEnter.Result==pb_enum.Succeess){
-				Entered=true;
-			}else
+				InGame=true;
+			}else{
 				Debug.LogError("enter error: "+msgEnter.Result);
+				Disconnect();
+			}
 			break;
 		case pb_msg.MsgNcCreate:
 			MsgNCCreate msgCreate=MsgNCCreate.Parser.ParseFrom(bytes);

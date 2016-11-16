@@ -45,7 +45,7 @@ public class DoudeZhuPanel : GamePanel {
 	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
 		yield return StartCoroutine(base.OnMsgSettle(player,msg));
 		
-		Utils.Load<DoudeZhuSettle>(Main.Instance.transform,delegate(Component obj) {
+		Utils.Load<DoudeZhuSettle>(Main.Instance.RootPanel,delegate(Component obj) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
 		});
@@ -143,7 +143,7 @@ public class DoudeZhuPanel : GamePanel {
 	override public float DiscardScalar{get{return .625f;}}
 	
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<DoudeZhuPanel>(Main.Instance.transform,delegate(Component obj){
+		Utils.Load<DoudeZhuPanel>(Main.Instance.RootPanel,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		});
 	}

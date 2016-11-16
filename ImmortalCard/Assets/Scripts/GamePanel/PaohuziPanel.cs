@@ -264,7 +264,7 @@ public class PaohuziPanel : GamePanel {
 
 		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
-		Utils.Load<PaohuziSettle>(Main.Instance.transform,delegate(Component obj) {
+		Utils.Load<PaohuziSettle>(Main.Instance.RootPanel,delegate(Component obj) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
 		});
@@ -779,7 +779,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<PaohuziPanel>(Main.Instance.transform,delegate(Component obj){
+		Utils.Load<PaohuziPanel>(Main.Instance.RootPanel,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		});
 	}
