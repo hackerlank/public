@@ -62,7 +62,13 @@ int Paohuzi::Type(){
 }
 
 int Paohuzi::MaxPlayer(Game& game){
-    return 3;
+    switch (game.category) {
+        case pb_enum::PHZ_HY:
+        case pb_enum::PHZ_PEGHZ:
+            return 4;
+        default:
+            return 3;
+    }
 }
 
 int Paohuzi::maxCards(Game& game){
@@ -70,7 +76,13 @@ int Paohuzi::maxCards(Game& game){
 }
 
 int Paohuzi::maxHands(Game& game){
-    return 20;
+    switch (game.category) {
+        case pb_enum::PHZ_HY:
+        case pb_enum::PHZ_PEGHZ:
+            return 14;
+        default:
+            return 20;
+    }
 }
 
 int Paohuzi::bottom(Game& game){

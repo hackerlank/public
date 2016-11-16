@@ -6,7 +6,17 @@ using Proto3;
 public class PaohuziRule: GameRule {
 
 	public override int MaxCards{get{return 80;}}
-	public override int MaxPlayer{get{return 3;}}
+	public override int MaxPlayer{
+		get{
+			switch(Main.Instance.MainPlayer.category){
+			case pb_enum.PhzHy:
+			case pb_enum.PhzPeghz:
+				return 4;
+			default:
+				return 3;
+			}
+		}
+	}
 
 	protected override void deal(MsgNCStart msg){
 		int id=0;
