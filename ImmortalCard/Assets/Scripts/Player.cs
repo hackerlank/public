@@ -62,10 +62,6 @@ public class Player {
 			ws.Close();
 	}
 
-	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
-		ws.Send<T>(mid,msg);
-	}
-		
 	public IEnumerator JoinGame(int id){
 		gameId=id;
 		Connect(gameId);
@@ -89,15 +85,41 @@ public class Player {
 			msg.Version=100;
 			Send<MsgCNEnter>(msg.Mid,msg);
 		}
+		Loom.QueueOnMainThread(delegate{
+			//dispatch to main thread
+			Main.Instance.Wait=false;
+		});
 	}
 	public void onClose(string error){
+		if(InGame)Loom.QueueOnMainThread(delegate{
+			//dispatch to main thread
+			Main.Instance.Wait=true;
+		});
 		connected=false;
 		Debug.Log("OnClose "+error);
 	}
 	public void onError(string error){
 		Debug.Log("OnError: "+error);
 	}
+
+	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
+		/*
+		Loom.QueueOnMainThread(delegate{
+			//dispatch to main thread
+			Main.Instance.StartWait();
+		});
+		*/
+		ws.Send<T>(mid,msg);
+	}
+
 	public void onMessage(pb_msg mid,byte[] bytes){
+		/*
+		Loom.QueueOnMainThread(delegate{
+			//dispatch to main thread
+			Main.Instance.StopWait();
+		});
+		*/
+
 		//receive and handle logic which PlayerController indenpendent
 		//Debug.Log("OnMessage "+mid);
 		switch(mid){

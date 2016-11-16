@@ -245,7 +245,6 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	void OnDestroy(){
-		Debug.Log("----- close game panel");
 		Main.Instance.MainPlayer.Disconnect();
 		foreach(var robot in Main.Instance.robots)robot.Disconnect();
 		Main.Instance.robots.Clear();

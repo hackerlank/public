@@ -33,6 +33,11 @@ public class MahJongPanel : GamePanel {
 	List<bunch_t> _hints=null;
 	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
+		if(msg.Bunch.Pawns.Count<=0){
+			Debug.LogError("error when OnMsgDiscard");
+			yield break;
+		}
+
 		//show hints for others
 		if(msg.Bunch.Pawns.Count>0&&Main.Instance.MainPlayer.playData.Seat!=msg.Bunch.Pos){
 			var card=msg.Bunch.Pawns[0];

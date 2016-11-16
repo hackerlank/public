@@ -26,7 +26,7 @@ public class WSProxy {
 			onClose.Invoke(e.Reason);
 		};
 		socket.OnError+=delegate(object sender, WebSocketSharp.ErrorEventArgs e) {
-			onOpen.Invoke(e.Message);
+			onError.Invoke(e.Message);
 		};
 		socket.OnMessage+=delegate(object sender, WebSocketSharp.MessageEventArgs e) {
 			var raw=e.RawData;

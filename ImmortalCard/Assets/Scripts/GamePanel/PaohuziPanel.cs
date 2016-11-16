@@ -64,6 +64,11 @@ public class PaohuziPanel : GamePanel {
 		StartCoroutine(base.OnMsgDiscard(player,msg));
 
 		if(Main.Instance.MainPlayer!=player)yield break;
+		if(msg.Bunch.Pawns.Count<=0){
+			Debug.LogError("error when OnMsgDiscard");
+			yield break;
+		}
+
 		//show hints
 		var fromSelf=false;
 		var card=msg.Bunch.Pawns[0];

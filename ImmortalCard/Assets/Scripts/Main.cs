@@ -6,7 +6,7 @@ public class Main : MonoBehaviour {
 
 	public static Main		Instance=null;
 
-	public const int		Round=1;
+	public const int		Round=2;
 	public GameController	gameController=null;
 	public ShareAPI			share;
 
@@ -32,6 +32,33 @@ public class Main : MonoBehaviour {
 	}
 	
 	void Update () {
+	}
+
+	public bool Wait{
+		get{
+			return Main.Instance.spinner.gameObject.activeSelf;
+		}
+		set{
+			Main.Instance.spinner.gameObject.SetActive(value);
+		}
+	}
+
+	public void StartWait(float t=5){
+		if(!waiting){
+			waiting=true;
+			StartCoroutine(waitCo(t));
+		}
+	}
+	public void StopWait(){
+		StopCoroutine(waitCo(0));
+		Wait=false;
+		waiting=false;
+	}
+
+	bool waiting=false;
+	IEnumerator waitCo(float t){
+		yield return new WaitForSeconds(t);
+		Wait=true;
 	}
 
 	public Player MainPlayer=new Player();

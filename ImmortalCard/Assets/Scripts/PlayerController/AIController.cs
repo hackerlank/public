@@ -23,7 +23,10 @@ public class AIController:PlayerController{
 		if(Main.Instance.MainPlayer==player)yield break;
 
 		//some errors
-		if(msg.Bunch.Pawns.Count<=0)yield break;
+		if(msg.Bunch.Pawns.Count<=0){
+			Debug.LogError("error when OnMsgDiscard");
+			yield break;
+		}
 
 		var fromSelf=false;
 		var card=msg.Bunch.Pawns[0];

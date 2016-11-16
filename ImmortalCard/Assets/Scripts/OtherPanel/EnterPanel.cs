@@ -87,11 +87,17 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnCreateOK(){
-		StartCoroutine(createCo());
+		if(!Main.Instance.Wait){
+			Main.Instance.Wait=true;
+			StartCoroutine(createCo());
+		}
 	}
 	
 	public void OnJoinOK(){
-		StartCoroutine(joinCo());
+		if(!Main.Instance.Wait){
+			Main.Instance.Wait=true;
+			StartCoroutine(joinCo());
+		}
 	}
 	
 	public void OnDial(int n){
@@ -114,7 +120,6 @@ public class EnterPanel : MonoBehaviour {
 	}
 	
 	IEnumerator createCo(){
-		Debug.Log("----- connect to node");
 		Main.Instance.MainPlayer.Connect();
 		while(!Main.Instance.MainPlayer.InGame)yield return null;
 
@@ -201,5 +206,6 @@ public class EnterPanel : MonoBehaviour {
 			DoudeZhuPanel.Create(handler);
 			break;
 		}
+		Main.Instance.Wait=false;
 	}
 }
