@@ -10,6 +10,8 @@ public class Main : MonoBehaviour {
 	public GameController	gameController=null;
 	public ShareAPI			share;
 
+	public Animator			spinner;
+
 	public enum Mode{
 		STANDALONE,
 		NODE,
