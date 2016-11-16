@@ -595,7 +595,8 @@ message MsgNCMeld{
 
 pb_msg mid				=1;
 bunch_t bunch           =2;
-pb_enum result			=3;
+int32 from              =3;
+pb_enum result			=4;
 };
 
 message MsgNCDraw{

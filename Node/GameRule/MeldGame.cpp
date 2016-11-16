@@ -217,6 +217,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto which=*front.pawns().begin();
         auto where=front.pos();
         auto who=game.players[where];
+        auto from=game.token;
 
         for(auto& what:bunches){
             //ok,verify
@@ -235,7 +236,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 ret=pb_enum::BUNCH_INVALID;
             }
             
-            KEYE_LOG("%d OnMeld %s,token=%d\n",what.pos(),bunch2str(str,what),game.token);
+            KEYE_LOG("%d OnMeld %s,token=%d\n",what.pos(),bunch2str(str,what),from);
             switch(result){
                 case pb_enum::BUNCH_WIN:{
                     std::vector<bunch_t> output;
@@ -286,6 +287,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         MsgNCMeld msg;
         msg.set_mid(pb_msg::MSG_NC_MELD);
         msg.set_result(ret);
+        msg.set_from(from);
         msg.mutable_bunch()->CopyFrom(front);
         
         //clear after copy

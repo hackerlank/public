@@ -197,8 +197,10 @@ public class Player {
 			MsgNCMeld msgMeld=MsgNCMeld.Parser.ParseFrom(bytes);
 			if(msgMeld.Result==pb_enum.Succeess){
 				//remember conflict meld
+				var from=msgMeld.From;
 				var rule=Main.Instance.gameController.Rule;
-				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk&&playData.Seat==rule.Token&&playData.Seat!=msgMeld.Bunch.Pos){
+				if(msgMeld.Bunch.Type==pb_enum.PhzBbbbdesk
+				   && playData.Seat==from&&playData.Seat!=msgMeld.Bunch.Pos){
 					if(rule.Pile.IndexOf(msgMeld.Bunch.Pawns[0])==-1){
 						conflictMeld=true;
 						Debug.Log(playData.Seat+" conflict "+msgMeld.Bunch.Pawns[0]);

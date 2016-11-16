@@ -17207,6 +17207,7 @@ MsgCNMeld::extra() const {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCMeld::kMidFieldNumber;
 const int MsgNCMeld::kBunchFieldNumber;
+const int MsgNCMeld::kFromFieldNumber;
 const int MsgNCMeld::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -17239,6 +17240,7 @@ void MsgNCMeld::SharedCtor() {
   _cached_size_ = 0;
   mid_ = 0;
   bunch_ = NULL;
+  from_ = 0;
   result_ = 0;
 }
 
@@ -17342,13 +17344,28 @@ bool MsgNCMeld::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_result;
+        if (input->ExpectTag(24)) goto parse_from;
         break;
       }
 
-      // optional .proto3.pb_enum result = 3;
+      // optional int32 from = 3;
       case 3: {
         if (tag == 24) {
+         parse_from:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &from_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_result;
+        break;
+      }
+
+      // optional .proto3.pb_enum result = 4;
+      case 4: {
+        if (tag == 32) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -17398,10 +17415,15 @@ void MsgNCMeld::SerializeWithCachedSizes(
       2, *this->bunch_, output);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // optional int32 from = 3;
+  if (this->from() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->from(), output);
+  }
+
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->result(), output);
+      4, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCMeld)
@@ -17424,7 +17446,14 @@ int MsgNCMeld::ByteSize() const {
         *this->bunch_);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // optional int32 from = 3;
+  if (this->from() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->from());
+  }
+
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -17452,6 +17481,9 @@ void MsgNCMeld::MergeFrom(const MsgNCMeld& from) {
   if (from.has_bunch()) {
     mutable_bunch()->::proto3::bunch_t::MergeFrom(from.bunch());
   }
+  if (from.from() != 0) {
+    set_from(from.from());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -17476,6 +17508,7 @@ void MsgNCMeld::Swap(MsgNCMeld* other) {
 void MsgNCMeld::InternalSwap(MsgNCMeld* other) {
   std::swap(mid_, other->mid_);
   std::swap(bunch_, other->bunch_);
+  std::swap(from_, other->from_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -17544,7 +17577,21 @@ void MsgNCMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCMeld.bunch)
 }
 
-// optional .proto3.pb_enum result = 3;
+// optional int32 from = 3;
+void MsgNCMeld::clear_from() {
+  from_ = 0;
+}
+ ::google::protobuf::int32 MsgNCMeld::from() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCMeld.from)
+  return from_;
+}
+ void MsgNCMeld::set_from(::google::protobuf::int32 value) {
+  
+  from_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.from)
+}
+
+// optional .proto3.pb_enum result = 4;
 void MsgNCMeld::clear_result() {
   result_ = 0;
 }

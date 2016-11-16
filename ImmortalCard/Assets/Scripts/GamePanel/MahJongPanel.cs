@@ -76,7 +76,7 @@ public class MahJongPanel : GamePanel {
 		_hints=null;
 
 		var bunch=msg.Bunch;
-		var from=Rule.Token;
+		var from=msg.From;
 		var to=bunch.Pos;
 		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
@@ -119,7 +119,7 @@ public class MahJongPanel : GamePanel {
 			break;
 		default:
 			//abandon
-			if(to==-1)to=Rule.Token;
+			if(to==-1)to=msg.From;
 			A.DiscardTo(AbandonAreas[to],AbandonScalar);
 			break;
 		}

@@ -5050,9 +5050,15 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::bunch_t* release_bunch();
   void set_allocated_bunch(::proto3::bunch_t* bunch);
 
-  // optional .proto3.pb_enum result = 3;
+  // optional int32 from = 3;
+  void clear_from();
+  static const int kFromFieldNumber = 3;
+  ::google::protobuf::int32 from() const;
+  void set_from(::google::protobuf::int32 value);
+
+  // optional .proto3.pb_enum result = 4;
   void clear_result();
-  static const int kResultFieldNumber = 3;
+  static const int kResultFieldNumber = 4;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -5065,6 +5071,7 @@ class MsgNCMeld : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   bool _is_default_instance_;
   ::proto3::bunch_t* bunch_;
   int mid_;
+  ::google::protobuf::int32 from_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -10144,7 +10151,21 @@ inline void MsgNCMeld::set_allocated_bunch(::proto3::bunch_t* bunch) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCMeld.bunch)
 }
 
-// optional .proto3.pb_enum result = 3;
+// optional int32 from = 3;
+inline void MsgNCMeld::clear_from() {
+  from_ = 0;
+}
+inline ::google::protobuf::int32 MsgNCMeld::from() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCMeld.from)
+  return from_;
+}
+inline void MsgNCMeld::set_from(::google::protobuf::int32 value) {
+  
+  from_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCMeld.from)
+}
+
+// optional .proto3.pb_enum result = 4;
 inline void MsgNCMeld::clear_result() {
   result_ = 0;
 }

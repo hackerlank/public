@@ -122,7 +122,7 @@ public class PaohuziPanel : GamePanel {
 
 	override public IEnumerator OnMsgMeld(Player player,MsgNCMeld msg){
 		var bunch=msg.Bunch;
-		var from=Rule.Token;
+		var from=msg.From;
 		var to=bunch.Pos;
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 
@@ -168,7 +168,7 @@ public class PaohuziPanel : GamePanel {
 			melds.Add(bunch);
 
 			//mark conflict meld
-			if(bunch.Pos!=Rule.Token){
+			if(bunch.Pos!=msg.From){
 				//Rule.Token conflict
 			}
 			break;
@@ -217,7 +217,7 @@ public class PaohuziPanel : GamePanel {
 		case pb_enum.OpPass:
 			//abandon
 			if(A!=null){
-				if(to==-1)to=Rule.Token;
+				if(to==-1)to=msg.From;
 				A.DiscardTo(AbandonAreas[to],AbandonScalar);
 				A.state=Card.State.ST_ABANDON;
 			}
