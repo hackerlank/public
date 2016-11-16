@@ -44,7 +44,8 @@ void GameRule::deal(Game& game){
     if(!game.definedCards.empty()){
         std::vector<int> o;
         parseCardsByString(o,game.definedCards);
-        for(size_t i=0,ii=o.size();i!=ii;++i){
+        auto C=std::min((int)o.size(),maxCards(game));
+        for(size_t i=0,ii=C;i!=ii;++i){
             auto I=o[i];
             for(size_t j=0,jj=game.pile.size();j!=jj;++j){
                 auto J=game.pile[j];

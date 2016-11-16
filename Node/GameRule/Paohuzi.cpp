@@ -218,6 +218,7 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
                 }
             }
             break;
+        case pb_enum::PHZ_B4B3:
         case pb_enum::PHZ_BBBBdesk:
         case pb_enum::PHZ_AAAAdesk:
             for(auto it=player.playData.mutable_bunch()->begin(),iend=player.playData.mutable_bunch()->end();it!=iend;++it){
@@ -456,6 +457,7 @@ pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
         case pb_enum::PHZ_AAAAstart:
         case pb_enum::PHZ_AAAAdesk:
         case pb_enum::PHZ_BBB_B:
+        case pb_enum::PHZ_B4B3:
         case pb_enum::PHZ_BBBBdesk:
             if(sz==4){
                 auto A=bunch.pawns(0);
@@ -922,12 +924,12 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                     //碰胡
                     game.players[pos]->m_winMark=pb_enum::WINPENG;
                 }
-            }else if(resSuite==pb_enum::PHZ_BBB_B||resSuite==pb_enum::PHZ_BBBBdesk){
+            }else if(resSuite==pb_enum::PHZ_BBB_B||resSuite==pb_enum::PHZ_BBBBdesk||resSuite==pb_enum::PHZ_B4B3){
                 //跑牌胡
                 bool bWei=true;//checkWeiPengAct(suite,pos,card);//true:偎坎牌跑胡，false:碰牌跑胡
                 if(resSuite==pb_enum::PHZ_BBB_B){
                     game.players[pos]->m_winMark=pb_enum::WINWPAO;//偎坎跑胡
-                } else if(resSuite==pb_enum::PHZ_BBBBdesk){
+                } else if(resSuite==pb_enum::PHZ_BBBBdesk||resSuite==pb_enum::PHZ_B4B3){
                     if(bWei){
                         //偎坎跑胡
                         game.players[pos]->m_winMark=pb_enum::WINWPAO;//偎坎跑胡
@@ -1384,7 +1386,8 @@ void Paohuzi::calcPengAchievement(Game& game,pb_enum rule,const std::vector<bunc
     auto kNum=findSuiteKT(game,hand,0,pos);
     bool bPaoDaul=false;//跑双标示
     for(auto iv=suites.begin(),ivv=suites.end();iv!=ivv;++iv){
-        if(iv->type()==pb_enum::PHZ_AAAA||iv->type()==pb_enum::PHZ_AAAAdesk||iv->type()==pb_enum::PHZ_BBB_B||iv->type()==pb_enum::PHZ_BBBBdesk){
+        if(iv->type()==pb_enum::PHZ_AAAA||iv->type()==pb_enum::PHZ_AAAAdesk
+           ||iv->type()==pb_enum::PHZ_BBB_B||iv->type()==pb_enum::PHZ_BBBBdesk||iv->type()==pb_enum::PHZ_B4B3){
             //判断是否跑双
             bPaoDaul=true;
         }
@@ -1443,7 +1446,7 @@ int Paohuzi::findSuiteKT(Game& game,std::vector<unit_id_t> hands,int type,int po
             auto resOps=fixOps(it->type());
             if(it->pawns_size()==3&&(resOps==pb_enum::PHZ_BBB||resOps==pb_enum::PHZ_AAA||resOps==pb_enum::PHZ_AAAchou||resOps==pb_enum::PHZ_AAAwei)){
                 kanNum++;
-            } else if(it->pawns_size()==4&&(resOps==pb_enum::PHZ_AAAA||resOps==pb_enum::PHZ_AAAAstart||resOps==pb_enum::PHZ_AAAAdesk||resOps==pb_enum::PHZ_BBBBdesk||resOps==pb_enum::PHZ_BBB_B)){
+            } else if(it->pawns_size()==4&&(resOps==pb_enum::PHZ_AAAA||resOps==pb_enum::PHZ_AAAAstart||resOps==pb_enum::PHZ_AAAAdesk||resOps==pb_enum::PHZ_BBBBdesk||resOps==pb_enum::PHZ_B4B3||resOps==pb_enum::PHZ_BBB_B)){
                 tpNum++;
             }
         }
@@ -1540,6 +1543,7 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
             case pb_enum::PHZ_AAAAdesk:
                 pt+=(small?9:12);
                 break;
+            case pb_enum::PHZ_B4B3:
             case pb_enum::PHZ_BBBBdesk:
             case pb_enum::PHZ_BBB_B:
                 pt+=(small?6:9);
@@ -1623,6 +1627,7 @@ int opWeight(pb_enum op){
         case pb_enum::PHZ_AAAchou:
             i=2;break;
         case pb_enum::PHZ_BBB_B:
+        case pb_enum::PHZ_B4B3:
         case pb_enum::PHZ_BBBBdesk:
         case pb_enum::PHZ_AAAAstart:
         case pb_enum::PHZ_AAAA:

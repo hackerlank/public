@@ -148,11 +148,13 @@ public class PaohuziRule: GameRule {
 				//check desk
 				if(BBBB==null){
 					foreach(var desk in player.playData.Bunch){
-						if(desk.Type==pb_enum.PhzBbb){
+						if(desk.Type==pb_enum.PhzBbb&&bDraw
+						   ||desk.Type==pb_enum.PhzAaawei){
 							var h=desk.Pawns[0];
 							if(h/1000==card/1000 && h%100==card%100){
 								BBBB=new bunch_t();
-								BBBB.Type=pb_enum.PhzBbbbdesk;
+								BBBB.Type=(desk.Type==pb_enum.PhzAaawei?
+								           pb_enum.PhzBbbbdesk:pb_enum.PhzB4B3);
 								BBBB.Pawns.Add(card);
 								BBBB.Pawns.Add(desk.Pawns);
 								break;
@@ -227,6 +229,7 @@ public class PaohuziRule: GameRule {
 				}
 			}
 			break;
+		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbbdesk:
 		case pb_enum.PhzAaaadesk:
 			foreach(var bun in player.playData.Bunch){
@@ -317,11 +320,13 @@ public class PaohuziRule: GameRule {
 			bunch_t pdesk=null;
 			if(BBBB==null){
 				foreach(var desk in desks){
-					if(desk.Type==pb_enum.PhzAaawei){
+					if(desk.Type==pb_enum.PhzAaawei||
+					   desk.Type==pb_enum.PhzBbb&&draw){
 						var h=desk.Pawns[0];
 						if(h/1000==card/1000 && h%100==card%100){
 							BBBB=new bunch_t();
-							BBBB.Type=pb_enum.PhzBbbbdesk;
+							BBBB.Type=desk.Type==pb_enum.PhzAaawei?
+								pb_enum.PhzBbbbdesk:pb_enum.PhzB4B3;
 							BBBB.Pawns.Add(card);
 							BBBB.Pawns.Add(desk.Pawns);
 
@@ -764,6 +769,7 @@ public class PaohuziRule: GameRule {
 		case pb_enum.PhzAaaa:
 		case pb_enum.PhzAaaastart:
 		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbB:
 		case pb_enum.PhzBbbbdesk:
 			if(bunch.Pawns.Count==4){
@@ -922,6 +928,7 @@ public class PaohuziRule: GameRule {
 			case pb_enum.PhzAaaadesk:
 				pt+=(small?9:12);
 				break;
+			case pb_enum.PhzB4B3:
 			case pb_enum.PhzBbbbdesk:
 			case pb_enum.PhzBbbB:
 				pt+=(small?6:9);

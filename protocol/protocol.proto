@@ -96,10 +96,11 @@ PHZ_AAA                 =21;	//kan
 PHZ_AAAwei              =22;	//wei   AA_A
 PHZ_AAAchou             =23;	//chou wei  AAA_
 PHZ_BBB_B               =24;	//pao
-PHZ_BBBBdesk            =25;	//desk pao  AAA_A
-PHZ_AAAAdesk            =26;	//desk ti   _AAAA
-PHZ_AAAA                =27;	//ti
-PHZ_AAAAstart            =28;	//startup ti    AAAA_
+PHZ_BBBBdesk            =25;	//wei=>pao(desk pao)  AAA_A
+PHZ_B4B3                =26;	//peng=>pao(desk pao)
+PHZ_AAAAdesk            =27;	//desk ti   _AAAA
+PHZ_AAAA                =28;	//ti
+PHZ_AAAAstart           =29;	//startup ti    AAAA_
 
 BUNCH_WIN               =100;
 

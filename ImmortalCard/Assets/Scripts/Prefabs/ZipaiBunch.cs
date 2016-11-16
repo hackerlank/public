@@ -53,6 +53,7 @@ public class ZipaiBunch : MonoBehaviour{
 		case pb_enum.PhzBbb:
 			return "碰";
 		case pb_enum.PhzBbbB:
+		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbbdesk:
 			return "跑";
 		case pb_enum.PhzAaa:

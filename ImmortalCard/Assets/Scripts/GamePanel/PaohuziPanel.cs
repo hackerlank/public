@@ -145,6 +145,7 @@ public class PaohuziPanel : GamePanel {
 			}
 			break;
 		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbbdesk:
 			//remove bunch from desk
 			var meldBunch=MeldAreas[to].GetComponentsInChildren<ZipaiBunch>();
@@ -180,6 +181,7 @@ public class PaohuziPanel : GamePanel {
 		//then move cards
 		switch(bunch.Type){
 		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbbdesk:
 		case pb_enum.PhzAbc:
 		case pb_enum.PhzBbb:
@@ -366,6 +368,7 @@ public class PaohuziPanel : GamePanel {
 				OnAAAA();
 				return true;
 			case pb_enum.PhzBbbB:
+			case pb_enum.PhzB4B3:
 			case pb_enum.PhzBbbbdesk:
 				bbbb=true;
 				break;
@@ -693,6 +696,7 @@ public class PaohuziPanel : GamePanel {
 				   hint.Type==pb_enum.PhzAaaadesk ||
 				   hint.Type==pb_enum.PhzAaaastart ||
 				   hint.Type==pb_enum.PhzBbbB ||
+				   hint.Type==pb_enum.PhzB4B3 ||
 				   hint.Type==pb_enum.PhzBbbbdesk){
 					MsgCNMeld msg=new MsgCNMeld();
 					msg.Mid=pb_msg.MsgCnMeld;
