@@ -91,15 +91,24 @@ public class Player {
 		});
 	}
 	public void onClose(string error){
-		if(InGame)Loom.QueueOnMainThread(delegate{
-			//dispatch to main thread
-			Main.Instance.Wait=true;
-		});
+		var reconnect=false;
+		if(reconnect){
+			if(InGame)Loom.QueueOnMainThread(delegate{
+				//dispatch to main thread
+				Main.Instance.Wait=true;
+			});
+		}else{
+			InGame=false;
+			Loom.QueueOnMainThread(delegate{
+				//dispatch to main thread
+				Main.Instance.Wait=false;
+			});
+		}
 		connected=false;
 		Debug.Log("OnClose "+error);
 	}
 	public void onError(string error){
-		Debug.Log("OnError: "+error);
+		Debug.LogError("OnError: "+error);
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{

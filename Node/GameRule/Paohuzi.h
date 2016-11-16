@@ -41,6 +41,7 @@ private:
     int						winPoint(Game&,proto3::pb_enum);
     int						calcScore(Game&,proto3::pb_enum,int points);
     int						calcPoints(Game&,std::vector<proto3::bunch_t>&);
+    int                     calcMultiOrScore(Game&,int);
     
     bool					chouWei(Game&,Player&,proto3::bunch_t&);
 

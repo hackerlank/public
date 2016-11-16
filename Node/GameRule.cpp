@@ -12,7 +12,7 @@
 #include <algorithm>
 using namespace proto3;
 
-inline void parseCardsByString(std::vector<int>& o,std::string& line);
+inline void parseCardsByString(std::vector<int>& o,const std::string& line);
 
 void GameRule::deal(Game& game){
     auto MP=MaxPlayer(game);
@@ -273,8 +273,9 @@ void GameRule::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
     }
 }
 
-void parseCardsByString(std::vector<int>& o,std::string& line){
+void parseCardsByString(std::vector<int>& o,const std::string& str){
     char c=',';
+    auto line(str);
     std::string comma;comma.push_back(c);
     if(!line.empty()&&line.back()!=c)line+=comma;
     while(true){

@@ -820,7 +820,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_LD||game.category==pb_enum::PHZ_XX_GHZ){
             //差额玩法
             play.set_score(score);
-            playFinish.set_score(playFinish.score());
+            playFinish.set_score(playFinish.score()+score);
 //            msg.m_scores[pos]=score;
 //            spFinalEnd->m_total[pos].score+=score;
             
@@ -828,7 +828,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 //放炮，两人变动
 //                msg.mutable_play(game.token)->set_score(-score);
                 game.players[game.token]->playData.set_score(-score);
-                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->mutable_play(game.token)->score()-score);
+                game.spFinish->mutable_play(game.token)->set_score(game.spFinish->play(game.token).score()-score);
 //                msg.m_scores[game.token]=-score;	//放炮这要扣分的，有番数
 //                spFinalEnd->m_total[game.token].score-=score;
             }
@@ -856,7 +856,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 int multi=M-1;
                 if(game.category==pb_enum::PHZ_CD_HHD||game.category==pb_enum::PHZ_CD_QMT)
                 {
-//                    score=calcMultiOrScore(game.category,score*multi);
+                    score=calcMultiOrScore(game,score*multi);
                     for(int i=0; i<M; ++i){
                         game.players[i]->playData.set_score(i==pos?score:-(score/multi));
 //                        msg.m_scores[i]=(i==pos?score:-(score/multi));
@@ -868,7 +868,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 }
             }
             for(int i=0; i<M; ++i){
-                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->play(i).score()+game.players[i]->playData.score());
 //                spFinalEnd->m_total[i].score+=msg.m_scores[i];
 //                msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
@@ -890,7 +890,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
             //剥皮和湘乡告胡子，庄家扣10分
             game.players[game.banker]->playData.set_score(-10);
         for(int i=0; i<M; ++i){
-            game.players[i]->playData.set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
+            game.spFinish->mutable_play(i)->set_score(game.spFinish->play(i).score()+game.players[i]->playData.score());
 //            spFinalEnd->m_total[i].score+=msg.m_scores[i];
 //            msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
         }
@@ -1156,7 +1156,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
                 game.players[i]->winCount=0;
             game.bankerChanged=false;
             for(int i=0; i<M; ++i){
-                game.spFinish->mutable_play(i)->set_score(game.spFinish->mutable_play(i)->score()+game.players[i]->playData.score());
+                game.spFinish->mutable_play(i)->set_score(game.spFinish->play(i).score()+game.players[i]->playData.score());
                 //spFinalEnd->m_total[i].score+=msg.m_scores[i];
                 //msg.m_totalScores[i]=spFinalEnd->m_total[i].score;
             }
@@ -1584,6 +1584,37 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
         //log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
     }
     return point;
+}
+
+//封顶统计
+int Paohuzi::calcMultiOrScore(Game& game,int value){
+    auto gameRule=game.category;
+    int res=0;
+    auto limit=-1;//_desk->_multiScore;
+    if(limit<=0)
+        return value;//认为无限制
+
+    switch(gameRule){
+        case pb_enum::PHZ_SY:		//邵阳字牌
+        case pb_enum::PHZ_SYBP:	//邵阳剥皮
+        case pb_enum::PHZ_LD:		//娄底放炮
+        case pb_enum::PHZ_HY:		//衡阳六条枪
+        default:
+            res=value;
+            break;
+        case pb_enum::PHZ_CD_QMT:	//常德全名堂
+        case pb_enum::PHZ_CD_HHD:	//常德红黑点
+        case pb_enum::PHZ_HH:		//怀化红拐弯
+        case pb_enum::PHZ_CS:		//长沙跑胡子
+            if(value>limit){
+                res=limit;
+            } 
+            else{
+                res=value;
+            }
+            break;
+    }
+    return res;
 }
 
 bool Paohuzi::chouWei(Game& game,Player& player,bunch_t& bunch){

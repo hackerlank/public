@@ -70,7 +70,7 @@ public class PaohuziRule: GameRule {
 			bunch_t paaa=null;
 			bunch_t pdesk=null;
 			var needAA=false;
-			if(bDraw){
+			if(bDraw && pos==src_bunch.Pos){
 				//check AAAs
 				foreach(var aaas in player.AAAs){
 					var h=aaas.Pawns[0];
