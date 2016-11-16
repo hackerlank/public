@@ -49,23 +49,23 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     do{
         auto game=player.game;
         if(!game){
-            KEYE_LOG("OnDiscard no game\n");
+            Logger<<"OnDiscard no game\n";
             break;
         }
         if(game->token!=pos){
             auto card=(unit_id_t)msg.bunch().pawns(0);
-            KEYE_LOG("OnDiscard %d wrong pos %d(need %d)\n",card,pos,game->token);
+            Logger<<"OnDiscard "<<card<<" wrong pos "<<pos<<"(need "<<game->token<<endl;
             break;
         }
         
         if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state %d,pos=%d\n",game->state,pos);
+            Logger<<"OnDiscard wrong state "<<game->state<<",pos="<<pos<<endl;
             break;
         }
         msg.mutable_bunch()->set_pos(pos);
         
         if(!verifyDiscard(*game,*msg.mutable_bunch())){
-            KEYE_LOG("OnDiscard invalid bunch\n");
+            Logger<<"OnDiscard invalid bunch\n";
             break;
         }
         
@@ -73,26 +73,26 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         auto card=(unit_id_t)msg.bunch().pawns(0);
         //boundary check
         if(!validId(card)){
-            KEYE_LOG("OnDiscard invalid cards %d\n",card);
+            Logger<<"OnDiscard invalid cards "<<card<<endl;
             break;
         }
 
         //shut discard after verify
         if(!game->pendingDiscard){
-            KEYE_LOG("OnDiscard not on pending\n");
+            Logger<<"OnDiscard not on pending\n";
             break;
         }else
             player.game->pendingDiscard.reset();
 
         std::string str;
         cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("%d OnDiscard %s\n",pos,str.c_str());
+        Logger<<pos<<" OnDiscard "<<str.c_str()<<endl;
         //remove hands
         auto& hands=*player.playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    //KEYE_LOG("OnDiscard pos=%d,erase card %d\n",pos,*i);
+                    //Logger<<"OnDiscard pos=%d,erase card %d\n",pos,*i);
                     hands.erase(i);
                     break;
                 }
@@ -102,7 +102,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //pass discard card
         if(msg.bunch().type()!=pb_enum::BUNCH_A){
             player.unpairedCards.push_back(card);
-            KEYE_LOG("%d past discard %d\n",pos,card);
+            Logger<<pos<<" past discard "<<card<<endl;
         }
 
         auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
@@ -142,20 +142,20 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     auto pos=player.playData.seat();
     auto spgame=player.game;
     if(!spgame){
-        KEYE_LOG("OnMeld no game\n");
+        Logger<<"OnMeld no game\n";
         return;
     }
     auto& game=*spgame;
     //state
     if(game.state!=Game::State::ST_MELD){
-        KEYE_LOG("OnMeld wrong st=%d,pos=%d\n",game.state,pos);
+        Logger<<"OnMeld wrong st="<<game.state<<",pos="<<pos<<endl;
         return;
     }
     
     //pending queue
     auto& pendingMeld=game.pendingMeld;
     if(pendingMeld.empty()){
-        KEYE_LOG("OnMeld with queue empty,pos=%d\n",pos);
+        Logger<<"OnMeld with queue empty,pos="<<pos<<endl;
         return;
     }
 
@@ -165,20 +165,20 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         if(pos==pendingMeld[i].bunch.pos())
             break;
     if(i>=pendingMeld.size()){
-        KEYE_LOG("OnMeld wrong player pos=%d\n",pos);
+        Logger<<"OnMeld wrong player pos="<<pos<<endl;
         return;
     }
     
     //arrived and duplicated
     auto& pending=pendingMeld[i];
     if(pending.arrived){
-        KEYE_LOG("OnMeld already arrived, pos=%d\n",pos);
+        Logger<<"OnMeld already arrived, pos="<<pos<<endl;
         return;
     }
     pending.arrived=true;
 
     if(pending.bunch.pawns_size()<=0){
-        KEYE_LOG("OnMeld empty cards,pos=%d\n",pos);
+        Logger<<"OnMeld empty cards,pos="<<pos<<endl;
         return;
     }
 
@@ -187,7 +187,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     //force card check
     auto pcard=*pending.bunch.pawns().begin();
     if(pcard!=invalid_card && card!=pcard){
-        KEYE_LOG("OnMeld wrong card=%d,need=%d,pos=%d\n",card,pcard,pos);
+        Logger<<"OnMeld wrong card="<<card<<",need="<<pcard<<",pos="<<pos<<endl;
         return;
     }
     
@@ -198,7 +198,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 
     //queue in
     std::string str;
-    //KEYE_LOG("OnMeld queue in(total %lu),pos=%d,%s\n",pendingMeld.size(),pos,bunch2str(str,curr));
+    //Logger<<"OnMeld queue in(total %lu),pos=%d,%s\n",pendingMeld.size(),pos,bunch2str(str,curr));
     pending.bunch.CopyFrom(curr);
     
     int ready=0;
@@ -230,13 +230,13 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             //deal invalid as pass
             if(result==pb_enum::BUNCH_INVALID){
                 std::string str;
-                KEYE_LOG("OnMeld verify failed,bunch=%s, old_ops=%d, pos=%d\n",bunch2str(str,what),old_ops,localPos);
+                Logger<<"OnMeld verify failed,bunch="<<bunch2str(str,what)<<", old_ops="<<old_ops<<", pos="<<localPos<<endl;
                 //result=pb_enum::BUNCH_INVALID;
                 result=pb_enum::OP_PASS;
                 ret=pb_enum::BUNCH_INVALID;
             }
             
-            KEYE_LOG("%d OnMeld %s,token=%d\n",what.pos(),bunch2str(str,what),from);
+            Logger<<what.pos()<<" OnMeld "<<bunch2str(str,what)<<",token="<<from<<endl;
             switch(result){
                 case pb_enum::BUNCH_WIN:{
                     std::vector<bunch_t> output;
@@ -303,7 +303,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         if(tokenPlayer){
             //then draw or discard
             if(!checkDiscard(*tokenPlayer,invalid_card)){
-                //KEYE_LOG("OnMeld pass to draw\n");
+                //Logger<<"OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);
                 draw(game);
             }
@@ -334,7 +334,7 @@ void MeldGame::engage(Game& game,MsgNCEngage&){
 void MeldGame::draw(Game& game){
     if(game.pile.empty()){
         //dismiss
-        KEYE_LOG("dismiss while pile empty, pos=%d\n",game.token);
+        Logger<<"dismiss while pile empty, pos="<<game.token<<endl;
         changeState(game,Game::State::ST_SETTLE);
         auto tokenPlayer=game.players[game.token];
         std::vector<bunch_t> output;
@@ -345,7 +345,7 @@ void MeldGame::draw(Game& game){
         
         auto card=game.pile.back();
         game.pile.pop_back();
-        KEYE_LOG("%d draw %d\n",game.token,card);
+        Logger<<game.token<<" draw "<<card<<endl;
         
         //game.pendingMeld.clear();
         game.pendingMeld.push_back(Game::pending_t());

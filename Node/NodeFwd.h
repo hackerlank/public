@@ -23,6 +23,11 @@ typedef short value_t;
 typedef unsigned game_id_t;
 static const unit_id_t invalid_card=-1; //more reliable than 0
 
+extern keye::logger sLogger;
+#ifndef Logger
+#define Logger sLogger<<begl
+#endif
+
 #include "Player.h"
 #include "Game.h"
 #include "GameRule.h"

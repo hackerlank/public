@@ -165,14 +165,14 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     auto past=std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end();
     if(past||player.conflictMeld){
         if(pb_enum::PHZ_ABC==bunch.type()||pb_enum::PHZ_BBB==bunch.type()){
-            KEYE_LOG("meld failed, past card or conflict\n");
+            Logger<<"meld failed, past card or conflict\n";
             return false;
         }
     }
     auto dodge=std::find(player.dodgeCards.begin(),player.dodgeCards.end(),card)!=player.dodgeCards.end();
     if(dodge){
         if(pb_enum::PHZ_BBB==bunch.type()){
-            KEYE_LOG("meld failed, dodge card\n");
+            Logger<<"meld failed, dodge card\n";
             return false;
         }
     }
@@ -190,7 +190,7 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
                 }
         }
         if(!ids.empty()){
-            KEYE_LOG("meld failed, baihuo %d\n",card);
+            Logger<<"meld failed, baihuo "<<card<<endl;
             return false;
         }
     }
@@ -200,7 +200,7 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     for(auto j:bunch.pawns()){
         for(auto i=hands.begin();i!=hands.end();++i){
             if(j==*i){
-                //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
+                //Logger<<"OnMeld pos=%d,erase card %d\n",where,*i);
                 hands.erase(i);
                 break;
             }
@@ -285,14 +285,14 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                     auto chBunch=bunch.mutable_child()->Add();
                     chBunch->set_pos(i);
                     chBunch->set_type(pb_enum::PHZ_BBB);
-                    KEYE_LOG("%d dodge %d\n",dodge,card);
+                    Logger<<dodge<<" dodge "<<card<<endl;
                 }else if(past){
                     game.players[i]->unpairedCards.push_back(card);
                     
                     auto chBunch=bunch.mutable_child()->Add();
                     chBunch->set_pos(i);
                     chBunch->set_type(pb_enum::PHZ_ABC);
-                    KEYE_LOG("%d past meld %d\n",past,card);
+                    Logger<<past<<" pass meld "<<card<<endl;
                 }
             }
    
@@ -333,7 +333,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                         auto chBunch=bunch.mutable_child()->Add();
                         chBunch->set_pos(i);
                         chBunch->set_type(pb_enum::PHZ_BBB);
-                        KEYE_LOG("%d dodge %d\n",i,card);
+                        Logger<<i<<" dodge "<<card<<endl;
                     }
                 }
             }
@@ -349,7 +349,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                 
                 bunch.mutable_child()->Add()->set_pos(j);
                 bunch.mutable_child()->Add()->set_type(pb_enum::PHZ_ABC);
-                KEYE_LOG("%d past meld %d\n",j,card);
+                Logger<<j<<" past meld "<<card<<endl;
             }
             break;
         }
@@ -357,7 +357,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
             //remember conflict meld
             if(game.token!=pos && game.pileMap.find(card)==game.pileMap.end()){
                 game.players[game.token]->conflictMeld=true;
-                KEYE_LOG("%d conflict %d\n",game.token,card);
+                Logger<<game.token<<" conflict "<<card<<endl;
             }
             break;
         default:
@@ -370,7 +370,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     int MIN_SUITES=7;
     if(M==4)MIN_SUITES=5;
     if(bunch.type()<pb_enum::BUNCH_WIN || bunch.child_size()<MIN_SUITES){
-        KEYE_LOG("isWin failed: wrong bunch size %d\n",bunch.child_size());
+        Logger<<"isWin failed: wrong bunch size "<<bunch.child_size()<<endl;
         return false;
     }
     
@@ -389,7 +389,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
                      game.category==pb_enum::PHZ_XX_GHZ||game.category==pb_enum::PHZ_CZ||
                      game.category==pb_enum::PHZ_HY||game.category==pb_enum::PHZ_GX));
     if(!bDraw && !fire){
-        KEYE_LOG("isWin failed: not fire and not from pile\n");
+        Logger<<"isWin failed: not fire and not from pile\n";
         return false;
     }
     
@@ -406,13 +406,13 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
             if(cmap.find(c)!=cmap.end())
                 --cmap[c];
             else if(c!=card){
-                KEYE_LOG("isWin failed: card %d not exists\n",c);
+                Logger<<"isWin failed: card "<<c<<" not exists\n";
                 return false;
             }
         }
     }
     for(auto& kv:cmap)if(kv.second!=0){
-        KEYE_LOG("isWin failed: card %d missing\n",kv.first);
+        Logger<<"isWin failed: card "<<kv.first<<" missing\n";
         return false;
     }
     
@@ -420,7 +420,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     for(auto& b:*bunch.mutable_child()){
         if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
             std::string str;
-            KEYE_LOG("isWin failed: invalid bunch %s\n",bunch2str(str,b));
+            Logger<<"isWin failed: invalid bunch "<<bunch2str(str,b)<<endl;
             return false;
         }
     }
@@ -428,7 +428,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     std::copy(bunch.child().begin(),bunch.child().end(),std::back_inserter(output));
     auto point=calcPoints(game,output);
     if(point<winPoint(game,game.category)){
-        KEYE_LOG("isWin failed: not enough points %d\n",point);
+        Logger<<"isWin failed: not enough points "<<point<<endl;
         output.clear();
         return false;
     }

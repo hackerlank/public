@@ -58,29 +58,29 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     do{
         auto game=player.game;
         if(!game){
-            KEYE_LOG("OnDiscard no game\n");
+            Logger<<"OnDiscard no game\n";
             break;
         }
         if(game->state!=Game::State::ST_DISCARD){
-            KEYE_LOG("OnDiscard wrong state pos %d\n",pos);
+            Logger<<"OnDiscard wrong state pos "<<pos<<endl;
             break;
         }
         if(game->token!=pos){
-            KEYE_LOG("OnDiscard wrong pos %d(need %d)\n",pos,game->token);
+            Logger<<"OnDiscard wrong pos "<<pos<<"(need "<<game->token<<")\n";
             break;
         }
         
         //this will fix the type of bunch
         auto bt=verifyBunch(*msg.mutable_bunch());
         if(pb_enum::BUNCH_INVALID==bt){
-            KEYE_LOG("OnDiscard invalid bunch\n");
+            Logger<<"OnDiscard invalid bunch\n";
             break;
         }
         
         //just pass
         if(msg.bunch().type()==pb_enum::OP_PASS){
             omsg.set_result(pb_enum::SUCCEESS);
-            KEYE_LOG("OnDiscard pos=%d pass\n",pos);
+            Logger<<"OnDiscard pos="<<pos<<" pass\n";
             break;
         }
 
@@ -94,7 +94,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             //boundary check
             if(!validId(c)){
                 check=false;
-                KEYE_LOG("OnDiscard invalid cards %d\n",c);
+                Logger<<"OnDiscard invalid cards "<<c<<endl;
                 break;
             }
             //duplicated id check
@@ -102,7 +102,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             for(auto d:cards)if(c==d)dup++;
             if(dup>1){
                 check=false;
-                KEYE_LOG("OnDiscard duplicated cards %d\n",c);
+                Logger<<"OnDiscard duplicated cards "<<c<<endl;
                 break;
             }
             //exists check
@@ -115,7 +115,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             }
             if(!exist){
                 check=false;
-                KEYE_LOG("OnDiscard cards not exists %d\n",c);
+                Logger<<"OnDiscard cards not exists "<<c<<endl;
                 break;
             }
         }
@@ -134,19 +134,19 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
                 check=true;
         }
         if(!check){
-            KEYE_LOG("OnDiscard compare failed\n");
+            Logger<<"OnDiscard compare failed\n";
             break;
         }
         
         std::string str;
         cards2str(str,msg.bunch().pawns());
-        KEYE_LOG("OnDiscard pos=%d,cards %s\n",pos,str.c_str());
+        Logger<<"OnDiscard pos="<<pos<<",cards "<<str.c_str()<<endl;
         //remove hands
         auto& hands=*game->players[pos]->playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    KEYE_LOG("OnDiscard pos=%d, erase card %d\n",pos,*i);
+                    Logger<<"OnDiscard pos="<<pos<<", erase card "<<*i<<endl;
                     hands.erase(i);
                     break;
                 }

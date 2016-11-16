@@ -20,6 +20,12 @@ enum TIMER:size_t{
     TIMER_DAY,
 };
 
+#if defined(WIN32) || defined(__APPLE__)
+keye::logger sLogger;
+#else
+keye::logger sLogger("node.log");
+#endif
+
 Node* Node::sNode=nullptr;
 
 Node::Node(size_t ios, size_t works, size_t rb_size)
@@ -47,7 +53,7 @@ std::shared_ptr<Game> Node::createGame(int key,proto3::MsgCNCreate& msg){
         gameptr->id=gid;
         gameptr->rule=rule->second;
     }else
-        KEYE_LOG("create game error no rule %d\n",msg.game());
+        Logger<<"create game error no rule "<<msg.game()<<endl;
     return gameptr;
 }
 
@@ -60,14 +66,14 @@ void Node::removeGame(game_id_t id){
 }
 
 void Node::on_open(svc_handler&) {
-//    KEYE_LOG("on_open\n");
+//    Logger<<"on_open\n");
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 
 void Node::on_close(svc_handler& sh) {
     auto shid=sh.id();
     players.erase(shid);
-    //KEYE_LOG("on_close\n");
+    Logger<<"on_close\n";
 }
 
 void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
@@ -84,13 +90,13 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
             player->set_level(168);
             player->set_uid("vic-game");
             player->set_currency(1000);
-            KEYE_LOG("client entered\n");
+            Logger<<"client entered\n";
             
             auto spplayer=std::make_shared<Player>(sh);
             spplayer->playData.mutable_player()->CopyFrom(*player);
             players[shid]=spplayer;
         }else{
-            KEYE_LOG("message error id=%zd\n",mid);
+            Logger<<"message error id="<<mid<<endl;
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
         }
         omsg.set_mid(proto3::pb_msg::MSG_NC_ENTER);
@@ -100,11 +106,11 @@ void Node::on_read(svc_handler& sh, void* buf, size_t sz) {
         if(p!=players.end())
             p->second->on_read(pb);
     }
-    //KEYE_LOG("on_read %zd,mid=%d\n", sz,mid);
+    //Logger<<"on_read %zd,mid=%d\n", sz,mid);
 }
 
 void Node::on_write(svc_handler&, void*, size_t sz) {
-//    KEYE_LOG("on_write %zd\n",sz);
+//    Logger<<"on_write %zd\n",sz);
 }
 
 bool Node::on_timer(svc_handler&, size_t id, size_t milliseconds) {
@@ -157,9 +163,9 @@ int main(int argc, char* argv[]) {
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
 
     //DoudeZhu::test();
-    
-    KEYE_LOG("server start at %d\n", port);
-    while(true)usleep(100);
+    Logger<<"server start at "<<port<<endf;
+    while(true)usleep(1000);
 
 	return 0;
 }
+

@@ -80,7 +80,7 @@ void GameRule::deal(Game& game){
     std::string str;
     google::protobuf::RepeatedField<int> pbpile(game.pile.begin(),game.pile.end());
     cards2str(str,pbpile);
-    KEYE_LOG("pile: %s\n",str.c_str());
+    Logger<<"pile: "<<str.c_str()<<endl;
 
     game.lastCard=game.pile.front();
 
@@ -173,7 +173,7 @@ void GameRule::OnEngage(Player& player,uint key){
             engage(*game,omsg);
 
             for(auto& p:game->players)p->send(omsg);
-            KEYE_LOG("all engaged\n");
+            Logger<<"all engaged\n";
         }
     }
 }
@@ -192,14 +192,14 @@ void GameRule::changePos(Game& game,pos_t pos){
     pos=pos%game.rule->MaxPlayer(game);
     if(game.token!=pos){
         game.token=pos;
-        KEYE_LOG("token: %d=>%d\n",old,game.token);
+        Logger<<"token: "<<old<<"=>"<<game.token<<endl;
     }
 }
 
 void GameRule::changeState(Game& game,Game::State state){
     if(game.state!=state){
         std::string str0,str1;
-        KEYE_LOG("game state: %s=>%s\n",state2str(str0,game.state),state2str(str1,state));
+        Logger<<"game state: "<<state2str(str0,game.state)<<"=>"<<state2str(str1,state)<<endl;
         game.state=state;
     }
 }
@@ -208,7 +208,7 @@ void GameRule::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
     auto& hands=game.players[pos]->playData.hands();
     cards2str(str,hands);
-    KEYE_LOG("%s hand of %d:%d %s\n",msg.c_str(),pos,hands.size(),str.c_str());
+    Logger<<msg.c_str()<<" hand of "<<pos<<":"<<hands.size()<<","<<str.c_str()<<endl;
 }
 
 const char* GameRule::state2str(std::string& str,Game::State st){

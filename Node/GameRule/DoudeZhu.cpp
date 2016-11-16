@@ -234,7 +234,7 @@ pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     
     std::string str;
     cards2str(str,bunch.pawns());
-    //KEYE_LOG("verifyBunch pos=%d,type=%d: %s\n",bunch.pos(),bunch.type(),str.c_str());
+    //Logger<<"verifyBunch pos=%d,type=%d: %s\n",bunch.pos(),bunch.type(),str.c_str());
     return bt;
 }
 
@@ -308,7 +308,7 @@ bool DoudeZhu::compareBunch(bunch_t& bunch,bunch_t& hist){
     std::string str,str1;
     cards2str(str,bunch.pawns());
     cards2str(str1,hist.pawns());
-    //KEYE_LOG("compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
+    //Logger<<"compare win=%d [pos=%d,type=%d: %s] [pos=%d,type=%d: %s]\n",win,bunch.pos(),bunch.type(),str.c_str(),hist.pos(),hist.type(),str1.c_str());
     return win;
 }
 

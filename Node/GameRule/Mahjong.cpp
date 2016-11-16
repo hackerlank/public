@@ -120,7 +120,7 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
             for(auto j:b->pawns()){
                 for(auto i=hands.begin();i!=hands.end();++i){
                     if(j==*i){
-                        //KEYE_LOG("OnMeld pos=%d,erase card %d\n",where,*i);
+                        //Logger<<"OnMeld pos=%d,erase card %d\n",where,*i);
                         hands.erase(i);
                         break;
                     }
@@ -143,7 +143,7 @@ void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
 
 bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
     if(bunch.type()<pb_enum::BUNCH_WIN){
-        KEYE_LOG("isWin failed: wrong bunch type\n");
+        Logger<<"isWin failed: wrong bunch type\n";
         return false;
     }
 
@@ -154,7 +154,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     auto& suite=*player.playData.mutable_bunch();
 
     if(hands.size()<1){
-        KEYE_LOG("isWin failed: len=%d\n",hands.size());
+        Logger<<"isWin failed: len="<<hands.size()<<endl;
         return false;
     }
     
@@ -171,13 +171,13 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
             if(cmap.find(c)!=cmap.end())
                 --cmap[c];
             else if(c!=card){
-                KEYE_LOG("isWin failed: card %d not exists\n",c);
+                Logger<<"isWin failed: card "<<c<<" not exists\n";
                 return false;
             }
         }
     }
     for(auto& kv:cmap)if(kv.second!=0){
-        KEYE_LOG("isWin failed: card %d missing\n",kv.first);
+        Logger<<"isWin failed: card "<<kv.first<<" missing\n";
         return false;
     }
     
@@ -185,7 +185,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     for(auto& b:*bunch.mutable_child()){
         if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
             std::string str;
-            KEYE_LOG("isWin failed: invalid bunch %s\n",bunch2str(str,b));
+            Logger<<"isWin failed: invalid bunch "<<bunch2str(str,b)<<endl;
             return false;
         }
     }
