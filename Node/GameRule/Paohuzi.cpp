@@ -1166,6 +1166,16 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     play.set_point(point);
     play.set_chunk(chunk);
     play.set_multiple(multiple);
+    
+    //copy hidden bunches after settle
+    for(int i=0; i<MaxPlayer(game); ++i){
+        auto localPlayer=game.players[i];
+        //the loser
+        for(auto& aaa:localPlayer->AAAAs)
+            localPlayer->playData.add_bunch()->CopyFrom(aaa);
+        for(auto& aaa:localPlayer->AAAs)
+            localPlayer->playData.add_bunch()->CopyFrom(aaa);
+    }
 /*
     if(game.category==pb_enum::PHZ_SYBP){	//专门为客户端显示做的
         int s=(game.noWinner>0?-10:0);

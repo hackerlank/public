@@ -307,16 +307,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 changeState(game,Game::State::ST_MELD);
                 draw(game);
             }
-        }else{
-            //or win: copy bunches after settle
-            for(int i=0; i<MaxPlayer(game); ++i){
-                auto localPlayer=game.players[i];
-                //the loser
-                for(auto& aaa:localPlayer->AAAAs)
-                    localPlayer->playData.add_bunch()->CopyFrom(aaa);
-                for(auto& aaa:localPlayer->AAAs)
-                    localPlayer->playData.add_bunch()->CopyFrom(aaa);
-            }
         }
     }//if(ready>=queue.size())
 }
