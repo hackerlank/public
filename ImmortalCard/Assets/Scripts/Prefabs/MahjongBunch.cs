@@ -5,8 +5,9 @@ using System.Collections;
 using Proto3;
 
 public class MahjongBunch : MonoBehaviour{
-	public Transform	Cards;
-	public Card			ExtraCard;
+	public LayoutElement	lyoutElement;
+	public Transform		Cards;
+	public Card				ExtraCard;
 
 	public System.Action<MahjongBunch> onTap=delegate(MahjongBunch bunch){};
 
