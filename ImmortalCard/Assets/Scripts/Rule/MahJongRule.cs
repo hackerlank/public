@@ -274,9 +274,9 @@ public class MahJongRule: GameRule {
 					var D=cards[i+3];
 					var E=cards[i+4];
 					var F=cards[i+5];
-					
+
 					if(D/1000 == E/1000 && D/1000 == F/1000){
-						//same color
+						//type AABBCC
 						D%=100;E%=100;F%=100;
 						if(A==B && C==D && E==F && B+1==C && D+1==E){
 							//great values
@@ -290,6 +290,28 @@ public class MahJongRule: GameRule {
 							for(int j=0;j<3;++j)bunch.Pawns.Add(cards[i+j*2+1]);
 							output.Add(bunch);
 
+							i+=6;
+							continue;
+						}
+					}else if(D/1000 == E/1000 && D/1000 == F/1000){
+						//type ABBCCD
+						D%=100;E%=100;F%=100;
+						if(B==C && D==E && A+1==B && E+1==F){
+							//great values
+							var bunch=new bunch_t();
+							bunch.Type=pb_enum.BunchAbc;
+							bunch.Pawns.Add(cards[i+0]);
+							bunch.Pawns.Add(cards[i+1]);
+							bunch.Pawns.Add(cards[i+3]);
+							output.Add(bunch);
+							
+							bunch=new bunch_t();
+							bunch.Type=pb_enum.BunchAbc;
+							bunch.Pawns.Add(cards[i+2]);
+							bunch.Pawns.Add(cards[i+4]);
+							bunch.Pawns.Add(cards[i+5]);
+							output.Add(bunch);
+							
 							i+=6;
 							continue;
 						}

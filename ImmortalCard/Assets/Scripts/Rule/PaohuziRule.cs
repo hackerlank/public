@@ -64,11 +64,13 @@ public class PaohuziRule: GameRule {
 				past=true;
 				break;
 			}
-			
+
+			//backup
+			var AAABack=new List<bunch_t>(player.AAAs);
+			var BunchesBack=new List<bunch_t>(player.playData.Bunch);
+
 			//AAA & AAAA first
 			bunch_t AAAAs=null;
-			bunch_t paaa=null;
-			bunch_t pdesk=null;
 			var needAA=false;
 			if(bDraw && pos==src_bunch.Pos){
 				//check AAAs
@@ -80,7 +82,7 @@ public class PaohuziRule: GameRule {
 						AAAAs.Pawns.Add(card);
 						AAAAs.Pawns.AddRange(aaas.Pawns);
 						
-						paaa=aaas;
+						player.AAAs.Remove(aaas);
 						break;
 					}
 				}
@@ -95,7 +97,7 @@ public class PaohuziRule: GameRule {
 								AAAAs.Pawns.Add(card);
 								AAAAs.Pawns.Add(desk.Pawns);
 								
-								pdesk=desk;
+								player.playData.Bunch.Remove(desk);
 								break;
 							}
 						}
@@ -126,21 +128,23 @@ public class PaohuziRule: GameRule {
 			}
 			
 			//then win
+			if(AAAAs!=null)
+				player.playData.Bunch.Add(AAAAs);
 			var win=isWin(player,copy,card,needAA);
 			if(win!=null){
-				if(AAAAs!=null){
-					//AAAs win
+				if(AAAAs!=null)
+					//AAAs win,clear AAAs
 					output.Clear();
-					//add or remove
-					win.Child.Add(AAAAs);
-					if(paaa!=null)win.Child.Remove(paaa);
-					if(pdesk!=null)win.Child.Remove(pdesk);
-				}
 				//restore win card
 				win.Pawns[0]=src_bunch.Pawns[0];
 				output.Add(win);
 			}
-			
+
+			//restore all
+			player.AAAs=AAABack;
+			player.playData.Bunch.Clear();
+			foreach(var b in BunchesBack)player.playData.Bunch.Add(b);
+
 			bunch_t BBBB=null;
 			if(AAAAs==null){
 				//then BBBB
