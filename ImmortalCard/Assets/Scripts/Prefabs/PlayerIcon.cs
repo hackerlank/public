@@ -8,4 +8,5 @@ public class PlayerIcon : MonoBehaviour {
 	public Text		Name;
 	public Text		Id;
 	public Text		Score;
+	public Text		Total;
 }

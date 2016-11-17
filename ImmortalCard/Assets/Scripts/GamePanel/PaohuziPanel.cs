@@ -28,6 +28,17 @@ public class PaohuziPanel : GamePanel {
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		PaohuziRule.prepareAAAA(player);
 
+		//remove AAAA from my hands
+		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
+		foreach(var id in msg.Bunch[_pos].Pawns){
+			foreach(var card in hands){
+				if(card.Value==id){
+					card.RemoveFromHand();
+					//card.DiscardTo(MeldAreas[_pos],DiscardScalar);
+				}
+			}
+		}
+
 		//display all AAAA
 		for(int i=0;i<maxPlayer;++i){
 			bunch_t bunch=msg.Bunch[i];
@@ -43,18 +54,6 @@ public class PaohuziPanel : GamePanel {
 			}
 		}
 		
-		//remove AAAA from my hands
-		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
-		foreach(var id in msg.Bunch[_pos].Pawns){
-			foreach(var card in hands){
-				if(card.Value==id){
-					card.RemoveFromHand();
-					//card.DiscardTo(MeldAreas[_pos],DiscardScalar);
-				}
-			}
-		}
-		yield return null;
-		yield return null;
 		yield return StartCoroutine(sortHands());
 		checkNaturalWin();
 	}
@@ -196,15 +195,8 @@ public class PaohuziPanel : GamePanel {
 		case pb_enum.PhzBbbB:
 			//move cards from hands and discard to meld area
 			foreach(var melt in melds){
-				ZipaiBunch zb=null;
-				Utils.Load<ZipaiBunch>(MeldAreas[to],delegate(Component obj) {
-					zb=obj as ZipaiBunch;
-				});
-				while(zb==null)yield return null;
-				zb.Value=melt;
-
 				if(to==_pos){
-					//find my hands cards
+					//find my hands cards and remove
 					var hands=HandAreas[to].GetComponentsInChildren<Card>();
 					foreach(var id in melt.Pawns){
 						foreach(var h in hands){
@@ -215,6 +207,14 @@ public class PaohuziPanel : GamePanel {
 						}
 					}
 				}
+
+				//meld bunch
+				ZipaiBunch zb=null;
+				Utils.Load<ZipaiBunch>(MeldAreas[to],delegate(Component obj) {
+					zb=obj as ZipaiBunch;
+				});
+				while(zb==null)yield return null;
+				zb.Value=melt;
 
 				//Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			}

@@ -116,8 +116,10 @@ public class DoudeZhuPanel : GamePanel {
 	}
 	
 	public void OnDiscard(){
-		foreach(var btn in btnOps)btn.SetActive(false);
-		StartCoroutine(Discard());
+		if(VerifyDiscard()){
+			foreach(var btn in btnOps)btn.SetActive(false);
+			StartCoroutine(Discard());
+		}
 	}
 	
 	override public void OnPass(){

@@ -76,11 +76,12 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 	public void OnPointerUp (PointerEventData eventData){
 		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT))return;
 
-		if(eventData.clickCount>=2)
-			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
 		var panel=Main.Instance.gameController as GamePanel;
-		if(panel!=null)
+		if(panel!=null){
+			if(eventData.clickCount>=2 && panel.VerifyDiscard(this))
+				Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
 			panel.OnPointerUp(null);
+		}
 	}
 
 	public void OnPointerEnter (PointerEventData eventData){
@@ -104,7 +105,11 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		var parent=self.parent;
 		var area=parent.parent;
 		var rect=(area as RectTransform).rect;
-		if(self.localPosition.y>rect.height+64)
+
+		var panel=Main.Instance.gameController as GamePanel;
+		if(panel==null)return;
+
+		if(self.localPosition.y>rect.height+64 && panel.VerifyDiscard(this))
 			//pass the line,discard
 			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
 		else{

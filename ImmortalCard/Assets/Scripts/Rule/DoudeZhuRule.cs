@@ -168,12 +168,9 @@ public class DoudeZhuRule: GameRule {
 	}
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
+		if(base.verifyDiscard(player,bunch))return false;
+
 		//discard my card
-		if(player.playData.Seat!=Token%MaxPlayer){
-			Debug.Log("Discard invalid turn");
-			return false;
-		}
-		
 		if(Historical.Count>0){
 			var hist=Historical[Historical.Count-1];
 			if(hist.Type==pb_enum.OpPass&&Historical.Count>=2)

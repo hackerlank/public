@@ -108,7 +108,7 @@ public class Player {
 		Debug.Log("OnClose "+error);
 	}
 	public void onError(string error){
-		Debug.LogError("OnError: "+error);
+		Debug.Log("OnError: "+error);
 	}
 
 	public void Send<T>(pb_msg mid,T msg) where T : IMessage<T>{
@@ -209,15 +209,16 @@ public class Player {
 			
 		case pb_msg.MsgNcDiscard:
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
-			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 			if(msgDiscard.Result==pb_enum.Succeess){
+				//handle only succeess to avoid crash
+				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 				//append historical
 				var hist=Main.Instance.gameController.Rule.Historical;
 				if(hist.Count<=0||hist[hist.Count-1].Pos!=msgDiscard.Bunch.Pos){
 					Debug.Log("add historical for "+msgDiscard.Bunch.Pos+" "+Player.bunch2str(msgDiscard.Bunch));
 					hist.Add(msgDiscard.Bunch);
 				}
-				//remove discards from hands
+				//remove discards from hands after controller
 				if(playData.Seat==msgDiscard.Bunch.Pos){
 					var rule=Main.Instance.gameController.Rule;
 					rule.nHands[playData.Seat]-=msgDiscard.Bunch.Pawns.Count;

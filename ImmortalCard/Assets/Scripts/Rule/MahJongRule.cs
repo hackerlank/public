@@ -305,11 +305,9 @@ public class MahJongRule: GameRule {
 	}
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
+		if(base.verifyDiscard(player,bunch))return false;
+
 		//huazhu check
-		if(player.playData.Seat!=Token%MaxPlayer){
-			Debug.Log("Discard invalid turn");
-			return false;
-		}
 		if(bunch.Pawns.Count<=0)return false;
 
 		var B=player.playData.SelectedCard;

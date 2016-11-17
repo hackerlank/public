@@ -27,9 +27,23 @@ public class ZipaiBunch : MonoBehaviour{
 				Type.gameObject.SetActive(true);
 				Score.gameObject.SetActive(true);
 			}
+			//handle AAA & AAAA
+			var bunch=new bunch_t(value);
+			if(!ShowType){
+				switch(bunch.Type){
+				case pb_enum.PhzAaaadesk:
+				case pb_enum.PhzAaaa:
+				case pb_enum.PhzAaawei:
+				case pb_enum.PhzAaachou:
+					for(int i=1;i<bunch.Pawns.Count;++i)bunch.Pawns[i]=1000;
+					break;
+				default:
+					break;
+				}
+			}
 			//cards
 			var ctrl=Main.Instance.gameController as GamePanel;
-			foreach(var card in value.Pawns){
+			foreach(var card in bunch.Pawns){
 				Card.Create(ctrl.CardPrefab,card,Cards,delegate(Card obj) {
 					obj.state=Card.State.ST_MELD;
 				});

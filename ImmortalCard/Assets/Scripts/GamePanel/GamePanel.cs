@@ -305,12 +305,10 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		card.Tap();
 	}
 
-	public IEnumerator Discard(Card card=null){
-		foreach(var btn in btnOps)btn.SetActive(false);
-		//discard my card
+	public bool VerifyDiscard(Card card=null){
 		if(null==card&&_selection.Count<=0){
 			Debug.Log("Discard invalid card");
-			yield break;
+			return false;
 		}
 		
 		bunch_t curr=new bunch_t();
@@ -319,35 +317,40 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			curr.Pawns.Add(card.Value);
 		else foreach(var c in _selection)
 			curr.Pawns.Add(c.Value);
-
-		if(Rule.verifyDiscard(Main.Instance.MainPlayer,curr)){
-			//remove discards
-			foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
-			//discard
-			MsgCNDiscard msg=new MsgCNDiscard();
-			msg.Mid=pb_msg.MsgCnDiscard;
-			msg.Bunch=new bunch_t();
-			msg.Bunch.Pos=_pos;
-			msg.Bunch.Type=pb_enum.Unknown;
-			if(card!=null){
-				deselectAll();
-				card.DiscardTo(DiscardAreas[_pos],DiscardScalar);
-				card.state=Card.State.ST_DISCARD;
-				msg.Bunch.Pawns.Add(card.Value);
-			}else if(_selection.Count>0){
-				_selection.Sort(compare_card);
-				foreach(var c in _selection){
-					c.DiscardTo(DiscardAreas[_pos],DiscardScalar);
-					c.state=Card.State.ST_DISCARD;
-					msg.Bunch.Pawns.Add(c.Value);
-				}
-				_selection.Clear();
-			}
-			yield return new WaitForSeconds(Configs.OpsInterval);
-			Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
-		}else{
+		
+		if(Rule.verifyDiscard(Main.Instance.MainPlayer,curr))
+			return true;
+		else{
 			Debug.LogError("Discard error verify failed");
+			return false;
 		}
+	}
+
+	public IEnumerator Discard(Card card=null){
+		//remove discards
+		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
+		//discard
+		MsgCNDiscard msg=new MsgCNDiscard();
+		msg.Mid=pb_msg.MsgCnDiscard;
+		msg.Bunch=new bunch_t();
+		msg.Bunch.Pos=_pos;
+		msg.Bunch.Type=pb_enum.Unknown;
+		if(card!=null){
+			deselectAll();
+			card.DiscardTo(DiscardAreas[_pos],DiscardScalar);
+			card.state=Card.State.ST_DISCARD;
+			msg.Bunch.Pawns.Add(card.Value);
+		}else if(_selection.Count>0){
+			_selection.Sort(compare_card);
+			foreach(var c in _selection){
+				c.DiscardTo(DiscardAreas[_pos],DiscardScalar);
+				c.state=Card.State.ST_DISCARD;
+				msg.Bunch.Pawns.Add(c.Value);
+			}
+			_selection.Clear();
+		}
+		yield return new WaitForSeconds(Configs.OpsInterval);
+		Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 
 	virtual protected IEnumerator sortHands(){yield break;}
