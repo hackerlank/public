@@ -117,6 +117,7 @@ public class MahJongPanel : GamePanel {
 			//draw with AAAA,unpack
 			meldBunch.AddRange(bunch.Child);
 			break;
+		case pb_enum.BunchAbc:
 		case pb_enum.BunchAaa:
 		case pb_enum.BunchAaaa:
 			//meld
@@ -130,14 +131,15 @@ public class MahJongPanel : GamePanel {
 		}
 		//do meld
 		foreach(var meld in meldBunch){
-			var melds=new List<Card>();
+			//var melds=new List<Card>();
 			if(_pos==to){
 				//move cards to meld area
 				var hands=HandAreas[to].GetComponentsInChildren<Card>();
 				foreach(var id in meld.Pawns)
 				foreach(var card in hands){
 					if(card.Value==id && A.Value!=id)
-						melds.Add(card);
+						Destroy(card.gameObject);
+						//melds.Add(card);
 				}
 			}else{
 				//remove extra cards of other player
@@ -147,7 +149,8 @@ public class MahJongPanel : GamePanel {
 					var hand=hands[i];
 					Destroy(hand.gameObject);
 				}
-				//the add melds
+				//then add melds
+				/*
 				foreach(var id in meld.Pawns){
 					if(id==A.Value)continue;
 					Card card=null;
@@ -157,9 +160,10 @@ public class MahJongPanel : GamePanel {
 					while(card==null)yield return null;
 					melds.Add(card);
 				}
+				*/
 			}
-			foreach(var m in melds)
-				m.DiscardTo(MeldAreas[to],scalar);
+			/*
+			foreach(var m in melds)m.DiscardTo(MeldAreas[to],scalar);
 			if(meld.Type==pb_enum.BunchAaaa){
 				A.DiscardTo(melds[1].transform,scalar);
 				yield return null;
@@ -171,6 +175,14 @@ public class MahJongPanel : GamePanel {
 				rt.localPosition=10*Vector3.up;
 			}else
 				A.DiscardTo(MeldAreas[to],scalar);
+			*/
+			Destroy(A.gameObject);
+			MahjongBunch mjBunch=null;
+			Utils.Load<MahjongBunch>(MeldAreas[to],delegate(Component obj){
+				mjBunch=obj as MahjongBunch;
+			});
+			while(!mjBunch)yield return null;
+			mjBunch.Value=meld;
 		}
 
 		//remove from hands
