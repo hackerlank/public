@@ -5,7 +5,6 @@ using System.Collections;
 using Proto3;
 
 public class MahjongBunch : MonoBehaviour{
-	public LayoutElement	lyoutElement;
 	public Transform		Cards;
 	public Card				ExtraCard;
 
