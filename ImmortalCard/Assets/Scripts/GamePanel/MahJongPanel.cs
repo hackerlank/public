@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Proto3;
 
 public class MahJongPanel : GamePanel {
-//	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
+	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
 	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
 	public GameObject	BtnA3,BtnA4,BtnWin;
 	public GameObject	BtnTong,BtnTiao,BtnWan;
@@ -13,7 +13,7 @@ public class MahJongPanel : GamePanel {
 	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
 		yield return StartCoroutine(base.OnMsgStart(player,msg));
 		//transform position
-//		transformComponent(MeldAreas);
+		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
 	}
 
@@ -178,7 +178,7 @@ public class MahJongPanel : GamePanel {
 			*/
 			Destroy(A.gameObject);
 			MahjongBunch mjBunch=null;
-			Utils.Load<MahjongBunch>(HandAreas[to],delegate(Component obj){
+			Utils.Load<MahjongBunch>(MeldAreas[to],delegate(Component obj){
 				mjBunch=obj as MahjongBunch;
 				mjBunch.transform.SetSiblingIndex(0);
 			});
@@ -197,7 +197,7 @@ public class MahJongPanel : GamePanel {
 	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
 		yield return StartCoroutine(base.OnMsgSettle(player,msg));
 
-//		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
+		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
 		Utils.Load<MahjongSettle>(Main.Instance.RootPanel,delegate(Component obj) {
 			var popup=obj as SettlePopup;

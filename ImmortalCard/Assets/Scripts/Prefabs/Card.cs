@@ -127,11 +127,12 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		transform.SetParent(group);
 		transform.localScale=Vector3.one;
 		transform.localEulerAngles=Vector3.zero;
-		le.minWidth*=scalar;
-		le.preferredWidth*=scalar;
-		le.minHeight*=scalar;
-		le.preferredHeight*=scalar;
-
+		if(le!=null){
+			le.minWidth*=scalar;
+			le.preferredWidth*=scalar;
+			le.minHeight*=scalar;
+			le.preferredHeight*=scalar;
+		}
 		if(parent==null)return;
 		var sibling=parent.GetComponentsInChildren<Card>().Length;
 		if(sibling<=0)

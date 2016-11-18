@@ -212,7 +212,7 @@ public class Player {
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(msgDiscard.Result==pb_enum.Succeess){
 				//count hands before handle message
-				if(Main.Instance.MainPlayer.playData.Seat==msgDiscard.Bunch.Pos){
+				if(Main.Instance.MainPlayer==this){
 					//how can i do? we can only decreament once
 					var rule=Main.Instance.gameController.Rule;
 					rule.nHands[msgDiscard.Bunch.Pos]-=msgDiscard.Bunch.Pawns.Count;
