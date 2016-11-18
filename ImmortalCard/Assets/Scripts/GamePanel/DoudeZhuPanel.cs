@@ -39,7 +39,8 @@ public class DoudeZhuPanel : GamePanel {
 				foreach(var btn in btnOps)btn.SetActive(false);
 				StartCoroutine(passDiscard(Main.Instance.MainPlayer));
 			}
-		}
+		}else if(_pos==pos)
+			foreach(var btn in btnOps)btn.SetActive(false);
 	}
 
 	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){

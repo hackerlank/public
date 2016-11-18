@@ -91,7 +91,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		panel.OnCardEnter(this);
 	}
 
-	Vector3 beginDragLocalPosition=Vector3.zero;
+	protected Vector3 beginDragLocalPosition=Vector3.zero;
 	public void OnBeginDrag (PointerEventData eventData){
 		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
 
@@ -101,7 +101,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 	public void OnEndDrag (PointerEventData eventData){
 		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
 
-		var self=eventData.pointerDrag.transform;
+		var self=transform;
 		var parent=self.parent;
 		var area=parent.parent;
 		var rect=(area as RectTransform).rect;
@@ -113,55 +113,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 			//pass the line,discard
 			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
 		else{
-			//find the nearest bunch
-			var bunches=area.GetComponentsInChildren<ZipaiHandBunch>();
-			float dist=1000000;
-			ZipaiHandBunch nearest=null;
-			foreach(var target in bunches){
-				var x=target.transform.position.x;
-				var delta=Mathf.Abs(x-transform.position.x);
-				if(dist>delta){
-					dist=delta;
-					nearest=target;
-				}
-			}
-
-			System.Action<Transform> discard=delegate(Transform target){
-				if(target!=parent){
-					DiscardTo(target,Main.Instance.gameController.DiscardScalar);
-					Static=false;
-				}else
-					self.localPosition=beginDragLocalPosition;
-			};
-			var nx=nearest.transform.position.x;
-			var nd=Mathf.Abs(nx-transform.position.x);
-			if(nd<=(parent.transform as RectTransform).rect.width){
-				//inside bunch area
-				var children=nearest.GetComponentsInChildren<Card>();
-				if(children.Length>=3)
-					//but no space
-					nearest=null;
-			}else{
-				//out of bunch area
-				if(bunches.Length<11){
-					//has bunches space
-					Utils.Load<ZipaiHandBunch>(area,delegate(Component obj){
-						if(nx>transform.position.x)
-							//left side
-							obj.transform.SetSiblingIndex(0);
-						discard.Invoke(obj.transform);
-					});
-					return;
-				}else
-					nearest=null;
-			}
-
-			if(null==nearest)
-				//put back
-				self.localPosition=beginDragLocalPosition;
-			else
-				//reparent
-				discard.Invoke(nearest.transform);
+			rearrange();
 		}
 	}
 	
@@ -196,6 +148,11 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 		if(sibling<=1)
 			Destroy(parent.gameObject);
 		DestroyImmediate(gameObject);
+	}
+
+	virtual protected void rearrange(){
+		//put back
+		transform.localPosition=beginDragLocalPosition;
 	}
 
 	public static void Create(string path,int data=0,Transform parent=null,System.Action<Card> handler=null){

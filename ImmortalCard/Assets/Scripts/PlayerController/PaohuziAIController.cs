@@ -21,6 +21,7 @@ public class PaohuziAIController:AIController{
 		
 		if(player.playData.Seat==msg.Bunch.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
+			if(null==Main.Instance.gameController)yield break;
 
 			rule.Meld(player,msg.Bunch);
 

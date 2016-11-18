@@ -11,6 +11,7 @@ public class DoudeZhuAIController:AIController {
 			var rule=Main.Instance.gameController.Rule;
 			if(rule.checkDiscard(player,0)){
 				yield return new WaitForSeconds(Configs.OpsInterval);
+				if(null==Main.Instance.gameController)yield break;
 
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();
 				omsgDiscard.Mid=pb_msg.MsgCnDiscard;

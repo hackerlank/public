@@ -327,7 +327,7 @@ public class MahJongRule: GameRule {
 	}
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
-		if(base.verifyDiscard(player,bunch))return false;
+		if(!base.verifyDiscard(player,bunch))return false;
 
 		//huazhu check
 		if(bunch.Pawns.Count<=0)return false;

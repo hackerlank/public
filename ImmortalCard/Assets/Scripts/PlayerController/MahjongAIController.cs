@@ -30,6 +30,7 @@ public class MahjongAIController:AIController{
 		
 		if(player.playData.Seat==msg.Bunch.Pos){
 			yield return new WaitForSeconds(Configs.OpsInterval);
+			if(null==Main.Instance.gameController)yield break;
 
 			var rule=Main.Instance.gameController.Rule;
 			rule.Meld(player,msg.Bunch);

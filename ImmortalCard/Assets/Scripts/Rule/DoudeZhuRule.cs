@@ -168,7 +168,7 @@ public class DoudeZhuRule: GameRule {
 	}
 
 	public override bool verifyDiscard(Player player,bunch_t bunch){
-		if(base.verifyDiscard(player,bunch))return false;
+		if(!base.verifyDiscard(player,bunch))return false;
 
 		//discard my card
 		if(Historical.Count>0){

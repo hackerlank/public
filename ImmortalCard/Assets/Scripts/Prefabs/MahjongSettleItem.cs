@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using Proto3;
 
 public class MahjongSettleItem : SettleItem {
-	public LayoutElement	BunchesLE,HansLE;
-	public Transform		Bunches,Hands;
+	public Transform		Items;
 	public Text				Info;
 
 	override public play_t Value{
