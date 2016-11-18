@@ -22,8 +22,6 @@ public class MahjongSettleItem : SettleItem {
 					break;
 				}
 			}
-
-			if(Achvs!=null && ach.Length>1)Achvs.text=ach;
 		}
 	}
 }

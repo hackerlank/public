@@ -7,12 +7,15 @@ using Proto3;
 public class PaohuziSettleItem : SettleItem {
 	public Text			Chunk,Multiple;
 	public Transform	Bunches;
+	public Text			Point,Achvs;
 
 	override public play_t Value{
 		set{
 			base.Value=value;
 			Chunk.text=value.Chunk.ToString();
 			Multiple.text=value.Multiple.ToString();
+			Point.text=value.Point.ToString();
+			Achvs.text="无";
 
 			var bunches=new List<bunch_t>(value.Bunch);
 			//hands
