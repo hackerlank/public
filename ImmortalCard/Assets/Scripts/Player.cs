@@ -208,8 +208,15 @@ public class Player {
 			break;
 			
 		case pb_msg.MsgNcDiscard:
+			if(null==Main.Instance.gameController)break;
 			MsgNCDiscard msgDiscard=MsgNCDiscard.Parser.ParseFrom(bytes);
 			if(msgDiscard.Result==pb_enum.Succeess){
+				//count hands before handle message
+				if(Main.Instance.MainPlayer.playData.Seat==msgDiscard.Bunch.Pos){
+					//how can i do? we can only decreament once
+					var rule=Main.Instance.gameController.Rule;
+					rule.nHands[msgDiscard.Bunch.Pos]-=msgDiscard.Bunch.Pawns.Count;
+				}
 				//handle only succeess to avoid crash
 				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 				//append historical
@@ -218,10 +225,8 @@ public class Player {
 					Debug.Log("add historical for "+msgDiscard.Bunch.Pos+" "+Player.bunch2str(msgDiscard.Bunch));
 					hist.Add(msgDiscard.Bunch);
 				}
-				//remove discards from hands after controller
+				//remove discards from hands after handle message
 				if(playData.Seat==msgDiscard.Bunch.Pos){
-					var rule=Main.Instance.gameController.Rule;
-					rule.nHands[playData.Seat]-=msgDiscard.Bunch.Pawns.Count;
 					foreach(var card in msgDiscard.Bunch.Pawns)
 						playData.Hands.Remove(card);
 				}

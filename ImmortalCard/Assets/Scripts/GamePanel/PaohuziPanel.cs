@@ -69,10 +69,10 @@ public class PaohuziPanel : GamePanel {
 		}
 
 		//show hints
-		var fromSelf=false;
+		var fromMyHands=false;
 		var card=msg.Bunch.Pawns[0];
-		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
-		if(fromSelf){
+		foreach(var h in player.playData.Hands)if(h==card){fromMyHands=true;break;}
+		if(fromMyHands){
 			//StartCoroutine(sortHands());
 			Main.Instance.MainPlayer.unpairedCards.Add(card);
 		}else{

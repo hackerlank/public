@@ -14,7 +14,7 @@ public abstract class SettleItem : MonoBehaviour {
 			if(Point!=null)Point.text=value.Point.ToString();
 			if(Achvs!=null)Achvs.text="无";
 
-			Players.Score.text=Score.text;
+			Players.Score.text=value.Score.ToString();
 			Players.Name.text="Player "+value.Seat;
 			Players.Win.gameObject.SetActive(value.Win>0);
 		}
