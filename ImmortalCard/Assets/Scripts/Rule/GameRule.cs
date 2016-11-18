@@ -42,7 +42,6 @@ public abstract class GameRule {
 	}
 
 	public virtual bool verifyDiscard(Player player,bunch_t bunch){
-		//huazhu check
 		if(player.playData.Seat!=Token%MaxPlayer){
 			Debug.Log("Discard invalid turn");
 			return false;

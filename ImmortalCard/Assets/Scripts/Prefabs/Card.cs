@@ -101,14 +101,11 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 	public void OnEndDrag (PointerEventData eventData){
 		if(_static||(_state!=State.ST_NORMAL&&_state!=State.ST_SELECT)||!Main.Instance.gameController.CardDrag)return;
 
-		var self=transform;
-		var parent=self.parent;
-		var area=parent.parent;
-		var rect=(area as RectTransform).rect;
-
 		var panel=Main.Instance.gameController as GamePanel;
 		if(panel==null)return;
 
+		var self=transform;
+		var rect=(panel.HandAreas[Main.Instance.MainPlayer.playData.Seat] as RectTransform).rect;
 		if(self.localPosition.y>rect.height+64 && panel.VerifyDiscard(this))
 			//pass the line,discard
 			Main.Instance.StartCoroutine(Main.Instance.gameController.Discard(this));
