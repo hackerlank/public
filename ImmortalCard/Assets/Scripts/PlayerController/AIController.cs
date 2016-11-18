@@ -28,9 +28,8 @@ public class AIController:PlayerController{
 			yield break;
 		}
 
-		var fromSelf=false;
 		var card=msg.Bunch.Pawns[0];
-		foreach(var h in player.playData.Hands)if(h==card){fromSelf=true;break;}
+		var fromSelf=(msg.Bunch.Pos==player.playData.Seat);
 
 		if(fromSelf){
 			//remove from hands
