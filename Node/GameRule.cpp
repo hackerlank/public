@@ -115,6 +115,7 @@ bool GameRule::settle(Game& game){
     
     //copy game data
     for(int i=0;i<MaxPlayer(game);++i)game.spSettle->add_play()->CopyFrom(game.players[i]->playData);
+    for(int i=0;i<MaxPlayer(game);++i)game.spSettle->mutable_play(i)->set_total(game.spFinish->play(i).score());
     //copy pile
     for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
     

@@ -187,25 +187,28 @@ public class MahJongRule: GameRule {
 					break;
 				}
 			}
-			if(win)for(int i=0;i<7;++i){
-				var A=cards[i*2];
-				var B=cards[i*2+1];
-				var bunch=new bunch_t();
-				bunch.Pawns.Add(A);
-				bunch.Pawns.Add(B);
-				bunch.Type=pb_enum.BunchAa;
-
-				if(i<7-1){
-					var C=cards[i*2+2];
-					if(C/1000==B/1000||C%100==B%100){
-						bunch.Pawns.Add(cards[i*2+2]);
-						bunch.Pawns.Add(cards[i*2+3]);
-						bunch.Type=pb_enum.BunchAaaa;
-						++i;
+			if(win){
+				for(int i=0;i<7;++i){
+					var A=cards[i*2];
+					var B=cards[i*2+1];
+					var bunch=new bunch_t();
+					bunch.Pawns.Add(A);
+					bunch.Pawns.Add(B);
+					bunch.Type=pb_enum.BunchAa;
+					
+					if(i<7-1){
+						var C=cards[i*2+2];
+						if(C/1000==B/1000||C%100==B%100){
+							bunch.Pawns.Add(cards[i*2+2]);
+							bunch.Pawns.Add(cards[i*2+3]);
+							bunch.Type=pb_enum.BunchAaaa;
+							++i;
+						}
 					}
+					
+					bunches.Add(bunch);
 				}
-
-				bunches.Add(bunch);
+				cards.Clear();
 			}
 			break;
 		}

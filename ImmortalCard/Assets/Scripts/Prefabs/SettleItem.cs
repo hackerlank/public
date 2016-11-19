@@ -9,6 +9,7 @@ public abstract class SettleItem : MonoBehaviour {
 	virtual public play_t Value{
 		set{
 			Players.Score.text=value.Score.ToString();
+			Players.Total.text=value.Total.ToString();
 			Players.Name.text="Player "+value.Seat;
 			Players.Win.gameObject.SetActive(value.Win>0);
 		}

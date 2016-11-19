@@ -11,6 +11,6 @@ public class MahjongSettle : SettlePopup {
 	}
 	
 	override protected void createItem(Transform parent,play_t play){
-		createItem<PaohuziSettleItem>(parent,play);
+		createItem<MahjongSettleItem>(parent,play);
 	}
 }

@@ -1635,10 +1635,22 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::int32 score() const;
   void set_score(::google::protobuf::int32 value);
 
-  // repeated .proto3.achv_t achvs = 12;
+  // optional int32 total = 12;
+  void clear_total();
+  static const int kTotalFieldNumber = 12;
+  ::google::protobuf::int32 total() const;
+  void set_total(::google::protobuf::int32 value);
+
+  // optional int32 seat = 13;
+  void clear_seat();
+  static const int kSeatFieldNumber = 13;
+  ::google::protobuf::int32 seat() const;
+  void set_seat(::google::protobuf::int32 value);
+
+  // repeated .proto3.achv_t achvs = 14;
   int achvs_size() const;
   void clear_achvs();
-  static const int kAchvsFieldNumber = 12;
+  static const int kAchvsFieldNumber = 14;
   const ::proto3::achv_t& achvs(int index) const;
   ::proto3::achv_t* mutable_achvs(int index);
   ::proto3::achv_t* add_achvs();
@@ -1646,12 +1658,6 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
       mutable_achvs();
   const ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >&
       achvs() const;
-
-  // optional int32 seat = 13;
-  void clear_seat();
-  static const int kSeatFieldNumber = 13;
-  ::google::protobuf::int32 seat() const;
-  void set_seat(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:proto3.play_t)
  private:
@@ -1674,8 +1680,9 @@ class play_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::int32 chunk_;
   ::google::protobuf::int32 multiple_;
   ::google::protobuf::int32 score_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::achv_t > achvs_;
+  ::google::protobuf::int32 total_;
   ::google::protobuf::int32 seat_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::achv_t > achvs_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -7570,7 +7577,35 @@ inline void play_t::set_score(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.play_t.score)
 }
 
-// repeated .proto3.achv_t achvs = 12;
+// optional int32 total = 12;
+inline void play_t::clear_total() {
+  total_ = 0;
+}
+inline ::google::protobuf::int32 play_t::total() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.total)
+  return total_;
+}
+inline void play_t::set_total(::google::protobuf::int32 value) {
+  
+  total_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.total)
+}
+
+// optional int32 seat = 13;
+inline void play_t::clear_seat() {
+  seat_ = 0;
+}
+inline ::google::protobuf::int32 play_t::seat() const {
+  // @@protoc_insertion_point(field_get:proto3.play_t.seat)
+  return seat_;
+}
+inline void play_t::set_seat(::google::protobuf::int32 value) {
+  
+  seat_ = value;
+  // @@protoc_insertion_point(field_set:proto3.play_t.seat)
+}
+
+// repeated .proto3.achv_t achvs = 14;
 inline int play_t::achvs_size() const {
   return achvs_.size();
 }
@@ -7598,20 +7633,6 @@ inline const ::google::protobuf::RepeatedPtrField< ::proto3::achv_t >&
 play_t::achvs() const {
   // @@protoc_insertion_point(field_list:proto3.play_t.achvs)
   return achvs_;
-}
-
-// optional int32 seat = 13;
-inline void play_t::clear_seat() {
-  seat_ = 0;
-}
-inline ::google::protobuf::int32 play_t::seat() const {
-  // @@protoc_insertion_point(field_get:proto3.play_t.seat)
-  return seat_;
-}
-inline void play_t::set_seat(::google::protobuf::int32 value) {
-  
-  seat_ = value;
-  // @@protoc_insertion_point(field_set:proto3.play_t.seat)
 }
 
 // -------------------------------------------------------------------

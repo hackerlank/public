@@ -190,6 +190,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
         }
     }
 
+    std::copy(bunch.child().begin(),bunch.child().end(),std::back_inserter(output));
     return true;
 }
 

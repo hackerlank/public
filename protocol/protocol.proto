@@ -299,8 +299,9 @@ int32 point             =8;
 int32 chunk             =9;
 int32 multiple          =10;
 int32 score             =11;
-repeated achv_t achvs   =12;
+int32 total             =12;
 int32 seat              =13;
+repeated achv_t achvs   =14;
 };
 
 message charge_t{
