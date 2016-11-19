@@ -66,14 +66,21 @@ void DoudeZhu::engage(Game& game,MsgNCEngage& msg){
 }
 
 void DoudeZhu::settle(Player& player){
-    Game& game=*player.game;
-    game.spSettle=std::make_shared<MsgNCSettle>();
-    auto& msg=*game.spSettle;
-    for(uint i=0,ii=MaxPlayer(game);i!=ii;++i){
-        auto play=msg.add_play();
-        play->set_win(i==player.playData.seat()?1:0);
-        play->mutable_hands()->CopyFrom(game.players[i]->playData.hands());
-        //auto player=msg.add_play();
+    auto& game=*player.game;
+    auto M=(int)MaxPlayer(game);
+    int score=1;
+    for(int i=0;i<M;++i){
+        auto& play=game.players[i]->playData;
+        if(i==player.playData.seat()){
+            play.set_win(1);
+            play.set_score((M-1)*score);
+        }else{
+            play.set_score(-score);
+        }
+        auto total=game.spFinish->play(i).score()+play.score();
+        play.set_total(total);
+        game.spFinish->mutable_play(i)->set_score(total);
+        game.spFinish->mutable_play(i)->set_total(total);
     }
 }
 

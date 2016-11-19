@@ -13,12 +13,22 @@ public class SummaryPanel : MonoBehaviour {
 		if(null==ctrl)yield break;
 		while(null==ctrl.Summary)yield return null;
 
+		var bestScore=0;
+		SummaryItem bestItem=null;
 		foreach(play_t play in ctrl.Summary.Play){
+			SummaryItem item=null;
 			Utils.Load<SummaryItem>(Items,delegate(Component obj) {
-				var item=obj as SummaryItem;
-				item.Value=play;
+				item=obj as SummaryItem;
 			});
+			while(null==item)yield return null;
+			item.Value=play;
+
+			if(play.Total>bestScore){
+				bestScore=play.Total;
+				bestItem=item;
+			}
 		}
+		bestItem.player.Win.gameObject.SetActive(true);
 	}
 	
 	public void OnClose(){

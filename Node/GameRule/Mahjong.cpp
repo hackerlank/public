@@ -198,21 +198,19 @@ void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
     auto pos=player.playData.seat();
     auto& game=*player.game;
     auto M=MaxPlayer(game);
-
-    game.spSettle=std::make_shared<MsgNCSettle>();
-    auto& msg=*game.spSettle;
-    
-    for(pos_t i=0;i<M;++i){
-        auto play=msg.add_play();
-        play->set_win(pos==i&&allSuites.size()>0?1:0);
-    }
-    
-    if(!game.spFinish){
-        //prepare final end message
-        game.spFinish=std::make_shared<MsgNCFinish>();
-        for(pos_t i=0; i < M; ++i){
-            game.spFinish->add_play();
+    int score=1;
+    for(int i=0;i<M;++i){
+        auto& play=game.players[i]->playData;
+        if(pos==i&&allSuites.size()>0){
+            play.set_win(1);
+            play.set_score((M-1)*score);
+        }else{
+            play.set_score(-score);
         }
+        auto total=game.spFinish->play(i).score()+play.score();
+        play.set_total(total);
+        game.spFinish->mutable_play(i)->set_score(total);
+        game.spFinish->mutable_play(i)->set_total(total);
     }
 }
 
