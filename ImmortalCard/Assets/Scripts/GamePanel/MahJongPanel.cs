@@ -67,6 +67,7 @@ public class MahJongPanel : GamePanel {
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(id);
 		if(pos==Main.Instance.MainPlayer.playData.Seat&&!showHints(bunch)){
+			yield return new WaitForSeconds(Configs.OpsInterval);
 			//collect
 			var omsg=new MsgCNMeld();
 			omsg.Mid=pb_msg.MsgCnMeld;
@@ -83,7 +84,7 @@ public class MahJongPanel : GamePanel {
 		var bunch=msg.Bunch;
 		var from=msg.From;
 		var to=bunch.Pos;
-		var scalar=(to==_pos?DiscardScalar:AbandonScalar);
+		var scalar=1;//(to==_pos?DiscardScalar:AbandonScalar);
 		Card A=DiscardAreas[from].GetComponentInChildren<Card>();
 		if(bunch.Type==pb_enum.BunchAaaa){
 			//could be startup AAAA,where A==null
@@ -149,33 +150,7 @@ public class MahJongPanel : GamePanel {
 					var hand=hands[i];
 					Destroy(hand.gameObject);
 				}
-				//then add melds
-				/*
-				foreach(var id in meld.Pawns){
-					if(id==A.Value)continue;
-					Card card=null;
-					Card.Create(CardPrefab,id,MeldAreas[to],delegate(Card obj) {
-						card=obj;
-					});
-					while(card==null)yield return null;
-					melds.Add(card);
-				}
-				*/
 			}
-			/*
-			foreach(var m in melds)m.DiscardTo(MeldAreas[to],scalar);
-			if(meld.Type==pb_enum.BunchAaaa){
-				A.DiscardTo(melds[1].transform,scalar);
-				yield return null;
-				var rt=A.transform as RectTransform;
-				rt.anchorMin=rt.anchorMax=Vector2.one*0.5f;
-				//rt.anchoredPosition=Vector2.one*0.5f;
-				rt.sizeDelta=(melds[1].transform as RectTransform).sizeDelta;
-				rt.localScale=Vector3.one;
-				rt.localPosition=10*Vector3.up;
-			}else
-				A.DiscardTo(MeldAreas[to],scalar);
-			*/
 			Destroy(A.gameObject);
 			MahjongBunch mjBunch=null;
 			Utils.Load<MahjongBunch>(MeldAreas[to],delegate(Component obj){
@@ -383,7 +358,7 @@ public class MahJongPanel : GamePanel {
 		return "";
 	}
 	
-	float AbandonScalar{get{return .7f;}}
+	float AbandonScalar{get{return 1f;}}
 	override public float DiscardScalar{get{return 1f;}}
 	
 	public override void TapCard(Card card,bool select=true){

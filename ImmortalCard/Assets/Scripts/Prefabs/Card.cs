@@ -124,7 +124,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 
 		_static=true;
 		transform.SetParent(group);
-		transform.localScale=Vector3.one;
+		transform.localScale=scalar*Vector3.one;
 		transform.localEulerAngles=Vector3.zero;
 		if(parent==null)return;
 		var sibling=parent.GetComponentsInChildren<Card>().Length;
