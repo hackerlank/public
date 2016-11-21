@@ -1,17 +1,17 @@
 //
-//  Node.h
-//  Node
+//  Immortal.h
+//  Immortal
 //
 //  Created by Vic Liu on 8/26/16.
 //  Copyright © 2016 Vic Liu. All rights reserved.
 //
 
-#ifndef Node_h
-#define Node_h
+#ifndef Immortal_h
+#define Immortal_h
 
-class Node :public keye::ws_service {
+class Immortal :public keye::ws_service {
 public:
-                    Node(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
+                    Immortal(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
     virtual void	on_open(keye::svc_handler&);
     virtual void	on_close(keye::svc_handler&);
     virtual void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
@@ -24,7 +24,7 @@ public:
     std::shared_ptr<Game>   findGame(game_id_t);
     void            removeGame(game_id_t);
     
-    static Node*    sNode;
+    static Immortal*    sImmortal;
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
@@ -33,4 +33,4 @@ private:
     size_t                  _game_index;
 };
 
-#endif /* Node_h */
+#endif /* Immortal_h */

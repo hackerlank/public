@@ -6,9 +6,9 @@
 //  Copyright © 2016 Vic Liu. All rights reserved.
 //
 
-#include "../stdafx.h"
+#include "stdafx.h"
 #include <algorithm>
-#include "NodeFwd.h"
+#include "ImmortalFwd.h"
 
 using namespace proto3;
 

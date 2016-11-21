@@ -7,7 +7,7 @@
 //
 
 #include "stdafx.h"
-#include "NodeFwd.h"
+#include "ImmortalFwd.h"
 #include <random>
 #include <algorithm>
 using namespace proto3;

@@ -1,0 +1,331 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5E991A701DE2E4E500D70431 /* DiscardGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A631DE2E4E500D70431 /* DiscardGame.cpp */; };
+		5E991A711DE2E4E500D70431 /* DiscardGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A641DE2E4E500D70431 /* DiscardGame.h */; };
+		5E991A721DE2E4E500D70431 /* Game.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A651DE2E4E500D70431 /* Game.h */; };
+		5E991A731DE2E4E500D70431 /* GameRule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A661DE2E4E500D70431 /* GameRule.cpp */; };
+		5E991A741DE2E4E500D70431 /* GameRule.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A671DE2E4E500D70431 /* GameRule.h */; };
+		5E991A751DE2E4E500D70431 /* MeldGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A681DE2E4E500D70431 /* MeldGame.cpp */; };
+		5E991A761DE2E4E500D70431 /* MeldGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A691DE2E4E500D70431 /* MeldGame.h */; };
+		5E991A771DE2E4E500D70431 /* Immortal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A6A1DE2E4E500D70431 /* Immortal.cpp */; };
+		5E991A781DE2E4E500D70431 /* Immortal.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A6B1DE2E4E500D70431 /* Immortal.h */; };
+		5E991A791DE2E4E500D70431 /* ImmortalFwd.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A6C1DE2E4E500D70431 /* ImmortalFwd.h */; };
+		5E991A7A1DE2E4E500D70431 /* PBHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A6D1DE2E4E500D70431 /* PBHelper.h */; };
+		5E991A7B1DE2E4E500D70431 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A6E1DE2E4E500D70431 /* Player.cpp */; };
+		5E991A7C1DE2E4E500D70431 /* Player.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A6F1DE2E4E500D70431 /* Player.h */; };
+		5E991A7F1DE2E7FF00D70431 /* stdafx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */; };
+		5E991A801DE2E7FF00D70431 /* stdafx.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A7E1DE2E7FF00D70431 /* stdafx.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5E991A5B1DE2E16C00D70431 /* libimmortal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libimmortal.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E991A631DE2E4E500D70431 /* DiscardGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiscardGame.cpp; sourceTree = "<group>"; };
+		5E991A641DE2E4E500D70431 /* DiscardGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscardGame.h; sourceTree = "<group>"; };
+		5E991A651DE2E4E500D70431 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		5E991A661DE2E4E500D70431 /* GameRule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameRule.cpp; sourceTree = "<group>"; };
+		5E991A671DE2E4E500D70431 /* GameRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameRule.h; sourceTree = "<group>"; };
+		5E991A681DE2E4E500D70431 /* MeldGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MeldGame.cpp; sourceTree = "<group>"; };
+		5E991A691DE2E4E500D70431 /* MeldGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MeldGame.h; sourceTree = "<group>"; };
+		5E991A6A1DE2E4E500D70431 /* Immortal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Immortal.cpp; sourceTree = "<group>"; };
+		5E991A6B1DE2E4E500D70431 /* Immortal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Immortal.h; sourceTree = "<group>"; };
+		5E991A6C1DE2E4E500D70431 /* ImmortalFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmortalFwd.h; sourceTree = "<group>"; };
+		5E991A6D1DE2E4E500D70431 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
+		5E991A6E1DE2E4E500D70431 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		5E991A6F1DE2E4E500D70431 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = SOURCE_ROOT; };
+		5E991A7E1DE2E7FF00D70431 /* stdafx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdafx.h; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5E991A581DE2E16C00D70431 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5E991A521DE2E16C00D70431 = {
+			isa = PBXGroup;
+			children = (
+				5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */,
+				5E991A7E1DE2E7FF00D70431 /* stdafx.h */,
+				5E991A621DE2E4E500D70431 /* immortal */,
+				5E991A5C1DE2E16C00D70431 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5E991A5C1DE2E16C00D70431 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5E991A5B1DE2E16C00D70431 /* libimmortal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5E991A621DE2E4E500D70431 /* immortal */ = {
+			isa = PBXGroup;
+			children = (
+				5E991A631DE2E4E500D70431 /* DiscardGame.cpp */,
+				5E991A641DE2E4E500D70431 /* DiscardGame.h */,
+				5E991A651DE2E4E500D70431 /* Game.h */,
+				5E991A661DE2E4E500D70431 /* GameRule.cpp */,
+				5E991A671DE2E4E500D70431 /* GameRule.h */,
+				5E991A681DE2E4E500D70431 /* MeldGame.cpp */,
+				5E991A691DE2E4E500D70431 /* MeldGame.h */,
+				5E991A6A1DE2E4E500D70431 /* Immortal.cpp */,
+				5E991A6B1DE2E4E500D70431 /* Immortal.h */,
+				5E991A6C1DE2E4E500D70431 /* ImmortalFwd.h */,
+				5E991A6D1DE2E4E500D70431 /* PBHelper.h */,
+				5E991A6E1DE2E4E500D70431 /* Player.cpp */,
+				5E991A6F1DE2E4E500D70431 /* Player.h */,
+			);
+			path = immortal;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5E991A591DE2E16C00D70431 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E991A801DE2E7FF00D70431 /* stdafx.h in Headers */,
+				5E991A781DE2E4E500D70431 /* Immortal.h in Headers */,
+				5E991A761DE2E4E500D70431 /* MeldGame.h in Headers */,
+				5E991A721DE2E4E500D70431 /* Game.h in Headers */,
+				5E991A7C1DE2E4E500D70431 /* Player.h in Headers */,
+				5E991A711DE2E4E500D70431 /* DiscardGame.h in Headers */,
+				5E991A791DE2E4E500D70431 /* ImmortalFwd.h in Headers */,
+				5E991A7A1DE2E4E500D70431 /* PBHelper.h in Headers */,
+				5E991A741DE2E4E500D70431 /* GameRule.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5E991A5A1DE2E16C00D70431 /* immortal */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E991A5F1DE2E16C00D70431 /* Build configuration list for PBXNativeTarget "immortal" */;
+			buildPhases = (
+				5E991A571DE2E16C00D70431 /* Sources */,
+				5E991A581DE2E16C00D70431 /* Frameworks */,
+				5E991A591DE2E16C00D70431 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = immortal;
+			productName = libimmortal;
+			productReference = 5E991A5B1DE2E16C00D70431 /* libimmortal.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5E991A531DE2E16C00D70431 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0810;
+				ORGANIZATIONNAME = "Vic Liu";
+				TargetAttributes = {
+					5E991A5A1DE2E16C00D70431 = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 5E991A561DE2E16C00D70431 /* Build configuration list for PBXProject "immortal" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5E991A521DE2E16C00D70431;
+			productRefGroup = 5E991A5C1DE2E16C00D70431 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5E991A5A1DE2E16C00D70431 /* immortal */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5E991A571DE2E16C00D70431 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5E991A701DE2E4E500D70431 /* DiscardGame.cpp in Sources */,
+				5E991A751DE2E4E500D70431 /* MeldGame.cpp in Sources */,
+				5E991A731DE2E4E500D70431 /* GameRule.cpp in Sources */,
+				5E991A7F1DE2E7FF00D70431 /* stdafx.cpp in Sources */,
+				5E991A771DE2E4E500D70431 /* Immortal.cpp in Sources */,
+				5E991A7B1DE2E4E500D70431 /* Player.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5E991A5D1DE2E16C00D70431 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5E991A5E1DE2E16C00D70431 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5E991A601DE2E16C00D70431 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					../libkeye,
+					../libvic,
+					../sdks/include,
+					../protocol,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib,
+					../sdks/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5E991A611DE2E16C00D70431 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					../libkeye,
+					../libvic,
+					../sdks/include,
+					../protocol,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/lib,
+					../sdks/libs,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5E991A561DE2E16C00D70431 /* Build configuration list for PBXProject "immortal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E991A5D1DE2E16C00D70431 /* Debug */,
+				5E991A5E1DE2E16C00D70431 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5E991A5F1DE2E16C00D70431 /* Build configuration list for PBXNativeTarget "immortal" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5E991A601DE2E16C00D70431 /* Debug */,
+				5E991A611DE2E16C00D70431 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5E991A531DE2E16C00D70431 /* Project object */;
+}

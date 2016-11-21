@@ -7,7 +7,7 @@
 //
 
 #include "stdafx.h"
-#include "NodeFwd.h"
+#include "ImmortalFwd.h"
 using namespace proto3;
 
 Player::Player(keye::svc_handler& sh)
@@ -29,7 +29,7 @@ void Player::on_read(PBHelper& pb){
             MsgNCCreate omsg;
             if(pb.Parse(imsg)){
                 auto key=getKey();
-                auto gameptr=Node::sNode->createGame(key,imsg);
+                auto gameptr=Immortal::sImmortal->createGame(key,imsg);
                 if(gameptr){
                     int maxRound=1;
                     for(auto kv:imsg.options()){
@@ -77,7 +77,7 @@ void Player::on_read(PBHelper& pb){
             MsgNCJoin omsg;
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
-                if(auto gameptr=Node::sNode->findGame(gid)){
+                if(auto gameptr=Immortal::sImmortal->findGame(gid)){
                     auto rule=gameptr->rule;
                     if(!rule->Ready(*gameptr)){
                         game=gameptr;

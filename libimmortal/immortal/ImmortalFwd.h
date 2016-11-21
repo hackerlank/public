@@ -6,15 +6,15 @@
 //  Copyright © 2016 Vic Liu. All rights reserved.
 //
 
-#ifndef login_fwd_h
-#define login_fwd_h
+#ifndef immortal_fwd_h
+#define immortal_fwd_h
 
 #include <keye/htio/htio_demo.h>
 #include <algorithm>
 
-#include "protocol.pb.h"
+#include <protocol.pb.h>
 
-#include "PBHelper.h"
+#include <immortal/PBHelper.h>
 
 typedef short unit_id_t;
 typedef short pos_t;
@@ -28,14 +28,11 @@ extern keye::logger sLogger;
 #define Logger sLogger<<begl
 #endif
 
-#include "Player.h"
-#include "Game.h"
-#include "GameRule.h"
-#include "GameRule/DiscardGame.h"
-#include "GameRule/MeldGame.h"
-#include "GameRule/DoudeZhu.h"
-#include "GameRule/Mahjong.h"
-#include "GameRule/Paohuzi.h"
-#include "Node.h"
+#include <immortal/Player.h>
+#include <immortal/Game.h>
+#include <immortal/GameRule.h>
+#include <immortal/DiscardGame.h>
+#include <immortal/MeldGame.h>
+#include <immortal/Immortal.h>
 
-#endif /* login_fwd_h */
+#endif /* immortal_fwd_h */

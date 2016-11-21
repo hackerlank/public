@@ -6,8 +6,8 @@
 //  Copyright © 2016 Vic Liu. All rights reserved.
 //
 
-#include "../stdafx.h"
-#include "NodeFwd.h"
+#include "stdafx.h"
+#include "ImmortalFwd.h"
 using namespace proto3;
 
 void MeldGame::Tick(Game& game){
