@@ -35,7 +35,6 @@
 		5E1099031D6731AD00B02E6B /* liblibvic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibvic.a; path = ../libvic/build/Debug/liblibvic.a; sourceTree = "<group>"; };
 		5E3845A11D35462A00F9B096 /* Node */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Node; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E3845B11D3548FD00F9B096 /* libkeye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkeye.a; path = "../../../Library/Developer/Xcode/DerivedData/server-dwybynuuejmzmkeiqegwnxidbfhh/Build/Products/Debug/libkeye.a"; sourceTree = "<group>"; };
-		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
 		5E8A17421D71E71600CDCE1D /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
 		5E8A17441D71E71600CDCE1D /* NodeFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeFwd.h; sourceTree = "<group>"; };
 		5E991A811DE2EF1900D70431 /* DoudeZhu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoudeZhu.cpp; sourceTree = "<group>"; };
@@ -77,7 +76,6 @@
 				5E991A851DE2EF1900D70431 /* Paohuzi.cpp */,
 				5E991A861DE2EF1900D70431 /* Paohuzi.h */,
 				5E8A17421D71E71600CDCE1D /* Node.cpp */,
-				5E430E321D706F7900B85CB8 /* PBHelper.h */,
 				5E8A17441D71E71600CDCE1D /* NodeFwd.h */,
 				5EEEA7B31D67A59D00630485 /* libprotocol.a */,
 				5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */,

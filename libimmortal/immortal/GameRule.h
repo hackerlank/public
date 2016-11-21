@@ -9,7 +9,7 @@
 #ifndef GameRule_h
 #define GameRule_h
 
-class GameRule{
+class KEYE_API GameRule{
 public:
     virtual             ~GameRule(){};
     bool                Ready(Game&);

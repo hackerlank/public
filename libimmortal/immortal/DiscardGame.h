@@ -9,7 +9,7 @@
 #ifndef DiscardGame_h
 #define DiscardGame_h
 
-class DiscardGame: public GameRule{
+class KEYE_API DiscardGame: public GameRule{
 public:
     virtual void            Tick(Game&);
 

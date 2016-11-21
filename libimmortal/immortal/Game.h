@@ -10,7 +10,7 @@
 #define Game_hpp
 
 class GameRule;
-struct Game{
+struct KEYE_API Game{
 public:
     enum State{
         ST_WAIT,

@@ -4,9 +4,9 @@ CCDEBUG+= -g
 CCOPT+= -O0
 #CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -DBOOST_ALL_NO_LIB
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
-CFLAGS+=  -I./ -I../libkeye/ -I../libvic/ -I../protocol/ -I$(DEPENDENCIES)/include
+CFLAGS+=  -I./ -I../libkeye/ -I../libimmortal/ -I../libvic/ -I../protocol/ -I$(DEPENDENCIES)/include
 LDFLAGS+= -L$(DEPENDENCIES)/libs/ubuntu16 -L../protocol/ -Wl,-rpath-link=$(DEPENDENCIES)/libs/ubuntu16 -Wl,-rpath=$(DEPENDENCIES)/libs/ubuntu16 -Wl,--no-as-needed
-LIBS+=  -lkeye -lvic -lprotocol -lprotobuf-lite -lmysqlclient -lhiredis -lstdc++ -lm -lboost_system -lboost_date_time
+LIBS+=  -limmortal -lkeye -lvic -lprotocol -lprotobuf-lite -lmysqlclient -lhiredis -lstdc++ -lm -lboost_system -lboost_date_time
 SRCS= $(wildcard *.cpp) \
 	$(wildcard GameRule/*.cpp)
 INCS= $(wildcard *.h) \

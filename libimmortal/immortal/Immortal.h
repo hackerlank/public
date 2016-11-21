@@ -9,7 +9,7 @@
 #ifndef Immortal_h
 #define Immortal_h
 
-class Immortal :public keye::ws_service {
+class KEYE_API Immortal :public keye::ws_service {
 public:
                     Immortal(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
     virtual void	on_open(keye::svc_handler&);

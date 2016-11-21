@@ -9,7 +9,7 @@
 #ifndef MeldGame_h
 #define MeldGame_h
 
-class MeldGame: public GameRule{
+class KEYE_API MeldGame: public GameRule{
 public:
     virtual void            Tick(Game&);
 

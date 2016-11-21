@@ -12,7 +12,7 @@
 // --------------------------------------------------------
 // PBHelper: protobuf helper
 // --------------------------------------------------------
-class PBHelper{
+class KEYE_API PBHelper{
 public:
     static const size_t send_buffer_size=2048;
     PBHelper(keye::PacketWrapper& pw):_pw(pw){
