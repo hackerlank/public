@@ -11,12 +11,16 @@ public class LoginPanel : MonoBehaviour {
 
 	public static LoginPanel Instance=null;
 	void Awake(){
-		Host.text=PlayerPrefs.GetString(Configs.PrefsKey_Uri,DefaultHost.text);
+		//load host from cache
+		Host.text=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
 		Instance=this;
 	}
 	void OnDestroy(){Instance=null;}
 	
 	public void OnLogin(){
+		//choice default if empty
+		if(Host.text.Length<=0)Host.text=DefaultHost.text;
+		//caching
 		if(Host.text.Length>0){
 			var saved=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
 			if(Host.text!=saved){
