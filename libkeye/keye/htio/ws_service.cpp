@@ -54,6 +54,7 @@ public:
 
 			// Listen on port
             try{
+                throw std::runtime_error("pass to ipv4");
                 _server.listen(port);
             }catch(const std::exception & e) {
                 KEYE_LOG("%s\n",e.what());
