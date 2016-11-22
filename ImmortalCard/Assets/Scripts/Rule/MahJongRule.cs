@@ -168,7 +168,7 @@ public class MahJongRule: GameRule {
 			foreach(var i in cards)if(i==card){inhand=true;break;}
 			if(!inhand)cards.Add(card);
 		}
-		cards.Sort(Main.Instance.gameController.Rule.comparision);
+		cards.Sort(comparision);
 
 		var win=false;
 		var bunches=new List<bunch_t>();
@@ -391,9 +391,9 @@ public class MahJongRule: GameRule {
 	public override int comparision(int x,int y){
 		var cx=(int)x/1000;
 		var cy=(int)y/1000;
-		if(cx<cy)return 1;
-		else if(cx==cy)return (int)y%100-(int)x%100;
-		else return -1;
+		if(cx<cy)return -1;
+		else if(cx==cy)return (int)x%100-(int)y%100;
+		else return 1;
 	}
 
 	public override int transformValue(int val){
