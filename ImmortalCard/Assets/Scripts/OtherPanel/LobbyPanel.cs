@@ -18,22 +18,13 @@ public class LobbyPanel : MonoBehaviour {
 		var str=PlayerPrefs.GetString(Configs.PrefsKey_StoreGame,"");
 		var storeGame=new StoreGame();
 		storeGame.FromString(str);
+		/*
 		if(storeGame.gameId>0){
 			//in game,send and wait for reconnect
-			Main.Instance.MainPlayer.Connect();
-			while(!Main.Instance.MainPlayer.InGame)yield return null;
-			
-			MsgCNReconnect msg=new MsgCNReconnect();
-			msg.Mid=pb_msg.MsgCnReconnect;
-			msg.Version=100;
-			Main.Instance.MainPlayer.Send<MsgCNReconnect>(msg.Mid,msg);
-			Debug.Log("reconnect game by key "+storeGame.gameId%(uint)pb_enum.DefMaxNodes);
+			yield return StartCoroutine(Main.Instance.MainPlayer.Reconnect());
 
-			Main.Instance.MainPlayer.CreateGame(
-				(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots,delegate {
-				Destroy(gameObject);
-			});
-		}else{
+			Destroy(gameObject);
+		}else*/{
 			//to enter panel
 			var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
 			foreach(var id in games){
@@ -42,6 +33,7 @@ public class LobbyPanel : MonoBehaviour {
 				addGame(game);
 			}
 		}
+		yield break;
 	}
 
 	void addGame(game_t game){

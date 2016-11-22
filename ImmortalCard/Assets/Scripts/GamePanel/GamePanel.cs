@@ -78,6 +78,11 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		tokenIcon.Pile=msg.Piles;
 	}
 
+	virtual public IEnumerator OnMsgReconnect(Player player,MsgNCReconnect msg){
+		Debug.Log("---- GamePanel on reconnect");
+		yield break;
+	}
+
 	virtual public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		yield break;
 	}

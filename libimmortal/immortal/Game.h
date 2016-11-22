@@ -34,6 +34,7 @@ public:
     proto3::pb_enum                     category;
     std::string                         definedCards;
     std::vector<unit_id_t>              pile;       //cards library
+    std::vector<unit_id_t>              bottom;     //bottom cards
     std::map<unit_id_t,int>             pileMap;    //cards map
     std::vector<std::shared_ptr<Player>> players;
     std::vector<proto3::bunch_t>        historical; //historical game data

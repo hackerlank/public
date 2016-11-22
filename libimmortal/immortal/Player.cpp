@@ -142,6 +142,45 @@ void Player::on_read(PBHelper& pb){
             PBHelper::Send(sh,omsg);
             break;
         }
+
+        case proto3::pb_msg::MSG_CN_RECONNECT:{
+            //broadcast
+            MsgNCReconnect msg;
+            msg.set_mid(pb_msg::MSG_NC_RECONNECT);
+            
+            auto MP=game->rule->MaxPlayer(*game);
+            auto& start=*msg.mutable_start();
+            start.set_banker(game->banker);
+            start.set_ante(10);
+            start.set_multiple(1);
+            for(int i=0;i<MP;++i)
+                start.mutable_count()->Add((int)game->players[i]->playData.hands().size());
+            for(auto b:game->bottom)start.add_bottom(b);
+            start.set_piles((int)game->pile.size());
+            
+            auto seat=playData.seat();
+            
+            //copy data of other players
+            for(int i=0,ii=MP;i<ii;++i){
+                auto p=game->players[i];
+                auto msgplay=msg.add_players();
+                msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
+                msgplay->mutable_discards()->CopyFrom(p->playData.discards());
+            }
+            
+            //send only to source player
+            start.set_pos(playData.seat());
+            auto hands=start.mutable_hands();
+            auto n=(int)playData.hands().size();
+            hands->Resize(n,0);
+            for(int j=0;j<n;++j)
+                hands->Set(j,playData.hands(j));
+            send(msg);
+    
+            //send last message
+            send(*lastMsg);
+        }
+
         case MSG_CN_READY:{
             game->rule->OnReady(*this);
             break;

@@ -20,6 +20,7 @@ void GameRule::deal(Game& game){
     changePos(game,game.banker);
     game.banker=game.token;
     game.pile.clear();
+    game.bottom.clear();
     game.pileMap.clear();
     game.historical.clear();
     game.pendingMeld.clear();
@@ -61,9 +62,8 @@ void GameRule::deal(Game& game){
     //deal: fixed position,movable banker
     auto MH=maxHands(game);
     auto BK=MH+bottom(game);
-    bunch_t bottom;
     auto sorter=std::bind(&GameRule::comparision,this,std::placeholders::_1,std::placeholders::_2);
-    for(auto x=game.pile.begin()+MH,xx=game.pile.begin()+BK;x!=xx;++x)bottom.add_pawns(*x);
+    for(auto x=game.pile.begin()+MH,xx=game.pile.begin()+BK;x!=xx;++x)game.bottom.push_back(*x);
     for(int i=0;i<MP;++i){
         size_t pos=(game.banker+i)%MP;
         size_t ibeg=(i==0?0:BK+MH*(i-1));
@@ -92,7 +92,7 @@ void GameRule::deal(Game& game){
     msg.set_multiple(1);
     for(int i=0;i<MP;++i)
         msg.mutable_count()->Add((int)game.players[i]->playData.hands().size());
-    msg.mutable_bottom()->CopyFrom(bottom.pawns());
+    for(auto b:game.bottom)msg.add_bottom(b);
     msg.set_piles((int)game.pile.size());
 
     for(auto p:game.players){

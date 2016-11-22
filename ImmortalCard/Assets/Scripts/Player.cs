@@ -56,32 +56,33 @@ public class Player {
 		}
 	}
 
+	public IEnumerator Reconnect(){
+		//in game,send and wait for reconnect
+		Main.Instance.MainPlayer.Connect();
+		while(!Main.Instance.MainPlayer.InGame)yield return null;
+		
+		MsgCNReconnect msg=new MsgCNReconnect();
+		msg.Mid=pb_msg.MsgCnReconnect;
+		msg.Version=100;
+		Main.Instance.MainPlayer.Send<MsgCNReconnect>(msg.Mid,msg);
+		Debug.Log("reconnect game by key "+storeGame.gameId%(uint)pb_enum.DefMaxNodes);
+		
+		yield return Main.Instance.StartCoroutine(Main.Instance.MainPlayer.CreateGame(
+			(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots));
+	}
+
 	public void Disconnect(){
 		InGame=false;
 		if(connected)
 			ws.Close();
 	}
 
-	public void CreateGame(pb_enum game,int gameId,int nRobots=0,System.Action cb=null){
+	public IEnumerator CreateGame(pb_enum game,int gameId,int nRobots=0){
+		GamePanel panel=null;
 		System.Action<Component> handler=delegate(Component obj){
-			if(nRobots>0){
-				//add robots demand
-				var panel=obj as GamePanel;
-				
-				var MP=panel.Rule.MaxPlayer;
-				if(nRobots>=MP)nRobots=MP-1;
-				for(uint i=0;i<nRobots;++i){
-					var robot=new Player();
-					robot.controllers.Add(panel.Rule.AIController);
-					Main.Instance.robots.Add(robot);
-					panel.StartCoroutine(robot.JoinGame(gameId));
-				}
-			}
-			if(cb!=null){
-				cb.Invoke();
-			}
+			panel=obj as GamePanel;
 		};
-		
+
 		switch(game){
 		case pb_enum.GameMj:
 			MahJongPanel.Create(handler);
@@ -94,6 +95,21 @@ public class Player {
 			DoudeZhuPanel.Create(handler);
 			break;
 		}
+		while (panel==null)
+			yield return null;
+
+		if(nRobots>0){
+			//add robots demand
+			var MP=panel.Rule.MaxPlayer;
+			if(nRobots>=MP)nRobots=MP-1;
+			for(uint i=0;i<nRobots;++i){
+				var robot=new Player();
+				robot.controllers.Add(panel.Rule.AIController);
+				Main.Instance.robots.Add(robot);
+				panel.StartCoroutine(robot.JoinGame(gameId));
+			}
+		}
+
 		Main.Instance.Wait=false;
 	}
 
@@ -125,19 +141,22 @@ public class Player {
 		});
 	}
 	public void onClose(string error){
-		var reconnect=false;
-		if(reconnect){
-			if(InGame)Loom.QueueOnMainThread(delegate{
-				//dispatch to main thread
+		Loom.QueueOnMainThread(delegate{
+			if(false && InGame){
+				if(this==Main.Instance.MainPlayer){
+					Main.Instance.StartCoroutine(Main.Instance.MainPlayer.Reconnect());
+				}else
+					Main.Instance.MainPlayer.Disconnect();
+			}
+			
+			var reconnect=false;
+			if(reconnect){
 				Main.Instance.Wait=true;
-			});
-		}else{
-			InGame=false;
-			Loom.QueueOnMainThread(delegate{
-				//dispatch to main thread
+			}else{
+				InGame=false;
 				Main.Instance.Wait=false;
-			});
-		}
+			}
+		});
 		connected=false;
 		Debug.Log("OnClose "+error);
 	}
@@ -219,7 +238,15 @@ public class Player {
 				Debug.LogError("engage error: "+msgEngage.Result);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgEngage(this,msgEngage));
 			break;
-			
+
+		case pb_msg.MsgNcReconnect:
+			MsgNCReconnect msgReconn=MsgNCReconnect.Parser.ParseFrom(bytes);
+			Debug.Log("reconnect game");
+			if(msgReconn.Result==pb_enum.Succeess){
+				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgReconnect(this,msgReconn));
+			}
+			break;
+
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){

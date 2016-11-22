@@ -5,6 +5,7 @@ using Proto3;
 
 public interface PlayerController {
 	IEnumerator OnMsgStart(Player player,MsgNCStart msg);
+	IEnumerator OnMsgReconnect(Player player,MsgNCReconnect msg);
 	IEnumerator OnMsgEngage(Player player,MsgNCEngage msg);
 	IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg);
 	IEnumerator OnMsgMeld(Player player,MsgNCMeld msg);

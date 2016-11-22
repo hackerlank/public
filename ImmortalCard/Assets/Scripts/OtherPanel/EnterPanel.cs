@@ -166,7 +166,7 @@ public class EnterPanel : MonoBehaviour {
 		storeGame.gameId=Main.Instance.MainPlayer.msgNCCreate.GameId;
 
 		Main.Instance.MainPlayer.msgNCCreate=null;
-		createGame();
+		yield return StartCoroutine(createGame());
 	}
 
 	IEnumerator joinCo(){
@@ -177,16 +177,16 @@ public class EnterPanel : MonoBehaviour {
 		storeGame.gameType=(int)Main.Instance.MainPlayer.msgNCJoin.Game;
 		Main.Instance.MainPlayer.msgNCJoin=null;
 
-		createGame();
+		yield return StartCoroutine(createGame());
 	}
 
-	void createGame(){
+	IEnumerator createGame(){
 		var storeGame=Main.Instance.MainPlayer.storeGame;
-		Main.Instance.MainPlayer.CreateGame(
-			(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots,delegate {
-			Destroy(gameObject);
-			if(LobbyPanel.Instance!=null)
-				Destroy(LobbyPanel.Instance.gameObject);
-		});
+		yield return StartCoroutine(Main.Instance.MainPlayer.CreateGame(
+			(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots));
+
+		if(LobbyPanel.Instance!=null)
+			Destroy(LobbyPanel.Instance.gameObject);
+		Destroy(gameObject);
 	}
 }
