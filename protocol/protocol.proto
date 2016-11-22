@@ -352,6 +352,8 @@ MSG_CH_END              =5999;
 MSG_CN_BEGIN            =6000;
 MSG_CN_ENTER            =6001;
 MSG_NC_ENTER            =6002;
+MSG_CN_RECONNECT        =6003;
+MSG_NC_RECONNECT        =6004;
 
 MSG_CN_CREATE           =6011;
 MSG_NC_CREATE           =6012;
@@ -502,6 +504,23 @@ message MsgNCEnter{
 pb_msg mid				=1;
 player_t player         =2;
 pb_enum result			=3;
+};
+
+message MsgCNReconnect{
+
+pb_msg mid				=1;
+string uid				=2;
+uint32 version			=3;
+int32 game              =4;
+uint64 session          =5;
+};
+
+message MsgNCReconnect{
+
+pb_msg mid				=1;
+MsgNCStart start        =2;
+repeated play_t players =3;
+pb_enum result			=4;
 };
 
 message MsgCNCreate{

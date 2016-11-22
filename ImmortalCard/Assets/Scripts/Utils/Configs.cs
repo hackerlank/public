@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using System.Reflection;
 
 public class Configs{
-	public const string PrefsKey_Uri="PrefsKey_Uri";
-	public const string PrefsKey_DefinedCards="PrefsKey_DefinedCards";
+	public const string PrefsKey_Uri			="PrefsKey_Uri";
+	public const string PrefsKey_DefinedCards	="PrefsKey_DefinedCards";
+
+	public const string PrefsKey_StoreGame		="PrefsKey_StoreGame";
 
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 
-	public static float OpsInterval=1f;
+	public static float OpsInterval=0.5f;
 	public static int invalidCard=-1;
 
 	public static void Load(){

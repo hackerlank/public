@@ -250,7 +250,6 @@ public class PaohuziPanel : GamePanel {
 						past=true;
 				}
 			}
-			if(past)Debug.Log("----pass "+card.ToString()+" when pass meld return");
 			if(dodge)me.dodgeCards.Add(card);
 			else if(past)me.unpairedCards.Add(card);
 			break;

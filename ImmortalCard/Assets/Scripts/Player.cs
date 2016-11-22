@@ -14,7 +14,7 @@ public class Player {
 	public bool				InGame=false;
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
-	public int				gameId=0;
+	public StoreGame		storeGame;	//store game for reconnect
 	public play_t			playData=new play_t();
 	public pb_enum			category;
 
@@ -62,8 +62,42 @@ public class Player {
 			ws.Close();
 	}
 
-	public IEnumerator JoinGame(int id){
-		gameId=id;
+	public void CreateGame(pb_enum game,int gameId,int nRobots=0,System.Action cb=null){
+		System.Action<Component> handler=delegate(Component obj){
+			if(nRobots>0){
+				//add robots demand
+				var panel=obj as GamePanel;
+				
+				var MP=panel.Rule.MaxPlayer;
+				if(nRobots>=MP)nRobots=MP-1;
+				for(uint i=0;i<nRobots;++i){
+					var robot=new Player();
+					robot.controllers.Add(panel.Rule.AIController);
+					Main.Instance.robots.Add(robot);
+					panel.StartCoroutine(robot.JoinGame(gameId));
+				}
+			}
+			if(cb!=null){
+				cb.Invoke();
+			}
+		};
+		
+		switch(game){
+		case pb_enum.GameMj:
+			MahJongPanel.Create(handler);
+			break;
+		case pb_enum.GamePhz:
+			PaohuziPanel.Create(handler);
+			break;
+		case pb_enum.GameDdz:
+		default:
+			DoudeZhuPanel.Create(handler);
+			break;
+		}
+		Main.Instance.Wait=false;
+	}
+
+	public IEnumerator JoinGame(int gameId){
 		Connect(gameId);
 		while(!InGame)yield return null;
 		
@@ -154,8 +188,13 @@ public class Player {
 			MsgNCCreate msgCreate=MsgNCCreate.Parser.ParseFrom(bytes);
 			Debug.Log("created game "+msgCreate.GameId);
 			if(msgCreate.Result==pb_enum.Succeess){
-				gameId=msgCreate.GameId;
 				msgNCCreate=msgCreate;
+				if(this==Main.Instance.MainPlayer)
+				{
+					storeGame.gameId=msgCreate.GameId;
+					var str=storeGame.ToString();
+					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
+				}
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
 			break;
@@ -164,6 +203,12 @@ public class Player {
 			//Debug.Log("joined game");
 			if(msgJoin.Result==pb_enum.Succeess){
 				msgNCJoin=msgJoin;
+				if(this==Main.Instance.MainPlayer)
+				{
+					storeGame.gameType=(int)msgJoin.Game;
+					var str=storeGame.ToString();
+					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
+				}
 			}else
 				Debug.LogError("join error: "+msgJoin.Result);
 			break;
@@ -272,8 +317,14 @@ public class Player {
 			break;
 		case pb_msg.MsgNcFinish:
 			MsgNCFinish msgFinish=MsgNCFinish.Parser.ParseFrom(bytes);
-			if(msgFinish.Result==pb_enum.Succeess){
-			}else
+			if(msgFinish.Result==pb_enum.Succeess)
+			{
+				if(this==Main.Instance.MainPlayer)
+				{
+					PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
+				}
+			}
+			else
 				Debug.LogError("finish error: "+msgFinish.Result);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgFinish(this,msgFinish));
 			break;

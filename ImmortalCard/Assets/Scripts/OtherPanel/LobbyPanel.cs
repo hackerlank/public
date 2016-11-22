@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using Proto3;
 
 public class LobbyPanel : MonoBehaviour {
@@ -13,12 +14,33 @@ public class LobbyPanel : MonoBehaviour {
 	void Awake(){Instance=this;}
 	void OnDestroy(){Instance=null;}
 
-	void Start(){
-		var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
-		foreach(var id in games){
-			game_t game=new game_t();
-			game.Id=(int)id;
-			addGame(game);
+	IEnumerator Start(){
+		var str=PlayerPrefs.GetString(Configs.PrefsKey_StoreGame,"");
+		var storeGame=new StoreGame();
+		storeGame.FromString(str);
+		if(storeGame.gameId>0){
+			//in game,send and wait for reconnect
+			Main.Instance.MainPlayer.Connect();
+			while(!Main.Instance.MainPlayer.InGame)yield return null;
+			
+			MsgCNReconnect msg=new MsgCNReconnect();
+			msg.Mid=pb_msg.MsgCnReconnect;
+			msg.Version=100;
+			Main.Instance.MainPlayer.Send<MsgCNReconnect>(msg.Mid,msg);
+			Debug.Log("reconnect game by key "+storeGame.gameId%(uint)pb_enum.DefMaxNodes);
+
+			Main.Instance.MainPlayer.CreateGame(
+				(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots,delegate {
+				Destroy(gameObject);
+			});
+		}else{
+			//to enter panel
+			var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
+			foreach(var id in games){
+				game_t game=new game_t();
+				game.Id=(int)id;
+				addGame(game);
+			}
 		}
 	}
 

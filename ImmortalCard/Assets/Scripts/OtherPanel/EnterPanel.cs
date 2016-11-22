@@ -22,8 +22,6 @@ public class EnterPanel : MonoBehaviour {
 	[HideInInspector]
 	public RuleIcon	GameCategory;
 
-	int nRobots=0;
-
 	void Start(){
 		var phz=new Dictionary<pb_enum, string>();
 		phz[pb_enum.PhzSy]="邵阳字牌";
@@ -123,7 +121,11 @@ public class EnterPanel : MonoBehaviour {
 		Main.Instance.MainPlayer.Connect();
 		while(!Main.Instance.MainPlayer.InGame)yield return null;
 
-		nRobots=4;
+		var storeGame=new StoreGame();
+		Main.Instance.MainPlayer.storeGame=storeGame;
+		storeGame.gameType=(int)CurrentGame.game;
+		storeGame.robots=4;
+
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
 		opRound.Ivalue=Main.Round;
@@ -160,52 +162,31 @@ public class EnterPanel : MonoBehaviour {
 		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
 
 		while(Main.Instance.MainPlayer.msgNCCreate==null)yield return null;
-		var gameId=Main.Instance.MainPlayer.msgNCCreate.GameId;
+
+		storeGame.gameId=Main.Instance.MainPlayer.msgNCCreate.GameId;
+
 		Main.Instance.MainPlayer.msgNCCreate=null;
-		createGame(CurrentGame.game,gameId);
+		createGame();
 	}
 
 	IEnumerator joinCo(){
 		Main.Instance.MainPlayer.msgNCJoin=null;
 		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
-		var game=Main.Instance.MainPlayer.msgNCJoin.Game;
+
+		var storeGame=Main.Instance.MainPlayer.storeGame;
+		storeGame.gameType=(int)Main.Instance.MainPlayer.msgNCJoin.Game;
 		Main.Instance.MainPlayer.msgNCJoin=null;
-		createGame(game,Main.Instance.MainPlayer.gameId);
+
+		createGame();
 	}
 
-	void createGame(pb_enum game,int gameId){
-		System.Action<Component> handler=delegate(Component obj){
+	void createGame(){
+		var storeGame=Main.Instance.MainPlayer.storeGame;
+		Main.Instance.MainPlayer.CreateGame(
+			(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots,delegate {
 			Destroy(gameObject);
 			if(LobbyPanel.Instance!=null)
 				Destroy(LobbyPanel.Instance.gameObject);
-
-			if(nRobots>0){
-				//add robots demand
-				var panel=obj as GamePanel;
-
-				var MP=panel.Rule.MaxPlayer;
-				if(nRobots>=MP)nRobots=MP-1;
-				for(uint i=0;i<nRobots;++i){
-					var robot=new Player();
-					robot.controllers.Add(panel.Rule.AIController);
-					Main.Instance.robots.Add(robot);
-					panel.StartCoroutine(robot.JoinGame(gameId));
-				}
-			}
-		};
-
-		switch(game){
-		case pb_enum.GameMj:
-			MahJongPanel.Create(handler);
-			break;
-		case pb_enum.GamePhz:
-			PaohuziPanel.Create(handler);
-			break;
-		case pb_enum.GameDdz:
-		default:
-			DoudeZhuPanel.Create(handler);
-			break;
-		}
-		Main.Instance.Wait=false;
+		});
 	}
 }

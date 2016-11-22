@@ -42,6 +42,8 @@ void protobuf_ShutdownFile_protocol_2eproto() {
   delete MsgHCQuery::default_instance_;
   delete MsgCNEnter::default_instance_;
   delete MsgNCEnter::default_instance_;
+  delete MsgCNReconnect::default_instance_;
+  delete MsgNCReconnect::default_instance_;
   delete MsgCNCreate::default_instance_;
   delete MsgNCCreate::default_instance_;
   delete MsgCNJoin::default_instance_;
@@ -103,6 +105,8 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgHCQuery::default_instance_ = new MsgHCQuery();
   MsgCNEnter::default_instance_ = new MsgCNEnter();
   MsgNCEnter::default_instance_ = new MsgNCEnter();
+  MsgCNReconnect::default_instance_ = new MsgCNReconnect();
+  MsgNCReconnect::default_instance_ = new MsgNCReconnect();
   MsgCNCreate::default_instance_ = new MsgCNCreate();
   MsgNCCreate::default_instance_ = new MsgNCCreate();
   MsgCNJoin::default_instance_ = new MsgCNJoin();
@@ -149,6 +153,8 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgHCQuery::default_instance_->InitAsDefaultInstance();
   MsgCNEnter::default_instance_->InitAsDefaultInstance();
   MsgNCEnter::default_instance_->InitAsDefaultInstance();
+  MsgCNReconnect::default_instance_->InitAsDefaultInstance();
+  MsgNCReconnect::default_instance_->InitAsDefaultInstance();
   MsgCNCreate::default_instance_->InitAsDefaultInstance();
   MsgNCCreate::default_instance_->InitAsDefaultInstance();
   MsgCNJoin::default_instance_->InitAsDefaultInstance();
@@ -264,6 +270,8 @@ bool pb_msg_IsValid(int value) {
     case 6000:
     case 6001:
     case 6002:
+    case 6003:
+    case 6004:
     case 6011:
     case 6012:
     case 6013:
@@ -12896,6 +12904,885 @@ void MsgNCEnter::clear_result() {
   
   result_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgNCEnter.result)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgCNReconnect::kMidFieldNumber;
+const int MsgCNReconnect::kUidFieldNumber;
+const int MsgCNReconnect::kVersionFieldNumber;
+const int MsgCNReconnect::kGameFieldNumber;
+const int MsgCNReconnect::kSessionFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgCNReconnect::MsgCNReconnect()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.MsgCNReconnect)
+}
+
+void MsgCNReconnect::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+MsgCNReconnect::MsgCNReconnect(const MsgCNReconnect& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNReconnect)
+}
+
+void MsgCNReconnect::SharedCtor() {
+    _is_default_instance_ = false;
+  ::google::protobuf::internal::GetEmptyString();
+  _cached_size_ = 0;
+  mid_ = 0;
+  uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  version_ = 0u;
+  game_ = 0;
+  session_ = GOOGLE_ULONGLONG(0);
+}
+
+MsgCNReconnect::~MsgCNReconnect() {
+  // @@protoc_insertion_point(destructor:proto3.MsgCNReconnect)
+  SharedDtor();
+}
+
+void MsgCNReconnect::SharedDtor() {
+  uid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void MsgCNReconnect::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const MsgCNReconnect& MsgCNReconnect::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+MsgCNReconnect* MsgCNReconnect::default_instance_ = NULL;
+
+MsgCNReconnect* MsgCNReconnect::New(::google::protobuf::Arena* arena) const {
+  MsgCNReconnect* n = new MsgCNReconnect;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void MsgCNReconnect::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgCNReconnect)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgCNReconnect, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgCNReconnect*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, game_);
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+
+#undef ZR_HELPER_
+#undef ZR_
+
+}
+
+bool MsgCNReconnect::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.MsgCNReconnect)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .proto3.pb_msg mid = 1;
+      case 1: {
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_uid;
+        break;
+      }
+
+      // optional string uid = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_uid:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+                input, this->mutable_uid()));
+          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+            this->uid().data(), this->uid().length(),
+            ::google::protobuf::internal::WireFormatLite::PARSE,
+            "proto3.MsgCNReconnect.uid"));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_version;
+        break;
+      }
+
+      // optional uint32 version = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_version:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &version_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_game;
+        break;
+      }
+
+      // optional int32 game = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_game:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &game_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(40)) goto parse_session;
+        break;
+      }
+
+      // optional uint64 session = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_session:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
+                 input, &session_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.MsgCNReconnect)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.MsgCNReconnect)
+  return false;
+#undef DO_
+}
+
+void MsgCNReconnect::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.MsgCNReconnect)
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
+  }
+
+  // optional string uid = 2;
+  if (this->uid().size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+      this->uid().data(), this->uid().length(),
+      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
+      "proto3.MsgCNReconnect.uid");
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
+      2, this->uid(), output);
+  }
+
+  // optional uint32 version = 3;
+  if (this->version() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->version(), output);
+  }
+
+  // optional int32 game = 4;
+  if (this->game() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->game(), output);
+  }
+
+  // optional uint64 session = 5;
+  if (this->session() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->session(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.MsgCNReconnect)
+}
+
+int MsgCNReconnect::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNReconnect)
+  int total_size = 0;
+
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional string uid = 2;
+  if (this->uid().size() > 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::StringSize(
+        this->uid());
+  }
+
+  // optional uint32 version = 3;
+  if (this->version() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->version());
+  }
+
+  // optional int32 game = 4;
+  if (this->game() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->game());
+  }
+
+  // optional uint64 session = 5;
+  if (this->session() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt64Size(
+        this->session());
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgCNReconnect::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MsgCNReconnect*>(&from));
+}
+
+void MsgCNReconnect::MergeFrom(const MsgCNReconnect& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNReconnect)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  if (from.mid() != 0) {
+    set_mid(from.mid());
+  }
+  if (from.uid().size() > 0) {
+
+    uid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.uid_);
+  }
+  if (from.version() != 0) {
+    set_version(from.version());
+  }
+  if (from.game() != 0) {
+    set_game(from.game());
+  }
+  if (from.session() != 0) {
+    set_session(from.session());
+  }
+}
+
+void MsgCNReconnect::CopyFrom(const MsgCNReconnect& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNReconnect)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgCNReconnect::IsInitialized() const {
+
+  return true;
+}
+
+void MsgCNReconnect::Swap(MsgCNReconnect* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgCNReconnect::InternalSwap(MsgCNReconnect* other) {
+  std::swap(mid_, other->mid_);
+  uid_.Swap(&other->uid_);
+  std::swap(version_, other->version_);
+  std::swap(game_, other->game_);
+  std::swap(session_, other->session_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string MsgCNReconnect::GetTypeName() const {
+  return "proto3.MsgCNReconnect";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MsgCNReconnect
+
+// optional .proto3.pb_msg mid = 1;
+void MsgCNReconnect::clear_mid() {
+  mid_ = 0;
+}
+ ::proto3::pb_msg MsgCNReconnect::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+ void MsgCNReconnect::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.mid)
+}
+
+// optional string uid = 2;
+void MsgCNReconnect::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ const ::std::string& MsgCNReconnect::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.uid)
+  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void MsgCNReconnect::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.uid)
+}
+ void MsgCNReconnect::set_uid(const char* value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCNReconnect.uid)
+}
+ void MsgCNReconnect::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCNReconnect.uid)
+}
+ ::std::string* MsgCNReconnect::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNReconnect.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ ::std::string* MsgCNReconnect::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCNReconnect.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+ void MsgCNReconnect::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNReconnect.uid)
+}
+
+// optional uint32 version = 3;
+void MsgCNReconnect::clear_version() {
+  version_ = 0u;
+}
+ ::google::protobuf::uint32 MsgCNReconnect::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.version)
+  return version_;
+}
+ void MsgCNReconnect::set_version(::google::protobuf::uint32 value) {
+  
+  version_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.version)
+}
+
+// optional int32 game = 4;
+void MsgCNReconnect::clear_game() {
+  game_ = 0;
+}
+ ::google::protobuf::int32 MsgCNReconnect::game() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.game)
+  return game_;
+}
+ void MsgCNReconnect::set_game(::google::protobuf::int32 value) {
+  
+  game_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.game)
+}
+
+// optional uint64 session = 5;
+void MsgCNReconnect::clear_session() {
+  session_ = GOOGLE_ULONGLONG(0);
+}
+ ::google::protobuf::uint64 MsgCNReconnect::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.session)
+  return session_;
+}
+ void MsgCNReconnect::set_session(::google::protobuf::uint64 value) {
+  
+  session_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.session)
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int MsgNCReconnect::kMidFieldNumber;
+const int MsgNCReconnect::kStartFieldNumber;
+const int MsgNCReconnect::kPlayersFieldNumber;
+const int MsgNCReconnect::kResultFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+MsgNCReconnect::MsgNCReconnect()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.MsgNCReconnect)
+}
+
+void MsgNCReconnect::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  start_ = const_cast< ::proto3::MsgNCStart*>(
+      ::proto3::MsgNCStart::internal_default_instance());
+#else
+  start_ = const_cast< ::proto3::MsgNCStart*>(&::proto3::MsgNCStart::default_instance());
+#endif
+}
+
+MsgNCReconnect::MsgNCReconnect(const MsgNCReconnect& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCReconnect)
+}
+
+void MsgNCReconnect::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  mid_ = 0;
+  start_ = NULL;
+  result_ = 0;
+}
+
+MsgNCReconnect::~MsgNCReconnect() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCReconnect)
+  SharedDtor();
+}
+
+void MsgNCReconnect::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+    delete start_;
+  }
+}
+
+void MsgNCReconnect::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const MsgNCReconnect& MsgNCReconnect::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+MsgNCReconnect* MsgNCReconnect::default_instance_ = NULL;
+
+MsgNCReconnect* MsgNCReconnect::New(::google::protobuf::Arena* arena) const {
+  MsgNCReconnect* n = new MsgNCReconnect;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void MsgNCReconnect::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCReconnect)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgNCReconnect, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgNCReconnect*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, result_);
+  if (GetArenaNoVirtual() == NULL && start_ != NULL) delete start_;
+  start_ = NULL;
+
+#undef ZR_HELPER_
+#undef ZR_
+
+  players_.Clear();
+}
+
+bool MsgNCReconnect::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCReconnect)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional .proto3.pb_msg mid = 1;
+      case 1: {
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(18)) goto parse_start;
+        break;
+      }
+
+      // optional .proto3.MsgNCStart start = 2;
+      case 2: {
+        if (tag == 18) {
+         parse_start:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_start()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_players;
+        break;
+      }
+
+      // repeated .proto3.play_t players = 3;
+      case 3: {
+        if (tag == 26) {
+         parse_players:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_players:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_players()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_loop_players;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(32)) goto parse_result;
+        break;
+      }
+
+      // optional .proto3.pb_enum result = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_result:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_result(static_cast< ::proto3::pb_enum >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCReconnect)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCReconnect)
+  return false;
+#undef DO_
+}
+
+void MsgNCReconnect::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCReconnect)
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
+  }
+
+  // optional .proto3.MsgNCStart start = 2;
+  if (this->has_start()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, *this->start_, output);
+  }
+
+  // repeated .proto3.play_t players = 3;
+  for (unsigned int i = 0, n = this->players_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, this->players(i), output);
+  }
+
+  // optional .proto3.pb_enum result = 4;
+  if (this->result() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      4, this->result(), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCReconnect)
+}
+
+int MsgNCReconnect::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCReconnect)
+  int total_size = 0;
+
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional .proto3.MsgNCStart start = 2;
+  if (this->has_start()) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->start_);
+  }
+
+  // optional .proto3.pb_enum result = 4;
+  if (this->result() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
+  }
+
+  // repeated .proto3.play_t players = 3;
+  total_size += 1 * this->players_size();
+  for (int i = 0; i < this->players_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->players(i));
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void MsgNCReconnect::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCReconnect*>(&from));
+}
+
+void MsgNCReconnect::MergeFrom(const MsgNCReconnect& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCReconnect)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  players_.MergeFrom(from.players_);
+  if (from.mid() != 0) {
+    set_mid(from.mid());
+  }
+  if (from.has_start()) {
+    mutable_start()->::proto3::MsgNCStart::MergeFrom(from.start());
+  }
+  if (from.result() != 0) {
+    set_result(from.result());
+  }
+}
+
+void MsgNCReconnect::CopyFrom(const MsgNCReconnect& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCReconnect)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgNCReconnect::IsInitialized() const {
+
+  return true;
+}
+
+void MsgNCReconnect::Swap(MsgNCReconnect* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void MsgNCReconnect::InternalSwap(MsgNCReconnect* other) {
+  std::swap(mid_, other->mid_);
+  std::swap(start_, other->start_);
+  players_.UnsafeArenaSwap(&other->players_);
+  std::swap(result_, other->result_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string MsgNCReconnect::GetTypeName() const {
+  return "proto3.MsgNCReconnect";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// MsgNCReconnect
+
+// optional .proto3.pb_msg mid = 1;
+void MsgNCReconnect::clear_mid() {
+  mid_ = 0;
+}
+ ::proto3::pb_msg MsgNCReconnect::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+ void MsgNCReconnect::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCReconnect.mid)
+}
+
+// optional .proto3.MsgNCStart start = 2;
+bool MsgNCReconnect::has_start() const {
+  return !_is_default_instance_ && start_ != NULL;
+}
+void MsgNCReconnect::clear_start() {
+  if (GetArenaNoVirtual() == NULL && start_ != NULL) delete start_;
+  start_ = NULL;
+}
+const ::proto3::MsgNCStart& MsgNCReconnect::start() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.start)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return start_ != NULL ? *start_ : *default_instance().start_;
+#else
+  return start_ != NULL ? *start_ : *default_instance_->start_;
+#endif
+}
+::proto3::MsgNCStart* MsgNCReconnect::mutable_start() {
+  
+  if (start_ == NULL) {
+    start_ = new ::proto3::MsgNCStart;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCReconnect.start)
+  return start_;
+}
+::proto3::MsgNCStart* MsgNCReconnect::release_start() {
+  // @@protoc_insertion_point(field_release:proto3.MsgNCReconnect.start)
+  
+  ::proto3::MsgNCStart* temp = start_;
+  start_ = NULL;
+  return temp;
+}
+void MsgNCReconnect::set_allocated_start(::proto3::MsgNCStart* start) {
+  delete start_;
+  start_ = start;
+  if (start) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCReconnect.start)
+}
+
+// repeated .proto3.play_t players = 3;
+int MsgNCReconnect::players_size() const {
+  return players_.size();
+}
+void MsgNCReconnect::clear_players() {
+  players_.Clear();
+}
+const ::proto3::play_t& MsgNCReconnect::players(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.players)
+  return players_.Get(index);
+}
+::proto3::play_t* MsgNCReconnect::mutable_players(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCReconnect.players)
+  return players_.Mutable(index);
+}
+::proto3::play_t* MsgNCReconnect::add_players() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCReconnect.players)
+  return players_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
+MsgNCReconnect::mutable_players() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCReconnect.players)
+  return &players_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
+MsgNCReconnect::players() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCReconnect.players)
+  return players_;
+}
+
+// optional .proto3.pb_enum result = 4;
+void MsgNCReconnect::clear_result() {
+  result_ = 0;
+}
+ ::proto3::pb_enum MsgNCReconnect::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+ void MsgNCReconnect::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCReconnect.result)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
