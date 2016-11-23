@@ -14,6 +14,7 @@
 		5E991A881DE2EF1900D70431 /* Mahjong.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A841DE2EF1900D70431 /* Mahjong.cpp */; };
 		5E991A891DE2EF1900D70431 /* Paohuzi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A851DE2EF1900D70431 /* Paohuzi.cpp */; };
 		5E991A8C1DE2EFA500D70431 /* libimmortal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E991A8B1DE2EFA500D70431 /* libimmortal.a */; };
+		5E991A901DE5693A00D70431 /* libimmortal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E991A8F1DE5693A00D70431 /* libimmortal.a */; };
 		5EEEA7981D67A19B00630485 /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */; };
 		5EEEA79C1D67A3EC00630485 /* libhiredis.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */; };
 		5EEEA7B41D67A59D00630485 /* libprotocol.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EEEA7B31D67A59D00630485 /* libprotocol.a */; };
@@ -44,6 +45,7 @@
 		5E991A851DE2EF1900D70431 /* Paohuzi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Paohuzi.cpp; sourceTree = "<group>"; };
 		5E991A861DE2EF1900D70431 /* Paohuzi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Paohuzi.h; sourceTree = "<group>"; };
 		5E991A8B1DE2EFA500D70431 /* libimmortal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libimmortal.a; path = ../Build/Debug/libimmortal.a; sourceTree = "<group>"; };
+		5E991A8F1DE5693A00D70431 /* libimmortal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libimmortal.a; path = ../Build/Debug/libimmortal.a; sourceTree = "<group>"; };
 		5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../../../../usr/local/lib/libprotobuf-lite.a"; sourceTree = "<group>"; };
 		5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhiredis.dylib; path = ../sdks/libs/libhiredis.dylib; sourceTree = "<group>"; };
 		5EEEA7B31D67A59D00630485 /* libprotocol.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotocol.a; path = ../Build/Debug/libprotocol.a; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E991A8C1DE2EFA500D70431 /* libimmortal.a in Frameworks */,
+				5E991A901DE5693A00D70431 /* libimmortal.a in Frameworks */,
 				5EEEA7B41D67A59D00630485 /* libprotocol.a in Frameworks */,
 				5EEEA79C1D67A3EC00630485 /* libhiredis.dylib in Frameworks */,
 				5EEEA7981D67A19B00630485 /* libprotobuf-lite.a in Frameworks */,
@@ -77,6 +80,7 @@
 				5E991A861DE2EF1900D70431 /* Paohuzi.h */,
 				5E8A17421D71E71600CDCE1D /* Node.cpp */,
 				5E8A17441D71E71600CDCE1D /* NodeFwd.h */,
+				5E991A8F1DE5693A00D70431 /* libimmortal.a */,
 				5EEEA7B31D67A59D00630485 /* libprotocol.a */,
 				5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */,
 				5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */,

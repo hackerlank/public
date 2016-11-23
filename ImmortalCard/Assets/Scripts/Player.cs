@@ -254,7 +254,7 @@ public class Player {
 			MsgNCReconnect msgReconn=MsgNCReconnect.Parser.ParseFrom(bytes);
 			Debug.Log("reconnected game");
 			if(msgReconn.Result==pb_enum.Succeess){
-				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgReconnect(this,msgReconn));
+				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgRevive(this,msgReconn));
 			}
 			break;
 
@@ -296,10 +296,13 @@ public class Player {
 			if(msgDiscard.Result==pb_enum.Succeess){
 				//count hands before handle message
 				if(Main.Instance.MainPlayer==this){
+					Debug.Log("----MsgNcDiscard player");
 					//how can i do? we can only decreament once
 					var rule=Main.Instance.gameController.Rule;
 					rule.nHands[msgDiscard.Bunch.Pos]-=msgDiscard.Bunch.Pawns.Count;
-				}
+				}else
+					Debug.Log("----MsgNcDiscard robot");
+
 				//handle only succeess to avoid crash
 				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));
 				//append historical

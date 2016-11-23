@@ -164,46 +164,45 @@ void Player::on_read(PBHelper& pb){
                     break;
                 }else{
                     auto uid=playData.player().uid();
+                    auto found=false;
                     for(auto p:spGame->players){
                         if(p->playData.player().uid()==uid){
-                            //set game
-                            game=spGame;
+                            found=true;
                             
                             //we donnot copy player, just swap sh
-                            auto sh=spsh;
+                            auto newsh=spsh;
                             spsh=p->spsh;
-                            p->spsh=sh;
                             //close current player
                             Immortal::sImmortal->on_close(*spsh);
-                            Immortal::sImmortal->on_close(*p->spsh);
-                            Immortal::sImmortal->addPlayer(p->spsh->id(),p);
+                            Immortal::sImmortal->on_close(*newsh);
                             
                             //revive player network handler
-                            p->spsh=spsh;
+                            p->spsh=newsh;
+                            Immortal::sImmortal->addPlayer(newsh->id(),p);
                             spPlayer=p;
                             break;
                         }
                     }
-                    if(!game){
+                    if(!found){
                         Logger<<"reconnect: game "<<gameId<<" player not found"<<endl;
                         break;
                     }
                     
                     //broadcast
-                    auto MP=game->rule->MaxPlayer(*game);
+                    auto MP=spGame->rule->MaxPlayer(*spGame);
                     auto& start=*msg.mutable_start();
-                    start.set_banker(game->banker);
+                    start.set_banker(spGame->banker);
                     start.set_pos(spPlayer->playData.seat());
-                    start.set_ante(game->anti);
-                    start.set_multiple(game->multiple);
+                    start.set_ante(spGame->anti);
+                    start.set_multiple(spGame->multiple);
                     for(int i=0;i<MP;++i)
-                        start.mutable_count()->Add((int)game->players[i]->playData.hands().size());
-                    for(auto b:game->bottom)start.add_bottom(b);
-                    start.set_piles((int)game->pile.size());
+                        start.mutable_count()->Add((int)spGame->players[i]->playData.hands().size());
+                    for(auto b:spGame->bottom)start.add_bottom(b);
+                    start.set_piles((int)spGame->pile.size());
                     
                     //copy data of other players
                     for(int i=0,ii=MP;i<ii;++i){
-                        auto p=game->players[i];
+                        auto p=spGame->players[i];
                         auto msgplay=msg.add_players();
                         msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
                         msgplay->mutable_discards()->CopyFrom(p->playData.discards());

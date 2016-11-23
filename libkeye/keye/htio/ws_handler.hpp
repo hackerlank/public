@@ -27,7 +27,9 @@ public:
 		return std::shared_ptr<svc_handler>(new ws_handler_impl(_sh));
 	}
 	virtual void	send(void* buf,size_t length){
-		_sh->send((const void*)buf, length, websocketpp::frame::opcode::value::binary);
+		auto ec=_sh->send((const void*)buf, length, websocketpp::frame::opcode::value::binary);
+        if(ec.value()!=0)
+            KEYE_LOG("ws send error: %s\n",ec.message().c_str());
 	}
 	virtual void	post_event(void* buf,size_t length){
 		//_sh.post_event(buf,length);

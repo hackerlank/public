@@ -270,6 +270,8 @@ bool pb_msg_IsValid(int value) {
     case 6000:
     case 6001:
     case 6002:
+    case 6003:
+    case 6004:
     case 6011:
     case 6012:
     case 6013:
@@ -278,8 +280,6 @@ bool pb_msg_IsValid(int value) {
     case 6022:
     case 6023:
     case 6024:
-    case 6029:
-    case 6030:
     case 6031:
     case 6032:
     case 6033:

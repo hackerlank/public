@@ -20,7 +20,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	protected GameObject[]		btnOps;	//all ops buttons
 
 	protected int		maxPlayer=0;
-	protected int		round=0;
+	int					round=0;
 	protected GameRule	rule=null;
 
 	protected int			_pos;
@@ -78,13 +78,14 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		tokenIcon.Pile=msg.Piles;
 	}
 
-	virtual public IEnumerator OnMsgReconnect(Player player,MsgNCReconnect msg){
+	virtual public IEnumerator OnMsgRevive(Player player,MsgNCReconnect msg){
 		if(msg.Result!=pb_enum.Succeess){
 			Debug.Log("---- GamePanel on reconnect faied: "+msg.Result.ToString());
 			OnExit();
 		}else{
 			Debug.Log("---- GamePanel on reconnect");
-
+			--Round;	//to match ++
+			yield return OnMsgStart(player,msg.Start);
 		}
 		yield break;
 	}
