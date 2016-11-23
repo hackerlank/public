@@ -63,7 +63,7 @@ public class Player {
 		while(!InGame)yield return null;
 		
 		MsgCNReconnect msg=new MsgCNReconnect();
-		msg.Mid=pb_msg.MsgCnReconnect;
+		msg.Mid=pb_msg.MsgCnRevive;
 		msg.Game=storeGame.gameId;
 		Main.Instance.MainPlayer.Send<MsgCNReconnect>(msg.Mid,msg);
 		Debug.Log("reconnect game by key "+storeGame.gameId);
@@ -137,7 +137,7 @@ public class Player {
 		if(!connected){
 			connected=true;
 			MsgCNEnter msg=new MsgCNEnter();
-			msg.Mid=pb_msg.MsgCnEnter;
+			msg.Mid=pb_msg.MsgCnConnect;
 			msg.Version=100;
 			msg.Uid=playData.Player.Uid;
 			Send<MsgCNEnter>(msg.Mid,msg);
@@ -202,7 +202,7 @@ public class Player {
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;
-		case pb_msg.MsgNcEnter:
+		case pb_msg.MsgNcConnect:
 			MsgNCEnter msgEnter=MsgNCEnter.Parser.ParseFrom(bytes);
 			Debug.Log("entered node");
 			if(msgEnter.Result==pb_enum.Succeess){
@@ -250,7 +250,7 @@ public class Player {
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgEngage(this,msgEngage));
 			break;
 
-		case pb_msg.MsgNcReconnect:
+		case pb_msg.MsgNcRevive:
 			MsgNCReconnect msgReconn=MsgNCReconnect.Parser.ParseFrom(bytes);
 			Debug.Log("reconnected game");
 			if(msgReconn.Result==pb_enum.Succeess){

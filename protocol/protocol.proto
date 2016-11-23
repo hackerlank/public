@@ -350,10 +350,8 @@ MSG_HC_RESET_PSWD       =5012;
 MSG_CH_END              =5999;
 //Client --  Node
 MSG_CN_BEGIN            =6000;
-MSG_CN_ENTER            =6001;
-MSG_NC_ENTER            =6002;
-MSG_CN_RECONNECT        =6003;
-MSG_NC_RECONNECT        =6004;
+MSG_CN_CONNECT          =6001;
+MSG_NC_CONNECT          =6002;
 
 MSG_CN_CREATE           =6011;
 MSG_NC_CREATE           =6012;
@@ -363,6 +361,9 @@ MSG_CN_DISMISS_SYNC     =6021;
 MSG_NC_DISMISS_SYNC     =6022;
 MSG_CN_DISMISS_ACK      =6023;
 MSG_NC_DISMISS_ACK      =6024;
+
+MSG_CN_REVIVE           =6029;
+MSG_NC_REVIVE           =6030;
 
 MSG_CN_READY            =6031;
 MSG_NC_READY            =6032;

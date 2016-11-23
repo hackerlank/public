@@ -149,10 +149,10 @@ void Player::on_read(PBHelper& pb){
             break;
         }
 
-        case proto3::pb_msg::MSG_CN_RECONNECT:{
+        case proto3::pb_msg::MSG_CN_REVIVE:{
             MsgCNReconnect imsg;
             MsgNCReconnect msg;
-            msg.set_mid(pb_msg::MSG_NC_RECONNECT);
+            msg.set_mid(pb_msg::MSG_NC_REVIVE);
             msg.set_result(pb_enum::ERR_FAILED);
 
             std::shared_ptr<Player> spPlayer=shared_from_this();
