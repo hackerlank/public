@@ -18,13 +18,16 @@ public class LobbyPanel : MonoBehaviour {
 		var str=PlayerPrefs.GetString(Configs.PrefsKey_StoreGame,"");
 		var storeGame=new StoreGame();
 		storeGame.FromString(str);
-		/*
+
 		if(storeGame.gameId>0){
+			Debug.Log("----found old game and reconnect");
 			//in game,send and wait for reconnect
+			Main.Instance.MainPlayer.storeGame=storeGame;
 			yield return StartCoroutine(Main.Instance.MainPlayer.Reconnect());
 
 			Destroy(gameObject);
-		}else*/{
+		}else{
+			Debug.Log("----enter lobby");
 			//to enter panel
 			var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
 			foreach(var id in games){

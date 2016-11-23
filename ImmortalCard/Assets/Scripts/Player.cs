@@ -58,17 +58,20 @@ public class Player {
 
 	public IEnumerator Reconnect(){
 		//in game,send and wait for reconnect
-		Main.Instance.MainPlayer.Connect();
-		while(!Main.Instance.MainPlayer.InGame)yield return null;
+		InGame=false;
+		Connect(storeGame.gameId);
+		while(!InGame)yield return null;
 		
 		MsgCNReconnect msg=new MsgCNReconnect();
 		msg.Mid=pb_msg.MsgCnReconnect;
-		msg.Version=100;
+		msg.Game=storeGame.gameId;
 		Main.Instance.MainPlayer.Send<MsgCNReconnect>(msg.Mid,msg);
-		Debug.Log("reconnect game by key "+storeGame.gameId%(uint)pb_enum.DefMaxNodes);
-		
-		yield return Main.Instance.StartCoroutine(Main.Instance.MainPlayer.CreateGame(
-			(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots));
+		Debug.Log("reconnect game by key "+storeGame.gameId);
+
+		Debug.Log("reconnect game controller="+Main.Instance.gameController);
+		if(Main.Instance.gameController==null)
+			yield return Main.Instance.StartCoroutine(CreateGame(
+				(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots));
 	}
 
 	public void Disconnect(){
@@ -104,6 +107,9 @@ public class Player {
 			if(nRobots>=MP)nRobots=MP-1;
 			for(uint i=0;i<nRobots;++i){
 				var robot=new Player();
+				robot.playData=new Proto3.play_t();
+				robot.playData.Player=new Proto3.player_t();
+				robot.playData.Player.Uid="robot_"+i;
 				robot.controllers.Add(panel.Rule.AIController);
 				Main.Instance.robots.Add(robot);
 				panel.StartCoroutine(robot.JoinGame(gameId));
@@ -133,6 +139,7 @@ public class Player {
 			MsgCNEnter msg=new MsgCNEnter();
 			msg.Mid=pb_msg.MsgCnEnter;
 			msg.Version=100;
+			msg.Uid=playData.Player.Uid;
 			Send<MsgCNEnter>(msg.Mid,msg);
 		}
 		Loom.QueueOnMainThread(delegate{
@@ -142,11 +149,13 @@ public class Player {
 	}
 	public void onClose(string error){
 		Loom.QueueOnMainThread(delegate{
-			if(false && InGame){
+			if(InGame){
 				if(this==Main.Instance.MainPlayer){
-					Main.Instance.StartCoroutine(Main.Instance.MainPlayer.Reconnect());
-				}else
-					Main.Instance.MainPlayer.Disconnect();
+					Debug.Log("----disconnect and reconnect game");
+				}else{
+					Debug.Log("----disconnect robot");
+				}
+				Main.Instance.StartCoroutine(Reconnect());
 			}
 			
 			var reconnect=false;
@@ -213,6 +222,7 @@ public class Player {
 					storeGame.gameId=msgCreate.GameId;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
+					Debug.Log("----create game and cache gameid "+storeGame.gameId);
 				}
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
@@ -224,6 +234,7 @@ public class Player {
 				msgNCJoin=msgJoin;
 				if(this==Main.Instance.MainPlayer)
 				{
+					Debug.Log("----create game and cache");
 					storeGame.gameType=(int)msgJoin.Game;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
@@ -241,7 +252,7 @@ public class Player {
 
 		case pb_msg.MsgNcReconnect:
 			MsgNCReconnect msgReconn=MsgNCReconnect.Parser.ParseFrom(bytes);
-			Debug.Log("reconnect game");
+			Debug.Log("reconnected game");
 			if(msgReconn.Result==pb_enum.Succeess){
 				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgReconnect(this,msgReconn));
 			}
@@ -348,6 +359,7 @@ public class Player {
 			{
 				if(this==Main.Instance.MainPlayer)
 				{
+					Debug.Log("----finish game and clear cache");
 					PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
 				}
 			}

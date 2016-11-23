@@ -23,6 +23,12 @@ void Player::on_read(PBHelper& pb){
     if(!spsh)return;
     auto& sh=*spsh;
     auto mid=pb.Id();
+    
+    if(mid>pb_msg::MSG_CN_JOIN &&(!game || !game->rule)){
+        Logger<<"no game when handle "<<(int)mid<<endl;
+        return;
+    }
+    
     switch (mid) {
         case proto3::pb_msg::MSG_CN_CREATE:{
             MsgCNCreate imsg;
@@ -144,41 +150,86 @@ void Player::on_read(PBHelper& pb){
         }
 
         case proto3::pb_msg::MSG_CN_RECONNECT:{
-            //broadcast
+            MsgCNReconnect imsg;
             MsgNCReconnect msg;
             msg.set_mid(pb_msg::MSG_NC_RECONNECT);
-            
-            auto MP=game->rule->MaxPlayer(*game);
-            auto& start=*msg.mutable_start();
-            start.set_banker(game->banker);
-            start.set_ante(10);
-            start.set_multiple(1);
-            for(int i=0;i<MP;++i)
-                start.mutable_count()->Add((int)game->players[i]->playData.hands().size());
-            for(auto b:game->bottom)start.add_bottom(b);
-            start.set_piles((int)game->pile.size());
-            
-            auto seat=playData.seat();
-            
-            //copy data of other players
-            for(int i=0,ii=MP;i<ii;++i){
-                auto p=game->players[i];
-                auto msgplay=msg.add_players();
-                msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
-                msgplay->mutable_discards()->CopyFrom(p->playData.discards());
+            msg.set_result(pb_enum::ERR_FAILED);
+
+            std::shared_ptr<Player> spPlayer=shared_from_this();
+            while (pb.Parse(imsg)){
+                auto gameId=imsg.game();
+                auto spGame=Immortal::sImmortal->findGame(gameId);
+                if(!spGame){
+                    Logger<<"reconnect: game "<<gameId<<" not found"<<endl;
+                    break;
+                }else{
+                    auto uid=playData.player().uid();
+                    for(auto p:spGame->players){
+                        if(p->playData.player().uid()==uid){
+                            //set game
+                            game=spGame;
+                            
+                            //we donnot copy player, just swap sh
+                            auto sh=spsh;
+                            spsh=p->spsh;
+                            p->spsh=sh;
+                            //close current player
+                            Immortal::sImmortal->on_close(*spsh);
+                            Immortal::sImmortal->on_close(*p->spsh);
+                            Immortal::sImmortal->addPlayer(p->spsh->id(),p);
+                            
+                            //revive player network handler
+                            p->spsh=spsh;
+                            spPlayer=p;
+                            break;
+                        }
+                    }
+                    if(!game){
+                        Logger<<"reconnect: game "<<gameId<<" player not found"<<endl;
+                        break;
+                    }
+                    
+                    //broadcast
+                    auto MP=game->rule->MaxPlayer(*game);
+                    auto& start=*msg.mutable_start();
+                    start.set_banker(game->banker);
+                    start.set_pos(spPlayer->playData.seat());
+                    start.set_ante(game->anti);
+                    start.set_multiple(game->multiple);
+                    for(int i=0;i<MP;++i)
+                        start.mutable_count()->Add((int)game->players[i]->playData.hands().size());
+                    for(auto b:game->bottom)start.add_bottom(b);
+                    start.set_piles((int)game->pile.size());
+                    
+                    //copy data of other players
+                    for(int i=0,ii=MP;i<ii;++i){
+                        auto p=game->players[i];
+                        auto msgplay=msg.add_players();
+                        msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
+                        msgplay->mutable_discards()->CopyFrom(p->playData.discards());
+                    }
+                    
+                    //send only to source player
+                    auto hands=start.mutable_hands();
+                    auto n=(int)spPlayer->playData.hands().size();
+                    hands->Resize(n,0);
+                    for(int j=0;j<n;++j)
+                        hands->Set(j,spPlayer->playData.hands(j));
+                    
+                    msg.set_result(pb_enum::SUCCEESS);
+                    
+                    break;
+                }
             }
-            
-            //send only to source player
-            start.set_pos(playData.seat());
-            auto hands=start.mutable_hands();
-            auto n=(int)playData.hands().size();
-            hands->Resize(n,0);
-            for(int j=0;j<n;++j)
-                hands->Set(j,playData.hands(j));
-            send(msg);
-    
-            //send last message
-            send(*lastMsg);
+
+            spPlayer->send(msg);
+            if(msg.result()==pb_enum::SUCCEESS && lastMsg){
+                //send last message
+                spPlayer->send(*lastMsg);
+                Logger<<"send last message\n";
+            }
+
+            break;
         }
 
         case MSG_CN_READY:{
@@ -226,9 +277,10 @@ int Player::getKey(){
 }
 
 void Player::reset(){
-    auto seat=playData.seat();
+    play_t play(playData);
     playData.Clear();
-    playData.set_seat(seat);
+    playData.set_seat(play.seat());
+    playData.mutable_player()->CopyFrom(play.player());
     
     unpairedCards.clear();
     dodgeCards.clear();

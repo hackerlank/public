@@ -138,8 +138,9 @@ public class EnterPanel : MonoBehaviour {
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;
 		msgC.Game=CurrentGame.game;
-		msgC.Options.Add(opRound);
-		msgC.Options.Add(opCategory);
+		//TODO: server parse error!
+		//msgC.Options.Add(opRound);
+		//msgC.Options.Add(opCategory);
 
 		if(DefinedCards.text.Length>0){
 			//preprocess
@@ -162,7 +163,7 @@ public class EnterPanel : MonoBehaviour {
 		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
 
 		while(Main.Instance.MainPlayer.msgNCCreate==null)yield return null;
-
+		Debug.Log("----store game id="+storeGame.gameId);
 		storeGame.gameId=Main.Instance.MainPlayer.msgNCCreate.GameId;
 
 		Main.Instance.MainPlayer.msgNCCreate=null;

@@ -61,6 +61,11 @@ void Immortal::removeGame(game_id_t id){
     gameRules.erase(id);
 }
 
+void Immortal::addPlayer(size_t shid,std::shared_ptr<Player> sp){
+    if(!sp)return;
+    players[shid]=sp;;
+}
+
 void Immortal::on_open(svc_handler&) {
     Logger<<"on_open\n";
     //set_timer(WRITE_TIMER, WRITE_FREQ);
@@ -81,16 +86,17 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
         MsgCNEnter imsg;
         MsgNCEnter omsg;
         if(pb.Parse(imsg)){
-            omsg.set_result(proto3::pb_enum::SUCCEESS);
-            auto player=omsg.mutable_player();
+            auto spPlayer=std::make_shared<Player>(sh);
+            auto player=spPlayer->playData.mutable_player();
+            player->set_uid(imsg.uid());
             player->set_level(168);
-            player->set_uid("vic-game");
             player->set_currency(1000);
-            Logger<<"client entered\n";
+            addPlayer(shid,spPlayer);
+
+            omsg.set_result(proto3::pb_enum::SUCCEESS);
+            omsg.mutable_player()->CopyFrom(*player);
+            Logger<<"client entered,uid="<<imsg.uid()<<"\n";
             
-            auto spplayer=std::make_shared<Player>(sh);
-            spplayer->playData.mutable_player()->CopyFrom(*player);
-            players[shid]=spplayer;
         }
         else
         {

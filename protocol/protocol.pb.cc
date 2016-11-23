@@ -12912,8 +12912,6 @@ void MsgNCEnter::clear_result() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCNReconnect::kMidFieldNumber;
-const int MsgCNReconnect::kUidFieldNumber;
-const int MsgCNReconnect::kVersionFieldNumber;
 const int MsgCNReconnect::kGameFieldNumber;
 const int MsgCNReconnect::kSessionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -12938,11 +12936,8 @@ MsgCNReconnect::MsgCNReconnect(const MsgCNReconnect& from)
 
 void MsgCNReconnect::SharedCtor() {
     _is_default_instance_ = false;
-  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   mid_ = 0;
-  uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  version_ = 0u;
   game_ = 0;
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -12953,7 +12948,6 @@ MsgCNReconnect::~MsgCNReconnect() {
 }
 
 void MsgCNReconnect::SharedDtor() {
-  uid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -13004,8 +12998,7 @@ void MsgCNReconnect::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, game_);
-  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  ZR_(mid_, session_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -13033,45 +13026,13 @@ bool MsgCNReconnect::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_uid;
+        if (input->ExpectTag(16)) goto parse_game;
         break;
       }
 
-      // optional string uid = 2;
+      // optional int32 game = 2;
       case 2: {
-        if (tag == 18) {
-         parse_uid:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_uid()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->uid().data(), this->uid().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "proto3.MsgCNReconnect.uid"));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(24)) goto parse_version;
-        break;
-      }
-
-      // optional uint32 version = 3;
-      case 3: {
-        if (tag == 24) {
-         parse_version:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
-                 input, &version_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(32)) goto parse_game;
-        break;
-      }
-
-      // optional int32 game = 4;
-      case 4: {
-        if (tag == 32) {
+        if (tag == 16) {
          parse_game:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -13080,13 +13041,13 @@ bool MsgCNReconnect::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_session;
+        if (input->ExpectTag(24)) goto parse_session;
         break;
       }
 
-      // optional uint64 session = 5;
-      case 5: {
-        if (tag == 40) {
+      // optional uint64 session = 3;
+      case 3: {
+        if (tag == 24) {
          parse_session:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -13129,29 +13090,14 @@ void MsgCNReconnect::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional string uid = 2;
-  if (this->uid().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->uid().data(), this->uid().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "proto3.MsgCNReconnect.uid");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      2, this->uid(), output);
-  }
-
-  // optional uint32 version = 3;
-  if (this->version() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->version(), output);
-  }
-
-  // optional int32 game = 4;
+  // optional int32 game = 2;
   if (this->game() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->game(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->game(), output);
   }
 
-  // optional uint64 session = 5;
+  // optional uint64 session = 3;
   if (this->session() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(5, this->session(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->session(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNReconnect)
@@ -13167,28 +13113,14 @@ int MsgCNReconnect::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional string uid = 2;
-  if (this->uid().size() > 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
-        this->uid());
-  }
-
-  // optional uint32 version = 3;
-  if (this->version() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::UInt32Size(
-        this->version());
-  }
-
-  // optional int32 game = 4;
+  // optional int32 game = 2;
   if (this->game() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->game());
   }
 
-  // optional uint64 session = 5;
+  // optional uint64 session = 3;
   if (this->session() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
@@ -13213,13 +13145,6 @@ void MsgCNReconnect::MergeFrom(const MsgCNReconnect& from) {
   }
   if (from.mid() != 0) {
     set_mid(from.mid());
-  }
-  if (from.uid().size() > 0) {
-
-    uid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.uid_);
-  }
-  if (from.version() != 0) {
-    set_version(from.version());
   }
   if (from.game() != 0) {
     set_game(from.game());
@@ -13247,8 +13172,6 @@ void MsgCNReconnect::Swap(MsgCNReconnect* other) {
 }
 void MsgCNReconnect::InternalSwap(MsgCNReconnect* other) {
   std::swap(mid_, other->mid_);
-  uid_.Swap(&other->uid_);
-  std::swap(version_, other->version_);
   std::swap(game_, other->game_);
   std::swap(session_, other->session_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -13276,65 +13199,7 @@ void MsgCNReconnect::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.mid)
 }
 
-// optional string uid = 2;
-void MsgCNReconnect::clear_uid() {
-  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- const ::std::string& MsgCNReconnect::uid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.uid)
-  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void MsgCNReconnect::set_uid(const ::std::string& value) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.uid)
-}
- void MsgCNReconnect::set_uid(const char* value) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgCNReconnect.uid)
-}
- void MsgCNReconnect::set_uid(const char* value, size_t size) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCNReconnect.uid)
-}
- ::std::string* MsgCNReconnect::mutable_uid() {
-  
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCNReconnect.uid)
-  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* MsgCNReconnect::release_uid() {
-  // @@protoc_insertion_point(field_release:proto3.MsgCNReconnect.uid)
-  
-  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void MsgCNReconnect::set_allocated_uid(::std::string* uid) {
-  if (uid != NULL) {
-    
-  } else {
-    
-  }
-  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNReconnect.uid)
-}
-
-// optional uint32 version = 3;
-void MsgCNReconnect::clear_version() {
-  version_ = 0u;
-}
- ::google::protobuf::uint32 MsgCNReconnect::version() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.version)
-  return version_;
-}
- void MsgCNReconnect::set_version(::google::protobuf::uint32 value) {
-  
-  version_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.version)
-}
-
-// optional int32 game = 4;
+// optional int32 game = 2;
 void MsgCNReconnect::clear_game() {
   game_ = 0;
 }
@@ -13348,7 +13213,7 @@ void MsgCNReconnect::clear_game() {
   // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.game)
 }
 
-// optional uint64 session = 5;
+// optional uint64 session = 3;
 void MsgCNReconnect::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }

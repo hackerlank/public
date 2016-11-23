@@ -79,7 +79,13 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 
 	virtual public IEnumerator OnMsgReconnect(Player player,MsgNCReconnect msg){
-		Debug.Log("---- GamePanel on reconnect");
+		if(msg.Result!=pb_enum.Succeess){
+			Debug.Log("---- GamePanel on reconnect faied: "+msg.Result.ToString());
+			OnExit();
+		}else{
+			Debug.Log("---- GamePanel on reconnect");
+
+		}
 		yield break;
 	}
 
@@ -272,6 +278,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnExit(){
+		Debug.Log("----exit game and clear cache");
 		PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
 		Main.Instance.MainPlayer.InGame=false;
 		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj) {
@@ -282,6 +289,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	public void OnDisconnect(){
 		//test reconnect
 		Main.Instance.MainPlayer.Disconnect();
+		Main.Instance.MainPlayer.InGame=true;
 	}
 	
 	bool pointerDown=false;

@@ -18,6 +18,8 @@ public:
     virtual void	on_write(keye::svc_handler&, void*, size_t sz);
     virtual bool	on_timer(keye::svc_handler&, size_t id, size_t milliseconds);
     
+    void            addPlayer(size_t,std::shared_ptr<Player>);
+
     void            registerRule(std::shared_ptr<GameRule>);
     
     std::shared_ptr<Game>   createGame(int,proto3::MsgCNCreate&);

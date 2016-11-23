@@ -55,6 +55,10 @@ public:
     int						_limitType;		//郴州，起手双提，控制能否继续吃碰，0：能，1：不能
     int						_fireDouble;	//广西跑胡子一炮双向。0未选择，1选择了
     
+    //special for ddz
+    int     anti;
+    int     multiple;
+    
     Game()
     :id(-1)
     ,delay(0)

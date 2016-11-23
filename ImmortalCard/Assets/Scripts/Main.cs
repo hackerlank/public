@@ -25,6 +25,9 @@ public class Main : MonoBehaviour {
 		//Loom
 		gameObject.AddComponent<Loom>();
 		MainPlayer=new Player();
+		MainPlayer.playData=new Proto3.play_t();
+		MainPlayer.playData.Player=new Proto3.player_t();
+		MainPlayer.playData.Player.Uid=SystemInfo.deviceUniqueIdentifier;
 		share=new ShareAPI();
 	}
 
