@@ -17,6 +17,33 @@ public class MahJongPanel : GamePanel {
 		transformComponent(AbandonAreas);
 	}
 
+	override public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
+		yield return StartCoroutine(base.OnMsgRevive(player,msg));
+
+		var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
+		foreach(var btn in btns)btn.SetActive(false);
+
+		var pos=player.playData.Seat;
+		var play=msg.Play[pos];
+		//revive meld
+		foreach(var meld in play.Bunch){
+			MahjongBunch mjBunch=null;
+			Utils.Load<MahjongBunch>(MeldAreas[pos],delegate(Component obj){
+				mjBunch=obj as MahjongBunch;
+				mjBunch.transform.SetSiblingIndex(0);
+			});
+			while(!mjBunch)yield return null;
+			mjBunch.Value=meld;
+		}
+
+		//revive abandon
+		foreach(var id in play.Discards){
+			Card.Create(CardPrefab,id,AbandonAreas[pos],delegate(Card card) {
+				card.state=Card.State.ST_ABANDON;
+			});
+		}
+	}
+
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		GameObject[] btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 		foreach(var btn in btns)btn.SetActive(false);

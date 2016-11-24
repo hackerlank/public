@@ -13234,7 +13234,7 @@ void MsgCNRevive::clear_session() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCRevive::kMidFieldNumber;
 const int MsgNCRevive::kStartFieldNumber;
-const int MsgNCRevive::kPlayersFieldNumber;
+const int MsgNCRevive::kPlayFieldNumber;
 const int MsgNCRevive::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -13334,7 +13334,7 @@ void MsgNCRevive::Clear() {
 #undef ZR_HELPER_
 #undef ZR_
 
-  players_.Clear();
+  play_.Clear();
 }
 
 bool MsgNCRevive::MergePartialFromCodedStream(
@@ -13371,22 +13371,22 @@ bool MsgNCRevive::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_players;
+        if (input->ExpectTag(26)) goto parse_play;
         break;
       }
 
-      // repeated .proto3.play_t players = 3;
+      // repeated .proto3.play_t play = 3;
       case 3: {
         if (tag == 26) {
-         parse_players:
+         parse_play:
           DO_(input->IncrementRecursionDepth());
-         parse_loop_players:
+         parse_loop_play:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_players()));
+                input, add_play()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_loop_players;
+        if (input->ExpectTag(26)) goto parse_loop_play;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectTag(32)) goto parse_result;
         break;
@@ -13444,10 +13444,10 @@ void MsgNCRevive::SerializeWithCachedSizes(
       2, *this->start_, output);
   }
 
-  // repeated .proto3.play_t players = 3;
-  for (unsigned int i = 0, n = this->players_size(); i < n; i++) {
+  // repeated .proto3.play_t play = 3;
+  for (unsigned int i = 0, n = this->play_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->players(i), output);
+      3, this->play(i), output);
   }
 
   // optional .proto3.pb_enum result = 4;
@@ -13482,12 +13482,12 @@ int MsgNCRevive::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.play_t players = 3;
-  total_size += 1 * this->players_size();
-  for (int i = 0; i < this->players_size(); i++) {
+  // repeated .proto3.play_t play = 3;
+  total_size += 1 * this->play_size();
+  for (int i = 0; i < this->play_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->players(i));
+        this->play(i));
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -13506,7 +13506,7 @@ void MsgNCRevive::MergeFrom(const MsgNCRevive& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
-  players_.MergeFrom(from.players_);
+  play_.MergeFrom(from.play_);
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
@@ -13537,7 +13537,7 @@ void MsgNCRevive::Swap(MsgNCRevive* other) {
 void MsgNCRevive::InternalSwap(MsgNCRevive* other) {
   std::swap(mid_, other->mid_);
   std::swap(start_, other->start_);
-  players_.UnsafeArenaSwap(&other->players_);
+  play_.UnsafeArenaSwap(&other->play_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -13606,34 +13606,34 @@ void MsgNCRevive::set_allocated_start(::proto3::MsgNCStart* start) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCRevive.start)
 }
 
-// repeated .proto3.play_t players = 3;
-int MsgNCRevive::players_size() const {
-  return players_.size();
+// repeated .proto3.play_t play = 3;
+int MsgNCRevive::play_size() const {
+  return play_.size();
 }
-void MsgNCRevive::clear_players() {
-  players_.Clear();
+void MsgNCRevive::clear_play() {
+  play_.Clear();
 }
-const ::proto3::play_t& MsgNCRevive::players(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.players)
-  return players_.Get(index);
+const ::proto3::play_t& MsgNCRevive::play(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.play)
+  return play_.Get(index);
 }
-::proto3::play_t* MsgNCRevive::mutable_players(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCRevive.players)
-  return players_.Mutable(index);
+::proto3::play_t* MsgNCRevive::mutable_play(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCRevive.play)
+  return play_.Mutable(index);
 }
-::proto3::play_t* MsgNCRevive::add_players() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCRevive.players)
-  return players_.Add();
+::proto3::play_t* MsgNCRevive::add_play() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCRevive.play)
+  return play_.Add();
 }
 ::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
-MsgNCRevive::mutable_players() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCRevive.players)
-  return &players_;
+MsgNCRevive::mutable_play() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCRevive.play)
+  return &play_;
 }
 const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
-MsgNCRevive::players() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCRevive.players)
-  return players_;
+MsgNCRevive::play() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCRevive.play)
+  return play_;
 }
 
 // optional .proto3.pb_enum result = 4;

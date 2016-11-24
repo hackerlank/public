@@ -203,7 +203,7 @@ void Player::on_read(PBHelper& pb){
                     //copy data of other players
                     for(int i=0,ii=MP;i<ii;++i){
                         auto p=spGame->players[i];
-                        auto msgplay=msg.add_players();
+                        auto msgplay=msg.add_play();
                         msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
                         msgplay->mutable_discards()->CopyFrom(p->playData.discards());
                     }

@@ -517,7 +517,7 @@ message MsgNCRevive{
 
 pb_msg mid				=1;
 MsgNCStart start        =2;
-repeated play_t players =3;
+repeated play_t play    =3;
 pb_enum result			=4;
 };
 

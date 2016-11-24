@@ -3800,17 +3800,17 @@ class MsgNCRevive : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::MsgNCStart* release_start();
   void set_allocated_start(::proto3::MsgNCStart* start);
 
-  // repeated .proto3.play_t players = 3;
-  int players_size() const;
-  void clear_players();
-  static const int kPlayersFieldNumber = 3;
-  const ::proto3::play_t& players(int index) const;
-  ::proto3::play_t* mutable_players(int index);
-  ::proto3::play_t* add_players();
+  // repeated .proto3.play_t play = 3;
+  int play_size() const;
+  void clear_play();
+  static const int kPlayFieldNumber = 3;
+  const ::proto3::play_t& play(int index) const;
+  ::proto3::play_t* mutable_play(int index);
+  ::proto3::play_t* add_play();
   ::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
-      mutable_players();
+      mutable_play();
   const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
-      players() const;
+      play() const;
 
   // optional .proto3.pb_enum result = 4;
   void clear_result();
@@ -3828,7 +3828,7 @@ class MsgNCRevive : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::MsgNCStart* start_;
   int mid_;
   int result_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::play_t > players_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::play_t > play_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -9617,34 +9617,34 @@ inline void MsgNCRevive::set_allocated_start(::proto3::MsgNCStart* start) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCRevive.start)
 }
 
-// repeated .proto3.play_t players = 3;
-inline int MsgNCRevive::players_size() const {
-  return players_.size();
+// repeated .proto3.play_t play = 3;
+inline int MsgNCRevive::play_size() const {
+  return play_.size();
 }
-inline void MsgNCRevive::clear_players() {
-  players_.Clear();
+inline void MsgNCRevive::clear_play() {
+  play_.Clear();
 }
-inline const ::proto3::play_t& MsgNCRevive::players(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.players)
-  return players_.Get(index);
+inline const ::proto3::play_t& MsgNCRevive::play(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.play)
+  return play_.Get(index);
 }
-inline ::proto3::play_t* MsgNCRevive::mutable_players(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCRevive.players)
-  return players_.Mutable(index);
+inline ::proto3::play_t* MsgNCRevive::mutable_play(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCRevive.play)
+  return play_.Mutable(index);
 }
-inline ::proto3::play_t* MsgNCRevive::add_players() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCRevive.players)
-  return players_.Add();
+inline ::proto3::play_t* MsgNCRevive::add_play() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCRevive.play)
+  return play_.Add();
 }
 inline ::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
-MsgNCRevive::mutable_players() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCRevive.players)
-  return &players_;
+MsgNCRevive::mutable_play() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCRevive.play)
+  return &play_;
 }
 inline const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
-MsgNCRevive::players() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCRevive.players)
-  return players_;
+MsgNCRevive::play() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCRevive.play)
+  return play_;
 }
 
 // optional .proto3.pb_enum result = 4;

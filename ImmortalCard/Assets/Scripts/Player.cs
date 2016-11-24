@@ -168,34 +168,6 @@ public class Player {
 		});
 	}
 
-	public void StartGame(MsgNCStart msgStart){
-		var rule=Main.Instance.gameController.Rule;
-		var M=rule.MaxPlayer;
-		
-		//clear rule data
-		rule.nHands=new int[M];
-		for(int i=0;i<M;++i)rule.nHands[i]=msgStart.Count[i];
-		
-		//clear player data
-		playData.Hands.Clear();
-		playData.Discards.Clear();
-		playData.Bunch.Clear();
-		playData.SelectedCard=-1;
-		AAAs.Clear();
-		AAAAs.Clear();
-		unpairedCards.Clear();
-		dodgeCards.Clear();
-		conflictMeld=false;
-		
-		//copy data
-		playData.Seat=msgStart.Pos;
-		playData.Hands.AddRange(msgStart.Hands);
-		var str="deal "+playData.Seat+":";
-		foreach(var hand in msgStart.Hands)str+=hand+",";
-		Debug.Log(str);
-
-	}
-
 	public void onClose(string error){
 		Loom.QueueOnMainThread(delegate{
 			if(InGame){
@@ -296,6 +268,35 @@ public class Player {
 
 		case pb_msg.MsgNcRevive:
 			MsgNCRevive msgReconn=MsgNCRevive.Parser.ParseFrom(bytes);
+			if(msgReconn.Result==pb_enum.Succeess){
+				var rule=Main.Instance.gameController.Rule;
+				var M=rule.MaxPlayer;
+				
+				//clear rule data
+				rule.nHands=new int[M];
+				for(int i=0;i<M;++i)rule.nHands[i]=msgReconn.Start.Count[i];
+				
+				//clear player data
+				playData.Hands.Clear();
+				playData.Discards.Clear();
+				playData.Bunch.Clear();
+				playData.SelectedCard=-1;
+				AAAs.Clear();
+				AAAAs.Clear();
+				unpairedCards.Clear();
+				dodgeCards.Clear();
+				conflictMeld=false;
+				
+				//copy data
+				var playFrom=msgReconn.Play[msgReconn.Start.Pos];
+				playData.MergeFrom(playFrom);
+				playData.Seat=msgReconn.Start.Pos;
+
+				var str="----revive deal "+playData.Seat+":";
+				foreach(var hand in msgReconn.Start.Hands)str+=hand+",";
+				Debug.Log(str);
+			}else
+				Debug.LogError("start error: "+msgReconn.Result);
 
 			foreach(var ctrl in controllers){
 				Main.Instance.StartCoroutine(ctrl.OnMsgRevive(this,msgReconn));
@@ -305,7 +306,30 @@ public class Player {
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){
-				StartGame(msgStart);
+				var rule=Main.Instance.gameController.Rule;
+				var M=rule.MaxPlayer;
+				
+				//clear rule data
+				rule.nHands=new int[M];
+				for(int i=0;i<M;++i)rule.nHands[i]=msgStart.Count[i];
+				
+				//clear player data
+				playData.Hands.Clear();
+				playData.Discards.Clear();
+				playData.Bunch.Clear();
+				playData.SelectedCard=-1;
+				AAAs.Clear();
+				AAAAs.Clear();
+				unpairedCards.Clear();
+				dodgeCards.Clear();
+				conflictMeld=false;
+				
+				//copy data
+				playData.Seat=msgStart.Pos;
+				playData.Hands.AddRange(msgStart.Hands);
+				var str="deal "+playData.Seat+":";
+				foreach(var hand in msgStart.Hands)str+=hand+",";
+				Debug.Log(str);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgStart(this,msgStart));

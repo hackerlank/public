@@ -94,9 +94,36 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 			//redeal
 			--Round;	//to match ++
-			player.StartGame(msg.Start);
 			yield return StartCoroutine(OnMsgStart(player,msg.Start));
-			//revive discard
+
+			var playFrom=msg.Play[player.playData.Seat];
+			for(int i=0;i<maxPlayer;++i){
+				//revive others hands
+				if(i!=player.playData.Seat){
+
+				}
+
+				//revive discard
+				/*
+				for(int j=0;j<playFrom.Discards.Length;++j){
+					var id=playFrom.Discards[j];
+					var fin=false;
+					var from=(i<nHandCards.Length&&nHandCards[i]!=null?nHandCards[i].transform.parent:HandAreas[i]);
+					Card.Create(CardPrefab,id,from,delegate(Card card) {
+						card.DiscardTo(DiscardAreas[i],DiscardScalar);
+						card.state=Card.State.ST_DISCARD;
+						fin=true;
+					});
+					yield return null;
+					str+=(int)id+",";
+					while(!fin)yield return null;
+				}
+				*/
+
+				//remember
+				if(i<nHandCards.Length&&nHandCards[i]!=null)
+					nHandCards[i].text=Rule.nHands[i].ToString();
+			}
 		}
 		yield break;
 	}
