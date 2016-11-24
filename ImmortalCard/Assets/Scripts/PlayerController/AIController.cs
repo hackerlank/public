@@ -14,7 +14,7 @@ public class AIController:PlayerController{
 		player.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 
-	virtual public IEnumerator OnMsgRevive(Player player,MsgNCReconnect msg){
+	virtual public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
 		yield break;
 	}
 

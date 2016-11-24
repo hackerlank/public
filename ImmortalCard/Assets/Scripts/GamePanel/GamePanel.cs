@@ -79,7 +79,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		tokenIcon.Pile=msg.Piles;
 	}
 
-	virtual public IEnumerator OnMsgRevive(Player player,MsgNCReconnect msg){
+	virtual public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
 		if(msg.Result!=pb_enum.Succeess){
 			Debug.Log("---- GamePanel on reconnect faied: "+msg.Result.ToString());
 			OnExit();

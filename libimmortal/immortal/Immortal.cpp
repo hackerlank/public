@@ -84,8 +84,8 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
     PBHelper pb(pw);
     auto mid=pb.Id();
     if(mid==proto3::pb_msg::MSG_CN_CONNECT){
-        MsgCNEnter imsg;
-        MsgNCEnter omsg;
+        MsgCNConnect imsg;
+        MsgNCConnect omsg;
         if(pb.Parse(imsg)){
             auto spPlayer=std::make_shared<Player>(sh);
             auto player=spPlayer->playData.mutable_player();

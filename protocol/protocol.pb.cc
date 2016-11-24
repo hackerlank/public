@@ -40,10 +40,10 @@ void protobuf_ShutdownFile_protocol_2eproto() {
   delete MsgHCCharge::default_instance_;
   delete MsgCHQuery::default_instance_;
   delete MsgHCQuery::default_instance_;
-  delete MsgCNEnter::default_instance_;
-  delete MsgNCEnter::default_instance_;
-  delete MsgCNReconnect::default_instance_;
-  delete MsgNCReconnect::default_instance_;
+  delete MsgCNConnect::default_instance_;
+  delete MsgNCConnect::default_instance_;
+  delete MsgCNRevive::default_instance_;
+  delete MsgNCRevive::default_instance_;
   delete MsgCNCreate::default_instance_;
   delete MsgNCCreate::default_instance_;
   delete MsgCNJoin::default_instance_;
@@ -103,10 +103,10 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgHCCharge::default_instance_ = new MsgHCCharge();
   MsgCHQuery::default_instance_ = new MsgCHQuery();
   MsgHCQuery::default_instance_ = new MsgHCQuery();
-  MsgCNEnter::default_instance_ = new MsgCNEnter();
-  MsgNCEnter::default_instance_ = new MsgNCEnter();
-  MsgCNReconnect::default_instance_ = new MsgCNReconnect();
-  MsgNCReconnect::default_instance_ = new MsgNCReconnect();
+  MsgCNConnect::default_instance_ = new MsgCNConnect();
+  MsgNCConnect::default_instance_ = new MsgNCConnect();
+  MsgCNRevive::default_instance_ = new MsgCNRevive();
+  MsgNCRevive::default_instance_ = new MsgNCRevive();
   MsgCNCreate::default_instance_ = new MsgCNCreate();
   MsgNCCreate::default_instance_ = new MsgNCCreate();
   MsgCNJoin::default_instance_ = new MsgCNJoin();
@@ -151,10 +151,10 @@ void protobuf_AddDesc_protocol_2eproto() {
   MsgHCCharge::default_instance_->InitAsDefaultInstance();
   MsgCHQuery::default_instance_->InitAsDefaultInstance();
   MsgHCQuery::default_instance_->InitAsDefaultInstance();
-  MsgCNEnter::default_instance_->InitAsDefaultInstance();
-  MsgNCEnter::default_instance_->InitAsDefaultInstance();
-  MsgCNReconnect::default_instance_->InitAsDefaultInstance();
-  MsgNCReconnect::default_instance_->InitAsDefaultInstance();
+  MsgCNConnect::default_instance_->InitAsDefaultInstance();
+  MsgNCConnect::default_instance_->InitAsDefaultInstance();
+  MsgCNRevive::default_instance_->InitAsDefaultInstance();
+  MsgNCRevive::default_instance_->InitAsDefaultInstance();
   MsgCNCreate::default_instance_->InitAsDefaultInstance();
   MsgNCCreate::default_instance_->InitAsDefaultInstance();
   MsgCNJoin::default_instance_->InitAsDefaultInstance();
@@ -12144,31 +12144,31 @@ void MsgHCQuery::clear_result() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgCNEnter::kMidFieldNumber;
-const int MsgCNEnter::kUidFieldNumber;
-const int MsgCNEnter::kVersionFieldNumber;
-const int MsgCNEnter::kSessionFieldNumber;
+const int MsgCNConnect::kMidFieldNumber;
+const int MsgCNConnect::kUidFieldNumber;
+const int MsgCNConnect::kVersionFieldNumber;
+const int MsgCNConnect::kSessionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgCNEnter::MsgCNEnter()
+MsgCNConnect::MsgCNConnect()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(constructor:proto3.MsgCNConnect)
 }
 
-void MsgCNEnter::InitAsDefaultInstance() {
+void MsgCNConnect::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 }
 
-MsgCNEnter::MsgCNEnter(const MsgCNEnter& from)
+MsgCNConnect::MsgCNConnect(const MsgCNConnect& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNConnect)
 }
 
-void MsgCNEnter::SharedCtor() {
+void MsgCNConnect::SharedCtor() {
     _is_default_instance_ = false;
   ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
@@ -12178,12 +12178,12 @@ void MsgCNEnter::SharedCtor() {
   session_ = GOOGLE_ULONGLONG(0);
 }
 
-MsgCNEnter::~MsgCNEnter() {
-  // @@protoc_insertion_point(destructor:proto3.MsgCNEnter)
+MsgCNConnect::~MsgCNConnect() {
+  // @@protoc_insertion_point(destructor:proto3.MsgCNConnect)
   SharedDtor();
 }
 
-void MsgCNEnter::SharedDtor() {
+void MsgCNConnect::SharedDtor() {
   uid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -12193,12 +12193,12 @@ void MsgCNEnter::SharedDtor() {
   }
 }
 
-void MsgCNEnter::SetCachedSize(int size) const {
+void MsgCNConnect::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgCNEnter& MsgCNEnter::default_instance() {
+const MsgCNConnect& MsgCNConnect::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_protocol_2eproto();
 #else
@@ -12207,27 +12207,27 @@ const MsgCNEnter& MsgCNEnter::default_instance() {
   return *default_instance_;
 }
 
-MsgCNEnter* MsgCNEnter::default_instance_ = NULL;
+MsgCNConnect* MsgCNConnect::default_instance_ = NULL;
 
-MsgCNEnter* MsgCNEnter::New(::google::protobuf::Arena* arena) const {
-  MsgCNEnter* n = new MsgCNEnter;
+MsgCNConnect* MsgCNConnect::New(::google::protobuf::Arena* arena) const {
+  MsgCNConnect* n = new MsgCNConnect;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgCNEnter::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgCNEnter)
+void MsgCNConnect::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgCNConnect)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgCNEnter, f) \
+  __builtin_offsetof(MsgCNConnect, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgCNEnter*>(16)->f)
+  &reinterpret_cast<MsgCNConnect*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -12243,11 +12243,11 @@ void MsgCNEnter::Clear() {
 
 }
 
-bool MsgCNEnter::MergePartialFromCodedStream(
+bool MsgCNConnect::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(parse_start:proto3.MsgCNConnect)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -12277,7 +12277,7 @@ bool MsgCNEnter::MergePartialFromCodedStream(
           DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
             this->uid().data(), this->uid().length(),
             ::google::protobuf::internal::WireFormatLite::PARSE,
-            "proto3.MsgCNEnter.uid"));
+            "proto3.MsgCNConnect.uid"));
         } else {
           goto handle_unusual;
         }
@@ -12328,17 +12328,17 @@ bool MsgCNEnter::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(parse_success:proto3.MsgCNConnect)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgCNConnect)
   return false;
 #undef DO_
 }
 
-void MsgCNEnter::SerializeWithCachedSizes(
+void MsgCNConnect::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgCNConnect)
   // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -12350,7 +12350,7 @@ void MsgCNEnter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
       this->uid().data(), this->uid().length(),
       ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "proto3.MsgCNEnter.uid");
+      "proto3.MsgCNConnect.uid");
     ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->uid(), output);
   }
@@ -12365,11 +12365,11 @@ void MsgCNEnter::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->session(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgCNEnter)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgCNConnect)
 }
 
-int MsgCNEnter::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNEnter)
+int MsgCNConnect::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNConnect)
   int total_size = 0;
 
   // optional .proto3.pb_msg mid = 1;
@@ -12405,13 +12405,13 @@ int MsgCNEnter::ByteSize() const {
   return total_size;
 }
 
-void MsgCNEnter::CheckTypeAndMergeFrom(
+void MsgCNConnect::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgCNEnter*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgCNConnect*>(&from));
 }
 
-void MsgCNEnter::MergeFrom(const MsgCNEnter& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNEnter)
+void MsgCNConnect::MergeFrom(const MsgCNConnect& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNConnect)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -12430,23 +12430,23 @@ void MsgCNEnter::MergeFrom(const MsgCNEnter& from) {
   }
 }
 
-void MsgCNEnter::CopyFrom(const MsgCNEnter& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNEnter)
+void MsgCNConnect::CopyFrom(const MsgCNConnect& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNConnect)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgCNEnter::IsInitialized() const {
+bool MsgCNConnect::IsInitialized() const {
 
   return true;
 }
 
-void MsgCNEnter::Swap(MsgCNEnter* other) {
+void MsgCNConnect::Swap(MsgCNConnect* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgCNEnter::InternalSwap(MsgCNEnter* other) {
+void MsgCNConnect::InternalSwap(MsgCNConnect* other) {
   std::swap(mid_, other->mid_);
   uid_.Swap(&other->uid_);
   std::swap(version_, other->version_);
@@ -12455,97 +12455,97 @@ void MsgCNEnter::InternalSwap(MsgCNEnter* other) {
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgCNEnter::GetTypeName() const {
-  return "proto3.MsgCNEnter";
+::std::string MsgCNConnect::GetTypeName() const {
+  return "proto3.MsgCNConnect";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgCNEnter
+// MsgCNConnect
 
 // optional .proto3.pb_msg mid = 1;
-void MsgCNEnter::clear_mid() {
+void MsgCNConnect::clear_mid() {
   mid_ = 0;
 }
- ::proto3::pb_msg MsgCNEnter::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.mid)
+ ::proto3::pb_msg MsgCNConnect::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNConnect.mid)
   return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNEnter::set_mid(::proto3::pb_msg value) {
+ void MsgCNConnect::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNConnect.mid)
 }
 
 // optional string uid = 2;
-void MsgCNEnter::clear_uid() {
+void MsgCNConnect::clear_uid() {
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- const ::std::string& MsgCNEnter::uid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.uid)
+ const ::std::string& MsgCNConnect::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNConnect.uid)
   return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void MsgCNEnter::set_uid(const ::std::string& value) {
+ void MsgCNConnect::set_uid(const ::std::string& value) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.uid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNConnect.uid)
 }
- void MsgCNEnter::set_uid(const char* value) {
+ void MsgCNConnect::set_uid(const char* value) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgCNEnter.uid)
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCNConnect.uid)
 }
- void MsgCNEnter::set_uid(const char* value, size_t size) {
+ void MsgCNConnect::set_uid(const char* value, size_t size) {
   
   uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCNEnter.uid)
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCNConnect.uid)
 }
- ::std::string* MsgCNEnter::mutable_uid() {
+ ::std::string* MsgCNConnect::mutable_uid() {
   
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCNEnter.uid)
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCNConnect.uid)
   return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- ::std::string* MsgCNEnter::release_uid() {
-  // @@protoc_insertion_point(field_release:proto3.MsgCNEnter.uid)
+ ::std::string* MsgCNConnect::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCNConnect.uid)
   
   return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
- void MsgCNEnter::set_allocated_uid(::std::string* uid) {
+ void MsgCNConnect::set_allocated_uid(::std::string* uid) {
   if (uid != NULL) {
     
   } else {
     
   }
   uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNEnter.uid)
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCNConnect.uid)
 }
 
 // optional uint32 version = 3;
-void MsgCNEnter::clear_version() {
+void MsgCNConnect::clear_version() {
   version_ = 0u;
 }
- ::google::protobuf::uint32 MsgCNEnter::version() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.version)
+ ::google::protobuf::uint32 MsgCNConnect::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNConnect.version)
   return version_;
 }
- void MsgCNEnter::set_version(::google::protobuf::uint32 value) {
+ void MsgCNConnect::set_version(::google::protobuf::uint32 value) {
   
   version_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.version)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNConnect.version)
 }
 
 // optional uint64 session = 4;
-void MsgCNEnter::clear_session() {
+void MsgCNConnect::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
- ::google::protobuf::uint64 MsgCNEnter::session() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNEnter.session)
+ ::google::protobuf::uint64 MsgCNConnect::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNConnect.session)
   return session_;
 }
- void MsgCNEnter::set_session(::google::protobuf::uint64 value) {
+ void MsgCNConnect::set_session(::google::protobuf::uint64 value) {
   
   session_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNEnter.session)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNConnect.session)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -12553,18 +12553,18 @@ void MsgCNEnter::clear_session() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgNCEnter::kMidFieldNumber;
-const int MsgNCEnter::kPlayerFieldNumber;
-const int MsgNCEnter::kResultFieldNumber;
+const int MsgNCConnect::kMidFieldNumber;
+const int MsgNCConnect::kPlayerFieldNumber;
+const int MsgNCConnect::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgNCEnter::MsgNCEnter()
+MsgNCConnect::MsgNCConnect()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(constructor:proto3.MsgNCConnect)
 }
 
-void MsgNCEnter::InitAsDefaultInstance() {
+void MsgNCConnect::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   player_ = const_cast< ::proto3::player_t*>(
@@ -12574,15 +12574,15 @@ void MsgNCEnter::InitAsDefaultInstance() {
 #endif
 }
 
-MsgNCEnter::MsgNCEnter(const MsgNCEnter& from)
+MsgNCConnect::MsgNCConnect(const MsgNCConnect& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCConnect)
 }
 
-void MsgNCEnter::SharedCtor() {
+void MsgNCConnect::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
@@ -12590,12 +12590,12 @@ void MsgNCEnter::SharedCtor() {
   result_ = 0;
 }
 
-MsgNCEnter::~MsgNCEnter() {
-  // @@protoc_insertion_point(destructor:proto3.MsgNCEnter)
+MsgNCConnect::~MsgNCConnect() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCConnect)
   SharedDtor();
 }
 
-void MsgNCEnter::SharedDtor() {
+void MsgNCConnect::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -12605,12 +12605,12 @@ void MsgNCEnter::SharedDtor() {
   }
 }
 
-void MsgNCEnter::SetCachedSize(int size) const {
+void MsgNCConnect::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgNCEnter& MsgNCEnter::default_instance() {
+const MsgNCConnect& MsgNCConnect::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_protocol_2eproto();
 #else
@@ -12619,27 +12619,27 @@ const MsgNCEnter& MsgNCEnter::default_instance() {
   return *default_instance_;
 }
 
-MsgNCEnter* MsgNCEnter::default_instance_ = NULL;
+MsgNCConnect* MsgNCConnect::default_instance_ = NULL;
 
-MsgNCEnter* MsgNCEnter::New(::google::protobuf::Arena* arena) const {
-  MsgNCEnter* n = new MsgNCEnter;
+MsgNCConnect* MsgNCConnect::New(::google::protobuf::Arena* arena) const {
+  MsgNCConnect* n = new MsgNCConnect;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgNCEnter::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgNCEnter)
+void MsgNCConnect::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCConnect)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgNCEnter, f) \
+  __builtin_offsetof(MsgNCConnect, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgNCEnter*>(16)->f)
+  &reinterpret_cast<MsgNCConnect*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -12656,11 +12656,11 @@ void MsgNCEnter::Clear() {
 
 }
 
-bool MsgNCEnter::MergePartialFromCodedStream(
+bool MsgNCConnect::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCConnect)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -12723,17 +12723,17 @@ bool MsgNCEnter::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCConnect)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCConnect)
   return false;
 #undef DO_
 }
 
-void MsgNCEnter::SerializeWithCachedSizes(
+void MsgNCConnect::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCConnect)
   // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -12752,11 +12752,11 @@ void MsgNCEnter::SerializeWithCachedSizes(
       3, this->result(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgNCEnter)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCConnect)
 }
 
-int MsgNCEnter::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCEnter)
+int MsgNCConnect::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCConnect)
   int total_size = 0;
 
   // optional .proto3.pb_msg mid = 1;
@@ -12784,13 +12784,13 @@ int MsgNCEnter::ByteSize() const {
   return total_size;
 }
 
-void MsgNCEnter::CheckTypeAndMergeFrom(
+void MsgNCConnect::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgNCEnter*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCConnect*>(&from));
 }
 
-void MsgNCEnter::MergeFrom(const MsgNCEnter& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCEnter)
+void MsgNCConnect::MergeFrom(const MsgNCConnect& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCConnect)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -12805,23 +12805,23 @@ void MsgNCEnter::MergeFrom(const MsgNCEnter& from) {
   }
 }
 
-void MsgNCEnter::CopyFrom(const MsgNCEnter& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCEnter)
+void MsgNCConnect::CopyFrom(const MsgNCConnect& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCConnect)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNCEnter::IsInitialized() const {
+bool MsgNCConnect::IsInitialized() const {
 
   return true;
 }
 
-void MsgNCEnter::Swap(MsgNCEnter* other) {
+void MsgNCConnect::Swap(MsgNCConnect* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgNCEnter::InternalSwap(MsgNCEnter* other) {
+void MsgNCConnect::InternalSwap(MsgNCConnect* other) {
   std::swap(mid_, other->mid_);
   std::swap(player_, other->player_);
   std::swap(result_, other->result_);
@@ -12829,59 +12829,59 @@ void MsgNCEnter::InternalSwap(MsgNCEnter* other) {
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgNCEnter::GetTypeName() const {
-  return "proto3.MsgNCEnter";
+::std::string MsgNCConnect::GetTypeName() const {
+  return "proto3.MsgNCConnect";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgNCEnter
+// MsgNCConnect
 
 // optional .proto3.pb_msg mid = 1;
-void MsgNCEnter::clear_mid() {
+void MsgNCConnect::clear_mid() {
   mid_ = 0;
 }
- ::proto3::pb_msg MsgNCEnter::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEnter.mid)
+ ::proto3::pb_msg MsgNCConnect::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCConnect.mid)
   return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCEnter::set_mid(::proto3::pb_msg value) {
+ void MsgNCConnect::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEnter.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCConnect.mid)
 }
 
 // optional .proto3.player_t player = 2;
-bool MsgNCEnter::has_player() const {
+bool MsgNCConnect::has_player() const {
   return !_is_default_instance_ && player_ != NULL;
 }
-void MsgNCEnter::clear_player() {
+void MsgNCConnect::clear_player() {
   if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
   player_ = NULL;
 }
-const ::proto3::player_t& MsgNCEnter::player() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEnter.player)
+const ::proto3::player_t& MsgNCConnect::player() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCConnect.player)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return player_ != NULL ? *player_ : *default_instance().player_;
 #else
   return player_ != NULL ? *player_ : *default_instance_->player_;
 #endif
 }
-::proto3::player_t* MsgNCEnter::mutable_player() {
+::proto3::player_t* MsgNCConnect::mutable_player() {
   
   if (player_ == NULL) {
     player_ = new ::proto3::player_t;
   }
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCEnter.player)
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCConnect.player)
   return player_;
 }
-::proto3::player_t* MsgNCEnter::release_player() {
-  // @@protoc_insertion_point(field_release:proto3.MsgNCEnter.player)
+::proto3::player_t* MsgNCConnect::release_player() {
+  // @@protoc_insertion_point(field_release:proto3.MsgNCConnect.player)
   
   ::proto3::player_t* temp = player_;
   player_ = NULL;
   return temp;
 }
-void MsgNCEnter::set_allocated_player(::proto3::player_t* player) {
+void MsgNCConnect::set_allocated_player(::proto3::player_t* player) {
   delete player_;
   player_ = player;
   if (player) {
@@ -12889,21 +12889,21 @@ void MsgNCEnter::set_allocated_player(::proto3::player_t* player) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCEnter.player)
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCConnect.player)
 }
 
 // optional .proto3.pb_enum result = 3;
-void MsgNCEnter::clear_result() {
+void MsgNCConnect::clear_result() {
   result_ = 0;
 }
- ::proto3::pb_enum MsgNCEnter::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCEnter.result)
+ ::proto3::pb_enum MsgNCConnect::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCConnect.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
- void MsgNCEnter::set_result(::proto3::pb_enum value) {
+ void MsgNCConnect::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCEnter.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCConnect.result)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -12911,30 +12911,30 @@ void MsgNCEnter::clear_result() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgCNReconnect::kMidFieldNumber;
-const int MsgCNReconnect::kGameFieldNumber;
-const int MsgCNReconnect::kSessionFieldNumber;
+const int MsgCNRevive::kMidFieldNumber;
+const int MsgCNRevive::kGameFieldNumber;
+const int MsgCNRevive::kSessionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgCNReconnect::MsgCNReconnect()
+MsgCNRevive::MsgCNRevive()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(constructor:proto3.MsgCNRevive)
 }
 
-void MsgCNReconnect::InitAsDefaultInstance() {
+void MsgCNRevive::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 }
 
-MsgCNReconnect::MsgCNReconnect(const MsgCNReconnect& from)
+MsgCNRevive::MsgCNRevive(const MsgCNRevive& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgCNRevive)
 }
 
-void MsgCNReconnect::SharedCtor() {
+void MsgCNRevive::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
@@ -12942,12 +12942,12 @@ void MsgCNReconnect::SharedCtor() {
   session_ = GOOGLE_ULONGLONG(0);
 }
 
-MsgCNReconnect::~MsgCNReconnect() {
-  // @@protoc_insertion_point(destructor:proto3.MsgCNReconnect)
+MsgCNRevive::~MsgCNRevive() {
+  // @@protoc_insertion_point(destructor:proto3.MsgCNRevive)
   SharedDtor();
 }
 
-void MsgCNReconnect::SharedDtor() {
+void MsgCNRevive::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -12956,12 +12956,12 @@ void MsgCNReconnect::SharedDtor() {
   }
 }
 
-void MsgCNReconnect::SetCachedSize(int size) const {
+void MsgCNRevive::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgCNReconnect& MsgCNReconnect::default_instance() {
+const MsgCNRevive& MsgCNRevive::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_protocol_2eproto();
 #else
@@ -12970,27 +12970,27 @@ const MsgCNReconnect& MsgCNReconnect::default_instance() {
   return *default_instance_;
 }
 
-MsgCNReconnect* MsgCNReconnect::default_instance_ = NULL;
+MsgCNRevive* MsgCNRevive::default_instance_ = NULL;
 
-MsgCNReconnect* MsgCNReconnect::New(::google::protobuf::Arena* arena) const {
-  MsgCNReconnect* n = new MsgCNReconnect;
+MsgCNRevive* MsgCNRevive::New(::google::protobuf::Arena* arena) const {
+  MsgCNRevive* n = new MsgCNRevive;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgCNReconnect::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgCNReconnect)
+void MsgCNRevive::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgCNRevive)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgCNReconnect, f) \
+  __builtin_offsetof(MsgCNRevive, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgCNReconnect*>(16)->f)
+  &reinterpret_cast<MsgCNRevive*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -13005,11 +13005,11 @@ void MsgCNReconnect::Clear() {
 
 }
 
-bool MsgCNReconnect::MergePartialFromCodedStream(
+bool MsgCNRevive::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(parse_start:proto3.MsgCNRevive)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -13073,17 +13073,17 @@ bool MsgCNReconnect::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(parse_success:proto3.MsgCNRevive)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgCNRevive)
   return false;
 #undef DO_
 }
 
-void MsgCNReconnect::SerializeWithCachedSizes(
+void MsgCNRevive::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgCNRevive)
   // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -13100,11 +13100,11 @@ void MsgCNReconnect::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->session(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgCNReconnect)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgCNRevive)
 }
 
-int MsgCNReconnect::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNReconnect)
+int MsgCNRevive::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgCNRevive)
   int total_size = 0;
 
   // optional .proto3.pb_msg mid = 1;
@@ -13133,13 +13133,13 @@ int MsgCNReconnect::ByteSize() const {
   return total_size;
 }
 
-void MsgCNReconnect::CheckTypeAndMergeFrom(
+void MsgCNRevive::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgCNReconnect*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgCNRevive*>(&from));
 }
 
-void MsgCNReconnect::MergeFrom(const MsgCNReconnect& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNReconnect)
+void MsgCNRevive::MergeFrom(const MsgCNRevive& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgCNRevive)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -13154,23 +13154,23 @@ void MsgCNReconnect::MergeFrom(const MsgCNReconnect& from) {
   }
 }
 
-void MsgCNReconnect::CopyFrom(const MsgCNReconnect& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNReconnect)
+void MsgCNRevive::CopyFrom(const MsgCNRevive& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgCNRevive)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgCNReconnect::IsInitialized() const {
+bool MsgCNRevive::IsInitialized() const {
 
   return true;
 }
 
-void MsgCNReconnect::Swap(MsgCNReconnect* other) {
+void MsgCNRevive::Swap(MsgCNRevive* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgCNReconnect::InternalSwap(MsgCNReconnect* other) {
+void MsgCNRevive::InternalSwap(MsgCNRevive* other) {
   std::swap(mid_, other->mid_);
   std::swap(game_, other->game_);
   std::swap(session_, other->session_);
@@ -13178,53 +13178,53 @@ void MsgCNReconnect::InternalSwap(MsgCNReconnect* other) {
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgCNReconnect::GetTypeName() const {
-  return "proto3.MsgCNReconnect";
+::std::string MsgCNRevive::GetTypeName() const {
+  return "proto3.MsgCNRevive";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgCNReconnect
+// MsgCNRevive
 
 // optional .proto3.pb_msg mid = 1;
-void MsgCNReconnect::clear_mid() {
+void MsgCNRevive::clear_mid() {
   mid_ = 0;
 }
- ::proto3::pb_msg MsgCNReconnect::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.mid)
+ ::proto3::pb_msg MsgCNRevive::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNRevive.mid)
   return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgCNReconnect::set_mid(::proto3::pb_msg value) {
+ void MsgCNRevive::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNRevive.mid)
 }
 
 // optional int32 game = 2;
-void MsgCNReconnect::clear_game() {
+void MsgCNRevive::clear_game() {
   game_ = 0;
 }
- ::google::protobuf::int32 MsgCNReconnect::game() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.game)
+ ::google::protobuf::int32 MsgCNRevive::game() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNRevive.game)
   return game_;
 }
- void MsgCNReconnect::set_game(::google::protobuf::int32 value) {
+ void MsgCNRevive::set_game(::google::protobuf::int32 value) {
   
   game_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.game)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNRevive.game)
 }
 
 // optional uint64 session = 3;
-void MsgCNReconnect::clear_session() {
+void MsgCNRevive::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
- ::google::protobuf::uint64 MsgCNReconnect::session() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCNReconnect.session)
+ ::google::protobuf::uint64 MsgCNRevive::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNRevive.session)
   return session_;
 }
- void MsgCNReconnect::set_session(::google::protobuf::uint64 value) {
+ void MsgCNRevive::set_session(::google::protobuf::uint64 value) {
   
   session_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCNReconnect.session)
+  // @@protoc_insertion_point(field_set:proto3.MsgCNRevive.session)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
@@ -13232,19 +13232,19 @@ void MsgCNReconnect::clear_session() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgNCReconnect::kMidFieldNumber;
-const int MsgNCReconnect::kStartFieldNumber;
-const int MsgNCReconnect::kPlayersFieldNumber;
-const int MsgNCReconnect::kResultFieldNumber;
+const int MsgNCRevive::kMidFieldNumber;
+const int MsgNCRevive::kStartFieldNumber;
+const int MsgNCRevive::kPlayersFieldNumber;
+const int MsgNCRevive::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
-MsgNCReconnect::MsgNCReconnect()
+MsgNCRevive::MsgNCRevive()
   : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
   SharedCtor();
-  // @@protoc_insertion_point(constructor:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(constructor:proto3.MsgNCRevive)
 }
 
-void MsgNCReconnect::InitAsDefaultInstance() {
+void MsgNCRevive::InitAsDefaultInstance() {
   _is_default_instance_ = true;
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   start_ = const_cast< ::proto3::MsgNCStart*>(
@@ -13254,15 +13254,15 @@ void MsgNCReconnect::InitAsDefaultInstance() {
 #endif
 }
 
-MsgNCReconnect::MsgNCReconnect(const MsgNCReconnect& from)
+MsgNCRevive::MsgNCRevive(const MsgNCRevive& from)
   : ::google::protobuf::MessageLite(),
     _arena_ptr_(NULL) {
   SharedCtor();
   MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(copy_constructor:proto3.MsgNCRevive)
 }
 
-void MsgNCReconnect::SharedCtor() {
+void MsgNCRevive::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
@@ -13270,12 +13270,12 @@ void MsgNCReconnect::SharedCtor() {
   result_ = 0;
 }
 
-MsgNCReconnect::~MsgNCReconnect() {
-  // @@protoc_insertion_point(destructor:proto3.MsgNCReconnect)
+MsgNCRevive::~MsgNCRevive() {
+  // @@protoc_insertion_point(destructor:proto3.MsgNCRevive)
   SharedDtor();
 }
 
-void MsgNCReconnect::SharedDtor() {
+void MsgNCRevive::SharedDtor() {
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
   #else
@@ -13285,12 +13285,12 @@ void MsgNCReconnect::SharedDtor() {
   }
 }
 
-void MsgNCReconnect::SetCachedSize(int size) const {
+void MsgNCRevive::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const MsgNCReconnect& MsgNCReconnect::default_instance() {
+const MsgNCRevive& MsgNCRevive::default_instance() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   protobuf_AddDesc_protocol_2eproto();
 #else
@@ -13299,27 +13299,27 @@ const MsgNCReconnect& MsgNCReconnect::default_instance() {
   return *default_instance_;
 }
 
-MsgNCReconnect* MsgNCReconnect::default_instance_ = NULL;
+MsgNCRevive* MsgNCRevive::default_instance_ = NULL;
 
-MsgNCReconnect* MsgNCReconnect::New(::google::protobuf::Arena* arena) const {
-  MsgNCReconnect* n = new MsgNCReconnect;
+MsgNCRevive* MsgNCRevive::New(::google::protobuf::Arena* arena) const {
+  MsgNCRevive* n = new MsgNCRevive;
   if (arena != NULL) {
     arena->Own(n);
   }
   return n;
 }
 
-void MsgNCReconnect::Clear() {
-// @@protoc_insertion_point(message_clear_start:proto3.MsgNCReconnect)
+void MsgNCRevive::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.MsgNCRevive)
 #if defined(__clang__)
 #define ZR_HELPER_(f) \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
-  __builtin_offsetof(MsgNCReconnect, f) \
+  __builtin_offsetof(MsgNCRevive, f) \
   _Pragma("clang diagnostic pop")
 #else
 #define ZR_HELPER_(f) reinterpret_cast<char*>(\
-  &reinterpret_cast<MsgNCReconnect*>(16)->f)
+  &reinterpret_cast<MsgNCRevive*>(16)->f)
 #endif
 
 #define ZR_(first, last) do {\
@@ -13337,11 +13337,11 @@ void MsgNCReconnect::Clear() {
   players_.Clear();
 }
 
-bool MsgNCReconnect::MergePartialFromCodedStream(
+bool MsgNCRevive::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(parse_start:proto3.MsgNCRevive)
   for (;;) {
     ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
     tag = p.first;
@@ -13421,17 +13421,17 @@ bool MsgNCReconnect::MergePartialFromCodedStream(
     }
   }
 success:
-  // @@protoc_insertion_point(parse_success:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(parse_success:proto3.MsgNCRevive)
   return true;
 failure:
-  // @@protoc_insertion_point(parse_failure:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(parse_failure:proto3.MsgNCRevive)
   return false;
 #undef DO_
 }
 
-void MsgNCReconnect::SerializeWithCachedSizes(
+void MsgNCRevive::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(serialize_start:proto3.MsgNCRevive)
   // optional .proto3.pb_msg mid = 1;
   if (this->mid() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
@@ -13456,11 +13456,11 @@ void MsgNCReconnect::SerializeWithCachedSizes(
       4, this->result(), output);
   }
 
-  // @@protoc_insertion_point(serialize_end:proto3.MsgNCReconnect)
+  // @@protoc_insertion_point(serialize_end:proto3.MsgNCRevive)
 }
 
-int MsgNCReconnect::ByteSize() const {
-// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCReconnect)
+int MsgNCRevive::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.MsgNCRevive)
   int total_size = 0;
 
   // optional .proto3.pb_msg mid = 1;
@@ -13496,13 +13496,13 @@ int MsgNCReconnect::ByteSize() const {
   return total_size;
 }
 
-void MsgNCReconnect::CheckTypeAndMergeFrom(
+void MsgNCRevive::CheckTypeAndMergeFrom(
     const ::google::protobuf::MessageLite& from) {
-  MergeFrom(*::google::protobuf::down_cast<const MsgNCReconnect*>(&from));
+  MergeFrom(*::google::protobuf::down_cast<const MsgNCRevive*>(&from));
 }
 
-void MsgNCReconnect::MergeFrom(const MsgNCReconnect& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCReconnect)
+void MsgNCRevive::MergeFrom(const MsgNCRevive& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.MsgNCRevive)
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
@@ -13518,23 +13518,23 @@ void MsgNCReconnect::MergeFrom(const MsgNCReconnect& from) {
   }
 }
 
-void MsgNCReconnect::CopyFrom(const MsgNCReconnect& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCReconnect)
+void MsgNCRevive::CopyFrom(const MsgNCRevive& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.MsgNCRevive)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgNCReconnect::IsInitialized() const {
+bool MsgNCRevive::IsInitialized() const {
 
   return true;
 }
 
-void MsgNCReconnect::Swap(MsgNCReconnect* other) {
+void MsgNCRevive::Swap(MsgNCRevive* other) {
   if (other == this) return;
   InternalSwap(other);
 }
-void MsgNCReconnect::InternalSwap(MsgNCReconnect* other) {
+void MsgNCRevive::InternalSwap(MsgNCRevive* other) {
   std::swap(mid_, other->mid_);
   std::swap(start_, other->start_);
   players_.UnsafeArenaSwap(&other->players_);
@@ -13543,59 +13543,59 @@ void MsgNCReconnect::InternalSwap(MsgNCReconnect* other) {
   std::swap(_cached_size_, other->_cached_size_);
 }
 
-::std::string MsgNCReconnect::GetTypeName() const {
-  return "proto3.MsgNCReconnect";
+::std::string MsgNCRevive::GetTypeName() const {
+  return "proto3.MsgNCRevive";
 }
 
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
-// MsgNCReconnect
+// MsgNCRevive
 
 // optional .proto3.pb_msg mid = 1;
-void MsgNCReconnect::clear_mid() {
+void MsgNCRevive::clear_mid() {
   mid_ = 0;
 }
- ::proto3::pb_msg MsgNCReconnect::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.mid)
+ ::proto3::pb_msg MsgNCRevive::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.mid)
   return static_cast< ::proto3::pb_msg >(mid_);
 }
- void MsgNCReconnect::set_mid(::proto3::pb_msg value) {
+ void MsgNCRevive::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCReconnect.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.mid)
 }
 
 // optional .proto3.MsgNCStart start = 2;
-bool MsgNCReconnect::has_start() const {
+bool MsgNCRevive::has_start() const {
   return !_is_default_instance_ && start_ != NULL;
 }
-void MsgNCReconnect::clear_start() {
+void MsgNCRevive::clear_start() {
   if (GetArenaNoVirtual() == NULL && start_ != NULL) delete start_;
   start_ = NULL;
 }
-const ::proto3::MsgNCStart& MsgNCReconnect::start() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.start)
+const ::proto3::MsgNCStart& MsgNCRevive::start() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.start)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return start_ != NULL ? *start_ : *default_instance().start_;
 #else
   return start_ != NULL ? *start_ : *default_instance_->start_;
 #endif
 }
-::proto3::MsgNCStart* MsgNCReconnect::mutable_start() {
+::proto3::MsgNCStart* MsgNCRevive::mutable_start() {
   
   if (start_ == NULL) {
     start_ = new ::proto3::MsgNCStart;
   }
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCReconnect.start)
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCRevive.start)
   return start_;
 }
-::proto3::MsgNCStart* MsgNCReconnect::release_start() {
-  // @@protoc_insertion_point(field_release:proto3.MsgNCReconnect.start)
+::proto3::MsgNCStart* MsgNCRevive::release_start() {
+  // @@protoc_insertion_point(field_release:proto3.MsgNCRevive.start)
   
   ::proto3::MsgNCStart* temp = start_;
   start_ = NULL;
   return temp;
 }
-void MsgNCReconnect::set_allocated_start(::proto3::MsgNCStart* start) {
+void MsgNCRevive::set_allocated_start(::proto3::MsgNCStart* start) {
   delete start_;
   start_ = start;
   if (start) {
@@ -13603,51 +13603,51 @@ void MsgNCReconnect::set_allocated_start(::proto3::MsgNCStart* start) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCReconnect.start)
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCRevive.start)
 }
 
 // repeated .proto3.play_t players = 3;
-int MsgNCReconnect::players_size() const {
+int MsgNCRevive::players_size() const {
   return players_.size();
 }
-void MsgNCReconnect::clear_players() {
+void MsgNCRevive::clear_players() {
   players_.Clear();
 }
-const ::proto3::play_t& MsgNCReconnect::players(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.players)
+const ::proto3::play_t& MsgNCRevive::players(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.players)
   return players_.Get(index);
 }
-::proto3::play_t* MsgNCReconnect::mutable_players(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgNCReconnect.players)
+::proto3::play_t* MsgNCRevive::mutable_players(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgNCRevive.players)
   return players_.Mutable(index);
 }
-::proto3::play_t* MsgNCReconnect::add_players() {
-  // @@protoc_insertion_point(field_add:proto3.MsgNCReconnect.players)
+::proto3::play_t* MsgNCRevive::add_players() {
+  // @@protoc_insertion_point(field_add:proto3.MsgNCRevive.players)
   return players_.Add();
 }
 ::google::protobuf::RepeatedPtrField< ::proto3::play_t >*
-MsgNCReconnect::mutable_players() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCReconnect.players)
+MsgNCRevive::mutable_players() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgNCRevive.players)
   return &players_;
 }
 const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
-MsgNCReconnect::players() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgNCReconnect.players)
+MsgNCRevive::players() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgNCRevive.players)
   return players_;
 }
 
 // optional .proto3.pb_enum result = 4;
-void MsgNCReconnect::clear_result() {
+void MsgNCRevive::clear_result() {
   result_ = 0;
 }
- ::proto3::pb_enum MsgNCReconnect::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgNCReconnect.result)
+ ::proto3::pb_enum MsgNCRevive::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
- void MsgNCReconnect::set_result(::proto3::pb_enum value) {
+ void MsgNCRevive::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgNCReconnect.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.result)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

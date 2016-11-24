@@ -27,7 +27,7 @@ public class Player {
 
 	public MsgNCCreate		msgNCCreate;
 	public MsgNCJoin		msgNCJoin;
-	public MsgCNReconnect	msgRevice;
+	public MsgCNRevive	msgRevice;
 
 	public Player(){
 		//networks
@@ -79,10 +79,10 @@ public class Player {
 			}
 		}
 
-		MsgCNReconnect msg=new MsgCNReconnect();
+		var msg=new MsgCNRevive();
 		msg.Mid=pb_msg.MsgCnRevive;
 		msg.Game=storeGame.gameId;
-		Send<MsgCNReconnect>(msg.Mid,msg);
+		Send<MsgCNRevive>(msg.Mid,msg);
 		Debug.Log("reconnect game by key "+storeGame.gameId);
 	}
 
@@ -156,11 +156,11 @@ public class Player {
 	public void onOpen(string error){
 		if(!connected){
 			connected=true;
-			MsgCNEnter msg=new MsgCNEnter();
+			var msg=new MsgCNConnect();
 			msg.Mid=pb_msg.MsgCnConnect;
 			msg.Version=100;
 			msg.Uid=playData.Player.Uid;
-			Send<MsgCNEnter>(msg.Mid,msg);
+			Send<MsgCNConnect>(msg.Mid,msg);
 		}
 		Loom.QueueOnMainThread(delegate{
 			//dispatch to main thread
@@ -247,7 +247,7 @@ public class Player {
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;
 		case pb_msg.MsgNcConnect:
-			MsgNCEnter msgEnter=MsgNCEnter.Parser.ParseFrom(bytes);
+			MsgNCConnect msgEnter=MsgNCConnect.Parser.ParseFrom(bytes);
 			Debug.Log("entered node");
 			if(msgEnter.Result==pb_enum.Succeess){
 				InGame=true;
@@ -295,7 +295,7 @@ public class Player {
 			break;
 
 		case pb_msg.MsgNcRevive:
-			MsgNCReconnect msgReconn=MsgNCReconnect.Parser.ParseFrom(bytes);
+			MsgNCRevive msgReconn=MsgNCRevive.Parser.ParseFrom(bytes);
 
 			foreach(var ctrl in controllers){
 				Main.Instance.StartCoroutine(ctrl.OnMsgRevive(this,msgReconn));
