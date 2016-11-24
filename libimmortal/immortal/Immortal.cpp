@@ -62,7 +62,8 @@ void Immortal::removeGame(game_id_t id){
 }
 
 void Immortal::addPlayer(size_t shid,std::shared_ptr<Player> sp){
-    if(!sp)return;
+    if(!sp)
+        return;
     players[shid]=sp;;
 }
 

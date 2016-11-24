@@ -182,9 +182,15 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	IEnumerator createGame(){
+		//create game panel
 		var storeGame=Main.Instance.MainPlayer.storeGame;
 		yield return StartCoroutine(Main.Instance.MainPlayer.CreateGame(
-			(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots));
+			(pb_enum)storeGame.gameType,storeGame.gameId));
+
+		//add robots and join
+		Player.addRobots(storeGame.robots);
+		foreach(var robot in Main.Instance.robots)
+			yield return StartCoroutine(robot.JoinGame(storeGame.gameId));
 
 		if(LobbyPanel.Instance!=null)
 			Destroy(LobbyPanel.Instance.gameObject);

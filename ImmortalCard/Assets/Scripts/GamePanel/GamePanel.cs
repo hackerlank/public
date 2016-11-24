@@ -45,6 +45,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		transformComponent(Players);
 		transformComponent(nHandCards);
 
+		Debug.Log("----game start, round="+Round+",pos="+_pos+",banker="+Rule.Banker);
 		//sort
 		yield return StartCoroutine(deal(msg));
 
@@ -84,8 +85,18 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			OnExit();
 		}else{
 			Debug.Log("---- GamePanel on reconnect");
+			//clear
+			foreach(var btn in btnOps)btn.SetActive(false);
+			for(int i=0;i<maxPlayer;++i){
+				foreach(Transform ch in HandAreas[i])Destroy(ch.gameObject);
+				foreach(Transform ch in DiscardAreas[i])Destroy(ch.gameObject);
+			}
+
+			//redeal
 			--Round;	//to match ++
-			yield return OnMsgStart(player,msg.Start);
+			player.StartGame(msg.Start);
+			yield return StartCoroutine(OnMsgStart(player,msg.Start));
+			//revive discard
 		}
 		yield break;
 	}

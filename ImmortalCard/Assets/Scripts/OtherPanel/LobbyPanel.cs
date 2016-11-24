@@ -21,7 +21,7 @@ public class LobbyPanel : MonoBehaviour {
 
 		if(storeGame.gameId>0){
 			Debug.Log("----found old game and reconnect");
-			//in game,send and wait for reconnect
+			//in game: reconnect and create game panel,robots
 			Main.Instance.MainPlayer.storeGame=storeGame;
 			yield return StartCoroutine(Main.Instance.MainPlayer.Reconnect());
 

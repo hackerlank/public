@@ -25,8 +25,9 @@ public class Player {
 	public List<bunch_t>	AAAs=new List<bunch_t>();
 	public bool				conflictMeld=false;
 
-	public MsgNCCreate	msgNCCreate;
-	public MsgNCJoin	msgNCJoin;
+	public MsgNCCreate		msgNCCreate;
+	public MsgNCJoin		msgNCJoin;
+	public MsgCNReconnect	msgRevice;
 
 	public Player(){
 		//networks
@@ -57,21 +58,32 @@ public class Player {
 	}
 
 	public IEnumerator Reconnect(){
-		//in game,send and wait for reconnect
+		//reconnect
 		InGame=false;
 		Connect(storeGame.gameId);
+
 		while(!InGame)yield return null;
-		
+
+		//reloaded
+		if(this==Main.Instance.MainPlayer && Main.Instance.gameController==null){
+			//create game panel
+			yield return Main.Instance.StartCoroutine(
+				CreateGame((pb_enum)storeGame.gameType,storeGame.gameId)
+				);
+
+			//add robots and reconnect
+			addRobots(storeGame.robots);
+			foreach(var robot in Main.Instance.robots){
+				robot.storeGame=storeGame;
+				Main.Instance.StartCoroutine(robot.Reconnect());
+			}
+		}
+
 		MsgCNReconnect msg=new MsgCNReconnect();
 		msg.Mid=pb_msg.MsgCnRevive;
 		msg.Game=storeGame.gameId;
-		Main.Instance.MainPlayer.Send<MsgCNReconnect>(msg.Mid,msg);
+		Send<MsgCNReconnect>(msg.Mid,msg);
 		Debug.Log("reconnect game by key "+storeGame.gameId);
-
-		Debug.Log("reconnect game controller="+Main.Instance.gameController);
-		if(Main.Instance.gameController==null)
-			yield return Main.Instance.StartCoroutine(CreateGame(
-				(pb_enum)storeGame.gameType,storeGame.gameId,storeGame.robots));
 	}
 
 	public void Disconnect(){
@@ -80,7 +92,7 @@ public class Player {
 			ws.Close();
 	}
 
-	public IEnumerator CreateGame(pb_enum game,int gameId,int nRobots=0){
+	public IEnumerator CreateGame(pb_enum game,int gameId){
 		GamePanel panel=null;
 		System.Action<Component> handler=delegate(Component obj){
 			panel=obj as GamePanel;
@@ -101,22 +113,30 @@ public class Player {
 		while (panel==null)
 			yield return null;
 
+		Main.Instance.Wait=false;
+	}
+
+	public static void addRobots(int nRobots){
+		var ctrl=Main.Instance.gameController;
+		if(ctrl==null){
+			Debug.Log("no game controller when add robot");
+			return;
+		}
+
 		if(nRobots>0){
 			//add robots demand
-			var MP=panel.Rule.MaxPlayer;
+			Main.Instance.robots.Clear();
+			var MP=ctrl.Rule.MaxPlayer;
 			if(nRobots>=MP)nRobots=MP-1;
 			for(uint i=0;i<nRobots;++i){
 				var robot=new Player();
 				robot.playData=new Proto3.play_t();
 				robot.playData.Player=new Proto3.player_t();
 				robot.playData.Player.Uid="robot_"+i;
-				robot.controllers.Add(panel.Rule.AIController);
+				robot.controllers.Add(ctrl.Rule.AIController);
 				Main.Instance.robots.Add(robot);
-				panel.StartCoroutine(robot.JoinGame(gameId));
 			}
 		}
-
-		Main.Instance.Wait=false;
 	}
 
 	public IEnumerator JoinGame(int gameId){
@@ -147,14 +167,38 @@ public class Player {
 			Main.Instance.Wait=false;
 		});
 	}
+
+	public void StartGame(MsgNCStart msgStart){
+		var rule=Main.Instance.gameController.Rule;
+		var M=rule.MaxPlayer;
+		
+		//clear rule data
+		rule.nHands=new int[M];
+		for(int i=0;i<M;++i)rule.nHands[i]=msgStart.Count[i];
+		
+		//clear player data
+		playData.Hands.Clear();
+		playData.Discards.Clear();
+		playData.Bunch.Clear();
+		playData.SelectedCard=-1;
+		AAAs.Clear();
+		AAAAs.Clear();
+		unpairedCards.Clear();
+		dodgeCards.Clear();
+		conflictMeld=false;
+		
+		//copy data
+		playData.Seat=msgStart.Pos;
+		playData.Hands.AddRange(msgStart.Hands);
+		var str="deal "+playData.Seat+":";
+		foreach(var hand in msgStart.Hands)str+=hand+",";
+		Debug.Log(str);
+
+	}
+
 	public void onClose(string error){
 		Loom.QueueOnMainThread(delegate{
 			if(InGame){
-				if(this==Main.Instance.MainPlayer){
-					Debug.Log("----disconnect and reconnect game");
-				}else{
-					Debug.Log("----disconnect robot");
-				}
 				Main.Instance.StartCoroutine(Reconnect());
 			}
 			
@@ -252,39 +296,16 @@ public class Player {
 
 		case pb_msg.MsgNcRevive:
 			MsgNCReconnect msgReconn=MsgNCReconnect.Parser.ParseFrom(bytes);
-			Debug.Log("reconnected game");
-			if(msgReconn.Result==pb_enum.Succeess){
-				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgRevive(this,msgReconn));
+
+			foreach(var ctrl in controllers){
+				Main.Instance.StartCoroutine(ctrl.OnMsgRevive(this,msgReconn));
 			}
 			break;
 
 		case pb_msg.MsgNcStart:
 			MsgNCStart msgStart=MsgNCStart.Parser.ParseFrom(bytes);
 			if(msgStart.Result==pb_enum.Succeess){
-				var rule=Main.Instance.gameController.Rule;
-				var M=rule.MaxPlayer;
-
-				//clear rule data
-				rule.nHands=new int[M];
-				for(int i=0;i<M;++i)rule.nHands[i]=msgStart.Count[i];
-
-				//clear player data
-				playData.Hands.Clear();
-				playData.Discards.Clear();
-				playData.Bunch.Clear();
-				playData.SelectedCard=-1;
-				AAAs.Clear();
-				AAAAs.Clear();
-				unpairedCards.Clear();
-				dodgeCards.Clear();
-				conflictMeld=false;
-
-				//copy data
-				playData.Seat=msgStart.Pos;
-				playData.Hands.AddRange(msgStart.Hands);
-				var str="deal "+playData.Seat+":";
-				foreach(var hand in msgStart.Hands)str+=hand+",";
-				Debug.Log(str);
+				StartGame(msgStart);
 			}else
 				Debug.LogError("start error: "+msgStart.Result);
 			foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgStart(this,msgStart));
@@ -296,12 +317,10 @@ public class Player {
 			if(msgDiscard.Result==pb_enum.Succeess){
 				//count hands before handle message
 				if(Main.Instance.MainPlayer==this){
-					Debug.Log("----MsgNcDiscard player");
 					//how can i do? we can only decreament once
 					var rule=Main.Instance.gameController.Rule;
 					rule.nHands[msgDiscard.Bunch.Pos]-=msgDiscard.Bunch.Pawns.Count;
-				}else
-					Debug.Log("----MsgNcDiscard robot");
+				}
 
 				//handle only succeess to avoid crash
 				foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMsgDiscard(this,msgDiscard));

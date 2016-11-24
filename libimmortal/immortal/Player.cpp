@@ -239,18 +239,24 @@ void Player::on_read(PBHelper& pb){
             MsgCNEngage imsg;
             if(pb.Parse(imsg))
                 game->rule->OnEngage(*this,imsg.key());
+            else
+                Logger<<"game engage failed\n";
             break;
         }
         case MSG_CN_DISCARD:{
             MsgCNDiscard imsg;
             if(pb.Parse(imsg))
                 game->rule->OnDiscard(*this,imsg);
+            else
+                Logger<<"game discard failed\n";
             break;
         }
         case MSG_CN_MELD:{
             MsgCNMeld imsg;
             if(pb.Parse(imsg))
                 game->rule->OnMeld(*this,imsg.bunch());
+            else
+                Logger<<"game meld failed\n";
             break;
         }
         default:
