@@ -291,12 +291,13 @@ public class Player {
 				var playFrom=msgReconn.Play[msgReconn.Start.Pos];
 				playData.MergeFrom(playFrom);
 				playData.Seat=msgReconn.Start.Pos;
+				playData.Hands.AddRange(msgReconn.Start.Hands);
 
-				var str="----revive deal "+playData.Seat+":";
-				foreach(var hand in msgReconn.Start.Hands)str+=hand+",";
+				var str="revive deal "+playData.Seat+":";
+				foreach(var hand in playData.Hands)str+=hand+",";
 				Debug.Log(str);
 			}else
-				Debug.LogError("start error: "+msgReconn.Result);
+				Debug.LogError("revive error: "+msgReconn.Result);
 
 			foreach(var ctrl in controllers){
 				Main.Instance.StartCoroutine(ctrl.OnMsgRevive(this,msgReconn));

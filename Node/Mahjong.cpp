@@ -344,8 +344,10 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     auto A=bunch.pawns(0);
     if(A/1000!=B/1000){
         for(auto card:gdata.hands()){
-            if(card/1000==B/1000)
+            if(card/1000==B/1000){
+                Logger<<"huazhu("<<B<<") found when verify "<<A<<endl;
                 return false;
+            }
         }
     }
     return true;

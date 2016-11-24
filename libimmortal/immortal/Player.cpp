@@ -204,8 +204,12 @@ void Player::on_read(PBHelper& pb){
                     for(int i=0,ii=MP;i<ii;++i){
                         auto p=spGame->players[i];
                         auto msgplay=msg.add_play();
+                        //seat,select_card,bunch,discards,achvs
+                        msgplay->set_seat(p->playData.seat());
+                        msgplay->set_selected_card(p->playData.selected_card());
                         msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
                         msgplay->mutable_discards()->CopyFrom(p->playData.discards());
+                        msgplay->mutable_achvs()->CopyFrom(p->playData.achvs());
                     }
                     
                     //send only to source player
@@ -240,7 +244,7 @@ void Player::on_read(PBHelper& pb){
             if(pb.Parse(imsg))
                 game->rule->OnEngage(*this,imsg.key());
             else
-                Logger<<"game engage failed\n";
+                Logger<<"engage message error\n";
             break;
         }
         case MSG_CN_DISCARD:{
@@ -248,7 +252,7 @@ void Player::on_read(PBHelper& pb){
             if(pb.Parse(imsg))
                 game->rule->OnDiscard(*this,imsg);
             else
-                Logger<<"game discard failed\n";
+                Logger<<"discard message error\n";
             break;
         }
         case MSG_CN_MELD:{
@@ -256,7 +260,7 @@ void Player::on_read(PBHelper& pb){
             if(pb.Parse(imsg))
                 game->rule->OnMeld(*this,imsg.bunch());
             else
-                Logger<<"game meld failed\n";
+                Logger<<"meld message error\n";
             break;
         }
         default:

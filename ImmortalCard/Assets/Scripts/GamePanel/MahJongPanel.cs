@@ -19,6 +19,8 @@ public class MahJongPanel : GamePanel {
 
 	override public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
 		yield return StartCoroutine(base.OnMsgRevive(player,msg));
+		if(msg.Result!=pb_enum.Succeess)
+			yield break;
 
 		var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 		foreach(var btn in btns)btn.SetActive(false);
@@ -37,10 +39,16 @@ public class MahJongPanel : GamePanel {
 		}
 
 		//revive abandon
-		foreach(var id in play.Discards){
-			Card.Create(CardPrefab,id,AbandonAreas[pos],delegate(Card card) {
-				card.state=Card.State.ST_ABANDON;
-			});
+		for(int i=0;i<maxPlayer;++i){
+			var playFrom=msg.Play[i];
+			foreach(var id in playFrom.Discards){
+				var fin=false;
+				Card.Create(CardPrefab,id,AbandonAreas[i],delegate(Card card) {
+					card.state=Card.State.ST_ABANDON;
+					fin=true;
+				});
+				while(!fin)yield return null;
+			}
 		}
 	}
 
