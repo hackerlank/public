@@ -13,9 +13,11 @@ public class DoudeZhuPanel : GamePanel {
 		yield return StartCoroutine(base.OnMsgDeal(player,msg));
 
 		//test only; will call Dezhu here
-		BtnCall.SetActive(false);
-		BtnDouble.SetActive(false);
-		foreach(var btn in btnOps)btn.SetActive(true);
+		//BtnCall.SetActive(true);
+		//BtnDouble.SetActive(true);
+
+		if(_pos==Rule.Banker)
+			foreach(var btn in btnOps)btn.SetActive(true);
 		
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;

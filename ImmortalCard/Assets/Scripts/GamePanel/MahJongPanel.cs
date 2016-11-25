@@ -15,15 +15,24 @@ public class MahJongPanel : GamePanel {
 		//transform position
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
+
+		//turn on engages
+		var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
+		foreach(var btn in btns)btn.SetActive(true);
 	}
 
 	override public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
 		yield return StartCoroutine(base.OnMsgRevive(player,msg));
+
+		//turn off engages
+		if(Main.Instance.MainPlayer.playData.SelectedCard>1000){
+			var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
+			foreach(var btn in btns)btn.SetActive(false);
+		}
+
 		if(msg.Result!=pb_enum.Succeess)
 			yield break;
 
-		var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
-		foreach(var btn in btns)btn.SetActive(false);
 
 		var pos=player.playData.Seat;
 		var play=msg.Play[pos];
