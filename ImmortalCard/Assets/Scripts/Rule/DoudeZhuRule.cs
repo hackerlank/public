@@ -8,7 +8,7 @@ public class DoudeZhuRule: GameRule {
 	public override int MaxCards{get{return 54;}}
 	public override int MaxPlayer{get{return 3;}}
 
-	protected override void deal(MsgNCStart msg){
+	protected override void deal(MsgNCDeal msg){
 		int id=0;
 		for(int i=1;i<=13;++i){ //A-K => 1-13
 			for(int j=1;j<=4;++j){

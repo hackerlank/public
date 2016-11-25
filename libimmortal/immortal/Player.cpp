@@ -188,7 +188,7 @@ void Player::on_read(PBHelper& pb){
                     
                     //broadcast
                     auto MP=spGame->rule->MaxPlayer(*spGame);
-                    auto& start=*msg.mutable_start();
+                    auto& start=*msg.mutable_deal();
                     start.set_banker(spGame->banker);
                     start.set_pos(spPlayer->playData.seat());
                     start.set_ante(spGame->anti);

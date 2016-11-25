@@ -5,7 +5,7 @@ using Google.Protobuf;
 
 public class MahjongAIController:AIController{
 
-	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+	override public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
 		yield return new WaitForSeconds(Configs.OpsInterval);
 
 		var key=MahJongRule.FindDefaultColor(player);

@@ -17,9 +17,9 @@ public abstract class GameRule {
 	public virtual List<bunch_t> Hint(Player player,bunch_t src_bunch){return new List<bunch_t>();}
 	public virtual void Meld(Player player,bunch_t bunch){}
 
-	public MsgNCStart Deal(){
-		var msg=new MsgNCStart();
-		msg.Mid=pb_msg.MsgNcStart;
+	public MsgNCDeal Deal(){
+		var msg=new MsgNCDeal();
+		msg.Mid=pb_msg.MsgNcDeal;
 		msg.Banker=0;
 		msg.Ante=10;
 		msg.Multiple=1;
@@ -49,7 +49,7 @@ public abstract class GameRule {
 		return true;
 	}
 
-	protected virtual void deal(MsgNCStart msg){}
+	protected virtual void deal(MsgNCDeal msg){}
 	protected virtual pb_enum verifyBunch(bunch_t bunch){return pb_enum.BunchA;}
 	protected virtual bool compareBunch(bunch_t bunch,bunch_t hist){return true;}
 	public virtual bool checkDiscard(Player player,int drawCard){return true;}

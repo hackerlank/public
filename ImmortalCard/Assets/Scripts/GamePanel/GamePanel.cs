@@ -30,7 +30,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	// ----------------------------------------------
 	// messages
 	// ----------------------------------------------
-	virtual public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+	virtual public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
 		while(!CardCache.Ready||maxPlayer<=0)yield return null;
 		++Round;
 		_pos=msg.Pos;
@@ -94,9 +94,9 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 			//redeal
 			--Round;	//to match ++
-			yield return StartCoroutine(OnMsgStart(player,msg.Start));
+			yield return StartCoroutine(OnMsgDeal(player,msg.Deal));
 
-			var playFrom=msg.Play[player.playData.Seat];
+			//var playFrom=msg.Play[player.playData.Seat];
 			for(int i=0;i<maxPlayer;++i){
 				//revive others hands
 				if(i!=player.playData.Seat){
@@ -176,7 +176,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		yield break;
 	}
 
-	virtual protected IEnumerator deal(MsgNCStart msg){
+	virtual protected IEnumerator deal(MsgNCDeal msg){
 		var hands=new List<int>(msg.Hands);
 		hands.Sort(Rule.comparision);
 		

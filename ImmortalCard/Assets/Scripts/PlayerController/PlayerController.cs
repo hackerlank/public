@@ -4,7 +4,7 @@ using Google.Protobuf;
 using Proto3;
 
 public interface PlayerController {
-	IEnumerator OnMsgStart(Player player,MsgNCStart msg);
+	IEnumerator OnMsgDeal(Player player,MsgNCDeal msg);
 	IEnumerator OnMsgRevive(Player player,MsgNCRevive msg);
 	IEnumerator OnMsgEngage(Player player,MsgNCEngage msg);
 	IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg);

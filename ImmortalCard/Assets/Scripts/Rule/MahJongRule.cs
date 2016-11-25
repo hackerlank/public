@@ -8,7 +8,7 @@ public class MahJongRule: GameRule {
 	public override int MaxCards{get{return 108;}}
 	public override int MaxPlayer{get{return 4;}}
 
-	protected override void deal(MsgNCStart msg){
+	protected override void deal(MsgNCDeal msg){
 		int id=0;
 		for(int k=1;k<=3;++k){
 			for(int i=1;i<=9;++i){

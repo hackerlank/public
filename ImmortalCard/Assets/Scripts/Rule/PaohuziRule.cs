@@ -18,7 +18,7 @@ public class PaohuziRule: GameRule {
 		}
 	}
 
-	protected override void deal(MsgNCStart msg){
+	protected override void deal(MsgNCDeal msg){
 		int id=0;
 		for(int k=1;k<=3;++k){
 			for(int i=1;i<=9;++i){

@@ -13,8 +13,8 @@ public class PaohuziPanel : GamePanel {
 
 	List<bunch_t> _hints=new List<bunch_t>();
 
-	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
-		yield return StartCoroutine(base.OnMsgStart(player,msg));
+	override public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
+		yield return StartCoroutine(base.OnMsgDeal(player,msg));
 		//transform position
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);
@@ -274,7 +274,7 @@ public class PaohuziPanel : GamePanel {
 		});
 	}
 
-	override protected IEnumerator deal(MsgNCStart msg){
+	override protected IEnumerator deal(MsgNCDeal msg){
 		var hands=new List<int>(msg.Hands);
 		//hands.Sort(Rule.comparision);
 		

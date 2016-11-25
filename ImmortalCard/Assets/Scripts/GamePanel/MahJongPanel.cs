@@ -10,8 +10,8 @@ public class MahJongPanel : GamePanel {
 	public GameObject	BtnA3,BtnA4,BtnWin;
 	public GameObject	BtnTong,BtnTiao,BtnWan;
 
-	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
-		yield return StartCoroutine(base.OnMsgStart(player,msg));
+	override public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
+		yield return StartCoroutine(base.OnMsgDeal(player,msg));
 		//transform position
 		transformComponent(MeldAreas);
 		transformComponent(AbandonAreas);

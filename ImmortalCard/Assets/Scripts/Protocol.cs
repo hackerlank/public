@@ -89,127 +89,127 @@ namespace Proto3 {
             "c2cSCwoDdWlkGAIgASgJEg8KB3ZlcnNpb24YAyABKA0SDwoHc2Vzc2lvbhgE",
             "IAEoBCJuCgxNc2dOQ0Nvbm5lY3QSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBi",
             "X21zZxIgCgZwbGF5ZXIYAiABKAsyEC5wcm90bzMucGxheWVyX3QSHwoGcmVz",
-            "dWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iSQoLTXNnQ05SZXZpdmUSGwoD",
-            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIMCgRnYW1lGAIgASgFEg8KB3Nl",
-            "c3Npb24YAyABKAQijAEKC01zZ05DUmV2aXZlEhsKA21pZBgBIAEoDjIOLnBy",
-            "b3RvMy5wYl9tc2cSIQoFc3RhcnQYAiABKAsyEi5wcm90bzMuTXNnTkNTdGFy",
-            "dBIcCgRwbGF5GAMgAygLMg4ucHJvdG8zLnBsYXlfdBIfCgZyZXN1bHQYBCAB",
-            "KA4yDy5wcm90bzMucGJfZW51bSJtCgtNc2dDTkNyZWF0ZRIbCgNtaWQYASAB",
+            "dWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0ibQoLTXNnQ05DcmVhdGUSGwoD",
+            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIdCgRnYW1lGAIgASgOMg8ucHJv",
+            "dG8zLnBiX2VudW0SIgoHb3B0aW9ucxgDIAMoCzIRLnByb3RvMy5rZXlfdmFs",
+            "dWUiXAoLTXNnTkNDcmVhdGUSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21z",
+            "ZxIPCgdnYW1lX2lkGAIgASgFEh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5w",
+            "Yl9lbnVtIjkKCU1zZ0NOSm9pbhIbCgNtaWQYASABKA4yDi5wcm90bzMucGJf",
+            "bXNnEg8KB2dhbWVfaWQYAiABKAUirgEKCU1zZ05DSm9pbhIbCgNtaWQYASAB",
             "KA4yDi5wcm90bzMucGJfbXNnEh0KBGdhbWUYAiABKA4yDy5wcm90bzMucGJf",
-            "ZW51bRIiCgdvcHRpb25zGAMgAygLMhEucHJvdG8zLmtleV92YWx1ZSJcCgtN",
-            "c2dOQ0NyZWF0ZRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8KB2dh",
-            "bWVfaWQYAiABKAUSHwoGcmVzdWx0GAMgASgOMg8ucHJvdG8zLnBiX2VudW0i",
-            "OQoJTXNnQ05Kb2luEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSDwoH",
-            "Z2FtZV9pZBgCIAEoBSKuAQoJTXNnTkNKb2luEhsKA21pZBgBIAEoDjIOLnBy",
-            "b3RvMy5wYl9tc2cSHQoEZ2FtZRgCIAEoDjIPLnByb3RvMy5wYl9lbnVtEiEK",
-            "CGNhdGVnb3J5GAMgASgOMg8ucHJvdG8zLnBiX2VudW0SIQoHcGxheWVycxgE",
-            "IAMoCzIQLnByb3RvMy5wbGF5ZXJfdBIfCgZyZXN1bHQYBSABKA4yDy5wcm90",
-            "bzMucGJfZW51bSIpCgpNc2dDTlJlYWR5EhsKA21pZBgBIAEoDjIOLnByb3Rv",
-            "My5wYl9tc2ciVwoKTXNnTkNSZWFkeRIbCgNtaWQYASABKA4yDi5wcm90bzMu",
-            "cGJfbXNnEgsKA3BvcxgCIAEoBRIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMu",
-            "cGJfZW51bSLEAQoKTXNnTkNTdGFydBIbCgNtaWQYASABKA4yDi5wcm90bzMu",
-            "cGJfbXNnEg4KBmJhbmtlchgCIAEoBRILCgNwb3MYAyABKAUSDAoEYW50ZRgE",
-            "IAEoBRIQCghtdWx0aXBsZRgFIAEoBRINCgVoYW5kcxgGIAMoBRIOCgZib3R0",
-            "b20YByADKAUSDQoFY291bnQYCCADKAUSDQoFcGlsZXMYCSABKAUSHwoGcmVz",
-            "dWx0GAogASgOMg8ucHJvdG8zLnBiX2VudW0iNwoLTXNnQ05FbmdhZ2USGwoD",
-            "bWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiABKAUieQoLTXNn",
-            "TkNFbmdhZ2USGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIMCgRrZXlz",
-            "GAIgAygFEh4KBWJ1bmNoGAMgAygLMg8ucHJvdG8zLmJ1bmNoX3QSHwoGcmVz",
-            "dWx0GAYgASgOMg8ucHJvdG8zLnBiX2VudW0iSwoMTXNnQ05EaXNjYXJkEhsK",
-            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5w",
-            "cm90bzMuYnVuY2hfdCJsCgxNc2dOQ0Rpc2NhcmQSGwoDbWlkGAEgASgOMg4u",
-            "cHJvdG8zLnBiX21zZxIeCgVidW5jaBgCIAEoCzIPLnByb3RvMy5idW5jaF90",
-            "Eh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtImgKCU1zZ0NOTWVs",
-            "ZBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBWJ1bmNoGAIgASgL",
-            "Mg8ucHJvdG8zLmJ1bmNoX3QSHgoFZXh0cmEYAyADKAsyDy5wcm90bzMuYnVu",
-            "Y2hfdCJ3CglNc2dOQ01lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21z",
-            "ZxIeCgVidW5jaBgCIAEoCzIPLnByb3RvMy5idW5jaF90EgwKBGZyb20YAyAB",
-            "KAUSHwoGcmVzdWx0GAQgASgOMg8ucHJvdG8zLnBiX2VudW0iQwoJTXNnTkNE",
-            "cmF3EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgF",
-            "EgwKBGNhcmQYAyABKAUiLwoQTXNnQ05EaXNtaXNzU3luYxIbCgNtaWQYASAB",
-            "KA4yDi5wcm90bzMucGJfbXNnIl0KEE1zZ05DRGlzbWlzc1N5bmMSGwoDbWlk",
-            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0",
-            "GAMgASgOMg8ucHJvdG8zLnBiX2VudW0iLgoPTXNnQ05EaXNtaXNzQWNrEhsK",
-            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXAoPTXNnTkNEaXNtaXNzQWNr",
-            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEh8K",
-            "BnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIncKC01zZ05DU2V0dGxl",
-            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHAoEcGxheRgCIAMoCzIO",
-            "LnByb3RvMy5wbGF5X3QSDAoEcGlsZRgDIAMoBRIfCgZyZXN1bHQYBCABKA4y",
-            "Dy5wcm90bzMucGJfZW51bSJpCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4y",
-            "Di5wcm90bzMucGJfbXNnEhwKBHBsYXkYAiADKAsyDi5wcm90bzMucGxheV90",
-            "Eh8KBnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIkUKCk1zZ0NOU3Rh",
-            "dHMSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiABKAkS",
-            "DQoFdmFsdWUYAyABKAkqkxAKB3BiX2VudW0SCwoHVU5LTk9XThAAEggKBE5P",
-            "TkUQABIMCghTVUNDRUVTUxAAEgoKBkRFVl9QQxAAEgsKB0RFVl9QUzQQARIM",
-            "CghERVZfWEJPWBACEgsKB0RFVl9JT1MQAxIPCgtERVZfQU5EUk9JRBAEEhAK",
-            "DERFVl9XSU5QSE9ORRAFEgwKCEdBTUVfRERaEBQSDAoIR0FNRV9QREsQFRIM",
-            "CghHQU1FX1BIWhAWEgsKB0dBTUVfTUoQFxIQCgxPUFRJT05fUk9VTkQQChIP",
-            "CgtPUFRJT05fQU5USRALEhMKD09QVElPTl9DQVRFR09SWRAMEhgKFE9QVElP",
-            "Tl9ERUZJTkVEX0NBUkRTEA0SEQoNQ0FURUdPUllfRUFTWRAKEhMKD0NBVEVH",
-            "T1JZX05PUk1BTBALEhEKDUNBVEVHT1JZX0hBUkQQDBIOCgpNSl9TSUNIVUFO",
-            "EAASEAoMTUpfR1VBTkdET05HEAESDAoITUpfSFVOQU4QAhINCglNSl9GVUpJ",
-            "QU4QAxIPCgtNSl9aSEVKSUFORxAEEg4KCkREWl9DTEFTSUMQABIMCghERFpf",
-            "Rk9SNBABEgoKBlBIWl9TWRAAEgwKCFBIWl9TWUJQEAESCgoGUEhaX0xEEAIS",
-            "CgoGUEhaX0hIEAMSDgoKUEhaX0NEX1FNVBAEEg4KClBIWl9DRF9ISEQQBRIK",
-            "CgZQSFpfQ1MQBhIOCgpQSFpfWFhfR0haEAcSCgoGUEhaX0hZEAgSDgoKUEha",
-            "X1laX1NCVxAJEg0KCVBIWl9QRUdIWhAKEg4KClBIWl9TQ19FUVMQCxIKCgZQ",
-            "SFpfQ1oQDBIKCgZQSFpfR1gQDRILCgdQSFpfTUFYEA4SCwoHT1BfUEFTUxAA",
-            "Eg4KCk9QX0RJU0NBUkQQARIRCg1CVU5DSF9JTlZBTElEEAoSCwoHQlVOQ0hf",
-            "QRALEgwKCEJVTkNIX0FBEAwSDQoJQlVOQ0hfQUFBEA0SDgoKQlVOQ0hfQUFB",
-            "QRAOEg8KC0JVTkNIX0FBQUFCEA8SDgoKQlVOQ0hfQUFBQhAQEg0KCUJVTkNI",
-            "X0FCQxAREgoKBlBIWl9BQRAMEgsKB1BIWl9BQkMQEhILCgdQSFpfQkJCEBQS",
-            "CwoHUEhaX0FBQRAVEg4KClBIWl9BQUF3ZWkQFhIPCgtQSFpfQUFBY2hvdRAX",
-            "Eg0KCVBIWl9CQkJfQhAYEhAKDFBIWl9CQkJCZGVzaxAZEgwKCFBIWl9CNEIz",
-            "EBoSEAoMUEhaX0FBQUFkZXNrEBsSDAoIUEhaX0FBQUEQHBIRCg1QSFpfQUFB",
-            "QXN0YXJ0EB0SDQoJQlVOQ0hfV0lOEGQSDQoJV0lOX0ZpcnN0EAESDgoKV0lO",
-            "X1NlY29uZBACEg4KCldJTl9NaWRkbGUQBRIQCgxXSU5fTWVuRmx1c2gQBhIN",
-            "CglXSU5fRmx1c2gQBxIRCg1XSU5fTWFqb3JQYWlyEAkSEQoNV0lOX0ZsdXNo",
-            "UGFpchAKEhMKD1dJTl9EcmFnb243UGFpchALEgoKBldJTl8xORAMEhIKDldJ",
-            "Tl9GbHVzaDdQYWlyEA0SEgoOV0lOX01ham9yN1BhaXIQDhIYChRXSU5fRmx1",
-            "c2hEcmFnb243UGFpchAPEg8KC1dJTl9GbHVzaDE5EBASDgoKV0lOX05PUk1B",
-            "TBAAEgwKCFdJTl9USUFOEAESCgoGV0lOX0RJEAISDAoIV0lOX0xBU1QQAxIM",
-            "CghXSU5fVElORxAEEg0KCVdJTl8xM1JFRBAFEgsKB1dJTl9SRUQQBhINCglX",
-            "SU5fQkxBQ0sQBxILCgdXSU5fQklHEAgSDQoJV0lOX1NNQUxMEAkSDgoKV0lO",
-            "X1NJTkdMRRAKEgwKCFdJTl9QQUlSEAsSDgoKV0lOX01PTktFWRAMEg4KCldJ",
-            "Tl9ZRUxMT1cQDRIMCghXSU5fU0VMRhAOEgoKBldJTl8zMBAPEgoKBldJTl8y",
-            "MBAQEgwKCFdJTl9GSVJFEBESDQoJV0lOX1BMQVRFEBISDAoIV0lOXzJSRUQQ",
-            "ExIMCghXSU5fM1JFRBAUEgwKCFdJTl80UkVEEBUSDgoKV0lOX0RPVUJMRRAW",
-            "Eg0KCVdJTl8xMFJFRBAXEgsKB1dJTl81RlUQGBIPCgtXSU5fUlVORFVBTBAZ",
-            "Eg0KCVdJTl83UEFJUhAaEg8KC1dJTl9EVUFMRFJBEBsSDgoKV0lOX1JFUEVB",
-            "VBAcEgsKB1dJTl9NQVgQHRIKCgZXSU5XRUkQABIJCgVXSU5USRABEgsKB1dJ",
-            "TlNBTkQQAhIKCgZXSU5TSUQQAxILCgdXSU5QRU5HEAQSCwoHV0lOV1BBTxAF",
-            "EgsKB1dJTlBQQU8QBhILCgdXSU5QSU5HEAcSCwoHX1dJTk1BWBAIEg0KCUFD",
-            "SFZfQk9NQhAKEg8KC0FDSFZfSEVBVkVOEAsSDQoJQUNIVl9IRUxMEAwSEgoO",
-            "QUNIVl9LRVlfUE9JTlQQABISCg5BQ0hWX0tFWV9DSFVOSxABEhIKDkFDSFZf",
-            "S0VZX1NDT1JFEAISFQoRQUNIVl9LRVlfTVVMVElQTEUQAxISCg1ERUZfTUFY",
-            "X05PREVTEOgHEhwKFkRFRl9NQVhfR0FNRVNfUEVSX05PREUQoI0GEg4KCkVS",
-            "Ul9GQUlMRUQQZBIRCg1FUlJfQ0FOQ0VMTEVEEGUSEAoMRVJSX1BST1RPQ09M",
-            "EGYSDQoJRVJSX1BBUkFNEGcSEgoORVJSX0RVUExJQ0FURUQQaBIQCgtFUlJf",
-            "VU5LTk9XThDnBxoCEAEqqwgKBnBiX21zZxIPCgtNU0dfSU5WQUxJRBAAEg4K",
-            "CU1TR19CRUdJThDoBxIMCgdNU0dfUkFXEOkHEhEKDE1TR19DU19CRUdJThDQ",
-            "DxIRCgxNU0dfQ1NfTE9HSU4Q0Q8SEQoMTVNHX1NDX0xPR0lOENIPEg8KCk1T",
-            "R19DU19FTkQQnx8SEQoMTVNHX0NMX0JFR0lOEKAfEhEKDE1TR19DTF9FTlRF",
-            "UhChHxIRCgxNU0dfTENfRU5URVIQoh8SEAoLTVNHX0xDX0VYSVQQpB8SDwoK",
-            "TVNHX0NMX0VORBCHJxIRCgxNU0dfQ0hfQkVHSU4QiCcSEQoMTVNHX0NIX0xP",
-            "R0lOEIknEhEKDE1TR19IQ19MT0dJThCKJxIUCg9NU0dfQ0hfUkVHSVNURVIQ",
-            "iycSFAoPTVNHX0hDX1JFR0lTVEVSEIwnEhIKDU1TR19DSF9DSEFSR0UQjScS",
-            "EgoNTVNHX0hDX0NIQVJHRRCOJxIRCgxNU0dfQ0hfUVVFUlkQjycSEQoMTVNH",
-            "X0hDX1FVRVJZEJAnEhIKDU1TR19DSF9GT1JHRVQQkScSEgoNTVNHX0hDX0ZP",
-            "UkdFVBCSJxIWChFNU0dfQ0hfUkVTRVRfUFNXRBCTJxIWChFNU0dfSENfUkVT",
-            "RVRfUFNXRBCUJxIPCgpNU0dfQ0hfRU5EEO8uEhEKDE1TR19DTl9CRUdJThDw",
-            "LhITCg5NU0dfQ05fQ09OTkVDVBDxLhITCg5NU0dfTkNfQ09OTkVDVBDyLhIS",
-            "Cg1NU0dfQ05fUkVWSVZFEPMuEhIKDU1TR19OQ19SRVZJVkUQ9C4SEgoNTVNH",
-            "X0NOX0NSRUFURRD7LhISCg1NU0dfTkNfQ1JFQVRFEPwuEhAKC01TR19DTl9K",
-            "T0lOEP0uEhAKC01TR19OQ19KT0lOEP4uEhgKE01TR19DTl9ESVNNSVNTX1NZ",
-            "TkMQhS8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCGLxIXChJNU0dfQ05fRElT",
-            "TUlTU19BQ0sQhy8SFwoSTVNHX05DX0RJU01JU1NfQUNLEIgvEhEKDE1TR19D",
-            "Tl9SRUFEWRCPLxIRCgxNU0dfTkNfUkVBRFkQkC8SEgoNTVNHX0NOX0VOR0FH",
-            "RRCRLxISCg1NU0dfTkNfRU5HQUdFEJIvEhEKDE1TR19OQ19TVEFSVBCTLxIS",
-            "Cg1NU0dfTkNfU0VUVExFEJQvEhIKDU1TR19OQ19GSU5JU0gQli8SEwoOTVNH",
-            "X0NOX0RJU0NBUkQQoy8SEwoOTVNHX05DX0RJU0NBUkQQpC8SEAoLTVNHX0NO",
-            "X01FTEQQpS8SEAoLTVNHX05DX01FTEQQpi8SEAoLTVNHX05DX0RSQVcQpy8S",
-            "EQoMTVNHX0NOX1NUQVRTEMEvEg8KCk1TR19DTl9FTkQQ1zYSDAoHTVNHX0VO",
-            "RBCPTkICSANiBnByb3RvMw=="));
+            "ZW51bRIhCghjYXRlZ29yeRgDIAEoDjIPLnByb3RvMy5wYl9lbnVtEiEKB3Bs",
+            "YXllcnMYBCADKAsyEC5wcm90bzMucGxheWVyX3QSHwoGcmVzdWx0GAUgASgO",
+            "Mg8ucHJvdG8zLnBiX2VudW0iKQoKTXNnQ05SZWFkeRIbCgNtaWQYASABKA4y",
+            "Di5wcm90bzMucGJfbXNnIlcKCk1zZ05DUmVhZHkSGwoDbWlkGAEgASgOMg4u",
+            "cHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0GAMgASgOMg8u",
+            "cHJvdG8zLnBiX2VudW0iSQoLTXNnQ05SZXZpdmUSGwoDbWlkGAEgASgOMg4u",
+            "cHJvdG8zLnBiX21zZxIMCgRnYW1lGAIgASgFEg8KB3Nlc3Npb24YAyABKAQi",
+            "igEKC01zZ05DUmV2aXZlEhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cS",
+            "HwoEZGVhbBgCIAEoCzIRLnByb3RvMy5Nc2dOQ0RlYWwSHAoEcGxheRgDIAMo",
+            "CzIOLnByb3RvMy5wbGF5X3QSHwoGcmVzdWx0GAQgASgOMg8ucHJvdG8zLnBi",
+            "X2VudW0iwwEKCU1zZ05DRGVhbBIbCgNtaWQYASABKA4yDi5wcm90bzMucGJf",
+            "bXNnEg4KBmJhbmtlchgCIAEoBRILCgNwb3MYAyABKAUSDAoEYW50ZRgEIAEo",
+            "BRIQCghtdWx0aXBsZRgFIAEoBRINCgVoYW5kcxgGIAMoBRIOCgZib3R0b20Y",
+            "ByADKAUSDQoFY291bnQYCCADKAUSDQoFcGlsZXMYCSABKAUSHwoGcmVzdWx0",
+            "GAogASgOMg8ucHJvdG8zLnBiX2VudW0iNwoLTXNnQ05FbmdhZ2USGwoDbWlk",
+            "GAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiABKAUieQoLTXNnTkNF",
+            "bmdhZ2USGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIMCgRrZXlzGAIg",
+            "AygFEh4KBWJ1bmNoGAMgAygLMg8ucHJvdG8zLmJ1bmNoX3QSHwoGcmVzdWx0",
+            "GAYgASgOMg8ucHJvdG8zLnBiX2VudW0iSwoMTXNnQ05EaXNjYXJkEhsKA21p",
+            "ZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHgoFYnVuY2gYAiABKAsyDy5wcm90",
+            "bzMuYnVuY2hfdCJsCgxNc2dOQ0Rpc2NhcmQSGwoDbWlkGAEgASgOMg4ucHJv",
+            "dG8zLnBiX21zZxIeCgVidW5jaBgCIAEoCzIPLnByb3RvMy5idW5jaF90Eh8K",
+            "BnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtImgKCU1zZ0NOTWVsZBIb",
+            "CgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEh4KBWJ1bmNoGAIgASgLMg8u",
+            "cHJvdG8zLmJ1bmNoX3QSHgoFZXh0cmEYAyADKAsyDy5wcm90bzMuYnVuY2hf",
+            "dCJ3CglNc2dOQ01lbGQSGwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxIe",
+            "CgVidW5jaBgCIAEoCzIPLnByb3RvMy5idW5jaF90EgwKBGZyb20YAyABKAUS",
+            "HwoGcmVzdWx0GAQgASgOMg8ucHJvdG8zLnBiX2VudW0iQwoJTXNnTkNEcmF3",
+            "EhsKA21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEgwK",
+            "BGNhcmQYAyABKAUiLwoQTXNnQ05EaXNtaXNzU3luYxIbCgNtaWQYASABKA4y",
+            "Di5wcm90bzMucGJfbXNnIl0KEE1zZ05DRGlzbWlzc1N5bmMSGwoDbWlkGAEg",
+            "ASgOMg4ucHJvdG8zLnBiX21zZxILCgNwb3MYAiABKAUSHwoGcmVzdWx0GAMg",
+            "ASgOMg8ucHJvdG8zLnBiX2VudW0iLgoPTXNnQ05EaXNtaXNzQWNrEhsKA21p",
+            "ZBgBIAEoDjIOLnByb3RvMy5wYl9tc2ciXAoPTXNnTkNEaXNtaXNzQWNrEhsK",
+            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSCwoDcG9zGAIgASgFEh8KBnJl",
+            "c3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIncKC01zZ05DU2V0dGxlEhsK",
+            "A21pZBgBIAEoDjIOLnByb3RvMy5wYl9tc2cSHAoEcGxheRgCIAMoCzIOLnBy",
+            "b3RvMy5wbGF5X3QSDAoEcGlsZRgDIAMoBRIfCgZyZXN1bHQYBCABKA4yDy5w",
+            "cm90bzMucGJfZW51bSJpCgtNc2dOQ0ZpbmlzaBIbCgNtaWQYASABKA4yDi5w",
+            "cm90bzMucGJfbXNnEhwKBHBsYXkYAiADKAsyDi5wcm90bzMucGxheV90Eh8K",
+            "BnJlc3VsdBgDIAEoDjIPLnByb3RvMy5wYl9lbnVtIkUKCk1zZ0NOU3RhdHMS",
+            "GwoDbWlkGAEgASgOMg4ucHJvdG8zLnBiX21zZxILCgNrZXkYAiABKAkSDQoF",
+            "dmFsdWUYAyABKAkqkxAKB3BiX2VudW0SCwoHVU5LTk9XThAAEggKBE5PTkUQ",
+            "ABIMCghTVUNDRUVTUxAAEgoKBkRFVl9QQxAAEgsKB0RFVl9QUzQQARIMCghE",
+            "RVZfWEJPWBACEgsKB0RFVl9JT1MQAxIPCgtERVZfQU5EUk9JRBAEEhAKDERF",
+            "Vl9XSU5QSE9ORRAFEgwKCEdBTUVfRERaEBQSDAoIR0FNRV9QREsQFRIMCghH",
+            "QU1FX1BIWhAWEgsKB0dBTUVfTUoQFxIQCgxPUFRJT05fUk9VTkQQChIPCgtP",
+            "UFRJT05fQU5USRALEhMKD09QVElPTl9DQVRFR09SWRAMEhgKFE9QVElPTl9E",
+            "RUZJTkVEX0NBUkRTEA0SEQoNQ0FURUdPUllfRUFTWRAKEhMKD0NBVEVHT1JZ",
+            "X05PUk1BTBALEhEKDUNBVEVHT1JZX0hBUkQQDBIOCgpNSl9TSUNIVUFOEAAS",
+            "EAoMTUpfR1VBTkdET05HEAESDAoITUpfSFVOQU4QAhINCglNSl9GVUpJQU4Q",
+            "AxIPCgtNSl9aSEVKSUFORxAEEg4KCkREWl9DTEFTSUMQABIMCghERFpfRk9S",
+            "NBABEgoKBlBIWl9TWRAAEgwKCFBIWl9TWUJQEAESCgoGUEhaX0xEEAISCgoG",
+            "UEhaX0hIEAMSDgoKUEhaX0NEX1FNVBAEEg4KClBIWl9DRF9ISEQQBRIKCgZQ",
+            "SFpfQ1MQBhIOCgpQSFpfWFhfR0haEAcSCgoGUEhaX0hZEAgSDgoKUEhaX1la",
+            "X1NCVxAJEg0KCVBIWl9QRUdIWhAKEg4KClBIWl9TQ19FUVMQCxIKCgZQSFpf",
+            "Q1oQDBIKCgZQSFpfR1gQDRILCgdQSFpfTUFYEA4SCwoHT1BfUEFTUxAAEg4K",
+            "Ck9QX0RJU0NBUkQQARIRCg1CVU5DSF9JTlZBTElEEAoSCwoHQlVOQ0hfQRAL",
+            "EgwKCEJVTkNIX0FBEAwSDQoJQlVOQ0hfQUFBEA0SDgoKQlVOQ0hfQUFBQRAO",
+            "Eg8KC0JVTkNIX0FBQUFCEA8SDgoKQlVOQ0hfQUFBQhAQEg0KCUJVTkNIX0FC",
+            "QxAREgoKBlBIWl9BQRAMEgsKB1BIWl9BQkMQEhILCgdQSFpfQkJCEBQSCwoH",
+            "UEhaX0FBQRAVEg4KClBIWl9BQUF3ZWkQFhIPCgtQSFpfQUFBY2hvdRAXEg0K",
+            "CVBIWl9CQkJfQhAYEhAKDFBIWl9CQkJCZGVzaxAZEgwKCFBIWl9CNEIzEBoS",
+            "EAoMUEhaX0FBQUFkZXNrEBsSDAoIUEhaX0FBQUEQHBIRCg1QSFpfQUFBQXN0",
+            "YXJ0EB0SDQoJQlVOQ0hfV0lOEGQSDQoJV0lOX0ZpcnN0EAESDgoKV0lOX1Nl",
+            "Y29uZBACEg4KCldJTl9NaWRkbGUQBRIQCgxXSU5fTWVuRmx1c2gQBhINCglX",
+            "SU5fRmx1c2gQBxIRCg1XSU5fTWFqb3JQYWlyEAkSEQoNV0lOX0ZsdXNoUGFp",
+            "chAKEhMKD1dJTl9EcmFnb243UGFpchALEgoKBldJTl8xORAMEhIKDldJTl9G",
+            "bHVzaDdQYWlyEA0SEgoOV0lOX01ham9yN1BhaXIQDhIYChRXSU5fRmx1c2hE",
+            "cmFnb243UGFpchAPEg8KC1dJTl9GbHVzaDE5EBASDgoKV0lOX05PUk1BTBAA",
+            "EgwKCFdJTl9USUFOEAESCgoGV0lOX0RJEAISDAoIV0lOX0xBU1QQAxIMCghX",
+            "SU5fVElORxAEEg0KCVdJTl8xM1JFRBAFEgsKB1dJTl9SRUQQBhINCglXSU5f",
+            "QkxBQ0sQBxILCgdXSU5fQklHEAgSDQoJV0lOX1NNQUxMEAkSDgoKV0lOX1NJ",
+            "TkdMRRAKEgwKCFdJTl9QQUlSEAsSDgoKV0lOX01PTktFWRAMEg4KCldJTl9Z",
+            "RUxMT1cQDRIMCghXSU5fU0VMRhAOEgoKBldJTl8zMBAPEgoKBldJTl8yMBAQ",
+            "EgwKCFdJTl9GSVJFEBESDQoJV0lOX1BMQVRFEBISDAoIV0lOXzJSRUQQExIM",
+            "CghXSU5fM1JFRBAUEgwKCFdJTl80UkVEEBUSDgoKV0lOX0RPVUJMRRAWEg0K",
+            "CVdJTl8xMFJFRBAXEgsKB1dJTl81RlUQGBIPCgtXSU5fUlVORFVBTBAZEg0K",
+            "CVdJTl83UEFJUhAaEg8KC1dJTl9EVUFMRFJBEBsSDgoKV0lOX1JFUEVBVBAc",
+            "EgsKB1dJTl9NQVgQHRIKCgZXSU5XRUkQABIJCgVXSU5USRABEgsKB1dJTlNB",
+            "TkQQAhIKCgZXSU5TSUQQAxILCgdXSU5QRU5HEAQSCwoHV0lOV1BBTxAFEgsK",
+            "B1dJTlBQQU8QBhILCgdXSU5QSU5HEAcSCwoHX1dJTk1BWBAIEg0KCUFDSFZf",
+            "Qk9NQhAKEg8KC0FDSFZfSEVBVkVOEAsSDQoJQUNIVl9IRUxMEAwSEgoOQUNI",
+            "Vl9LRVlfUE9JTlQQABISCg5BQ0hWX0tFWV9DSFVOSxABEhIKDkFDSFZfS0VZ",
+            "X1NDT1JFEAISFQoRQUNIVl9LRVlfTVVMVElQTEUQAxISCg1ERUZfTUFYX05P",
+            "REVTEOgHEhwKFkRFRl9NQVhfR0FNRVNfUEVSX05PREUQoI0GEg4KCkVSUl9G",
+            "QUlMRUQQZBIRCg1FUlJfQ0FOQ0VMTEVEEGUSEAoMRVJSX1BST1RPQ09MEGYS",
+            "DQoJRVJSX1BBUkFNEGcSEgoORVJSX0RVUExJQ0FURUQQaBIQCgtFUlJfVU5L",
+            "Tk9XThDnBxoCEAEqqggKBnBiX21zZxIPCgtNU0dfSU5WQUxJRBAAEg4KCU1T",
+            "R19CRUdJThDoBxIMCgdNU0dfUkFXEOkHEhEKDE1TR19DU19CRUdJThDQDxIR",
+            "CgxNU0dfQ1NfTE9HSU4Q0Q8SEQoMTVNHX1NDX0xPR0lOENIPEg8KCk1TR19D",
+            "U19FTkQQnx8SEQoMTVNHX0NMX0JFR0lOEKAfEhEKDE1TR19DTF9FTlRFUhCh",
+            "HxIRCgxNU0dfTENfRU5URVIQoh8SEAoLTVNHX0xDX0VYSVQQpB8SDwoKTVNH",
+            "X0NMX0VORBCHJxIRCgxNU0dfQ0hfQkVHSU4QiCcSEQoMTVNHX0NIX0xPR0lO",
+            "EIknEhEKDE1TR19IQ19MT0dJThCKJxIUCg9NU0dfQ0hfUkVHSVNURVIQiycS",
+            "FAoPTVNHX0hDX1JFR0lTVEVSEIwnEhIKDU1TR19DSF9DSEFSR0UQjScSEgoN",
+            "TVNHX0hDX0NIQVJHRRCOJxIRCgxNU0dfQ0hfUVVFUlkQjycSEQoMTVNHX0hD",
+            "X1FVRVJZEJAnEhIKDU1TR19DSF9GT1JHRVQQkScSEgoNTVNHX0hDX0ZPUkdF",
+            "VBCSJxIWChFNU0dfQ0hfUkVTRVRfUFNXRBCTJxIWChFNU0dfSENfUkVTRVRf",
+            "UFNXRBCUJxIPCgpNU0dfQ0hfRU5EEO8uEhEKDE1TR19DTl9CRUdJThDwLhIT",
+            "Cg5NU0dfQ05fQ09OTkVDVBDxLhITCg5NU0dfTkNfQ09OTkVDVBDyLhISCg1N",
+            "U0dfQ05fUkVWSVZFEPMuEhIKDU1TR19OQ19SRVZJVkUQ9C4SEgoNTVNHX0NO",
+            "X0NSRUFURRD7LhISCg1NU0dfTkNfQ1JFQVRFEPwuEhAKC01TR19DTl9KT0lO",
+            "EP0uEhAKC01TR19OQ19KT0lOEP4uEhgKE01TR19DTl9ESVNNSVNTX1NZTkMQ",
+            "hS8SGAoTTVNHX05DX0RJU01JU1NfU1lOQxCGLxIXChJNU0dfQ05fRElTTUlT",
+            "U19BQ0sQhy8SFwoSTVNHX05DX0RJU01JU1NfQUNLEIgvEhEKDE1TR19DTl9S",
+            "RUFEWRCPLxIRCgxNU0dfTkNfUkVBRFkQkC8SEgoNTVNHX0NOX0VOR0FHRRCR",
+            "LxISCg1NU0dfTkNfRU5HQUdFEJIvEhAKC01TR19OQ19ERUFMEJMvEhIKDU1T",
+            "R19OQ19TRVRUTEUQlC8SEgoNTVNHX05DX0ZJTklTSBCWLxITCg5NU0dfQ05f",
+            "RElTQ0FSRBCjLxITCg5NU0dfTkNfRElTQ0FSRBCkLxIQCgtNU0dfQ05fTUVM",
+            "RBClLxIQCgtNU0dfTkNfTUVMRBCmLxIQCgtNU0dfTkNfRFJBVxCnLxIRCgxN",
+            "U0dfQ05fU1RBVFMQwS8SDwoKTVNHX0NOX0VORBDXNhIMCgdNU0dfRU5EEI9O",
+            "QgJIA2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Proto3.pb_enum), typeof(global::Proto3.pb_msg), }, new pbr::GeneratedClrTypeInfo[] {
@@ -238,15 +238,15 @@ namespace Proto3 {
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgHCQuery), global::Proto3.MsgHCQuery.Parser, new[]{ "Mid", "Log", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNConnect), global::Proto3.MsgCNConnect.Parser, new[]{ "Mid", "Uid", "Version", "Session" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCConnect), global::Proto3.MsgNCConnect.Parser, new[]{ "Mid", "Player", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNRevive), global::Proto3.MsgCNRevive.Parser, new[]{ "Mid", "Game", "Session" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCRevive), global::Proto3.MsgNCRevive.Parser, new[]{ "Mid", "Start", "Play", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNCreate), global::Proto3.MsgCNCreate.Parser, new[]{ "Mid", "Game", "Options" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCCreate), global::Proto3.MsgNCCreate.Parser, new[]{ "Mid", "GameId", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNJoin), global::Proto3.MsgCNJoin.Parser, new[]{ "Mid", "GameId" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCJoin), global::Proto3.MsgNCJoin.Parser, new[]{ "Mid", "Game", "Category", "Players", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNReady), global::Proto3.MsgCNReady.Parser, new[]{ "Mid" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCReady), global::Proto3.MsgNCReady.Parser, new[]{ "Mid", "Pos", "Result" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCStart), global::Proto3.MsgNCStart.Parser, new[]{ "Mid", "Banker", "Pos", "Ante", "Multiple", "Hands", "Bottom", "Count", "Piles", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNRevive), global::Proto3.MsgCNRevive.Parser, new[]{ "Mid", "Game", "Session" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCRevive), global::Proto3.MsgNCRevive.Parser, new[]{ "Mid", "Deal", "Play", "Result" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCDeal), global::Proto3.MsgNCDeal.Parser, new[]{ "Mid", "Banker", "Pos", "Ante", "Multiple", "Hands", "Bottom", "Count", "Piles", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNEngage), global::Proto3.MsgCNEngage.Parser, new[]{ "Mid", "Key" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgNCEngage), global::Proto3.MsgNCEngage.Parser, new[]{ "Mid", "Keys", "Bunch", "Result" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Proto3.MsgCNDiscard), global::Proto3.MsgCNDiscard.Parser, new[]{ "Mid", "Bunch" }, null, null, null),
@@ -727,7 +727,7 @@ namespace Proto3 {
     [pbr::OriginalName("MSG_NC_READY")] MsgNcReady = 6032,
     [pbr::OriginalName("MSG_CN_ENGAGE")] MsgCnEngage = 6033,
     [pbr::OriginalName("MSG_NC_ENGAGE")] MsgNcEngage = 6034,
-    [pbr::OriginalName("MSG_NC_START")] MsgNcStart = 6035,
+    [pbr::OriginalName("MSG_NC_DEAL")] MsgNcDeal = 6035,
     [pbr::OriginalName("MSG_NC_SETTLE")] MsgNcSettle = 6036,
     [pbr::OriginalName("MSG_NC_FINISH")] MsgNcFinish = 6038,
     [pbr::OriginalName("MSG_CN_DISCARD")] MsgCnDiscard = 6051,
@@ -6733,378 +6733,6 @@ namespace Proto3 {
 
   }
 
-  public sealed partial class MsgCNRevive : pb::IMessage<MsgCNRevive> {
-    private static readonly pb::MessageParser<MsgCNRevive> _parser = new pb::MessageParser<MsgCNRevive>(() => new MsgCNRevive());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MsgCNRevive> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[25]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgCNRevive() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgCNRevive(MsgCNRevive other) : this() {
-      mid_ = other.mid_;
-      game_ = other.game_;
-      session_ = other.session_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgCNRevive Clone() {
-      return new MsgCNRevive(this);
-    }
-
-    /// <summary>Field number for the "mid" field.</summary>
-    public const int MidFieldNumber = 1;
-    private global::Proto3.pb_msg mid_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto3.pb_msg Mid {
-      get { return mid_; }
-      set {
-        mid_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "game" field.</summary>
-    public const int GameFieldNumber = 2;
-    private int game_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int Game {
-      get { return game_; }
-      set {
-        game_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "session" field.</summary>
-    public const int SessionFieldNumber = 3;
-    private ulong session_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public ulong Session {
-      get { return session_; }
-      set {
-        session_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MsgCNRevive);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MsgCNRevive other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Mid != other.Mid) return false;
-      if (Game != other.Game) return false;
-      if (Session != other.Session) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Mid != 0) hash ^= Mid.GetHashCode();
-      if (Game != 0) hash ^= Game.GetHashCode();
-      if (Session != 0UL) hash ^= Session.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Mid != 0) {
-        output.WriteRawTag(8);
-        output.WriteEnum((int) Mid);
-      }
-      if (Game != 0) {
-        output.WriteRawTag(16);
-        output.WriteInt32(Game);
-      }
-      if (Session != 0UL) {
-        output.WriteRawTag(24);
-        output.WriteUInt64(Session);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
-      }
-      if (Game != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Game);
-      }
-      if (Session != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MsgCNRevive other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Mid != 0) {
-        Mid = other.Mid;
-      }
-      if (other.Game != 0) {
-        Game = other.Game;
-      }
-      if (other.Session != 0UL) {
-        Session = other.Session;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
-            break;
-          }
-          case 16: {
-            Game = input.ReadInt32();
-            break;
-          }
-          case 24: {
-            Session = input.ReadUInt64();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
-  public sealed partial class MsgNCRevive : pb::IMessage<MsgNCRevive> {
-    private static readonly pb::MessageParser<MsgNCRevive> _parser = new pb::MessageParser<MsgNCRevive>(() => new MsgNCRevive());
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MsgNCRevive> Parser { get { return _parser; } }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[26]; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    pbr::MessageDescriptor pb::IMessage.Descriptor {
-      get { return Descriptor; }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgNCRevive() {
-      OnConstruction();
-    }
-
-    partial void OnConstruction();
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgNCRevive(MsgNCRevive other) : this() {
-      mid_ = other.mid_;
-      Start = other.start_ != null ? other.Start.Clone() : null;
-      play_ = other.play_.Clone();
-      result_ = other.result_;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgNCRevive Clone() {
-      return new MsgNCRevive(this);
-    }
-
-    /// <summary>Field number for the "mid" field.</summary>
-    public const int MidFieldNumber = 1;
-    private global::Proto3.pb_msg mid_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto3.pb_msg Mid {
-      get { return mid_; }
-      set {
-        mid_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "start" field.</summary>
-    public const int StartFieldNumber = 2;
-    private global::Proto3.MsgNCStart start_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto3.MsgNCStart Start {
-      get { return start_; }
-      set {
-        start_ = value;
-      }
-    }
-
-    /// <summary>Field number for the "play" field.</summary>
-    public const int PlayFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::Proto3.play_t> _repeated_play_codec
-        = pb::FieldCodec.ForMessage(26, global::Proto3.play_t.Parser);
-    private readonly pbc::RepeatedField<global::Proto3.play_t> play_ = new pbc::RepeatedField<global::Proto3.play_t>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::Proto3.play_t> Play {
-      get { return play_; }
-    }
-
-    /// <summary>Field number for the "result" field.</summary>
-    public const int ResultFieldNumber = 4;
-    private global::Proto3.pb_enum result_ = 0;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Proto3.pb_enum Result {
-      get { return result_; }
-      set {
-        result_ = value;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override bool Equals(object other) {
-      return Equals(other as MsgNCRevive);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MsgNCRevive other) {
-      if (ReferenceEquals(other, null)) {
-        return false;
-      }
-      if (ReferenceEquals(other, this)) {
-        return true;
-      }
-      if (Mid != other.Mid) return false;
-      if (!object.Equals(Start, other.Start)) return false;
-      if(!play_.Equals(other.play_)) return false;
-      if (Result != other.Result) return false;
-      return true;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override int GetHashCode() {
-      int hash = 1;
-      if (Mid != 0) hash ^= Mid.GetHashCode();
-      if (start_ != null) hash ^= Start.GetHashCode();
-      hash ^= play_.GetHashCode();
-      if (Result != 0) hash ^= Result.GetHashCode();
-      return hash;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public override string ToString() {
-      return pb::JsonFormatter.ToDiagnosticString(this);
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void WriteTo(pb::CodedOutputStream output) {
-      if (Mid != 0) {
-        output.WriteRawTag(8);
-        output.WriteEnum((int) Mid);
-      }
-      if (start_ != null) {
-        output.WriteRawTag(18);
-        output.WriteMessage(Start);
-      }
-      play_.WriteTo(output, _repeated_play_codec);
-      if (Result != 0) {
-        output.WriteRawTag(32);
-        output.WriteEnum((int) Result);
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int CalculateSize() {
-      int size = 0;
-      if (Mid != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
-      }
-      if (start_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Start);
-      }
-      size += play_.CalculateSize(_repeated_play_codec);
-      if (Result != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
-      }
-      return size;
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MsgNCRevive other) {
-      if (other == null) {
-        return;
-      }
-      if (other.Mid != 0) {
-        Mid = other.Mid;
-      }
-      if (other.start_ != null) {
-        if (start_ == null) {
-          start_ = new global::Proto3.MsgNCStart();
-        }
-        Start.MergeFrom(other.Start);
-      }
-      play_.Add(other.play_);
-      if (other.Result != 0) {
-        Result = other.Result;
-      }
-    }
-
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(pb::CodedInputStream input) {
-      uint tag;
-      while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
-          default:
-            input.SkipLastField();
-            break;
-          case 8: {
-            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
-            break;
-          }
-          case 18: {
-            if (start_ == null) {
-              start_ = new global::Proto3.MsgNCStart();
-            }
-            input.ReadMessage(start_);
-            break;
-          }
-          case 26: {
-            play_.AddEntriesFrom(input, _repeated_play_codec);
-            break;
-          }
-          case 32: {
-            result_ = (global::Proto3.pb_enum) input.ReadEnum();
-            break;
-          }
-        }
-      }
-    }
-
-  }
-
   public sealed partial class MsgCNCreate : pb::IMessage<MsgCNCreate> {
     private static readonly pb::MessageParser<MsgCNCreate> _parser = new pb::MessageParser<MsgCNCreate>(() => new MsgCNCreate());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7112,7 +6740,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[27]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7280,7 +6908,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[28]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7453,7 +7081,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[29]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7598,7 +7226,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[30]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7819,7 +7447,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[31]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7936,7 +7564,7 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[32]; }
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8102,10 +7730,382 @@ namespace Proto3 {
 
   }
 
-  public sealed partial class MsgNCStart : pb::IMessage<MsgNCStart> {
-    private static readonly pb::MessageParser<MsgNCStart> _parser = new pb::MessageParser<MsgNCStart>(() => new MsgNCStart());
+  public sealed partial class MsgCNRevive : pb::IMessage<MsgCNRevive> {
+    private static readonly pb::MessageParser<MsgCNRevive> _parser = new pb::MessageParser<MsgCNRevive>(() => new MsgCNRevive());
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static pb::MessageParser<MsgNCStart> Parser { get { return _parser; } }
+    public static pb::MessageParser<MsgCNRevive> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[31]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCNRevive() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCNRevive(MsgCNRevive other) : this() {
+      mid_ = other.mid_;
+      game_ = other.game_;
+      session_ = other.session_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgCNRevive Clone() {
+      return new MsgCNRevive(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "game" field.</summary>
+    public const int GameFieldNumber = 2;
+    private int game_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Game {
+      get { return game_; }
+      set {
+        game_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "session" field.</summary>
+    public const int SessionFieldNumber = 3;
+    private ulong session_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public ulong Session {
+      get { return session_; }
+      set {
+        session_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgCNRevive);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgCNRevive other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (Game != other.Game) return false;
+      if (Session != other.Session) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (Game != 0) hash ^= Game.GetHashCode();
+      if (Session != 0UL) hash ^= Session.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (Game != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Game);
+      }
+      if (Session != 0UL) {
+        output.WriteRawTag(24);
+        output.WriteUInt64(Session);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (Game != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Game);
+      }
+      if (Session != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(Session);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgCNRevive other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.Game != 0) {
+        Game = other.Game;
+      }
+      if (other.Session != 0UL) {
+        Session = other.Session;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            Game = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            Session = input.ReadUInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgNCRevive : pb::IMessage<MsgNCRevive> {
+    private static readonly pb::MessageParser<MsgNCRevive> _parser = new pb::MessageParser<MsgNCRevive>(() => new MsgNCRevive());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgNCRevive> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Proto3.ProtocolReflection.Descriptor.MessageTypes[32]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgNCRevive() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgNCRevive(MsgNCRevive other) : this() {
+      mid_ = other.mid_;
+      Deal = other.deal_ != null ? other.Deal.Clone() : null;
+      play_ = other.play_.Clone();
+      result_ = other.result_;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public MsgNCRevive Clone() {
+      return new MsgNCRevive(this);
+    }
+
+    /// <summary>Field number for the "mid" field.</summary>
+    public const int MidFieldNumber = 1;
+    private global::Proto3.pb_msg mid_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_msg Mid {
+      get { return mid_; }
+      set {
+        mid_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "deal" field.</summary>
+    public const int DealFieldNumber = 2;
+    private global::Proto3.MsgNCDeal deal_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.MsgNCDeal Deal {
+      get { return deal_; }
+      set {
+        deal_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "play" field.</summary>
+    public const int PlayFieldNumber = 3;
+    private static readonly pb::FieldCodec<global::Proto3.play_t> _repeated_play_codec
+        = pb::FieldCodec.ForMessage(26, global::Proto3.play_t.Parser);
+    private readonly pbc::RepeatedField<global::Proto3.play_t> play_ = new pbc::RepeatedField<global::Proto3.play_t>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::Proto3.play_t> Play {
+      get { return play_; }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 4;
+    private global::Proto3.pb_enum result_ = 0;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::Proto3.pb_enum Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other) {
+      return Equals(other as MsgNCRevive);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(MsgNCRevive other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Mid != other.Mid) return false;
+      if (!object.Equals(Deal, other.Deal)) return false;
+      if(!play_.Equals(other.play_)) return false;
+      if (Result != other.Result) return false;
+      return true;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Mid != 0) hash ^= Mid.GetHashCode();
+      if (deal_ != null) hash ^= Deal.GetHashCode();
+      hash ^= play_.GetHashCode();
+      if (Result != 0) hash ^= Result.GetHashCode();
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (Mid != 0) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Mid);
+      }
+      if (deal_ != null) {
+        output.WriteRawTag(18);
+        output.WriteMessage(Deal);
+      }
+      play_.WriteTo(output, _repeated_play_codec);
+      if (Result != 0) {
+        output.WriteRawTag(32);
+        output.WriteEnum((int) Result);
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize() {
+      int size = 0;
+      if (Mid != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Mid);
+      }
+      if (deal_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Deal);
+      }
+      size += play_.CalculateSize(_repeated_play_codec);
+      if (Result != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(MsgNCRevive other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Mid != 0) {
+        Mid = other.Mid;
+      }
+      if (other.deal_ != null) {
+        if (deal_ == null) {
+          deal_ = new global::Proto3.MsgNCDeal();
+        }
+        Deal.MergeFrom(other.Deal);
+      }
+      play_.Add(other.play_);
+      if (other.Result != 0) {
+        Result = other.Result;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            mid_ = (global::Proto3.pb_msg) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            if (deal_ == null) {
+              deal_ = new global::Proto3.MsgNCDeal();
+            }
+            input.ReadMessage(deal_);
+            break;
+          }
+          case 26: {
+            play_.AddEntriesFrom(input, _repeated_play_codec);
+            break;
+          }
+          case 32: {
+            result_ = (global::Proto3.pb_enum) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public sealed partial class MsgNCDeal : pb::IMessage<MsgNCDeal> {
+    private static readonly pb::MessageParser<MsgNCDeal> _parser = new pb::MessageParser<MsgNCDeal>(() => new MsgNCDeal());
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<MsgNCDeal> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor {
@@ -8118,14 +8118,14 @@ namespace Proto3 {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgNCStart() {
+    public MsgNCDeal() {
       OnConstruction();
     }
 
     partial void OnConstruction();
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgNCStart(MsgNCStart other) : this() {
+    public MsgNCDeal(MsgNCDeal other) : this() {
       mid_ = other.mid_;
       banker_ = other.banker_;
       pos_ = other.pos_;
@@ -8139,8 +8139,8 @@ namespace Proto3 {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public MsgNCStart Clone() {
-      return new MsgNCStart(this);
+    public MsgNCDeal Clone() {
+      return new MsgNCDeal(this);
     }
 
     /// <summary>Field number for the "mid" field.</summary>
@@ -8258,11 +8258,11 @@ namespace Proto3 {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other) {
-      return Equals(other as MsgNCStart);
+      return Equals(other as MsgNCDeal);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public bool Equals(MsgNCStart other) {
+    public bool Equals(MsgNCDeal other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -8369,7 +8369,7 @@ namespace Proto3 {
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public void MergeFrom(MsgNCStart other) {
+    public void MergeFrom(MsgNCDeal other) {
       if (other == null) {
         return;
       }

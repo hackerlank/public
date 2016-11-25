@@ -8,9 +8,9 @@ public class DoudeZhuPanel : GamePanel {
 	public GameObject	BtnHint;
 	public GameObject	BtnDiscard,BtnCall,BtnDouble;
 
-	override public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+	override public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
 		tokenIcon.Pile=0;
-		yield return StartCoroutine(base.OnMsgStart(player,msg));
+		yield return StartCoroutine(base.OnMsgDeal(player,msg));
 
 		//test only; will call Dezhu here
 		BtnCall.SetActive(false);

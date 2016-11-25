@@ -5,7 +5,7 @@ using Google.Protobuf;
 
 public class AIController:PlayerController{
 
-	virtual public IEnumerator OnMsgStart(Player player,MsgNCStart msg){
+	virtual public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
 		yield return new WaitForSeconds(Configs.OpsInterval);
 
 		var omsgEngage=new MsgCNEngage();

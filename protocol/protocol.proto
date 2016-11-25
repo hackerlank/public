@@ -368,7 +368,7 @@ MSG_CN_READY            =6031;
 MSG_NC_READY            =6032;
 MSG_CN_ENGAGE           =6033;
 MSG_NC_ENGAGE           =6034;
-MSG_NC_START            =6035;
+MSG_NC_DEAL             =6035;
 MSG_NC_SETTLE           =6036;
 MSG_NC_FINISH           =6038;
 
@@ -506,21 +506,6 @@ player_t player         =2;
 pb_enum result			=3;
 };
 
-message MsgCNRevive{
-
-pb_msg mid				=1;
-int32 game              =2;
-uint64 session          =3;
-};
-
-message MsgNCRevive{
-
-pb_msg mid				=1;
-MsgNCStart start        =2;
-repeated play_t play    =3;
-pb_enum result			=4;
-};
-
 message MsgCNCreate{
 
 pb_msg mid                  =1;
@@ -562,7 +547,22 @@ int32 pos               =2;
 pb_enum result          =3;
 }
 
-message MsgNCStart{
+message MsgCNRevive{
+
+pb_msg mid				=1;
+int32 game              =2;
+uint64 session          =3;
+};
+
+message MsgNCRevive{
+
+pb_msg mid				=1;
+MsgNCDeal deal          =2;
+repeated play_t play    =3;
+pb_enum result			=4;
+};
+
+message MsgNCDeal{
 
 pb_msg mid              =1;
 int32 banker            =2;

@@ -85,8 +85,8 @@ void GameRule::deal(Game& game){
     game.lastCard=game.pile.front();
 
     //broadcast
-    MsgNCStart msg;
-    msg.set_mid(pb_msg::MSG_NC_START);
+    MsgNCDeal msg;
+    msg.set_mid(pb_msg::MSG_NC_DEAL);
     msg.set_banker(game.banker);
     msg.set_ante(10);
     msg.set_multiple(1);
