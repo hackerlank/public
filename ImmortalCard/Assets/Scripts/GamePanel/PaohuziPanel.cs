@@ -31,6 +31,8 @@ public class PaohuziPanel : GamePanel {
 		if(msg.Result!=pb_enum.Succeess)
 			yield break;
 		
+		PaohuziRule.prepareAAAA(player);
+
 		for(int i=0;i<maxPlayer;++i){
 			if(i<MeldAreas.Length)
 				foreach(Transform ch in MeldAreas[i])Destroy(ch.gameObject);
@@ -64,17 +66,6 @@ public class PaohuziPanel : GamePanel {
 	
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		PaohuziRule.prepareAAAA(player);
-
-		//remove AAAA from my hands
-		var hands=HandAreas[_pos].GetComponentsInChildren<Card>();
-		foreach(var id in msg.Bunch[_pos].Pawns){
-			foreach(var card in hands){
-				if(card.Value==id){
-					card.RemoveFromHand();
-					//card.DiscardTo(MeldAreas[_pos],DiscardScalar);
-				}
-			}
-		}
 
 		//display all AAAA
 		for(int i=0;i<maxPlayer;++i){

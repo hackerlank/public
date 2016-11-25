@@ -161,6 +161,7 @@ void Player::on_read(PBHelper& pb){
                     Logger<<"reconnect: game "<<gameId<<" not found"<<endl;
                     break;
                 }else{
+                    //handle player
                     auto uid=playData.player().uid();
                     auto found=false;
                     for(auto p:spGame->players){
@@ -186,7 +187,7 @@ void Player::on_read(PBHelper& pb){
                         break;
                     }
                     
-                    //broadcast
+                    //handle play data
                     auto MP=spGame->rule->MaxPlayer(*spGame);
                     auto& start=*msg.mutable_deal();
                     start.set_banker(spGame->banker);
@@ -198,7 +199,7 @@ void Player::on_read(PBHelper& pb){
                     for(auto b:spGame->bottom)start.add_bottom(b);
                     start.set_piles((int)spGame->pile.size());
                     
-                    //copy data of other players
+                    //copy data for all
                     for(int i=0,ii=MP;i<ii;++i){
                         auto p=spGame->players[i];
                         auto msgplay=msg.add_play();
@@ -206,16 +207,22 @@ void Player::on_read(PBHelper& pb){
                         msgplay->set_seat(p->playData.seat());
                         msgplay->set_selected_card(p->playData.selected_card());
                         msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
+                        
+                        //AAAAs if necessary
+                        for(auto& aaaa:p->AAAAs)
+                            msgplay->mutable_bunch()->Add()->CopyFrom(aaaa);
+                        
                         msgplay->mutable_discards()->CopyFrom(p->playData.discards());
                         msgplay->mutable_achvs()->CopyFrom(p->playData.achvs());
                     }
                     
-                    //send only to source player
+                    //hand cards
                     auto hands=start.mutable_hands();
-                    auto n=(int)spPlayer->playData.hands().size();
-                    hands->Resize(n,0);
-                    for(int j=0;j<n;++j)
-                        hands->Set(j,spPlayer->playData.hands(j));
+                    hands->CopyFrom(spPlayer->playData.hands());
+                    //AAAs
+                    for(auto& aaa:spPlayer->AAAs)
+                        for(auto a:aaa.pawns())
+                            hands->Add(a);
                     
                     msg.set_result(pb_enum::SUCCEESS);
                     
