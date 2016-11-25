@@ -34,8 +34,10 @@ public class MahJongPanel : GamePanel {
 		}
 		
 		for(int i=0;i<maxPlayer;++i){
-			foreach(Transform ch in MeldAreas[i])Destroy(ch.gameObject);
-			foreach(Transform ch in AbandonAreas[i])Destroy(ch.gameObject);
+			if(i<MeldAreas.Length)
+				foreach(Transform ch in MeldAreas[i])Destroy(ch.gameObject);
+			if(i<AbandonAreas.Length)
+				foreach(Transform ch in AbandonAreas[i])Destroy(ch.gameObject);
 
 			var playFrom=msg.Play[i];
 
@@ -44,7 +46,6 @@ public class MahJongPanel : GamePanel {
 				MahjongBunch mjBunch=null;
 				Utils.Load<MahjongBunch>(MeldAreas[i],delegate(Component obj){
 					mjBunch=obj as MahjongBunch;
-					mjBunch.transform.SetSiblingIndex(0);
 					mjBunch.Value=meld;
 				});
 				while(!mjBunch)yield return null;

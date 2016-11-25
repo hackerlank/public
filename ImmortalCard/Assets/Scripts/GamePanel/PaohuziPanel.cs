@@ -25,6 +25,43 @@ public class PaohuziPanel : GamePanel {
 		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 	
+	override public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
+		yield return StartCoroutine(base.OnMsgRevive(player,msg));
+		
+		if(msg.Result!=pb_enum.Succeess)
+			yield break;
+		
+		for(int i=0;i<maxPlayer;++i){
+			if(i<MeldAreas.Length)
+				foreach(Transform ch in MeldAreas[i])Destroy(ch.gameObject);
+			if(i<AbandonAreas.Length)
+				foreach(Transform ch in AbandonAreas[i])Destroy(ch.gameObject);
+			
+			var playFrom=msg.Play[i];
+			
+			//revive meld
+			foreach(var meld in playFrom.Bunch){
+				ZipaiBunch mjBunch=null;
+				Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj){
+					mjBunch=obj as ZipaiBunch;
+					mjBunch.Value=meld;
+				});
+				while(!mjBunch)yield return null;
+			}
+			
+			//revive abandon
+			foreach(var id in playFrom.Discards){
+				var fin=false;
+				Card.Create(CardPrefab,id,AbandonAreas[i],delegate(Card card) {
+					card.state=Card.State.ST_ABANDON;
+					fin=true;
+				});
+				while(!fin)yield return null;
+			}
+		}
+		yield return StartCoroutine(sortHands());
+	}
+	
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		PaohuziRule.prepareAAAA(player);
 

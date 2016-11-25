@@ -53,7 +53,7 @@ public class Player {
 			//connect by key
 			var key=gid/(int)pb_enum.DefMaxGamesPerNode;
 			ws.Connect(Configs.ws+"/"+key);
-			Debug.Log("connecting by key "+key);
+			//Debug.Log("connecting by key "+key);
 		}
 	}
 
@@ -83,7 +83,7 @@ public class Player {
 		msg.Mid=pb_msg.MsgCnRevive;
 		msg.Game=storeGame.gameId;
 		Send<MsgCNRevive>(msg.Mid,msg);
-		Debug.Log("reconnect game by key "+storeGame.gameId);
+		Debug.Log("revive game "+storeGame.gameId);
 	}
 
 	public void Disconnect(){
@@ -220,7 +220,7 @@ public class Player {
 			break;
 		case pb_msg.MsgNcConnect:
 			MsgNCConnect msgEnter=MsgNCConnect.Parser.ParseFrom(bytes);
-			Debug.Log("entered node");
+			Debug.Log("connected node");
 			if(msgEnter.Result==pb_enum.Succeess){
 				InGame=true;
 			}else{

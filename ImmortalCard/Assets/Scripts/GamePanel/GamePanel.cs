@@ -45,7 +45,6 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		transformComponent(Players);
 		transformComponent(nHandCards);
 
-		Debug.Log("----game start, round="+Round+",pos="+_pos+",banker="+Rule.Banker);
 		//sort
 		yield return StartCoroutine(deal(msg));
 
@@ -81,15 +80,16 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 	virtual public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
 		if(msg.Result!=pb_enum.Succeess){
-			Debug.Log("---- GamePanel on reconnect faied: "+msg.Result.ToString());
+			Debug.Log("revive faied: "+msg.Result.ToString());
 			OnExit();
 		}else{
-			Debug.Log("---- GamePanel on reconnect");
 			//clear
 			foreach(var btn in btnOps)btn.SetActive(false);
 			for(int i=0;i<maxPlayer;++i){
-				foreach(Transform ch in HandAreas[i])Destroy(ch.gameObject);
-				foreach(Transform ch in DiscardAreas[i])Destroy(ch.gameObject);
+				if(i<HandAreas.Length)
+					foreach(Transform ch in HandAreas[i])Destroy(ch.gameObject);
+				if(i<DiscardAreas.Length)
+					foreach(Transform ch in DiscardAreas[i])Destroy(ch.gameObject);
 			}
 
 			//redeal
@@ -181,7 +181,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		hands.Sort(Rule.comparision);
 		
 		//deal
-		string str="deal: banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
+		string str="deal: round="+Round+",banker="+msg.Banker+",pos="+msg.Pos+",hands:\n";
 		for(int i=0;i<hands.Count;++i){
 			var id=hands[i];
 			var fin=false;

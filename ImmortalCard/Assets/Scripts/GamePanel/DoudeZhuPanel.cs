@@ -25,6 +25,19 @@ public class DoudeZhuPanel : GamePanel {
 		Main.Instance.MainPlayer.Send<MsgCNEngage>(omsgEngage.Mid,omsgEngage);
 	}
 
+	override public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
+		yield return StartCoroutine(base.OnMsgRevive(player,msg));
+		
+		if(msg.Result!=pb_enum.Succeess)
+			yield break;
+		
+		//turn off engages
+		if(Main.Instance.MainPlayer.playData.SelectedCard>1000){
+			BtnCall.SetActive(false);
+			BtnDouble.SetActive(false);
+		}
+	}
+
 	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
 		yield return StartCoroutine(base.OnMsgDiscard(player,msg));
 		//set to next after discard
