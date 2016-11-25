@@ -24,32 +24,33 @@ public class MahJongPanel : GamePanel {
 	override public IEnumerator OnMsgRevive(Player player,MsgNCRevive msg){
 		yield return StartCoroutine(base.OnMsgRevive(player,msg));
 
+		if(msg.Result!=pb_enum.Succeess)
+			yield break;
+
 		//turn off engages
 		if(Main.Instance.MainPlayer.playData.SelectedCard>1000){
 			var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 			foreach(var btn in btns)btn.SetActive(false);
 		}
-
-		if(msg.Result!=pb_enum.Succeess)
-			yield break;
-
-
-		var pos=player.playData.Seat;
-		var play=msg.Play[pos];
-		//revive meld
-		foreach(var meld in play.Bunch){
-			MahjongBunch mjBunch=null;
-			Utils.Load<MahjongBunch>(MeldAreas[pos],delegate(Component obj){
-				mjBunch=obj as MahjongBunch;
-				mjBunch.transform.SetSiblingIndex(0);
-			});
-			while(!mjBunch)yield return null;
-			mjBunch.Value=meld;
-		}
-
-		//revive abandon
+		
 		for(int i=0;i<maxPlayer;++i){
+			foreach(Transform ch in MeldAreas[i])Destroy(ch.gameObject);
+			foreach(Transform ch in AbandonAreas[i])Destroy(ch.gameObject);
+
 			var playFrom=msg.Play[i];
+
+			//revive meld
+			foreach(var meld in playFrom.Bunch){
+				MahjongBunch mjBunch=null;
+				Utils.Load<MahjongBunch>(MeldAreas[i],delegate(Component obj){
+					mjBunch=obj as MahjongBunch;
+					mjBunch.transform.SetSiblingIndex(0);
+					mjBunch.Value=meld;
+				});
+				while(!mjBunch)yield return null;
+			}
+
+			//revive abandon
 			foreach(var id in playFrom.Discards){
 				var fin=false;
 				Card.Create(CardPrefab,id,AbandonAreas[i],delegate(Card card) {
