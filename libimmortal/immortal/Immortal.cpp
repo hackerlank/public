@@ -68,14 +68,14 @@ void Immortal::addPlayer(size_t shid,std::shared_ptr<Player> sp){
 }
 
 void Immortal::on_open(svc_handler&) {
-    Logger<<"on_open\n";
+    //Logger<<"on_open\n";
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 
 void Immortal::on_close(svc_handler& sh) {
     auto shid=sh.id();
     players.erase(shid);
-    Logger<<"on_close\n";
+    //Logger<<"on_close\n";
 }
 
 void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
@@ -96,7 +96,7 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
 
             omsg.set_result(proto3::pb_enum::SUCCEESS);
             omsg.mutable_player()->CopyFrom(*player);
-            Logger<<"client entered,uid="<<imsg.uid()<<"\n";
+            //Logger<<"client connected,uid="<<imsg.uid()<<"\n";
             
         }
         else

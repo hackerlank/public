@@ -64,7 +64,7 @@ void Player::on_read(PBHelper& pb){
                 
                     omsg.set_game_id((int)game->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    Logger<<"game created,gid="<<(int)game->id<<endl;
+                    //Logger<<"game created,gid="<<(int)game->id<<endl;
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
                     Logger<<"game create failed,no rule "<<imsg.game()<<endl;
@@ -91,7 +91,7 @@ void Player::on_read(PBHelper& pb){
                         ready=true;
                         playData.set_seat((int)game->players.size()-1);
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
-                        Logger<<"game joined,gid="<<gid<<endl;
+                        //Logger<<"game joined,gid="<<gid<<endl;
                     }else{
                         omsg.set_result(proto3::pb_enum::ERR_FAILED);
                         Logger<<"game join failed of full,gid="<<gid<<endl;
@@ -123,7 +123,6 @@ void Player::on_read(PBHelper& pb){
                     break;
                 }
             }
-            Logger<<"game dismiss failed\n";
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
             PBHelper::Send(sh,omsg);
             break;
@@ -143,7 +142,6 @@ void Player::on_read(PBHelper& pb){
                     break;
                 }
             }
-            Logger<<"game dismiss failed\n";
             omsg.set_result(proto3::pb_enum::ERR_FAILED);
             PBHelper::Send(sh,omsg);
             break;
@@ -243,24 +241,18 @@ void Player::on_read(PBHelper& pb){
             MsgCNEngage imsg;
             if(pb.Parse(imsg))
                 game->rule->OnEngage(*this,imsg.key());
-            else
-                Logger<<"engage message error\n";
             break;
         }
         case MSG_CN_DISCARD:{
             MsgCNDiscard imsg;
             if(pb.Parse(imsg))
                 game->rule->OnDiscard(*this,imsg);
-            else
-                Logger<<"discard message error\n";
             break;
         }
         case MSG_CN_MELD:{
             MsgCNMeld imsg;
             if(pb.Parse(imsg))
                 game->rule->OnMeld(*this,imsg.bunch());
-            else
-                Logger<<"meld message error\n";
             break;
         }
         default:

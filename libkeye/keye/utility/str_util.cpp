@@ -80,10 +80,11 @@ bool str_util::str2wstr(std::wstring& wstr,const char* str){
 
 std::string str_util::bytes2hex(const unsigned char* buf,size_t len){
 	std::string str;
-	char tmp[3];
+	char tmp[4];
 	for(uint32 i=0; i<len; i++){
 		sprintf(tmp,"%02x",buf[i]);
 		str += tmp;
+        if(i>0&&i%8==0)str+=",";
 	}
 	return str;
 }

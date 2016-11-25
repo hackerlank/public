@@ -14,8 +14,6 @@
 
 #include <protocol.pb.h>
 
-#include <immortal/PBHelper.h>
-
 typedef short unit_id_t;
 typedef short pos_t;
 typedef short color_t;
@@ -28,6 +26,7 @@ extern keye::logger sLogger;
 #define Logger sLogger<<begl
 #endif
 
+#include <immortal/PBHelper.h>
 #include <immortal/Player.h>
 #include <immortal/Game.h>
 #include <immortal/GameRule.h>

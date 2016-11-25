@@ -129,6 +129,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             //but send to all
             p->send(omsg);
             p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
+            //Logger<<"----"<<i<<" lastmsg=MsgNCDiscard\n";
         }
         
         //historic
@@ -198,7 +199,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 
     //queue in
     std::string str;
-    //Logger<<"OnMeld queue in(total %lu),pos=%d,%s\n",pendingMeld.size(),pos,bunch2str(str,curr));
+    //Logger<<pos<<" OnMeld queue in(total "<<(int)pendingMeld.size()<<"),"<<bunch2str(str,curr)<<endl;
     pending.bunch.CopyFrom(curr);
     
     int ready=0;
@@ -267,6 +268,10 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     if(!bDraw)
                         who->discardedCards.push_back(which);
                     onMeld(game,*localPlayer,which,what);
+                    
+                    //abandon
+                    if(validId(which))
+                        tokenPlayer->playData.add_discards(which);
                     break;
                 case pb_enum::BUNCH_INVALID:
                     //checked already
@@ -298,6 +303,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             //need reply all
             p->send(msg);
             p->lastMsg=std::make_shared<MsgNCMeld>(msg);
+            //Logger<<"----"<<i<<" lastmsg=MsgNCMeld\n";
         }
         
         if(tokenPlayer){
@@ -359,6 +365,7 @@ void MeldGame::draw(Game& game){
             }
             p->send(msg);
             p->lastMsg=std::make_shared<MsgNCDraw>(msg);
+            //Logger<<"----"<<i<<" lastmsg=MsgNCDraw\n";
         }
     }
 }
