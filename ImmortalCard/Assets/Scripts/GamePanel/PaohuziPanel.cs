@@ -600,12 +600,6 @@ public class PaohuziPanel : GamePanel {
 		base.Awake();
 		Rule=new PaohuziRule();
 
-		var files=new List<string>();
-		files.Add(CardPrefab+"/"+"back");
-		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
-			files.Add(Id2File(k,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
-
 		btnOps=new GameObject[]{BtnABC,BtnA3,BtnA4,BtnWin,BtnPass};
 	}
 
@@ -800,6 +794,14 @@ public class PaohuziPanel : GamePanel {
 		return "";
 	}
 	
+	override public void PrepareCache(){
+		var files=new List<string>();
+		files.Add(CardPrefab+"/"+"back");
+		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
+			files.Add(Id2File(k,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
+	}
+
 	float AbandonScalar{get{return 1f;}}
 	override public float DiscardScalar{get{return 1f;}}
 	

@@ -108,15 +108,6 @@ public class DoudeZhuPanel : GamePanel {
 		Rule=new DoudeZhuRule();
 		base.Awake();
 
-		var files=new List<string>();
-		files.Add(CardPrefab+"/"+"back");
-		files.Add(CardPrefab+"/"+"c14");
-		files.Add(CardPrefab+"/"+"d15");
-		for(int j=1;j<=4;++j)
-			for(int i=1;i<=13;++i)
-				files.Add(Id2File(j,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
-
 		btnOps=new GameObject[]{BtnHint,BtnDiscard,BtnPass};
 	}
 
@@ -157,7 +148,18 @@ public class DoudeZhuPanel : GamePanel {
 		}
 		return "";
 	}
-	
+
+	override public void PrepareCache(){
+		var files=new List<string>();
+		files.Add(CardPrefab+"/"+"back");
+		files.Add(CardPrefab+"/"+"c14");
+		files.Add(CardPrefab+"/"+"d15");
+		for(int j=1;j<=4;++j)
+			for(int i=1;i<=13;++i)
+				files.Add(Id2File(j,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
+	}
+
 	override public float DiscardScalar{get{return .625f;}}
 	
 	public static void Create(System.Action<Component> handler=null){

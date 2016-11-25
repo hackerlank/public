@@ -286,18 +286,6 @@ public class MahJongPanel : GamePanel {
 		Rule=new MahJongRule();
 		base.Awake();
 
-		var files=new List<string>();
-		files.Add(CardPrefab+"/"+"dong");
-		files.Add(CardPrefab+"/"+"nan");
-		files.Add(CardPrefab+"/"+"xi");
-		files.Add(CardPrefab+"/"+"bei");
-		files.Add(CardPrefab+"/"+"zhong");
-		files.Add(CardPrefab+"/"+"fa");
-		files.Add(CardPrefab+"/"+"bai");
-		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
-			files.Add(Id2File(k,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
-
 		btnOps=new GameObject[]{BtnA3,BtnA4,BtnWin,BtnPass};
 	}
 
@@ -404,6 +392,20 @@ public class MahJongPanel : GamePanel {
 		return "";
 	}
 	
+	override public void PrepareCache(){
+		var files=new List<string>();
+		files.Add(CardPrefab+"/"+"dong");
+		files.Add(CardPrefab+"/"+"nan");
+		files.Add(CardPrefab+"/"+"xi");
+		files.Add(CardPrefab+"/"+"bei");
+		files.Add(CardPrefab+"/"+"zhong");
+		files.Add(CardPrefab+"/"+"fa");
+		files.Add(CardPrefab+"/"+"bai");
+		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
+			files.Add(Id2File(k,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
+	}
+
 	float AbandonScalar{get{return 1f;}}
 	override public float DiscardScalar{get{return 1f;}}
 	

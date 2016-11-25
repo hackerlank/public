@@ -231,9 +231,9 @@ void Player::on_read(PBHelper& pb){
             }
 
             spPlayer->send(msg);
-            if(msg.result()==pb_enum::SUCCEESS && lastMsg){
+            if(msg.result()==pb_enum::SUCCEESS && spPlayer->lastMsg){
                 //send last message
-                spPlayer->send(*lastMsg);
+                spPlayer->send(*spPlayer->lastMsg);
                 Logger<<"send last message\n";
             }
 

@@ -129,7 +129,6 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             //but send to all
             p->send(omsg);
             p->lastMsg=std::make_shared<MsgNCDiscard>(omsg);
-            //Logger<<"----"<<i<<" lastmsg=MsgNCDiscard\n";
         }
         
         //historic
@@ -303,7 +302,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             //need reply all
             p->send(msg);
             p->lastMsg=std::make_shared<MsgNCMeld>(msg);
-            //Logger<<"----"<<i<<" lastmsg=MsgNCMeld\n";
         }
         
         if(tokenPlayer){
@@ -365,7 +363,6 @@ void MeldGame::draw(Game& game){
             }
             p->send(msg);
             p->lastMsg=std::make_shared<MsgNCDraw>(msg);
-            //Logger<<"----"<<i<<" lastmsg=MsgNCDraw\n";
         }
     }
 }

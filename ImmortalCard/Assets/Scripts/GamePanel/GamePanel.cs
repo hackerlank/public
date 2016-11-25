@@ -31,7 +31,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	// messages
 	// ----------------------------------------------
 	virtual public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
-		while(!CardCache.Ready||maxPlayer<=0)yield return null;
+		while(maxPlayer<=0)yield return null;
 		++Round;
 		_pos=msg.Pos;
 		changeToken(msg.Pos);
@@ -271,7 +271,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	
 	IEnumerator Start(){
 		maxPlayer=rule.MaxPlayer;
-		while(!CardCache.Ready)yield return null;
+		yield break;
 	}
 	
 	void OnDestroy(){
@@ -335,6 +335,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	abstract public string Id2File(int color,int value);
 	abstract public float DiscardScalar{get;}
 	abstract public string CardPrefab{get;}
+	abstract public void PrepareCache();
 	
 	virtual public void TapCard(Card card,bool select=true){
 		if(select)
