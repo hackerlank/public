@@ -15,6 +15,8 @@ using namespace proto3;
 inline void parseCardsByString(std::vector<int>& o,const std::string& line);
 
 void GameRule::deal(Game& game){
+    Logger<<"game "<<(int)game.id<<" begin, type("<<Type()<<")"<<endl;
+
     auto MP=MaxPlayer(game);
     //clear
     changePos(game,game.banker);
@@ -174,7 +176,11 @@ void GameRule::OnEngage(Player& player,uint key){
             engage(*game,omsg);
 
             for(auto& p:game->players)p->send(omsg);
-            Logger<<"all engaged\n";
+            
+            char buf[64];
+            sprintf(buf,"%s","all engaged:");
+            for(auto& key:omsg.keys())sprintf(buf,"%s,%d",buf,key);
+            Logger<<buf<<"\n";
         }
     }
 }
@@ -193,14 +199,14 @@ void GameRule::changePos(Game& game,pos_t pos){
     pos=pos%game.rule->MaxPlayer(game);
     if(game.token!=pos){
         game.token=pos;
-        Logger<<"token: "<<old<<"=>"<<game.token<<endl;
+        Logger<<" "<<old<<"=>"<<game.token<<endl;
     }
 }
 
 void GameRule::changeState(Game& game,Game::State state){
     if(game.state!=state){
         std::string str0,str1;
-        Logger<<"game state: "<<state2str(str0,game.state)<<"=>"<<state2str(str1,state)<<endl;
+        Logger<<" "<<state2str(str0,game.state)<<"=>"<<state2str(str1,state)<<endl;
         game.state=state;
     }
 }

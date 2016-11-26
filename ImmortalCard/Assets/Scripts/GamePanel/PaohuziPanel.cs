@@ -278,6 +278,19 @@ public class PaohuziPanel : GamePanel {
 						past=true;
 				}
 			}
+			if(past && bunch.Type==pb_enum.PhzAbc){
+				//if other player prior to me,shouldn't make me pass
+				var X=from;
+				var Y=_pos;
+				var Z=to;
+				if(X==maxPlayer)X=0;
+				else{
+					if(Y==0)Y=maxPlayer;
+					if(Z==0)Z=maxPlayer;
+				}
+				if(Z-X<Y-X)past=false;
+			}
+
 			if(dodge)me.dodgeCards.Add(card);
 			else if(past)me.unpairedCards.Add(card);
 			break;
