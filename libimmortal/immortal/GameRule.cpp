@@ -86,6 +86,16 @@ void GameRule::deal(Game& game){
 
     game.lastCard=game.pile.front();
 
+    //init game replay
+    auto spReplay=std::make_shared<MsgLCReplay>();
+    spReplay->set_banker(game.banker);
+    spReplay->set_gameid(game.id);
+    spReplay->set_gamecategory((pb_msg)game.category);
+    for(auto c:game.pile)spReplay->add_piles(c);
+    for(auto b:game.bottom)spReplay->add_bottom(b);
+    for(auto p:game.players)spReplay->add_hands()->mutable_pawns()->CopyFrom(p->playData.hands());
+    game.spReplay=spReplay;
+    
     //broadcast
     MsgNCDeal msg;
     msg.set_mid(pb_msg::MSG_NC_DEAL);

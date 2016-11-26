@@ -213,6 +213,7 @@ public class Player {
 		//receive and handle logic which PlayerController indenpendent
 		//Debug.Log("OnMessage "+mid);
 		switch(mid){
+		//Login
 		case pb_msg.MsgScLogin:
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
 			Debug.Log("response mid="+mid+",uid="+msgLogin.Uid+",ip="+msgLogin.Ip+",port="+msgLogin.Port);
@@ -221,6 +222,18 @@ public class Player {
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;
+
+		//Lobby
+		case pb_msg.MsgLcReplay:
+			MsgLCReplay msgReplay=MsgLCReplay.Parser.ParseFrom(bytes);
+			if(msgReplay.Result==pb_enum.Succeess){
+				if(EnterPanel.Instance!=null)
+					EnterPanel.Instance.StartCoroutine(EnterPanel.Instance.DoReplay(msgReplay));
+			}else
+				Debug.LogError("replay error: "+msgReplay.Result);
+			break;
+
+		//Node
 		case pb_msg.MsgNcConnect:
 			MsgNCConnect msgEnter=MsgNCConnect.Parser.ParseFrom(bytes);
 			Debug.Log("connected node");

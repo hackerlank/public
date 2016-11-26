@@ -329,7 +329,11 @@ MSG_CS_END              =3999;
 MSG_CL_BEGIN            =4000;
 MSG_CL_ENTER            =4001;
 MSG_LC_ENTER            =4002;
-MSG_LC_EXIT             =4004;
+MSG_CL_REPLAYS          =4011;
+MSG_LC_REPLAYS          =4012;
+MSG_CL_REPLAY           =4013;
+MSG_LC_REPLAY           =4014;
+MSG_LC_EXIT             =4050;
 
 MSG_CL_END              =4999;
 //Client --  Charge
@@ -419,10 +423,45 @@ uint64 session          =4;
 message MsgLCEnter{
 
 pb_msg mid				=1;
-int32 key              =2;
+int32 key               =2;
 player_t player         =3;
 lobby_t lobby           =4;
 pb_enum result			=5;
+};
+
+message MsgCLReplays{
+
+pb_msg mid				=1;
+string uid              =2;
+uint64 session          =3;
+};
+
+message MsgLCReplays{
+
+repeated user_t users   =1;
+repeated int32 gameIds  =2;
+pb_enum result			=3;
+};
+
+message MsgCLReplay{
+
+pb_msg mid				=1;
+uint32 gameId           =2;
+uint64 session          =3;
+};
+
+message MsgLCReplay{
+
+pb_msg mid				=1;
+int32 gameId            =2;
+pb_msg gameCategory     =3;
+int32 banker            =4;
+repeated int32 piles    =5;
+repeated int32 bottom   =6;
+repeated bunch_t hands  =7;
+repeated int32 engage   =8;
+repeated bunch_t ops    =9;
+pb_enum result			=10;
 };
 // ----------------------------------------------------------------
 // Charge

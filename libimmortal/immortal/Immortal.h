@@ -24,14 +24,16 @@ public:
     
     std::shared_ptr<Game>   createGame(int,proto3::MsgCNCreate&);
     std::shared_ptr<Game>   findGame(game_id_t);
-    void            removeGame(game_id_t);
+    void                    removeGame(game_id_t);
     
     static Immortal*    sImmortal;
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
     std::map<size_t,std::shared_ptr<Game>>      games;
-    
+
+    std::map<int,std::shared_ptr<proto3::MsgLCReplay>>  replays;
+
     size_t                  _game_index;
 };
 
