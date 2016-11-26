@@ -122,7 +122,7 @@ public class EnterPanel : MonoBehaviour {
 		while(!Main.Instance.MainPlayer.InGame)yield return null;
 
 		var storeGame=new StoreGame();
-		Main.Instance.MainPlayer.storeGame=storeGame;
+		Main.Instance.storeGame=storeGame;
 		storeGame.gameType=(int)CurrentGame.game;
 		storeGame.robots=4;
 
@@ -138,9 +138,9 @@ public class EnterPanel : MonoBehaviour {
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;
 		msgC.Game=CurrentGame.game;
-		//TODO: server parse error!
-		//msgC.Options.Add(opRound);
-		//msgC.Options.Add(opCategory);
+
+		msgC.Options.Add(opRound);
+		msgC.Options.Add(opCategory);
 
 		if(DefinedCards.text.Length>0){
 			//preprocess
@@ -174,7 +174,7 @@ public class EnterPanel : MonoBehaviour {
 		Main.Instance.MainPlayer.msgNCJoin=null;
 		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
 
-		var storeGame=Main.Instance.MainPlayer.storeGame;
+		var storeGame=Main.Instance.storeGame;
 		storeGame.gameType=(int)Main.Instance.MainPlayer.msgNCJoin.Game;
 		Main.Instance.MainPlayer.msgNCJoin=null;
 
@@ -183,13 +183,14 @@ public class EnterPanel : MonoBehaviour {
 
 	IEnumerator createGame(){
 		//create game panel
-		var storeGame=Main.Instance.MainPlayer.storeGame;
+		var storeGame=Main.Instance.storeGame;
 		yield return StartCoroutine(Main.Instance.MainPlayer.CreateGame(
 			(pb_enum)storeGame.gameType,storeGame.gameId));
 
 		//add robots and join
 		Player.addRobots(storeGame.robots);
-		foreach(var robot in Main.Instance.robots)
+		var robots=new List<Player>(Main.Instance.robots);
+		foreach(var robot in robots)
 			yield return StartCoroutine(robot.JoinGame(storeGame.gameId));
 
 		if(LobbyPanel.Instance!=null)

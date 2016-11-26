@@ -28,7 +28,8 @@ public class SummaryPanel : MonoBehaviour {
 				bestItem=item;
 			}
 		}
-		bestItem.player.Win.gameObject.SetActive(true);
+		if(null!=bestItem)
+			bestItem.player.Win.gameObject.SetActive(true);
 	}
 	
 	public void OnClose(){

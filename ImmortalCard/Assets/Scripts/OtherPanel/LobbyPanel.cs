@@ -22,7 +22,7 @@ public class LobbyPanel : MonoBehaviour {
 		if(storeGame.gameId>0){
 			Debug.Log("found game "+storeGame.gameId);
 			//in game: reconnect and create game panel,robots
-			Main.Instance.MainPlayer.storeGame=storeGame;
+			Main.Instance.storeGame=storeGame;
 			yield return StartCoroutine(Main.Instance.MainPlayer.Reconnect());
 
 			Destroy(gameObject);

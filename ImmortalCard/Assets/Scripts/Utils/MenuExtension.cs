@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.Collections;
+
+#if UNITY_EDITOR
+using UnityEditor;
 
 public class MenuExtension {
 
@@ -10,3 +12,5 @@ public class MenuExtension {
 		PlayerPrefs.DeleteAll();
 	}
 }
+
+#endif

@@ -14,7 +14,6 @@ public class Player {
 	public bool				InGame=false;
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
-	public StoreGame		storeGame;	//store game for reconnect
 	public play_t			playData=new play_t();
 	public pb_enum			category;
 
@@ -60,6 +59,7 @@ public class Player {
 	public IEnumerator Reconnect(){
 		//reconnect
 		InGame=false;
+		var storeGame=Main.Instance.storeGame;
 		Connect(storeGame.gameId);
 
 		while(!InGame)yield return null;
@@ -74,7 +74,6 @@ public class Player {
 			//add robots and reconnect
 			addRobots(storeGame.robots);
 			foreach(var robot in Main.Instance.robots){
-				robot.storeGame=storeGame;
 				Main.Instance.StartCoroutine(robot.Reconnect());
 			}
 		}
@@ -239,6 +238,7 @@ public class Player {
 				msgNCCreate=msgCreate;
 				if(this==Main.Instance.MainPlayer)
 				{
+					var storeGame=Main.Instance.storeGame;
 					storeGame.gameId=msgCreate.GameId;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
@@ -255,6 +255,7 @@ public class Player {
 				if(this==Main.Instance.MainPlayer)
 				{
 					Debug.Log("----create game and cache");
+					var storeGame=Main.Instance.storeGame;
 					storeGame.gameType=(int)msgJoin.Game;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
@@ -264,6 +265,8 @@ public class Player {
 			break;
 
 		case pb_msg.MsgNcDeal:
+			if(Main.Instance.gameController==null)break;
+			
 			MsgNCDeal msgDeal=MsgNCDeal.Parser.ParseFrom(bytes);
 			if(msgDeal.Result==pb_enum.Succeess){
 				var rule=Main.Instance.gameController.Rule;
