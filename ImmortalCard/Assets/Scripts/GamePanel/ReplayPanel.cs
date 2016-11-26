@@ -19,7 +19,6 @@ public class ReplayPanel : GamePanel {
 	}
 
 	public IEnumerator Play(MsgLCReplay msg){
-		yield break;
 		maxPlayer=msg.Hands.Count;
 		_pos=0;
 		transformComponent(DiscardAreas);
@@ -68,7 +67,7 @@ public class ReplayPanel : GamePanel {
 
 	override public string Id2File(int color,int value){return "";}
 	override public float DiscardScalar{get{return 1;}}
-	override public string CardPrefab{get{return "";}}
+	override public string CardPrefab{get{return "Zipai";}}
 	override public void PrepareCache(){}
 
 	public static void Create(string path,System.Action<Component> handler=null){

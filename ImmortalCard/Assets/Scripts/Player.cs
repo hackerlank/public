@@ -228,7 +228,7 @@ public class Player {
 			MsgLCReplay msgReplay=MsgLCReplay.Parser.ParseFrom(bytes);
 			if(msgReplay.Result==pb_enum.Succeess){
 				if(EnterPanel.Instance!=null)
-					EnterPanel.Instance.StartCoroutine(EnterPanel.Instance.DoReplay(msgReplay));
+					EnterPanel.Instance.DoReplay(msgReplay);
 			}else
 				Debug.LogError("replay error: "+msgReplay.Result);
 			break;

@@ -34,7 +34,7 @@ private:
 
     std::map<int,std::shared_ptr<proto3::MsgLCReplay>>  replays;
 
-    size_t                  _game_index;
+    int                  _game_index;
 };
 
 #endif /* Immortal_h */

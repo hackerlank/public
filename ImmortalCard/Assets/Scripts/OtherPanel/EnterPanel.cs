@@ -106,7 +106,7 @@ public class EnterPanel : MonoBehaviour {
 
 	public void OnLog(){
 		var msg=new MsgCLReplay();
-		msg.Mid=pb_msg.MsgLcReplay;
+		msg.Mid=pb_msg.MsgClReplay;
 		msg.GameId=10000;
 		Main.Instance.MainPlayer.Send<MsgCLReplay>(msg.Mid,msg);
 	}
@@ -202,9 +202,10 @@ public class EnterPanel : MonoBehaviour {
 		Destroy(gameObject);
 	}
 
-	public IEnumerator DoReplay(MsgLCReplay msg){
+	public void DoReplay(MsgLCReplay msg){
 		ReplayPanel panel=null;
 		System.Action<Component> handler=delegate(Component obj) {
+			Destroy(gameObject);
 			panel=obj as ReplayPanel;
 			panel.StartCoroutine(panel.Play(msg));
 		};
@@ -222,7 +223,5 @@ public class EnterPanel : MonoBehaviour {
 			ReplayPanel.Create("PaohuziReplay",handler);
 			break;
 		}
-		while(null==panel)yield return null;
-		Destroy(gameObject);
 	}
 }
