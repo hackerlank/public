@@ -109,10 +109,21 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
             //remove from pile map
             game.pileMap.erase(card);
             //draw with AAAA
-            for(auto b:bun->child())
+            for(auto b:bun->child()){
                 meldBunch.push_back(&b);
-        }else
+                
+                //replay
+                auto op=game.spReplay->add_ops();
+                op->CopyFrom(b);
+                op->set_type(BUNCH_A);
+            }
+        }else{
             meldBunch.push_back(bun);
+            
+            //replay
+            auto op=game.spReplay->add_ops();
+            op->CopyFrom(*bun);
+        }
         
         for(auto b:meldBunch){
             //erase from hands

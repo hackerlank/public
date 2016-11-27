@@ -7,17 +7,21 @@ using Proto3;
 using Google.Protobuf;
 
 public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandler,IPointerUpHandler{
-	public TokenIcon	tokenIcon;
-	public Card[]		BottomCards;
-	public Transform	Pile;
-	public Transform[]	HandAreas;
-	public Transform[]	DiscardAreas;	//MROL(Me,Right,Opposite,Left)
+	public Transform[]	HandAreas;	//MROL(Me,Right,Opposite,Left)
+	public Transform[]	DiscardAreas;
+	public Transform[]	MeldAreas;
+	public Transform[]	AbandonAreas;
 	public PlayerIcon[]	Players;
 	public Text[]		nHandCards;
+
+	public Card[]		BottomCards;
+	public Transform	Pile;
+
+	public TokenIcon	tokenIcon;
 	public Text			Ante,Multiples,Infomation;
 	public GameObject	BtnPass,Buttons;
 
-	protected GameObject[]		btnOps;	//all ops buttons
+	protected GameObject[]	btnOps;	//all ops buttons
 
 	protected int		maxPlayer=0;
 	int					round=0;
@@ -198,6 +202,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 
 	protected void transformComponent(Component[] com){
+		if(com.Length<=0)return;
 		/* position transform
 		*	  (O)
 		(R)          (L)

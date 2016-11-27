@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using Proto3;
 
 public class PaohuziPanel : GamePanel {
-	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
-	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
 	public GameObject	BtnABC,BtnA3,BtnA4,BtnWin;
 	public GameObject	BaihuoPanel;
 	public Transform[]	BaihuoLayers;	//max 3 layers
@@ -68,6 +66,7 @@ public class PaohuziPanel : GamePanel {
 		PaohuziRule.prepareAAAA(player);
 
 		//display all AAAA
+
 		for(int i=0;i<maxPlayer;++i){
 			bunch_t bunch=msg.Bunch[i];
 			for(int j=0;j<bunch.Pawns.Count/4;++j){
@@ -81,6 +80,7 @@ public class PaohuziPanel : GamePanel {
 				zb.Value=val;
 			}
 		}
+
 		
 		yield return StartCoroutine(sortHands());
 		checkNaturalWin();

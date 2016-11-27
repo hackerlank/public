@@ -9747,6 +9747,8 @@ const int MsgLCReplay::kMidFieldNumber;
 const int MsgLCReplay::kGameIdFieldNumber;
 const int MsgLCReplay::kGameCategoryFieldNumber;
 const int MsgLCReplay::kBankerFieldNumber;
+const int MsgLCReplay::kRoundFieldNumber;
+const int MsgLCReplay::kRoundsFieldNumber;
 const int MsgLCReplay::kPilesFieldNumber;
 const int MsgLCReplay::kBottomFieldNumber;
 const int MsgLCReplay::kHandsFieldNumber;
@@ -9780,6 +9782,8 @@ void MsgLCReplay::SharedCtor() {
   gameid_ = 0;
   gamecategory_ = 0;
   banker_ = 0;
+  round_ = 0;
+  rounds_ = 0;
   result_ = 0;
 }
 
@@ -9839,7 +9843,7 @@ void MsgLCReplay::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, banker_);
+  ZR_(mid_, rounds_);
   result_ = 0;
 
 #undef ZR_HELPER_
@@ -9919,49 +9923,79 @@ bool MsgLCReplay::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(42)) goto parse_piles;
+        if (input->ExpectTag(40)) goto parse_round;
         break;
       }
 
-      // repeated int32 piles = 5;
+      // optional int32 round = 5;
       case 5: {
-        if (tag == 42) {
+        if (tag == 40) {
+         parse_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(48)) goto parse_rounds;
+        break;
+      }
+
+      // optional int32 rounds = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_rounds:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &rounds_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(58)) goto parse_piles;
+        break;
+      }
+
+      // repeated int32 piles = 7;
+      case 7: {
+        if (tag == 58) {
          parse_piles:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_piles())));
-        } else if (tag == 40) {
+        } else if (tag == 56) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 42, input, this->mutable_piles())));
+                 1, 58, input, this->mutable_piles())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_bottom;
+        if (input->ExpectTag(66)) goto parse_bottom;
         break;
       }
 
-      // repeated int32 bottom = 6;
-      case 6: {
-        if (tag == 50) {
+      // repeated int32 bottom = 8;
+      case 8: {
+        if (tag == 66) {
          parse_bottom:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_bottom())));
-        } else if (tag == 48) {
+        } else if (tag == 64) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 50, input, this->mutable_bottom())));
+                 1, 66, input, this->mutable_bottom())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_hands;
+        if (input->ExpectTag(74)) goto parse_hands;
         break;
       }
 
-      // repeated .proto3.bunch_t hands = 7;
-      case 7: {
-        if (tag == 58) {
+      // repeated .proto3.bunch_t hands = 9;
+      case 9: {
+        if (tag == 74) {
          parse_hands:
           DO_(input->IncrementRecursionDepth());
          parse_loop_hands:
@@ -9970,33 +10004,33 @@ bool MsgLCReplay::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_loop_hands;
+        if (input->ExpectTag(74)) goto parse_loop_hands;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(66)) goto parse_engage;
+        if (input->ExpectTag(82)) goto parse_engage;
         break;
       }
 
-      // repeated int32 engage = 8;
-      case 8: {
-        if (tag == 66) {
+      // repeated int32 engage = 10;
+      case 10: {
+        if (tag == 82) {
          parse_engage:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, this->mutable_engage())));
-        } else if (tag == 64) {
+        } else if (tag == 80) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 66, input, this->mutable_engage())));
+                 1, 82, input, this->mutable_engage())));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(74)) goto parse_ops;
+        if (input->ExpectTag(90)) goto parse_ops;
         break;
       }
 
-      // repeated .proto3.bunch_t ops = 9;
-      case 9: {
-        if (tag == 74) {
+      // repeated .proto3.bunch_t ops = 11;
+      case 11: {
+        if (tag == 90) {
          parse_ops:
           DO_(input->IncrementRecursionDepth());
          parse_loop_ops:
@@ -10005,15 +10039,15 @@ bool MsgLCReplay::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(74)) goto parse_loop_ops;
+        if (input->ExpectTag(90)) goto parse_loop_ops;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(80)) goto parse_result;
+        if (input->ExpectTag(96)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 10;
-      case 10: {
-        if (tag == 80) {
+      // optional .proto3.pb_enum result = 12;
+      case 12: {
+        if (tag == 96) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -10073,9 +10107,19 @@ void MsgLCReplay::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->banker(), output);
   }
 
-  // repeated int32 piles = 5;
+  // optional int32 round = 5;
+  if (this->round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->round(), output);
+  }
+
+  // optional int32 rounds = 6;
+  if (this->rounds() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->rounds(), output);
+  }
+
+  // repeated int32 piles = 7;
   if (this->piles_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(5, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::google::protobuf::internal::WireFormatLite::WriteTag(7, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_piles_cached_byte_size_);
   }
   for (int i = 0; i < this->piles_size(); i++) {
@@ -10083,9 +10127,9 @@ void MsgLCReplay::SerializeWithCachedSizes(
       this->piles(i), output);
   }
 
-  // repeated int32 bottom = 6;
+  // repeated int32 bottom = 8;
   if (this->bottom_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(6, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::google::protobuf::internal::WireFormatLite::WriteTag(8, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_bottom_cached_byte_size_);
   }
   for (int i = 0; i < this->bottom_size(); i++) {
@@ -10093,15 +10137,15 @@ void MsgLCReplay::SerializeWithCachedSizes(
       this->bottom(i), output);
   }
 
-  // repeated .proto3.bunch_t hands = 7;
+  // repeated .proto3.bunch_t hands = 9;
   for (unsigned int i = 0, n = this->hands_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      7, this->hands(i), output);
+      9, this->hands(i), output);
   }
 
-  // repeated int32 engage = 8;
+  // repeated int32 engage = 10;
   if (this->engage_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(8, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    ::google::protobuf::internal::WireFormatLite::WriteTag(10, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
     output->WriteVarint32(_engage_cached_byte_size_);
   }
   for (int i = 0; i < this->engage_size(); i++) {
@@ -10109,16 +10153,16 @@ void MsgLCReplay::SerializeWithCachedSizes(
       this->engage(i), output);
   }
 
-  // repeated .proto3.bunch_t ops = 9;
+  // repeated .proto3.bunch_t ops = 11;
   for (unsigned int i = 0, n = this->ops_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      9, this->ops(i), output);
+      11, this->ops(i), output);
   }
 
-  // optional .proto3.pb_enum result = 10;
+  // optional .proto3.pb_enum result = 12;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      10, this->result(), output);
+      12, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgLCReplay)
@@ -10154,13 +10198,27 @@ int MsgLCReplay::ByteSize() const {
         this->banker());
   }
 
-  // optional .proto3.pb_enum result = 10;
+  // optional int32 round = 5;
+  if (this->round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->round());
+  }
+
+  // optional int32 rounds = 6;
+  if (this->rounds() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->rounds());
+  }
+
+  // optional .proto3.pb_enum result = 12;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated int32 piles = 5;
+  // repeated int32 piles = 7;
   {
     int data_size = 0;
     for (int i = 0; i < this->piles_size(); i++) {
@@ -10177,7 +10235,7 @@ int MsgLCReplay::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated int32 bottom = 6;
+  // repeated int32 bottom = 8;
   {
     int data_size = 0;
     for (int i = 0; i < this->bottom_size(); i++) {
@@ -10194,7 +10252,7 @@ int MsgLCReplay::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated .proto3.bunch_t hands = 7;
+  // repeated .proto3.bunch_t hands = 9;
   total_size += 1 * this->hands_size();
   for (int i = 0; i < this->hands_size(); i++) {
     total_size +=
@@ -10202,7 +10260,7 @@ int MsgLCReplay::ByteSize() const {
         this->hands(i));
   }
 
-  // repeated int32 engage = 8;
+  // repeated int32 engage = 10;
   {
     int data_size = 0;
     for (int i = 0; i < this->engage_size(); i++) {
@@ -10219,7 +10277,7 @@ int MsgLCReplay::ByteSize() const {
     total_size += data_size;
   }
 
-  // repeated .proto3.bunch_t ops = 9;
+  // repeated .proto3.bunch_t ops = 11;
   total_size += 1 * this->ops_size();
   for (int i = 0; i < this->ops_size(); i++) {
     total_size +=
@@ -10260,6 +10318,12 @@ void MsgLCReplay::MergeFrom(const MsgLCReplay& from) {
   if (from.banker() != 0) {
     set_banker(from.banker());
   }
+  if (from.round() != 0) {
+    set_round(from.round());
+  }
+  if (from.rounds() != 0) {
+    set_rounds(from.rounds());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -10286,6 +10350,8 @@ void MsgLCReplay::InternalSwap(MsgLCReplay* other) {
   std::swap(gameid_, other->gameid_);
   std::swap(gamecategory_, other->gamecategory_);
   std::swap(banker_, other->banker_);
+  std::swap(round_, other->round_);
+  std::swap(rounds_, other->rounds_);
   piles_.UnsafeArenaSwap(&other->piles_);
   bottom_.UnsafeArenaSwap(&other->bottom_);
   hands_.UnsafeArenaSwap(&other->hands_);
@@ -10359,7 +10425,35 @@ void MsgLCReplay::clear_banker() {
   // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.banker)
 }
 
-// repeated int32 piles = 5;
+// optional int32 round = 5;
+void MsgLCReplay::clear_round() {
+  round_ = 0;
+}
+ ::google::protobuf::int32 MsgLCReplay::round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.round)
+  return round_;
+}
+ void MsgLCReplay::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.round)
+}
+
+// optional int32 rounds = 6;
+void MsgLCReplay::clear_rounds() {
+  rounds_ = 0;
+}
+ ::google::protobuf::int32 MsgLCReplay::rounds() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.rounds)
+  return rounds_;
+}
+ void MsgLCReplay::set_rounds(::google::protobuf::int32 value) {
+  
+  rounds_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.rounds)
+}
+
+// repeated int32 piles = 7;
 int MsgLCReplay::piles_size() const {
   return piles_.size();
 }
@@ -10389,7 +10483,7 @@ MsgLCReplay::mutable_piles() {
   return &piles_;
 }
 
-// repeated int32 bottom = 6;
+// repeated int32 bottom = 8;
 int MsgLCReplay::bottom_size() const {
   return bottom_.size();
 }
@@ -10419,7 +10513,7 @@ MsgLCReplay::mutable_bottom() {
   return &bottom_;
 }
 
-// repeated .proto3.bunch_t hands = 7;
+// repeated .proto3.bunch_t hands = 9;
 int MsgLCReplay::hands_size() const {
   return hands_.size();
 }
@@ -10449,7 +10543,7 @@ MsgLCReplay::hands() const {
   return hands_;
 }
 
-// repeated int32 engage = 8;
+// repeated int32 engage = 10;
 int MsgLCReplay::engage_size() const {
   return engage_.size();
 }
@@ -10479,7 +10573,7 @@ MsgLCReplay::mutable_engage() {
   return &engage_;
 }
 
-// repeated .proto3.bunch_t ops = 9;
+// repeated .proto3.bunch_t ops = 11;
 int MsgLCReplay::ops_size() const {
   return ops_.size();
 }
@@ -10509,7 +10603,7 @@ MsgLCReplay::ops() const {
   return ops_;
 }
 
-// optional .proto3.pb_enum result = 10;
+// optional .proto3.pb_enum result = 12;
 void MsgLCReplay::clear_result() {
   result_ = 0;
 }

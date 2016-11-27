@@ -29,7 +29,7 @@ struct KEYE_API Game{
     State       state;
     pos_t       banker;
     pos_t       token;
-    size_t      round,Round;
+    int         round,Round;
     proto3::pb_enum                     category;
     std::string                         definedCards;
     std::vector<unit_id_t>              pile;       //cards library

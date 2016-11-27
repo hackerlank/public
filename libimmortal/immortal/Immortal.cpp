@@ -48,10 +48,6 @@ std::shared_ptr<Game> Immortal::createGame(int key,proto3::MsgCNCreate& msg){
         games[gid]=gameptr;
         gameptr->id=gid;
         gameptr->rule=rule->second;
-        auto spReplay=std::make_shared<MsgLCReplay>();
-        spReplay->set_gameid(gid);
-        gameptr->spReplay=spReplay;
-        replays[gid]=spReplay;
     }else
         Logger<<"create game error no rule "<<msg.game()<<endl;
     return gameptr;
@@ -111,15 +107,12 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
         PBHelper::Send(sh,omsg);
     }
     else if(mid==proto3::pb_msg::MSG_CL_REPLAY){
-        //test only,should be in Lobby
+        //TODO: move into Lobby
         MsgCLReplay imsg;
         MsgLCReplay omsg;
         if(pb.Parse(imsg)){
-            auto replay=replays.find(imsg.gameid());
-            if(replay!=replays.end())
-                omsg.CopyFrom(*replay->second);
-            else if(!replays.empty())
-                omsg.CopyFrom(*replays.begin()->second);
+            if(!replays.empty())
+                omsg.CopyFrom(*replays.front());
         }
         else
         {

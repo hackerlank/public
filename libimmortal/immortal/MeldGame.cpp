@@ -250,6 +250,11 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                         localPlayer->AAAs.clear();
                         localPlayer->AAAAs.clear();
                         for(auto& o:output)localPlayer->playData.mutable_bunch()->Add()->CopyFrom(o);
+                        
+                        //replay
+                        auto op=game.spReplay->add_ops();
+                        op->CopyFrom(what);
+                        for(auto& o:output)op->add_child()->CopyFrom(o);
 
                         if(localPos==where){
                             changeState(game,Game::State::ST_SETTLE);
@@ -269,8 +274,12 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     onMeld(game,*localPlayer,which,what);
                     
                     //abandon
-                    if(validId(which))
+                    if(validId(which)){
                         tokenPlayer->playData.add_discards(which);
+                        //replay
+                        auto op=game.spReplay->add_ops();
+                        op->CopyFrom(what);
+                    }
                     break;
                 case pb_enum::BUNCH_INVALID:
                     //checked already

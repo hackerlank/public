@@ -87,13 +87,17 @@ void GameRule::deal(Game& game){
     game.lastCard=game.pile.front();
 
     //init game replay
-    auto spReplay=game.spReplay;
+    auto spReplay=std::make_shared<MsgLCReplay>();
+    spReplay->set_round(game.round);
+    spReplay->set_rounds(game.Round);
     spReplay->set_banker(game.banker);
     spReplay->set_gameid(game.id);
     spReplay->set_gamecategory((pb_msg)game.category);
     for(auto c:game.pile)spReplay->add_piles(c);
     for(auto b:game.bottom)spReplay->add_bottom(b);
     for(auto p:game.players)spReplay->add_hands()->mutable_pawns()->CopyFrom(p->playData.hands());
+    game.spReplay=spReplay;
+    Immortal::sImmortal->replays.push_back(spReplay);
     
     //broadcast
     MsgNCDeal msg;
@@ -137,6 +141,8 @@ bool GameRule::settle(Game& game){
         p->send(msg);
         p->lastMsg=game.spSettle;
     }
+    
+    //TODO: persistence replay
     
     if(++game.round>=game.Round){
         if(!game.spFinish)return false;

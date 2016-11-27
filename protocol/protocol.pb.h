@@ -2845,10 +2845,22 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::int32 banker() const;
   void set_banker(::google::protobuf::int32 value);
 
-  // repeated int32 piles = 5;
+  // optional int32 round = 5;
+  void clear_round();
+  static const int kRoundFieldNumber = 5;
+  ::google::protobuf::int32 round() const;
+  void set_round(::google::protobuf::int32 value);
+
+  // optional int32 rounds = 6;
+  void clear_rounds();
+  static const int kRoundsFieldNumber = 6;
+  ::google::protobuf::int32 rounds() const;
+  void set_rounds(::google::protobuf::int32 value);
+
+  // repeated int32 piles = 7;
   int piles_size() const;
   void clear_piles();
-  static const int kPilesFieldNumber = 5;
+  static const int kPilesFieldNumber = 7;
   ::google::protobuf::int32 piles(int index) const;
   void set_piles(int index, ::google::protobuf::int32 value);
   void add_piles(::google::protobuf::int32 value);
@@ -2857,10 +2869,10 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_piles();
 
-  // repeated int32 bottom = 6;
+  // repeated int32 bottom = 8;
   int bottom_size() const;
   void clear_bottom();
-  static const int kBottomFieldNumber = 6;
+  static const int kBottomFieldNumber = 8;
   ::google::protobuf::int32 bottom(int index) const;
   void set_bottom(int index, ::google::protobuf::int32 value);
   void add_bottom(::google::protobuf::int32 value);
@@ -2869,10 +2881,10 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_bottom();
 
-  // repeated .proto3.bunch_t hands = 7;
+  // repeated .proto3.bunch_t hands = 9;
   int hands_size() const;
   void clear_hands();
-  static const int kHandsFieldNumber = 7;
+  static const int kHandsFieldNumber = 9;
   const ::proto3::bunch_t& hands(int index) const;
   ::proto3::bunch_t* mutable_hands(int index);
   ::proto3::bunch_t* add_hands();
@@ -2881,10 +2893,10 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
       hands() const;
 
-  // repeated int32 engage = 8;
+  // repeated int32 engage = 10;
   int engage_size() const;
   void clear_engage();
-  static const int kEngageFieldNumber = 8;
+  static const int kEngageFieldNumber = 10;
   ::google::protobuf::int32 engage(int index) const;
   void set_engage(int index, ::google::protobuf::int32 value);
   void add_engage(::google::protobuf::int32 value);
@@ -2893,10 +2905,10 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
       mutable_engage();
 
-  // repeated .proto3.bunch_t ops = 9;
+  // repeated .proto3.bunch_t ops = 11;
   int ops_size() const;
   void clear_ops();
-  static const int kOpsFieldNumber = 9;
+  static const int kOpsFieldNumber = 11;
   const ::proto3::bunch_t& ops(int index) const;
   ::proto3::bunch_t* mutable_ops(int index);
   ::proto3::bunch_t* add_ops();
@@ -2905,9 +2917,9 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
       ops() const;
 
-  // optional .proto3.pb_enum result = 10;
+  // optional .proto3.pb_enum result = 12;
   void clear_result();
-  static const int kResultFieldNumber = 10;
+  static const int kResultFieldNumber = 12;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -2922,6 +2934,8 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::int32 gameid_;
   int gamecategory_;
   ::google::protobuf::int32 banker_;
+  ::google::protobuf::int32 round_;
+  ::google::protobuf::int32 rounds_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > piles_;
   mutable int _piles_cached_byte_size_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > bottom_;
@@ -9253,7 +9267,35 @@ inline void MsgLCReplay::set_banker(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.banker)
 }
 
-// repeated int32 piles = 5;
+// optional int32 round = 5;
+inline void MsgLCReplay::clear_round() {
+  round_ = 0;
+}
+inline ::google::protobuf::int32 MsgLCReplay::round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.round)
+  return round_;
+}
+inline void MsgLCReplay::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.round)
+}
+
+// optional int32 rounds = 6;
+inline void MsgLCReplay::clear_rounds() {
+  rounds_ = 0;
+}
+inline ::google::protobuf::int32 MsgLCReplay::rounds() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.rounds)
+  return rounds_;
+}
+inline void MsgLCReplay::set_rounds(::google::protobuf::int32 value) {
+  
+  rounds_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.rounds)
+}
+
+// repeated int32 piles = 7;
 inline int MsgLCReplay::piles_size() const {
   return piles_.size();
 }
@@ -9283,7 +9325,7 @@ MsgLCReplay::mutable_piles() {
   return &piles_;
 }
 
-// repeated int32 bottom = 6;
+// repeated int32 bottom = 8;
 inline int MsgLCReplay::bottom_size() const {
   return bottom_.size();
 }
@@ -9313,7 +9355,7 @@ MsgLCReplay::mutable_bottom() {
   return &bottom_;
 }
 
-// repeated .proto3.bunch_t hands = 7;
+// repeated .proto3.bunch_t hands = 9;
 inline int MsgLCReplay::hands_size() const {
   return hands_.size();
 }
@@ -9343,7 +9385,7 @@ MsgLCReplay::hands() const {
   return hands_;
 }
 
-// repeated int32 engage = 8;
+// repeated int32 engage = 10;
 inline int MsgLCReplay::engage_size() const {
   return engage_.size();
 }
@@ -9373,7 +9415,7 @@ MsgLCReplay::mutable_engage() {
   return &engage_;
 }
 
-// repeated .proto3.bunch_t ops = 9;
+// repeated .proto3.bunch_t ops = 11;
 inline int MsgLCReplay::ops_size() const {
   return ops_.size();
 }
@@ -9403,7 +9445,7 @@ MsgLCReplay::ops() const {
   return ops_;
 }
 
-// optional .proto3.pb_enum result = 10;
+// optional .proto3.pb_enum result = 12;
 inline void MsgLCReplay::clear_result() {
   result_ = 0;
 }

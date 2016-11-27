@@ -27,12 +27,13 @@ public:
     void                    removeGame(game_id_t);
     
     static Immortal*    sImmortal;
+    
+    //TODO: remove
+    std::vector<std::shared_ptr<proto3::MsgLCReplay>>  replays;
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
     std::map<size_t,std::shared_ptr<Game>>      games;
-
-    std::map<int,std::shared_ptr<proto3::MsgLCReplay>>  replays;
 
     int                  _game_index;
 };

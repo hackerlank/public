@@ -105,6 +105,15 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnLog(){
+		StartCoroutine(logCo());
+	}
+
+	IEnumerator logCo(){
+		//connect: unstable and only for test
+		if(!Main.Instance.MainPlayer.InGame)
+			Main.Instance.MainPlayer.Connect(100);
+		while(!Main.Instance.MainPlayer.InGame)yield return null;
+
 		var msg=new MsgCLReplay();
 		msg.Mid=pb_msg.MsgClReplay;
 		msg.GameId=10000;
@@ -203,24 +212,24 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void DoReplay(MsgLCReplay msg){
-		ReplayPanel panel=null;
+		PaohuziReplay panel=null;
 		System.Action<Component> handler=delegate(Component obj) {
 			Destroy(gameObject);
-			panel=obj as ReplayPanel;
+			panel=obj as PaohuziReplay;
 			panel.StartCoroutine(panel.Play(msg));
 		};
 
 		switch(CurrentGame.game){
 		case pb_enum.GameMj:
-			ReplayPanel.Create("MahjongPanel",handler);
+			PaohuziReplay.Create("MahjongPanel",handler);
 			break;
 		case pb_enum.GameDdz:
-			ReplayPanel.Create("MahjongPanel",handler);
-			//ReplayPanel.Create("DoudeZheReplay");
+			PaohuziReplay.Create("MahjongPanel",handler);
+			//PaohuziReplay.Create("DoudeZheReplay");
 			break;
 		case pb_enum.GamePhz:
 		default:
-			ReplayPanel.Create("PaohuziReplay",handler);
+			PaohuziReplay.Create("PaohuziReplay",handler);
 			break;
 		}
 	}

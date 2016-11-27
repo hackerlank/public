@@ -254,10 +254,18 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
             h->add_pawns(bunch.pawns(i*3+0));
             h->add_pawns(bunch.pawns(i*3+1));
             h->add_pawns(bunch.pawns(i*3+2));
+            
+            //replay
+            auto op=game.spReplay->add_ops();
+            op->CopyFrom(*h);
         }
     }else{
         auto h=player.playData.add_bunch();
         h->CopyFrom(bunch);
+        
+        //replay
+        auto op=game.spReplay->add_ops();
+        op->CopyFrom(*h);
     }
     return true;
 }

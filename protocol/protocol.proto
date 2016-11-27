@@ -456,12 +456,14 @@ pb_msg mid				=1;
 int32 gameId            =2;
 pb_msg gameCategory     =3;
 int32 banker            =4;
-repeated int32 piles    =5;
-repeated int32 bottom   =6;
-repeated bunch_t hands  =7;
-repeated int32 engage   =8;
-repeated bunch_t ops    =9;
-pb_enum result			=10;
+int32 round             =5;
+int32 rounds            =6;
+repeated int32 piles    =7;
+repeated int32 bottom   =8;
+repeated bunch_t hands  =9;
+repeated int32 engage   =10;
+repeated bunch_t ops    =11;
+pb_enum result			=12;
 };
 // ----------------------------------------------------------------
 // Charge

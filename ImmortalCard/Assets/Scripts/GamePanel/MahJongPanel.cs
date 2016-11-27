@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using Proto3;
 
 public class MahJongPanel : GamePanel {
-	public Transform[]	MeldAreas;		//MROL(Me,Right,Opposite,Left)
-	public Transform[]	AbandonAreas;	//MROL(Me,Right,Opposite,Left)
 	public GameObject	BtnA3,BtnA4,BtnWin;
 	public GameObject	BtnTong,BtnTiao,BtnWan;
 
