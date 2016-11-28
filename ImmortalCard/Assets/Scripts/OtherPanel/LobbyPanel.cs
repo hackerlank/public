@@ -65,6 +65,7 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnSettings(){
+		Utils.Load<SettingsPanel>(Main.Instance.RootPanel);
 	}
 	
 	public void OnProxy(){

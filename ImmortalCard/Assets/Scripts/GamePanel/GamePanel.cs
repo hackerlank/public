@@ -303,18 +303,25 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		StartCoroutine(passMeld(Main.Instance.MainPlayer,id,false));
 	}
 	
+	public void OnHelp(){
+	}
+	
+	public void OnSettings(){
+		Utils.Load<SettingsPanel>(Main.Instance.RootPanel);
+	}
+
+	public void OnBack(){
+		//test reconnect
+		Main.Instance.MainPlayer.Disconnect();
+		Main.Instance.MainPlayer.InGame=true;
+	}
+	
 	public void OnExit(){
 		PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
 		Main.Instance.MainPlayer.InGame=false;
 		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj) {
 			Destroy(gameObject);
 		});
-	}
-
-	public void OnDisconnect(){
-		//test reconnect
-		Main.Instance.MainPlayer.Disconnect();
-		Main.Instance.MainPlayer.InGame=true;
 	}
 	
 	bool pointerDown=false;

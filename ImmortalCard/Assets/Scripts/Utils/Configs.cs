@@ -8,6 +8,10 @@ public class Configs{
 	public const string PrefsKey_DefinedCards	="PrefsKey_DefinedCards";
 
 	public const string PrefsKey_StoreGame		="PrefsKey_StoreGame";
+	public const string PrefsKey_SoundVolume	="PrefsKey_SoundVolume";
+	public const string PrefsKey_MusicVolume	="PrefsKey_MusicVolume";
+	public const string PrefsKey_SoundOn		="PrefsKey_SoundOn";
+	public const string PrefsKey_MusicOn		="PrefsKey_MusicOn";
 
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
@@ -16,6 +20,11 @@ public class Configs{
 
 	public static float OpsInterval=0.5f;
 	public static int invalidCard=-1;
+
+	public static float SoundVolume=0.5f;
+	public static float MusicVolume=0.5f;
+	public static bool SoundOn=true;
+	public static bool MusicOn=true;
 
 	public static void Load(){
 		string file="Config/config.ini";

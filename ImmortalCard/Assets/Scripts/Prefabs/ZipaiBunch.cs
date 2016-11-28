@@ -74,6 +74,8 @@ public class ZipaiBunch : Bunch{
 	}
 
 	static public void PlaySound(pb_enum type){
+		if(!Configs.SoundOn)return;
+
 		var sndName="";
 		switch(type){
 		case pb_enum.PhzAbc:
@@ -94,14 +96,18 @@ public class ZipaiBunch : Bunch{
 		case pb_enum.PhzBbbB:
 		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbbdesk:
-			sndName="m0_pso";
+			sndName="m0_pao";
+			break;
+		case pb_enum.BunchWin:
+			sndName="m0_hu";
 			break;
 		default:
 			break;
 		}
 
 		var snd=Audio.Instance.Get(sndName);
-		if(null!=snd && !snd.isPlaying)
+		if(null!=snd && !snd.isPlaying){
 			snd.Play();
+		}
 	}
 }

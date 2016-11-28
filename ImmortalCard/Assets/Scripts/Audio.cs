@@ -20,6 +20,20 @@ public class Audio : MonoBehaviour {
 		foreach(AudioSource src in srcs){
 			dict[src.clip.name]=src;
 		}
+
+		SettingsPanel.Load();
+	}
+
+	public void PlayMusic(string musicName="bg0"){
+		var bg=Get(musicName);
+		if(bg!=null){
+			if(!bg.isPlaying && Configs.MusicOn){
+				bg.Play();
+			}
+			else if(bg.isPlaying && !Configs.MusicOn){
+				bg.Stop();
+			}
+		}
 	}
 
 	public AudioSource Get(string name){
