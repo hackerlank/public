@@ -116,6 +116,7 @@ public class PaohuziPanel : GamePanel {
 		//show hints
 		var fromMyHands=false;
 		var card=msg.Bunch.Pawns[0];
+		Zipai.PlaySound(card);
 		foreach(var h in player.playData.Hands)if(h==card){fromMyHands=true;break;}
 		if(fromMyHands){
 			//StartCoroutine(sortHands());
@@ -179,6 +180,7 @@ public class PaohuziPanel : GamePanel {
 		if(A==null&&!bDraw)
 			yield break;
 
+		ZipaiBunch.PlaySound(bunch.Type);
 		//construct bunches
 		var melds=new List<bunch_t>();
 		switch(bunch.Type){

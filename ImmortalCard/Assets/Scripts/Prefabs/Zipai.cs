@@ -115,4 +115,11 @@ public class Zipai : Card{
 			//reparent
 			discard.Invoke(nearest.transform);
 	}
+
+	static public void PlaySound(int id){
+		var sndName=string.Format("m0_{0}0{1:00}",id/1000*1000,id%100);
+		var snd=Audio.Instance.Get(sndName);
+		if(null!=snd && !snd.isPlaying)
+			snd.Play();
+	}
 }

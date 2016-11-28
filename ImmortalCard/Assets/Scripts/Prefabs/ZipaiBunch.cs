@@ -72,4 +72,36 @@ public class ZipaiBunch : Bunch{
 			return "";
 		}
 	}
+
+	static public void PlaySound(pb_enum type){
+		var sndName="";
+		switch(type){
+		case pb_enum.PhzAbc:
+			sndName="m0_chi";
+			break;
+		case pb_enum.PhzAaawei:
+		case pb_enum.PhzAaachou:
+			sndName="m0_wei";
+			break;
+		case pb_enum.PhzAaaa:
+		case pb_enum.PhzAaaadesk:
+		case pb_enum.PhzAaaastart:
+			sndName="m0_ti";
+			break;
+		case pb_enum.PhzBbb:
+			sndName="m0_peng";
+			break;
+		case pb_enum.PhzBbbB:
+		case pb_enum.PhzB4B3:
+		case pb_enum.PhzBbbbdesk:
+			sndName="m0_pso";
+			break;
+		default:
+			break;
+		}
+
+		var snd=Audio.Instance.Get(sndName);
+		if(null!=snd && !snd.isPlaying)
+			snd.Play();
+	}
 }

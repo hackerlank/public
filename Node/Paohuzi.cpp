@@ -91,7 +91,7 @@ int Paohuzi::bottom(Game& game){
 
 void Paohuzi::initCard(Game& game){
     //id: [color-index-value]
-    for(int j=1;j<=2;++j){          //Big,Small => 1-2
+    for(int j=1;j<=2;++j){          //Small,Big => 1-2
         for(int i=1;i<=10;++i){      //1-10
             for(int k=0;k<4;++k){   //xxxx
                 unit_id_t id=j*1000+k*100+i;
