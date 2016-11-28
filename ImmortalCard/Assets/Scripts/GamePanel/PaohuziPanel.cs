@@ -12,6 +12,7 @@ public class PaohuziPanel : GamePanel {
 	List<bunch_t> _hints=new List<bunch_t>();
 
 	override public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
+		//deal and random display all hands include AAAA and AAA
 		yield return StartCoroutine(base.OnMsgDeal(player,msg));
 		//transform position
 		transformComponent(MeldAreas);
@@ -63,15 +64,29 @@ public class PaohuziPanel : GamePanel {
 	}
 	
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
+		//process all players AAAA
 		PaohuziRule.prepareAAAA(player);
-
-		//display all AAAA
 
 		for(int i=0;i<maxPlayer;++i){
 			bunch_t bunch=msg.Bunch[i];
 			for(int j=0;j<bunch.Pawns.Count/4;++j){
 				var val=new bunch_t();
 				for(int k=j*4;k<(j+1)*4;++k)val.Pawns.Add(bunch.Pawns[k]);
+
+				//remove cards from hand area
+				if(_pos==i){
+					var hands=HandAreas[i].GetComponentsInChildren<Card>();
+					foreach(var pawn in bunch.Pawns){
+						foreach(var hand in hands){
+							if(hand.Value==pawn){
+								Destroy(hand.gameObject);
+								break;
+							}
+						}
+					}
+				}
+
+				//meld area
 				ZipaiBunch zb=null;
 				Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj) {
 					zb=obj as ZipaiBunch;
