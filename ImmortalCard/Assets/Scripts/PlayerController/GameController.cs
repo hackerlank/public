@@ -14,6 +14,4 @@ public interface GameController:PlayerController{
 
 	//ui
 	void OnExit();
-	string Id2File(int color,int value);
-	float DiscardScalar{get;}
 }

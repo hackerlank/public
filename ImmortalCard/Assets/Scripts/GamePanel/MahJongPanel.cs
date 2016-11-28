@@ -52,7 +52,7 @@ public class MahJongPanel : GamePanel {
 			//revive abandon
 			foreach(var id in playFrom.Discards){
 				var fin=false;
-				Card.Create(CardPrefab,id,AbandonAreas[i],delegate(Card card) {
+				Card.Create(Rule.CardPrefab,id,AbandonAreas[i],delegate(Card card) {
 					card.state=Card.State.ST_ABANDON;
 					fin=true;
 				});
@@ -100,8 +100,8 @@ public class MahJongPanel : GamePanel {
 		//remove discards
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
-		Card.Create(CardPrefab,id,Pile,delegate(Card card) {
-			card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+		Card.Create(Rule.CardPrefab,id,Pile,delegate(Card card) {
+			card.DiscardTo(DiscardAreas[pos],Rule.DiscardScalar);
 			card.state=Card.State.ST_DISCARD;
 		});
 
@@ -378,35 +378,8 @@ public class MahJongPanel : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
-	override public string CardPrefab{get{return "Mahjong";}}
-	override public string Id2File(int color,int value){
-		if(Rule!=null){
-			color-=1;
-			string[] Colors={"tong","tiao","wan"};
-			value=Rule.inverseTransformValue(value);
-			if(color<Colors.Length)
-				return CardPrefab+"/"+string.Format("{0}{1:0}",Colors[color],value);
-		}
-		return "";
-	}
-	
-	override public void PrepareCache(){
-		var files=new List<string>();
-		files.Add(CardPrefab+"/"+"dong");
-		files.Add(CardPrefab+"/"+"nan");
-		files.Add(CardPrefab+"/"+"xi");
-		files.Add(CardPrefab+"/"+"bei");
-		files.Add(CardPrefab+"/"+"zhong");
-		files.Add(CardPrefab+"/"+"fa");
-		files.Add(CardPrefab+"/"+"bai");
-		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
-			files.Add(Id2File(k,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
-	}
-
 	float AbandonScalar{get{return 1f;}}
-	override public float DiscardScalar{get{return 1f;}}
-	
+
 	public override void TapCard(Card card,bool select=true){
 		var selected=false;
 		foreach(var old in _selection)if(old==card)selected=true;

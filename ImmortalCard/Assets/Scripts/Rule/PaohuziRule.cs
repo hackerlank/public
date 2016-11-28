@@ -1052,4 +1052,27 @@ public class PaohuziRule: GameRule {
 			return aiController;
 		}
 	}
+
+	// ------------------------------------------------------
+	// resources related
+	// ------------------------------------------------------
+	override public string CardPrefab{get{return "Zipai";}}
+	override public string Id2File(int color,int value){
+		color-=1;
+		string[] Colors={"s","b"};
+		value=inverseTransformValue(value);
+		if(color<Colors.Length)
+			return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
+		return "";
+	}
+	
+	override public void PrepareCache(){
+		var files=new List<string>();
+		files.Add(CardPrefab+"/"+"back");
+		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
+			files.Add(Id2File(k,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
+	}
+	
+	override public float DiscardScalar{get{return 1f;}}
 }

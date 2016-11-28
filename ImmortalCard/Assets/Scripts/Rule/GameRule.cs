@@ -56,4 +56,12 @@ public abstract class GameRule {
 	public abstract int comparision(int x,int y);
 	public virtual int transformValue(int val){return val;}
 	public virtual int inverseTransformValue(int val){return val;}
+
+	// ------------------------------------------------------
+	// resources related
+	// ------------------------------------------------------
+	abstract public string Id2File(int color,int value);
+	abstract public float DiscardScalar{get;}
+	abstract public string CardPrefab{get;}
+	abstract public void PrepareCache();
 }

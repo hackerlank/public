@@ -113,7 +113,7 @@ public class Player {
 			yield return null;
 
 		//prepare cache before panel shown,to ensure revive
-		panel.PrepareCache();
+		panel.Rule.PrepareCache();
 		while(!CardCache.Ready)yield return null;
 
 		Main.Instance.Wait=false;

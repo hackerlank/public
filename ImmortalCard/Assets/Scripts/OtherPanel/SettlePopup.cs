@@ -17,7 +17,7 @@ public abstract class SettlePopup : MonoBehaviour {
 			if(Pile!=null){
 				var ctrl=Main.Instance.gameController as GamePanel;
 				foreach(var card in value.Pile)
-					Card.Create(ctrl.CardPrefab,card,Pile,delegate(Card obj) {
+					Card.Create(ctrl.Rule.CardPrefab,card,Pile,delegate(Card obj) {
 						obj.state=Card.State.ST_ABANDON;
 					});
 			}

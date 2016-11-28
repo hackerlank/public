@@ -138,30 +138,7 @@ public class DoudeZhuPanel : GamePanel {
 	// logic
 	// ----------------------------------------------
 	override public bool CardDrag{get{return false;}}
-	override public string CardPrefab{get{return "Card";}}
-	override public string Id2File(int color,int value){
-		if(Rule!=null){
-			color-=1;
-			string[] Colors={"c","d","h","s"};
-			value=Rule.inverseTransformValue(value);
-			return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
-		}
-		return "";
-	}
 
-	override public void PrepareCache(){
-		var files=new List<string>();
-		files.Add(CardPrefab+"/"+"back");
-		files.Add(CardPrefab+"/"+"c14");
-		files.Add(CardPrefab+"/"+"d15");
-		for(int j=1;j<=4;++j)
-			for(int i=1;i<=13;++i)
-				files.Add(Id2File(j,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Card"));
-	}
-
-	override public float DiscardScalar{get{return .625f;}}
-	
 	public static void Create(System.Action<Component> handler=null){
 		Utils.Load<DoudeZhuPanel>(Main.Instance.RootPanel,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);

@@ -60,7 +60,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 				var n=msg.Count[i];
 				for(int j=0;j<n;++j){
 					var fin=false;
-					Card.Create(CardPrefab,1000,HandAreas[i],delegate(Card card) {
+					Card.Create(Rule.CardPrefab,1000,HandAreas[i],delegate(Card card) {
 						fin=true;
 					});
 					yield return null;
@@ -141,8 +141,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 					var id=cards[i];
 					var fin=false;
 					var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
-					Card.Create(CardPrefab,id,from,delegate(Card card) {
-						card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+					Card.Create(Rule.CardPrefab,id,from,delegate(Card card) {
+						card.DiscardTo(DiscardAreas[pos],Rule.DiscardScalar);
 						card.state=Card.State.ST_DISCARD;
 						fin=true;
 					});
@@ -189,7 +189,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		for(int i=0;i<hands.Count;++i){
 			var id=hands[i];
 			var fin=false;
-			Card.Create(CardPrefab,id,HandAreas[0],delegate(Card card) {
+			Card.Create(Rule.CardPrefab,id,HandAreas[0],delegate(Card card) {
 				card.Static=false;
 				fin=true;
 			});
@@ -337,11 +337,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	public int Round{get{return round;}set{round=value;}}
 	public GameRule Rule{get{return rule;}set{rule=value;}}
 	virtual public bool CardDrag{get{return true;}}
-	abstract public string Id2File(int color,int value);
-	abstract public float DiscardScalar{get;}
-	abstract public string CardPrefab{get;}
-	abstract public void PrepareCache();
-	
+
 	virtual public void TapCard(Card card,bool select=true){
 		if(select)
 			_selection.Add(card);
@@ -382,13 +378,13 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		msg.Bunch.Type=pb_enum.Unknown;
 		if(card!=null){
 			deselectAll();
-			card.DiscardTo(DiscardAreas[_pos],DiscardScalar);
+			card.DiscardTo(DiscardAreas[_pos],Rule.DiscardScalar);
 			card.state=Card.State.ST_DISCARD;
 			msg.Bunch.Pawns.Add(card.Value);
 		}else if(_selection.Count>0){
 			_selection.Sort(compare_card);
 			foreach(var c in _selection){
-				c.DiscardTo(DiscardAreas[_pos],DiscardScalar);
+				c.DiscardTo(DiscardAreas[_pos],Rule.DiscardScalar);
 				c.state=Card.State.ST_DISCARD;
 				msg.Bunch.Pawns.Add(c.Value);
 			}

@@ -44,7 +44,7 @@ public class ZipaiBunch : MonoBehaviour{
 			//cards
 			var ctrl=Main.Instance.gameController as GamePanel;
 			foreach(var card in bunch.Pawns){
-				Card.Create(ctrl.CardPrefab,card,Cards,delegate(Card obj) {
+				Card.Create(ctrl.Rule.CardPrefab,card,Cards,delegate(Card obj) {
 					obj.state=Card.State.ST_MELD;
 				});
 			}

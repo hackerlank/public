@@ -41,7 +41,7 @@ public class Card : MonoBehaviour,IDragHandler,IEndDragHandler,IBeginDragHandler
 					var Clr=(int)value/1000;
 					var Val=(int)value%100;
 					
-					var file=Main.Instance.gameController.Id2File(Clr,Val);
+					var file=Main.Instance.gameController.Rule.Id2File(Clr,Val);
 					if(CardCache.Ready&&CardCache.sprites.ContainsKey(file))
 						image.sprite=CardCache.sprites[file];
 				}

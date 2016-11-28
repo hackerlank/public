@@ -24,7 +24,7 @@ public class MahjongSettleItem : SettleItem {
 				});
 			}
 
-			var prefab=(Main.Instance.gameController as GamePanel).CardPrefab;
+			var prefab=(Main.Instance.gameController as GamePanel).Rule.CardPrefab;
 			foreach(var hand in hands){
 				Card.Create(prefab,hand,Hands,delegate(Card obj) {
 					obj.state=Card.State.ST_MELD;

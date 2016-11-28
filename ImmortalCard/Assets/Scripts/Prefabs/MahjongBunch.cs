@@ -19,7 +19,7 @@ public class MahjongBunch : MonoBehaviour{
 			_bunch=value;
 			if(value.Pawns.Count<=0)return;
 			//cards
-			var prefab=(Main.Instance.gameController as GamePanel).CardPrefab;
+			var prefab=(Main.Instance.gameController as GamePanel).Rule.CardPrefab;
 			var start=0;
 			if(value.Type==pb_enum.BunchAaaa){
 				++start;

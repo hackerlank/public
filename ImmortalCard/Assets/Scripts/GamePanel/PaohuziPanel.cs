@@ -53,7 +53,7 @@ public class PaohuziPanel : GamePanel {
 			//revive abandon
 			foreach(var id in playFrom.Discards){
 				var fin=false;
-				Card.Create(CardPrefab,id,AbandonAreas[i],delegate(Card card) {
+				Card.Create(Rule.CardPrefab,id,AbandonAreas[i],delegate(Card card) {
 					card.state=Card.State.ST_ABANDON;
 					fin=true;
 				});
@@ -135,12 +135,12 @@ public class PaohuziPanel : GamePanel {
 		foreach(Transform ch in DiscardAreas[_pos].transform)Destroy(ch.gameObject);
 		//discard
 		Card card=null;
-		Card.Create(CardPrefab,1000,Pile,delegate(Card obj) {
+		Card.Create(Rule.CardPrefab,1000,Pile,delegate(Card obj) {
 			card=obj;
 		});
 		while(card==null)yield return null;
 
-		card.DiscardTo(DiscardAreas[pos],DiscardScalar);
+		card.DiscardTo(DiscardAreas[pos],Rule.DiscardScalar);
 		card.state=Card.State.ST_DISCARD;
 
 		Debug.Log(pos+" draw "+id);
@@ -810,29 +810,8 @@ public class PaohuziPanel : GamePanel {
 	// ----------------------------------------------
 	// logic
 	// ----------------------------------------------
-	override public string CardPrefab{get{return "Zipai";}}
-	override public string Id2File(int color,int value){
-		if(Rule!=null){
-			color-=1;
-			string[] Colors={"s","b"};
-			value=Rule.inverseTransformValue(value);
-			if(color<Colors.Length)
-				return CardPrefab+"/"+string.Format("{0}{1:00}",Colors[color],value);
-		}
-		return "";
-	}
-	
-	override public void PrepareCache(){
-		var files=new List<string>();
-		files.Add(CardPrefab+"/"+"back");
-		for(int k=1;k<=2;++k)for(int i=1;i<=10;++i)
-			files.Add(Id2File(k,i));
-		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Zipai"));
-	}
-
 	float AbandonScalar{get{return 1f;}}
-	override public float DiscardScalar{get{return 1f;}}
-	
+
 	public override void TapCard(Card card,bool select=true){
 		var selected=false;
 		foreach(var old in _selection)if(old==card)selected=true;

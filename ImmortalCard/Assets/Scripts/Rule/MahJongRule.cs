@@ -425,4 +425,32 @@ public class MahJongRule: GameRule {
 			return aiController;
 		}
 	}
+	// ------------------------------------------------------
+	// resources related
+	// ------------------------------------------------------
+	override public string CardPrefab{get{return "Mahjong";}}
+	override public string Id2File(int color,int value){
+		color-=1;
+		string[] Colors={"tong","tiao","wan"};
+		value=inverseTransformValue(value);
+		if(color<Colors.Length)
+			return CardPrefab+"/"+string.Format("{0}{1:0}",Colors[color],value);
+		return "";
+	}
+	
+	override public void PrepareCache(){
+		var files=new List<string>();
+		files.Add(CardPrefab+"/"+"dong");
+		files.Add(CardPrefab+"/"+"nan");
+		files.Add(CardPrefab+"/"+"xi");
+		files.Add(CardPrefab+"/"+"bei");
+		files.Add(CardPrefab+"/"+"zhong");
+		files.Add(CardPrefab+"/"+"fa");
+		files.Add(CardPrefab+"/"+"bai");
+		for(int k=1;k<=3;++k)for(int i=1;i<=9;++i)
+			files.Add(Id2File(k,i));
+		Main.Instance.StartCoroutine(CardCache.Load(files.ToArray(),"Mahjong"));
+	}
+	
+	override public float DiscardScalar{get{return 1f;}}
 }

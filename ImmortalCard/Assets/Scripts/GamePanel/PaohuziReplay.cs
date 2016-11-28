@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class PaohuziReplay : PaohuziPanel {
+public class PaohuziReplay : GamePanel {
 	public GameObject	BtnPlay,BtnPause,BtnStop,BtnPre,BtnNext;
 	
 	// ----------------------------------------------
@@ -19,7 +19,7 @@ public class PaohuziReplay : PaohuziPanel {
 	public IEnumerator Play(MsgLCReplay msg){
 		//prepare cache before panel shown,to ensure revive
 		if(!CardCache.Ready){
-			PrepareCache();
+			Rule.PrepareCache();
 			while(!CardCache.Ready)yield return null;
 		}
 
@@ -37,7 +37,7 @@ public class PaohuziReplay : PaohuziPanel {
 			var hands=msg.Hands[i].Pawns;
 			int fin=0;
 			foreach(var id in hands){
-				Card.Create(CardPrefab,id,HandAreas[i],delegate(Card card) {
+				Card.Create(Rule.CardPrefab,id,HandAreas[i],delegate(Card card) {
 					card.state=Card.State.ST_MELD;
 					++fin;
 				});
@@ -97,7 +97,7 @@ public class PaohuziReplay : PaohuziPanel {
 			case pb_enum.BunchA:
 				//draw
 				foreach(var id in op.Pawns){
-					Card.Create(CardPrefab,id,HandAreas[op.Pos],delegate(Card card) {
+					Card.Create(Rule.CardPrefab,id,HandAreas[op.Pos],delegate(Card card) {
 						card.state=Card.State.ST_MELD;
 						++fin;
 					});
@@ -105,7 +105,7 @@ public class PaohuziReplay : PaohuziPanel {
 				break;
 			case pb_enum.OpPass:
 				foreach(var id in op.Pawns){
-					Card.Create(CardPrefab,id,AbandonAreas[op.Pos],delegate(Card card) {
+					Card.Create(Rule.CardPrefab,id,AbandonAreas[op.Pos],delegate(Card card) {
 						card.state=Card.State.ST_MELD;
 						++fin;
 					});
