@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Proto3;
 
-public class PaohuziReplay : GamePanel {
+public class ReplayPanel : GamePanel {
 	public GameObject	BtnPlay,BtnPause,BtnStop,BtnPre,BtnNext;
 	
 	// ----------------------------------------------
@@ -136,7 +136,7 @@ public class PaohuziReplay : GamePanel {
 	}
 
 	public static void Create(string path,System.Action<Component> handler=null){
-		Utils.Load<PaohuziReplay>(Main.Instance.RootPanel,delegate(Component obj){
+		Utils.Load<ReplayPanel>(Main.Instance.RootPanel,delegate(Component obj){
 			if(handler!=null)handler.Invoke(obj);
 		},path);
 	}
