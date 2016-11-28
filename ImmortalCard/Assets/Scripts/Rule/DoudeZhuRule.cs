@@ -462,4 +462,5 @@ public class DoudeZhuRule: GameRule {
 	}
 	
 	override public float DiscardScalar{get{return .625f;}}
+	override public void LoadBunch(Transform parent=null,System.Action<Bunch> action=null,string path=null){}
 }

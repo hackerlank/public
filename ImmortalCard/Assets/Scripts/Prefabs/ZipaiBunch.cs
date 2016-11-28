@@ -4,17 +4,13 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using Proto3;
 
-public class ZipaiBunch : MonoBehaviour{
+public class ZipaiBunch : Bunch{
 	public Text			Type;
 	public Text			Score;
-	public Transform	Cards;
 
 	public bool ShowType=false;
 
-	public System.Action<ZipaiBunch> onTap=delegate(ZipaiBunch bunch){};
-
-	bunch_t _bunch=null;
-	public bunch_t Value{
+	override public bunch_t Value{
 		get{
 			return _bunch;
 		}
@@ -75,9 +71,5 @@ public class ZipaiBunch : MonoBehaviour{
 		default:
 			return "";
 		}
-	}
-
-	public void OnPUP(){
-		if(onTap!=null)onTap.Invoke(this);
 	}
 }

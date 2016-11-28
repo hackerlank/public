@@ -70,7 +70,7 @@ public class PaohuziReplay : GamePanel {
 					if(removed)break;
 					
 					//remove from melds
-					var meldBunch=MeldAreas[i].GetComponentsInChildren<ZipaiBunch>();
+					var meldBunch=MeldAreas[i].GetComponentsInChildren<Bunch>();
 					foreach(var mb in meldBunch){
 						var found=false;
 						var val=mb.Value;
@@ -116,16 +116,14 @@ public class PaohuziReplay : GamePanel {
 				foreach(Transform ch in MeldAreas[op.Pos])Destroy(ch.gameObject);
 				fin=op.Pawns.Count-op.Child.Count;
 				foreach(bunch_t bun in op.Child){
-					Utils.Load<ZipaiBunch>(MeldAreas[op.Pos],delegate(Component obj) {
-						var zb=obj as ZipaiBunch;
+					Rule.LoadBunch(MeldAreas[op.Pos],delegate(Bunch zb) {
 						zb.Value=bun;
 						++fin;
 					});
 				}
 				break;
 			default:
-				Utils.Load<ZipaiBunch>(MeldAreas[op.Pos],delegate(Component obj) {
-					var zb=obj as ZipaiBunch;
+				Rule.LoadBunch(MeldAreas[op.Pos],delegate(Bunch zb) {
 					zb.Value=op;
 					fin=op.Pawns.Count;
 				});

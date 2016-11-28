@@ -1075,4 +1075,13 @@ public class PaohuziRule: GameRule {
 	}
 	
 	override public float DiscardScalar{get{return 1f;}}
+	
+	override public void LoadBunch(Transform parent=null,System.Action<Bunch> action=null,string path=null){
+		Utils.Load<ZipaiBunch>(parent,delegate(Component obj){
+			if(action !=null){
+				var zb=obj as Bunch;
+				action.Invoke(zb);
+			}
+		});
+	}
 }

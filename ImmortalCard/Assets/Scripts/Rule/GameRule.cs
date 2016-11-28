@@ -64,4 +64,5 @@ public abstract class GameRule {
 	abstract public float DiscardScalar{get;}
 	abstract public string CardPrefab{get;}
 	abstract public void PrepareCache();
+	abstract public void LoadBunch(Transform parent=null,System.Action<Bunch> action=null,string path=null);
 }

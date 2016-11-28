@@ -4,14 +4,10 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using Proto3;
 
-public class MahjongBunch : MonoBehaviour{
-	public Transform		Cards;
+public class MahjongBunch : Bunch{
 	public Card				ExtraCard;
 
-	public System.Action<MahjongBunch> onTap=delegate(MahjongBunch bunch){};
-
-	bunch_t _bunch=null;
-	public bunch_t Value{
+	override public bunch_t Value{
 		get{
 			return _bunch;
 		}
@@ -34,9 +30,5 @@ public class MahjongBunch : MonoBehaviour{
 				});
 			}
 		}
-	}
-
-	public void OnPUP(){
-		if(onTap!=null)onTap.Invoke(this);
 	}
 }

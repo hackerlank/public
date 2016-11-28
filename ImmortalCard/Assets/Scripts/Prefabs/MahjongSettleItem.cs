@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Proto3;
 
 public class MahjongSettleItem : SettleItem {
-	public Transform		Bunch,Hands;
+	public Transform		Bunches,Hands;
 	public Text				Info;
 
 	override public play_t Value{
@@ -18,7 +18,7 @@ public class MahjongSettleItem : SettleItem {
 			Debug.Log("settle "+value.Seat+" bunches="+bunches.Count+",hands="+hands.Count);
 
 			foreach(var bunch in bunches){
-				Utils.Load<MahjongBunch>(Bunch,delegate(Component obj) {
+				Utils.Load<MahjongBunch>(Bunches,delegate(Component obj) {
 					var zi=obj as MahjongBunch;
 					zi.Value=bunch;
 				});

@@ -42,9 +42,9 @@ public class PaohuziPanel : GamePanel {
 			
 			//revive meld
 			foreach(var meld in playFrom.Bunch){
-				ZipaiBunch mjBunch=null;
-				Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj){
-					mjBunch=obj as ZipaiBunch;
+				Bunch mjBunch=null;
+				Rule.LoadBunch(MeldAreas[i],delegate(Bunch zb) {
+					mjBunch=zb;
 					mjBunch.Value=meld;
 				});
 				while(!mjBunch)yield return null;
@@ -87,12 +87,12 @@ public class PaohuziPanel : GamePanel {
 				}
 
 				//meld area
-				ZipaiBunch zb=null;
-				Utils.Load<ZipaiBunch>(MeldAreas[i],delegate(Component obj) {
-					zb=obj as ZipaiBunch;
+				Bunch zb=null;
+				Rule.LoadBunch(MeldAreas[i],delegate(Bunch obj) {
+					zb=obj;
+					zb.Value=val;
 				});
 				while(zb==null)yield return null;
-				zb.Value=val;
 			}
 		}
 
@@ -195,7 +195,7 @@ public class PaohuziPanel : GamePanel {
 		case pb_enum.PhzB4B3:
 		case pb_enum.PhzBbbbdesk:
 			//remove bunch from desk
-			var meldBunch=MeldAreas[to].GetComponentsInChildren<ZipaiBunch>();
+			var meldBunch=MeldAreas[to].GetComponentsInChildren<Bunch>();
 			foreach(var mb in meldBunch){
 				var found=false;
 				var val=mb.Value;
@@ -252,12 +252,12 @@ public class PaohuziPanel : GamePanel {
 				}
 
 				//meld bunch
-				ZipaiBunch zb=null;
-				Utils.Load<ZipaiBunch>(MeldAreas[to],delegate(Component obj) {
-					zb=obj as ZipaiBunch;
+				Bunch zb=null;
+				Rule.LoadBunch(MeldAreas[to],delegate(Bunch obj) {
+					zb=obj;
+					zb.Value=melt;
 				});
 				while(zb==null)yield return null;
-				zb.Value=melt;
 
 				//Debug.Log("meld "+A.Value+" from "+from+" to "+to);
 			}
@@ -636,7 +636,7 @@ public class PaohuziPanel : GamePanel {
 			StartCoroutine(onABC());
 	}
 
-	bool onTap(bunch_t[] bunchLayers,ZipaiBunch zpbunch){
+	bool onTap(bunch_t[] bunchLayers,Bunch zpbunch){
 		int layer=0;
 		if(zpbunch.transform.parent==BaihuoLayers[2]){
 			layer=2;
@@ -670,15 +670,15 @@ public class PaohuziPanel : GamePanel {
 				continue;
 			
 			abcs.Add(bunch);
-			ZipaiBunch zipaiBunch=null;
-			Utils.Load<ZipaiBunch>(BaihuoLayers[layer],delegate(Component obj) {
-				zipaiBunch=obj as ZipaiBunch;
+			Bunch zipaiBunch=null;
+			Rule.LoadBunch(BaihuoLayers[layer],delegate(Bunch obj) {
+				zipaiBunch=obj;
+				zipaiBunch.Value=bunch;
+				zipaiBunch.onTap=delegate(Bunch obj1) {
+					_baihuoReady=onTap(bunchLayers,obj1);
+				};
 			});
 			while(zipaiBunch==null)yield return null;
-			zipaiBunch.Value=bunch;
-			zipaiBunch.onTap=delegate(ZipaiBunch obj) {
-				_baihuoReady=onTap(bunchLayers,obj);
-			};
 		}
 	}
 
