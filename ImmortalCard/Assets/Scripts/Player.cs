@@ -255,7 +255,6 @@ public class Player {
 					storeGame.gameId=msgCreate.GameId;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
-					Debug.Log("----create game and cache gameid "+storeGame.gameId);
 				}
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
@@ -267,7 +266,6 @@ public class Player {
 				msgNCJoin=msgJoin;
 				if(this==Main.Instance.MainPlayer)
 				{
-					Debug.Log("----create game and cache");
 					var storeGame=Main.Instance.storeGame;
 					storeGame.gameType=(int)msgJoin.Game;
 					var str=storeGame.ToString();

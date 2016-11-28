@@ -176,7 +176,6 @@ public class EnterPanel : MonoBehaviour {
 		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
 
 		while(Main.Instance.MainPlayer.msgNCCreate==null)yield return null;
-		Debug.Log("----store game id="+storeGame.gameId);
 		storeGame.gameId=Main.Instance.MainPlayer.msgNCCreate.GameId;
 
 		Main.Instance.MainPlayer.msgNCCreate=null;

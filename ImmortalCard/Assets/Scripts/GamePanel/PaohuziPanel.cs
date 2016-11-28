@@ -84,6 +84,8 @@ public class PaohuziPanel : GamePanel {
 							}
 						}
 					}
+					//make destroy effective
+					yield return null;
 				}
 
 				//meld area

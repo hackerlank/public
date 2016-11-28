@@ -304,7 +304,6 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnExit(){
-		Debug.Log("----exit game and clear cache");
 		PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
 		Main.Instance.MainPlayer.InGame=false;
 		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj) {
