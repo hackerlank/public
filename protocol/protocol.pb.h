@@ -109,13 +109,13 @@ enum pb_enum {
   CATEGORY_EASY = 10,
   CATEGORY_NORMAL = 11,
   CATEGORY_HARD = 12,
-  MJ_SICHUAN = 0,
-  MJ_GUANGDONG = 1,
-  MJ_HUNAN = 2,
-  MJ_FUJIAN = 3,
-  MJ_ZHEJIANG = 4,
-  DDZ_CLASIC = 0,
-  DDZ_FOR4 = 1,
+  MJ_SICHUAN = 10,
+  MJ_GUANGDONG = 11,
+  MJ_HUNAN = 12,
+  MJ_FUJIAN = 13,
+  MJ_ZHEJIANG = 14,
+  DDZ_CLASIC = 10,
+  DDZ_FOR4 = 11,
   PHZ_SY = 0,
   PHZ_SYBP = 1,
   PHZ_LD = 2,
@@ -220,6 +220,7 @@ enum pb_enum {
   ERR_PROTOCOL = 102,
   ERR_PARAM = 103,
   ERR_DUPLICATED = 104,
+  ERR_NOTEXISTS = 105,
   ERR_UNKNOWN = 999,
   pb_enum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   pb_enum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max
@@ -687,22 +688,28 @@ class player_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_po
   ::google::protobuf::int32 xp() const;
   void set_xp(::google::protobuf::int32 value);
 
-  // optional int32 currency = 5;
-  void clear_currency();
-  static const int kCurrencyFieldNumber = 5;
-  ::google::protobuf::int32 currency() const;
-  void set_currency(::google::protobuf::int32 value);
+  // optional int32 silver = 5;
+  void clear_silver();
+  static const int kSilverFieldNumber = 5;
+  ::google::protobuf::int32 silver() const;
+  void set_silver(::google::protobuf::int32 value);
 
-  // optional int32 energy = 6;
+  // optional int32 gold = 6;
+  void clear_gold();
+  static const int kGoldFieldNumber = 6;
+  ::google::protobuf::int32 gold() const;
+  void set_gold(::google::protobuf::int32 value);
+
+  // optional int32 energy = 7;
   void clear_energy();
-  static const int kEnergyFieldNumber = 6;
+  static const int kEnergyFieldNumber = 7;
   ::google::protobuf::int32 energy() const;
   void set_energy(::google::protobuf::int32 value);
 
-  // repeated .proto3.win_t wins = 7;
+  // repeated .proto3.win_t wins = 8;
   int wins_size() const;
   void clear_wins();
-  static const int kWinsFieldNumber = 7;
+  static const int kWinsFieldNumber = 8;
   const ::proto3::win_t& wins(int index) const;
   ::proto3::win_t* mutable_wins(int index);
   ::proto3::win_t* add_wins();
@@ -711,10 +718,10 @@ class player_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_po
   const ::google::protobuf::RepeatedPtrField< ::proto3::win_t >&
       wins() const;
 
-  // repeated .proto3.achv_t achvs = 8;
+  // repeated .proto3.achv_t achvs = 9;
   int achvs_size() const;
   void clear_achvs();
-  static const int kAchvsFieldNumber = 8;
+  static const int kAchvsFieldNumber = 9;
   const ::proto3::achv_t& achvs(int index) const;
   ::proto3::achv_t* mutable_achvs(int index);
   ::proto3::achv_t* add_achvs();
@@ -734,10 +741,11 @@ class player_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_po
   ::google::protobuf::uint32 pid_;
   ::google::protobuf::int32 level_;
   ::google::protobuf::int32 xp_;
-  ::google::protobuf::int32 currency_;
+  ::google::protobuf::int32 silver_;
+  ::google::protobuf::int32 gold_;
+  ::google::protobuf::int32 energy_;
   ::google::protobuf::RepeatedPtrField< ::proto3::win_t > wins_;
   ::google::protobuf::RepeatedPtrField< ::proto3::achv_t > achvs_;
-  ::google::protobuf::int32 energy_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -7221,21 +7229,35 @@ inline void player_t::set_xp(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.player_t.xp)
 }
 
-// optional int32 currency = 5;
-inline void player_t::clear_currency() {
-  currency_ = 0;
+// optional int32 silver = 5;
+inline void player_t::clear_silver() {
+  silver_ = 0;
 }
-inline ::google::protobuf::int32 player_t::currency() const {
-  // @@protoc_insertion_point(field_get:proto3.player_t.currency)
-  return currency_;
+inline ::google::protobuf::int32 player_t::silver() const {
+  // @@protoc_insertion_point(field_get:proto3.player_t.silver)
+  return silver_;
 }
-inline void player_t::set_currency(::google::protobuf::int32 value) {
+inline void player_t::set_silver(::google::protobuf::int32 value) {
   
-  currency_ = value;
-  // @@protoc_insertion_point(field_set:proto3.player_t.currency)
+  silver_ = value;
+  // @@protoc_insertion_point(field_set:proto3.player_t.silver)
 }
 
-// optional int32 energy = 6;
+// optional int32 gold = 6;
+inline void player_t::clear_gold() {
+  gold_ = 0;
+}
+inline ::google::protobuf::int32 player_t::gold() const {
+  // @@protoc_insertion_point(field_get:proto3.player_t.gold)
+  return gold_;
+}
+inline void player_t::set_gold(::google::protobuf::int32 value) {
+  
+  gold_ = value;
+  // @@protoc_insertion_point(field_set:proto3.player_t.gold)
+}
+
+// optional int32 energy = 7;
 inline void player_t::clear_energy() {
   energy_ = 0;
 }
@@ -7249,7 +7271,7 @@ inline void player_t::set_energy(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.player_t.energy)
 }
 
-// repeated .proto3.win_t wins = 7;
+// repeated .proto3.win_t wins = 8;
 inline int player_t::wins_size() const {
   return wins_.size();
 }
@@ -7279,7 +7301,7 @@ player_t::wins() const {
   return wins_;
 }
 
-// repeated .proto3.achv_t achvs = 8;
+// repeated .proto3.achv_t achvs = 9;
 inline int player_t::achvs_size() const {
   return achvs_.size();
 }

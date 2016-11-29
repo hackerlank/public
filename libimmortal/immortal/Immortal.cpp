@@ -32,6 +32,13 @@ Immortal::Immortal(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size)
 ,_game_index(0){
     sImmortal=this;
+    
+    // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
+    // standalone mode if only one node, else cluster mode.
+    const char* dbhost="ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com:6379";
+    spdb=std::make_shared<redis_proxy>();
+    if(!spdb->connect(dbhost))
+        spdb.reset();
 }
 
 void Immortal::registerRule(std::shared_ptr<GameRule> game){
@@ -84,25 +91,42 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
     PBHelper pb(pw);
     auto mid=pb.Id();
     if(mid==proto3::pb_msg::MSG_CN_CONNECT){
-        MsgCNConnect imsg;
         MsgNCConnect omsg;
-        if(pb.Parse(imsg)){
+        do{
+            MsgCNConnect imsg;
+            if(!pb.Parse(imsg)){
+                omsg.set_result(proto3::pb_enum::ERR_PROTOCOL);
+                break;
+            }
+
+            //access player from db
+            if(!spdb){
+                omsg.set_result(proto3::pb_enum::ERR_FAILED);
+                break;
+            }
+
             auto spPlayer=std::make_shared<Player>(sh);
             auto player=spPlayer->playData.mutable_player();
             player->set_uid(imsg.uid());
-            player->set_level(168);
-            player->set_currency(1000);
+            
+            //fill player
+            char key[64];
+            sprintf(key,"player:%s",imsg.uid().c_str());
+            std::map<std::string,std::string> pmap;
+            spdb->hgetall(key,pmap);
+            
+            if(pmap.count("level")) player->set_level(  atoi(pmap["level"].c_str()));
+            if(pmap.count("xp"))    player->set_xp(     atoi(pmap["xp"].c_str()));
+            if(pmap.count("gold"))  player->set_gold(   atoi(pmap["gold"].c_str()));
+            if(pmap.count("silver"))player->set_silver( atoi(pmap["silver"].c_str()));
+            if(pmap.count("energy"))player->set_energy( atoi(pmap["energy"].c_str()));
+            
             addPlayer(shid,spPlayer);
-
+            
             omsg.set_result(proto3::pb_enum::SUCCEESS);
             omsg.mutable_player()->CopyFrom(*player);
             //Logger<<"client connected,uid="<<imsg.uid()<<"\n";
-            
-        }
-        else
-        {
-            omsg.set_result(proto3::pb_enum::ERR_FAILED);
-        }
+        }while (false);
         omsg.set_mid(proto3::pb_msg::MSG_NC_CONNECT);
         PBHelper::Send(sh,omsg);
     }

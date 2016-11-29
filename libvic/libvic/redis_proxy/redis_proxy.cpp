@@ -167,6 +167,10 @@ bool redis_proxy::setnx(const char* key,const char* value){
 	DO_RET_ARG0(setnx,false,value)
 }	//set if not exists
 
+int64_t redis_proxy::incrby(const char* key,int64_t value){
+    DO_RET_ARG0(incrby,0,value)
+}
+
 bool redis_proxy::get(const char* key,std::string& value){
 	DO_RET_REF_ARG0(get,false,value)
 }
@@ -257,6 +261,10 @@ void redis_proxy::hmset(const char* key,const std::map<std::string,std::string>&
 
 int redis_proxy::hmget(const char* key,const std::vector<std::string>& fields,std::map<std::string,std::string>& map){
 	DO_RET_ARG1(hmget,false,fields,&map)
+}
+
+int64_t redis_proxy::hincrby(const char* key,const char* field,int64_t value){
+    DO_RET_ARG1(hincrby,0,field,value)
 }
 
 int redis_proxy::hgetall(const char* key,std::map<std::string,std::string>& map){

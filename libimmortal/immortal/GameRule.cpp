@@ -144,7 +144,27 @@ bool GameRule::settle(Game& game){
     
     //TODO: persistence replay
     
-    if(++game.round>=game.Round){
+    ++game.round;
+    
+    //permanent data
+    if(game.round==1){
+        //cost gold
+        int cost=1;
+        auto banker=game.players[0]->playData.mutable_player();
+        banker->set_gold(banker->gold()-cost);
+        
+        char key[64],field[32];
+        sprintf(key,"player:%s",banker->uid().c_str());
+        Immortal::sImmortal->spdb->hincrby(key,"gold",cost);
+        
+        //stats
+        sprintf(key,"game_count:%d",game.rule->Type());
+        sprintf(field,"%d",(int)game.category);
+        Immortal::sImmortal->spdb->hincrby(key,field);
+    }
+    
+    //end round
+    if(game.round>=game.Round){
         if(!game.spFinish)return false;
         
         auto& fin=*game.spFinish;

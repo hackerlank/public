@@ -36,6 +36,7 @@ public:
 	//string
 	void	set			(const char* key,const char* value);
 	bool	setnx		(const char* key,const char* value);	//set if not exists
+    int64_t incrby      (const char* key,int64_t=1);
 	bool	get			(const char* key,std::string& value);
 
 	// list
@@ -57,6 +58,7 @@ public:
 	bool	hset		(const char* key,const char* field,const char* value);
 	bool	hsetnx		(const char* key,const char* field,const char* value);
 	bool	hget		(const char* key,const char* field,std::string& value);
+    int64_t hincrby		(const char* key,const char* field,int64_t=1);
 	void	hmset		(const char* key,const std::map<std::string,std::string>& map);	//set multiple values
 	int		hmget		(const char* key,const std::vector<std::string>& fields,std::map<std::string,std::string>& map);
 	int		hgetall		(const char* key,std::map<std::string,std::string>& map);		//get all

@@ -242,6 +242,7 @@ bool pb_enum_IsValid(int value) {
     case 102:
     case 103:
     case 104:
+    case 105:
     case 999:
     case 1000:
     case 100000:
@@ -1579,7 +1580,8 @@ const int player_t::kUidFieldNumber;
 const int player_t::kPidFieldNumber;
 const int player_t::kLevelFieldNumber;
 const int player_t::kXpFieldNumber;
-const int player_t::kCurrencyFieldNumber;
+const int player_t::kSilverFieldNumber;
+const int player_t::kGoldFieldNumber;
 const int player_t::kEnergyFieldNumber;
 const int player_t::kWinsFieldNumber;
 const int player_t::kAchvsFieldNumber;
@@ -1611,7 +1613,8 @@ void player_t::SharedCtor() {
   pid_ = 0u;
   level_ = 0;
   xp_ = 0;
-  currency_ = 0;
+  silver_ = 0;
+  gold_ = 0;
   energy_ = 0;
 }
 
@@ -1672,9 +1675,8 @@ void player_t::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(pid_, currency_);
+  ZR_(pid_, energy_);
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  energy_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -1750,28 +1752,43 @@ bool player_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(40)) goto parse_currency;
+        if (input->ExpectTag(40)) goto parse_silver;
         break;
       }
 
-      // optional int32 currency = 5;
+      // optional int32 silver = 5;
       case 5: {
         if (tag == 40) {
-         parse_currency:
+         parse_silver:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &currency_)));
+                 input, &silver_)));
 
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(48)) goto parse_energy;
+        if (input->ExpectTag(48)) goto parse_gold;
         break;
       }
 
-      // optional int32 energy = 6;
+      // optional int32 gold = 6;
       case 6: {
         if (tag == 48) {
+         parse_gold:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &gold_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(56)) goto parse_energy;
+        break;
+      }
+
+      // optional int32 energy = 7;
+      case 7: {
+        if (tag == 56) {
          parse_energy:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
@@ -1780,13 +1797,13 @@ bool player_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_wins;
+        if (input->ExpectTag(66)) goto parse_wins;
         break;
       }
 
-      // repeated .proto3.win_t wins = 7;
-      case 7: {
-        if (tag == 58) {
+      // repeated .proto3.win_t wins = 8;
+      case 8: {
+        if (tag == 66) {
          parse_wins:
           DO_(input->IncrementRecursionDepth());
          parse_loop_wins:
@@ -1795,15 +1812,15 @@ bool player_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(58)) goto parse_loop_wins;
-        if (input->ExpectTag(66)) goto parse_loop_achvs;
+        if (input->ExpectTag(66)) goto parse_loop_wins;
+        if (input->ExpectTag(74)) goto parse_loop_achvs;
         input->UnsafeDecrementRecursionDepth();
         break;
       }
 
-      // repeated .proto3.achv_t achvs = 8;
-      case 8: {
-        if (tag == 66) {
+      // repeated .proto3.achv_t achvs = 9;
+      case 9: {
+        if (tag == 74) {
           DO_(input->IncrementRecursionDepth());
          parse_loop_achvs:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
@@ -1811,7 +1828,7 @@ bool player_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(66)) goto parse_loop_achvs;
+        if (input->ExpectTag(74)) goto parse_loop_achvs;
         input->UnsafeDecrementRecursionDepth();
         if (input->ExpectAtEnd()) goto success;
         break;
@@ -1866,26 +1883,31 @@ void player_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->xp(), output);
   }
 
-  // optional int32 currency = 5;
-  if (this->currency() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->currency(), output);
+  // optional int32 silver = 5;
+  if (this->silver() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->silver(), output);
   }
 
-  // optional int32 energy = 6;
+  // optional int32 gold = 6;
+  if (this->gold() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->gold(), output);
+  }
+
+  // optional int32 energy = 7;
   if (this->energy() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->energy(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->energy(), output);
   }
 
-  // repeated .proto3.win_t wins = 7;
+  // repeated .proto3.win_t wins = 8;
   for (unsigned int i = 0, n = this->wins_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      7, this->wins(i), output);
+      8, this->wins(i), output);
   }
 
-  // repeated .proto3.achv_t achvs = 8;
+  // repeated .proto3.achv_t achvs = 9;
   for (unsigned int i = 0, n = this->achvs_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      8, this->achvs(i), output);
+      9, this->achvs(i), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.player_t)
@@ -1923,21 +1945,28 @@ int player_t::ByteSize() const {
         this->xp());
   }
 
-  // optional int32 currency = 5;
-  if (this->currency() != 0) {
+  // optional int32 silver = 5;
+  if (this->silver() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->currency());
+        this->silver());
   }
 
-  // optional int32 energy = 6;
+  // optional int32 gold = 6;
+  if (this->gold() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->gold());
+  }
+
+  // optional int32 energy = 7;
   if (this->energy() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->energy());
   }
 
-  // repeated .proto3.win_t wins = 7;
+  // repeated .proto3.win_t wins = 8;
   total_size += 1 * this->wins_size();
   for (int i = 0; i < this->wins_size(); i++) {
     total_size +=
@@ -1945,7 +1974,7 @@ int player_t::ByteSize() const {
         this->wins(i));
   }
 
-  // repeated .proto3.achv_t achvs = 8;
+  // repeated .proto3.achv_t achvs = 9;
   total_size += 1 * this->achvs_size();
   for (int i = 0; i < this->achvs_size(); i++) {
     total_size +=
@@ -1984,8 +2013,11 @@ void player_t::MergeFrom(const player_t& from) {
   if (from.xp() != 0) {
     set_xp(from.xp());
   }
-  if (from.currency() != 0) {
-    set_currency(from.currency());
+  if (from.silver() != 0) {
+    set_silver(from.silver());
+  }
+  if (from.gold() != 0) {
+    set_gold(from.gold());
   }
   if (from.energy() != 0) {
     set_energy(from.energy());
@@ -2013,7 +2045,8 @@ void player_t::InternalSwap(player_t* other) {
   std::swap(pid_, other->pid_);
   std::swap(level_, other->level_);
   std::swap(xp_, other->xp_);
-  std::swap(currency_, other->currency_);
+  std::swap(silver_, other->silver_);
+  std::swap(gold_, other->gold_);
   std::swap(energy_, other->energy_);
   wins_.UnsafeArenaSwap(&other->wins_);
   achvs_.UnsafeArenaSwap(&other->achvs_);
@@ -2114,21 +2147,35 @@ void player_t::clear_xp() {
   // @@protoc_insertion_point(field_set:proto3.player_t.xp)
 }
 
-// optional int32 currency = 5;
-void player_t::clear_currency() {
-  currency_ = 0;
+// optional int32 silver = 5;
+void player_t::clear_silver() {
+  silver_ = 0;
 }
- ::google::protobuf::int32 player_t::currency() const {
-  // @@protoc_insertion_point(field_get:proto3.player_t.currency)
-  return currency_;
+ ::google::protobuf::int32 player_t::silver() const {
+  // @@protoc_insertion_point(field_get:proto3.player_t.silver)
+  return silver_;
 }
- void player_t::set_currency(::google::protobuf::int32 value) {
+ void player_t::set_silver(::google::protobuf::int32 value) {
   
-  currency_ = value;
-  // @@protoc_insertion_point(field_set:proto3.player_t.currency)
+  silver_ = value;
+  // @@protoc_insertion_point(field_set:proto3.player_t.silver)
 }
 
-// optional int32 energy = 6;
+// optional int32 gold = 6;
+void player_t::clear_gold() {
+  gold_ = 0;
+}
+ ::google::protobuf::int32 player_t::gold() const {
+  // @@protoc_insertion_point(field_get:proto3.player_t.gold)
+  return gold_;
+}
+ void player_t::set_gold(::google::protobuf::int32 value) {
+  
+  gold_ = value;
+  // @@protoc_insertion_point(field_set:proto3.player_t.gold)
+}
+
+// optional int32 energy = 7;
 void player_t::clear_energy() {
   energy_ = 0;
 }
@@ -2142,7 +2189,7 @@ void player_t::clear_energy() {
   // @@protoc_insertion_point(field_set:proto3.player_t.energy)
 }
 
-// repeated .proto3.win_t wins = 7;
+// repeated .proto3.win_t wins = 8;
 int player_t::wins_size() const {
   return wins_.size();
 }
@@ -2172,7 +2219,7 @@ player_t::wins() const {
   return wins_;
 }
 
-// repeated .proto3.achv_t achvs = 8;
+// repeated .proto3.achv_t achvs = 9;
 int player_t::achvs_size() const {
   return achvs_.size();
 }

@@ -45,14 +45,14 @@ CATEGORY_EASY           =10;
 CATEGORY_NORMAL         =11;
 CATEGORY_HARD           =12;
 
-MJ_SICHUAN              =0;
-MJ_GUANGDONG            =1;
-MJ_HUNAN                =2;
-MJ_FUJIAN               =3;
-MJ_ZHEJIANG             =4;
+MJ_SICHUAN              =10;
+MJ_GUANGDONG            =11;
+MJ_HUNAN                =12;
+MJ_FUJIAN               =13;
+MJ_ZHEJIANG             =14;
 
-DDZ_CLASIC              =0;
-DDZ_FOR4                =1;
+DDZ_CLASIC              =10;
+DDZ_FOR4                =11;
 
 PHZ_SY                  =0;	//邵阳字牌
 PHZ_SYBP                =1;	//邵阳剥皮
@@ -192,6 +192,7 @@ ERR_CANCELLED           =101;
 ERR_PROTOCOL            =102;
 ERR_PARAM               =103;
 ERR_DUPLICATED          =104;
+ERR_NOTEXISTS           =105;
 ERR_UNKNOWN             =999;
 };
 
@@ -223,10 +224,11 @@ string uid				=1;
 uint32 pid              =2;
 int32 level             =3;
 int32 xp                =4;
-int32 currency          =5;
-int32 energy            =6;
-repeated win_t wins     =7;
-repeated achv_t achvs   =8;
+int32 silver            =5;
+int32 gold              =6;
+int32 energy            =7;
+repeated win_t wins     =8;
+repeated achv_t achvs   =9;
 };
 
 message win_t{

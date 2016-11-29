@@ -26,7 +26,8 @@ public:
     std::shared_ptr<Game>   findGame(game_id_t);
     void                    removeGame(game_id_t);
     
-    static Immortal*    sImmortal;
+    static Immortal*        sImmortal;
+    std::shared_ptr<vic_proxy>   spdb;
     
     //TODO: remove
     std::vector<std::shared_ptr<proto3::MsgLCReplay>>  replays;

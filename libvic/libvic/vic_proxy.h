@@ -44,6 +44,7 @@ public:
 	//string
 	virtual void	set			(const char* key,const char* value)=0;
 	virtual bool	setnx		(const char* key,const char* value)=0;		//set if not exists
+    virtual int64_t incrby      (const char* key,int64_t=1)=0;
 	virtual bool	get			(const char* key,std::string& value)=0;
 
 	// list
@@ -65,6 +66,7 @@ public:
 	virtual bool	hset		(const char* key,const char* field,const char* value)=0;
 	virtual bool	hsetnx		(const char* key,const char* field,const char* value)=0;
 	virtual bool	hget		(const char* key,const char* field,std::string& value)=0;
+    virtual int64_t hincrby		(const char* key,const char* field,int64_t=1)=0;
 	virtual void	hmset		(const char* key,const std::map<std::string,std::string>& map)=0;	//set multiple values
 	virtual int		hmget		(const char* key,const std::vector<std::string>& fields,std::map<std::string,std::string>& map)=0;
 	virtual int		hgetall		(const char* key,std::map<std::string,std::string>& map)=0;			//get all
