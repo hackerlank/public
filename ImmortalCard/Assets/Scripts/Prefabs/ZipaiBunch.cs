@@ -105,9 +105,6 @@ public class ZipaiBunch : Bunch{
 			break;
 		}
 
-		var snd=Audio.Instance.Get(sndName);
-		if(null!=snd && !snd.isPlaying){
-			snd.Play();
-		}
+		Audio.Instance.PlaySound(sndName);
 	}
 }

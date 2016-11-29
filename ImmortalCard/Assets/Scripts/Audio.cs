@@ -24,15 +24,30 @@ public class Audio : MonoBehaviour {
 		SettingsPanel.Load();
 	}
 
-	public void PlayMusic(string musicName="bg0"){
-		var bg=Get(musicName);
-		if(bg!=null){
-			if(!bg.isPlaying && Configs.MusicOn){
-				bg.Play();
+	public void PlayMusic(string Name="bg0"){
+		play(Name);
+	}
+	
+	public void PlaySound(string Name){
+		play(Name,false);
+	}
+
+	void play(string Name,bool music=true){
+		bool on=(music?Configs.MusicOn:Configs.SoundOn);
+		float volume=(music?Configs.MusicVolume:Configs.MusicVolume);
+
+		var src=Get(Name);
+		if(src!=null){
+			if(!src.isPlaying && on){
+				src.Play();
 			}
-			else if(bg.isPlaying && !Configs.MusicOn){
-				bg.Stop();
+			else if(src.isPlaying && !on){
+				src.Stop();
 			}
+
+			//volume
+			if(src.isPlaying)
+				src.volume=volume;
 		}
 	}
 

@@ -117,12 +117,7 @@ public class Zipai : Card{
 	}
 
 	static public void PlaySound(int id){
-		if(!Configs.SoundOn)return;
-
 		var sndName=string.Format("m0_{0}0{1:00}",id/1000,id%100);
-		var snd=Audio.Instance.Get(sndName);
-		if(null!=snd && !snd.isPlaying){
-			snd.Play();
-		}
+		Audio.Instance.PlaySound(sndName);
 	}
 }
