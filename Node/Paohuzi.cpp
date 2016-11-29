@@ -1564,7 +1564,7 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
     int point=0;
     for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
         auto& suite=*i;
-        if(suite.pawns().empty())continue;
+        if(suite.pawns().size()<3)continue;
         auto small=(1==suite.pawns(0)/1000);
         int pt=0;
         switch(fixOps(suite.type())){
@@ -1591,7 +1591,8 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
                 std::sort(sl.begin(),sl.end(),sorter);
                 auto A=sl[0];
                 auto B=sl[1];
-                if(A/1000==B/1000 && (A%100==1 || (A%100==2&&B%100==7)))
+                auto C=sl[2];
+                if(A/1000==B/1000 && A/1000==C/1000 && (A%100==1 || (A%100==2&&B%100==7)))
                     pt+=(small?3:6);
                 break;
             }

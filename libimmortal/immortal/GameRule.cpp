@@ -124,6 +124,8 @@ void GameRule::deal(Game& game){
 }
 
 bool GameRule::settle(Game& game){
+    Logger<<"game "<<(int)game.id<<" round "<<game.round<<" end"<<endf;
+
     //broadcast
     game.spSettle=std::make_shared<MsgNCSettle>();
     game.spSettle->clear_play();
