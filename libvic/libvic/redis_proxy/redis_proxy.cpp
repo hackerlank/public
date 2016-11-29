@@ -41,7 +41,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		return redis->CMD(key,arg0,&arg1); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 		return RETURN; \
 	}
 
@@ -53,7 +53,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		return redis->CMD(key,arg0,arg1); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 		return RETURN; \
 	}
 
@@ -65,7 +65,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		return redis->CMD(key,arg0); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 		return RETURN; \
 	}
 
@@ -77,7 +77,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		return redis->CMD(key,&arg0); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 		return RETURN; \
 	}
 
@@ -89,7 +89,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		return redis->CMD(key); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 		return RETURN; \
 	}
 
@@ -101,7 +101,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		return redis->CMD(key,arg0); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 		return; \
 	}
 
@@ -113,7 +113,7 @@ void copy(result_t& dest,const redisReply& src){
 	try{ \
 		redis->CMD(key); \
 	} catch(r3c::CRedisException& ex){ \
-		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s",ex.str().c_str()); \
+		KEYE_LOG("redis_proxy::"#CMD" ERROR: %s\n",ex.str().c_str()); \
 	}
 
 // --------------------------------------------------------
@@ -126,9 +126,20 @@ bool redis_proxy::connect(const char* host, unsigned short port,
 		const char* user, const char* passwd,const char* db){
 	try{
 		redis.reset(new r3c::CRedisClient(host));
+        
+        //mute debug log
+        r3c::set_debug_log_write(nullptr);
+        
+        //test connection
+        std::pair<std::string, uint16_t> node;
+        unsigned int slot = 0;//redis->cluster_mode()? redis->get_key_slot(key): 0;
+        redisContext* redis_context = redis->get_redis_context(slot, &node);
+        if (NULL == redis_context||redis_context->err != 0)
+            throw r3c::CRedisException(r3c::ERROR_CONNECT_REDIS, "refused", __FILE__, __LINE__);
+
 		return true;
 	}catch(r3c::CRedisException& ex){
-		KEYE_LOG("redis_proxy::connect ERROR: %s",ex.str().c_str());
+		KEYE_LOG("redis_proxy::connect ERROR: %s\n",ex.str().c_str());
 		return false;
 	}
 }
@@ -140,7 +151,7 @@ int redis_proxy::command(result_t& result,const char* cmd){
 		if(redis_res)copy(result,*redis_res);
 		return redis_res!=nullptr;
 	} catch(r3c::CRedisException& ex){
-		KEYE_LOG("redis_proxy::command ERROR: %s",ex.str().c_str());
+		KEYE_LOG("redis_proxy::command ERROR: %s\n",ex.str().c_str());
 		return -1;
 	}
 }
@@ -199,7 +210,7 @@ int redis_proxy::lrange(const char* key,int start,int end,std::vector<std::strin
 	try{
 		return redis->lrange(key,start,end,&values);
 	} catch(r3c::CRedisException& ex){
-		KEYE_LOG("redis_proxy::lrange ERROR: %s",ex.str().c_str());
+		KEYE_LOG("redis_proxy::lrange ERROR: %s\n",ex.str().c_str());
 		return -1;
 	}
 }	//get range elements
@@ -209,7 +220,7 @@ bool redis_proxy::ltrim(const char* key,int start,int end){
 	try{
 		return redis->ltrim(key,start,end);
 	} catch(r3c::CRedisException& ex){
-		KEYE_LOG("redis_proxy::ltrim ERROR: %s",ex.str().c_str());
+		KEYE_LOG("redis_proxy::ltrim ERROR: %s\n",ex.str().c_str());
 		return -1;
 	}
 }		//remove range elements
@@ -324,7 +335,7 @@ int redis_proxy::zrange(const char* key,int start,int end,bool withscores,std::v
 	try{
 		return redis->zrange(key,start,end,withscores,&vec);
 	} catch(r3c::CRedisException& ex){
-		KEYE_LOG("redis_proxy::zrange ERROR: %s",ex.str().c_str());
+		KEYE_LOG("redis_proxy::zrange ERROR: %s\n",ex.str().c_str());
 		return -1;
 	}
 }
@@ -334,7 +345,7 @@ int redis_proxy::zrevrange(const char* key,int start,int end,bool withscores,std
 	try{
 		return redis->zrevrange(key,start,end,withscores,&vec);
 	} catch(r3c::CRedisException& ex){
-		KEYE_LOG("redis_proxy::zrevrange ERROR: %s",ex.str().c_str());
+		KEYE_LOG("redis_proxy::zrevrange ERROR: %s\n",ex.str().c_str());
 		return -1;
 	}
 }

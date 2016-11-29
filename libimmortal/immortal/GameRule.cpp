@@ -155,7 +155,7 @@ bool GameRule::settle(Game& game){
         
         char key[64],field[32];
         sprintf(key,"player:%s",banker->uid().c_str());
-        Immortal::sImmortal->spdb->hincrby(key,"gold",cost);
+        Immortal::sImmortal->spdb->hincrby(key,"gold",-cost);
         
         //stats
         sprintf(key,"game_count:%d",game.rule->Type());

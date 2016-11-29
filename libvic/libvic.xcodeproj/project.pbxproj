@@ -45,7 +45,7 @@
 		5E1098931D67312700B02E6B /* vic_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = vic_proxy.h; path = libvic/vic_proxy.h; sourceTree = "<group>"; };
 		5E1098991D67314300B02E6B /* crc16.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crc16.cpp; sourceTree = "<group>"; };
 		5E10989B1D67314300B02E6B /* r3c.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = r3c.cpp; sourceTree = "<group>"; };
-		5E10989C1D67314300B02E6B /* r3c.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = r3c.h; sourceTree = "<group>"; };
+		5E10989C1D67314300B02E6B /* r3c.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = r3c.h; sourceTree = "<group>"; };
 		5E10989E1D67314300B02E6B /* redis_proxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = redis_proxy.cpp; sourceTree = "<group>"; };
 		5E10989F1D67314300B02E6B /* redis_proxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = redis_proxy.h; sourceTree = "<group>"; };
 		5E1098A11D67314300B02E6B /* redis_proxy_fwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = redis_proxy_fwd.h; sourceTree = "<group>"; };

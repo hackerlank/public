@@ -49,16 +49,16 @@
 #define PRINT_COLOR_BLUE         "\033[0;34m"
 #define PRINT_COLOR_GREEN        "\033[0;32m"
 #define PRINT_COLOR_WHITE        "\033[1;37m"
-#define PRINT_COLOR_CYAN         "\033[0;36m"      // 蓝绿色, 青色
-#define PRINT_COLOR_PURPLE       "\033[0;35m"      // 紫色
-#define PRINT_COLOR_BROWN        "\033[0;33m"      // 褐色, 棕色
-#define PRINT_COLOR_DARY_GRAY    "\033[1;30m"      // 卡里灰色
+#define PRINT_COLOR_CYAN         "\033[0;36m" 
+#define PRINT_COLOR_PURPLE       "\033[0;35m" 
+#define PRINT_COLOR_BROWN        "\033[0;33m" 
+#define PRINT_COLOR_DARY_GRAY    "\033[1;30m" 
 #define PRINT_COLOR_LIGHT_RED    "\033[1;31m"
 #define PRINT_COLOR_LIGHT_GREEN  "\033[1;32m"
 #define PRINT_COLOR_LIGHT_BLUE   "\033[1;34m"
 #define PRINT_COLOR_LIGHT_CYAN   "\033[1;36m"
 #define PRINT_COLOR_LIGHT_PURPLE "\033[1;35m"
-#define PRINT_COLOR_LIGHT_GRAY   "\033[0;37m"      // 亮灰色
+#define PRINT_COLOR_LIGHT_GRAY   "\033[0;37m"
 namespace r3c {
 
 enum ZADDFLAG
@@ -180,6 +180,8 @@ public:
 
     bool cluster_mode() const;
     void set_retry(int retry_times, int retry_sleep_milliseconds);
+    //only for test connection please
+    redisContext* get_redis_context(unsigned int slot, std::pair<std::string, uint16_t>* node) throw (CRedisException);
 
 public:
     // Get all nodes information of redis cluster,
@@ -278,7 +280,6 @@ private:
 private:
     void parse_nodes() throw (CRedisException);
     void init() throw (CRedisException);
-    redisContext* get_redis_context(unsigned int slot, std::pair<std::string, uint16_t>* node) throw (CRedisException);
     void choose_node(int seed_factor, std::pair<std::string, uint16_t>* node) const;
     redisContext* connect_node(int* errcode, std::string* errmsg, std::pair<std::string, uint16_t>* node) const;
 
