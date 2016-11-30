@@ -1,13 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Proto3;
 
 public class LoginPanel : MonoBehaviour {
 
-	public InputField Host;
-	public Text DefaultHost;
+	public InputField	Host;
+	public Text			DefaultHost;
+	public Slider		slider;
 
 	public static LoginPanel Instance=null;
 	void Awake(){
@@ -78,170 +80,91 @@ public class LoginPanel : MonoBehaviour {
 			Destroy(gameObject);
 		});
 	}
-
-	/*
+	
 	private IEnumerator Process(){
-		animator.SetBool ("IsOpen",true);
-		StartCoroutine (StartMusic ());
-		//float startTime = Time.time;
-		if (!Configs.EndlessMode) {
-			slider.value = 0;
-			state = Game.Localize(Msg.STARTUP_STATUS_CONNECTING.ToString());
-			animator.SetTrigger("StatusChanged");
-			animator.SetBool("StatusIsShown",true);
-			foreach(object o in Game.ToEnumerable(StartUp.Instance.Login()))yield return o;
-			foreach(object o in Game.ToEnumerable(ResendReliableMessages()))yield return o;
-			if(ResentReliableMessages){
-				ResentReliableMessages = false;
-				foreach(object o in Game.ToEnumerable(StartUp.Instance.Login()))yield return o;
+		slider.value = 0;
+
+		//foreach(object o in Game.ToEnumerable(Upgrade()))yield return o;
+		//if(Configs.Testing.skipResourceUpdated>0)yield break;
+
+		if(DownloadManager.Instance!=null)
+			DestroyImmediate(DownloadManager.Instance.gameObject);
+		yield return null;
+
+		if(!string.IsNullOrEmpty(Configs.updateUri)){
+			DownloadManager.SetManualUrl(Configs.updateUri+"$(Platform)");
+		}
+
+		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
+
+		var bundleInProgress=new List<string>();
+		var bundleProgress=new List<string>();
+		var lowPriority=new List<string>();
+
+		foreach (BundleData bd in DownloadManager.Instance.BuiltBundles) {
+			string url = Updater.MakeUrl(bd.name);
+			if(DownloadManager.Instance.IsBundleCached(url))continue;
+			Debug.Log ("Resource Updating: " + url);
+			if(bd.priority>=9){
+				bundleInProgress.Add(url);
+				bundleProgress.Add(url);
+			}else
+				lowPriority.Add(url);
+		}
+		 
+		int totalInProgress=bundleInProgress.Count;
+		if(bundleInProgress.Count+lowPriority.Count>0){
+			Debug.Log("need download");
+		}
+
+		var tm=Time.realtimeSinceStartup;
+		while(!Caching.ready&&Time.realtimeSinceStartup-tm<5f)yield return null;
+
+		foreach(string url in bundleInProgress)DownloadManager.Instance.StartDownload (url,9);
+
+		if(bundleProgress.Count>0)state=progressString(0,totalInProgress,totalInProgress);
+
+		while(bundleInProgress.Count>0){
+			slider.value = DownloadManager.Instance.ProgressOfBundles (bundleProgress.ToArray ());
+			foreach(string url in bundleInProgress){
+				var www=DownloadManager.Instance.GetWWW(url);
+				if(www!=null&&www.isDone){
+					string resname=Updater.MakeName(url);
+					Main.Instance.resourceUpdater.AddResource(resname,www);
+					bundleInProgress.Remove(url);
+					state=progressString(slider.value,bundleInProgress.Count,totalInProgress);
+					Debug.Log("----Asset updated "+resname);
+					break;
+				}
 			}
-			Misc.LogProgress("Connected");
-			state = Game.Localize(Msg.STARTUP_STATUS_CHECKINGFORUPDATES.ToString());
-			animator.SetTrigger("StatusChanged");
-			foreach(object o in Game.ToEnumerable(Upgrade()))yield return o;
-
-			if(Configs.Testing.skipResourceUpdated>0)yield break;
-
-			if(DownloadManager.Instance!=null)DestroyImmediate(DownloadManager.Instance.gameObject);
+			state=progressString(slider.value,bundleInProgress.Count,totalInProgress);
 			yield return null;
-
-			Misc.LogProgress("BeginUpdate");
-			var fakeMsg=new Message_T(1,null);
-			Game.instance.httpHelper.Listener.OnSend(fakeMsg);
-			if(!string.IsNullOrEmpty(Configs.Testing.overrideResourceUpdaterAddress)){
-				DownloadManager.SetManualUrl(Configs.Testing.overrideResourceUpdaterAddress+"$(Platform)");
-			}else{
-				string path = Game.instance.netHandler.globalConfigs.resourceUpdaterPath;
-				if(string.IsNullOrEmpty(path))path = Configs.S_APP_URL +"assets/";
-				DownloadManager.SetManualUrl(path+"$(Platform)");
-				showDebug(path);
-			}
-
-			DownloadManager.Instance.ErrorHandler=delegate(string error) {
-				StatsHelper.Log(StatsType.ASSETS_ERROR,new Dictionary<string, object>(){{"assets","BMData"},{"message",error}});
-				Misc.ShowNormalErrorMessage(Game.Localize(Msg.ASSETS_ERROR_CONTENT),Game.Localize(Msg.ASSETS_ERROR_TITLE),error,delegate(BasePopup obj) {
-					if(obj!=null)obj.OnCancel();
-					Game.StartCo(RestartAfterClosingPopups());
-				});
-			};
-			while(!DownloadManager.Instance.ConfigLoaded)yield return CDbg.Null();
-			Game.instance.httpHelper.Listener.OnRecv("",null,null,null,fakeMsg);
-			StartCoroutine(downloadAssetsVersion());
-
-			StatsHelper.Log(StatsType.RESOURCEUPDATE_RESPONSE);
-			string urlAssets=DownloadManager.Instance.downloadRootUrl;
-			showDebug(urlAssets);
-
-			List<string> bundleInProgress=new List<string>(),bundleProgress=new List<string>()
-				,lowPriority=new List<string>();
-
-			//BundleData wbd = DownloadManager.Instance.AddTempBundle("World");
-			//BundleData ctbd = DownloadManager.Instance.AddTempBundle("CreatureTypeList");
-
-			foreach (BundleData bd in DownloadManager.Instance.BuiltBundles) {
-				string url = DeltaResourceUpdater.MakeUrl(bd.name);
-				Game.instance.resourceUpdater.AddServerResource(bd.name,url);
-				if(url.Contains("WarnutsAudio")||url.Contains("MasterAudioPlaylistControllers")){
-					StartUp.Instance.NeedToReloadAudio = true;
-				}
-				if(DownloadManager.Instance.IsBundleCached(url,bd.name))continue;
-				//Ndbg.Log ("Resource Updating: " + url);
-				if(bd.priority>=9||
-				   url.Contains("content")||
-				   url.Contains("WarnutsLanguages")||
-				   url.Contains("MainCamera")||
-				   url.Contains("firedragon_01")||
-				   url.Contains("mermaidqueen_01")||
-				   url.Contains("monkey_01")||
-				   url.Contains("mouse_01")||
-				   url.Contains("pinocchio_01")||
-				   url.Contains("WarnutsAudio")){
-					bundleInProgress.Add(url);
-					bundleProgress.Add(url);
-				}else
-					lowPriority.Add(url);
-			}
-			 
-			int totalInProgress=bundleInProgress.Count;
-			if(bundleInProgress.Count+lowPriority.Count>0){
-				animator.SetTrigger("StatusChanged");
-				animator.SetBool("IsUpdatingContent",true);
-				StatsHelper.Log(StatsType.RESOURCEUPDATE_NEEDED);
-			}
-
-			var tm=Time.realtimeSinceStartup;
-			while(!Caching.ready&&Time.realtimeSinceStartup-tm<5f)yield return CDbg.Null();
-
-			foreach(string url in bundleInProgress)DownloadManager.Instance.StartDownload (url,9);
-			StartedResourceUpdating = true;
-			if(bundleProgress.Count>0)state=progressString(0,totalInProgress,totalInProgress);
-
-			bool over25 = false,over50 = false,over75 = false;
-			while(bundleInProgress.Count>0){
-				slider.value = DownloadManager.Instance.ProgressOfBundles (bundleProgress.ToArray ());
-				foreach(string url in bundleInProgress){
-					var www=DownloadManager.Instance.GetWWW(url);
-					if(www!=null&&www.isDone){
-						string resname=DeltaResourceUpdater.MakeName(url);
-						Game.instance.resourceUpdater.AddResource(resname,www);
-						bundleInProgress.Remove(url);
-						//state=progressString(slider.value,bundleInProgress.Count,totalInProgress);
-						animator.SetTrigger("StatusChanged");
-						Debug.Log("----Asset updated "+resname);
-						break;
-					}
-				}
-				state=progressString(slider.value,bundleInProgress.Count,totalInProgress);
-				if((!over25)&&(slider.value>=0.25f)){
-					over25 = true;
-					StatsHelper.Log(StatsType.RESOURCEUPDATE_25);
-				}
-				if((!over50)&&(slider.value>=0.50f)){
-					over50 = true;
-					StatsHelper.Log(StatsType.RESOURCEUPDATE_50);
-				}
-				if((!over75)&&(slider.value>=0.75f)){
-					over75 = true;
-					StatsHelper.Log(StatsType.RESOURCEUPDATE_75);
-				}
-				//Debug.Log("----progress of download="+slider.value.ToString()+","+downloadedAlready.ToString()+" of "+bundleProgress.Count.ToString());
-				yield return CDbg.Null();
-			}
-			if(over25)StatsHelper.Log(StatsType.RESOURCEUPDATE_100);
-			animator.SetBool("IsUpdatingContent",false);
-			state = "";
-			DownloadManager.Instance.ErrorHandler=null;
-
-			foreach(string url in lowPriority)
-				DownloadManager.Instance.StartDownload (url);
 		}
-		//while ((Time.time-startTime)<Configs.HLPanelConfigs.MinUpdateScreenShowTime)yield return CDbg.Null();
 
-		List<string> cachelist=new List<string>();
-		foreach(var team in Game.instance.player.info.teams.team){
-			foreach(var id in team.creaturesIds)
-				if(id>0)foreach(CreatureInstance c in Game.instance.player.info.creaturebox)
-					if(c.cid==id)cachelist.Add("Sprite/Creature/" +c.slug);
-		}
-		Game.instance.resourceUpdater.cache(cachelist.ToArray(),8);
-		Misc.LogProgress("EndUpdate");
+		state = "";
+
+		foreach(string url in lowPriority)
+			DownloadManager.Instance.StartDownload (url);
 	}
 
+	string state{
+		set{
+
+		}
+	}
 	string progressString(float percent,int bundleInProgress,int totalInProgress){
-		//percent=(float)(totalInProgress-bundleInProgress-1)/(float)totalInProgress;
-		//var percentage=string.Format("{0:#0.#}%",100.0f*percent);
 		var percentage=string.Format("{0:#0.}%",100.0f*percent);
-		var fmt=Game.Localize(Msg.STARTUP_STATUS_UPDATING_0COUNTDONE_1COUNTALL.ToString());
-		if(fmt.Contains("/"))fmt=fmt.Substring(0,fmt.IndexOf("/"));
-		var str=string.Format(fmt,percentage);
+		var str=string.Format("下载...{0}",percentage);
 		if(Debug.isDebugBuild)str+=string.Format(" ({0}/{1})",totalInProgress-bundleInProgress,totalInProgress);
 		//Debug.Log("===="+str);
 		return str;
 	}
-				if (Application.platform == RuntimePlatform.IPhonePlayer)
-				Application.OpenURL (Game.instance.netHandler.globalConfigs.versionSettings.iosUpgradeUrl);
-				else
-				Application.OpenURL (Game.instance.netHandler.globalConfigs.versionSettings.gpUpgradeUrl);
 
-	 	 */
+	public void OnUpgrade(){
+		var storeUrl="";
+		if (Application.platform == RuntimePlatform.IPhonePlayer)
+			Application.OpenURL(storeUrl);
+		else
+			Application.OpenURL(storeUrl);
+	}
 }

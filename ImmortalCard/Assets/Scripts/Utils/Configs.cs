@@ -13,8 +13,15 @@ public class Configs{
 	public const string PrefsKey_SoundOn		="PrefsKey_SoundOn";
 	public const string PrefsKey_MusicOn		="PrefsKey_MusicOn";
 
+	public static string file="Config/config";
+
+	public static string version="1.0.0";
+	public static string build	="100";
+
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
+	public static string updateUri="";
+
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 
@@ -27,26 +34,20 @@ public class Configs{
 	public static bool MusicOn=true;
 
 	public static void Load(){
-		string file="Config/config.ini";
 		TextAsset text = (TextAsset)Resources.Load(file);
 		if(text!=null){
-			string[] lines = text.text.Split('\n');
-			foreach(var line in lines){
-				string[] values = line.Split('=');
-				if(values.Length>1){
-
-					System.Type type = typeof(Configs);
-					string path = values[0];
-					FieldInfo fi = type.GetField(path);
-					if(fi==null)fi=type.GetField(path,BindingFlags.Instance|BindingFlags.NonPublic);
-					if(fi==null)continue;
-					if(fi.FieldType!=typeof(string))continue;
-					fi.SetValue(null,values[1]);
-				}
+			var dict=Utils.ParseIni(text.text);
+			foreach(var kv in dict){
+				System.Type type = typeof(Configs);
+				string field = kv.Key;
+				FieldInfo fi = type.GetField(field);
+				if(fi==null)fi=type.GetField(field,BindingFlags.Instance|BindingFlags.NonPublic);
+				if(fi==null)continue;
+				if(fi.FieldType!=typeof(string))continue;
+				fi.SetValue(null,kv.Value);
+				Debug.Log(kv.Key+"="+kv.Value);
 			}
 		}
-		Debug.Log("uri="+uri);
-		Debug.Log("ws="+ws);
 	}
 }
 

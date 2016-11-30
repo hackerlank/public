@@ -24,6 +24,8 @@ public class Main : MonoBehaviour {
 
 	void Awake(){
 		Instance=this;
+
+		Configs.Load();
 		//Loom
 		gameObject.AddComponent<Loom>();
 		MainPlayer=new Player();
@@ -54,6 +56,14 @@ public class Main : MonoBehaviour {
 	}
 	
 	void OnApplicationQuit(){
+	}
+
+	Updater updater;
+	public Updater resourceUpdater{
+		get{
+			if(updater==null)updater=gameObject.AddComponent<Updater>();
+			return updater;
+		}
 	}
 
 	public bool Wait{

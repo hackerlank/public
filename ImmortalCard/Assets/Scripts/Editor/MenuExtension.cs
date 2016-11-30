@@ -8,14 +8,14 @@ using UnityEngine.UI;
 
 public class MenuExtension {
 
-	[MenuItem("Tools/ClearPlayerPrefs")]
-	private static void NewMenuOption()
+	[MenuItem("Utils/ClearPlayerPrefs")]
+	static void NewMenuOption()
 	{
 		PlayerPrefs.DeleteAll();
 	}
 
-	[MenuItem("Assets/Reimport UI Assemblies", false, 80)]
-	public static void ReimportUI() {
+	[MenuItem("Utils/Reimport UI Assemblies", false, 80)]
+	static void ReimportUI() {
 		#if UNITY_4_7
 		var path = EditorApplication.applicationContentsPath + "/UnityExtensions/Unity/GUISystem/{0}/{1}";
 		var version = Regex.Match(Application.unityVersion, @"^[0-9]+\.[0-9]+\.[0-9]+").Value;
@@ -36,7 +36,7 @@ public class MenuExtension {
 			Debug.LogError(string.Format("DLL not found {0}", path));
 	}
 
-	[MenuItem("Assets/Create AssetBundle",false,121)]
+	[MenuItem("Utils/Create AssetBundle",false,121)]
 	static void CreateAssetBundle(){
 		EditorCoroutine.start (ReCreateAssetBundlesCo());
 	}
@@ -82,5 +82,25 @@ public class MenuExtension {
 			BMDataAccessor.SaveBundleData();
 		}
 		EditorUtility.DisplayDialog ("Assetbundles", "Assetbundles re-created", "Ok");
+	}
+
+	[MenuItem("Utils/Update Version",false,122)]
+	static void UpdateVersion(){
+		var path="Assets/Resources/"+Configs.file+".txt";
+		string buf = System.IO.File.ReadAllText(path);
+		var dict=Utils.ParseIni(buf);
+		dict["user"]	=System.Environment.UserName;
+		dict["build"]	=UnityEditor.PlayerSettings.shortBundleVersion;
+		dict["date"]	=System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+		#if UNITY_IPHONE
+		dict["version"]	=UnityEditor.PlayerSettings.bundleVersion;
+		#else
+		dict["version"]	=UnityEditor.PlayerSettings.Android.bundleVersionCode.ToString();
+		#endif
+
+		buf="";
+		foreach(var kv in dict)
+			buf+=kv.Key+"="+kv.Value+"\n";
+		System.IO.File.WriteAllText (path,buf);
 	}
 }

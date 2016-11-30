@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System;
 using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public class Utils {
@@ -62,6 +63,19 @@ public class Utils {
 
 	public static Vector2 ScreenToUIPoing(Vector2 pt){
 		return new Vector2(pt.x-Screen.width/2f,pt.y-Screen.height/2f);
+	}
+
+	public static Dictionary<string,string> ParseIni(string text){
+		var dict=new Dictionary<string,string>();
+
+		string[] lines = text.Split('\n');
+		foreach(var line in lines){
+			string[] values = line.Split('=');
+			if(values.Length>1){
+				dict[values[0]]=values[1];
+			}
+		}
+		return dict;
 	}
 
 	// splits a TSV row

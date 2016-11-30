@@ -236,7 +236,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                 ret=pb_enum::BUNCH_INVALID;
             }
             
-            Logger<<what.pos()<<" OnMeld "<<bunch2str(str,what)<<",token="<<from<<endl;
+            if(what.type()!=pb_enum::OP_PASS)
+                Logger<<what.pos()<<" OnMeld "<<bunch2str(str,what)<<",token="<<from<<endl;
             switch(result){
                 case pb_enum::BUNCH_WIN:{
                     std::vector<bunch_t> output;
