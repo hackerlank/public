@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Linq;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 public class Utils {
 
@@ -56,5 +58,36 @@ public class Utils {
 		get{
 			return 0.001f*(float)(System.DateTime.Now.Ticks/10000%100000000);
 		}
+	}
+
+	public static Vector2 ScreenToUIPoing(Vector2 pt){
+		return new Vector2(pt.x-Screen.width/2f,pt.y-Screen.height/2f);
+	}
+
+	// splits a TSV row
+	public static string[] SplitTsvLine(string line)
+	{
+		return line.Split('\t');
+	}
+	
+	// splits a CSV row 
+	public static string[] SplitCsvLine(string line)
+	{
+		string pattern = @"
+	    # Match one value in valid CSV string.
+	    (?!\s*$)                                      # Don't match empty last value.
+	    \s*                                           # Strip whitespace before value.
+	    (?:                                           # Group for value alternatives.
+	      '(?<val>[^'\\]*(?:\\[\S\s][^'\\]*)*)'       # Either $1: Single quoted string,
+	    | ""(?<val>[^""\\]*(?:\\[\S\s][^""\\]*)*)""   # or $2: Double quoted string,
+	    | (?<val>[^,'""\s\\]*(?:\s+[^,'""\s\\]+)*)    # or $3: Non-comma, non-quote stuff.
+	    )                                             # End group of value alternatives.
+	    \s*                                           # Strip whitespace after value.
+	    (?:,|$)                                       # Field ends on comma or EOS.
+	    ";
+		string[] values = (from Match m in Regex.Matches(line, pattern, 
+		                                                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline)
+		                   select m.Groups[1].Value).ToArray();
+		return values;      
 	}
 }

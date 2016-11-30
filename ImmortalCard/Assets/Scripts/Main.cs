@@ -34,9 +34,26 @@ public class Main : MonoBehaviour {
 	}
 
 	void Start () {
+		Application.targetFrameRate = 30;
+		//Application.backgroundLoadingPriority = ThreadPriority.High;
+		//Application.runInBackground = true;
+		//Screen.orientation=ScreenOrientation.Portrait;
 	}
 	
 	void Update () {
+		#if UNITY_EDITOR
+		//if(Input.GetKeyUp(KeyCode.F3)){}
+		#endif
+	}
+	void OnApplicationPause(bool pauseStatus) {
+		if(pauseStatus){
+			Resources.UnloadUnusedAssets();	//anyway need this
+		}
+	}
+	void OnApplicationFocus(bool focusStatus) {
+	}
+	
+	void OnApplicationQuit(){
 	}
 
 	public bool Wait{
