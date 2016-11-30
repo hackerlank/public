@@ -36,7 +36,7 @@ public abstract class SettlePopup : MonoBehaviour {
 	public void OnClose(){
 		Destroy(gameObject);
 		if(Main.Instance.gameController.Round>=Main.Round){
-			StartCoroutine(Main.Instance.resourceUpdater.Load<SummaryPanel>(
+			Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<SummaryPanel>(
 				"Prefabs/SummaryPanel",Main.Instance.RootPanel));
 		}else{
 			MsgCNReady msg=new MsgCNReady();
