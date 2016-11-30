@@ -75,10 +75,12 @@ public class LoginPanel : MonoBehaviour {
 	}
 
 	public void DoLogin(){
-		//Main.Instance.share.SignIn();
-		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj){
+		var path="Prefabs/LobbyPanel";
+		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(path,delegate(Object arg1, Hashtable arg2) {
+			var lobby=arg1 as LobbyPanel;
+			lobby.transform.SetParent(Main.Instance.RootPanel,false);
 			Destroy(gameObject);
-		});
+		}));
 	}
 	
 	private IEnumerator Process(){

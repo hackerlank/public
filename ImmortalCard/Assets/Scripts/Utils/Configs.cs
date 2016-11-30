@@ -45,7 +45,6 @@ public class Configs{
 				if(fi==null)continue;
 				if(fi.FieldType!=typeof(string))continue;
 				fi.SetValue(null,kv.Value);
-				Debug.Log(kv.Key+"="+kv.Value);
 			}
 		}
 	}

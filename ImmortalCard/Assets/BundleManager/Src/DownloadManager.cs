@@ -278,6 +278,16 @@ public class DownloadManager : MonoBehaviour
 	}
 
 	/**
+	 * search Bundle from dict. 
+	 * Before use this, please make sure ConfigLoaded is true.
+	 * if it does not exists,no need download at all.
+	 */ 
+	public bool IsBundleExists(string url)
+	{
+		return bundleDict.ContainsKey(url);
+	}
+
+	/**
 	 * Get cache state of the Bundle. 
 	 * Before use this, please make sure ConfigLoaded is true.
 	 * BM cannot cache any bundle download by absolute url or build out of the bundles set.

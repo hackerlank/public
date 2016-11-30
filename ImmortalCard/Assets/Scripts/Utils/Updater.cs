@@ -61,24 +61,29 @@ public class Updater : MonoBehaviour {
 	}
 
 	public IEnumerator Load<T>(string uri,System.Action<Object,Hashtable> handler=null,Hashtable param=null){
-		Object lo=null;
-		WWW www = null;
+		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 
+		Object lo=null;
 		//load from cache or remote
-		string url = Updater.MakeUrl(uri);
-		while(www==null){
-			yield return StartCoroutine(DownloadManager.Instance.WaitDownload(url,10));
-			www = DownloadManager.Instance.GetWWW(url);
+		if(DownloadManager.Instance.IsBundleExists(uri)){
+			WWW www = null;			
+			string url = Updater.MakeUrl(uri);
+			while(www==null){
+				yield return StartCoroutine(DownloadManager.Instance.WaitDownload(url,10));
+				www = DownloadManager.Instance.GetWWW(url);
+			}
+			if(www != null){
+				var name=Path.GetFileNameWithoutExtension(uri);
+				lo=www.assetBundle.Load(name,typeof(T));
+				if(lo!=null)lo = Instantiate(lo,name);
+				www.assetBundle.Unload (false);
+				DownloadManager.Instance.DisposeWWW(url);	//www.Dispose ();
+				www = null;
+			}
 		}
-		if(www != null){
-			var name=Path.GetFileNameWithoutExtension(uri);
-			lo=www.assetBundle.Load(name,typeof(T));
-			if(lo!=null)lo = Instantiate(lo,name);
-			www.assetBundle.Unload (false);
-			DownloadManager.Instance.DisposeWWW(url);	//www.Dispose ();
-			www = null;
-		}else{
-			//load from local
+
+		//load from local
+		if(lo==null){
 			ResourceRequest req=null;
 			if(uri.Contains("Sprite/")){
 				req = Resources.LoadAsync(uri,typeof(Sprite));
@@ -88,6 +93,10 @@ public class Updater : MonoBehaviour {
 				req = Resources.LoadAsync(uri);
 				while(!req.isDone)yield return null;
 				lo=Instantiate (req.asset,uri);
+				var go=lo as GameObject;
+				if(go!=null){
+					lo=go.GetComponent(typeof(T));
+				}
 			}
 		}
 		if(handler!=null)
