@@ -26,16 +26,18 @@ public abstract class SettlePopup : MonoBehaviour {
 
 	abstract protected void createItem(Transform parent,play_t play);
 	protected void createItem<T>(Transform parent,play_t play){
-		Utils.Load<T>(parent,delegate(Component obj) {
+		StartCoroutine(Main.Instance.resourceUpdater.Load<T>(
+			"Prefabs/"+typeof(T).Name,parent,delegate(Object obj,Hashtable arg) {
 			var item=obj as SettleItem;
 			item.Value=play;
-		});
+		}));
 	}
 
 	public void OnClose(){
 		Destroy(gameObject);
 		if(Main.Instance.gameController.Round>=Main.Round){
-			Utils.Load<SummaryPanel>(Main.Instance.RootPanel);
+			StartCoroutine(Main.Instance.resourceUpdater.Load<SummaryPanel>(
+				"Prefabs/SummaryPanel",Main.Instance.RootPanel));
 		}else{
 			MsgCNReady msg=new MsgCNReady();
 			msg.Mid=pb_msg.MsgCnReady;

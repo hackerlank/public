@@ -307,7 +307,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnSettings(){
-		Utils.Load<SettingsPanel>(Main.Instance.RootPanel);
+		Main.Instance.resourceUpdater.Load<SettingsPanel>(
+			"Prefabs/SettingsPanel",Main.Instance.RootPanel);
 	}
 
 	public void OnBack(){
@@ -319,9 +320,10 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	public void OnExit(){
 		PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
 		Main.Instance.MainPlayer.InGame=false;
-		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj) {
+		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(
+			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
 			Destroy(gameObject);
-		});
+		}));
 	}
 	
 	bool pointerDown=false;

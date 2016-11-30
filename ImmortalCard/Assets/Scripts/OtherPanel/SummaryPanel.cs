@@ -17,10 +17,11 @@ public class SummaryPanel : MonoBehaviour {
 		SummaryItem bestItem=null;
 		foreach(play_t play in ctrl.Summary.Play){
 			SummaryItem item=null;
-			Utils.Load<SummaryItem>(Items,delegate(Component obj) {
+			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<SummaryItem>(
+				"Prefabs/SummaryItem",Items,delegate(Object obj,Hashtable arg) {
 				item=obj as SummaryItem;
-			});
-			while(null==item)yield return null;
+			}));
+
 			item.Value=play;
 
 			if(play.Total>bestScore){

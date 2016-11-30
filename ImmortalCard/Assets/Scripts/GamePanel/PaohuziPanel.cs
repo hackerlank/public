@@ -328,10 +328,11 @@ public class PaohuziPanel : GamePanel {
 
 		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
-		Utils.Load<PaohuziSettle>(Main.Instance.RootPanel,delegate(Component obj) {
+		StartCoroutine(Main.Instance.resourceUpdater.Load<PaohuziSettle>(
+			"Prefabs/PaohuziSettle",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
-		});
+		}));
 	}
 
 	override protected IEnumerator deal(MsgNCDeal msg){
@@ -344,10 +345,11 @@ public class PaohuziPanel : GamePanel {
 		int col=hands.Count/3+(rest==0?0:1);
 		for(int i=0;i<col;++i){
 			ZipaiHandBunch bunch=null;
-			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
+			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+				"Prefabs/ZipaiHandBunch",HandAreas[0],delegate(Object obj,Hashtable arg){
 				bunch=obj as ZipaiHandBunch;
-			});
-			while(!bunch)yield return null;
+			}));
+
 			for(int j=0;j<3;++j){
 				var idx=i*3+j;
 				if(idx<hands.Count){
@@ -609,18 +611,19 @@ public class PaohuziPanel : GamePanel {
 
 		foreach(var aaa in player.AAAs){
 			ZipaiHandBunch bunch=null;
-			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
+			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+				"Prefabs/ZipaiHandBunch",HandAreas[0],delegate(Object obj,Hashtable arg){
 				bunch=obj as ZipaiHandBunch;
-			});
-			while(!bunch)yield return null;
+			}));
+
 			foreach(var id in aaa.Pawns)bunch.Add(id,true);
 		}
 		foreach(var cards in sorted){
 			ZipaiHandBunch bunch=null;
-			Utils.Load<ZipaiHandBunch>(HandAreas[0],delegate(Component obj){
+			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+				"Prefabs/ZipaiHandBunch",HandAreas[0],delegate(Object obj,Hashtable arg){
 				bunch=obj as ZipaiHandBunch;
-			});
-			while(!bunch)yield return null;
+			}));
 			foreach(var id in cards)bunch.Add(id);
 		}
 	}
@@ -824,8 +827,9 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<PaohuziPanel>(Main.Instance.RootPanel,delegate(Component obj){
-			if(handler!=null)handler.Invoke(obj);
-		});
+		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<PaohuziPanel>(
+			"Prefabs/PaohuziPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
+			if(handler!=null)handler.Invoke(obj as Component);
+		}));
 	}
 }

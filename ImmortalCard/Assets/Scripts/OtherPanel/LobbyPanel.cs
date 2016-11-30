@@ -39,7 +39,8 @@ public class LobbyPanel : MonoBehaviour {
 	}
 
 	void addGame(game_t game){
-		Utils.Load<GameIcon>(GameRoot,delegate(Component obj){
+		StartCoroutine(Main.Instance.resourceUpdater.Load<GameIcon>(
+			"Prefabs/GameIcon",GameRoot,delegate(Object obj,Hashtable arg){
 			var icon=obj as GameIcon;
 			icon.game=(pb_enum)game.Id;
 			switch(icon.game){
@@ -51,7 +52,7 @@ public class LobbyPanel : MonoBehaviour {
 			default:
 				icon.Name.text="Paohuzi";	break;
 			}
-		});
+		}));
 	}
 
 	public void OnIcon(){
@@ -65,11 +66,13 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnSettings(){
-		Utils.Load<SettingsPanel>(Main.Instance.RootPanel);
+		StartCoroutine(Main.Instance.resourceUpdater.Load<SettingsPanel>(
+			"Prefabs/SettingsPanel",Main.Instance.RootPanel));
 	}
 	
 	public void OnProxy(){
-		Utils.Load<ChargePanel>(Main.Instance.RootPanel);
+		StartCoroutine(Main.Instance.resourceUpdater.Load<ChargePanel>(
+			"Prefabs/ChargePanel",Main.Instance.RootPanel));
 	}
 	
 	public void OnShare(){

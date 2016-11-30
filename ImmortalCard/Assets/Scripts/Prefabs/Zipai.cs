@@ -97,12 +97,14 @@ public class Zipai : Card{
 			//out of bunch area
 			if(bunches.Length<11){
 				//has bunches space
-				Utils.Load<ZipaiHandBunch>(area,delegate(Component obj){
+				StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+					"Prefabs/ZipaiHandBunch",area,delegate(Object arg0,Hashtable arg){
+					var obj=arg0 as Component;
 					if(nx>transform.position.x)
 						//left side
 						obj.transform.SetSiblingIndex(0);
 					discard.Invoke(obj.transform);
-				});
+				}));
 				return;
 			}else
 				nearest=null;

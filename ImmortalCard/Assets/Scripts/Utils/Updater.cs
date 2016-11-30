@@ -60,7 +60,7 @@ public class Updater : MonoBehaviour {
 		StartCoroutine(DownloadManager.Instance.WaitDownload(url,10));
 	}
 
-	public IEnumerator Load<T>(string uri,System.Action<Object,Hashtable> handler=null,Hashtable param=null){
+	public IEnumerator Load<T>(string uri,Transform parent=null,System.Action<Object,Hashtable> handler=null,Hashtable param=null){
 		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 
 		Object lo=null;
@@ -90,15 +90,17 @@ public class Updater : MonoBehaviour {
 				while(!req.isDone)yield return null;
 				lo=Instantiate (req.asset as Sprite,uri);
 			}else{
-				req = Resources.LoadAsync(uri);
+				req = Resources.LoadAsync(uri,typeof(T));
 				while(!req.isDone)yield return null;
 				lo=Instantiate (req.asset,uri);
-				var go=lo as GameObject;
-				if(go!=null){
-					lo=go.GetComponent(typeof(T));
-				}
 			}
 		}
+
+		//parent
+		if(parent!=null && lo is Component)
+			(lo as Component).transform.SetParent(parent,false);
+
+		//callback
 		if(handler!=null)
 			handler.Invoke(lo,param);
 	}

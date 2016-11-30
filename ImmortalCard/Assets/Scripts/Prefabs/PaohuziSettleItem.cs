@@ -24,11 +24,12 @@ public class PaohuziSettleItem : SettleItem {
 			bunches.AddRange(PaohuziRule.buildFrees(hands,bunches.Count));
 
 			foreach(var bunch in bunches){
-				Utils.Load<ZipaiBunch>(Bunches,delegate(Component obj) {
+				StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiBunch>(
+					"Prefabs/ZipaiBunch",Bunches,delegate(Object obj,Hashtable arg) {
 					var zi=obj as ZipaiBunch;
 					zi.ShowType=true;
 					zi.Value=bunch;
-				});
+				}));
 			}
 			
 			//achievments

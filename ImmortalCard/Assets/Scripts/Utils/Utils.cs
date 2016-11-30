@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 
 public class Utils {
 
+	/*
 	public static void Load<T>(Transform parent=null,System.Action<Component> action=null,string path=null){
 		string url="Prefabs/"+(path==null?typeof(T).ToString():path);
 		GameObject go=Resources.Load(url,typeof(GameObject)) as GameObject;
@@ -33,7 +34,7 @@ public class Utils {
 			//go.transform.localScale=Vector3.one;
 		}
 	}
-
+*/
 	public static void SpriteCreate(string url,System.Action<Sprite> handler=null){
 		var obj=Resources.Load(url,typeof(Sprite));
 		Sprite sprite=null;

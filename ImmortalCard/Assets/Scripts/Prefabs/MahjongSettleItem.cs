@@ -18,10 +18,11 @@ public class MahjongSettleItem : SettleItem {
 			Debug.Log("settle "+value.Seat+" bunches="+bunches.Count+",hands="+hands.Count);
 
 			foreach(var bunch in bunches){
-				Utils.Load<MahjongBunch>(Bunches,delegate(Component obj) {
+				StartCoroutine(Main.Instance.resourceUpdater.Load<MahjongBunch>(
+					"Prefabs/MahjongBunch",Bunches,delegate(Object obj,Hashtable arg) {
 					var zi=obj as MahjongBunch;
 					zi.Value=bunch;
-				});
+				}));
 			}
 
 			var prefab=(Main.Instance.gameController as GamePanel).Rule.CardPrefab;

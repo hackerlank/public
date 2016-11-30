@@ -8,8 +8,14 @@ using UnityEngine.UI;
 
 public class MenuExtension {
 
+	[MenuItem("Utils/ClearCache")]
+	static void CleanCache()
+	{
+		Caching.CleanCache();
+	}
+	
 	[MenuItem("Utils/ClearPlayerPrefs")]
-	static void NewMenuOption()
+	static void ClearPlayerPrefs()
 	{
 		PlayerPrefs.DeleteAll();
 	}

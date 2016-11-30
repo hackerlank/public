@@ -60,11 +60,12 @@ public class DoudeZhuPanel : GamePanel {
 
 	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
 		yield return StartCoroutine(base.OnMsgSettle(player,msg));
-		
-		Utils.Load<DoudeZhuSettle>(Main.Instance.RootPanel,delegate(Component obj) {
-			var popup=obj as SettlePopup;
+
+		StartCoroutine(Main.Instance.resourceUpdater.Load<DoudeZhuSettle>(
+			"Prefabs/DoudeZhuSettle",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
+			var popup=arg1 as SettlePopup;
 			popup.Value=msg;
-		});
+		}));
 	}
 
 	int _nhints=0;
@@ -140,8 +141,9 @@ public class DoudeZhuPanel : GamePanel {
 	override public bool CardDrag{get{return false;}}
 
 	public static void Create(System.Action<Component> handler=null){
-		Utils.Load<DoudeZhuPanel>(Main.Instance.RootPanel,delegate(Component obj){
-			if(handler!=null)handler.Invoke(obj);
-		});
+		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<DoudeZhuPanel>(
+			"Prefabs/DoudeZhuPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
+			if(handler!=null)handler.Invoke(arg1 as Component);
+		}));
 	}
 }

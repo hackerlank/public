@@ -75,10 +75,8 @@ public class LoginPanel : MonoBehaviour {
 	}
 
 	public void DoLogin(){
-		var path="Prefabs/LobbyPanel";
-		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(path,delegate(Object arg1, Hashtable arg2) {
-			var lobby=arg1 as LobbyPanel;
-			lobby.transform.SetParent(Main.Instance.RootPanel,false);
+		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(
+			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
 			Destroy(gameObject);
 		}));
 	}

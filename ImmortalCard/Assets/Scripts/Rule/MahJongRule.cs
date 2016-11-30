@@ -455,11 +455,12 @@ public class MahJongRule: GameRule {
 	override public float DiscardScalar{get{return 1f;}}
 
 	override public void LoadBunch(Transform parent=null,System.Action<Bunch> action=null,string path=null){
-		Utils.Load<MahjongBunch>(parent,delegate(Component obj){
+		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<MahjongBunch>(
+			"Prefabs/MahjongBunch",parent,delegate(Object obj,Hashtable arg){
 			if(action !=null){
 				var zb=obj as Bunch;
 				action.Invoke(zb);
 			}
-		});
+		}));
 	}
 }

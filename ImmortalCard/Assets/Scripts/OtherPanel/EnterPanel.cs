@@ -62,7 +62,8 @@ public class EnterPanel : MonoBehaviour {
 			break;
 		}
 		foreach(var kv in games)
-			Utils.Load<RuleIcon>(GameRoot,delegate(Component obj){
+			StartCoroutine(Main.Instance.resourceUpdater.Load<RuleIcon>(
+				"Prefabs/RuleIcon",GameRoot,delegate(Object obj,Hashtable arg){
 				var category=kv.Key;
 				var icon=obj as RuleIcon;
 				icon.Category=category;
@@ -71,7 +72,7 @@ public class EnterPanel : MonoBehaviour {
 					GameCategory=icon;
 					GameCategory.OnGame();
 				}
-			});
+			}));
 	}
 
 	public void OnCreate(){
@@ -125,9 +126,10 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnBack(){
-		Utils.Load<LobbyPanel>(Main.Instance.RootPanel,delegate(Component obj){
+		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(
+			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
 			Destroy(gameObject);
-		});
+		}));
 	}
 	
 	IEnumerator createCo(){

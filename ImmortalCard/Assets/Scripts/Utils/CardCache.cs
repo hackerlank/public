@@ -17,10 +17,12 @@ public class CardCache{
 		Ready=false;
 		//load Card.prefab
 		if(!cards.ContainsKey(path)||cards[path]==null){
-			Utils.Load<Card>(null,delegate(Component comp){
+			Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<Card>(
+				"Prefabs/"+path,null,delegate(Object obj,Hashtable arg){
+				var comp=obj as Component;
 				cards[path]=comp.gameObject;
 				cards[path].SetActive(false);
-			},path);
+			}));
 			yield return null;
 		}
 		
