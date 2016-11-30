@@ -2,7 +2,7 @@
     "downloadUrls" : 
     {
         "Android" : "$(DataPath)/../AssetBundle/$(Platform)",        
-        "IOS" : "$(DataPath)/../",        
+        "IOS" : "$(DataPath)/../AssetBundle/$(Platform)",        
         "Standalones" : "$(DataPath)/../AssetBundle/$(Platform)",        
         "WebPlayer" : "$(DataPath)/../AssetBundle/$(Platform)",        
         "WP8" : "$(DataPath)/../AssetBundle/$(Platform)",        
