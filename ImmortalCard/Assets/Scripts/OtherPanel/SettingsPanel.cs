@@ -7,6 +7,7 @@ public class SettingsPanel : MonoBehaviour {
 	public Slider	music;
 	public Toggle	soundOn;
 	public Toggle	musicOn;
+	public Text		version;
 
 	public const string PrefsKey_SoundVolume	="PrefsKey_SoundVolume";
 	public const string PrefsKey_MusicVolume	="PrefsKey_MusicVolume";
@@ -56,6 +57,12 @@ public class SettingsPanel : MonoBehaviour {
 	public void OnMusicOn(bool x){
 		var v=musicOn.isOn;
 		Configs.MusicOn=v;
+	}
+
+	public void OnDismiss(){
+	}
+
+	public void OnLogout(){
 	}
 
 	public void OnClose(){

@@ -9,7 +9,10 @@ public class LoginPanel : MonoBehaviour {
 
 	public InputField	Host;
 	public Text			DefaultHost;
-	public Slider		slider;
+
+	public Text			percentage;
+	public Slider		fileProgress;
+	public Slider		totalProgress;
 
 	public static LoginPanel Instance=null;
 	void Awake(){
@@ -82,7 +85,7 @@ public class LoginPanel : MonoBehaviour {
 	}
 	
 	private IEnumerator Process(){
-		slider.value = 0;
+		fileProgress.value = 0;
 
 		//foreach(object o in Game.ToEnumerable(Upgrade()))yield return o;
 		//if(Configs.Testing.skipResourceUpdated>0)yield break;
@@ -125,19 +128,19 @@ public class LoginPanel : MonoBehaviour {
 		if(bundleProgress.Count>0)state=progressString(0,totalInProgress,totalInProgress);
 
 		while(bundleInProgress.Count>0){
-			slider.value = DownloadManager.Instance.ProgressOfBundles (bundleProgress.ToArray ());
+			fileProgress.value = DownloadManager.Instance.ProgressOfBundles (bundleProgress.ToArray ());
 			foreach(string url in bundleInProgress){
 				var www=DownloadManager.Instance.GetWWW(url);
 				if(www!=null&&www.isDone){
 					string resname=Updater.MakeName(url);
 					Main.Instance.resourceUpdater.AddResource(resname,www);
 					bundleInProgress.Remove(url);
-					state=progressString(slider.value,bundleInProgress.Count,totalInProgress);
+					state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
 					Debug.Log("----Asset updated "+resname);
 					break;
 				}
 			}
-			state=progressString(slider.value,bundleInProgress.Count,totalInProgress);
+			state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
 			yield return null;
 		}
 
