@@ -21,6 +21,7 @@ public class Configs{
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
 	public static string updateUri="";
+	public static string update="0";
 
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
@@ -33,10 +34,9 @@ public class Configs{
 	public static bool SoundOn=true;
 	public static bool MusicOn=true;
 
-	public static void Load(){
-		TextAsset text = (TextAsset)Resources.Load(file);
+	public static void Load(string text){
 		if(text!=null){
-			var dict=Utils.ParseIni(text.text);
+			var dict=Utils.ParseIni(text);
 			foreach(var kv in dict){
 				System.Type type = typeof(Configs);
 				string field = kv.Key;

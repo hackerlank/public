@@ -6,7 +6,7 @@ using System.IO;
 using Proto3;
 
 public class LoginPanel : MonoBehaviour {
-
+	public GameObject	children;
 	public InputField	Host;
 	public Text			DefaultHost;
 
@@ -16,12 +16,94 @@ public class LoginPanel : MonoBehaviour {
 
 	public static LoginPanel Instance=null;
 	void Awake(){
-		//load host from cache
-		Host.text=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
 		Instance=this;
 	}
-	void OnDestroy(){Instance=null;}
-	
+	void OnDestroy(){
+		if(Instance==this)
+			Instance=null;
+	}
+
+
+	public IEnumerator Process(){
+		children.SetActive(true);
+		//load host from cache
+		Host.text=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
+
+		/*
+		update & login
+		login:
+			if cached account: login with it
+			else: login with udid
+		if updated and logged in: enter lobby
+		start account coroutine:
+			if not account disable: sign in,cache and update to server
+		 */
+
+		fileProgress.value = 0;
+		
+		//foreach(object o in Game.ToEnumerable(Upgrade()))yield return o;
+		//if(Configs.Testing.skipResourceUpdated>0)yield break;
+		
+		if(DownloadManager.Instance!=null)
+			DestroyImmediate(DownloadManager.Instance.gameObject);
+		yield return null;
+		
+		if(!string.IsNullOrEmpty(Configs.updateUri)){
+			DownloadManager.SetManualUrl(Configs.updateUri+"$(Platform)");
+		}
+		
+		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
+		
+		var bundleInProgress=new List<string>();
+		var bundleProgress=new List<string>();
+		var lowPriority=new List<string>();
+		
+		foreach (BundleData bd in DownloadManager.Instance.BuiltBundles) {
+			string url = Updater.MakeUrl(bd.name);
+			if(DownloadManager.Instance.IsBundleCached(url))continue;
+			Debug.Log ("Resource Updating: " + url);
+			if(bd.priority>=9){
+				bundleInProgress.Add(url);
+				bundleProgress.Add(url);
+			}else
+				lowPriority.Add(url);
+		}
+		
+		int totalInProgress=bundleInProgress.Count;
+		if(bundleInProgress.Count+lowPriority.Count>0){
+			Debug.Log("need download");
+		}
+		
+		var tm=Time.realtimeSinceStartup;
+		while(!Caching.ready&&Time.realtimeSinceStartup-tm<5f)yield return null;
+		
+		foreach(string url in bundleInProgress)DownloadManager.Instance.StartDownload (url,9);
+		
+		if(bundleProgress.Count>0)state=progressString(0,totalInProgress,totalInProgress);
+		
+		while(bundleInProgress.Count>0){
+			fileProgress.value = DownloadManager.Instance.ProgressOfBundles (bundleProgress.ToArray ());
+			foreach(string url in bundleInProgress){
+				var www=DownloadManager.Instance.GetWWW(url);
+				if(www!=null&&www.isDone){
+					string resname=Updater.MakeName(url);
+					Main.Instance.resourceUpdater.AddResource(resname,www);
+					bundleInProgress.Remove(url);
+					state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
+					Debug.Log("----Asset updated "+resname);
+					break;
+				}
+			}
+			state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
+			yield return null;
+		}
+		
+		state = "";
+		
+		foreach(string url in lowPriority)
+			DownloadManager.Instance.StartDownload (url);
+	}
+
 	public void OnLogin(){
 		//choice default if empty
 		if(Host.text.Length<=0)Host.text=DefaultHost.text;
@@ -84,72 +166,6 @@ public class LoginPanel : MonoBehaviour {
 		}));
 	}
 	
-	private IEnumerator Process(){
-		fileProgress.value = 0;
-
-		//foreach(object o in Game.ToEnumerable(Upgrade()))yield return o;
-		//if(Configs.Testing.skipResourceUpdated>0)yield break;
-
-		if(DownloadManager.Instance!=null)
-			DestroyImmediate(DownloadManager.Instance.gameObject);
-		yield return null;
-
-		if(!string.IsNullOrEmpty(Configs.updateUri)){
-			DownloadManager.SetManualUrl(Configs.updateUri+"$(Platform)");
-		}
-
-		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
-
-		var bundleInProgress=new List<string>();
-		var bundleProgress=new List<string>();
-		var lowPriority=new List<string>();
-
-		foreach (BundleData bd in DownloadManager.Instance.BuiltBundles) {
-			string url = Updater.MakeUrl(bd.name);
-			if(DownloadManager.Instance.IsBundleCached(url))continue;
-			Debug.Log ("Resource Updating: " + url);
-			if(bd.priority>=9){
-				bundleInProgress.Add(url);
-				bundleProgress.Add(url);
-			}else
-				lowPriority.Add(url);
-		}
-		 
-		int totalInProgress=bundleInProgress.Count;
-		if(bundleInProgress.Count+lowPriority.Count>0){
-			Debug.Log("need download");
-		}
-
-		var tm=Time.realtimeSinceStartup;
-		while(!Caching.ready&&Time.realtimeSinceStartup-tm<5f)yield return null;
-
-		foreach(string url in bundleInProgress)DownloadManager.Instance.StartDownload (url,9);
-
-		if(bundleProgress.Count>0)state=progressString(0,totalInProgress,totalInProgress);
-
-		while(bundleInProgress.Count>0){
-			fileProgress.value = DownloadManager.Instance.ProgressOfBundles (bundleProgress.ToArray ());
-			foreach(string url in bundleInProgress){
-				var www=DownloadManager.Instance.GetWWW(url);
-				if(www!=null&&www.isDone){
-					string resname=Updater.MakeName(url);
-					Main.Instance.resourceUpdater.AddResource(resname,www);
-					bundleInProgress.Remove(url);
-					state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
-					Debug.Log("----Asset updated "+resname);
-					break;
-				}
-			}
-			state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
-			yield return null;
-		}
-
-		state = "";
-
-		foreach(string url in lowPriority)
-			DownloadManager.Instance.StartDownload (url);
-	}
-
 	string state{
 		set{
 

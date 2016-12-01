@@ -14,6 +14,7 @@ public class Main : MonoBehaviour {
 
 	public Transform		RootPanel;
 	public Animator			spinner;
+	public GameObject		loginPanel;
 
 	public enum Mode{
 		STANDALONE,
@@ -25,21 +26,55 @@ public class Main : MonoBehaviour {
 	void Awake(){
 		Instance=this;
 
-		Configs.Load();
-		//Loom
-		gameObject.AddComponent<Loom>();
+		//init components
+		gameObject.AddComponent<Loom>();	//Loom
+		updater=gameObject.AddComponent<Updater>();
+	}
+
+	IEnumerator Start () {
+		//load config
+		TextAsset text = (TextAsset)Resources.Load(Configs.file);
+		if(text!=null)
+			Configs.Load(text.text);
+
+		//update config
+		yield return StartCoroutine(updater.Load<TextAsset>(
+			"Config/config",null,delegate(Object obj,Hashtable param){
+			var ta=obj as TextAsset;
+			Configs.Load(ta.text);
+		}));
+
+		//force update
+		var forceUpdate=(int.Parse(Configs.update)!=0);
+		if(forceUpdate){
+			var storeUrl="";
+			if (Application.platform == RuntimePlatform.IPhonePlayer)
+				storeUrl="";
+			Application.OpenURL(storeUrl);
+			yield break;
+		}
+
+		//update LoginPanel and reload
+		yield return StartCoroutine(updater.Load<LoginPanel>(
+			"Prefabs/LoginPanel",RootPanel,delegate(Object arg1, Hashtable arg2) {
+			var panel=arg1 as LoginPanel;
+			panel.StartCoroutine(panel.Process());
+		}));
+
+		if(loginPanel!=null)
+			Destroy(loginPanel);
+
+		//init
 		MainPlayer=new Player();
 		MainPlayer.playData=new Proto3.play_t();
 		MainPlayer.playData.Player=new Proto3.player_t();
 		MainPlayer.playData.Player.Uid=SystemInfo.deviceUniqueIdentifier;
-		share=new ShareAPI();
-	}
 
-	void Start () {
 		Application.targetFrameRate = 30;
 		//Application.backgroundLoadingPriority = ThreadPriority.High;
 		//Application.runInBackground = true;
 		//Screen.orientation=ScreenOrientation.Portrait;
+		share=new ShareAPI();
 	}
 	
 	void Update () {
@@ -61,7 +96,6 @@ public class Main : MonoBehaviour {
 	Updater updater;
 	public Updater resourceUpdater{
 		get{
-			if(updater==null)updater=gameObject.AddComponent<Updater>();
 			return updater;
 		}
 	}

@@ -3,33 +3,36 @@ using System.Collections;
 using cn.sharesdk.unity3d;
 
 public class ShareAPI {
-	ShareSDK sdk;
+	ShareSDK _sdk;
 
 	public ShareAPI() {
-		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+		_sdk=Main.Instance.gameObject.GetComponent<ShareSDK>();
+		if(_sdk==null || Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)
+			return;
 
-		sdk=Main.Instance.gameObject.GetComponent<ShareSDK>();
-		sdk.appKey=Configs.modId;
-		sdk.devInfo.wechat.Enable=true;
-		sdk.devInfo.wechatMoments.Enable=true;
+		_sdk.appKey=Configs.modId;
+		_sdk.devInfo.wechat.Enable=true;
+		_sdk.devInfo.wechatMoments.Enable=true;
 		//sdk.devInfo.wechatFavorites.Enable=true;
 		//sdk.devInfo.wechatSeries.Enable=true;
 
-		sdk.shareHandler = ShareResultHandler;
-		sdk.authHandler = AuthResultHandler;
-		sdk.showUserHandler = GetUserInfoResultHandler;
+		_sdk.shareHandler = ShareResultHandler;
+		_sdk.authHandler = AuthResultHandler;
+		_sdk.showUserHandler = GetUserInfoResultHandler;
 	}
 
 	public void SignIn(){
-		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+		if(_sdk==null || Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)
+			return;
 		
-		sdk.Authorize(PlatformType.WeChat);
-		sdk.GetUserInfo(PlatformType.WeChat);
+		_sdk.Authorize(PlatformType.WeChat);
+		_sdk.GetUserInfo(PlatformType.WeChat);
 	}
 
 	public void Share(string title,string text,int type,string url=""){
 		//type[ ContentType.Image=2, ContentType.Webpage=4, ContentType.App=7 ]
-		if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+		if(_sdk==null || Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)
+			return;
 
 		ShareContent content = new ShareContent();
 		content.SetTitle(title);
@@ -40,7 +43,7 @@ public class ShareAPI {
 		content.SetSiteUrl(url);
 		content.SetShareType(type);
 
-		sdk.ShowPlatformList(null, content, 100, 100);
+		_sdk.ShowPlatformList(null, content, 100, 100);
 	}
 
 	void ShareResultHandler (int reqID, ResponseState state, PlatformType type, Hashtable result){

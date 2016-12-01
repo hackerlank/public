@@ -8,19 +8,19 @@ using UnityEngine.UI;
 
 public class MenuExtension {
 
-	[MenuItem("Utils/ClearCache")]
+	[MenuItem("Extension/ClearCache")]
 	static void CleanCache()
 	{
 		Caching.CleanCache();
 	}
 	
-	[MenuItem("Utils/ClearPlayerPrefs")]
+	[MenuItem("Extension/ClearPlayerPrefs")]
 	static void ClearPlayerPrefs()
 	{
 		PlayerPrefs.DeleteAll();
 	}
 
-	[MenuItem("Utils/Reimport UI Assemblies", false, 80)]
+	[MenuItem("Extension/Reimport UI Assemblies", false, 80)]
 	static void ReimportUI() {
 		#if UNITY_4_7
 		var path = EditorApplication.applicationContentsPath + "/UnityExtensions/Unity/GUISystem/{0}/{1}";
@@ -42,7 +42,7 @@ public class MenuExtension {
 			Debug.LogError(string.Format("DLL not found {0}", path));
 	}
 
-	[MenuItem("Utils/Create AssetBundle",false,121)]
+	[MenuItem("Extension/Create AssetBundle",false,121)]
 	static void CreateAssetBundle(){
 		EditorCoroutine.start (ReCreateAssetBundlesCo());
 	}
@@ -90,7 +90,7 @@ public class MenuExtension {
 		EditorUtility.DisplayDialog ("Assetbundles", "Assetbundles re-created", "Ok");
 	}
 
-	[MenuItem("Utils/Update Version",false,122)]
+	[MenuItem("Extension/Update Version",false,122)]
 	static void UpdateVersion(){
 		var path="Assets/Resources/"+Configs.file+".txt";
 		string buf = System.IO.File.ReadAllText(path);
