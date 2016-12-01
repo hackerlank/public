@@ -9,6 +9,7 @@ public class LoadingPanel : MonoBehaviour {
 	public GameObject	children;
 	public InputField	Host;
 	public Text			DefaultHost;
+	public GameObject	Login;
 
 	public Text			percentage;
 	public Slider		fileProgress;
@@ -26,19 +27,30 @@ public class LoadingPanel : MonoBehaviour {
 
 	public IEnumerator Process(){
 		children.SetActive(true);
+#if DEVELOPMENT_BUILD
+		Host.gameObject.SetActive(true);
+		BtnLogin.SetActive(true);
+#endif
 		//load host from cache
-		Host.text=Config.ws;
+		DefaultHost.text=Config.ws;
 
-		/*
-		update & login
-		login:
-			if cached account: login with it
-			else: login with udid
-		if updated and logged in: enter lobby
-		start account coroutine:
-			if not account disable: sign in,cache and update to server
-		 */
+		//update & login
+		StartCoroutine(loginCo());
+		yield return StartCoroutine(updateCo());
+		while(Main.Instance.MainPlayer.msgSCLogin==null)
+			yield return null;
 
+		//all ready: enter lobby
+		yield return StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
+			"Prefabs/LobbyPanel",Main.Instance.RootPanel));
+
+		//start sign up/in
+		Main.Instance.gameObject.AddComponent<SignInGame>();
+
+		Destroy(gameObject);
+	}
+
+	IEnumerator updateCo(){
 		fileProgress.value = 0;
 		
 		//foreach(object o in Game.ToEnumerable(Upgrade()))yield return o;
@@ -104,15 +116,16 @@ public class LoadingPanel : MonoBehaviour {
 			DownloadManager.Instance.StartDownload (url);
 	}
 
-	public void OnLogin(){
+	IEnumerator loginCo(){
+#if DEVELOPMENT_BUILD
 		//choice default if empty
 		if(Host.text.Length<=0)Host.text=DefaultHost.text;
 		//caching
 		if(Host.text.Length<=0){
 			Debug.LogError("Invalid host");
-			return;
+			yield break;
 		}
-
+		
 		var uri=Host.text;
 		var ws=Host.text;
 		if(uri.IndexOf(':')<=0){
@@ -125,7 +138,7 @@ public class LoadingPanel : MonoBehaviour {
 		}
 		Config.uri=uri;
 		Config.ws=ws;
-
+#endif
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			//only for testing
 			MahJongPanel.Create(delegate(Component obj){
@@ -136,30 +149,27 @@ public class LoadingPanel : MonoBehaviour {
 				Destroy(gameObject);
 			});
 		}else if(Main.Instance.GameMode==Main.Mode.NODE)
-			DoLogin();
+			Main.Instance.MainPlayer.msgSCLogin=new MsgSCLogin();
 		else{
+			//login with cached account OR udid
+			var udid=SystemInfo.deviceUniqueIdentifier;
+			var account=PlayerPrefs.GetString(Cache.PrefsKey_Account,udid);
+
 			MsgCSLogin msg=new MsgCSLogin();
 			msg.Mid=pb_msg.MsgCsLogin;
-			msg.Version=100;
+			msg.Version=uint.Parse(Config.build);
 			msg.User=new user_t();
-			msg.User.Account="Unity";
+			msg.User.Account=account;
 			msg.User.DevType=pb_enum.DevPc;
-			msg.User.Name="vic";
-			msg.User.Udid=SystemInfo.deviceUniqueIdentifier;
+			msg.User.Udid=udid;
 			
 			//Debug.Log("----DoLogin account="+msg.User.Account);
 			Main.Instance.MainPlayer.http.SetUri(Config.uri);
 			Main.Instance.MainPlayer.http.Request<MsgCSLogin>(msg.Mid,msg);
 		}
+		yield break;
 	}
 
-	public void DoLogin(){
-		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
-			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
-			Destroy(gameObject);
-		}));
-	}
-	
 	string state{
 		set{
 
@@ -173,6 +183,10 @@ public class LoadingPanel : MonoBehaviour {
 		return str;
 	}
 
+	public void OnLogin(){
+		StartCoroutine(loginCo());
+	}
+	
 	public void OnUpgrade(){
 		var storeUrl="";
 		if (Application.platform == RuntimePlatform.IPhonePlayer)

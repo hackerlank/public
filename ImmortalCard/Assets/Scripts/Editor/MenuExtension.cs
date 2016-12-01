@@ -94,17 +94,28 @@ public class MenuExtension {
 	static void UpdateVersion(){
 		var path="Assets/Resources/"+Config.file+".txt";
 		string buf = System.IO.File.ReadAllText(path);
+
+		//store comments
+		var comments="";
+		string[] lines = buf.Split('\n');
+		foreach(var line in lines){
+			if(line.StartsWith("#") || line.StartsWith("//"))
+				comments+=line+"\n";
+		}
+
+		//parse
 		var dict=Utils.ParseIni(buf);
 		dict["user"]	=System.Environment.UserName;
-		dict["build"]	=UnityEditor.PlayerSettings.shortBundleVersion;
+		dict["version"]	=UnityEditor.PlayerSettings.shortBundleVersion;
 		dict["date"]	=System.DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+		dict["build"]	=UnityEditor.PlayerSettings.
 		#if UNITY_IPHONE
-		dict["version"]	=UnityEditor.PlayerSettings.bundleVersion;
+			bundleVersion;
 		#else
-		dict["version"]	=UnityEditor.PlayerSettings.Android.bundleVersionCode.ToString();
+			Android.bundleVersionCode.ToString();
 		#endif
 
-		buf="";
+		buf=comments;
 		foreach(var kv in dict)
 			buf+=kv.Key+"="+kv.Value+"\n";
 		System.IO.File.WriteAllText (path,buf);

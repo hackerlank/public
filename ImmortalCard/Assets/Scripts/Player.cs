@@ -24,6 +24,7 @@ public class Player {
 	public List<bunch_t>	AAAs=new List<bunch_t>();
 	public bool				conflictMeld=false;
 
+	public MsgSCLogin		msgSCLogin;
 	public MsgNCCreate		msgNCCreate;
 	public MsgNCJoin		msgNCJoin;
 	public MsgCNRevive	msgRevice;
@@ -218,7 +219,7 @@ public class Player {
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
 			Debug.Log("response mid="+mid+",uid="+msgLogin.Uid+",ip="+msgLogin.Ip+",port="+msgLogin.Port);
 			if(msgLogin.Result==pb_enum.Succeess){
-				if(LoadingPanel.Instance!=null)LoadingPanel.Instance.DoLogin();
+				msgSCLogin=msgLogin;
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;

@@ -1,8 +1,8 @@
-uri=http://127.0.0.1:8800
-ws=ws://127.0.0.1:8820
 #ws=ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com
 #update=1
+uri=http://127.0.0.1:8800
+ws=ws://127.0.0.1:8820
 user=vliu
-version=100
-build=1.0.1
-date=2016-11-30 18:36
+version=1.0.0
+build=100
+date=2016-12-01 20:32

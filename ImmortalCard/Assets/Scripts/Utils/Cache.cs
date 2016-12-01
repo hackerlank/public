@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 public class Cache{
+	public const string PrefsKey_Account		="PrefsKey_Account";
 	public const string PrefsKey_DefinedCards	="PrefsKey_DefinedCards";
 	public const string PrefsKey_StoreGame		="PrefsKey_StoreGame";
 
