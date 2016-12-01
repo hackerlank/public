@@ -136,7 +136,7 @@ public class ReplayPanel : GamePanel {
 	}
 
 	public static void Create(string path,System.Action<Component> handler=null){
-		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<ReplayPanel>(
+		Main.Instance.StartCoroutine(Main.Instance.updater.Load<ReplayPanel>(
 			"Prefabs/"+path,Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
 			if(handler!=null)handler.Invoke(obj as Component);
 		}));

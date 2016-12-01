@@ -11,6 +11,8 @@ public class Main : MonoBehaviour {
 
 	public GameController	gameController=null;
 	public ShareAPI			share;
+	public Updater			updater;
+	
 
 	public Transform		RootPanel;
 	public Animator			spinner;
@@ -54,10 +56,10 @@ public class Main : MonoBehaviour {
 			yield break;
 		}
 
-		//update LoginPanel and reload
-		yield return StartCoroutine(updater.Load<LoginPanel>(
-			"Prefabs/LoginPanel",RootPanel,delegate(Object arg1, Hashtable arg2) {
-			var panel=arg1 as LoginPanel;
+		//update LoadingPanel and reload
+		yield return StartCoroutine(updater.Load<LoadingPanel>(
+			"Prefabs/LoadingPanel",RootPanel,delegate(Object arg1, Hashtable arg2) {
+			var panel=arg1 as LoadingPanel;
 			panel.StartCoroutine(panel.Process());
 		}));
 
@@ -91,13 +93,6 @@ public class Main : MonoBehaviour {
 	}
 	
 	void OnApplicationQuit(){
-	}
-
-	Updater updater;
-	public Updater resourceUpdater{
-		get{
-			return updater;
-		}
 	}
 
 	public bool Wait{

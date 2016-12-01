@@ -18,7 +18,7 @@ public class MahjongSettleItem : SettleItem {
 			Debug.Log("settle "+value.Seat+" bunches="+bunches.Count+",hands="+hands.Count);
 
 			foreach(var bunch in bunches){
-				StartCoroutine(Main.Instance.resourceUpdater.Load<MahjongBunch>(
+				StartCoroutine(Main.Instance.updater.Load<MahjongBunch>(
 					"Prefabs/MahjongBunch",Bunches,delegate(Object obj,Hashtable arg) {
 					var zi=obj as MahjongBunch;
 					zi.Value=bunch;

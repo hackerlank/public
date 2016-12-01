@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ public class SummaryPanel : MonoBehaviour {
 		SummaryItem bestItem=null;
 		foreach(play_t play in ctrl.Summary.Play){
 			SummaryItem item=null;
-			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<SummaryItem>(
+			yield return StartCoroutine(Main.Instance.updater.Load<SummaryItem>(
 				"Prefabs/SummaryItem",Items,delegate(Object obj,Hashtable arg) {
 				item=obj as SummaryItem;
 			}));

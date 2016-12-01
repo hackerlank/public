@@ -17,7 +17,7 @@ public class CardCache{
 		Ready=false;
 		//load Card.prefab
 		if(!cards.ContainsKey(path)||cards[path]==null){
-			Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<Card>(
+			Main.Instance.StartCoroutine(Main.Instance.updater.Load<Card>(
 				"Prefabs/"+path,null,delegate(Object obj,Hashtable arg){
 				var comp=obj as Component;
 				cards[path]=comp.gameObject;

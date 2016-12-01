@@ -218,7 +218,7 @@ public class Player {
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
 			Debug.Log("response mid="+mid+",uid="+msgLogin.Uid+",ip="+msgLogin.Ip+",port="+msgLogin.Port);
 			if(msgLogin.Result==pb_enum.Succeess){
-				if(LoginPanel.Instance!=null)LoginPanel.Instance.DoLogin();
+				if(LoadingPanel.Instance!=null)LoadingPanel.Instance.DoLogin();
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;

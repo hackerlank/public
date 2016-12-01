@@ -61,7 +61,7 @@ public class DoudeZhuPanel : GamePanel {
 	override public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
 		yield return StartCoroutine(base.OnMsgSettle(player,msg));
 
-		StartCoroutine(Main.Instance.resourceUpdater.Load<DoudeZhuSettle>(
+		StartCoroutine(Main.Instance.updater.Load<DoudeZhuSettle>(
 			"Prefabs/DoudeZhuSettle",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
 			var popup=arg1 as SettlePopup;
 			popup.Value=msg;
@@ -141,7 +141,7 @@ public class DoudeZhuPanel : GamePanel {
 	override public bool CardDrag{get{return false;}}
 
 	public static void Create(System.Action<Component> handler=null){
-		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<DoudeZhuPanel>(
+		Main.Instance.StartCoroutine(Main.Instance.updater.Load<DoudeZhuPanel>(
 			"Prefabs/DoudeZhuPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
 			if(handler!=null)handler.Invoke(arg1 as Component);
 		}));

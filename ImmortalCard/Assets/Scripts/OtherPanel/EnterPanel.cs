@@ -62,7 +62,7 @@ public class EnterPanel : MonoBehaviour {
 			break;
 		}
 		foreach(var kv in games)
-			StartCoroutine(Main.Instance.resourceUpdater.Load<RuleIcon>(
+			StartCoroutine(Main.Instance.updater.Load<RuleIcon>(
 				"Prefabs/RuleIcon",GameRoot,delegate(Object obj,Hashtable arg){
 				var category=kv.Key;
 				var icon=obj as RuleIcon;
@@ -126,7 +126,7 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnBack(){
-		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(
+		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
 			Destroy(gameObject);
 		}));

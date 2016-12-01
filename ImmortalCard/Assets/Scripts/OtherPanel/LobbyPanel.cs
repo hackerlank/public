@@ -39,7 +39,7 @@ public class LobbyPanel : MonoBehaviour {
 	}
 
 	void addGame(game_t game){
-		StartCoroutine(Main.Instance.resourceUpdater.Load<GameIcon>(
+		StartCoroutine(Main.Instance.updater.Load<GameIcon>(
 			"Prefabs/GameIcon",GameRoot,delegate(Object obj,Hashtable arg){
 			var icon=obj as GameIcon;
 			icon.game=(pb_enum)game.Id;
@@ -66,12 +66,12 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnSettings(){
-		StartCoroutine(Main.Instance.resourceUpdater.Load<SettingsPanel>(
+		StartCoroutine(Main.Instance.updater.Load<SettingsPanel>(
 			"Prefabs/SettingsPanel",Main.Instance.RootPanel));
 	}
 	
 	public void OnProxy(){
-		StartCoroutine(Main.Instance.resourceUpdater.Load<ChargePanel>(
+		StartCoroutine(Main.Instance.updater.Load<ChargePanel>(
 			"Prefabs/ChargePanel",Main.Instance.RootPanel));
 	}
 	

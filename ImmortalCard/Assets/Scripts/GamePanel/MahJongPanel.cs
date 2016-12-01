@@ -42,7 +42,7 @@ public class MahJongPanel : GamePanel {
 			//revive meld
 			foreach(var meld in playFrom.Bunch){
 				MahjongBunch mjBunch=null;
-				StartCoroutine(Main.Instance.resourceUpdater.Load<MahjongBunch>(
+				StartCoroutine(Main.Instance.updater.Load<MahjongBunch>(
 					"Prefabs/MahjongBunch",MeldAreas[i],delegate(Object obj,Hashtable arg){
 					mjBunch=obj as MahjongBunch;
 					mjBunch.Value=meld;
@@ -198,7 +198,7 @@ public class MahJongPanel : GamePanel {
 			}
 			Destroy(A.gameObject);
 			MahjongBunch mjBunch=null;
-			StartCoroutine(Main.Instance.resourceUpdater.Load<MahjongBunch>(
+			StartCoroutine(Main.Instance.updater.Load<MahjongBunch>(
 				"Prefabs/MahjongBunch",MeldAreas[to],delegate(Object obj,Hashtable arg){
 				mjBunch=obj as MahjongBunch;
 				mjBunch.transform.SetSiblingIndex(0);
@@ -220,7 +220,7 @@ public class MahJongPanel : GamePanel {
 
 		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
-		StartCoroutine(Main.Instance.resourceUpdater.Load<MahjongSettle>(
+		StartCoroutine(Main.Instance.updater.Load<MahjongSettle>(
 			"Prefabs/MahjongSettle",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
@@ -391,7 +391,7 @@ public class MahJongPanel : GamePanel {
 	}
 	
 	public static void Create(System.Action<Component> handler=null){
-		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<MahJongPanel>(
+		Main.Instance.StartCoroutine(Main.Instance.updater.Load<MahJongPanel>(
 			"Prefabs/MahJongPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
 			if(handler!=null)handler.Invoke(obj as Component);
 		}));

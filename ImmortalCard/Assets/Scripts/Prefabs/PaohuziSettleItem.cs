@@ -26,7 +26,7 @@ public class PaohuziSettleItem : SettleItem {
 			foreach(var bunch in bunches){
 				var param=new Hashtable();
 				param[0]=bunch;
-				StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiBunch>(
+				StartCoroutine(Main.Instance.updater.Load<ZipaiBunch>(
 					"Prefabs/ZipaiBunch",Bunches,delegate(Object obj,Hashtable arg){
 					var zi=obj as ZipaiBunch;
 					zi.ShowType=true;

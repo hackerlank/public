@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -97,7 +97,7 @@ public class Zipai : Card{
 			//out of bunch area
 			if(bunches.Length<11){
 				//has bunches space
-				StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+				StartCoroutine(Main.Instance.updater.Load<ZipaiHandBunch>(
 					"Prefabs/ZipaiHandBunch",area,delegate(Object arg0,Hashtable arg){
 					var obj=arg0 as Component;
 					if(nx>transform.position.x)

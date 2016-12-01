@@ -10,7 +10,7 @@ public class GameIcon : MonoBehaviour {
 	public pb_enum	game;
 
 	public void OnGame(){
-		StartCoroutine(Main.Instance.resourceUpdater.Load<EnterPanel>(
+		StartCoroutine(Main.Instance.updater.Load<EnterPanel>(
 			"Prefabs/EnterPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2) {
 			var lobby=arg1 as EnterPanel;
 			lobby.CurrentGame=this;

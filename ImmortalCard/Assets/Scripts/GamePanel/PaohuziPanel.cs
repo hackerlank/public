@@ -328,7 +328,7 @@ public class PaohuziPanel : GamePanel {
 
 		for(int i=0;i<MeldAreas.Length;++i)foreach(Transform ch in MeldAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<AbandonAreas.Length;++i)foreach(Transform ch in AbandonAreas[i].transform)Destroy(ch.gameObject);
-		StartCoroutine(Main.Instance.resourceUpdater.Load<PaohuziSettle>(
+		StartCoroutine(Main.Instance.updater.Load<PaohuziSettle>(
 			"Prefabs/PaohuziSettle",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg) {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
@@ -345,7 +345,7 @@ public class PaohuziPanel : GamePanel {
 		int col=hands.Count/3+(rest==0?0:1);
 		for(int i=0;i<col;++i){
 			ZipaiHandBunch bunch=null;
-			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+			yield return StartCoroutine(Main.Instance.updater.Load<ZipaiHandBunch>(
 				"Prefabs/ZipaiHandBunch",HandAreas[0],delegate(Object obj,Hashtable arg){
 				bunch=obj as ZipaiHandBunch;
 			}));
@@ -611,7 +611,7 @@ public class PaohuziPanel : GamePanel {
 
 		foreach(var aaa in player.AAAs){
 			ZipaiHandBunch bunch=null;
-			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+			yield return StartCoroutine(Main.Instance.updater.Load<ZipaiHandBunch>(
 				"Prefabs/ZipaiHandBunch",HandAreas[0],delegate(Object obj,Hashtable arg){
 				bunch=obj as ZipaiHandBunch;
 			}));
@@ -620,7 +620,7 @@ public class PaohuziPanel : GamePanel {
 		}
 		foreach(var cards in sorted){
 			ZipaiHandBunch bunch=null;
-			yield return StartCoroutine(Main.Instance.resourceUpdater.Load<ZipaiHandBunch>(
+			yield return StartCoroutine(Main.Instance.updater.Load<ZipaiHandBunch>(
 				"Prefabs/ZipaiHandBunch",HandAreas[0],delegate(Object obj,Hashtable arg){
 				bunch=obj as ZipaiHandBunch;
 			}));
@@ -827,7 +827,7 @@ public class PaohuziPanel : GamePanel {
 	}
 
 	public static void Create(System.Action<Component> handler=null){
-		Main.Instance.StartCoroutine(Main.Instance.resourceUpdater.Load<PaohuziPanel>(
+		Main.Instance.StartCoroutine(Main.Instance.updater.Load<PaohuziPanel>(
 			"Prefabs/PaohuziPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
 			if(handler!=null)handler.Invoke(obj as Component);
 		}));

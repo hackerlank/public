@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Proto3;
 
-public class LoginPanel : MonoBehaviour {
+public class LoadingPanel : MonoBehaviour {
 	public GameObject	children;
 	public InputField	Host;
 	public Text			DefaultHost;
@@ -14,7 +14,7 @@ public class LoginPanel : MonoBehaviour {
 	public Slider		fileProgress;
 	public Slider		totalProgress;
 
-	public static LoginPanel Instance=null;
+	public static LoadingPanel Instance=null;
 	void Awake(){
 		Instance=this;
 	}
@@ -87,7 +87,7 @@ public class LoginPanel : MonoBehaviour {
 				var www=DownloadManager.Instance.GetWWW(url);
 				if(www!=null&&www.isDone){
 					string resname=Updater.MakeName(url);
-					Main.Instance.resourceUpdater.AddResource(resname,www);
+					Main.Instance.updater.AddResource(resname,www);
 					bundleInProgress.Remove(url);
 					state=progressString(fileProgress.value,bundleInProgress.Count,totalInProgress);
 					Debug.Log("----Asset updated "+resname);
@@ -160,7 +160,7 @@ public class LoginPanel : MonoBehaviour {
 	}
 
 	public void DoLogin(){
-		StartCoroutine(Main.Instance.resourceUpdater.Load<LobbyPanel>(
+		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
 			Destroy(gameObject);
 		}));
