@@ -59,7 +59,7 @@ public class Player {
 	public IEnumerator Reconnect(){
 		//reconnect
 		InGame=false;
-		var storeGame=Main.Instance.storeGame;
+		var storeGame=Cache.storeGame;
 		Connect(storeGame.gameId);
 
 		while(!InGame)yield return null;
@@ -251,7 +251,7 @@ public class Player {
 				msgNCCreate=msgCreate;
 				if(this==Main.Instance.MainPlayer)
 				{
-					var storeGame=Main.Instance.storeGame;
+					var storeGame=Cache.storeGame;
 					storeGame.gameId=msgCreate.GameId;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Cache.PrefsKey_StoreGame,str);
@@ -266,7 +266,7 @@ public class Player {
 				msgNCJoin=msgJoin;
 				if(this==Main.Instance.MainPlayer)
 				{
-					var storeGame=Main.Instance.storeGame;
+					var storeGame=Cache.storeGame;
 					storeGame.gameType=(int)msgJoin.Game;
 					var str=storeGame.ToString();
 					PlayerPrefs.SetString(Cache.PrefsKey_StoreGame,str);

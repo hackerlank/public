@@ -137,7 +137,7 @@ public class EnterPanel : MonoBehaviour {
 		while(!Main.Instance.MainPlayer.InGame)yield return null;
 
 		var storeGame=new StoreGame();
-		Main.Instance.storeGame=storeGame;
+		Cache.storeGame=storeGame;
 		storeGame.gameType=(int)CurrentGame.game;
 		storeGame.robots=4;
 
@@ -188,7 +188,7 @@ public class EnterPanel : MonoBehaviour {
 		Main.Instance.MainPlayer.msgNCJoin=null;
 		while(Main.Instance.MainPlayer.msgNCJoin==null)yield return null;
 
-		var storeGame=Main.Instance.storeGame;
+		var storeGame=Cache.storeGame;
 		storeGame.gameType=(int)Main.Instance.MainPlayer.msgNCJoin.Game;
 		Main.Instance.MainPlayer.msgNCJoin=null;
 
@@ -197,7 +197,7 @@ public class EnterPanel : MonoBehaviour {
 
 	IEnumerator createGame(){
 		//create game panel
-		var storeGame=Main.Instance.storeGame;
+		var storeGame=Cache.storeGame;
 		yield return StartCoroutine(Main.Instance.MainPlayer.CreateGame(
 			(pb_enum)storeGame.gameType,storeGame.gameId));
 

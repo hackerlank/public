@@ -11,7 +11,9 @@ public class Cache{
 	public const string PrefsKey_MusicVolume	="PrefsKey_MusicVolume";
 	public const string PrefsKey_SoundOn		="PrefsKey_SoundOn";
 	public const string PrefsKey_MusicOn		="PrefsKey_MusicOn";
-	
+
+	public static StoreGame storeGame;	//store game for reconnect
+
 	public static float SoundVolume=0.5f;
 	public static float MusicVolume=0.5f;
 	public static bool SoundOn=true;

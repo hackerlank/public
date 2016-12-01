@@ -7,7 +7,6 @@ public class Main : MonoBehaviour {
 	public static Main		Instance=null;
 
 	public const int		Round=2;
-	public StoreGame		storeGame;	//store game for reconnect
 
 	public GameController	gameController=null;
 	public ShareAPI			share;
