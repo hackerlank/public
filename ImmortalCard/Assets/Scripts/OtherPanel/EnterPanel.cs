@@ -12,7 +12,7 @@ public class EnterPanel : MonoBehaviour {
 
 	public static EnterPanel Instance=null;
 	void Awake(){
-		DefinedCards.text=PlayerPrefs.GetString(Configs.PrefsKey_DefinedCards);
+		DefinedCards.text=PlayerPrefs.GetString(Cache.PrefsKey_DefinedCards);
 		Instance=this;
 	}
 	void OnDestroy(){Instance=null;}
@@ -169,7 +169,7 @@ public class EnterPanel : MonoBehaviour {
 			msgC.Options.Add(opCards);
 
 			//save
-			PlayerPrefs.SetString(Configs.PrefsKey_DefinedCards,cards);
+			PlayerPrefs.SetString(Cache.PrefsKey_DefinedCards,cards);
 			PlayerPrefs.Save();
 		}
 		

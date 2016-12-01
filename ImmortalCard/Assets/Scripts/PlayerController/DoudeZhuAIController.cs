@@ -10,7 +10,7 @@ public class DoudeZhuAIController:AIController {
 		if(player.playData.Seat==(msg.Bunch.Pos+1)%maxPlayer){
 			var rule=Main.Instance.gameController.Rule;
 			if(rule.checkDiscard(player,0)){
-				yield return new WaitForSeconds(Configs.OpsInterval);
+				yield return new WaitForSeconds(Config.OpsInterval);
 				if(null==Main.Instance.gameController)yield break;
 
 				MsgCNDiscard omsgDiscard=new MsgCNDiscard();

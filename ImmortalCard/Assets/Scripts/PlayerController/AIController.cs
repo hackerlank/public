@@ -6,7 +6,7 @@ using Google.Protobuf;
 public class AIController:PlayerController{
 
 	virtual public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
-		yield return new WaitForSeconds(Configs.OpsInterval);
+		yield return new WaitForSeconds(Config.OpsInterval);
 
 		var omsgEngage=new MsgCNEngage();
 		omsgEngage.Mid=pb_msg.MsgCnEngage;
@@ -40,7 +40,7 @@ public class AIController:PlayerController{
 			//remove from hands
 			player.playData.Hands.Remove(card);
 		}else{
-			yield return new WaitForSeconds(Configs.OpsInterval);
+			yield return new WaitForSeconds(Config.OpsInterval);
 			if(Main.Instance.gameController==null)yield break;
 
 			//meld only for others

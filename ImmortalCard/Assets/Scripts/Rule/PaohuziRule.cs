@@ -45,7 +45,7 @@ public class PaohuziRule: GameRule {
 		}
 		var card=src_bunch.Pawns[0];
 
-		if(card==Configs.invalidCard){
+		if(card==Config.invalidCard){
 			//check natural win at startup
 			var win=isWin(player,copy,card);
 			if(win!=null)
@@ -122,7 +122,7 @@ public class PaohuziRule: GameRule {
 				}
 				//also set card to invalid
 				if(AAAAs!=null){
-					card=Configs.invalidCard;
+					card=Config.invalidCard;
 					output.Add(AAAAs);
 				}
 			}
@@ -294,7 +294,7 @@ public class PaohuziRule: GameRule {
 			}
 		}
 
-		if(card==Configs.invalidCard){
+		if(card==Config.invalidCard){
 			//natural win: AAAs
 			if(player.AAAAs.Count>=3 || player.AAAs.Count>=5)
 				bunches=buildFrees(hands,player.AAAs.Count+player.AAAAs.Count);

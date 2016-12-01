@@ -35,19 +35,19 @@ public class Main : MonoBehaviour {
 
 	IEnumerator Start () {
 		//load config
-		TextAsset text = (TextAsset)Resources.Load(Configs.file);
+		TextAsset text = (TextAsset)Resources.Load(Config.file);
 		if(text!=null)
-			Configs.Load(text.text);
+			Config.Load(text.text);
 
 		//update config
 		yield return StartCoroutine(updater.Load<TextAsset>(
 			"Config/config",null,delegate(Object obj,Hashtable param){
 			var ta=obj as TextAsset;
-			Configs.Load(ta.text);
+			Config.Load(ta.text);
 		}));
 
 		//force update
-		var forceUpdate=(int.Parse(Configs.update)!=0);
+		var forceUpdate=(int.Parse(Config.update)!=0);
 		if(forceUpdate){
 			var storeUrl="";
 			if (Application.platform == RuntimePlatform.IPhonePlayer)

@@ -1,5 +1,7 @@
 uri=http://127.0.0.1:8800
 ws=ws://127.0.0.1:8820
+#ws=ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com
+#update=1
 user=vliu
 version=100
 build=1.0.1

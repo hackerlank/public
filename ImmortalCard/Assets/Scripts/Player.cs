@@ -51,7 +51,7 @@ public class Player {
 
 			//connect by key
 			var key=gid/(int)pb_enum.DefMaxGamesPerNode;
-			ws.Connect(Configs.ws+"/"+key);
+			ws.Connect(Config.ws+"/"+key);
 			//Debug.Log("connecting by key "+key);
 		}
 	}
@@ -254,7 +254,7 @@ public class Player {
 					var storeGame=Main.Instance.storeGame;
 					storeGame.gameId=msgCreate.GameId;
 					var str=storeGame.ToString();
-					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
+					PlayerPrefs.SetString(Cache.PrefsKey_StoreGame,str);
 				}
 			}else
 				Debug.LogError("create error: "+msgCreate.Result);
@@ -269,7 +269,7 @@ public class Player {
 					var storeGame=Main.Instance.storeGame;
 					storeGame.gameType=(int)msgJoin.Game;
 					var str=storeGame.ToString();
-					PlayerPrefs.SetString(Configs.PrefsKey_StoreGame,str);
+					PlayerPrefs.SetString(Cache.PrefsKey_StoreGame,str);
 				}
 			}else
 				Debug.LogError("join error: "+msgJoin.Result);
@@ -426,7 +426,7 @@ public class Player {
 				if(this==Main.Instance.MainPlayer)
 				{
 					Debug.Log("----finish game and clear cache");
-					PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
+					PlayerPrefs.DeleteKey(Cache.PrefsKey_StoreGame);
 				}
 			}
 			else

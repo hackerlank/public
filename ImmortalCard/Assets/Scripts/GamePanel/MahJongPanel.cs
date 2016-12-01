@@ -112,7 +112,7 @@ public class MahJongPanel : GamePanel {
 		bunch.Type=pb_enum.BunchA;
 		bunch.Pawns.Add(id);
 		if(pos==Main.Instance.MainPlayer.playData.Seat&&!showHints(bunch)){
-			yield return new WaitForSeconds(Configs.OpsInterval);
+			yield return new WaitForSeconds(Config.OpsInterval);
 			//collect
 			var omsg=new MsgCNMeld();
 			omsg.Mid=pb_msg.MsgCnMeld;

@@ -163,7 +163,7 @@ public class MahJongRule: GameRule {
 			return null;
 
 		List<int> cards=new List<int>(hands);
-		if(card!=Configs.invalidCard){
+		if(card!=Config.invalidCard){
 			var inhand=false;
 			foreach(var i in cards)if(i==card){inhand=true;break;}
 			if(!inhand)cards.Add(card);

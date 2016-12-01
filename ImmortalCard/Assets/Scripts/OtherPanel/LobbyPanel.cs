@@ -15,7 +15,7 @@ public class LobbyPanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 
 	IEnumerator Start(){
-		var str=PlayerPrefs.GetString(Configs.PrefsKey_StoreGame,"");
+		var str=PlayerPrefs.GetString(Cache.PrefsKey_StoreGame,"");
 		var storeGame=new StoreGame();
 		storeGame.FromString(str);
 

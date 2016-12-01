@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
@@ -74,7 +74,7 @@ public class ZipaiBunch : Bunch{
 	}
 
 	static public void PlaySound(pb_enum type){
-		if(!Configs.SoundOn)return;
+		if(!Cache.SoundOn)return;
 
 		var sndName="";
 		switch(type){

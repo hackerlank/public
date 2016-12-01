@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using Proto3;
 using Google.Protobuf;
@@ -16,11 +16,11 @@ public class PaohuziAIController:AIController{
 		var bDraw=rule.Pile.IndexOf(card)!=-1;
 
 		//do nothing if all pass discard,because draw message will come
-		if(msg.Bunch.Type==pb_enum.OpPass && !bDraw && card!=Configs.invalidCard)
+		if(msg.Bunch.Type==pb_enum.OpPass && !bDraw && card!=Config.invalidCard)
 			yield break;
 		
 		if(player.playData.Seat==msg.Bunch.Pos){
-			yield return new WaitForSeconds(Configs.OpsInterval);
+			yield return new WaitForSeconds(Config.OpsInterval);
 			if(null==Main.Instance.gameController)yield break;
 
 			rule.Meld(player,msg.Bunch);
@@ -28,7 +28,7 @@ public class PaohuziAIController:AIController{
 			if(msg.Bunch.Type==pb_enum.BunchWin)
 				yield break;
 
-			if(rule.checkDiscard(player,Configs.invalidCard)){
+			if(rule.checkDiscard(player,Config.invalidCard)){
 				//discard
 				var discard=player.playData.Hands[0];
 

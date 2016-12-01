@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using cn.sharesdk.unity3d;
 
@@ -10,7 +10,7 @@ public class ShareAPI {
 		if(_sdk==null || Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)
 			return;
 
-		_sdk.appKey=Configs.modId;
+		_sdk.appKey=Config.modId;
 		_sdk.devInfo.wechat.Enable=true;
 		_sdk.devInfo.wechatMoments.Enable=true;
 		//sdk.devInfo.wechatFavorites.Enable=true;

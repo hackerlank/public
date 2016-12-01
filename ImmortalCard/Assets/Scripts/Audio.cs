@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -33,8 +33,8 @@ public class Audio : MonoBehaviour {
 	}
 
 	void play(string Name,bool music=true){
-		bool on=(music?Configs.MusicOn:Configs.SoundOn);
-		float volume=(music?Configs.MusicVolume:Configs.MusicVolume);
+		bool on=(music?Cache.MusicOn:Cache.SoundOn);
+		float volume=(music?Cache.MusicVolume:Cache.MusicVolume);
 
 		var src=Get(Name);
 		if(src!=null){

@@ -27,7 +27,7 @@ public class LoadingPanel : MonoBehaviour {
 	public IEnumerator Process(){
 		children.SetActive(true);
 		//load host from cache
-		Host.text=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
+		Host.text=Config.ws;
 
 		/*
 		update & login
@@ -48,8 +48,8 @@ public class LoadingPanel : MonoBehaviour {
 			DestroyImmediate(DownloadManager.Instance.gameObject);
 		yield return null;
 		
-		if(!string.IsNullOrEmpty(Configs.updateUri)){
-			DownloadManager.SetManualUrl(Configs.updateUri+"$(Platform)");
+		if(!string.IsNullOrEmpty(Config.updateUri)){
+			DownloadManager.SetManualUrl(Config.updateUri+"$(Platform)");
 		}
 		
 		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
@@ -108,13 +108,7 @@ public class LoadingPanel : MonoBehaviour {
 		//choice default if empty
 		if(Host.text.Length<=0)Host.text=DefaultHost.text;
 		//caching
-		if(Host.text.Length>0){
-			var saved=PlayerPrefs.GetString(Configs.PrefsKey_Uri);
-			if(Host.text!=saved){
-				PlayerPrefs.SetString(Configs.PrefsKey_Uri,Host.text);
-				PlayerPrefs.Save();
-			}
-		}else{
+		if(Host.text.Length<=0){
 			Debug.LogError("Invalid host");
 			return;
 		}
@@ -129,8 +123,8 @@ public class LoadingPanel : MonoBehaviour {
 			uri="http://"+uri;
 			ws="ws://"+ws;
 		}
-		Configs.uri=uri;
-		Configs.ws=ws;
+		Config.uri=uri;
+		Config.ws=ws;
 
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			//only for testing
@@ -154,7 +148,7 @@ public class LoadingPanel : MonoBehaviour {
 			msg.User.Udid=SystemInfo.deviceUniqueIdentifier;
 			
 			//Debug.Log("----DoLogin account="+msg.User.Account);
-			Main.Instance.MainPlayer.http.SetUri(Configs.uri);
+			Main.Instance.MainPlayer.http.SetUri(Config.uri);
 			Main.Instance.MainPlayer.http.Request<MsgCSLogin>(msg.Mid,msg);
 		}
 	}

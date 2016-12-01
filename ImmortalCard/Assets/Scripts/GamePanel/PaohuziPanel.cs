@@ -147,7 +147,7 @@ public class PaohuziPanel : GamePanel {
 		card.state=Card.State.ST_DISCARD;
 
 		Debug.Log(pos+" draw "+id);
-		yield return new WaitForSeconds(Configs.OpsInterval/2f);
+		yield return new WaitForSeconds(Config.OpsInterval/2f);
 
 		//immediately discard,we only meld when discard
 		if(this!=null){
@@ -378,7 +378,7 @@ public class PaohuziPanel : GamePanel {
 			}
 		}
 
-		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
+		if(wait)yield return new WaitForSeconds(Config.OpsInterval);
 		
 		//pass discard or draw message
 		var msg=new MsgCNMeld();

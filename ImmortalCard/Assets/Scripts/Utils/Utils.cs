@@ -71,6 +71,8 @@ public class Utils {
 
 		string[] lines = text.Split('\n');
 		foreach(var line in lines){
+			if(line.StartsWith("#") || line.StartsWith("//"))
+				continue;
 			string[] values = line.Split('=');
 			if(values.Length>1){
 				dict[values[0]]=values[1];

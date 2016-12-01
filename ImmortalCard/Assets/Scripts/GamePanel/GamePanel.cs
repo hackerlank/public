@@ -235,7 +235,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			bunch_t bunch=new bunch_t();
 			bunch.Pos=player.playData.Seat;
 			bunch.Type=pb_enum.BunchA;
-			bunch.Pawns.Add(Configs.invalidCard);
+			bunch.Pawns.Add(Config.invalidCard);
 			
 			var meld=false;
 			if(player==Main.Instance.MainPlayer){
@@ -263,7 +263,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			}
 			
 			if(!meld)
-				StartCoroutine(passMeld(player,Configs.invalidCard,true));
+				StartCoroutine(passMeld(player,Config.invalidCard,true));
 		}
 	}
 	// ----------------------------------------------
@@ -290,7 +290,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual public void OnPass(){
 		foreach(var btn in btnOps)btn.SetActive(false);
 		
-		int id=Configs.invalidCard;
+		int id=Config.invalidCard;
 		var card=DiscardAreas[Rule.Token].GetComponentInChildren<Card>();
 		if(card!=null){
 			id=card.Value;
@@ -318,7 +318,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnExit(){
-		PlayerPrefs.DeleteKey(Configs.PrefsKey_StoreGame);
+		PlayerPrefs.DeleteKey(Cache.PrefsKey_StoreGame);
 		Main.Instance.MainPlayer.InGame=false;
 		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
@@ -398,7 +398,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 			}
 			_selection.Clear();
 		}
-		yield return new WaitForSeconds(Configs.OpsInterval);
+		yield return new WaitForSeconds(Config.OpsInterval);
 		Main.Instance.MainPlayer.Send<MsgCNDiscard>(msg.Mid,msg);
 	}
 
@@ -406,7 +406,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	virtual protected bool showHints(bunch_t bunch,bool startup=false){return true;}
 
 	protected IEnumerator passDiscard(Player player,bool wait=true){
-		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
+		if(wait)yield return new WaitForSeconds(Config.OpsInterval);
 		
 		//pass discard or draw
 		MsgCNDiscard msg=new MsgCNDiscard();
@@ -421,7 +421,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 
 	virtual protected IEnumerator passMeld(Player player,int card,bool wait=true){
-		if(wait)yield return new WaitForSeconds(Configs.OpsInterval);
+		if(wait)yield return new WaitForSeconds(Config.OpsInterval);
 		
 		//pass discard or draw
 		var msg=new MsgCNMeld();

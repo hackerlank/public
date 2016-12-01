@@ -55,7 +55,7 @@ public class Updater : MonoBehaviour {
 		return finished / total;
 	}
 
-	public void Cache(string uri){
+	public void cache(string uri){
 		string url = Updater.MakeUrl(uri);
 		StartCoroutine(DownloadManager.Instance.WaitDownload(url,10));
 	}

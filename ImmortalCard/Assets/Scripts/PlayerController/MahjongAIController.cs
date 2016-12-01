@@ -6,7 +6,7 @@ using Google.Protobuf;
 public class MahjongAIController:AIController{
 
 	override public IEnumerator OnMsgDeal(Player player,MsgNCDeal msg){
-		yield return new WaitForSeconds(Configs.OpsInterval);
+		yield return new WaitForSeconds(Config.OpsInterval);
 
 		var key=MahJongRule.FindDefaultColor(player);
 		var omsgEngage=new MsgCNEngage();
@@ -29,7 +29,7 @@ public class MahjongAIController:AIController{
 			yield break;
 		
 		if(player.playData.Seat==msg.Bunch.Pos){
-			yield return new WaitForSeconds(Configs.OpsInterval);
+			yield return new WaitForSeconds(Config.OpsInterval);
 			if(null==Main.Instance.gameController)yield break;
 
 			var rule=Main.Instance.gameController.Rule;
@@ -64,7 +64,7 @@ public class MahjongAIController:AIController{
 
 	override public IEnumerator OnMsgDraw(Player player,MsgNCDraw msg){
 		if(player.playData.Seat==msg.Pos){
-			yield return new WaitForSeconds(Configs.OpsInterval);
+			yield return new WaitForSeconds(Config.OpsInterval);
 			if(null==Main.Instance.gameController)yield break;
 
 			//meld only for the drawer

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.IO;
@@ -92,7 +92,7 @@ public class MenuExtension {
 
 	[MenuItem("Extension/Update Version",false,122)]
 	static void UpdateVersion(){
-		var path="Assets/Resources/"+Configs.file+".txt";
+		var path="Assets/Resources/"+Config.file+".txt";
 		string buf = System.IO.File.ReadAllText(path);
 		var dict=Utils.ParseIni(buf);
 		dict["user"]	=System.Environment.UserName;
