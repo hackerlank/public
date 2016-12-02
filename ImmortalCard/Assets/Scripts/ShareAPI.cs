@@ -21,12 +21,19 @@ public class ShareAPI {
 		_sdk.showUserHandler = GetUserInfoResultHandler;
 	}
 
-	public void SignIn(){
-		if(_sdk==null || Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)
-			return;
-		
-		_sdk.Authorize(PlatformType.WeChat);
-		_sdk.GetUserInfo(PlatformType.WeChat);
+	string account;
+	public IEnumerator SignIn(System.Action<string> callback=null){
+		account="";
+		if(_sdk==null || Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android){
+			account=SystemInfo.deviceUniqueIdentifier;
+		}else{
+			_sdk.Authorize(PlatformType.WeChat);
+			_sdk.GetUserInfo(PlatformType.WeChat);
+		}
+		while(string.IsNullOrEmpty(account))yield return null;
+
+		if(callback!=null)
+			callback.Invoke(account);
 	}
 
 	public void Share(string title,string text,int type,string url=""){
@@ -97,6 +104,7 @@ public class ShareAPI {
 		}
 		else
 			Debug.Log("get user info unknown");
+		account="vliu";
 	}
 
 	string PrepareShareImage(bool capture){

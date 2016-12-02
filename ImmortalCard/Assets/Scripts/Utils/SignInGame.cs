@@ -5,13 +5,16 @@ public class SignInGame : MonoBehaviour {
 
 	// Use this for initialization
 	IEnumerator Start () {
-		//if not account disable: sign in,cache and update to server
-		yield return new WaitForSeconds(5);
+		var limited=(0==int.Parse(Config.limited));
+		if(!limited){
+			//if not account disable: sign in,cache and update to server
+			yield return new WaitForSeconds(5);
 
-		var udid=SystemInfo.deviceUniqueIdentifier;
-		var account=PlayerPrefs.GetString(Cache.PrefsKey_Account);
-		if(udid==account){
-			//need sign up
+			//always sign in to find the new user
+			yield return StartCoroutine(Main.Instance.share.SignIn(delegate(string account) {
+				//cache account for next time login
+				PlayerPrefs.SetString(Cache.PrefsKey_Account,account);
+			}));
 		}
 
 		//destroy when finish

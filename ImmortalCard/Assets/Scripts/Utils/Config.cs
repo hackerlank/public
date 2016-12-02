@@ -11,8 +11,9 @@ public class Config{
 
 	public static string uri="http://127.0.0.1:8800";
 	public static string ws="ws://127.0.0.1:8820";
-	public static string updateUri="";
-	public static string update="0";
+	public static string updateUri="";	//bundles update uri
+	public static string update="0";	//force update
+	public static string limited="0";	//feature limited: wechat,payment etc.
 
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
