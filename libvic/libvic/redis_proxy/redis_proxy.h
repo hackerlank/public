@@ -28,6 +28,10 @@ public:
 	// raw command
 	int			command(result_t&,const char* cmd);
 
+    //distributed lock
+    bool        lock(const char* key,int expire=3);
+    void        unlock(const char* key);
+    
 	//key
 	bool	exists		(const char* key);
 	bool	expire		(const char* key,uint32_t seconds);

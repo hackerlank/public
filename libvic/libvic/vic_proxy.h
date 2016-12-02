@@ -36,7 +36,11 @@ public:
 	// raw command
 	virtual int			command(result_t&,const char* cmd)=0;
 
-	//key
+    //distributed lock
+    virtual bool        lock(const char* key,int expire=3)=0;
+    virtual void        unlock(const char* key)=0;
+
+    //key
 	virtual bool	exists		(const char* key)=0;
 	virtual bool	expire		(const char* key,uint32_t seconds)=0;
 	virtual bool	del			(const char* key)=0;

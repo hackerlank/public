@@ -33,46 +33,69 @@ void Player::on_read(PBHelper& pb){
         case proto3::pb_msg::MSG_CN_CREATE:{
             MsgCNCreate imsg;
             MsgNCCreate omsg;
-            if(pb.Parse(imsg)){
+            do{
+                if(!pb.Parse(imsg)){
+                    omsg.set_result(proto3::pb_enum::ERR_PROTOCOL);
+                    break;
+                }
+                
+                //gold check
+                auto spdb=Immortal::sImmortal->spdb;
+                auto uid=playData.player().uid().c_str();
+                spdb->lock(uid);
+                {
+                    char gold_key[128];
+                    std::string str;
+                    int gold=0;
+                    int cost=1;
+                    sprintf(gold_key,"player:%s",uid);
+                    spdb->hget(gold_key,"gold",str);
+                    gold=atoi(str.c_str());
+                    if(gold<cost){
+                        omsg.set_result(proto3::pb_enum::ERR_NOENOUGH);
+                        spdb->unlock(uid);
+                        Logger<<"game create failed,no gold for "<<imsg.game()<<":"<<gold<<endl;
+                        break;
+                    }
+                }
+                spdb->unlock(uid);
+
                 auto key=getKey();
                 auto gameptr=Immortal::sImmortal->createGame(key,imsg);
-                if(gameptr){
-                    int maxRound=1;
-                    for(auto kv:imsg.options()){
-                        switch (kv.ikey()) {
-                            case pb_enum::OPTION_CATEGORY:
-                                gameptr->category=(pb_enum)kv.ivalue();
-                                break;
-                            case pb_enum::OPTION_ROUND:
-                                maxRound=kv.ivalue();
-                                break;
-                            case pb_enum::OPTION_DEFINED_CARDS:
-                                gameptr->definedCards=kv.value();
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    game=gameptr;
-                    game->players.push_back(shared_from_this());
-                    game->Round=maxRound;
-                    //game->banker=game->rule->MaxPlayer(*game)-1; //test change banker
-                    ready=true;
-                    playData.set_seat((int)game->players.size()-1);
-                    //fill data
-                
-                    omsg.set_game_id((int)game->id);
-                    omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    //Logger<<"game created,gid="<<(int)game->id<<endl;
-                }else{
-                    omsg.set_result(proto3::pb_enum::ERR_FAILED);
+                if(!gameptr){
+                    omsg.set_result(proto3::pb_enum::ERR_PARAM);
                     Logger<<"game create failed,no rule "<<imsg.game()<<endl;
+                    break;
                 }
-            }else{
-                Logger<<"message error id="<<mid<<endl;
-                omsg.set_result(proto3::pb_enum::ERR_FAILED);
-            }
+                int maxRound=1;
+                for(auto kv:imsg.options()){
+                    switch (kv.ikey()) {
+                        case pb_enum::OPTION_CATEGORY:
+                            gameptr->category=(pb_enum)kv.ivalue();
+                            break;
+                        case pb_enum::OPTION_ROUND:
+                            maxRound=kv.ivalue();
+                            break;
+                        case pb_enum::OPTION_DEFINED_CARDS:
+                            gameptr->definedCards=kv.value();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                
+                game=gameptr;
+                game->players.push_back(shared_from_this());
+                game->Round=maxRound;
+                //game->banker=game->rule->MaxPlayer(*game)-1; //test change banker
+                ready=true;
+                playData.set_seat((int)game->players.size()-1);
+                //fill data
+                
+                omsg.set_game_id((int)game->id);
+                omsg.set_result(proto3::pb_enum::SUCCEESS);
+                //Logger<<"game created,gid="<<(int)game->id<<endl;
+            }while(false);
             omsg.set_mid(proto3::pb_msg::MSG_NC_CREATE);
             PBHelper::Send(sh,omsg);
             

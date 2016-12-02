@@ -136,33 +136,57 @@ bool GameRule::settle(Game& game){
     //copy pile
     for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
     
-    //just send
-    auto& msg=*game.spSettle;
-    msg.set_mid(pb_msg::MSG_NC_SETTLE);
-    for(auto p:game.players){
-        p->send(msg);
-        p->lastMsg=game.spSettle;
-    }
-    
     //TODO: persistence replay
     
     ++game.round;
     
     //permanent data
+    bool cost_failed=false;
     if(game.round==1){
         //cost gold
-        int cost=1;
-        auto banker=game.players[0]->playData.mutable_player();
-        banker->set_gold(banker->gold()-cost);
-        
+        auto owner=game.players[0]->playData.mutable_player();
+        auto uid=owner->uid().c_str();
         char key[64],field[32];
-        sprintf(key,"player:%s",banker->uid().c_str());
-        Immortal::sImmortal->spdb->hincrby(key,"gold",-cost);
+        sprintf(key,"player:%s",uid);
+        
+        int gold=0;
+        int cost=1;
+        auto spdb=Immortal::sImmortal->spdb;
+        spdb->lock(uid);
+        {
+            char gold_key[128];
+            std::string str;
+            sprintf(gold_key,"player:%s",uid);
+            spdb->hget(gold_key,"gold",str);
+            gold=atoi(str.c_str());
+
+            if(gold>=cost){
+                owner->set_gold(gold-cost);
+                spdb->hincrby(gold_key,"gold",gold-cost);
+            }else{
+                cost_failed=true;
+                Logger<<"game "<<(int)game.id<<" no enough gold "<<gold<<endf;
+            }
+        }
+        spdb->unlock(uid);
         
         //stats
         sprintf(key,"game_count:%d",game.rule->Type());
         sprintf(field,"%d",(int)game.category);
-        Immortal::sImmortal->spdb->hincrby(key,field);
+        spdb->hincrby(key,field);
+    }
+    
+    //just send
+    auto& msg=*game.spSettle;
+    if(cost_failed){
+        //no data for cheater
+        msg.Clear();
+        msg.set_result(pb_enum::ERR_NOENOUGH);
+    }
+    msg.set_mid(pb_msg::MSG_NC_SETTLE);
+    for(auto p:game.players){
+        p->send(msg);
+        p->lastMsg=game.spSettle;
     }
     
     //end round

@@ -156,6 +156,33 @@ int redis_proxy::command(result_t& result,const char* cmd){
 	}
 }
 
+//distributed lock
+bool redis_proxy::lock(const char* key,int seconds){
+    char lkey[128];
+    sprintf(lkey,"%s:lock",key);
+    if(setnx(lkey,"1")){
+        //locked, set expire
+        expire(lkey,seconds);
+        return true;
+    }else{
+        //failed, check
+        char cmd[64];
+        sprintf(cmd,"ttl %s",lkey);
+        auto redis_res=redis->redis_command(REDIS_REPLY_INTEGER,nullptr,nullptr,nullptr,cmd);
+        if(redis_res && redis_res->integer<=0)
+            //crashed by some reason, revive expire
+            expire(lkey,seconds);
+        return false;
+    }
+}
+
+void redis_proxy::unlock(const char* key){
+    //must pair with lock
+    char lkey[128];
+    sprintf(lkey,"%s:lock",key);
+    del(lkey);
+}
+
 //key
 bool redis_proxy::exists(const char* key){
 	DO_RET(exists,false)
