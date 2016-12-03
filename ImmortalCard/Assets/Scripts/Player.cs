@@ -219,19 +219,22 @@ public class Player {
 			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
 			Debug.Log("response mid="+mid+",uid="+msgLogin.Uid+",ip="+msgLogin.Ip+",port="+msgLogin.Port);
 			if(msgLogin.Result==pb_enum.Succeess){
+				playData.Player.Uid=msgLogin.Uid;
 				msgSCLogin=msgLogin;
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;
 
 		//Lobby
-		case pb_msg.MsgLcReplay:
-			MsgLCReplay msgReplay=MsgLCReplay.Parser.ParseFrom(bytes);
-			if(msgReplay.Result==pb_enum.Succeess){
-				if(EnterPanel.Instance!=null)
-					EnterPanel.Instance.DoReplay(msgReplay);
+		case pb_msg.MsgLcEnter:
+			MsgLCEnter msgLobby=MsgLCEnter.Parser.ParseFrom(bytes);
+			if(msgLobby.Result==pb_enum.Succeess){
+				LobbyPanel.Info=msgLobby.Lobby;
+				var uid=playData.Player.Uid;
+				playData.Player=msgLobby.Player;
+				playData.Player.Uid=uid;
 			}else
-				Debug.LogError("replay error: "+msgReplay.Result);
+				Debug.LogError("lobby error: "+msgLobby.Result);
 			break;
 
 		//Node

@@ -22,7 +22,7 @@ public class Main : MonoBehaviour {
 		NODE,
 		NORMAL,
 	}
-	public Mode GameMode{get{return Mode.NODE;}}
+	public Mode GameMode{get{return Mode.NORMAL;}}
 
 	void Awake(){
 		Instance=this;
@@ -44,6 +44,7 @@ public class Main : MonoBehaviour {
 			var ta=obj as TextAsset;
 			Config.Load(ta.text);
 		}));
+		Main.Instance.MainPlayer.http.SetUri(Config.uri);
 
 		//force update
 		var forceUpdate=(int.Parse(Config.update)!=0);
@@ -76,6 +77,7 @@ public class Main : MonoBehaviour {
 		//Application.runInBackground = true;
 		//Screen.orientation=ScreenOrientation.Portrait;
 		share=new ShareAPI();
+		StartCoroutine(LobbyPanel.ObserveCo());
 	}
 	
 	void Update () {

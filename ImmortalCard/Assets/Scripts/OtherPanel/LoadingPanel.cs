@@ -7,8 +7,8 @@ using Proto3;
 
 public class LoadingPanel : MonoBehaviour {
 	public GameObject	children;
-	public InputField	Host;
-	public Text			DefaultHost;
+	public InputField	Node;
+	public Text			DefaultNode;
 	public GameObject	Login;
 
 	public Text			percentage;
@@ -26,14 +26,15 @@ public class LoadingPanel : MonoBehaviour {
 
 	public IEnumerator Process(){
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
-		Host.gameObject.SetActive(true);
+		Node.gameObject.SetActive(true);
 		Login.SetActive(true);
-#endif
 		//load host from cache
-		DefaultHost.text=Config.ws;
-
+		DefaultNode.text=Config.ws;
+#else
 		//update & login
 		StartCoroutine(loginCo());
+#endif
+
 		yield return StartCoroutine(updateCo());
 		while(Main.Instance.MainPlayer.msgSCLogin==null)
 			yield return null;
@@ -118,25 +119,21 @@ public class LoadingPanel : MonoBehaviour {
 	IEnumerator loginCo(){
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
 		//choice default if empty
-		if(Host.text.Length<=0)Host.text=DefaultHost.text;
+		if(Node.text.Length<=0)Node.text=DefaultNode.text;
 		//caching
-		if(Host.text.Length<=0){
+		if(Node.text.Length<=0){
 			Debug.LogError("Invalid host");
 			yield break;
 		}
 		
-		var uri=Host.text;
-		var ws=Host.text;
-		if(uri.IndexOf(':')<=0){
-			uri+=":8800";
-			ws+=":8820";
+		var node=Node.text;
+		if(node.IndexOf(':')<=0){
+			node+=":8820";
 		}
-		if(uri.IndexOf('/')<=0){
-			uri="http://"+uri;
-			ws="ws://"+ws;
+		if(node.IndexOf('/')<=0){
+			node="ws://"+node;
 		}
-		Config.uri=uri;
-		Config.ws=ws;
+		Config.ws=node;
 #endif
 		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
 			//only for testing
@@ -163,7 +160,6 @@ public class LoadingPanel : MonoBehaviour {
 			msg.User.Udid=udid;
 			
 			//Debug.Log("----DoLogin account="+msg.User.Account);
-			Main.Instance.MainPlayer.http.SetUri(Config.uri);
 			Main.Instance.MainPlayer.http.Request<MsgCSLogin>(msg.Mid,msg);
 		}
 		yield break;

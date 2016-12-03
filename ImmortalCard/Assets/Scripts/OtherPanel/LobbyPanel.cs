@@ -27,15 +27,35 @@ public class LobbyPanel : MonoBehaviour {
 
 			Destroy(gameObject);
 		}else{
-			//to enter panel
-			var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
-			foreach(var id in games){
-				game_t game=new game_t();
-				game.Id=(int)id;
-				addGame(game);
-			}
+			yield return StartCoroutine(loadLobbyCo());
 		}
-		yield break;
+	}
+
+	IEnumerator loadLobbyCo(){
+		var info=Info;
+		if(Dirty){
+			MsgCLEnter msg=new MsgCLEnter();
+			msg.Mid=pb_msg.MsgClEnter;
+			msg.Version=uint.Parse(Config.build);
+			msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
+			Main.Instance.MainPlayer.http.Request<MsgCLEnter>(msg.Mid,msg);
+
+			Info=null;
+		}
+
+		while(Info==null)
+			yield return null;
+
+		if(info!=null && Info.Version<=info.Version)
+			Info=info;
+
+		//to enter panel
+		var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
+		foreach(var id in games){
+			game_t game=new game_t();
+			game.Id=(int)id;
+			addGame(game);
+		}
 	}
 
 	void addGame(game_t game){
@@ -77,5 +97,14 @@ public class LobbyPanel : MonoBehaviour {
 	
 	public void OnShare(){
 		Main.Instance.share.Share("Share App","Hello Player!",cn.sharesdk.unity3d.ContentType.Webpage,"http://www.baidu.com");
+	}
+
+	public static bool Dirty=true;
+	public static lobby_t Info=null;
+	public static IEnumerator ObserveCo(){
+		while(true){
+			Dirty=true;
+			yield return new WaitForSeconds(10*60);
+		}
 	}
 }
