@@ -39,11 +39,73 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             auto mid=pb_msg::MSG_LC_LOGIN;
             omsg.set_mid(mid);
             if(imsg.ParseFromString(str)){
+                //version
+                if(imsg.version()<100){
+                    omsg.set_result(pb_enum::ERR_VERSION);
+                    KEYE_LOG("client login failed\n");
+                    PBHelper::Response(resp,omsg,mid);
+                    break;
+                }
+                
+                auto& account=imsg.user().account();
+                auto player=omsg.mutable_player();
+                //account
+                auto spdb=Lobby::sLobby->spdb;
+                std::string uid;
+                char key[128];
+                sprintf(key,"user:%s",account.c_str());
+                spdb->hget(key,"uid",uid);
+                if(uid.empty()){
+                    //new user
+                    char idkey[32];
+                    auto rnd=rand()%4;
+                    sprintf(idkey,"global_id:%d",rnd+1);
+                    spdb->lock(idkey);
+                    {
+                        spdb->get(idkey,uid);
+                        spdb->incrby(idkey);
+                    }
+                    spdb->unlock(idkey);
+                    
+                    char tm[32];
+                    sprintf(tm,"%ld",time(nullptr));
+                    
+                    std::map<std::string,std::string> hmap;
+                    hmap["uid"]=uid;
+                    hmap["regtime"]=tm;
+                    hmap["account"]=account;
+                    hmap["udid"]=imsg.user().udid();
+                    hmap["dev_type"]=imsg.user().dev_type();
+                    
+                    //new player
+                    sprintf(key,"player:%s",uid.c_str());
+                    hmap.clear();
+                    hmap["level"]="1";
+                    hmap["gold"]="10";
+                    hmap["silver"]="1000";
+                    spdb->hmset(key,hmap);
+                    
+                    player->set_level(1);
+                    player->set_gold(10);
+                    player->set_silver(1000);
+                }else{
+                    std::map<std::string,std::string> hmap;
+                    std::vector<std::string> fields;
+                    fields.push_back("level");
+                    fields.push_back("gold");
+                    fields.push_back("silver");
+                    if(spdb->hmget(key,fields,hmap)==0){
+                        player->set_level(atoi(hmap["level"].c_str()));
+                        player->set_gold(atoi(hmap["gold"].c_str()));
+                        player->set_silver(atoi(hmap["silver"].c_str()));
+                    }
+                }
+
                 KEYE_LOG("client login succeeded\n");
-                omsg.mutable_player()->set_uid("clusters");
+                player->set_uid(uid);
                 omsg.set_version(imsg.version()+1);
                 omsg.set_node("127.0.0.1");
-                omsg.set_port(8810);
+                omsg.set_port(8820);
                 omsg.set_result(pb_enum::SUCCEESS);
                 
                 PBHelper::Response(resp,omsg,mid);

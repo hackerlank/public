@@ -194,6 +194,7 @@ ERR_PARAM               =103;
 ERR_DUPLICATED          =104;
 ERR_NOTEXISTS           =105;
 ERR_NOENOUGH            =106;
+ERR_VERSION             =107;
 ERR_UNKNOWN             =999;
 };
 

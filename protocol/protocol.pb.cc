@@ -251,6 +251,7 @@ bool pb_enum_IsValid(int value) {
     case 104:
     case 105:
     case 106:
+    case 107:
     case 999:
     case 1000:
     case 100000:

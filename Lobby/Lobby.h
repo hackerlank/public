@@ -16,6 +16,7 @@ public:
     MsgHandler      handler;
 
     static Lobby*   sLobby;
+    std::shared_ptr<vic_proxy>   spdb;
 };
 
 #endif /* Lobby_h */
