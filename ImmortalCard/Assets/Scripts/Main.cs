@@ -44,7 +44,8 @@ public class Main : MonoBehaviour {
 			var ta=obj as TextAsset;
 			Config.Load(ta.text);
 		}));
-		Main.Instance.MainPlayer.http.SetUri(Config.uri);
+		MainPlayer.http.SetUri(Config.uri);
+		MainPlayer.playData=new Proto3.play_t();
 
 		//force update
 		var forceUpdate=(int.Parse(Config.update)!=0);
@@ -67,11 +68,6 @@ public class Main : MonoBehaviour {
 			Destroy(loginPanel);
 
 		//init
-		MainPlayer=new Player();
-		MainPlayer.playData=new Proto3.play_t();
-		MainPlayer.playData.Player=new Proto3.player_t();
-		MainPlayer.playData.Player.Uid=SystemInfo.deviceUniqueIdentifier;
-
 		Application.targetFrameRate = 30;
 		//Application.backgroundLoadingPriority = ThreadPriority.High;
 		//Application.runInBackground = true;

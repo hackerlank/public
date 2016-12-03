@@ -41,7 +41,8 @@ public class LobbyPanel : MonoBehaviour {
 			
 			while(lobby==null)
 				yield return null;
-			
+
+			Dirty=false;
 			if(old!=null && lobby.Version<=old.Version)
 				lobby=old;
 			

@@ -22,57 +22,29 @@ public class EnterPanel : MonoBehaviour {
 	[HideInInspector]
 	public RuleIcon	GameCategory;
 
-	void Start(){
-		var phz=new Dictionary<pb_enum, string>();
-		phz[pb_enum.PhzSy]="邵阳字牌";
-		phz[pb_enum.PhzSybp]="邵阳剥皮";
-		phz[pb_enum.PhzLd]="娄底放炮";
-		phz[pb_enum.PhzHh]="怀化红拐弯";
-		phz[pb_enum.PhzCdQmt]="常德全名堂";
-		phz[pb_enum.PhzCdHhd]="常德红黑点";
-		phz[pb_enum.PhzCs]="长沙";
-		phz[pb_enum.PhzXxGhz]="湘乡告胡子";
-		phz[pb_enum.PhzHy]="衡阳六条枪";
-		phz[pb_enum.PhzYzSbw]="永州双霸王";
-		phz[pb_enum.PhzPeghz]="碰胡子";
-		phz[pb_enum.PhzScEqs]="四川二七十";
-		phz[pb_enum.PhzCz]="郴州跑胡子";
-		phz[pb_enum.PhzGx]="广西跑胡子";
+	IEnumerator Start(){
+		if(CurrentGame==null)
+			yield break;
 
-		var mj=new Dictionary<pb_enum, string>();
-		mj[pb_enum.MjSichuan]="四川麻将";
-		mj[pb_enum.MjGuangdong]="广东麻将";
-		mj[pb_enum.MjZhejiang]="浙江麻将";
+		if(!string.IsNullOrEmpty(CurrentGame.Desc))
+			Information.text=CurrentGame.Desc;
 
-		var ddz=new Dictionary<pb_enum, string>();
-		ddz[pb_enum.PhzSy]="经典斗地主";
-		ddz[pb_enum.PhzSybp]="四人斗地主";
-
-		var games=phz;
-		switch(CurrentGame.Id){
-		case pb_enum.GameMj:
-			games=mj;
-			break;
-		case pb_enum.GameDdz:
-			games=ddz;
-			break;
-		case pb_enum.GamePhz:
-		default:
-			games=phz;
-			break;
-		}
-		foreach(var kv in games)
+		foreach(pb_enum rule in CurrentGame.Rules){
+			var param=new Hashtable();
+			param["rule"]=rule;
 			StartCoroutine(Main.Instance.updater.Load<RuleIcon>(
 				"Prefabs/RuleIcon",GameRoot,delegate(Object obj,Hashtable arg){
-				var category=kv.Key;
 				var icon=obj as RuleIcon;
-				icon.Category=category;
-				icon.Name.text=games[category];
+				icon.Value=(pb_enum)arg["rule"];
+
+				//default selection
 				if(GameCategory==null){
 					GameCategory=icon;
 					GameCategory.OnGame();
 				}
-			}));
+			},param));
+			yield return null;
+		}
 	}
 
 	public void OnCreate(){
@@ -145,7 +117,7 @@ public class EnterPanel : MonoBehaviour {
 		opRound.Ikey=pb_enum.OptionRound;
 		opRound.Ivalue=Main.Round;
 
-		Main.Instance.MainPlayer.category=GameCategory.Category;
+		Main.Instance.MainPlayer.category=GameCategory.Value;
 		var opCategory=new key_value();
 		opCategory.Ikey=pb_enum.OptionCategory;
 		opCategory.Ivalue=(int)Main.Instance.MainPlayer.category;

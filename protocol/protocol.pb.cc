@@ -237,6 +237,13 @@ bool pb_enum_IsValid(int value) {
     case 27:
     case 28:
     case 29:
+    case 30:
+    case 31:
+    case 32:
+    case 33:
+    case 34:
+    case 90:
+    case 91:
     case 100:
     case 101:
     case 102:
@@ -3175,6 +3182,7 @@ const int game_t::kStatusFieldNumber;
 const int game_t::kOpenningTimeFieldNumber;
 const int game_t::kMaintainStartFieldNumber;
 const int game_t::kMaintainEndFieldNumber;
+const int game_t::kRulesFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 game_t::game_t()
@@ -3275,11 +3283,13 @@ void game_t::Clear() {
   ZR_(capacity_, status_);
   ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   desc_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  ZR_(openning_time_, maintain_end_);
+  ZR_(openning_time_, maintain_start_);
+  maintain_end_ = 0u;
 
 #undef ZR_HELPER_
 #undef ZR_
 
+  rules_.Clear();
 }
 
 bool game_t::MergePartialFromCodedStream(
@@ -3457,6 +3467,34 @@ bool game_t::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(98)) goto parse_rules;
+        break;
+      }
+
+      // repeated .proto3.pb_enum rules = 12;
+      case 12: {
+        if (tag == 98) {
+         parse_rules:
+          ::google::protobuf::uint32 length;
+          DO_(input->ReadVarint32(&length));
+          ::google::protobuf::io::CodedInputStream::Limit limit = input->PushLimit(length);
+          while (input->BytesUntilLimit() > 0) {
+            int value;
+            DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+            add_rules(static_cast< ::proto3::pb_enum >(value));
+          }
+          input->PopLimit(limit);
+        } else if (tag == 96) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          add_rules(static_cast< ::proto3::pb_enum >(value));
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -3551,6 +3589,19 @@ void game_t::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(11, this->maintain_end(), output);
   }
 
+  // repeated .proto3.pb_enum rules = 12;
+  if (this->rules_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(
+      12,
+      ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED,
+      output);
+    output->WriteVarint32(_rules_cached_byte_size_);
+  }
+  for (int i = 0; i < this->rules_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnumNoTag(
+      this->rules(i), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.game_t)
 }
 
@@ -3634,6 +3685,23 @@ int game_t::ByteSize() const {
         this->maintain_end());
   }
 
+  // repeated .proto3.pb_enum rules = 12;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->rules_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::EnumSize(
+        this->rules(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _rules_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -3650,6 +3718,7 @@ void game_t::MergeFrom(const game_t& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
+  rules_.MergeFrom(from.rules_);
   if (from.id() != 0) {
     set_id(from.id());
   }
@@ -3715,6 +3784,7 @@ void game_t::InternalSwap(game_t* other) {
   std::swap(openning_time_, other->openning_time_);
   std::swap(maintain_start_, other->maintain_start_);
   std::swap(maintain_end_, other->maintain_end_);
+  rules_.UnsafeArenaSwap(&other->rules_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -3938,6 +4008,36 @@ void game_t::clear_maintain_end() {
   
   maintain_end_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.maintain_end)
+}
+
+// repeated .proto3.pb_enum rules = 12;
+int game_t::rules_size() const {
+  return rules_.size();
+}
+void game_t::clear_rules() {
+  rules_.Clear();
+}
+ ::proto3::pb_enum game_t::rules(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.rules)
+  return static_cast< ::proto3::pb_enum >(rules_.Get(index));
+}
+ void game_t::set_rules(int index, ::proto3::pb_enum value) {
+  rules_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.game_t.rules)
+}
+ void game_t::add_rules(::proto3::pb_enum value) {
+  rules_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.game_t.rules)
+}
+ const ::google::protobuf::RepeatedField<int>&
+game_t::rules() const {
+  // @@protoc_insertion_point(field_list:proto3.game_t.rules)
+  return rules_;
+}
+ ::google::protobuf::RepeatedField<int>*
+game_t::mutable_rules() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_t.rules)
+  return &rules_;
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

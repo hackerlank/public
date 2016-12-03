@@ -45,15 +45,6 @@ CATEGORY_EASY           =10;
 CATEGORY_NORMAL         =11;
 CATEGORY_HARD           =12;
 
-MJ_SICHUAN              =10;
-MJ_GUANGDONG            =11;
-MJ_HUNAN                =12;
-MJ_FUJIAN               =13;
-MJ_ZHEJIANG             =14;
-
-DDZ_CLASIC              =10;
-DDZ_FOR4                =11;
-
 PHZ_SY                  =0;	//邵阳字牌
 PHZ_SYBP                =1;	//邵阳剥皮
 PHZ_LD                  =2;//娄底放炮
@@ -74,6 +65,15 @@ PHZ_CZ                  =12;//郴州跑胡子
 PHZ_GX                  =13;//广西跑胡子
 
 PHZ_MAX                 =14;
+
+MJ_SICHUAN              =30;
+MJ_GUANGDONG            =31;
+MJ_HUNAN                =32;
+MJ_FUJIAN               =33;
+MJ_ZHEJIANG             =34;
+
+DDZ_CLASIC              =90;
+DDZ_FOR4                =91;
 
 // game operation
 OP_PASS                 =0;
@@ -263,6 +263,7 @@ int32 status            = 8;
 uint32 openning_time    = 9;
 uint32 maintain_start   = 10;
 uint32 maintain_end     = 11;
+repeated pb_enum rules  = 12;   //categories of game
 };
 
 message lobby_t{

@@ -12,20 +12,25 @@ public class GameIcon : MonoBehaviour {
 	public game_t Value{
 		set{
 			game=value;
-			switch(value.id){
-			case pb_enum.GameMj:
-				Name.text="Mahjong";	break;
-			case pb_enum.GameDdz:
-				Name.text="DoudeZhu";	break;
-			case pb_enum.GamePhz:
-			default:
-				Name.text="Paohuzi";	break;
-			}
+			Name.text=id2name(game.Id);
 		}
 	}
 
 	public void OnGame(){
 		if(LobbyPanel.Instance!=null)
 			LobbyPanel.Instance.OnGame(game);
+	}
+
+	string id2name(pb_enum id){
+		switch(id){
+		case pb_enum.GameMj:
+			return "麻将";
+		case pb_enum.GameDdz:
+			return "斗地主";
+		case pb_enum.GamePhz:
+			return "跑胡子";
+		default:
+			return "???";
+		}
 	}
 }

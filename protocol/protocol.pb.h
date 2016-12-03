@@ -109,13 +109,6 @@ enum pb_enum {
   CATEGORY_EASY = 10,
   CATEGORY_NORMAL = 11,
   CATEGORY_HARD = 12,
-  MJ_SICHUAN = 10,
-  MJ_GUANGDONG = 11,
-  MJ_HUNAN = 12,
-  MJ_FUJIAN = 13,
-  MJ_ZHEJIANG = 14,
-  DDZ_CLASIC = 10,
-  DDZ_FOR4 = 11,
   PHZ_SY = 0,
   PHZ_SYBP = 1,
   PHZ_LD = 2,
@@ -131,6 +124,13 @@ enum pb_enum {
   PHZ_CZ = 12,
   PHZ_GX = 13,
   PHZ_MAX = 14,
+  MJ_SICHUAN = 30,
+  MJ_GUANGDONG = 31,
+  MJ_HUNAN = 32,
+  MJ_FUJIAN = 33,
+  MJ_ZHEJIANG = 34,
+  DDZ_CLASIC = 90,
+  DDZ_FOR4 = 91,
   OP_PASS = 0,
   OP_DISCARD = 1,
   BUNCH_INVALID = 10,
@@ -1149,6 +1149,16 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::uint32 maintain_end() const;
   void set_maintain_end(::google::protobuf::uint32 value);
 
+  // repeated .proto3.pb_enum rules = 12;
+  int rules_size() const;
+  void clear_rules();
+  static const int kRulesFieldNumber = 12;
+  ::proto3::pb_enum rules(int index) const;
+  void set_rules(int index, ::proto3::pb_enum value);
+  void add_rules(::proto3::pb_enum value);
+  const ::google::protobuf::RepeatedField<int>& rules() const;
+  ::google::protobuf::RepeatedField<int>* mutable_rules();
+
   // @@protoc_insertion_point(class_scope:proto3.game_t)
  private:
 
@@ -1166,6 +1176,8 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::int32 status_;
   ::google::protobuf::uint32 openning_time_;
   ::google::protobuf::uint32 maintain_start_;
+  ::google::protobuf::RepeatedField<int> rules_;
+  mutable int _rules_cached_byte_size_;
   ::google::protobuf::uint32 maintain_end_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -7742,6 +7754,36 @@ inline void game_t::set_maintain_end(::google::protobuf::uint32 value) {
   
   maintain_end_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.maintain_end)
+}
+
+// repeated .proto3.pb_enum rules = 12;
+inline int game_t::rules_size() const {
+  return rules_.size();
+}
+inline void game_t::clear_rules() {
+  rules_.Clear();
+}
+inline ::proto3::pb_enum game_t::rules(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.rules)
+  return static_cast< ::proto3::pb_enum >(rules_.Get(index));
+}
+inline void game_t::set_rules(int index, ::proto3::pb_enum value) {
+  rules_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.game_t.rules)
+}
+inline void game_t::add_rules(::proto3::pb_enum value) {
+  rules_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.game_t.rules)
+}
+inline const ::google::protobuf::RepeatedField<int>&
+game_t::rules() const {
+  // @@protoc_insertion_point(field_list:proto3.game_t.rules)
+  return rules_;
+}
+inline ::google::protobuf::RepeatedField<int>*
+game_t::mutable_rules() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.game_t.rules)
+  return &rules_;
 }
 
 // -------------------------------------------------------------------
