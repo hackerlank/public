@@ -24,7 +24,7 @@ public class Player {
 	public List<bunch_t>	AAAs=new List<bunch_t>();
 	public bool				conflictMeld=false;
 
-	public MsgSCLogin		msgSCLogin;
+	public MsgLCLogin		msgLCLogin;
 	public MsgNCCreate		msgNCCreate;
 	public MsgNCJoin		msgNCJoin;
 	public MsgCNRevive	msgRevice;
@@ -215,24 +215,21 @@ public class Player {
 		//Debug.Log("OnMessage "+mid);
 		switch(mid){
 		//Login
-		case pb_msg.MsgScLogin:
-			MsgSCLogin msgLogin=MsgSCLogin.Parser.ParseFrom(bytes);
-			Debug.Log("response mid="+mid+",uid="+msgLogin.Uid+",ip="+msgLogin.Ip+",port="+msgLogin.Port);
+		case pb_msg.MsgLcLogin:
+			MsgLCLogin msgLogin=MsgLCLogin.Parser.ParseFrom(bytes);
 			if(msgLogin.Result==pb_enum.Succeess){
-				playData.Player.Uid=msgLogin.Uid;
-				msgSCLogin=msgLogin;
+				Debug.Log("response mid="+mid+",uid="+msgLogin.Player.Uid+",ip="+msgLogin.Node+",port="+msgLogin.Port);
+				playData.Player=msgLogin.Player;
+				msgLCLogin=msgLogin;
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;
 
 		//Lobby
-		case pb_msg.MsgLcEnter:
-			MsgLCEnter msgLobby=MsgLCEnter.Parser.ParseFrom(bytes);
+		case pb_msg.MsgLcLobby:
+			MsgLCLobby msgLobby=MsgLCLobby.Parser.ParseFrom(bytes);
 			if(msgLobby.Result==pb_enum.Succeess){
 				LobbyPanel.Info=msgLobby.Lobby;
-				var uid=playData.Player.Uid;
-				playData.Player=msgLobby.Player;
-				playData.Player.Uid=uid;
 			}else
 				Debug.LogError("lobby error: "+msgLobby.Result);
 			break;

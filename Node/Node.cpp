@@ -39,7 +39,6 @@ int main(int argc, char* argv[]) {
                 break;
         }
     }
-	proto3::MsgSCLogin zi;
 
 	redis_proxy redis;
 	keye::PacketWrapper pw;

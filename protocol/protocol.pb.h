@@ -40,7 +40,8 @@ class MsgCHCharge;
 class MsgCHLogin;
 class MsgCHQuery;
 class MsgCHRegister;
-class MsgCLEnter;
+class MsgCLLobby;
+class MsgCLLogin;
 class MsgCLReplay;
 class MsgCLReplays;
 class MsgCNConnect;
@@ -54,12 +55,12 @@ class MsgCNMeld;
 class MsgCNReady;
 class MsgCNRevive;
 class MsgCNStats;
-class MsgCSLogin;
 class MsgHCCharge;
 class MsgHCLogin;
 class MsgHCQuery;
 class MsgHCRegister;
-class MsgLCEnter;
+class MsgLCLobby;
+class MsgLCLogin;
 class MsgLCReplay;
 class MsgLCReplays;
 class MsgNCConnect;
@@ -76,7 +77,6 @@ class MsgNCMeld;
 class MsgNCReady;
 class MsgNCRevive;
 class MsgNCSettle;
-class MsgSCLogin;
 class achv_t;
 class bunch_t;
 class charge_t;
@@ -235,13 +235,11 @@ enum pb_msg {
   MSG_INVALID = 0,
   MSG_BEGIN = 1000,
   MSG_RAW = 1001,
-  MSG_CS_BEGIN = 2000,
-  MSG_CS_LOGIN = 2001,
-  MSG_SC_LOGIN = 2002,
-  MSG_CS_END = 3999,
   MSG_CL_BEGIN = 4000,
-  MSG_CL_ENTER = 4001,
-  MSG_LC_ENTER = 4002,
+  MSG_CL_LOGIN = 4001,
+  MSG_LC_LOGIN = 4002,
+  MSG_CL_LOBBY = 4003,
+  MSG_LC_LOBBY = 4004,
   MSG_CL_REPLAYS = 4011,
   MSG_LC_REPLAYS = 4012,
   MSG_CL_REPLAY = 4013,
@@ -1933,40 +1931,40 @@ class MsgBase : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
 };
 // -------------------------------------------------------------------
 
-class MsgCSLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCSLogin) */ {
+class MsgCLLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCLLogin) */ {
  public:
-  MsgCSLogin();
-  virtual ~MsgCSLogin();
+  MsgCLLogin();
+  virtual ~MsgCLLogin();
 
-  MsgCSLogin(const MsgCSLogin& from);
+  MsgCLLogin(const MsgCLLogin& from);
 
-  inline MsgCSLogin& operator=(const MsgCSLogin& from) {
+  inline MsgCLLogin& operator=(const MsgCLLogin& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgCSLogin& default_instance();
+  static const MsgCLLogin& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgCSLogin* internal_default_instance() {
+  static inline const MsgCLLogin* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgCSLogin* other);
+  void Swap(MsgCLLogin* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgCSLogin* New() const { return New(NULL); }
+  inline MsgCLLogin* New() const { return New(NULL); }
 
-  MsgCSLogin* New(::google::protobuf::Arena* arena) const;
+  MsgCLLogin* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgCSLogin& from);
-  void MergeFrom(const MsgCSLogin& from);
+  void CopyFrom(const MsgCLLogin& from);
+  void MergeFrom(const MsgCLLogin& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -1981,7 +1979,7 @@ class MsgCSLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgCSLogin* other);
+  void InternalSwap(MsgCLLogin* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -2018,7 +2016,7 @@ class MsgCSLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::user_t* release_user();
   void set_allocated_user(::proto3::user_t* user);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgCSLogin)
+  // @@protoc_insertion_point(class_scope:proto3.MsgCLLogin)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -2038,44 +2036,44 @@ class MsgCSLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   friend void protobuf_ShutdownFile_protocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgCSLogin* default_instance_;
+  static MsgCLLogin* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgSCLogin) */ {
+class MsgLCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgLCLogin) */ {
  public:
-  MsgSCLogin();
-  virtual ~MsgSCLogin();
+  MsgLCLogin();
+  virtual ~MsgLCLogin();
 
-  MsgSCLogin(const MsgSCLogin& from);
+  MsgLCLogin(const MsgLCLogin& from);
 
-  inline MsgSCLogin& operator=(const MsgSCLogin& from) {
+  inline MsgLCLogin& operator=(const MsgLCLogin& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgSCLogin& default_instance();
+  static const MsgLCLogin& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgSCLogin* internal_default_instance() {
+  static inline const MsgLCLogin* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgSCLogin* other);
+  void Swap(MsgLCLogin* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgSCLogin* New() const { return New(NULL); }
+  inline MsgLCLogin* New() const { return New(NULL); }
 
-  MsgSCLogin* New(::google::protobuf::Arena* arena) const;
+  MsgLCLogin* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgSCLogin& from);
-  void MergeFrom(const MsgSCLogin& from);
+  void CopyFrom(const MsgLCLogin& from);
+  void MergeFrom(const MsgLCLogin& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -2090,7 +2088,7 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgSCLogin* other);
+  void InternalSwap(MsgLCLogin* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -2112,39 +2110,37 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional string uid = 2;
-  void clear_uid();
-  static const int kUidFieldNumber = 2;
-  const ::std::string& uid() const;
-  void set_uid(const ::std::string& value);
-  void set_uid(const char* value);
-  void set_uid(const char* value, size_t size);
-  ::std::string* mutable_uid();
-  ::std::string* release_uid();
-  void set_allocated_uid(::std::string* uid);
-
-  // optional uint32 version = 3;
+  // optional uint32 version = 2;
   void clear_version();
-  static const int kVersionFieldNumber = 3;
+  static const int kVersionFieldNumber = 2;
   ::google::protobuf::uint32 version() const;
   void set_version(::google::protobuf::uint32 value);
 
-  // optional uint64 session = 4;
+  // optional uint64 session = 3;
   void clear_session();
-  static const int kSessionFieldNumber = 4;
+  static const int kSessionFieldNumber = 3;
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
-  // optional string ip = 5;
-  void clear_ip();
-  static const int kIpFieldNumber = 5;
-  const ::std::string& ip() const;
-  void set_ip(const ::std::string& value);
-  void set_ip(const char* value);
-  void set_ip(const char* value, size_t size);
-  ::std::string* mutable_ip();
-  ::std::string* release_ip();
-  void set_allocated_ip(::std::string* ip);
+  // optional .proto3.player_t player = 4;
+  bool has_player() const;
+  void clear_player();
+  static const int kPlayerFieldNumber = 4;
+  const ::proto3::player_t& player() const;
+  ::proto3::player_t* mutable_player();
+  ::proto3::player_t* release_player();
+  void set_allocated_player(::proto3::player_t* player);
+
+  // optional string node = 5;
+  void clear_node();
+  static const int kNodeFieldNumber = 5;
+  const ::std::string& node() const;
+  void set_node(const ::std::string& value);
+  void set_node(const char* value);
+  void set_node(const char* value, size_t size);
+  ::std::string* mutable_node();
+  ::std::string* release_node();
+  void set_allocated_node(::std::string* node);
 
   // optional uint32 port = 6;
   void clear_port();
@@ -2158,18 +2154,18 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgSCLogin)
+  // @@protoc_insertion_point(class_scope:proto3.MsgLCLogin)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::internal::ArenaStringPtr uid_;
   int mid_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
-  ::google::protobuf::internal::ArenaStringPtr ip_;
+  ::proto3::player_t* player_;
+  ::google::protobuf::internal::ArenaStringPtr node_;
   ::google::protobuf::uint32 port_;
   int result_;
   mutable int _cached_size_;
@@ -2182,44 +2178,44 @@ class MsgSCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   friend void protobuf_ShutdownFile_protocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgSCLogin* default_instance_;
+  static MsgLCLogin* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCLEnter) */ {
+class MsgCLLobby : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgCLLobby) */ {
  public:
-  MsgCLEnter();
-  virtual ~MsgCLEnter();
+  MsgCLLobby();
+  virtual ~MsgCLLobby();
 
-  MsgCLEnter(const MsgCLEnter& from);
+  MsgCLLobby(const MsgCLLobby& from);
 
-  inline MsgCLEnter& operator=(const MsgCLEnter& from) {
+  inline MsgCLLobby& operator=(const MsgCLLobby& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgCLEnter& default_instance();
+  static const MsgCLLobby& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgCLEnter* internal_default_instance() {
+  static inline const MsgCLLobby* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgCLEnter* other);
+  void Swap(MsgCLLobby* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgCLEnter* New() const { return New(NULL); }
+  inline MsgCLLobby* New() const { return New(NULL); }
 
-  MsgCLEnter* New(::google::protobuf::Arena* arena) const;
+  MsgCLLobby* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgCLEnter& from);
-  void MergeFrom(const MsgCLEnter& from);
+  void CopyFrom(const MsgCLLobby& from);
+  void MergeFrom(const MsgCLLobby& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -2234,7 +2230,7 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgCLEnter* other);
+  void InternalSwap(MsgCLLobby* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -2279,7 +2275,7 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgCLEnter)
+  // @@protoc_insertion_point(class_scope:proto3.MsgCLLobby)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
@@ -2300,44 +2296,44 @@ class MsgCLEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   friend void protobuf_ShutdownFile_protocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgCLEnter* default_instance_;
+  static MsgCLLobby* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgLCEnter) */ {
+class MsgLCLobby : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgLCLobby) */ {
  public:
-  MsgLCEnter();
-  virtual ~MsgLCEnter();
+  MsgLCLobby();
+  virtual ~MsgLCLobby();
 
-  MsgLCEnter(const MsgLCEnter& from);
+  MsgLCLobby(const MsgLCLobby& from);
 
-  inline MsgLCEnter& operator=(const MsgLCEnter& from) {
+  inline MsgLCLobby& operator=(const MsgLCLobby& from) {
     CopyFrom(from);
     return *this;
   }
 
-  static const MsgLCEnter& default_instance();
+  static const MsgLCLobby& default_instance();
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   // Returns the internal default instance pointer. This function can
   // return NULL thus should not be used by the user. This is intended
   // for Protobuf internal code. Please use default_instance() declared
   // above instead.
-  static inline const MsgLCEnter* internal_default_instance() {
+  static inline const MsgLCLobby* internal_default_instance() {
     return default_instance_;
   }
   #endif
 
-  void Swap(MsgLCEnter* other);
+  void Swap(MsgLCLobby* other);
 
   // implements Message ----------------------------------------------
 
-  inline MsgLCEnter* New() const { return New(NULL); }
+  inline MsgLCLobby* New() const { return New(NULL); }
 
-  MsgLCEnter* New(::google::protobuf::Arena* arena) const;
+  MsgLCLobby* New(::google::protobuf::Arena* arena) const;
   void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
-  void CopyFrom(const MsgLCEnter& from);
-  void MergeFrom(const MsgLCEnter& from);
+  void CopyFrom(const MsgLCLobby& from);
+  void MergeFrom(const MsgLCLobby& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -2352,7 +2348,7 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const;
-  void InternalSwap(MsgLCEnter* other);
+  void InternalSwap(MsgLCLobby* other);
   private:
   inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
     return _arena_ptr_;
@@ -2374,47 +2370,37 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional int32 key = 2;
-  void clear_key();
-  static const int kKeyFieldNumber = 2;
-  ::google::protobuf::int32 key() const;
-  void set_key(::google::protobuf::int32 value);
-
-  // optional .proto3.player_t player = 3;
-  bool has_player() const;
-  void clear_player();
-  static const int kPlayerFieldNumber = 3;
-  const ::proto3::player_t& player() const;
-  ::proto3::player_t* mutable_player();
-  ::proto3::player_t* release_player();
-  void set_allocated_player(::proto3::player_t* player);
-
-  // optional .proto3.lobby_t lobby = 4;
+  // optional .proto3.lobby_t lobby = 2;
   bool has_lobby() const;
   void clear_lobby();
-  static const int kLobbyFieldNumber = 4;
+  static const int kLobbyFieldNumber = 2;
   const ::proto3::lobby_t& lobby() const;
   ::proto3::lobby_t* mutable_lobby();
   ::proto3::lobby_t* release_lobby();
   void set_allocated_lobby(::proto3::lobby_t* lobby);
 
-  // optional .proto3.pb_enum result = 5;
+  // optional int32 key = 3;
+  void clear_key();
+  static const int kKeyFieldNumber = 3;
+  ::google::protobuf::int32 key() const;
+  void set_key(::google::protobuf::int32 value);
+
+  // optional .proto3.pb_enum result = 4;
   void clear_result();
-  static const int kResultFieldNumber = 5;
+  static const int kResultFieldNumber = 4;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
-  // @@protoc_insertion_point(class_scope:proto3.MsgLCEnter)
+  // @@protoc_insertion_point(class_scope:proto3.MsgLCLobby)
  private:
 
   ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::proto3::lobby_t* lobby_;
   int mid_;
   ::google::protobuf::int32 key_;
-  ::proto3::player_t* player_;
-  ::proto3::lobby_t* lobby_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2426,7 +2412,7 @@ class MsgLCEnter : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   friend void protobuf_ShutdownFile_protocol_2eproto();
 
   void InitAsDefaultInstance();
-  static MsgLCEnter* default_instance_;
+  static MsgLCLobby* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -8576,68 +8562,68 @@ inline void MsgBase::set_mid(::proto3::pb_msg value) {
 
 // -------------------------------------------------------------------
 
-// MsgCSLogin
+// MsgCLLogin
 
 // optional .proto3.pb_msg mid = 1;
-inline void MsgCSLogin::clear_mid() {
+inline void MsgCLLogin::clear_mid() {
   mid_ = 0;
 }
-inline ::proto3::pb_msg MsgCSLogin::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCSLogin.mid)
+inline ::proto3::pb_msg MsgCLLogin::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLogin.mid)
   return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgCSLogin::set_mid(::proto3::pb_msg value) {
+inline void MsgCLLogin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCSLogin.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgCLLogin.mid)
 }
 
 // optional uint32 version = 3;
-inline void MsgCSLogin::clear_version() {
+inline void MsgCLLogin::clear_version() {
   version_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgCSLogin::version() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCSLogin.version)
+inline ::google::protobuf::uint32 MsgCLLogin::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLogin.version)
   return version_;
 }
-inline void MsgCSLogin::set_version(::google::protobuf::uint32 value) {
+inline void MsgCLLogin::set_version(::google::protobuf::uint32 value) {
   
   version_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCSLogin.version)
+  // @@protoc_insertion_point(field_set:proto3.MsgCLLogin.version)
 }
 
 // optional .proto3.user_t user = 2;
-inline bool MsgCSLogin::has_user() const {
+inline bool MsgCLLogin::has_user() const {
   return !_is_default_instance_ && user_ != NULL;
 }
-inline void MsgCSLogin::clear_user() {
+inline void MsgCLLogin::clear_user() {
   if (GetArenaNoVirtual() == NULL && user_ != NULL) delete user_;
   user_ = NULL;
 }
-inline const ::proto3::user_t& MsgCSLogin::user() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCSLogin.user)
+inline const ::proto3::user_t& MsgCLLogin::user() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLogin.user)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return user_ != NULL ? *user_ : *default_instance().user_;
 #else
   return user_ != NULL ? *user_ : *default_instance_->user_;
 #endif
 }
-inline ::proto3::user_t* MsgCSLogin::mutable_user() {
+inline ::proto3::user_t* MsgCLLogin::mutable_user() {
   
   if (user_ == NULL) {
     user_ = new ::proto3::user_t;
   }
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCSLogin.user)
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCLLogin.user)
   return user_;
 }
-inline ::proto3::user_t* MsgCSLogin::release_user() {
-  // @@protoc_insertion_point(field_release:proto3.MsgCSLogin.user)
+inline ::proto3::user_t* MsgCLLogin::release_user() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCLLogin.user)
   
   ::proto3::user_t* temp = user_;
   user_ = NULL;
   return temp;
 }
-inline void MsgCSLogin::set_allocated_user(::proto3::user_t* user) {
+inline void MsgCLLogin::set_allocated_user(::proto3::user_t* user) {
   delete user_;
   user_ = user;
   if (user) {
@@ -8645,325 +8631,87 @@ inline void MsgCSLogin::set_allocated_user(::proto3::user_t* user) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCSLogin.user)
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCLLogin.user)
 }
 
 // -------------------------------------------------------------------
 
-// MsgSCLogin
+// MsgLCLogin
 
 // optional .proto3.pb_msg mid = 1;
-inline void MsgSCLogin::clear_mid() {
+inline void MsgLCLogin::clear_mid() {
   mid_ = 0;
 }
-inline ::proto3::pb_msg MsgSCLogin::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.mid)
+inline ::proto3::pb_msg MsgLCLogin::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.mid)
   return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline void MsgSCLogin::set_mid(::proto3::pb_msg value) {
+inline void MsgLCLogin::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.mid)
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.mid)
 }
 
-// optional string uid = 2;
-inline void MsgSCLogin::clear_uid() {
-  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgSCLogin::uid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.uid)
-  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgSCLogin::set_uid(const ::std::string& value) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.uid)
-}
-inline void MsgSCLogin::set_uid(const char* value) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgSCLogin.uid)
-}
-inline void MsgSCLogin::set_uid(const char* value, size_t size) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgSCLogin.uid)
-}
-inline ::std::string* MsgSCLogin::mutable_uid() {
-  
-  // @@protoc_insertion_point(field_mutable:proto3.MsgSCLogin.uid)
-  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgSCLogin::release_uid() {
-  // @@protoc_insertion_point(field_release:proto3.MsgSCLogin.uid)
-  
-  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgSCLogin::set_allocated_uid(::std::string* uid) {
-  if (uid != NULL) {
-    
-  } else {
-    
-  }
-  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgSCLogin.uid)
-}
-
-// optional uint32 version = 3;
-inline void MsgSCLogin::clear_version() {
+// optional uint32 version = 2;
+inline void MsgLCLogin::clear_version() {
   version_ = 0u;
 }
-inline ::google::protobuf::uint32 MsgSCLogin::version() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.version)
+inline ::google::protobuf::uint32 MsgLCLogin::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.version)
   return version_;
 }
-inline void MsgSCLogin::set_version(::google::protobuf::uint32 value) {
+inline void MsgLCLogin::set_version(::google::protobuf::uint32 value) {
   
   version_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.version)
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.version)
 }
 
-// optional uint64 session = 4;
-inline void MsgSCLogin::clear_session() {
+// optional uint64 session = 3;
+inline void MsgLCLogin::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
-inline ::google::protobuf::uint64 MsgSCLogin::session() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.session)
+inline ::google::protobuf::uint64 MsgLCLogin::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.session)
   return session_;
 }
-inline void MsgSCLogin::set_session(::google::protobuf::uint64 value) {
+inline void MsgLCLogin::set_session(::google::protobuf::uint64 value) {
   
   session_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.session)
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.session)
 }
 
-// optional string ip = 5;
-inline void MsgSCLogin::clear_ip() {
-  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgSCLogin::ip() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.ip)
-  return ip_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgSCLogin::set_ip(const ::std::string& value) {
-  
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.ip)
-}
-inline void MsgSCLogin::set_ip(const char* value) {
-  
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgSCLogin.ip)
-}
-inline void MsgSCLogin::set_ip(const char* value, size_t size) {
-  
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgSCLogin.ip)
-}
-inline ::std::string* MsgSCLogin::mutable_ip() {
-  
-  // @@protoc_insertion_point(field_mutable:proto3.MsgSCLogin.ip)
-  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgSCLogin::release_ip() {
-  // @@protoc_insertion_point(field_release:proto3.MsgSCLogin.ip)
-  
-  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgSCLogin::set_allocated_ip(::std::string* ip) {
-  if (ip != NULL) {
-    
-  } else {
-    
-  }
-  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgSCLogin.ip)
-}
-
-// optional uint32 port = 6;
-inline void MsgSCLogin::clear_port() {
-  port_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgSCLogin::port() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.port)
-  return port_;
-}
-inline void MsgSCLogin::set_port(::google::protobuf::uint32 value) {
-  
-  port_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.port)
-}
-
-// optional .proto3.pb_enum result = 7;
-inline void MsgSCLogin::clear_result() {
-  result_ = 0;
-}
-inline ::proto3::pb_enum MsgSCLogin::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgSCLogin.result)
-  return static_cast< ::proto3::pb_enum >(result_);
-}
-inline void MsgSCLogin::set_result(::proto3::pb_enum value) {
-  
-  result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgSCLogin.result)
-}
-
-// -------------------------------------------------------------------
-
-// MsgCLEnter
-
-// optional .proto3.pb_msg mid = 1;
-inline void MsgCLEnter::clear_mid() {
-  mid_ = 0;
-}
-inline ::proto3::pb_msg MsgCLEnter::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.mid)
-  return static_cast< ::proto3::pb_msg >(mid_);
-}
-inline void MsgCLEnter::set_mid(::proto3::pb_msg value) {
-  
-  mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.mid)
-}
-
-// optional string uid = 2;
-inline void MsgCLEnter::clear_uid() {
-  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline const ::std::string& MsgCLEnter::uid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.uid)
-  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgCLEnter::set_uid(const ::std::string& value) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.uid)
-}
-inline void MsgCLEnter::set_uid(const char* value) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgCLEnter.uid)
-}
-inline void MsgCLEnter::set_uid(const char* value, size_t size) {
-  
-  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCLEnter.uid)
-}
-inline ::std::string* MsgCLEnter::mutable_uid() {
-  
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCLEnter.uid)
-  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgCLEnter::release_uid() {
-  // @@protoc_insertion_point(field_release:proto3.MsgCLEnter.uid)
-  
-  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgCLEnter::set_allocated_uid(::std::string* uid) {
-  if (uid != NULL) {
-    
-  } else {
-    
-  }
-  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCLEnter.uid)
-}
-
-// optional uint32 version = 3;
-inline void MsgCLEnter::clear_version() {
-  version_ = 0u;
-}
-inline ::google::protobuf::uint32 MsgCLEnter::version() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.version)
-  return version_;
-}
-inline void MsgCLEnter::set_version(::google::protobuf::uint32 value) {
-  
-  version_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.version)
-}
-
-// optional uint64 session = 4;
-inline void MsgCLEnter::clear_session() {
-  session_ = GOOGLE_ULONGLONG(0);
-}
-inline ::google::protobuf::uint64 MsgCLEnter::session() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgCLEnter.session)
-  return session_;
-}
-inline void MsgCLEnter::set_session(::google::protobuf::uint64 value) {
-  
-  session_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgCLEnter.session)
-}
-
-// -------------------------------------------------------------------
-
-// MsgLCEnter
-
-// optional .proto3.pb_msg mid = 1;
-inline void MsgLCEnter::clear_mid() {
-  mid_ = 0;
-}
-inline ::proto3::pb_msg MsgLCEnter::mid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.mid)
-  return static_cast< ::proto3::pb_msg >(mid_);
-}
-inline void MsgLCEnter::set_mid(::proto3::pb_msg value) {
-  
-  mid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.mid)
-}
-
-// optional int32 key = 2;
-inline void MsgLCEnter::clear_key() {
-  key_ = 0;
-}
-inline ::google::protobuf::int32 MsgLCEnter::key() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.key)
-  return key_;
-}
-inline void MsgLCEnter::set_key(::google::protobuf::int32 value) {
-  
-  key_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.key)
-}
-
-// optional .proto3.player_t player = 3;
-inline bool MsgLCEnter::has_player() const {
+// optional .proto3.player_t player = 4;
+inline bool MsgLCLogin::has_player() const {
   return !_is_default_instance_ && player_ != NULL;
 }
-inline void MsgLCEnter::clear_player() {
+inline void MsgLCLogin::clear_player() {
   if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
   player_ = NULL;
 }
-inline const ::proto3::player_t& MsgLCEnter::player() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.player)
+inline const ::proto3::player_t& MsgLCLogin::player() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.player)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return player_ != NULL ? *player_ : *default_instance().player_;
 #else
   return player_ != NULL ? *player_ : *default_instance_->player_;
 #endif
 }
-inline ::proto3::player_t* MsgLCEnter::mutable_player() {
+inline ::proto3::player_t* MsgLCLogin::mutable_player() {
   
   if (player_ == NULL) {
     player_ = new ::proto3::player_t;
   }
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCEnter.player)
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCLogin.player)
   return player_;
 }
-inline ::proto3::player_t* MsgLCEnter::release_player() {
-  // @@protoc_insertion_point(field_release:proto3.MsgLCEnter.player)
+inline ::proto3::player_t* MsgLCLogin::release_player() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCLogin.player)
   
   ::proto3::player_t* temp = player_;
   player_ = NULL;
   return temp;
 }
-inline void MsgLCEnter::set_allocated_player(::proto3::player_t* player) {
+inline void MsgLCLogin::set_allocated_player(::proto3::player_t* player) {
   delete player_;
   player_ = player;
   if (player) {
@@ -8971,41 +8719,221 @@ inline void MsgLCEnter::set_allocated_player(::proto3::player_t* player) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCEnter.player)
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLogin.player)
 }
 
-// optional .proto3.lobby_t lobby = 4;
-inline bool MsgLCEnter::has_lobby() const {
+// optional string node = 5;
+inline void MsgLCLogin::clear_node() {
+  node_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgLCLogin::node() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.node)
+  return node_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgLCLogin::set_node(const ::std::string& value) {
+  
+  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.node)
+}
+inline void MsgLCLogin::set_node(const char* value) {
+  
+  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgLCLogin.node)
+}
+inline void MsgLCLogin::set_node(const char* value, size_t size) {
+  
+  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgLCLogin.node)
+}
+inline ::std::string* MsgLCLogin::mutable_node() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCLogin.node)
+  return node_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgLCLogin::release_node() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCLogin.node)
+  
+  return node_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgLCLogin::set_allocated_node(::std::string* node) {
+  if (node != NULL) {
+    
+  } else {
+    
+  }
+  node_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), node);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLogin.node)
+}
+
+// optional uint32 port = 6;
+inline void MsgLCLogin::clear_port() {
+  port_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgLCLogin::port() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.port)
+  return port_;
+}
+inline void MsgLCLogin::set_port(::google::protobuf::uint32 value) {
+  
+  port_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.port)
+}
+
+// optional .proto3.pb_enum result = 7;
+inline void MsgLCLogin::clear_result() {
+  result_ = 0;
+}
+inline ::proto3::pb_enum MsgLCLogin::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.result)
+  return static_cast< ::proto3::pb_enum >(result_);
+}
+inline void MsgLCLogin::set_result(::proto3::pb_enum value) {
+  
+  result_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.result)
+}
+
+// -------------------------------------------------------------------
+
+// MsgCLLobby
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgCLLobby::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgCLLobby::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLobby.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgCLLobby::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCLLobby.mid)
+}
+
+// optional string uid = 2;
+inline void MsgCLLobby::clear_uid() {
+  uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgCLLobby::uid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLobby.uid)
+  return uid_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCLLobby::set_uid(const ::std::string& value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgCLLobby.uid)
+}
+inline void MsgCLLobby::set_uid(const char* value) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgCLLobby.uid)
+}
+inline void MsgCLLobby::set_uid(const char* value, size_t size) {
+  
+  uid_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCLLobby.uid)
+}
+inline ::std::string* MsgCLLobby::mutable_uid() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgCLLobby.uid)
+  return uid_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgCLLobby::release_uid() {
+  // @@protoc_insertion_point(field_release:proto3.MsgCLLobby.uid)
+  
+  return uid_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgCLLobby::set_allocated_uid(::std::string* uid) {
+  if (uid != NULL) {
+    
+  } else {
+    
+  }
+  uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCLLobby.uid)
+}
+
+// optional uint32 version = 3;
+inline void MsgCLLobby::clear_version() {
+  version_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgCLLobby::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLobby.version)
+  return version_;
+}
+inline void MsgCLLobby::set_version(::google::protobuf::uint32 value) {
+  
+  version_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCLLobby.version)
+}
+
+// optional uint64 session = 4;
+inline void MsgCLLobby::clear_session() {
+  session_ = GOOGLE_ULONGLONG(0);
+}
+inline ::google::protobuf::uint64 MsgCLLobby::session() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLLobby.session)
+  return session_;
+}
+inline void MsgCLLobby::set_session(::google::protobuf::uint64 value) {
+  
+  session_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCLLobby.session)
+}
+
+// -------------------------------------------------------------------
+
+// MsgLCLobby
+
+// optional .proto3.pb_msg mid = 1;
+inline void MsgLCLobby::clear_mid() {
+  mid_ = 0;
+}
+inline ::proto3::pb_msg MsgLCLobby::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLobby.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
+}
+inline void MsgLCLobby::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLobby.mid)
+}
+
+// optional .proto3.lobby_t lobby = 2;
+inline bool MsgLCLobby::has_lobby() const {
   return !_is_default_instance_ && lobby_ != NULL;
 }
-inline void MsgLCEnter::clear_lobby() {
+inline void MsgLCLobby::clear_lobby() {
   if (GetArenaNoVirtual() == NULL && lobby_ != NULL) delete lobby_;
   lobby_ = NULL;
 }
-inline const ::proto3::lobby_t& MsgLCEnter::lobby() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.lobby)
+inline const ::proto3::lobby_t& MsgLCLobby::lobby() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLobby.lobby)
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   return lobby_ != NULL ? *lobby_ : *default_instance().lobby_;
 #else
   return lobby_ != NULL ? *lobby_ : *default_instance_->lobby_;
 #endif
 }
-inline ::proto3::lobby_t* MsgLCEnter::mutable_lobby() {
+inline ::proto3::lobby_t* MsgLCLobby::mutable_lobby() {
   
   if (lobby_ == NULL) {
     lobby_ = new ::proto3::lobby_t;
   }
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCEnter.lobby)
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCLobby.lobby)
   return lobby_;
 }
-inline ::proto3::lobby_t* MsgLCEnter::release_lobby() {
-  // @@protoc_insertion_point(field_release:proto3.MsgLCEnter.lobby)
+inline ::proto3::lobby_t* MsgLCLobby::release_lobby() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCLobby.lobby)
   
   ::proto3::lobby_t* temp = lobby_;
   lobby_ = NULL;
   return temp;
 }
-inline void MsgLCEnter::set_allocated_lobby(::proto3::lobby_t* lobby) {
+inline void MsgLCLobby::set_allocated_lobby(::proto3::lobby_t* lobby) {
   delete lobby_;
   lobby_ = lobby;
   if (lobby) {
@@ -9013,21 +8941,35 @@ inline void MsgLCEnter::set_allocated_lobby(::proto3::lobby_t* lobby) {
   } else {
     
   }
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCEnter.lobby)
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLobby.lobby)
 }
 
-// optional .proto3.pb_enum result = 5;
-inline void MsgLCEnter::clear_result() {
+// optional int32 key = 3;
+inline void MsgLCLobby::clear_key() {
+  key_ = 0;
+}
+inline ::google::protobuf::int32 MsgLCLobby::key() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLobby.key)
+  return key_;
+}
+inline void MsgLCLobby::set_key(::google::protobuf::int32 value) {
+  
+  key_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLobby.key)
+}
+
+// optional .proto3.pb_enum result = 4;
+inline void MsgLCLobby::clear_result() {
   result_ = 0;
 }
-inline ::proto3::pb_enum MsgLCEnter::result() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCEnter.result)
+inline ::proto3::pb_enum MsgLCLobby::result() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLobby.result)
   return static_cast< ::proto3::pb_enum >(result_);
 }
-inline void MsgLCEnter::set_result(::proto3::pb_enum value) {
+inline void MsgLCLobby::set_result(::proto3::pb_enum value) {
   
   result_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCEnter.result)
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLobby.result)
 }
 
 // -------------------------------------------------------------------

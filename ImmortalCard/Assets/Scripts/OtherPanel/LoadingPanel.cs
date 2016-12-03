@@ -36,7 +36,7 @@ public class LoadingPanel : MonoBehaviour {
 #endif
 
 		yield return StartCoroutine(updateCo());
-		while(Main.Instance.MainPlayer.msgSCLogin==null)
+		while(Main.Instance.MainPlayer.msgLCLogin==null)
 			yield return null;
 
 		//all ready: enter lobby
@@ -145,14 +145,14 @@ public class LoadingPanel : MonoBehaviour {
 				Destroy(gameObject);
 			});
 		}else if(Main.Instance.GameMode==Main.Mode.NODE)
-			Main.Instance.MainPlayer.msgSCLogin=new MsgSCLogin();
+			Main.Instance.MainPlayer.msgLCLogin=new MsgLCLogin();
 		else{
 			//login with cached account OR udid
 			var udid=SystemInfo.deviceUniqueIdentifier;
 			var account=PlayerPrefs.GetString(Cache.PrefsKey_Account,udid);
 
-			MsgCSLogin msg=new MsgCSLogin();
-			msg.Mid=pb_msg.MsgCsLogin;
+			MsgCLLogin msg=new MsgCLLogin();
+			msg.Mid=pb_msg.MsgClLogin;
 			msg.Version=uint.Parse(Config.build);
 			msg.User=new user_t();
 			msg.User.Account=account;
@@ -160,7 +160,7 @@ public class LoadingPanel : MonoBehaviour {
 			msg.User.Udid=udid;
 			
 			//Debug.Log("----DoLogin account="+msg.User.Account);
-			Main.Instance.MainPlayer.http.Request<MsgCSLogin>(msg.Mid,msg);
+			Main.Instance.MainPlayer.http.Request<MsgCLLogin>(msg.Mid,msg);
 		}
 		yield break;
 	}

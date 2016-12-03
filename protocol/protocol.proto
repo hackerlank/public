@@ -322,16 +322,12 @@ MSG_INVALID             =0;
 MSG_BEGIN               =1000;
 MSG_RAW                 =1001;
 
-//Client --  Login
-MSG_CS_BEGIN            =2000;
-MSG_CS_LOGIN            =2001;  //odd for in,even for out
-MSG_SC_LOGIN            =2002;
-
-MSG_CS_END              =3999;
 //Client --  Lobby
 MSG_CL_BEGIN            =4000;
-MSG_CL_ENTER            =4001;
-MSG_LC_ENTER            =4002;
+MSG_CL_LOGIN            =4001;  //odd for in,even for out
+MSG_LC_LOGIN            =4002;
+MSG_CL_LOBBY            =4003;
+MSG_LC_LOBBY            =4004;
 MSG_CL_REPLAYS          =4011;
 MSG_LC_REPLAYS          =4012;
 MSG_CL_REPLAY           =4013;
@@ -395,27 +391,26 @@ message MsgBase{
 pb_msg mid              =1;
 };
 // ----------------------------------------------------------------
-// Login
-message MsgCSLogin{
+// Lobby
+message MsgCLLogin{
 
 pb_msg mid				=1;
 uint32 version          =3;
 user_t user             =2;
 };
 
-message MsgSCLogin{
+message MsgLCLogin{
 
 pb_msg mid				=1;
-string uid				=2;
-uint32 version			=3;
-uint64 session          =4;
-string ip				=5;
+uint32 version			=2;
+uint64 session          =3;
+player_t player         =4;
+string node				=5;
 uint32 port             =6;
 pb_enum result			=7;
 };
-// ----------------------------------------------------------------
-// Lobby
-message MsgCLEnter{
+
+message MsgCLLobby{
 
 pb_msg mid				=1;
 string uid				=2;
@@ -423,13 +418,12 @@ uint32 version			=3;
 uint64 session          =4;
 };
 
-message MsgLCEnter{
+message MsgLCLobby{
 
 pb_msg mid				=1;
-int32 key               =2;
-player_t player         =3;
-lobby_t lobby           =4;
-pb_enum result			=5;
+lobby_t lobby           =2;
+int32 key               =3;
+pb_enum result			=4;
 };
 
 message MsgCLReplays{

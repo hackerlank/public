@@ -34,11 +34,11 @@ public class LobbyPanel : MonoBehaviour {
 	IEnumerator loadLobbyCo(){
 		var info=Info;
 		if(Dirty){
-			MsgCLEnter msg=new MsgCLEnter();
-			msg.Mid=pb_msg.MsgClEnter;
+			MsgCLLobby msg=new MsgCLLobby();
+			msg.Mid=pb_msg.MsgClLobby;
 			msg.Version=uint.Parse(Config.build);
 			msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
-			Main.Instance.MainPlayer.http.Request<MsgCLEnter>(msg.Mid,msg);
+			Main.Instance.MainPlayer.http.Request<MsgCLLobby>(msg.Mid,msg);
 
 			Info=null;
 		}

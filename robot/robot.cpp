@@ -63,7 +63,7 @@ void robot::http_client::on_response(const http_parser& resp) {
 }
 void robot::http_client::login(){
     auto mid=proto3::pb_msg::MSG_CS_LOGIN;
-    proto3::MsgCSLogin msg;
+    proto3::MsgCLLogin msg;
     msg.set_mid(mid);
     msg.set_version(100);
     auto user=msg.mutable_user();
@@ -74,8 +74,8 @@ void robot::http_client::login(){
     KEYE_LOG("login\n");
 }
 void robot::http_client::enter_lobby(){
-    auto mid=proto3::pb_msg::MSG_CL_ENTER;
-    proto3::MsgCLEnter msg;
+    auto mid=proto3::pb_msg::MSG_CL_LOBBY;
+    proto3::MsgCLLobby msg;
     msg.set_mid(mid);
     msg.set_version(100);
     msg.set_uid(sRobot->user.uid().c_str());

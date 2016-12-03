@@ -70,12 +70,12 @@ void MsgHandler::on_response(const http_parser& resp) {
     auto body=resp.body();
     auto mid=(proto3::pb_msg)atoi(msgid);
     switch(mid){
-        case proto3::pb_msg::MSG_SC_LOGIN:{
+        case proto3::pb_msg::MSG_LC_LOGIN:{
             auto str=base64_decode(body);
-            proto3::MsgSCLogin imsg;
+            proto3::MsgLCLogin imsg;
             if(imsg.ParseFromString(str)){
                 KEYE_LOG("login succeeded\n");
-                auto ip=imsg.ip();
+                auto ip=imsg.node();
                 auto port=imsg.port();
                 char uri[64];
                 sprintf(uri,"http://%s:%d",ip.c_str(),port);
@@ -86,9 +86,9 @@ void MsgHandler::on_response(const http_parser& resp) {
             }
             break;
         }
-        case proto3::pb_msg::MSG_LC_ENTER:{
+        case proto3::pb_msg::MSG_LC_LOBBY:{
             auto str=base64_decode(body);
-            proto3::MsgLCEnter imsg;
+            proto3::MsgLCLobby imsg;
             if(imsg.ParseFromString(str)){
                 KEYE_LOG("enter lobby succeeded\n");
                 const char* host="127.0.0.1";

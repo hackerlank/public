@@ -58,19 +58,19 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     else
         msgid=extractBody(content,body);
     
-    if(msgid==proto3::pb_msg::MSG_CS_LOGIN){
+    if(msgid==proto3::pb_msg::MSG_CL_LOGIN){
         KEYE_LOG("body=%s\n",content.c_str());
         auto str=base64_decode(content);
         KEYE_LOG("decode=%s\n",str.c_str());
-        proto3::MsgCSLogin imsg;
-        proto3::MsgSCLogin omsg;
-        auto mid=proto3::pb_msg::MSG_SC_LOGIN;
+        proto3::MsgCLLogin imsg;
+        proto3::MsgLCLogin omsg;
+        auto mid=proto3::pb_msg::MSG_LC_LOGIN;
         omsg.set_mid(mid);
         if(imsg.ParseFromString(str)){
             KEYE_LOG("client login succeeded\n");
-            omsg.set_uid("clusters");
+            omsg.mutable_player()->set_uid("clusters");
             omsg.set_version(imsg.version()+1);
-            omsg.set_ip("127.0.0.1");
+            omsg.set_node("127.0.0.1");
             omsg.set_port(8810);
             omsg.set_result(proto3::pb_enum::SUCCEESS);
             

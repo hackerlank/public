@@ -8,9 +8,6 @@
       location = "group:Charge/Charge.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Login/Login.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:Lobby/Lobby.xcodeproj">
    </FileRef>
    <FileRef

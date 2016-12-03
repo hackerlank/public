@@ -33,16 +33,16 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     
     //process
     switch(msgid){
-        case pb_msg::MSG_CS_LOGIN:{
-            MsgCSLogin imsg;
-            MsgSCLogin omsg;
-            auto mid=pb_msg::MSG_SC_LOGIN;
+        case pb_msg::MSG_CL_LOGIN:{
+            MsgCLLogin imsg;
+            MsgLCLogin omsg;
+            auto mid=pb_msg::MSG_LC_LOGIN;
             omsg.set_mid(mid);
             if(imsg.ParseFromString(str)){
                 KEYE_LOG("client login succeeded\n");
-                omsg.set_uid("clusters");
+                omsg.mutable_player()->set_uid("clusters");
                 omsg.set_version(imsg.version()+1);
-                omsg.set_ip("127.0.0.1");
+                omsg.set_node("127.0.0.1");
                 omsg.set_port(8810);
                 omsg.set_result(pb_enum::SUCCEESS);
                 
@@ -53,11 +53,11 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             }
             break;
         }
-        case pb_msg::MSG_CL_ENTER:{
+        case pb_msg::MSG_CL_LOBBY:{
             auto str=base64_decode(body);
-            MsgCLEnter imsg;
-            MsgLCEnter omsg;
-            auto omid=pb_msg::MSG_LC_ENTER;
+            MsgCLLobby imsg;
+            MsgLCLobby omsg;
+            auto omid=pb_msg::MSG_LC_LOBBY;
             omsg.set_mid(omid);
             if(imsg.ParseFromString(str)){
                 KEYE_LOG("client enter succeeded\n");
