@@ -20,58 +20,57 @@ public class LobbyPanel : MonoBehaviour {
 		storeGame.FromString(str);
 
 		if(storeGame.gameId>0){
-			Debug.Log("found game "+storeGame.gameId);
 			//in game: reconnect and create game panel,robots
+			Debug.Log("found game "+storeGame.gameId);
 			Cache.storeGame=storeGame;
 			yield return StartCoroutine(Main.Instance.MainPlayer.Reconnect());
 
 			Destroy(gameObject);
 		}else{
-			yield return StartCoroutine(loadLobbyCo());
-		}
-	}
-
-	IEnumerator loadLobbyCo(){
-		var info=Info;
-		if(Dirty){
-			MsgCLLobby msg=new MsgCLLobby();
-			msg.Mid=pb_msg.MsgClLobby;
-			msg.Version=uint.Parse(Config.build);
-			msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
-			Main.Instance.MainPlayer.http.Request<MsgCLLobby>(msg.Mid,msg);
-
-			Info=null;
-		}
-
-		while(Info==null)
-			yield return null;
-
-		if(info!=null && Info.Version<=info.Version)
-			Info=info;
-
-		//to enter panel
-		var games=new pb_enum[]{pb_enum.GameDdz,pb_enum.GameMj,pb_enum.GamePhz};
-		foreach(var id in games){
-			game_t game=new game_t();
-			game.Id=(int)id;
-			addGame(game);
-		}
-	}
-
-	void addGame(game_t game){
-		StartCoroutine(Main.Instance.updater.Load<GameIcon>(
-			"Prefabs/GameIcon",GameRoot,delegate(Object obj,Hashtable arg){
-			var icon=obj as GameIcon;
-			icon.game=(pb_enum)game.Id;
-			switch(icon.game){
-			case pb_enum.GameMj:
-				icon.Name.text="Mahjong";	break;
-			case pb_enum.GameDdz:
-				icon.Name.text="DoudeZhu";	break;
-			case pb_enum.GamePhz:
-			default:
-				icon.Name.text="Paohuzi";	break;
+			//request and show lobby
+			var old=lobby;
+			if(Dirty){
+				MsgCLLobby msg=new MsgCLLobby();
+				msg.Mid=pb_msg.MsgClLobby;
+				msg.Version=(old==null?0:old.Version);
+				msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
+				Main.Instance.MainPlayer.http.Request<MsgCLLobby>(msg.Mid,msg);
+				
+				lobby=null;
 			}
+			
+			while(lobby==null)
+				yield return null;
+			
+			if(old!=null && lobby.Version<=old.Version)
+				lobby=old;
+			
+			//bulletin
+			if(!string.IsNullOrEmpty(lobby.Bulletin)){
+				Bulletin.text=lobby.Bulletin;
+			}
+			
+			//games
+			foreach(game_t game in lobby.Games){
+				Hashtable param=new Hashtable();
+				param["game"]=game;
+				StartCoroutine(Main.Instance.updater.Load<GameIcon>(
+					"Prefabs/GameIcon",GameRoot,delegate(Object obj,Hashtable arg){
+					var icon=obj as GameIcon;
+					icon.Value=arg["game"] as game_t;
+				},param));
+				yield return null;
+			}
+		}
+	}
+
+	public void OnGame(game_t game){
+		StartCoroutine(Main.Instance.updater.Load<EnterPanel>(
+			"Prefabs/EnterPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2) {
+			var panel=arg1 as EnterPanel;
+			panel.CurrentGame=game;
+			if(null!=this)
+				Destroy(gameObject);
 		}));
 	}
 
@@ -100,7 +99,7 @@ public class LobbyPanel : MonoBehaviour {
 	}
 
 	public static bool Dirty=true;
-	public static lobby_t Info=null;
+	public static lobby_t lobby=null;
 	public static IEnumerator ObserveCo(){
 		while(true){
 			Dirty=true;

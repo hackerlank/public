@@ -18,7 +18,7 @@ public class EnterPanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 
 	[HideInInspector]
-	public GameIcon	CurrentGame;
+	public game_t	CurrentGame;
 	[HideInInspector]
 	public RuleIcon	GameCategory;
 
@@ -49,7 +49,7 @@ public class EnterPanel : MonoBehaviour {
 		ddz[pb_enum.PhzSybp]="四人斗地主";
 
 		var games=phz;
-		switch(CurrentGame.game){
+		switch(CurrentGame.Id){
 		case pb_enum.GameMj:
 			games=mj;
 			break;
@@ -138,7 +138,7 @@ public class EnterPanel : MonoBehaviour {
 
 		var storeGame=new StoreGame();
 		Cache.storeGame=storeGame;
-		storeGame.gameType=(int)CurrentGame.game;
+		storeGame.gameType=(int)CurrentGame.Id;
 		storeGame.robots=4;
 
 		var opRound=new key_value();
@@ -152,7 +152,7 @@ public class EnterPanel : MonoBehaviour {
 		
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;
-		msgC.Game=CurrentGame.game;
+		msgC.Game=CurrentGame.Id;
 
 		msgC.Options.Add(opRound);
 		msgC.Options.Add(opCategory);
@@ -222,7 +222,7 @@ public class EnterPanel : MonoBehaviour {
 			panel.StartCoroutine(panel.Play(msg));
 		};
 
-		switch(CurrentGame.game){
+		switch(CurrentGame.Id){
 		case pb_enum.GameMj:
 			rule=new MahJongRule();
 			ReplayPanel.Create("MahjongPanel",handler);

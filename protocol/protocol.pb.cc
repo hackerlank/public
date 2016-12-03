@@ -3292,13 +3292,14 @@ bool game_t::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 id = 1;
+      // optional .proto3.pb_enum id = 1;
       case 1: {
         if (tag == 8) {
+          int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &id_)));
-
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_id(static_cast< ::proto3::pb_enum >(value));
         } else {
           goto handle_unusual;
         }
@@ -3484,9 +3485,10 @@ failure:
 void game_t::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.game_t)
-  // optional int32 id = 1;
+  // optional .proto3.pb_enum id = 1;
   if (this->id() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->id(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->id(), output);
   }
 
   // optional uint32 version = 2;
@@ -3556,11 +3558,10 @@ int game_t::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.game_t)
   int total_size = 0;
 
-  // optional int32 id = 1;
+  // optional .proto3.pb_enum id = 1;
   if (this->id() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->id());
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->id());
   }
 
   // optional uint32 version = 2;
@@ -3725,15 +3726,15 @@ void game_t::InternalSwap(game_t* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // game_t
 
-// optional int32 id = 1;
+// optional .proto3.pb_enum id = 1;
 void game_t::clear_id() {
   id_ = 0;
 }
- ::google::protobuf::int32 game_t::id() const {
+ ::proto3::pb_enum game_t::id() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.id)
-  return id_;
+  return static_cast< ::proto3::pb_enum >(id_);
 }
- void game_t::set_id(::google::protobuf::int32 value) {
+ void game_t::set_id(::proto3::pb_enum value) {
   
   id_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.id)

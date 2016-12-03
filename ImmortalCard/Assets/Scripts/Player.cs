@@ -229,7 +229,7 @@ public class Player {
 		case pb_msg.MsgLcLobby:
 			MsgLCLobby msgLobby=MsgLCLobby.Parser.ParseFrom(bytes);
 			if(msgLobby.Result==pb_enum.Succeess){
-				LobbyPanel.Info=msgLobby.Lobby;
+				LobbyPanel.lobby=msgLobby.Lobby;
 			}else
 				Debug.LogError("lobby error: "+msgLobby.Result);
 			break;

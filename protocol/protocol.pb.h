@@ -1073,11 +1073,11 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
 
   // accessors -------------------------------------------------------
 
-  // optional int32 id = 1;
+  // optional .proto3.pb_enum id = 1;
   void clear_id();
   static const int kIdFieldNumber = 1;
-  ::google::protobuf::int32 id() const;
-  void set_id(::google::protobuf::int32 value);
+  ::proto3::pb_enum id() const;
+  void set_id(::proto3::pb_enum value);
 
   // optional uint32 version = 2;
   void clear_version();
@@ -1156,7 +1156,7 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::int32 id_;
+  int id_;
   ::google::protobuf::uint32 version_;
   ::google::protobuf::internal::ArenaStringPtr ip_;
   ::google::protobuf::uint32 port_;
@@ -7530,15 +7530,15 @@ inline void achv_t::set_value(::google::protobuf::int32 value) {
 
 // game_t
 
-// optional int32 id = 1;
+// optional .proto3.pb_enum id = 1;
 inline void game_t::clear_id() {
   id_ = 0;
 }
-inline ::google::protobuf::int32 game_t::id() const {
+inline ::proto3::pb_enum game_t::id() const {
   // @@protoc_insertion_point(field_get:proto3.game_t.id)
-  return id_;
+  return static_cast< ::proto3::pb_enum >(id_);
 }
-inline void game_t::set_id(::google::protobuf::int32 value) {
+inline void game_t::set_id(::proto3::pb_enum value) {
   
   id_ = value;
   // @@protoc_insertion_point(field_set:proto3.game_t.id)

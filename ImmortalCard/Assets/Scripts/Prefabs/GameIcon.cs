@@ -7,14 +7,25 @@ public class GameIcon : MonoBehaviour {
 
 	public Image	Icon;
 	public Text		Name;
-	public pb_enum	game;
+
+	game_t game;
+	public game_t Value{
+		set{
+			game=value;
+			switch(value.id){
+			case pb_enum.GameMj:
+				Name.text="Mahjong";	break;
+			case pb_enum.GameDdz:
+				Name.text="DoudeZhu";	break;
+			case pb_enum.GamePhz:
+			default:
+				Name.text="Paohuzi";	break;
+			}
+		}
+	}
 
 	public void OnGame(){
-		StartCoroutine(Main.Instance.updater.Load<EnterPanel>(
-			"Prefabs/EnterPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2) {
-			var lobby=arg1 as EnterPanel;
-			lobby.CurrentGame=this;
-			if(LobbyPanel.Instance)Destroy(LobbyPanel.Instance.gameObject);
-		}));
+		if(LobbyPanel.Instance!=null)
+			LobbyPanel.Instance.OnGame(game);
 	}
 }
