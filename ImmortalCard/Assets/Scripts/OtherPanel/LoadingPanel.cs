@@ -144,9 +144,10 @@ public class LoadingPanel : MonoBehaviour {
 				gp.StartCoroutine(gp.OnMsgDeal(Main.Instance.MainPlayer,msg));
 				Destroy(gameObject);
 			});
-		}else if(Main.Instance.GameMode==Main.Mode.NODE)
+		}else if(Main.Instance.GameMode==Main.Mode.NODE){
+			Main.Instance.MainPlayer.playData.Player=new Proto3.player_t();
 			Main.Instance.MainPlayer.msgLCLogin=new MsgLCLogin();
-		else{
+		}else{
 			//login with cached account OR udid
 			var udid=SystemInfo.deviceUniqueIdentifier;
 			var account=PlayerPrefs.GetString(Cache.PrefsKey_Account,udid);

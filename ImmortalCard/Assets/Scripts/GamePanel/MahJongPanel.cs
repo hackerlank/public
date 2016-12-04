@@ -150,12 +150,6 @@ public class MahJongPanel : GamePanel {
 		switch(bunch.Type){
 		case pb_enum.BunchA:
 			//collect
-			if(_pos!=to){
-				//remove extra card of other player
-				var hand=HandAreas[to].GetComponentInChildren<Card>();
-				if(hand!=null)
-					Destroy(hand.gameObject);
-			}
 			A.DiscardTo(HandAreas[to],scalar);
 			A.Static=false;
 			A.state=Card.State.ST_NORMAL;
@@ -178,21 +172,22 @@ public class MahJongPanel : GamePanel {
 		//do meld
 		foreach(var meld in meldBunch){
 			//var melds=new List<Card>();
+			var meldHands=HandAreas[to].GetComponentsInChildren<Card>();
 			if(_pos==to){
 				//move cards to meld area
-				var hands=HandAreas[to].GetComponentsInChildren<Card>();
 				foreach(var id in meld.Pawns)
-				foreach(var card in hands){
-					if(card.Value==id && A.Value!=id)
+				foreach(var card in meldHands){
+					if(card.Value==id && A.Value!=id){
 						Destroy(card.gameObject);
 						//melds.Add(card);
+						break;
+					}
 				}
 			}else{
 				//remove extra cards of other player
-				var hands=HandAreas[to].GetComponentsInChildren<Card>();
-				var rm=Mathf.Min(hands.Length,meld.Pawns.Count-1);
+				var rm=Mathf.Min(meldHands.Length,meld.Pawns.Count-1);
 				for(int i=0;i<rm;++i){
-					var hand=hands[i];
+					var hand=meldHands[i];
 					Destroy(hand.gameObject);
 				}
 			}

@@ -136,6 +136,14 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 				//remove discards
 				foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
 
+				//remove cards of other player
+				var meldHands=HandAreas[pos].GetComponentsInChildren<Card>();
+				var rm=Mathf.Min(meldHands.Length,cards.Length);
+				for(int i=0;i<rm;++i){
+					var hand=meldHands[i];
+					Destroy(hand.gameObject);
+				}
+
 				//show new discards
 				for(int i=0;i<cards.Length;++i){
 					var id=cards[i];

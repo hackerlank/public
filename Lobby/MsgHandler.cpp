@@ -47,14 +47,30 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     break;
                 }
                 
+                //account
                 auto& account=imsg.user().account();
                 auto player=omsg.mutable_player();
-                //account
                 auto spdb=Lobby::sLobby->spdb;
                 std::string uid;
                 char key[128];
+                
+                //search db by account
                 sprintf(key,"user:%s",account.c_str());
                 spdb->hget(key,"uid",uid);
+                
+                if(uid.empty()){
+                    //test udid if not found
+                    if(imsg.user().udid()!=account){
+                        sprintf(key,"user:%s",imsg.user().udid().c_str());
+                        spdb->hget(key,"uid",uid);
+                        
+                        //bind account if udid exists
+                        if(!uid.empty()){
+                            spdb->hset(key,"account",account.c_str());
+                        }
+                    }
+                }
+                
                 if(uid.empty()){
                     //new user
                     char idkey[32];

@@ -21,9 +21,10 @@ public class MahjongBunch : Bunch{
 				++start;
 				ExtraCard.Value=value.Pawns[0];
 				ExtraCard.state=Card.State.ST_MELD;
+				ExtraCard.gameObject.SetActive(true);
 			}
-			for(int i=start;i<3;++i){
-				var card=(i<value.Pawns.Count?value.Pawns[i]:-1);
+			for(int i=start;i<value.Pawns.Count;++i){
+				var card=value.Pawns[i];
 				Card.Create(prefab,card,Cards,delegate(Card obj) {
 					obj.state=Card.State.ST_MELD;
 					if(obj.Value<1000)obj.tint.color=Color.clear;
