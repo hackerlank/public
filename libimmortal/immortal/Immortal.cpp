@@ -20,11 +20,7 @@ enum TIMER:size_t{
     TIMER_DAY,
 };
 
-#if defined(WIN32) || defined(__APPLE__)
-keye::logger sLogger;
-#else
-keye::logger sLogger("immortal.log");
-#endif
+std::shared_ptr<keye::logger> sLogger;
 
 Immortal* Immortal::sImmortal=nullptr;
 
@@ -32,6 +28,7 @@ Immortal::Immortal(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size)
 ,_game_index(0){
     sImmortal=this;
+    setup_log("immortal");
 }
 
 void Immortal::run(const char* cfg){
@@ -175,12 +172,29 @@ bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
             break;
         case TIMER::TIMER_MIN:
             break;
-        case TIMER::TIMER_HOUR:
+        case TIMER::TIMER_HOUR:{
+            time_t t=time(NULL);
+            tm* aTm=localtime(&t);
+            if(aTm->tm_hour==0)
+                setup_log("immortal");
             break;
+        }
         case TIMER::TIMER_DAY:
             break;
         default:
             break;
     }
     return true;
+}
+
+void Immortal::setup_log(const char* file){
+#if defined(WIN32) || defined(__APPLE__)
+    sLogger=std::make_shared<logger>();
+#else
+    time_t t=time(NULL);
+    tm* aTm=localtime(&t);
+    char logfile[32];
+    sprintf(logfile,"%s-%02d-%02d-%02d.log",file,aTm->tm_year%100,aTm->tm_mon+1,aTm->tm_mday);
+    sLogger=std::make_shared<logger>(logfile);
+#endif
 }

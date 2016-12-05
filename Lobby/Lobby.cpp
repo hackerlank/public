@@ -17,17 +17,14 @@ using namespace keye;
 #define WRITE_FREQ 1000
 #endif // WRITE_FREQ
 
-#if defined(WIN32) || defined(__APPLE__)
-keye::logger sLogger;
-#else
-keye::logger sLogger("lobby.log");
-#endif
+std::shared_ptr<keye::logger> sLogger;
 
 Lobby* Lobby::sLobby=nullptr;
 
 Lobby::Lobby(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size) {
     sLobby=this;
+    setup_log("lobby");
 }
 
 void Lobby::run(const char* cfg){
@@ -63,6 +60,18 @@ void Lobby::run(const char* cfg){
 
 void Lobby::on_http(const http_parser& req,http_parser& resp){
     handler.on_http(req,resp);
+}
+
+void Lobby::setup_log(const char* file){
+#if defined(WIN32) || defined(__APPLE__)
+    sLogger=std::make_shared<logger>();
+#else
+    time_t t=time(NULL);
+    tm* aTm=localtime(&t);
+    char logfile[32];
+    sprintf(logfile,"%s-%02d-%02d-%02d.log",file,aTm->tm_year%100,aTm->tm_mon+1,aTm->tm_mday);
+    sLogger=std::make_shared<logger>(logfile);
+#endif
 }
 
 int main(int argc, char* argv[]) {

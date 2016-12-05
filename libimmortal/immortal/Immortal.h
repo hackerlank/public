@@ -30,6 +30,7 @@ public:
     static Immortal*        sImmortal;
     std::shared_ptr<vic_proxy>   spdb;
     
+    void            setup_log(const char*);
     //TODO: remove
     std::vector<std::shared_ptr<proto3::MsgLCReplay>>  replays;
 private:

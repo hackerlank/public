@@ -13,9 +13,9 @@
 
 #include "protocol.pb.h"
 
-extern keye::logger sLogger;
+extern std::shared_ptr<keye::logger> sLogger;
 #ifndef Logger
-#define Logger sLogger<<begl
+#define Logger sLogger->operator<<(begl)
 #endif
 
 #include "PBHelper.h"

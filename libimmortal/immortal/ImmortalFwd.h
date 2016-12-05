@@ -21,9 +21,9 @@ typedef short value_t;
 typedef unsigned game_id_t;
 static const unit_id_t invalid_card=-1; //more reliable than 0
 
-extern keye::logger sLogger;
+extern std::shared_ptr<keye::logger> sLogger;
 #ifndef Logger
-#define Logger sLogger<<begl
+#define Logger sLogger->operator<<(begl)
 #endif
 
 #include <immortal/PBHelper.h>

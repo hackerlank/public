@@ -15,6 +15,7 @@ public:
     void            run(const char* =nullptr);
     virtual void	on_http(const http_parser& req,http_parser& resp);
     MsgHandler      handler;
+    void            setup_log(const char*);
 
     static Lobby*   sLobby;
     std::shared_ptr<vic_proxy>   spdb;
