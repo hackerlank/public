@@ -14,10 +14,15 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     auto msgid=req.header("msgid");
     auto mid=(pb_msg)atoi(msgid);
     if(mid<pb_msg::MSG_CH_BEGIN||mid>pb_msg::MSG_CH_END){
-        KEYE_LOG("invalid msg id %d\n",mid);
+        Logger<<"invalid msg id "<<(int)mid<<endl;
         return;
     }
     
+    if(mid<=pb_msg::MSG_CH_BEGIN || mid>=pb_msg::MSG_CH_END){
+        Logger<<"invalid message id "<<(int)mid<<endl;
+        return;
+    }
+
     auto body=req.body();
     auto str=base64_decode(body);
     switch(mid){
@@ -33,10 +38,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 omsg.set_amount(1999);
                 omsg.set_session(19700101);
                 
-                KEYE_LOG("login succeeded\n");
+                Logger<<"login succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                KEYE_LOG("login failed\n");
+                Logger<<"login failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
@@ -51,10 +56,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //query db by phone and uid
                 //insert into db if not exists
                 
-                KEYE_LOG("register succeeded\n");
+                Logger<<"register succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                KEYE_LOG("register failed\n");
+                Logger<<"register failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
@@ -70,10 +75,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //query uid and amount from db by phone
                 //transfer from source uid to target
                 
-                KEYE_LOG("charge succeeded\n");
+                Logger<<"charge succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                KEYE_LOG("charge failed\n");
+                Logger<<"charge failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
@@ -88,10 +93,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //verify session and retrieve phone
                 //query charge logs from db by target uid
                 
-                KEYE_LOG("query succeeded\n");
+                Logger<<"query succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                KEYE_LOG("query failed\n");
+                Logger<<"query failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);

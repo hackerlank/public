@@ -1954,6 +1954,12 @@ class replays : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
       users() const;
 
+  // optional uint32 timestamp = 6;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 6;
+  ::google::protobuf::uint32 timestamp() const;
+  void set_timestamp(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:proto3.replays)
  private:
 
@@ -1966,6 +1972,7 @@ class replays : public ::google::protobuf::MessageLite /* @@protoc_insertion_poi
   ::google::protobuf::int32 rounds_;
   ::google::protobuf::int32 max_round_;
   ::google::protobuf::RepeatedPtrField< ::proto3::user_t > users_;
+  ::google::protobuf::uint32 timestamp_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2122,6 +2129,12 @@ class replay : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
       ops() const;
 
+  // optional uint32 timestamp = 9;
+  void clear_timestamp();
+  static const int kTimestampFieldNumber = 9;
+  ::google::protobuf::uint32 timestamp() const;
+  void set_timestamp(::google::protobuf::uint32 value);
+
   // @@protoc_insertion_point(class_scope:proto3.replay)
  private:
 
@@ -2136,10 +2149,11 @@ class replay : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > bottom_;
   mutable int _bottom_cached_byte_size_;
   ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hands_;
+  ::google::protobuf::int32 round_;
+  ::google::protobuf::uint32 timestamp_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > engage_;
   mutable int _engage_cached_byte_size_;
   ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > ops_;
-  ::google::protobuf::int32 round_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -8884,6 +8898,20 @@ replays::users() const {
   return users_;
 }
 
+// optional uint32 timestamp = 6;
+inline void replays::clear_timestamp() {
+  timestamp_ = 0u;
+}
+inline ::google::protobuf::uint32 replays::timestamp() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.timestamp)
+  return timestamp_;
+}
+inline void replays::set_timestamp(::google::protobuf::uint32 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.timestamp)
+}
+
 // -------------------------------------------------------------------
 
 // replay
@@ -9078,6 +9106,20 @@ inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
 replay::ops() const {
   // @@protoc_insertion_point(field_list:proto3.replay.ops)
   return ops_;
+}
+
+// optional uint32 timestamp = 9;
+inline void replay::clear_timestamp() {
+  timestamp_ = 0u;
+}
+inline ::google::protobuf::uint32 replay::timestamp() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.timestamp)
+  return timestamp_;
+}
+inline void replay::set_timestamp(::google::protobuf::uint32 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.timestamp)
 }
 
 // -------------------------------------------------------------------

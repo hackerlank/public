@@ -323,6 +323,7 @@ pb_enum gameCategory    =2;
 int32 rounds            =3;
 int32 max_round         =4;
 repeated user_t users   =5;
+uint32 timestamp        =6;
 }
 
 message replay{
@@ -335,6 +336,7 @@ repeated int32 bottom   =5;
 repeated bunch_t hands  =6;
 repeated int32 engage   =7;
 repeated bunch_t ops    =8;
+uint32 timestamp        =9;
 }
 // ----------------------------------------------------------------
 // messages

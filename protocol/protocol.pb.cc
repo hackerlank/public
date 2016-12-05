@@ -6814,6 +6814,7 @@ const int replays::kGameCategoryFieldNumber;
 const int replays::kRoundsFieldNumber;
 const int replays::kMaxRoundFieldNumber;
 const int replays::kUsersFieldNumber;
+const int replays::kTimestampFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 replays::replays()
@@ -6841,6 +6842,7 @@ void replays::SharedCtor() {
   gamecategory_ = 0;
   rounds_ = 0;
   max_round_ = 0;
+  timestamp_ = 0u;
 }
 
 replays::~replays() {
@@ -6900,6 +6902,7 @@ void replays::Clear() {
 } while (0)
 
   ZR_(gameid_, max_round_);
+  timestamp_ = 0u;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -6990,6 +6993,21 @@ bool replays::MergePartialFromCodedStream(
         }
         if (input->ExpectTag(42)) goto parse_loop_users;
         input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(48)) goto parse_timestamp;
+        break;
+      }
+
+      // optional uint32 timestamp = 6;
+      case 6: {
+        if (tag == 48) {
+         parse_timestamp:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &timestamp_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -7045,6 +7063,11 @@ void replays::SerializeWithCachedSizes(
       5, this->users(i), output);
   }
 
+  // optional uint32 timestamp = 6;
+  if (this->timestamp() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->timestamp(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.replays)
 }
 
@@ -7077,6 +7100,13 @@ int replays::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->max_round());
+  }
+
+  // optional uint32 timestamp = 6;
+  if (this->timestamp() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->timestamp());
   }
 
   // repeated .proto3.user_t users = 5;
@@ -7116,6 +7146,9 @@ void replays::MergeFrom(const replays& from) {
   if (from.max_round() != 0) {
     set_max_round(from.max_round());
   }
+  if (from.timestamp() != 0) {
+    set_timestamp(from.timestamp());
+  }
 }
 
 void replays::CopyFrom(const replays& from) {
@@ -7140,6 +7173,7 @@ void replays::InternalSwap(replays* other) {
   std::swap(rounds_, other->rounds_);
   std::swap(max_round_, other->max_round_);
   users_.UnsafeArenaSwap(&other->users_);
+  std::swap(timestamp_, other->timestamp_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -7237,6 +7271,20 @@ replays::users() const {
   return users_;
 }
 
+// optional uint32 timestamp = 6;
+void replays::clear_timestamp() {
+  timestamp_ = 0u;
+}
+ ::google::protobuf::uint32 replays::timestamp() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.timestamp)
+  return timestamp_;
+}
+ void replays::set_timestamp(::google::protobuf::uint32 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.timestamp)
+}
+
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
 
 // ===================================================================
@@ -7250,6 +7298,7 @@ const int replay::kBottomFieldNumber;
 const int replay::kHandsFieldNumber;
 const int replay::kEngageFieldNumber;
 const int replay::kOpsFieldNumber;
+const int replay::kTimestampFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 replay::replay()
@@ -7276,6 +7325,7 @@ void replay::SharedCtor() {
   gameid_ = 0;
   banker_ = 0;
   round_ = 0;
+  timestamp_ = 0u;
 }
 
 replay::~replay() {
@@ -7336,6 +7386,7 @@ void replay::Clear() {
 
   ZR_(gameid_, banker_);
   round_ = 0;
+  timestamp_ = 0u;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -7485,6 +7536,21 @@ bool replay::MergePartialFromCodedStream(
         }
         if (input->ExpectTag(66)) goto parse_loop_ops;
         input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(72)) goto parse_timestamp;
+        break;
+      }
+
+      // optional uint32 timestamp = 9;
+      case 9: {
+        if (tag == 72) {
+         parse_timestamp:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &timestamp_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -7570,6 +7636,11 @@ void replay::SerializeWithCachedSizes(
       8, this->ops(i), output);
   }
 
+  // optional uint32 timestamp = 9;
+  if (this->timestamp() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(9, this->timestamp(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.replay)
 }
 
@@ -7596,6 +7667,13 @@ int replay::ByteSize() const {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::Int32Size(
         this->round());
+  }
+
+  // optional uint32 timestamp = 9;
+  if (this->timestamp() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->timestamp());
   }
 
   // repeated int32 piles = 4;
@@ -7695,6 +7773,9 @@ void replay::MergeFrom(const replay& from) {
   if (from.round() != 0) {
     set_round(from.round());
   }
+  if (from.timestamp() != 0) {
+    set_timestamp(from.timestamp());
+  }
 }
 
 void replay::CopyFrom(const replay& from) {
@@ -7722,6 +7803,7 @@ void replay::InternalSwap(replay* other) {
   hands_.UnsafeArenaSwap(&other->hands_);
   engage_.UnsafeArenaSwap(&other->engage_);
   ops_.UnsafeArenaSwap(&other->ops_);
+  std::swap(timestamp_, other->timestamp_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -7923,6 +8005,20 @@ const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
 replay::ops() const {
   // @@protoc_insertion_point(field_list:proto3.replay.ops)
   return ops_;
+}
+
+// optional uint32 timestamp = 9;
+void replay::clear_timestamp() {
+  timestamp_ = 0u;
+}
+ ::google::protobuf::uint32 replay::timestamp() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.timestamp)
+  return timestamp_;
+}
+ void replay::set_timestamp(::google::protobuf::uint32 value) {
+  
+  timestamp_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.timestamp)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

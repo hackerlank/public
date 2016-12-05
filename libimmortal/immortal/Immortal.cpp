@@ -98,6 +98,12 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
     keye::PacketWrapper pw(buf,sz);
     PBHelper pb(pw);
     auto mid=pb.Id();
+    
+    if(mid<=pb_msg::MSG_CN_BEGIN || mid>=pb_msg::MSG_CN_END){
+        Logger<<"invalid message id "<<(int)mid<<endl;
+        return;
+    }
+
     if(mid==proto3::pb_msg::MSG_CN_CONNECT){
         MsgNCConnect omsg;
         do{

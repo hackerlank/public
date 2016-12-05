@@ -28,14 +28,13 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     
     if(msgid<=pb_msg::MSG_CL_BEGIN || msgid>=pb_msg::MSG_CL_END){
         Logger<<"invalid message id "<<(int)msgid<<endl;
-        //PBHelper::Response(resp,omsg,mid,500,"Internal error");
         return;
     }
     
     //decode
-    KEYE_LOG("body=%s\n",content.c_str());
+    Logger<<"body="<<content.c_str()<<endl;
     auto str=base64_decode(content);
-    KEYE_LOG("decode=%s\n",str.c_str());
+    Logger<<"decode="<<str.c_str()<<endl;
     
     auto spdb=Lobby::sLobby->spdb;
     //process
@@ -49,7 +48,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //version
                 if(imsg.version()<100){
                     omsg.set_result(pb_enum::ERR_VERSION);
-                    KEYE_LOG("client login failed\n");
+                    Logger<<"client login failed\n";
                     PBHelper::Response(resp,omsg,mid);
                     break;
                 }
@@ -77,6 +76,8 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     }
                 }
                 
+                char timestamp[32];
+                sprintf(timestamp,"%ld",time(nullptr));
                 if(uid.empty()){
                     //new user
                     char idkey[32];
@@ -89,15 +90,14 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     }
                     spdb->unlock(idkey);
                     
-                    char tm[32];
-                    sprintf(tm,"%ld",time(nullptr));
-                    
                     std::map<std::string,std::string> hmap;
                     hmap["uid"]=uid;
-                    hmap["regtime"]=tm;
+                    hmap["regtime"]=timestamp;
+                    hmap["lastlogin"]=timestamp;
                     hmap["account"]=account;
                     hmap["udid"]=imsg.user().udid();
                     hmap["dev_type"]=imsg.user().dev_type();
+                    spdb->hmset(key,hmap);
                     
                     //new player
                     sprintf(key,"player:%s",uid.c_str());
@@ -111,6 +111,8 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     player->set_gold(10);
                     player->set_silver(1000);
                 }else{
+                    spdb->hset(key,"lastlogin",timestamp);
+                    
                     std::map<std::string,std::string> hmap;
                     std::vector<std::string> fields;
                     fields.push_back("level");
@@ -123,7 +125,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     }
                 }
 
-                KEYE_LOG("client login succeeded\n");
+                Logger<<"client login succeeded\n";
                 player->set_uid(uid);
                 omsg.set_version(imsg.version()+1);
                 omsg.set_node("127.0.0.1");
@@ -132,7 +134,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 
                 PBHelper::Response(resp,omsg,mid);
             }else{
-                KEYE_LOG("client login failed\n");
+                Logger<<"client login failed\n";
                 PBHelper::Response(resp,omsg,mid,500,"Internal error");
             }
             break;
@@ -143,7 +145,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             auto omid=pb_msg::MSG_LC_LOBBY;
             omsg.set_mid(omid);
             if(imsg.ParseFromString(str)){
-                KEYE_LOG("client enter succeeded\n");
+                Logger<<"client enter succeeded\n";
                 omsg.set_result(pb_enum::SUCCEESS);
                 
                 auto& lobby=*omsg.mutable_lobby();
@@ -190,7 +192,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 game->add_rules(pb_enum::DDZ_CLASIC);
                 game->add_rules(pb_enum::DDZ_FOR4);
             }else{
-                KEYE_LOG("client enter failed\n");
+                Logger<<"client enter failed\n";
                 omsg.set_result(pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);

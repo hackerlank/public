@@ -91,6 +91,7 @@ void GameRule::deal(Game& game){
     spReplay->set_round(game.round);
     spReplay->set_banker(game.banker);
     spReplay->set_gameid(game.id);
+    spReplay->set_timestamp((unsigned)time(nullptr));
     for(auto c:game.pile)spReplay->add_piles(c);
     for(auto b:game.bottom)spReplay->add_bottom(b);
     for(auto p:game.players)spReplay->add_hands()->mutable_pawns()->CopyFrom(p->playData.hands());
