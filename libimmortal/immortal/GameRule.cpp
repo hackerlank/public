@@ -357,7 +357,7 @@ void GameRule::persistReplay(Game& game){
     }
 }
 
-void GameRule::release(Game& game){
+void GameRule::Release(Game& game){
     //player replay list - replay:player:<uid>{replays list}
     replays all;
     all.set_gameid(game.id);
@@ -376,7 +376,6 @@ void GameRule::release(Game& game){
             Immortal::sImmortal->spdb->lpush(key,ll);
         }
     }
-    Immortal::sImmortal->removeGame(game.id);
 }
 
 void parseCardsByString(std::vector<int>& o,const std::string& str){

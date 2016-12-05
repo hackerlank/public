@@ -159,7 +159,15 @@ void Immortal::on_write(svc_handler&, void*, size_t sz) {
 bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
     switch (id) {
         case TIMER::TIMER_SEC:
-            for(auto game:games)game.second->rule->Tick(*game.second);
+            for(auto iter=games.begin();iter!=games.end();){
+                auto game=iter->second;
+                game->rule->Tick(*game);
+                if(game->state==Game::ST_END){
+                    game->rule->Release(*game);
+                    iter=games.erase(iter);
+                }else
+                    ++iter;
+            }
             break;
         case TIMER::TIMER_MIN:
             break;

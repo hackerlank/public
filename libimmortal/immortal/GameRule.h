@@ -13,6 +13,7 @@ class KEYE_API GameRule{
 public:
     virtual             ~GameRule(){};
     bool                Ready(Game&);
+    void                Release(Game&);
 
     virtual void        Tick(Game&)=0;
     virtual int         Type()=0;
@@ -31,7 +32,6 @@ protected:
     virtual int         bottom(Game& game)=0;
     
     virtual bool        settle(Game&);
-    void                release(Game&);
     
     virtual void        engage(Game&,proto3::MsgNCEngage&){};
     void                deal(Game&);
