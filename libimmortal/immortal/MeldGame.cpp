@@ -34,6 +34,7 @@ void MeldGame::Tick(Game& game){
                 changeState(game,Game::State::ST_WAIT);
             break;
         case Game::State::ST_END:
+            release(game);
             break;
         default:
             break;

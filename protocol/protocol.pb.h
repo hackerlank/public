@@ -85,6 +85,8 @@ class key_value;
 class lobby_t;
 class play_t;
 class player_t;
+class replay;
+class replays;
 class user_t;
 class win_t;
 
@@ -1852,6 +1854,306 @@ class charge_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_po
 };
 // -------------------------------------------------------------------
 
+class replays : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.replays) */ {
+ public:
+  replays();
+  virtual ~replays();
+
+  replays(const replays& from);
+
+  inline replays& operator=(const replays& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const replays& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const replays* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(replays* other);
+
+  // implements Message ----------------------------------------------
+
+  inline replays* New() const { return New(NULL); }
+
+  replays* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const replays& from);
+  void MergeFrom(const replays& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(replays* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 gameId = 1;
+  void clear_gameid();
+  static const int kGameIdFieldNumber = 1;
+  ::google::protobuf::int32 gameid() const;
+  void set_gameid(::google::protobuf::int32 value);
+
+  // optional .proto3.pb_enum gameCategory = 2;
+  void clear_gamecategory();
+  static const int kGameCategoryFieldNumber = 2;
+  ::proto3::pb_enum gamecategory() const;
+  void set_gamecategory(::proto3::pb_enum value);
+
+  // optional int32 rounds = 3;
+  void clear_rounds();
+  static const int kRoundsFieldNumber = 3;
+  ::google::protobuf::int32 rounds() const;
+  void set_rounds(::google::protobuf::int32 value);
+
+  // optional int32 max_round = 4;
+  void clear_max_round();
+  static const int kMaxRoundFieldNumber = 4;
+  ::google::protobuf::int32 max_round() const;
+  void set_max_round(::google::protobuf::int32 value);
+
+  // repeated .proto3.user_t users = 5;
+  int users_size() const;
+  void clear_users();
+  static const int kUsersFieldNumber = 5;
+  const ::proto3::user_t& users(int index) const;
+  ::proto3::user_t* mutable_users(int index);
+  ::proto3::user_t* add_users();
+  ::google::protobuf::RepeatedPtrField< ::proto3::user_t >*
+      mutable_users();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
+      users() const;
+
+  // @@protoc_insertion_point(class_scope:proto3.replays)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::int32 gameid_;
+  int gamecategory_;
+  ::google::protobuf::int32 rounds_;
+  ::google::protobuf::int32 max_round_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::user_t > users_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static replays* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class replay : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.replay) */ {
+ public:
+  replay();
+  virtual ~replay();
+
+  replay(const replay& from);
+
+  inline replay& operator=(const replay& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const replay& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const replay* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(replay* other);
+
+  // implements Message ----------------------------------------------
+
+  inline replay* New() const { return New(NULL); }
+
+  replay* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const replay& from);
+  void MergeFrom(const replay& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(replay* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 gameId = 1;
+  void clear_gameid();
+  static const int kGameIdFieldNumber = 1;
+  ::google::protobuf::int32 gameid() const;
+  void set_gameid(::google::protobuf::int32 value);
+
+  // optional int32 banker = 2;
+  void clear_banker();
+  static const int kBankerFieldNumber = 2;
+  ::google::protobuf::int32 banker() const;
+  void set_banker(::google::protobuf::int32 value);
+
+  // optional int32 round = 3;
+  void clear_round();
+  static const int kRoundFieldNumber = 3;
+  ::google::protobuf::int32 round() const;
+  void set_round(::google::protobuf::int32 value);
+
+  // repeated int32 piles = 4;
+  int piles_size() const;
+  void clear_piles();
+  static const int kPilesFieldNumber = 4;
+  ::google::protobuf::int32 piles(int index) const;
+  void set_piles(int index, ::google::protobuf::int32 value);
+  void add_piles(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      piles() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_piles();
+
+  // repeated int32 bottom = 5;
+  int bottom_size() const;
+  void clear_bottom();
+  static const int kBottomFieldNumber = 5;
+  ::google::protobuf::int32 bottom(int index) const;
+  void set_bottom(int index, ::google::protobuf::int32 value);
+  void add_bottom(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      bottom() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_bottom();
+
+  // repeated .proto3.bunch_t hands = 6;
+  int hands_size() const;
+  void clear_hands();
+  static const int kHandsFieldNumber = 6;
+  const ::proto3::bunch_t& hands(int index) const;
+  ::proto3::bunch_t* mutable_hands(int index);
+  ::proto3::bunch_t* add_hands();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_hands();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      hands() const;
+
+  // repeated int32 engage = 7;
+  int engage_size() const;
+  void clear_engage();
+  static const int kEngageFieldNumber = 7;
+  ::google::protobuf::int32 engage(int index) const;
+  void set_engage(int index, ::google::protobuf::int32 value);
+  void add_engage(::google::protobuf::int32 value);
+  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+      engage() const;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+      mutable_engage();
+
+  // repeated .proto3.bunch_t ops = 8;
+  int ops_size() const;
+  void clear_ops();
+  static const int kOpsFieldNumber = 8;
+  const ::proto3::bunch_t& ops(int index) const;
+  ::proto3::bunch_t* mutable_ops(int index);
+  ::proto3::bunch_t* add_ops();
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+      mutable_ops();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+      ops() const;
+
+  // @@protoc_insertion_point(class_scope:proto3.replay)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::int32 gameid_;
+  ::google::protobuf::int32 banker_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > piles_;
+  mutable int _piles_cached_byte_size_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > bottom_;
+  mutable int _bottom_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hands_;
+  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > engage_;
+  mutable int _engage_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > ops_;
+  ::google::protobuf::int32 round_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static replay* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgBase : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.MsgBase) */ {
  public:
   MsgBase();
@@ -2604,29 +2906,23 @@ class MsgLCReplays : public ::google::protobuf::MessageLite /* @@protoc_insertio
 
   // accessors -------------------------------------------------------
 
-  // repeated .proto3.user_t users = 1;
-  int users_size() const;
-  void clear_users();
-  static const int kUsersFieldNumber = 1;
-  const ::proto3::user_t& users(int index) const;
-  ::proto3::user_t* mutable_users(int index);
-  ::proto3::user_t* add_users();
-  ::google::protobuf::RepeatedPtrField< ::proto3::user_t >*
-      mutable_users();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
-      users() const;
+  // optional .proto3.pb_msg mid = 1;
+  void clear_mid();
+  static const int kMidFieldNumber = 1;
+  ::proto3::pb_msg mid() const;
+  void set_mid(::proto3::pb_msg value);
 
-  // repeated int32 gameIds = 2;
-  int gameids_size() const;
-  void clear_gameids();
-  static const int kGameIdsFieldNumber = 2;
-  ::google::protobuf::int32 gameids(int index) const;
-  void set_gameids(int index, ::google::protobuf::int32 value);
-  void add_gameids(::google::protobuf::int32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      gameids() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_gameids();
+  // repeated .proto3.replays all = 2;
+  int all_size() const;
+  void clear_all();
+  static const int kAllFieldNumber = 2;
+  const ::proto3::replays& all(int index) const;
+  ::proto3::replays* mutable_all(int index);
+  ::proto3::replays* add_all();
+  ::google::protobuf::RepeatedPtrField< ::proto3::replays >*
+      mutable_all();
+  const ::google::protobuf::RepeatedPtrField< ::proto3::replays >&
+      all() const;
 
   // optional .proto3.pb_enum result = 3;
   void clear_result();
@@ -2641,9 +2937,8 @@ class MsgLCReplays : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::user_t > users_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > gameids_;
-  mutable int _gameids_cached_byte_size_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::replays > all_;
+  int mid_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2735,9 +3030,15 @@ class MsgCLReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::uint32 gameid() const;
   void set_gameid(::google::protobuf::uint32 value);
 
-  // optional uint64 session = 3;
+  // optional int32 round = 3;
+  void clear_round();
+  static const int kRoundFieldNumber = 3;
+  ::google::protobuf::int32 round() const;
+  void set_round(::google::protobuf::int32 value);
+
+  // optional uint64 session = 4;
   void clear_session();
-  static const int kSessionFieldNumber = 3;
+  static const int kSessionFieldNumber = 4;
   ::google::protobuf::uint64 session() const;
   void set_session(::google::protobuf::uint64 value);
 
@@ -2751,6 +3052,7 @@ class MsgCLReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   int mid_;
   ::google::protobuf::uint32 gameid_;
   ::google::protobuf::uint64 session_;
+  ::google::protobuf::int32 round_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -2835,99 +3137,18 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional int32 gameId = 2;
-  void clear_gameid();
-  static const int kGameIdFieldNumber = 2;
-  ::google::protobuf::int32 gameid() const;
-  void set_gameid(::google::protobuf::int32 value);
+  // optional .proto3.replay data = 2;
+  bool has_data() const;
+  void clear_data();
+  static const int kDataFieldNumber = 2;
+  const ::proto3::replay& data() const;
+  ::proto3::replay* mutable_data();
+  ::proto3::replay* release_data();
+  void set_allocated_data(::proto3::replay* data);
 
-  // optional .proto3.pb_msg gameCategory = 3;
-  void clear_gamecategory();
-  static const int kGameCategoryFieldNumber = 3;
-  ::proto3::pb_msg gamecategory() const;
-  void set_gamecategory(::proto3::pb_msg value);
-
-  // optional int32 banker = 4;
-  void clear_banker();
-  static const int kBankerFieldNumber = 4;
-  ::google::protobuf::int32 banker() const;
-  void set_banker(::google::protobuf::int32 value);
-
-  // optional int32 round = 5;
-  void clear_round();
-  static const int kRoundFieldNumber = 5;
-  ::google::protobuf::int32 round() const;
-  void set_round(::google::protobuf::int32 value);
-
-  // optional int32 rounds = 6;
-  void clear_rounds();
-  static const int kRoundsFieldNumber = 6;
-  ::google::protobuf::int32 rounds() const;
-  void set_rounds(::google::protobuf::int32 value);
-
-  // repeated int32 piles = 7;
-  int piles_size() const;
-  void clear_piles();
-  static const int kPilesFieldNumber = 7;
-  ::google::protobuf::int32 piles(int index) const;
-  void set_piles(int index, ::google::protobuf::int32 value);
-  void add_piles(::google::protobuf::int32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      piles() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_piles();
-
-  // repeated int32 bottom = 8;
-  int bottom_size() const;
-  void clear_bottom();
-  static const int kBottomFieldNumber = 8;
-  ::google::protobuf::int32 bottom(int index) const;
-  void set_bottom(int index, ::google::protobuf::int32 value);
-  void add_bottom(::google::protobuf::int32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      bottom() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_bottom();
-
-  // repeated .proto3.bunch_t hands = 9;
-  int hands_size() const;
-  void clear_hands();
-  static const int kHandsFieldNumber = 9;
-  const ::proto3::bunch_t& hands(int index) const;
-  ::proto3::bunch_t* mutable_hands(int index);
-  ::proto3::bunch_t* add_hands();
-  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-      mutable_hands();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-      hands() const;
-
-  // repeated int32 engage = 10;
-  int engage_size() const;
-  void clear_engage();
-  static const int kEngageFieldNumber = 10;
-  ::google::protobuf::int32 engage(int index) const;
-  void set_engage(int index, ::google::protobuf::int32 value);
-  void add_engage(::google::protobuf::int32 value);
-  const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-      engage() const;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-      mutable_engage();
-
-  // repeated .proto3.bunch_t ops = 11;
-  int ops_size() const;
-  void clear_ops();
-  static const int kOpsFieldNumber = 11;
-  const ::proto3::bunch_t& ops(int index) const;
-  ::proto3::bunch_t* mutable_ops(int index);
-  ::proto3::bunch_t* add_ops();
-  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-      mutable_ops();
-  const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-      ops() const;
-
-  // optional .proto3.pb_enum result = 12;
+  // optional .proto3.pb_enum result = 3;
   void clear_result();
-  static const int kResultFieldNumber = 12;
+  static const int kResultFieldNumber = 3;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -2938,20 +3159,8 @@ class MsgLCReplay : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
+  ::proto3::replay* data_;
   int mid_;
-  ::google::protobuf::int32 gameid_;
-  int gamecategory_;
-  ::google::protobuf::int32 banker_;
-  ::google::protobuf::int32 round_;
-  ::google::protobuf::int32 rounds_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > piles_;
-  mutable int _piles_cached_byte_size_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > bottom_;
-  mutable int _bottom_cached_byte_size_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > hands_;
-  ::google::protobuf::RepeatedField< ::google::protobuf::int32 > engage_;
-  mutable int _engage_cached_byte_size_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t > ops_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -8587,6 +8796,292 @@ inline void charge_t::set_amount(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
+// replays
+
+// optional int32 gameId = 1;
+inline void replays::clear_gameid() {
+  gameid_ = 0;
+}
+inline ::google::protobuf::int32 replays::gameid() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.gameId)
+  return gameid_;
+}
+inline void replays::set_gameid(::google::protobuf::int32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.gameId)
+}
+
+// optional .proto3.pb_enum gameCategory = 2;
+inline void replays::clear_gamecategory() {
+  gamecategory_ = 0;
+}
+inline ::proto3::pb_enum replays::gamecategory() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.gameCategory)
+  return static_cast< ::proto3::pb_enum >(gamecategory_);
+}
+inline void replays::set_gamecategory(::proto3::pb_enum value) {
+  
+  gamecategory_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.gameCategory)
+}
+
+// optional int32 rounds = 3;
+inline void replays::clear_rounds() {
+  rounds_ = 0;
+}
+inline ::google::protobuf::int32 replays::rounds() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.rounds)
+  return rounds_;
+}
+inline void replays::set_rounds(::google::protobuf::int32 value) {
+  
+  rounds_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.rounds)
+}
+
+// optional int32 max_round = 4;
+inline void replays::clear_max_round() {
+  max_round_ = 0;
+}
+inline ::google::protobuf::int32 replays::max_round() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.max_round)
+  return max_round_;
+}
+inline void replays::set_max_round(::google::protobuf::int32 value) {
+  
+  max_round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.max_round)
+}
+
+// repeated .proto3.user_t users = 5;
+inline int replays::users_size() const {
+  return users_.size();
+}
+inline void replays::clear_users() {
+  users_.Clear();
+}
+inline const ::proto3::user_t& replays::users(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replays.users)
+  return users_.Get(index);
+}
+inline ::proto3::user_t* replays::mutable_users(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.replays.users)
+  return users_.Mutable(index);
+}
+inline ::proto3::user_t* replays::add_users() {
+  // @@protoc_insertion_point(field_add:proto3.replays.users)
+  return users_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::user_t >*
+replays::mutable_users() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replays.users)
+  return &users_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
+replays::users() const {
+  // @@protoc_insertion_point(field_list:proto3.replays.users)
+  return users_;
+}
+
+// -------------------------------------------------------------------
+
+// replay
+
+// optional int32 gameId = 1;
+inline void replay::clear_gameid() {
+  gameid_ = 0;
+}
+inline ::google::protobuf::int32 replay::gameid() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.gameId)
+  return gameid_;
+}
+inline void replay::set_gameid(::google::protobuf::int32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.gameId)
+}
+
+// optional int32 banker = 2;
+inline void replay::clear_banker() {
+  banker_ = 0;
+}
+inline ::google::protobuf::int32 replay::banker() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.banker)
+  return banker_;
+}
+inline void replay::set_banker(::google::protobuf::int32 value) {
+  
+  banker_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.banker)
+}
+
+// optional int32 round = 3;
+inline void replay::clear_round() {
+  round_ = 0;
+}
+inline ::google::protobuf::int32 replay::round() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.round)
+  return round_;
+}
+inline void replay::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.round)
+}
+
+// repeated int32 piles = 4;
+inline int replay::piles_size() const {
+  return piles_.size();
+}
+inline void replay::clear_piles() {
+  piles_.Clear();
+}
+inline ::google::protobuf::int32 replay::piles(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.piles)
+  return piles_.Get(index);
+}
+inline void replay::set_piles(int index, ::google::protobuf::int32 value) {
+  piles_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.replay.piles)
+}
+inline void replay::add_piles(::google::protobuf::int32 value) {
+  piles_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.replay.piles)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+replay::piles() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.piles)
+  return piles_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+replay::mutable_piles() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.piles)
+  return &piles_;
+}
+
+// repeated int32 bottom = 5;
+inline int replay::bottom_size() const {
+  return bottom_.size();
+}
+inline void replay::clear_bottom() {
+  bottom_.Clear();
+}
+inline ::google::protobuf::int32 replay::bottom(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.bottom)
+  return bottom_.Get(index);
+}
+inline void replay::set_bottom(int index, ::google::protobuf::int32 value) {
+  bottom_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.replay.bottom)
+}
+inline void replay::add_bottom(::google::protobuf::int32 value) {
+  bottom_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.replay.bottom)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+replay::bottom() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.bottom)
+  return bottom_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+replay::mutable_bottom() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.bottom)
+  return &bottom_;
+}
+
+// repeated .proto3.bunch_t hands = 6;
+inline int replay::hands_size() const {
+  return hands_.size();
+}
+inline void replay::clear_hands() {
+  hands_.Clear();
+}
+inline const ::proto3::bunch_t& replay::hands(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.hands)
+  return hands_.Get(index);
+}
+inline ::proto3::bunch_t* replay::mutable_hands(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.replay.hands)
+  return hands_.Mutable(index);
+}
+inline ::proto3::bunch_t* replay::add_hands() {
+  // @@protoc_insertion_point(field_add:proto3.replay.hands)
+  return hands_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+replay::mutable_hands() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.hands)
+  return &hands_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+replay::hands() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.hands)
+  return hands_;
+}
+
+// repeated int32 engage = 7;
+inline int replay::engage_size() const {
+  return engage_.size();
+}
+inline void replay::clear_engage() {
+  engage_.Clear();
+}
+inline ::google::protobuf::int32 replay::engage(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.engage)
+  return engage_.Get(index);
+}
+inline void replay::set_engage(int index, ::google::protobuf::int32 value) {
+  engage_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.replay.engage)
+}
+inline void replay::add_engage(::google::protobuf::int32 value) {
+  engage_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.replay.engage)
+}
+inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+replay::engage() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.engage)
+  return engage_;
+}
+inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+replay::mutable_engage() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.engage)
+  return &engage_;
+}
+
+// repeated .proto3.bunch_t ops = 8;
+inline int replay::ops_size() const {
+  return ops_.size();
+}
+inline void replay::clear_ops() {
+  ops_.Clear();
+}
+inline const ::proto3::bunch_t& replay::ops(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.ops)
+  return ops_.Get(index);
+}
+inline ::proto3::bunch_t* replay::mutable_ops(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.replay.ops)
+  return ops_.Mutable(index);
+}
+inline ::proto3::bunch_t* replay::add_ops() {
+  // @@protoc_insertion_point(field_add:proto3.replay.ops)
+  return ops_.Add();
+}
+inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+replay::mutable_ops() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.ops)
+  return &ops_;
+}
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+replay::ops() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.ops)
+  return ops_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgBase
 
 // optional .proto3.pb_msg mid = 1;
@@ -9095,64 +9590,48 @@ inline void MsgCLReplays::set_session(::google::protobuf::uint64 value) {
 
 // MsgLCReplays
 
-// repeated .proto3.user_t users = 1;
-inline int MsgLCReplays::users_size() const {
-  return users_.size();
+// optional .proto3.pb_msg mid = 1;
+inline void MsgLCReplays::clear_mid() {
+  mid_ = 0;
 }
-inline void MsgLCReplays::clear_users() {
-  users_.Clear();
+inline ::proto3::pb_msg MsgLCReplays::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-inline const ::proto3::user_t& MsgLCReplays::users(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.users)
-  return users_.Get(index);
-}
-inline ::proto3::user_t* MsgLCReplays::mutable_users(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplays.users)
-  return users_.Mutable(index);
-}
-inline ::proto3::user_t* MsgLCReplays::add_users() {
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplays.users)
-  return users_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::proto3::user_t >*
-MsgLCReplays::mutable_users() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplays.users)
-  return &users_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
-MsgLCReplays::users() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplays.users)
-  return users_;
+inline void MsgLCReplays::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCReplays.mid)
 }
 
-// repeated int32 gameIds = 2;
-inline int MsgLCReplays::gameids_size() const {
-  return gameids_.size();
+// repeated .proto3.replays all = 2;
+inline int MsgLCReplays::all_size() const {
+  return all_.size();
 }
-inline void MsgLCReplays::clear_gameids() {
-  gameids_.Clear();
+inline void MsgLCReplays::clear_all() {
+  all_.Clear();
 }
-inline ::google::protobuf::int32 MsgLCReplays::gameids(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.gameIds)
-  return gameids_.Get(index);
+inline const ::proto3::replays& MsgLCReplays::all(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.all)
+  return all_.Get(index);
 }
-inline void MsgLCReplays::set_gameids(int index, ::google::protobuf::int32 value) {
-  gameids_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplays.gameIds)
+inline ::proto3::replays* MsgLCReplays::mutable_all(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplays.all)
+  return all_.Mutable(index);
 }
-inline void MsgLCReplays::add_gameids(::google::protobuf::int32 value) {
-  gameids_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplays.gameIds)
+inline ::proto3::replays* MsgLCReplays::add_all() {
+  // @@protoc_insertion_point(field_add:proto3.MsgLCReplays.all)
+  return all_.Add();
 }
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplays::gameids() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplays.gameIds)
-  return gameids_;
+inline ::google::protobuf::RepeatedPtrField< ::proto3::replays >*
+MsgLCReplays::mutable_all() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplays.all)
+  return &all_;
 }
-inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplays::mutable_gameids() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplays.gameIds)
-  return &gameids_;
+inline const ::google::protobuf::RepeatedPtrField< ::proto3::replays >&
+MsgLCReplays::all() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgLCReplays.all)
+  return all_;
 }
 
 // optional .proto3.pb_enum result = 3;
@@ -9201,7 +9680,21 @@ inline void MsgCLReplay::set_gameid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.MsgCLReplay.gameId)
 }
 
-// optional uint64 session = 3;
+// optional int32 round = 3;
+inline void MsgCLReplay::clear_round() {
+  round_ = 0;
+}
+inline ::google::protobuf::int32 MsgCLReplay::round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLReplay.round)
+  return round_;
+}
+inline void MsgCLReplay::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCLReplay.round)
+}
+
+// optional uint64 session = 4;
 inline void MsgCLReplay::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -9233,227 +9726,49 @@ inline void MsgLCReplay::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.mid)
 }
 
-// optional int32 gameId = 2;
-inline void MsgLCReplay::clear_gameid() {
-  gameid_ = 0;
+// optional .proto3.replay data = 2;
+inline bool MsgLCReplay::has_data() const {
+  return !_is_default_instance_ && data_ != NULL;
 }
-inline ::google::protobuf::int32 MsgLCReplay::gameid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.gameId)
-  return gameid_;
+inline void MsgLCReplay::clear_data() {
+  if (GetArenaNoVirtual() == NULL && data_ != NULL) delete data_;
+  data_ = NULL;
 }
-inline void MsgLCReplay::set_gameid(::google::protobuf::int32 value) {
+inline const ::proto3::replay& MsgLCReplay::data() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.data)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return data_ != NULL ? *data_ : *default_instance().data_;
+#else
+  return data_ != NULL ? *data_ : *default_instance_->data_;
+#endif
+}
+inline ::proto3::replay* MsgLCReplay::mutable_data() {
   
-  gameid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.gameId)
+  if (data_ == NULL) {
+    data_ = new ::proto3::replay;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplay.data)
+  return data_;
 }
-
-// optional .proto3.pb_msg gameCategory = 3;
-inline void MsgLCReplay::clear_gamecategory() {
-  gamecategory_ = 0;
-}
-inline ::proto3::pb_msg MsgLCReplay::gamecategory() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.gameCategory)
-  return static_cast< ::proto3::pb_msg >(gamecategory_);
-}
-inline void MsgLCReplay::set_gamecategory(::proto3::pb_msg value) {
+inline ::proto3::replay* MsgLCReplay::release_data() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCReplay.data)
   
-  gamecategory_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.gameCategory)
+  ::proto3::replay* temp = data_;
+  data_ = NULL;
+  return temp;
+}
+inline void MsgLCReplay::set_allocated_data(::proto3::replay* data) {
+  delete data_;
+  data_ = data;
+  if (data) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCReplay.data)
 }
 
-// optional int32 banker = 4;
-inline void MsgLCReplay::clear_banker() {
-  banker_ = 0;
-}
-inline ::google::protobuf::int32 MsgLCReplay::banker() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.banker)
-  return banker_;
-}
-inline void MsgLCReplay::set_banker(::google::protobuf::int32 value) {
-  
-  banker_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.banker)
-}
-
-// optional int32 round = 5;
-inline void MsgLCReplay::clear_round() {
-  round_ = 0;
-}
-inline ::google::protobuf::int32 MsgLCReplay::round() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.round)
-  return round_;
-}
-inline void MsgLCReplay::set_round(::google::protobuf::int32 value) {
-  
-  round_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.round)
-}
-
-// optional int32 rounds = 6;
-inline void MsgLCReplay::clear_rounds() {
-  rounds_ = 0;
-}
-inline ::google::protobuf::int32 MsgLCReplay::rounds() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.rounds)
-  return rounds_;
-}
-inline void MsgLCReplay::set_rounds(::google::protobuf::int32 value) {
-  
-  rounds_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.rounds)
-}
-
-// repeated int32 piles = 7;
-inline int MsgLCReplay::piles_size() const {
-  return piles_.size();
-}
-inline void MsgLCReplay::clear_piles() {
-  piles_.Clear();
-}
-inline ::google::protobuf::int32 MsgLCReplay::piles(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.piles)
-  return piles_.Get(index);
-}
-inline void MsgLCReplay::set_piles(int index, ::google::protobuf::int32 value) {
-  piles_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.piles)
-}
-inline void MsgLCReplay::add_piles(::google::protobuf::int32 value) {
-  piles_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.piles)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplay::piles() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.piles)
-  return piles_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplay::mutable_piles() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.piles)
-  return &piles_;
-}
-
-// repeated int32 bottom = 8;
-inline int MsgLCReplay::bottom_size() const {
-  return bottom_.size();
-}
-inline void MsgLCReplay::clear_bottom() {
-  bottom_.Clear();
-}
-inline ::google::protobuf::int32 MsgLCReplay::bottom(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.bottom)
-  return bottom_.Get(index);
-}
-inline void MsgLCReplay::set_bottom(int index, ::google::protobuf::int32 value) {
-  bottom_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.bottom)
-}
-inline void MsgLCReplay::add_bottom(::google::protobuf::int32 value) {
-  bottom_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.bottom)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplay::bottom() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.bottom)
-  return bottom_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplay::mutable_bottom() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.bottom)
-  return &bottom_;
-}
-
-// repeated .proto3.bunch_t hands = 9;
-inline int MsgLCReplay::hands_size() const {
-  return hands_.size();
-}
-inline void MsgLCReplay::clear_hands() {
-  hands_.Clear();
-}
-inline const ::proto3::bunch_t& MsgLCReplay::hands(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.hands)
-  return hands_.Get(index);
-}
-inline ::proto3::bunch_t* MsgLCReplay::mutable_hands(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplay.hands)
-  return hands_.Mutable(index);
-}
-inline ::proto3::bunch_t* MsgLCReplay::add_hands() {
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.hands)
-  return hands_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-MsgLCReplay::mutable_hands() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.hands)
-  return &hands_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-MsgLCReplay::hands() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.hands)
-  return hands_;
-}
-
-// repeated int32 engage = 10;
-inline int MsgLCReplay::engage_size() const {
-  return engage_.size();
-}
-inline void MsgLCReplay::clear_engage() {
-  engage_.Clear();
-}
-inline ::google::protobuf::int32 MsgLCReplay::engage(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.engage)
-  return engage_.Get(index);
-}
-inline void MsgLCReplay::set_engage(int index, ::google::protobuf::int32 value) {
-  engage_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.engage)
-}
-inline void MsgLCReplay::add_engage(::google::protobuf::int32 value) {
-  engage_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.engage)
-}
-inline const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplay::engage() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.engage)
-  return engage_;
-}
-inline ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplay::mutable_engage() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.engage)
-  return &engage_;
-}
-
-// repeated .proto3.bunch_t ops = 11;
-inline int MsgLCReplay::ops_size() const {
-  return ops_.size();
-}
-inline void MsgLCReplay::clear_ops() {
-  ops_.Clear();
-}
-inline const ::proto3::bunch_t& MsgLCReplay::ops(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.ops)
-  return ops_.Get(index);
-}
-inline ::proto3::bunch_t* MsgLCReplay::mutable_ops(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplay.ops)
-  return ops_.Mutable(index);
-}
-inline ::proto3::bunch_t* MsgLCReplay::add_ops() {
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.ops)
-  return ops_.Add();
-}
-inline ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-MsgLCReplay::mutable_ops() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.ops)
-  return &ops_;
-}
-inline const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-MsgLCReplay::ops() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.ops)
-  return ops_;
-}
-
-// optional .proto3.pb_enum result = 12;
+// optional .proto3.pb_enum result = 3;
 inline void MsgLCReplay::clear_result() {
   result_ = 0;
 }
@@ -12024,6 +12339,10 @@ inline void MsgCNStats::set_allocated_value(::std::string* value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

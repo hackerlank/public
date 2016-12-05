@@ -28,17 +28,15 @@ public:
     void                    removeGame(game_id_t);
     
     static Immortal*        sImmortal;
+    keye::ini_cfg_file      config;
     std::shared_ptr<vic_proxy>   spdb;
     
     void            setup_log(const char*);
-    //TODO: remove
-    std::vector<std::shared_ptr<proto3::MsgLCReplay>>  replays;
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
     std::map<size_t,std::shared_ptr<Game>>      games;
 
-    keye::ini_cfg_file  config;
     int                 _game_index;
 };
 

@@ -41,7 +41,7 @@ struct KEYE_API Game{
     std::shared_ptr<pending_t>          pendingDiscard; //pending discard
     int                                 delay;
     std::shared_ptr<GameRule>           rule;
-    std::shared_ptr<proto3::MsgLCReplay>    spReplay;   //record for replaying
+    std::shared_ptr<proto3::replay>     spReplay;   //record for replaying
     std::shared_ptr<proto3::MsgNCSettle>    spSettle;
     std::shared_ptr<proto3::MsgNCFinish>    spFinish;
     

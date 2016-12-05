@@ -27,6 +27,8 @@ void protobuf_ShutdownFile_protocol_2eproto() {
   delete bunch_t::default_instance_;
   delete play_t::default_instance_;
   delete charge_t::default_instance_;
+  delete replays::default_instance_;
+  delete replay::default_instance_;
   delete MsgBase::default_instance_;
   delete MsgCLLogin::default_instance_;
   delete MsgLCLogin::default_instance_;
@@ -94,6 +96,8 @@ void protobuf_AddDesc_protocol_2eproto() {
   bunch_t::default_instance_ = new bunch_t();
   play_t::default_instance_ = new play_t();
   charge_t::default_instance_ = new charge_t();
+  replays::default_instance_ = new replays();
+  replay::default_instance_ = new replay();
   MsgBase::default_instance_ = new MsgBase();
   MsgCLLogin::default_instance_ = new MsgCLLogin();
   MsgLCLogin::default_instance_ = new MsgLCLogin();
@@ -146,6 +150,8 @@ void protobuf_AddDesc_protocol_2eproto() {
   bunch_t::default_instance_->InitAsDefaultInstance();
   play_t::default_instance_->InitAsDefaultInstance();
   charge_t::default_instance_->InitAsDefaultInstance();
+  replays::default_instance_->InitAsDefaultInstance();
+  replay::default_instance_->InitAsDefaultInstance();
   MsgBase::default_instance_->InitAsDefaultInstance();
   MsgCLLogin::default_instance_->InitAsDefaultInstance();
   MsgLCLogin::default_instance_->InitAsDefaultInstance();
@@ -6803,6 +6809,1127 @@ void charge_t::clear_amount() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int replays::kGameIdFieldNumber;
+const int replays::kGameCategoryFieldNumber;
+const int replays::kRoundsFieldNumber;
+const int replays::kMaxRoundFieldNumber;
+const int replays::kUsersFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+replays::replays()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.replays)
+}
+
+void replays::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+replays::replays(const replays& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.replays)
+}
+
+void replays::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  gameid_ = 0;
+  gamecategory_ = 0;
+  rounds_ = 0;
+  max_round_ = 0;
+}
+
+replays::~replays() {
+  // @@protoc_insertion_point(destructor:proto3.replays)
+  SharedDtor();
+}
+
+void replays::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void replays::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const replays& replays::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+replays* replays::default_instance_ = NULL;
+
+replays* replays::New(::google::protobuf::Arena* arena) const {
+  replays* n = new replays;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void replays::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.replays)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(replays, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<replays*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(gameid_, max_round_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+  users_.Clear();
+}
+
+bool replays::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.replays)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 gameId = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &gameid_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_gameCategory;
+        break;
+      }
+
+      // optional .proto3.pb_enum gameCategory = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_gameCategory:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_gamecategory(static_cast< ::proto3::pb_enum >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_rounds;
+        break;
+      }
+
+      // optional int32 rounds = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_rounds:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &rounds_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_max_round;
+        break;
+      }
+
+      // optional int32 max_round = 4;
+      case 4: {
+        if (tag == 32) {
+         parse_max_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &max_round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_users;
+        break;
+      }
+
+      // repeated .proto3.user_t users = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_users:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_users:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_users()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_loop_users;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.replays)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.replays)
+  return false;
+#undef DO_
+}
+
+void replays::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.replays)
+  // optional int32 gameId = 1;
+  if (this->gameid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->gameid(), output);
+  }
+
+  // optional .proto3.pb_enum gameCategory = 2;
+  if (this->gamecategory() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->gamecategory(), output);
+  }
+
+  // optional int32 rounds = 3;
+  if (this->rounds() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->rounds(), output);
+  }
+
+  // optional int32 max_round = 4;
+  if (this->max_round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->max_round(), output);
+  }
+
+  // repeated .proto3.user_t users = 5;
+  for (unsigned int i = 0, n = this->users_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      5, this->users(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.replays)
+}
+
+int replays::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.replays)
+  int total_size = 0;
+
+  // optional int32 gameId = 1;
+  if (this->gameid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->gameid());
+  }
+
+  // optional .proto3.pb_enum gameCategory = 2;
+  if (this->gamecategory() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->gamecategory());
+  }
+
+  // optional int32 rounds = 3;
+  if (this->rounds() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->rounds());
+  }
+
+  // optional int32 max_round = 4;
+  if (this->max_round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->max_round());
+  }
+
+  // repeated .proto3.user_t users = 5;
+  total_size += 1 * this->users_size();
+  for (int i = 0; i < this->users_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->users(i));
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void replays::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const replays*>(&from));
+}
+
+void replays::MergeFrom(const replays& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.replays)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  users_.MergeFrom(from.users_);
+  if (from.gameid() != 0) {
+    set_gameid(from.gameid());
+  }
+  if (from.gamecategory() != 0) {
+    set_gamecategory(from.gamecategory());
+  }
+  if (from.rounds() != 0) {
+    set_rounds(from.rounds());
+  }
+  if (from.max_round() != 0) {
+    set_max_round(from.max_round());
+  }
+}
+
+void replays::CopyFrom(const replays& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.replays)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool replays::IsInitialized() const {
+
+  return true;
+}
+
+void replays::Swap(replays* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void replays::InternalSwap(replays* other) {
+  std::swap(gameid_, other->gameid_);
+  std::swap(gamecategory_, other->gamecategory_);
+  std::swap(rounds_, other->rounds_);
+  std::swap(max_round_, other->max_round_);
+  users_.UnsafeArenaSwap(&other->users_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string replays::GetTypeName() const {
+  return "proto3.replays";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// replays
+
+// optional int32 gameId = 1;
+void replays::clear_gameid() {
+  gameid_ = 0;
+}
+ ::google::protobuf::int32 replays::gameid() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.gameId)
+  return gameid_;
+}
+ void replays::set_gameid(::google::protobuf::int32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.gameId)
+}
+
+// optional .proto3.pb_enum gameCategory = 2;
+void replays::clear_gamecategory() {
+  gamecategory_ = 0;
+}
+ ::proto3::pb_enum replays::gamecategory() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.gameCategory)
+  return static_cast< ::proto3::pb_enum >(gamecategory_);
+}
+ void replays::set_gamecategory(::proto3::pb_enum value) {
+  
+  gamecategory_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.gameCategory)
+}
+
+// optional int32 rounds = 3;
+void replays::clear_rounds() {
+  rounds_ = 0;
+}
+ ::google::protobuf::int32 replays::rounds() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.rounds)
+  return rounds_;
+}
+ void replays::set_rounds(::google::protobuf::int32 value) {
+  
+  rounds_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.rounds)
+}
+
+// optional int32 max_round = 4;
+void replays::clear_max_round() {
+  max_round_ = 0;
+}
+ ::google::protobuf::int32 replays::max_round() const {
+  // @@protoc_insertion_point(field_get:proto3.replays.max_round)
+  return max_round_;
+}
+ void replays::set_max_round(::google::protobuf::int32 value) {
+  
+  max_round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replays.max_round)
+}
+
+// repeated .proto3.user_t users = 5;
+int replays::users_size() const {
+  return users_.size();
+}
+void replays::clear_users() {
+  users_.Clear();
+}
+const ::proto3::user_t& replays::users(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replays.users)
+  return users_.Get(index);
+}
+::proto3::user_t* replays::mutable_users(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.replays.users)
+  return users_.Mutable(index);
+}
+::proto3::user_t* replays::add_users() {
+  // @@protoc_insertion_point(field_add:proto3.replays.users)
+  return users_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::user_t >*
+replays::mutable_users() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replays.users)
+  return &users_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
+replays::users() const {
+  // @@protoc_insertion_point(field_list:proto3.replays.users)
+  return users_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
+const int replay::kGameIdFieldNumber;
+const int replay::kBankerFieldNumber;
+const int replay::kRoundFieldNumber;
+const int replay::kPilesFieldNumber;
+const int replay::kBottomFieldNumber;
+const int replay::kHandsFieldNumber;
+const int replay::kEngageFieldNumber;
+const int replay::kOpsFieldNumber;
+#endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
+
+replay::replay()
+  : ::google::protobuf::MessageLite(), _arena_ptr_(NULL) {
+  SharedCtor();
+  // @@protoc_insertion_point(constructor:proto3.replay)
+}
+
+void replay::InitAsDefaultInstance() {
+  _is_default_instance_ = true;
+}
+
+replay::replay(const replay& from)
+  : ::google::protobuf::MessageLite(),
+    _arena_ptr_(NULL) {
+  SharedCtor();
+  MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:proto3.replay)
+}
+
+void replay::SharedCtor() {
+    _is_default_instance_ = false;
+  _cached_size_ = 0;
+  gameid_ = 0;
+  banker_ = 0;
+  round_ = 0;
+}
+
+replay::~replay() {
+  // @@protoc_insertion_point(destructor:proto3.replay)
+  SharedDtor();
+}
+
+void replay::SharedDtor() {
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  if (this != &default_instance()) {
+  #else
+  if (this != default_instance_) {
+  #endif
+  }
+}
+
+void replay::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const replay& replay::default_instance() {
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  protobuf_AddDesc_protocol_2eproto();
+#else
+  if (default_instance_ == NULL) protobuf_AddDesc_protocol_2eproto();
+#endif
+  return *default_instance_;
+}
+
+replay* replay::default_instance_ = NULL;
+
+replay* replay::New(::google::protobuf::Arena* arena) const {
+  replay* n = new replay;
+  if (arena != NULL) {
+    arena->Own(n);
+  }
+  return n;
+}
+
+void replay::Clear() {
+// @@protoc_insertion_point(message_clear_start:proto3.replay)
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(replay, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<replay*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(gameid_, banker_);
+  round_ = 0;
+
+#undef ZR_HELPER_
+#undef ZR_
+
+  piles_.Clear();
+  bottom_.Clear();
+  hands_.Clear();
+  engage_.Clear();
+  ops_.Clear();
+}
+
+bool replay::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!GOOGLE_PREDICT_TRUE(EXPRESSION)) goto failure
+  ::google::protobuf::uint32 tag;
+  // @@protoc_insertion_point(parse_start:proto3.replay)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 gameId = 1;
+      case 1: {
+        if (tag == 8) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &gameid_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_banker;
+        break;
+      }
+
+      // optional int32 banker = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_banker:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &banker_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_round;
+        break;
+      }
+
+      // optional int32 round = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_piles;
+        break;
+      }
+
+      // repeated int32 piles = 4;
+      case 4: {
+        if (tag == 34) {
+         parse_piles:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_piles())));
+        } else if (tag == 32) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 34, input, this->mutable_piles())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_bottom;
+        break;
+      }
+
+      // repeated int32 bottom = 5;
+      case 5: {
+        if (tag == 42) {
+         parse_bottom:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_bottom())));
+        } else if (tag == 40) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 42, input, this->mutable_bottom())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(50)) goto parse_hands;
+        break;
+      }
+
+      // repeated .proto3.bunch_t hands = 6;
+      case 6: {
+        if (tag == 50) {
+         parse_hands:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_hands:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_hands()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(50)) goto parse_loop_hands;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectTag(58)) goto parse_engage;
+        break;
+      }
+
+      // repeated int32 engage = 7;
+      case 7: {
+        if (tag == 58) {
+         parse_engage:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, this->mutable_engage())));
+        } else if (tag == 56) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 1, 58, input, this->mutable_engage())));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(66)) goto parse_ops;
+        break;
+      }
+
+      // repeated .proto3.bunch_t ops = 8;
+      case 8: {
+        if (tag == 66) {
+         parse_ops:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_ops:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_ops()));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(66)) goto parse_loop_ops;
+        input->UnsafeDecrementRecursionDepth();
+        if (input->ExpectAtEnd()) goto success;
+        break;
+      }
+
+      default: {
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          goto success;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        break;
+      }
+    }
+  }
+success:
+  // @@protoc_insertion_point(parse_success:proto3.replay)
+  return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:proto3.replay)
+  return false;
+#undef DO_
+}
+
+void replay::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:proto3.replay)
+  // optional int32 gameId = 1;
+  if (this->gameid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->gameid(), output);
+  }
+
+  // optional int32 banker = 2;
+  if (this->banker() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->banker(), output);
+  }
+
+  // optional int32 round = 3;
+  if (this->round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->round(), output);
+  }
+
+  // repeated int32 piles = 4;
+  if (this->piles_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(4, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_piles_cached_byte_size_);
+  }
+  for (int i = 0; i < this->piles_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->piles(i), output);
+  }
+
+  // repeated int32 bottom = 5;
+  if (this->bottom_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(5, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_bottom_cached_byte_size_);
+  }
+  for (int i = 0; i < this->bottom_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->bottom(i), output);
+  }
+
+  // repeated .proto3.bunch_t hands = 6;
+  for (unsigned int i = 0, n = this->hands_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      6, this->hands(i), output);
+  }
+
+  // repeated int32 engage = 7;
+  if (this->engage_size() > 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteTag(7, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
+    output->WriteVarint32(_engage_cached_byte_size_);
+  }
+  for (int i = 0; i < this->engage_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
+      this->engage(i), output);
+  }
+
+  // repeated .proto3.bunch_t ops = 8;
+  for (unsigned int i = 0, n = this->ops_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      8, this->ops(i), output);
+  }
+
+  // @@protoc_insertion_point(serialize_end:proto3.replay)
+}
+
+int replay::ByteSize() const {
+// @@protoc_insertion_point(message_byte_size_start:proto3.replay)
+  int total_size = 0;
+
+  // optional int32 gameId = 1;
+  if (this->gameid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->gameid());
+  }
+
+  // optional int32 banker = 2;
+  if (this->banker() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->banker());
+  }
+
+  // optional int32 round = 3;
+  if (this->round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->round());
+  }
+
+  // repeated int32 piles = 4;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->piles_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->piles(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _piles_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated int32 bottom = 5;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->bottom_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->bottom(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _bottom_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated .proto3.bunch_t hands = 6;
+  total_size += 1 * this->hands_size();
+  for (int i = 0; i < this->hands_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->hands(i));
+  }
+
+  // repeated int32 engage = 7;
+  {
+    int data_size = 0;
+    for (int i = 0; i < this->engage_size(); i++) {
+      data_size += ::google::protobuf::internal::WireFormatLite::
+        Int32Size(this->engage(i));
+    }
+    if (data_size > 0) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
+    }
+    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+    _engage_cached_byte_size_ = data_size;
+    GOOGLE_SAFE_CONCURRENT_WRITES_END();
+    total_size += data_size;
+  }
+
+  // repeated .proto3.bunch_t ops = 8;
+  total_size += 1 * this->ops_size();
+  for (int i = 0; i < this->ops_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->ops(i));
+  }
+
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void replay::CheckTypeAndMergeFrom(
+    const ::google::protobuf::MessageLite& from) {
+  MergeFrom(*::google::protobuf::down_cast<const replay*>(&from));
+}
+
+void replay::MergeFrom(const replay& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:proto3.replay)
+  if (GOOGLE_PREDICT_FALSE(&from == this)) {
+    ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
+  }
+  piles_.MergeFrom(from.piles_);
+  bottom_.MergeFrom(from.bottom_);
+  hands_.MergeFrom(from.hands_);
+  engage_.MergeFrom(from.engage_);
+  ops_.MergeFrom(from.ops_);
+  if (from.gameid() != 0) {
+    set_gameid(from.gameid());
+  }
+  if (from.banker() != 0) {
+    set_banker(from.banker());
+  }
+  if (from.round() != 0) {
+    set_round(from.round());
+  }
+}
+
+void replay::CopyFrom(const replay& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:proto3.replay)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool replay::IsInitialized() const {
+
+  return true;
+}
+
+void replay::Swap(replay* other) {
+  if (other == this) return;
+  InternalSwap(other);
+}
+void replay::InternalSwap(replay* other) {
+  std::swap(gameid_, other->gameid_);
+  std::swap(banker_, other->banker_);
+  std::swap(round_, other->round_);
+  piles_.UnsafeArenaSwap(&other->piles_);
+  bottom_.UnsafeArenaSwap(&other->bottom_);
+  hands_.UnsafeArenaSwap(&other->hands_);
+  engage_.UnsafeArenaSwap(&other->engage_);
+  ops_.UnsafeArenaSwap(&other->ops_);
+  _unknown_fields_.Swap(&other->_unknown_fields_);
+  std::swap(_cached_size_, other->_cached_size_);
+}
+
+::std::string replay::GetTypeName() const {
+  return "proto3.replay";
+}
+
+#if PROTOBUF_INLINE_NOT_IN_HEADERS
+// replay
+
+// optional int32 gameId = 1;
+void replay::clear_gameid() {
+  gameid_ = 0;
+}
+ ::google::protobuf::int32 replay::gameid() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.gameId)
+  return gameid_;
+}
+ void replay::set_gameid(::google::protobuf::int32 value) {
+  
+  gameid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.gameId)
+}
+
+// optional int32 banker = 2;
+void replay::clear_banker() {
+  banker_ = 0;
+}
+ ::google::protobuf::int32 replay::banker() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.banker)
+  return banker_;
+}
+ void replay::set_banker(::google::protobuf::int32 value) {
+  
+  banker_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.banker)
+}
+
+// optional int32 round = 3;
+void replay::clear_round() {
+  round_ = 0;
+}
+ ::google::protobuf::int32 replay::round() const {
+  // @@protoc_insertion_point(field_get:proto3.replay.round)
+  return round_;
+}
+ void replay::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay.round)
+}
+
+// repeated int32 piles = 4;
+int replay::piles_size() const {
+  return piles_.size();
+}
+void replay::clear_piles() {
+  piles_.Clear();
+}
+ ::google::protobuf::int32 replay::piles(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.piles)
+  return piles_.Get(index);
+}
+ void replay::set_piles(int index, ::google::protobuf::int32 value) {
+  piles_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.replay.piles)
+}
+ void replay::add_piles(::google::protobuf::int32 value) {
+  piles_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.replay.piles)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+replay::piles() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.piles)
+  return piles_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+replay::mutable_piles() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.piles)
+  return &piles_;
+}
+
+// repeated int32 bottom = 5;
+int replay::bottom_size() const {
+  return bottom_.size();
+}
+void replay::clear_bottom() {
+  bottom_.Clear();
+}
+ ::google::protobuf::int32 replay::bottom(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.bottom)
+  return bottom_.Get(index);
+}
+ void replay::set_bottom(int index, ::google::protobuf::int32 value) {
+  bottom_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.replay.bottom)
+}
+ void replay::add_bottom(::google::protobuf::int32 value) {
+  bottom_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.replay.bottom)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+replay::bottom() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.bottom)
+  return bottom_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+replay::mutable_bottom() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.bottom)
+  return &bottom_;
+}
+
+// repeated .proto3.bunch_t hands = 6;
+int replay::hands_size() const {
+  return hands_.size();
+}
+void replay::clear_hands() {
+  hands_.Clear();
+}
+const ::proto3::bunch_t& replay::hands(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.hands)
+  return hands_.Get(index);
+}
+::proto3::bunch_t* replay::mutable_hands(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.replay.hands)
+  return hands_.Mutable(index);
+}
+::proto3::bunch_t* replay::add_hands() {
+  // @@protoc_insertion_point(field_add:proto3.replay.hands)
+  return hands_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+replay::mutable_hands() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.hands)
+  return &hands_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+replay::hands() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.hands)
+  return hands_;
+}
+
+// repeated int32 engage = 7;
+int replay::engage_size() const {
+  return engage_.size();
+}
+void replay::clear_engage() {
+  engage_.Clear();
+}
+ ::google::protobuf::int32 replay::engage(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.engage)
+  return engage_.Get(index);
+}
+ void replay::set_engage(int index, ::google::protobuf::int32 value) {
+  engage_.Set(index, value);
+  // @@protoc_insertion_point(field_set:proto3.replay.engage)
+}
+ void replay::add_engage(::google::protobuf::int32 value) {
+  engage_.Add(value);
+  // @@protoc_insertion_point(field_add:proto3.replay.engage)
+}
+ const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
+replay::engage() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.engage)
+  return engage_;
+}
+ ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
+replay::mutable_engage() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.engage)
+  return &engage_;
+}
+
+// repeated .proto3.bunch_t ops = 8;
+int replay::ops_size() const {
+  return ops_.size();
+}
+void replay::clear_ops() {
+  ops_.Clear();
+}
+const ::proto3::bunch_t& replay::ops(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.replay.ops)
+  return ops_.Get(index);
+}
+::proto3::bunch_t* replay::mutable_ops(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.replay.ops)
+  return ops_.Mutable(index);
+}
+::proto3::bunch_t* replay::add_ops() {
+  // @@protoc_insertion_point(field_add:proto3.replay.ops)
+  return ops_.Add();
+}
+::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
+replay::mutable_ops() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.replay.ops)
+  return &ops_;
+}
+const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
+replay::ops() const {
+  // @@protoc_insertion_point(field_list:proto3.replay.ops)
+  return ops_;
+}
+
+#endif  // PROTOBUF_INLINE_NOT_IN_HEADERS
+
+// ===================================================================
+
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgBase::kMidFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9131,8 +10258,8 @@ void MsgCLReplays::clear_session() {
 // ===================================================================
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
-const int MsgLCReplays::kUsersFieldNumber;
-const int MsgLCReplays::kGameIdsFieldNumber;
+const int MsgLCReplays::kMidFieldNumber;
+const int MsgLCReplays::kAllFieldNumber;
 const int MsgLCReplays::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9157,6 +10284,7 @@ MsgLCReplays::MsgLCReplays(const MsgLCReplays& from)
 void MsgLCReplays::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
+  mid_ = 0;
   result_ = 0;
 }
 
@@ -9200,9 +10328,28 @@ MsgLCReplays* MsgLCReplays::New(::google::protobuf::Arena* arena) const {
 
 void MsgLCReplays::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgLCReplays)
-  result_ = 0;
-  users_.Clear();
-  gameids_.Clear();
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgLCReplays, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgLCReplays*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, result_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
+  all_.Clear();
 }
 
 bool MsgLCReplays::MergePartialFromCodedStream(
@@ -9215,36 +10362,34 @@ bool MsgLCReplays::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .proto3.user_t users = 1;
+      // optional .proto3.pb_msg mid = 1;
       case 1: {
-        if (tag == 10) {
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_users:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_users()));
+        if (tag == 8) {
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_mid(static_cast< ::proto3::pb_msg >(value));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(10)) goto parse_loop_users;
-        input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(18)) goto parse_gameIds;
+        if (input->ExpectTag(18)) goto parse_all;
         break;
       }
 
-      // repeated int32 gameIds = 2;
+      // repeated .proto3.replays all = 2;
       case 2: {
         if (tag == 18) {
-         parse_gameIds:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_gameids())));
-        } else if (tag == 16) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 18, input, this->mutable_gameids())));
+         parse_all:
+          DO_(input->IncrementRecursionDepth());
+         parse_loop_all:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
+                input, add_all()));
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(18)) goto parse_loop_all;
+        input->UnsafeDecrementRecursionDepth();
         if (input->ExpectTag(24)) goto parse_result;
         break;
       }
@@ -9289,20 +10434,16 @@ failure:
 void MsgLCReplays::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.MsgLCReplays)
-  // repeated .proto3.user_t users = 1;
-  for (unsigned int i = 0, n = this->users_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      1, this->users(i), output);
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->mid(), output);
   }
 
-  // repeated int32 gameIds = 2;
-  if (this->gameids_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(2, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_gameids_cached_byte_size_);
-  }
-  for (int i = 0; i < this->gameids_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
-      this->gameids(i), output);
+  // repeated .proto3.replays all = 2;
+  for (unsigned int i = 0, n = this->all_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      2, this->all(i), output);
   }
 
   // optional .proto3.pb_enum result = 3;
@@ -9318,35 +10459,24 @@ int MsgLCReplays::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.MsgLCReplays)
   int total_size = 0;
 
+  // optional .proto3.pb_msg mid = 1;
+  if (this->mid() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
   // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.user_t users = 1;
-  total_size += 1 * this->users_size();
-  for (int i = 0; i < this->users_size(); i++) {
+  // repeated .proto3.replays all = 2;
+  total_size += 1 * this->all_size();
+  for (int i = 0; i < this->all_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->users(i));
-  }
-
-  // repeated int32 gameIds = 2;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->gameids_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->gameids(i));
-    }
-    if (data_size > 0) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
-    }
-    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _gameids_cached_byte_size_ = data_size;
-    GOOGLE_SAFE_CONCURRENT_WRITES_END();
-    total_size += data_size;
+        this->all(i));
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -9365,8 +10495,10 @@ void MsgLCReplays::MergeFrom(const MsgLCReplays& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
-  users_.MergeFrom(from.users_);
-  gameids_.MergeFrom(from.gameids_);
+  all_.MergeFrom(from.all_);
+  if (from.mid() != 0) {
+    set_mid(from.mid());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -9389,8 +10521,8 @@ void MsgLCReplays::Swap(MsgLCReplays* other) {
   InternalSwap(other);
 }
 void MsgLCReplays::InternalSwap(MsgLCReplays* other) {
-  users_.UnsafeArenaSwap(&other->users_);
-  gameids_.UnsafeArenaSwap(&other->gameids_);
+  std::swap(mid_, other->mid_);
+  all_.UnsafeArenaSwap(&other->all_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -9403,64 +10535,48 @@ void MsgLCReplays::InternalSwap(MsgLCReplays* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // MsgLCReplays
 
-// repeated .proto3.user_t users = 1;
-int MsgLCReplays::users_size() const {
-  return users_.size();
+// optional .proto3.pb_msg mid = 1;
+void MsgLCReplays::clear_mid() {
+  mid_ = 0;
 }
-void MsgLCReplays::clear_users() {
-  users_.Clear();
+ ::proto3::pb_msg MsgLCReplays::mid() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.mid)
+  return static_cast< ::proto3::pb_msg >(mid_);
 }
-const ::proto3::user_t& MsgLCReplays::users(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.users)
-  return users_.Get(index);
-}
-::proto3::user_t* MsgLCReplays::mutable_users(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplays.users)
-  return users_.Mutable(index);
-}
-::proto3::user_t* MsgLCReplays::add_users() {
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplays.users)
-  return users_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::proto3::user_t >*
-MsgLCReplays::mutable_users() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplays.users)
-  return &users_;
-}
-const ::google::protobuf::RepeatedPtrField< ::proto3::user_t >&
-MsgLCReplays::users() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplays.users)
-  return users_;
+ void MsgLCReplays::set_mid(::proto3::pb_msg value) {
+  
+  mid_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgLCReplays.mid)
 }
 
-// repeated int32 gameIds = 2;
-int MsgLCReplays::gameids_size() const {
-  return gameids_.size();
+// repeated .proto3.replays all = 2;
+int MsgLCReplays::all_size() const {
+  return all_.size();
 }
-void MsgLCReplays::clear_gameids() {
-  gameids_.Clear();
+void MsgLCReplays::clear_all() {
+  all_.Clear();
 }
- ::google::protobuf::int32 MsgLCReplays::gameids(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.gameIds)
-  return gameids_.Get(index);
+const ::proto3::replays& MsgLCReplays::all(int index) const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplays.all)
+  return all_.Get(index);
 }
- void MsgLCReplays::set_gameids(int index, ::google::protobuf::int32 value) {
-  gameids_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplays.gameIds)
+::proto3::replays* MsgLCReplays::mutable_all(int index) {
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplays.all)
+  return all_.Mutable(index);
 }
- void MsgLCReplays::add_gameids(::google::protobuf::int32 value) {
-  gameids_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplays.gameIds)
+::proto3::replays* MsgLCReplays::add_all() {
+  // @@protoc_insertion_point(field_add:proto3.MsgLCReplays.all)
+  return all_.Add();
 }
- const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplays::gameids() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplays.gameIds)
-  return gameids_;
+::google::protobuf::RepeatedPtrField< ::proto3::replays >*
+MsgLCReplays::mutable_all() {
+  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplays.all)
+  return &all_;
 }
- ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplays::mutable_gameids() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplays.gameIds)
-  return &gameids_;
+const ::google::protobuf::RepeatedPtrField< ::proto3::replays >&
+MsgLCReplays::all() const {
+  // @@protoc_insertion_point(field_list:proto3.MsgLCReplays.all)
+  return all_;
 }
 
 // optional .proto3.pb_enum result = 3;
@@ -9484,6 +10600,7 @@ void MsgLCReplays::clear_result() {
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCLReplay::kMidFieldNumber;
 const int MsgCLReplay::kGameIdFieldNumber;
+const int MsgCLReplay::kRoundFieldNumber;
 const int MsgCLReplay::kSessionFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9510,6 +10627,7 @@ void MsgCLReplay::SharedCtor() {
   _cached_size_ = 0;
   mid_ = 0;
   gameid_ = 0u;
+  round_ = 0;
   session_ = GOOGLE_ULONGLONG(0);
 }
 
@@ -9569,7 +10687,7 @@ void MsgCLReplay::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, session_);
+  ZR_(mid_, round_);
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -9612,13 +10730,28 @@ bool MsgCLReplay::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_session;
+        if (input->ExpectTag(24)) goto parse_round;
         break;
       }
 
-      // optional uint64 session = 3;
+      // optional int32 round = 3;
       case 3: {
         if (tag == 24) {
+         parse_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(32)) goto parse_session;
+        break;
+      }
+
+      // optional uint64 session = 4;
+      case 4: {
+        if (tag == 32) {
          parse_session:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::uint64, ::google::protobuf::internal::WireFormatLite::TYPE_UINT64>(
@@ -9666,9 +10799,14 @@ void MsgCLReplay::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->gameid(), output);
   }
 
-  // optional uint64 session = 3;
+  // optional int32 round = 3;
+  if (this->round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->round(), output);
+  }
+
+  // optional uint64 session = 4;
   if (this->session() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt64(3, this->session(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt64(4, this->session(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgCLReplay)
@@ -9691,7 +10829,14 @@ int MsgCLReplay::ByteSize() const {
         this->gameid());
   }
 
-  // optional uint64 session = 3;
+  // optional int32 round = 3;
+  if (this->round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->round());
+  }
+
+  // optional uint64 session = 4;
   if (this->session() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::UInt64Size(
@@ -9720,6 +10865,9 @@ void MsgCLReplay::MergeFrom(const MsgCLReplay& from) {
   if (from.gameid() != 0) {
     set_gameid(from.gameid());
   }
+  if (from.round() != 0) {
+    set_round(from.round());
+  }
   if (from.session() != 0) {
     set_session(from.session());
   }
@@ -9744,6 +10892,7 @@ void MsgCLReplay::Swap(MsgCLReplay* other) {
 void MsgCLReplay::InternalSwap(MsgCLReplay* other) {
   std::swap(mid_, other->mid_);
   std::swap(gameid_, other->gameid_);
+  std::swap(round_, other->round_);
   std::swap(session_, other->session_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -9784,7 +10933,21 @@ void MsgCLReplay::clear_gameid() {
   // @@protoc_insertion_point(field_set:proto3.MsgCLReplay.gameId)
 }
 
-// optional uint64 session = 3;
+// optional int32 round = 3;
+void MsgCLReplay::clear_round() {
+  round_ = 0;
+}
+ ::google::protobuf::int32 MsgCLReplay::round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCLReplay.round)
+  return round_;
+}
+ void MsgCLReplay::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCLReplay.round)
+}
+
+// optional uint64 session = 4;
 void MsgCLReplay::clear_session() {
   session_ = GOOGLE_ULONGLONG(0);
 }
@@ -9804,16 +10967,7 @@ void MsgCLReplay::clear_session() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgLCReplay::kMidFieldNumber;
-const int MsgLCReplay::kGameIdFieldNumber;
-const int MsgLCReplay::kGameCategoryFieldNumber;
-const int MsgLCReplay::kBankerFieldNumber;
-const int MsgLCReplay::kRoundFieldNumber;
-const int MsgLCReplay::kRoundsFieldNumber;
-const int MsgLCReplay::kPilesFieldNumber;
-const int MsgLCReplay::kBottomFieldNumber;
-const int MsgLCReplay::kHandsFieldNumber;
-const int MsgLCReplay::kEngageFieldNumber;
-const int MsgLCReplay::kOpsFieldNumber;
+const int MsgLCReplay::kDataFieldNumber;
 const int MsgLCReplay::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
@@ -9825,6 +10979,12 @@ MsgLCReplay::MsgLCReplay()
 
 void MsgLCReplay::InitAsDefaultInstance() {
   _is_default_instance_ = true;
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  data_ = const_cast< ::proto3::replay*>(
+      ::proto3::replay::internal_default_instance());
+#else
+  data_ = const_cast< ::proto3::replay*>(&::proto3::replay::default_instance());
+#endif
 }
 
 MsgLCReplay::MsgLCReplay(const MsgLCReplay& from)
@@ -9839,11 +10999,7 @@ void MsgLCReplay::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
-  gameid_ = 0;
-  gamecategory_ = 0;
-  banker_ = 0;
-  round_ = 0;
-  rounds_ = 0;
+  data_ = NULL;
   result_ = 0;
 }
 
@@ -9858,6 +11014,7 @@ void MsgLCReplay::SharedDtor() {
   #else
   if (this != default_instance_) {
   #endif
+    delete data_;
   }
 }
 
@@ -9903,17 +11060,13 @@ void MsgLCReplay::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, rounds_);
-  result_ = 0;
+  ZR_(mid_, result_);
+  if (GetArenaNoVirtual() == NULL && data_ != NULL) delete data_;
+  data_ = NULL;
 
 #undef ZR_HELPER_
 #undef ZR_
 
-  piles_.Clear();
-  bottom_.Clear();
-  hands_.Clear();
-  engage_.Clear();
-  ops_.Clear();
 }
 
 bool MsgLCReplay::MergePartialFromCodedStream(
@@ -9937,177 +11090,26 @@ bool MsgLCReplay::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_gameId;
+        if (input->ExpectTag(18)) goto parse_data;
         break;
       }
 
-      // optional int32 gameId = 2;
+      // optional .proto3.replay data = 2;
       case 2: {
-        if (tag == 16) {
-         parse_gameId:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &gameid_)));
-
+        if (tag == 18) {
+         parse_data:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_data()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_gameCategory;
+        if (input->ExpectTag(24)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_msg gameCategory = 3;
+      // optional .proto3.pb_enum result = 3;
       case 3: {
         if (tag == 24) {
-         parse_gameCategory:
-          int value;
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_gamecategory(static_cast< ::proto3::pb_msg >(value));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(32)) goto parse_banker;
-        break;
-      }
-
-      // optional int32 banker = 4;
-      case 4: {
-        if (tag == 32) {
-         parse_banker:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &banker_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(40)) goto parse_round;
-        break;
-      }
-
-      // optional int32 round = 5;
-      case 5: {
-        if (tag == 40) {
-         parse_round:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &round_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(48)) goto parse_rounds;
-        break;
-      }
-
-      // optional int32 rounds = 6;
-      case 6: {
-        if (tag == 48) {
-         parse_rounds:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &rounds_)));
-
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(58)) goto parse_piles;
-        break;
-      }
-
-      // repeated int32 piles = 7;
-      case 7: {
-        if (tag == 58) {
-         parse_piles:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_piles())));
-        } else if (tag == 56) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 58, input, this->mutable_piles())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(66)) goto parse_bottom;
-        break;
-      }
-
-      // repeated int32 bottom = 8;
-      case 8: {
-        if (tag == 66) {
-         parse_bottom:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_bottom())));
-        } else if (tag == 64) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 66, input, this->mutable_bottom())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(74)) goto parse_hands;
-        break;
-      }
-
-      // repeated .proto3.bunch_t hands = 9;
-      case 9: {
-        if (tag == 74) {
-         parse_hands:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_hands:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_hands()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(74)) goto parse_loop_hands;
-        input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(82)) goto parse_engage;
-        break;
-      }
-
-      // repeated int32 engage = 10;
-      case 10: {
-        if (tag == 82) {
-         parse_engage:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPackedPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, this->mutable_engage())));
-        } else if (tag == 80) {
-          DO_((::google::protobuf::internal::WireFormatLite::ReadRepeatedPrimitiveNoInline<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 1, 82, input, this->mutable_engage())));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(90)) goto parse_ops;
-        break;
-      }
-
-      // repeated .proto3.bunch_t ops = 11;
-      case 11: {
-        if (tag == 90) {
-         parse_ops:
-          DO_(input->IncrementRecursionDepth());
-         parse_loop_ops:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtualNoRecursionDepth(
-                input, add_ops()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectTag(90)) goto parse_loop_ops;
-        input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(96)) goto parse_result;
-        break;
-      }
-
-      // optional .proto3.pb_enum result = 12;
-      case 12: {
-        if (tag == 96) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -10151,78 +11153,16 @@ void MsgLCReplay::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional int32 gameId = 2;
-  if (this->gameid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->gameid(), output);
-  }
-
-  // optional .proto3.pb_msg gameCategory = 3;
-  if (this->gamecategory() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->gamecategory(), output);
-  }
-
-  // optional int32 banker = 4;
-  if (this->banker() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->banker(), output);
-  }
-
-  // optional int32 round = 5;
-  if (this->round() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->round(), output);
-  }
-
-  // optional int32 rounds = 6;
-  if (this->rounds() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->rounds(), output);
-  }
-
-  // repeated int32 piles = 7;
-  if (this->piles_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(7, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_piles_cached_byte_size_);
-  }
-  for (int i = 0; i < this->piles_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
-      this->piles(i), output);
-  }
-
-  // repeated int32 bottom = 8;
-  if (this->bottom_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(8, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_bottom_cached_byte_size_);
-  }
-  for (int i = 0; i < this->bottom_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
-      this->bottom(i), output);
-  }
-
-  // repeated .proto3.bunch_t hands = 9;
-  for (unsigned int i = 0, n = this->hands_size(); i < n; i++) {
+  // optional .proto3.replay data = 2;
+  if (this->has_data()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      9, this->hands(i), output);
+      2, *this->data_, output);
   }
 
-  // repeated int32 engage = 10;
-  if (this->engage_size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteTag(10, ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED, output);
-    output->WriteVarint32(_engage_cached_byte_size_);
-  }
-  for (int i = 0; i < this->engage_size(); i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32NoTag(
-      this->engage(i), output);
-  }
-
-  // repeated .proto3.bunch_t ops = 11;
-  for (unsigned int i = 0, n = this->ops_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      11, this->ops(i), output);
-  }
-
-  // optional .proto3.pb_enum result = 12;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      12, this->result(), output);
+      3, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgLCReplay)
@@ -10238,111 +11178,17 @@ int MsgLCReplay::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional int32 gameId = 2;
-  if (this->gameid() != 0) {
+  // optional .proto3.replay data = 2;
+  if (this->has_data()) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->gameid());
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        *this->data_);
   }
 
-  // optional .proto3.pb_msg gameCategory = 3;
-  if (this->gamecategory() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->gamecategory());
-  }
-
-  // optional int32 banker = 4;
-  if (this->banker() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->banker());
-  }
-
-  // optional int32 round = 5;
-  if (this->round() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->round());
-  }
-
-  // optional int32 rounds = 6;
-  if (this->rounds() != 0) {
-    total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
-        this->rounds());
-  }
-
-  // optional .proto3.pb_enum result = 12;
+  // optional .proto3.pb_enum result = 3;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
-  }
-
-  // repeated int32 piles = 7;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->piles_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->piles(i));
-    }
-    if (data_size > 0) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
-    }
-    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _piles_cached_byte_size_ = data_size;
-    GOOGLE_SAFE_CONCURRENT_WRITES_END();
-    total_size += data_size;
-  }
-
-  // repeated int32 bottom = 8;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->bottom_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->bottom(i));
-    }
-    if (data_size > 0) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
-    }
-    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _bottom_cached_byte_size_ = data_size;
-    GOOGLE_SAFE_CONCURRENT_WRITES_END();
-    total_size += data_size;
-  }
-
-  // repeated .proto3.bunch_t hands = 9;
-  total_size += 1 * this->hands_size();
-  for (int i = 0; i < this->hands_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->hands(i));
-  }
-
-  // repeated int32 engage = 10;
-  {
-    int data_size = 0;
-    for (int i = 0; i < this->engage_size(); i++) {
-      data_size += ::google::protobuf::internal::WireFormatLite::
-        Int32Size(this->engage(i));
-    }
-    if (data_size > 0) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(data_size);
-    }
-    GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-    _engage_cached_byte_size_ = data_size;
-    GOOGLE_SAFE_CONCURRENT_WRITES_END();
-    total_size += data_size;
-  }
-
-  // repeated .proto3.bunch_t ops = 11;
-  total_size += 1 * this->ops_size();
-  for (int i = 0; i < this->ops_size(); i++) {
-    total_size +=
-      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->ops(i));
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -10361,28 +11207,11 @@ void MsgLCReplay::MergeFrom(const MsgLCReplay& from) {
   if (GOOGLE_PREDICT_FALSE(&from == this)) {
     ::google::protobuf::internal::MergeFromFail(__FILE__, __LINE__);
   }
-  piles_.MergeFrom(from.piles_);
-  bottom_.MergeFrom(from.bottom_);
-  hands_.MergeFrom(from.hands_);
-  engage_.MergeFrom(from.engage_);
-  ops_.MergeFrom(from.ops_);
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
-  if (from.gameid() != 0) {
-    set_gameid(from.gameid());
-  }
-  if (from.gamecategory() != 0) {
-    set_gamecategory(from.gamecategory());
-  }
-  if (from.banker() != 0) {
-    set_banker(from.banker());
-  }
-  if (from.round() != 0) {
-    set_round(from.round());
-  }
-  if (from.rounds() != 0) {
-    set_rounds(from.rounds());
+  if (from.has_data()) {
+    mutable_data()->::proto3::replay::MergeFrom(from.data());
   }
   if (from.result() != 0) {
     set_result(from.result());
@@ -10407,16 +11236,7 @@ void MsgLCReplay::Swap(MsgLCReplay* other) {
 }
 void MsgLCReplay::InternalSwap(MsgLCReplay* other) {
   std::swap(mid_, other->mid_);
-  std::swap(gameid_, other->gameid_);
-  std::swap(gamecategory_, other->gamecategory_);
-  std::swap(banker_, other->banker_);
-  std::swap(round_, other->round_);
-  std::swap(rounds_, other->rounds_);
-  piles_.UnsafeArenaSwap(&other->piles_);
-  bottom_.UnsafeArenaSwap(&other->bottom_);
-  hands_.UnsafeArenaSwap(&other->hands_);
-  engage_.UnsafeArenaSwap(&other->engage_);
-  ops_.UnsafeArenaSwap(&other->ops_);
+  std::swap(data_, other->data_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -10443,227 +11263,49 @@ void MsgLCReplay::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.mid)
 }
 
-// optional int32 gameId = 2;
-void MsgLCReplay::clear_gameid() {
-  gameid_ = 0;
+// optional .proto3.replay data = 2;
+bool MsgLCReplay::has_data() const {
+  return !_is_default_instance_ && data_ != NULL;
 }
- ::google::protobuf::int32 MsgLCReplay::gameid() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.gameId)
-  return gameid_;
+void MsgLCReplay::clear_data() {
+  if (GetArenaNoVirtual() == NULL && data_ != NULL) delete data_;
+  data_ = NULL;
 }
- void MsgLCReplay::set_gameid(::google::protobuf::int32 value) {
+const ::proto3::replay& MsgLCReplay::data() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.data)
+#ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  return data_ != NULL ? *data_ : *default_instance().data_;
+#else
+  return data_ != NULL ? *data_ : *default_instance_->data_;
+#endif
+}
+::proto3::replay* MsgLCReplay::mutable_data() {
   
-  gameid_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.gameId)
+  if (data_ == NULL) {
+    data_ = new ::proto3::replay;
+  }
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplay.data)
+  return data_;
 }
-
-// optional .proto3.pb_msg gameCategory = 3;
-void MsgLCReplay::clear_gamecategory() {
-  gamecategory_ = 0;
-}
- ::proto3::pb_msg MsgLCReplay::gamecategory() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.gameCategory)
-  return static_cast< ::proto3::pb_msg >(gamecategory_);
-}
- void MsgLCReplay::set_gamecategory(::proto3::pb_msg value) {
+::proto3::replay* MsgLCReplay::release_data() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCReplay.data)
   
-  gamecategory_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.gameCategory)
+  ::proto3::replay* temp = data_;
+  data_ = NULL;
+  return temp;
+}
+void MsgLCReplay::set_allocated_data(::proto3::replay* data) {
+  delete data_;
+  data_ = data;
+  if (data) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCReplay.data)
 }
 
-// optional int32 banker = 4;
-void MsgLCReplay::clear_banker() {
-  banker_ = 0;
-}
- ::google::protobuf::int32 MsgLCReplay::banker() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.banker)
-  return banker_;
-}
- void MsgLCReplay::set_banker(::google::protobuf::int32 value) {
-  
-  banker_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.banker)
-}
-
-// optional int32 round = 5;
-void MsgLCReplay::clear_round() {
-  round_ = 0;
-}
- ::google::protobuf::int32 MsgLCReplay::round() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.round)
-  return round_;
-}
- void MsgLCReplay::set_round(::google::protobuf::int32 value) {
-  
-  round_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.round)
-}
-
-// optional int32 rounds = 6;
-void MsgLCReplay::clear_rounds() {
-  rounds_ = 0;
-}
- ::google::protobuf::int32 MsgLCReplay::rounds() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.rounds)
-  return rounds_;
-}
- void MsgLCReplay::set_rounds(::google::protobuf::int32 value) {
-  
-  rounds_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.rounds)
-}
-
-// repeated int32 piles = 7;
-int MsgLCReplay::piles_size() const {
-  return piles_.size();
-}
-void MsgLCReplay::clear_piles() {
-  piles_.Clear();
-}
- ::google::protobuf::int32 MsgLCReplay::piles(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.piles)
-  return piles_.Get(index);
-}
- void MsgLCReplay::set_piles(int index, ::google::protobuf::int32 value) {
-  piles_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.piles)
-}
- void MsgLCReplay::add_piles(::google::protobuf::int32 value) {
-  piles_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.piles)
-}
- const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplay::piles() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.piles)
-  return piles_;
-}
- ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplay::mutable_piles() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.piles)
-  return &piles_;
-}
-
-// repeated int32 bottom = 8;
-int MsgLCReplay::bottom_size() const {
-  return bottom_.size();
-}
-void MsgLCReplay::clear_bottom() {
-  bottom_.Clear();
-}
- ::google::protobuf::int32 MsgLCReplay::bottom(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.bottom)
-  return bottom_.Get(index);
-}
- void MsgLCReplay::set_bottom(int index, ::google::protobuf::int32 value) {
-  bottom_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.bottom)
-}
- void MsgLCReplay::add_bottom(::google::protobuf::int32 value) {
-  bottom_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.bottom)
-}
- const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplay::bottom() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.bottom)
-  return bottom_;
-}
- ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplay::mutable_bottom() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.bottom)
-  return &bottom_;
-}
-
-// repeated .proto3.bunch_t hands = 9;
-int MsgLCReplay::hands_size() const {
-  return hands_.size();
-}
-void MsgLCReplay::clear_hands() {
-  hands_.Clear();
-}
-const ::proto3::bunch_t& MsgLCReplay::hands(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.hands)
-  return hands_.Get(index);
-}
-::proto3::bunch_t* MsgLCReplay::mutable_hands(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplay.hands)
-  return hands_.Mutable(index);
-}
-::proto3::bunch_t* MsgLCReplay::add_hands() {
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.hands)
-  return hands_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-MsgLCReplay::mutable_hands() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.hands)
-  return &hands_;
-}
-const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-MsgLCReplay::hands() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.hands)
-  return hands_;
-}
-
-// repeated int32 engage = 10;
-int MsgLCReplay::engage_size() const {
-  return engage_.size();
-}
-void MsgLCReplay::clear_engage() {
-  engage_.Clear();
-}
- ::google::protobuf::int32 MsgLCReplay::engage(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.engage)
-  return engage_.Get(index);
-}
- void MsgLCReplay::set_engage(int index, ::google::protobuf::int32 value) {
-  engage_.Set(index, value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCReplay.engage)
-}
- void MsgLCReplay::add_engage(::google::protobuf::int32 value) {
-  engage_.Add(value);
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.engage)
-}
- const ::google::protobuf::RepeatedField< ::google::protobuf::int32 >&
-MsgLCReplay::engage() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.engage)
-  return engage_;
-}
- ::google::protobuf::RepeatedField< ::google::protobuf::int32 >*
-MsgLCReplay::mutable_engage() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.engage)
-  return &engage_;
-}
-
-// repeated .proto3.bunch_t ops = 11;
-int MsgLCReplay::ops_size() const {
-  return ops_.size();
-}
-void MsgLCReplay::clear_ops() {
-  ops_.Clear();
-}
-const ::proto3::bunch_t& MsgLCReplay::ops(int index) const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCReplay.ops)
-  return ops_.Get(index);
-}
-::proto3::bunch_t* MsgLCReplay::mutable_ops(int index) {
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCReplay.ops)
-  return ops_.Mutable(index);
-}
-::proto3::bunch_t* MsgLCReplay::add_ops() {
-  // @@protoc_insertion_point(field_add:proto3.MsgLCReplay.ops)
-  return ops_.Add();
-}
-::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >*
-MsgLCReplay::mutable_ops() {
-  // @@protoc_insertion_point(field_mutable_list:proto3.MsgLCReplay.ops)
-  return &ops_;
-}
-const ::google::protobuf::RepeatedPtrField< ::proto3::bunch_t >&
-MsgLCReplay::ops() const {
-  // @@protoc_insertion_point(field_list:proto3.MsgLCReplay.ops)
-  return ops_;
-}
-
-// optional .proto3.pb_enum result = 12;
+// optional .proto3.pb_enum result = 3;
 void MsgLCReplay::clear_result() {
   result_ = 0;
 }

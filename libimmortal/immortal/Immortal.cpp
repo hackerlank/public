@@ -73,7 +73,7 @@ std::shared_ptr<Game> Immortal::findGame(game_id_t id){
 }
 
 void Immortal::removeGame(game_id_t id){
-    gameRules.erase(id);
+    games.erase(id);
 }
 
 void Immortal::addPlayer(size_t shid,std::shared_ptr<Player> sp){
@@ -136,21 +136,6 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
             //Logger<<"client connected,uid="<<imsg.uid()<<"\n";
         }while (false);
         omsg.set_mid(proto3::pb_msg::MSG_NC_CONNECT);
-        PBHelper::Send(sh,omsg);
-    }
-    else if(mid==proto3::pb_msg::MSG_CL_REPLAY){
-        //TODO: move into Lobby
-        MsgCLReplay imsg;
-        MsgLCReplay omsg;
-        if(pb.Parse(imsg)){
-            if(!replays.empty())
-                omsg.CopyFrom(*replays.front());
-        }
-        else
-        {
-            omsg.set_result(proto3::pb_enum::ERR_FAILED);
-        }
-        omsg.set_mid(proto3::pb_msg::MSG_LC_REPLAY);
         PBHelper::Send(sh,omsg);
     }
     else{

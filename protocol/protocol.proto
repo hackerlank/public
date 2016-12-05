@@ -315,6 +315,27 @@ string uid              =2;
 uint32 time             =3;
 int32 amount            =4;
 }
+
+message replays{
+
+int32 gameId            =1;
+pb_enum gameCategory    =2;
+int32 rounds            =3;
+int32 max_round         =4;
+repeated user_t users   =5;
+}
+
+message replay{
+
+int32 gameId            =1;
+int32 banker            =2;
+int32 round             =3;
+repeated int32 piles    =4;
+repeated int32 bottom   =5;
+repeated bunch_t hands  =6;
+repeated int32 engage   =7;
+repeated bunch_t ops    =8;
+}
 // ----------------------------------------------------------------
 // messages
 // ----------------------------------------------------------------
@@ -437,8 +458,8 @@ uint64 session          =3;
 
 message MsgLCReplays{
 
-repeated user_t users   =1;
-repeated int32 gameIds  =2;
+pb_msg mid				=1;
+repeated replays all    =2;
 pb_enum result			=3;
 };
 
@@ -446,23 +467,15 @@ message MsgCLReplay{
 
 pb_msg mid				=1;
 uint32 gameId           =2;
-uint64 session          =3;
+int32 round             =3;
+uint64 session          =4;
 };
 
 message MsgLCReplay{
 
 pb_msg mid				=1;
-int32 gameId            =2;
-pb_msg gameCategory     =3;
-int32 banker            =4;
-int32 round             =5;
-int32 rounds            =6;
-repeated int32 piles    =7;
-repeated int32 bottom   =8;
-repeated bunch_t hands  =9;
-repeated int32 engage   =10;
-repeated bunch_t ops    =11;
-pb_enum result			=12;
+replay data             =2;
+pb_enum result			=3;
 };
 // ----------------------------------------------------------------
 // Charge

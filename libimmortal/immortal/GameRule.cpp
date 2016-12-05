@@ -87,17 +87,14 @@ void GameRule::deal(Game& game){
     game.lastCard=game.pile.front();
 
     //init game replay
-    auto spReplay=std::make_shared<MsgLCReplay>();
+    auto spReplay=std::make_shared<replay>();
     spReplay->set_round(game.round);
-    spReplay->set_rounds(game.Round);
     spReplay->set_banker(game.banker);
     spReplay->set_gameid(game.id);
-    spReplay->set_gamecategory((pb_msg)game.category);
     for(auto c:game.pile)spReplay->add_piles(c);
     for(auto b:game.bottom)spReplay->add_bottom(b);
     for(auto p:game.players)spReplay->add_hands()->mutable_pawns()->CopyFrom(p->playData.hands());
     game.spReplay=spReplay;
-    Immortal::sImmortal->replays.push_back(spReplay);
     
     //broadcast
     MsgNCDeal msg;
@@ -136,7 +133,8 @@ bool GameRule::settle(Game& game){
     //copy pile
     for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
     
-    //TODO: persistence replay
+    //persistence replay
+    persistReplay(game);
     
     ++game.round;
     
@@ -149,26 +147,29 @@ bool GameRule::settle(Game& game){
         char key[64],field[32];
         sprintf(key,"player:%s",uid);
         
-        int gold=0;
-        int cost=1;
         auto spdb=Immortal::sImmortal->spdb;
-        spdb->lock(uid);
-        {
-            char gold_key[128];
-            std::string str;
-            sprintf(gold_key,"player:%s",uid);
-            spdb->hget(gold_key,"gold",str);
-            gold=atoi(str.c_str());
-
-            if(gold>=cost){
-                owner->set_gold(gold-cost);
-                spdb->hincrby(gold_key,"gold",gold-cost);
-            }else{
-                cost_failed=true;
-                Logger<<"game "<<(int)game.id<<" no enough gold "<<gold<<endf;
+        auto is_free=(int)Immortal::sImmortal->config.value("free");
+        if(!is_free){
+            int gold=0;
+            int cost=1;
+            spdb->lock(uid);
+            {
+                char gold_key[128];
+                std::string str;
+                sprintf(gold_key,"player:%s",uid);
+                spdb->hget(gold_key,"gold",str);
+                gold=atoi(str.c_str());
+                
+                if(gold>=cost){
+                    owner->set_gold(gold-cost);
+                    spdb->hincrby(gold_key,"gold",gold-cost);
+                }else{
+                    cost_failed=true;
+                    Logger<<"game "<<(int)game.id<<" no enough gold "<<gold<<endf;
+                }
             }
+            spdb->unlock(uid);
         }
-        spdb->unlock(uid);
         
         //stats
         sprintf(key,"game_count:%d",game.rule->Type());
@@ -339,6 +340,42 @@ void GameRule::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
     for(auto id:vals){
         bunch.mutable_pawns()->Add(id);
     }
+}
+
+void GameRule::persistReplay(Game& game){
+    if(!game.spReplay)return;
+    
+    std::string replaybuf;
+    if(game.spReplay->SerializeToString(&replaybuf)){
+        //replay hash data - replay:<game id>{round:data}
+        char key[32],field[32];
+        sprintf(key,"replay:%d",game.id);
+        sprintf(field,"%d",game.round);
+        Immortal::sImmortal->spdb->hset(key,field,replaybuf.c_str());
+        Logger<<"----replay data len="<<(int)replaybuf.size()<<endl;
+    }
+}
+
+void GameRule::release(Game& game){
+    //player replay list - replay:player:<uid>{replays list}
+    replays all;
+    all.set_gameid(game.id);
+    all.set_gamecategory(game.category);
+    all.set_rounds(game.round+1);
+    all.set_max_round(game.Round);
+    
+    std::string replaybuf;
+    if(all.SerializeToString(&replaybuf)){
+        char key[32];
+        std::vector<std::string> ll;
+        ll.push_back(replaybuf);
+        
+        for(auto p:game.players){
+            sprintf(key,"replay:player:%s",p->playData.player().uid().c_str());
+            Immortal::sImmortal->spdb->lpush(key,ll);
+        }
+    }
+    Immortal::sImmortal->removeGame(game.id);
 }
 
 void parseCardsByString(std::vector<int>& o,const std::string& str){

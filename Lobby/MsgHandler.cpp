@@ -26,11 +26,18 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     }else
         msgid=extractBody(content,body);
     
+    if(msgid<=pb_msg::MSG_CL_BEGIN || msgid>=pb_msg::MSG_CL_END){
+        Logger<<"invalid message id "<<(int)msgid<<endl;
+        //PBHelper::Response(resp,omsg,mid,500,"Internal error");
+        return;
+    }
+    
     //decode
     KEYE_LOG("body=%s\n",content.c_str());
     auto str=base64_decode(content);
     KEYE_LOG("decode=%s\n",str.c_str());
     
+    auto spdb=Lobby::sLobby->spdb;
     //process
     switch(msgid){
         case pb_msg::MSG_CL_LOGIN:{
@@ -50,7 +57,6 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //account
                 auto& account=imsg.user().account();
                 auto player=omsg.mutable_player();
-                auto spdb=Lobby::sLobby->spdb;
                 std::string uid;
                 char key[128];
                 
@@ -187,6 +193,59 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 KEYE_LOG("client enter failed\n");
                 omsg.set_result(pb_enum::ERR_FAILED);
             }
+            PBHelper::Response(resp,omsg,omid);
+            break;
+        }
+        case proto3::pb_msg::MSG_CL_REPLAYS:{
+            MsgCLReplays imsg;
+            MsgLCReplays omsg;
+            if(imsg.ParseFromString(str)){
+                char key[32];
+                //player replay list - replay:player:<uid>{game id list}
+                std::vector<std::string> values;
+                sprintf(key,"replay:player:%s",imsg.uid().c_str());
+                spdb->lrange(key,0,-1,values);
+                for(auto& v:values){
+                    replays game_replay;
+                    if(game_replay.ParseFromString(v))
+                        omsg.add_all()->CopyFrom(game_replay);
+                }
+                omsg.set_result(proto3::pb_enum::SUCCEESS);
+            }
+            else
+            {
+                omsg.set_result(proto3::pb_enum::ERR_FAILED);
+            }
+            auto omid=pb_msg::MSG_LC_REPLAYS;
+            omsg.set_mid(omid);
+            PBHelper::Response(resp,omsg,omid);
+            break;
+        }
+        case proto3::pb_msg::MSG_CL_REPLAY:{
+            MsgCLReplay imsg;
+            MsgLCReplay omsg;
+            if(imsg.ParseFromString(str)){
+                //replay hash data - replay:<game id>{round:data}
+                char key[32],field[32];
+                sprintf(key,"replay:%d",imsg.gameid());
+                sprintf(field,"%d",imsg.round());
+                
+                std::string buf;
+                spdb->hget(key,field,buf);
+            
+                if(omsg.mutable_data()->ParseFromString(buf)){
+                    omsg.set_result(pb_enum::SUCCEESS);
+                }else{
+                    omsg.set_result(pb_enum::ERR_FAILED);
+                    omsg.clear_data();
+                }
+            }
+            else
+            {
+                omsg.set_result(pb_enum::ERR_FAILED);
+            }
+            auto omid=pb_msg::MSG_LC_REPLAY;
+            omsg.set_mid(omid);
             PBHelper::Response(resp,omsg,omid);
             break;
         }

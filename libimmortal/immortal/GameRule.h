@@ -31,6 +31,7 @@ protected:
     virtual int         bottom(Game& game)=0;
     
     virtual bool        settle(Game&);
+    void                release(Game&);
     
     virtual void        engage(Game&,proto3::MsgNCEngage&){};
     void                deal(Game&);
@@ -42,6 +43,7 @@ protected:
     const char*         cards2str(std::string&,const google::protobuf::RepeatedField<int>&);
     void                logHands(Game&,uint32,std::string="");
     
+    void                persistReplay(Game&);
     void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
 };
 

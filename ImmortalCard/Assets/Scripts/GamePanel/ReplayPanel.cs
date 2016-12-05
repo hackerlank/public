@@ -23,7 +23,7 @@ public class ReplayPanel : GamePanel {
 			while(!CardCache.Ready)yield return null;
 		}
 
-		maxPlayer=msg.Hands.Count;
+		maxPlayer=msg.Data.Hands.Count;
 		_pos=0;
 		transformComponent(DiscardAreas);
 		transformComponent(HandAreas);
@@ -34,7 +34,7 @@ public class ReplayPanel : GamePanel {
 
 		//deal
 		for(int i=0;i<maxPlayer;++i){
-			var hands=msg.Hands[i].Pawns;
+			var hands=msg.Data.Hands[i].Pawns;
 			int fin=0;
 			foreach(var id in hands){
 				Card.Create(Rule.CardPrefab,id,HandAreas[i],delegate(Card card) {
@@ -48,7 +48,7 @@ public class ReplayPanel : GamePanel {
 		//engage
 
 		//replay
-		foreach(bunch_t op in msg.Ops){
+		foreach(bunch_t op in msg.Data.Ops){
 			yield return new WaitForSeconds(1.5f);
 			Debug.Log("----replay "+op.Pos.ToString()+":"+Player.bunch2str(op));
 
