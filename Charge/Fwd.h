@@ -13,6 +13,11 @@
 
 #include "protocol.pb.h"
 
+extern keye::logger sLogger;
+#ifndef Logger
+#define Logger sLogger<<begl
+#endif
+
 #include "PBHelper.h"
 #include "MsgHandler.h"
 #include "Server.h"

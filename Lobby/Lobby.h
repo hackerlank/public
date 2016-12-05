@@ -12,6 +12,7 @@
 class Lobby :public keye::ws_service {
 public:
                     Lobby(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
+    void            run(const char* =nullptr);
     virtual void	on_http(const http_parser& req,http_parser& resp);
     MsgHandler      handler;
 

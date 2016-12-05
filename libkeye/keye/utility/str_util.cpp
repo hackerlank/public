@@ -17,38 +17,65 @@ using namespace std;
 using namespace keye;
 
 void str_util::split_lines(std::vector<std::string>& lines,const std::string& buf){
-	const char* _pattern="[^\n]+(?:$)";
-	try{
-		regex pattern(_pattern);
-		auto beg = std::sregex_iterator(buf.begin(),buf.end(),pattern);
-		auto end = std::sregex_iterator();
-		for(auto i=beg;i!=end; ++i)
-			//for(auto s:*i)lines.push_back(s);
-			for(auto s:*i){
-				auto str=s.str();
-				if(str.back()==L'\r')str.pop_back();
-				lines.push_back(str);
-			}
-	} catch(regex_error e){
-		KEYE_LOG("%s\n",e.what());
-	}
+    const char* _pattern=
+    "(?!\\s*$)"                                 // Don't match empty last value.
+    "\\s*"                                       // Strip whitespace before value.
+    "(?:"                                        // Group for value alternatives.
+    "'([^']*(?:[\\S\\s][^']*)*?)'"               // Either $1: Single quoted string,
+    "|\"([^\"]*(?:[\\S\\s][^\"]*)*?)\""          // or $2: Double quoted string,
+    "|([^\n'\"]*\\w[^\t'\"]*?)"                  // or $3: Non-comma, non-quote stuff.
+    ")"                                          // End group of value alternatives.
+    "\\s*"                                       // Strip whitespace after value.
+    "(?:\n|$)";                                  // Field ends on comma or EOS.
+    try{
+        regex pattern(_pattern);
+        auto beg = std::sregex_iterator(buf.begin(),buf.end(),pattern);
+        auto end = std::sregex_iterator();
+        for(auto i=beg;i!=end; ++i){
+            auto& match=*i;
+            auto empty=true;
+            for(auto it=++match.begin(),iend=match.end();it!=iend;++it)
+                if(it->length()>0){
+                    lines.push_back(*it);
+                    empty=false;
+                    break;
+                }
+            if(empty)lines.push_back("");
+        }
+    } catch(regex_error e){
+        KEYE_LOG("%s\n",e.what());
+    }
 }
 
 void str_util::wsplit_lines(std::vector<std::wstring>& lines,const std::wstring& buf){
-	const wchar_t* _pattern=L"[^\n]+(?:$)";
-	try{
-		wregex pattern(_pattern);
-		auto beg = std::wsregex_iterator(buf.begin(),buf.end(),pattern);
-		auto end = std::wsregex_iterator();
-		for(auto i=beg;i!=end; ++i)
-			for(auto s:*i){
-				auto str=s.str();
-				if(str.back()==L'\r')str.pop_back();
-				lines.push_back(str);
-			}
-	} catch(regex_error e){
-		KEYE_LOG("%s\n",e.what());
-	}
+    const wchar_t* _pattern=
+    L"(?!\\s*$)"                                 // Don't match empty last value.
+    "\\s*"                                       // Strip whitespace before value.
+    "(?:"                                        // Group for value alternatives.
+    "'([^']*(?:[\\S\\s][^']*)*?)'"               // Either $1: Single quoted string,
+    "|\"([^\"]*(?:[\\S\\s][^\"]*)*?)\""          // or $2: Double quoted string,
+    "|([^\n'\"]*\\w[^\t'\"]*?)"                  // or $3: Non-comma, non-quote stuff.
+    ")"                                          // End group of value alternatives.
+    "\\s*"                                       // Strip whitespace after value.
+    "(?:\n|$)";                                  // Field ends on comma or EOS.
+    try{
+        wregex pattern(_pattern);
+        auto beg = std::wsregex_iterator(buf.begin(),buf.end(),pattern);
+        auto end = std::wsregex_iterator();
+        for(auto i=beg;i!=end; ++i){
+            auto& match=*i;
+            auto empty=true;
+            for(auto it=++match.begin(),iend=match.end();it!=iend;++it)
+                if(it->length()>0){
+                    lines.push_back(*it);
+                    empty=false;
+                    break;
+                }
+            if(empty)lines.push_back(L"");
+        }
+    } catch(regex_error e){
+        KEYE_LOG("%s\n",e.what());
+    }
 }
 
 bool str_util::wstr2str(std::string& str,const wchar_t* wstr){

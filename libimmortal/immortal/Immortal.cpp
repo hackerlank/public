@@ -32,13 +32,24 @@ Immortal::Immortal(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size)
 ,_game_index(0){
     sImmortal=this;
-    
-    // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
-    // standalone mode if only one node, else cluster mode.
-    const char* dbhost="ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com:6379";
-    spdb=std::make_shared<redis_proxy>();
-    if(!spdb->connect(dbhost))
-        spdb.reset();
+}
+
+void Immortal::run(const char* cfg){
+    if(cfg && config.load(cfg)){
+        auto port=(short)(int)config.value("port");
+        ws_service::run(port,"127.0.0.1");
+        Logger<<"server start at "<<port<<endf;
+        
+        // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
+        // standalone mode if only one node, else cluster mode.
+        char db[128];
+        sprintf(db,"%s:%d",(const char*)config.value("dbhost"),(int)config.value("dbport"));
+        spdb=std::make_shared<redis_proxy>();
+        if(!spdb->connect(db))
+            spdb.reset();
+    }else{
+        Logger<<"server start error: no config file"<<endf;
+    }
 }
 
 void Immortal::registerRule(std::shared_ptr<GameRule> game){

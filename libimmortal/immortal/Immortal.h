@@ -12,6 +12,7 @@
 class KEYE_API Immortal :public keye::ws_service {
 public:
                     Immortal(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
+    void            run(const char* =nullptr);
     virtual void	on_open(keye::svc_handler&);
     virtual void	on_close(keye::svc_handler&);
     virtual void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
@@ -36,7 +37,8 @@ private:
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
     std::map<size_t,std::shared_ptr<Game>>      games;
 
-    int                  _game_index;
+    keye::ini_cfg_file  config;
+    int                 _game_index;
 };
 
 #endif /* Immortal_h */

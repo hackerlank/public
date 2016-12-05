@@ -12,10 +12,12 @@
 class Server :public keye::ws_service {
 public:
                     Server(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
+    void            run(const char* =nullptr);
     virtual void	on_http(const http_parser& req,http_parser& resp);
     MsgHandler      handler;
 
     static Server*   sServer;
+    std::shared_ptr<vic_proxy>   spdb;
 };
 
 #endif /* Server_h */
