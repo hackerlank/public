@@ -25,7 +25,7 @@ void Player::on_read(PBHelper& pb){
     auto mid=pb.Id();
     
     if(mid>pb_msg::MSG_CN_JOIN &&(!game || !game->rule)){
-        Logger<<"no game when handle "<<(int)mid<<endl;
+        Debug<<"no game when handle "<<(int)mid<<endl;
         return;
     }
     
@@ -54,7 +54,7 @@ void Player::on_read(PBHelper& pb){
                     if(gold<cost){
                         omsg.set_result(proto3::pb_enum::ERR_NOENOUGH);
                         spdb->unlock(uid);
-                        Logger<<"game create failed,no gold for "<<imsg.game()<<":"<<gold<<endl;
+                        Debug<<"game create failed,no gold for "<<imsg.game()<<":"<<gold<<endl;
                         break;
                     }
                 }
@@ -64,7 +64,7 @@ void Player::on_read(PBHelper& pb){
                 auto gameptr=Immortal::sImmortal->createGame(key,imsg);
                 if(!gameptr){
                     omsg.set_result(proto3::pb_enum::ERR_PARAM);
-                    Logger<<"game create failed,no rule "<<imsg.game()<<endl;
+                    Debug<<"game create failed,no rule "<<imsg.game()<<endl;
                     break;
                 }
                 int maxRound=1;
@@ -94,7 +94,7 @@ void Player::on_read(PBHelper& pb){
                 
                 omsg.set_game_id((int)game->id);
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
-                //Logger<<"game created,gid="<<(int)game->id<<endl;
+                //Debug<<"game created,gid="<<(int)game->id<<endl;
             }while(false);
             omsg.set_mid(proto3::pb_msg::MSG_NC_CREATE);
             PBHelper::Send(sh,omsg);
@@ -114,17 +114,17 @@ void Player::on_read(PBHelper& pb){
                         ready=true;
                         playData.set_seat((int)game->players.size()-1);
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
-                        //Logger<<"game joined,gid="<<gid<<endl;
+                        //Debug<<"game joined,gid="<<gid<<endl;
                     }else{
                         omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                        Logger<<"game join failed of full,gid="<<gid<<endl;
+                        Debug<<"game join failed of full,gid="<<gid<<endl;
                     }
                 }else{
                     omsg.set_result(proto3::pb_enum::ERR_FAILED);
-                    Logger<<"game join failed of no,gid="<<gid<<endl;
+                    Debug<<"game join failed of no,gid="<<gid<<endl;
                 }
             }else{
-                Logger<<"game join failed of message error id="<<mid<<endl;
+                Debug<<"game join failed of message error id="<<mid<<endl;
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             omsg.set_mid(proto3::pb_msg::MSG_NC_JOIN);
@@ -181,7 +181,7 @@ void Player::on_read(PBHelper& pb){
                 auto gameId=imsg.game();
                 auto spGame=Immortal::sImmortal->findGame(gameId);
                 if(!spGame){
-                    Logger<<"reconnect: game "<<gameId<<" not found"<<endl;
+                    Debug<<"reconnect: game "<<gameId<<" not found"<<endl;
                     break;
                 }else{
                     //handle player
@@ -206,7 +206,7 @@ void Player::on_read(PBHelper& pb){
                         }
                     }
                     if(!found){
-                        Logger<<"reconnect: game "<<gameId<<" player not found"<<endl;
+                        Debug<<"reconnect: game "<<gameId<<" player not found"<<endl;
                         break;
                     }
                     
@@ -257,7 +257,7 @@ void Player::on_read(PBHelper& pb){
             if(msg.result()==pb_enum::SUCCEESS && spPlayer->lastMsg){
                 //send last message
                 spPlayer->send(*spPlayer->lastMsg);
-                Logger<<"send last message\n";
+                Debug<<"send last message\n";
             }
 
             break;
@@ -288,7 +288,7 @@ void Player::on_read(PBHelper& pb){
         default:
             break;
     }
-    //Logger<<"on_read %zd,mid=%d\n", sz,mid);
+    //Debug<<"on_read %zd,mid=%d\n", sz,mid);
 }
 
 void Player::send(google::protobuf::MessageLite& msg){

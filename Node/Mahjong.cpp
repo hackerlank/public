@@ -131,7 +131,7 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
             for(auto j:b->pawns()){
                 for(auto i=hands.begin();i!=hands.end();++i){
                     if(j==*i){
-                        //Logger<<"OnMeld pos=%d,erase card %d\n",where,*i);
+                        //Debug<<"OnMeld pos=%d,erase card %d\n",where,*i);
                         hands.erase(i);
                         break;
                     }
@@ -154,7 +154,7 @@ void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
 
 bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
     if(bunch.type()<pb_enum::BUNCH_WIN){
-        Logger<<"isWin failed: wrong bunch type\n";
+        Debug<<"isWin failed: wrong bunch type\n";
         return false;
     }
 
@@ -165,7 +165,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     auto& suite=*player.playData.mutable_bunch();
 
     if(hands.size()<1){
-        Logger<<"isWin failed: len="<<hands.size()<<endl;
+        Debug<<"isWin failed: len="<<hands.size()<<endl;
         return false;
     }
     
@@ -182,13 +182,13 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
             if(cmap.find(c)!=cmap.end())
                 --cmap[c];
             else if(c!=card){
-                Logger<<"isWin failed: card "<<c<<" not exists\n";
+                Debug<<"isWin failed: card "<<c<<" not exists\n";
                 return false;
             }
         }
     }
     for(auto& kv:cmap)if(kv.second!=0){
-        Logger<<"isWin failed: card "<<kv.first<<" missing\n";
+        Debug<<"isWin failed: card "<<kv.first<<" missing\n";
         return false;
     }
     
@@ -196,7 +196,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     for(auto& b:*bunch.mutable_child()){
         if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
             std::string str;
-            Logger<<"isWin failed: invalid bunch "<<bunch2str(str,b)<<endl;
+            Debug<<"isWin failed: invalid bunch "<<bunch2str(str,b)<<endl;
             return false;
         }
     }
@@ -356,7 +356,7 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
     if(A/1000!=B/1000){
         for(auto card:gdata.hands()){
             if(card/1000==B/1000){
-                Logger<<"huazhu("<<B<<") found when verify "<<A<<endl;
+                Debug<<"huazhu("<<B<<") found when verify "<<A<<endl;
                 return false;
             }
         }

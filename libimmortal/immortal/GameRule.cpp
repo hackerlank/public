@@ -15,7 +15,7 @@ using namespace proto3;
 inline void parseCardsByString(std::vector<int>& o,const std::string& line);
 
 void GameRule::deal(Game& game){
-    Logger<<"game "<<(int)game.id<<" begin, type("<<Type()<<")"<<endl;
+    Debug<<"game "<<(int)game.id<<" begin, type("<<Type()<<")"<<endl;
 
     auto MP=MaxPlayer(game);
     //clear
@@ -82,7 +82,7 @@ void GameRule::deal(Game& game){
     std::string str;
     google::protobuf::RepeatedField<int> pbpile(game.pile.begin(),game.pile.end());
     cards2str(str,pbpile);
-    Logger<<"pile: "<<str.c_str()<<endl;
+    Debug<<"pile: "<<str.c_str()<<endl;
 
     game.lastCard=game.pile.front();
 
@@ -122,7 +122,7 @@ void GameRule::deal(Game& game){
 }
 
 bool GameRule::settle(Game& game){
-    Logger<<"game "<<(int)game.id<<" round "<<game.round<<" end"<<endf;
+    Debug<<"game "<<(int)game.id<<" round "<<game.round<<" end"<<endf;
 
     //broadcast
     game.spSettle=std::make_shared<MsgNCSettle>();
@@ -164,9 +164,10 @@ bool GameRule::settle(Game& game){
                 if(gold>=cost){
                     owner->set_gold(gold-cost);
                     spdb->hincrby(gold_key,"gold",gold-cost);
+                    Logger<<uid<<"cost gold ("<<gold<<"-"<<cost<<") for game "<<(int)game.id<<endf;
                 }else{
                     cost_failed=true;
-                    Logger<<"game "<<(int)game.id<<" no enough gold "<<gold<<endf;
+                    Debug<<"game "<<(int)game.id<<" no enough gold "<<gold<<endf;
                 }
             }
             spdb->unlock(uid);
@@ -243,7 +244,7 @@ void GameRule::OnEngage(Player& player,uint key){
             char buf[64];
             sprintf(buf,"%s","all engaged:");
             for(auto& key:omsg.keys())sprintf(buf,"%s,%d",buf,key);
-            Logger<<buf<<"\n";
+            Debug<<buf<<"\n";
         }
     }
 }
@@ -262,14 +263,14 @@ void GameRule::changePos(Game& game,pos_t pos){
     pos=pos%game.rule->MaxPlayer(game);
     if(game.token!=pos){
         game.token=pos;
-        Logger<<" "<<old<<"=>"<<game.token<<endl;
+        Debug<<" "<<old<<"=>"<<game.token<<endl;
     }
 }
 
 void GameRule::changeState(Game& game,Game::State state){
     if(game.state!=state){
         std::string str0,str1;
-        Logger<<" "<<state2str(str0,game.state)<<"=>"<<state2str(str1,state)<<endl;
+        Debug<<" "<<state2str(str0,game.state)<<"=>"<<state2str(str1,state)<<endl;
         game.state=state;
     }
 }
@@ -278,7 +279,7 @@ void GameRule::logHands(Game& game,uint32 pos,std::string msg){
     std::string str;
     auto& hands=game.players[pos]->playData.hands();
     cards2str(str,hands);
-    Logger<<msg.c_str()<<" hand of "<<pos<<":"<<hands.size()<<","<<str.c_str()<<endl;
+    Debug<<msg.c_str()<<" hand of "<<pos<<":"<<hands.size()<<","<<str.c_str()<<endl;
 }
 
 const char* GameRule::state2str(std::string& str,Game::State st){
@@ -353,7 +354,6 @@ void GameRule::persistReplay(Game& game){
         sprintf(key,"replay:%d",game.id);
         sprintf(field,"%d",game.round);
         Immortal::sImmortal->spdb->hset(key,field,replaybuf.c_str());
-        Logger<<"----replay data len="<<(int)replaybuf.size()<<endl;
     }
 }
 
@@ -373,7 +373,7 @@ void GameRule::Release(Game& game){
         
         for(auto p:game.players){
             auto& uid=p->playData.player().uid();
-            if(uid.find("robot"!=string::npos)continue;
+            if(uid.find("robot")!=std::string::npos)continue;
             sprintf(key,"replay:player:%s",uid.c_str());
             Immortal::sImmortal->spdb->lpush(key,ll);
         }

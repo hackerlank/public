@@ -27,14 +27,14 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
         msgid=extractBody(content,body);
     
     if(msgid<=pb_msg::MSG_CL_BEGIN || msgid>=pb_msg::MSG_CL_END){
-        Logger<<"invalid message id "<<(int)msgid<<endl;
+        Debug<<"invalid message id "<<(int)msgid<<endl;
         return;
     }
     
     //decode
-    Logger<<"body="<<content.c_str()<<endl;
+    Debug<<"body="<<content.c_str()<<endl;
     auto str=base64_decode(content);
-    Logger<<"decode="<<str.c_str()<<endl;
+    Debug<<"decode="<<str.c_str()<<endl;
     
     auto spdb=Lobby::sLobby->spdb;
     //process
@@ -48,7 +48,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //version
                 if(imsg.version()<100){
                     omsg.set_result(pb_enum::ERR_VERSION);
-                    Logger<<"client login failed\n";
+                    Debug<<"client login failed\n";
                     PBHelper::Response(resp,omsg,mid);
                     break;
                 }
@@ -125,7 +125,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     }
                 }
 
-                Logger<<"client login succeeded\n";
+                Debug<<"client login succeeded\n";
                 player->set_uid(uid);
                 omsg.set_version(imsg.version()+1);
                 omsg.set_node("127.0.0.1");
@@ -134,7 +134,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 
                 PBHelper::Response(resp,omsg,mid);
             }else{
-                Logger<<"client login failed\n";
+                Debug<<"client login failed\n";
                 PBHelper::Response(resp,omsg,mid,500,"Internal error");
             }
             break;
@@ -145,7 +145,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             auto omid=pb_msg::MSG_LC_LOBBY;
             omsg.set_mid(omid);
             if(imsg.ParseFromString(str)){
-                Logger<<"client enter succeeded\n";
+                Debug<<"client enter succeeded\n";
                 omsg.set_result(pb_enum::SUCCEESS);
                 
                 auto& lobby=*omsg.mutable_lobby();
@@ -192,7 +192,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 game->add_rules(pb_enum::DDZ_CLASIC);
                 game->add_rules(pb_enum::DDZ_FOR4);
             }else{
-                Logger<<"client enter failed\n";
+                Debug<<"client enter failed\n";
                 omsg.set_result(pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);

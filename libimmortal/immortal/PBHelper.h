@@ -23,7 +23,7 @@ public:
     bool Parse(google::protobuf::MessageLite& msg){
         auto ret=msg.ParseFromArray(_pw.data,(int)_pw.length);
         if(!ret){
-            Logger<<"message parse error: mid="<<(int)Id()<<",length="<<(int)_pw.length<<",buf="<<
+            Debug<<"message parse error: mid="<<(int)Id()<<",length="<<(int)_pw.length<<",buf="<<
             str_util::bytes2hex((const unsigned char*)_pw.data,_pw.length).c_str()<<endl;
         }
         return ret;

@@ -14,12 +14,12 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     auto msgid=req.header("msgid");
     auto mid=(pb_msg)atoi(msgid);
     if(mid<pb_msg::MSG_CH_BEGIN||mid>pb_msg::MSG_CH_END){
-        Logger<<"invalid msg id "<<(int)mid<<endl;
+        Debug<<"invalid msg id "<<(int)mid<<endl;
         return;
     }
     
     if(mid<=pb_msg::MSG_CH_BEGIN || mid>=pb_msg::MSG_CH_END){
-        Logger<<"invalid message id "<<(int)mid<<endl;
+        Debug<<"invalid message id "<<(int)mid<<endl;
         return;
     }
 
@@ -38,10 +38,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 omsg.set_amount(1999);
                 omsg.set_session(19700101);
                 
-                Logger<<"login succeeded\n";
+                Debug<<"login succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                Logger<<"login failed\n";
+                Debug<<"login failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
@@ -56,10 +56,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //query db by phone and uid
                 //insert into db if not exists
                 
-                Logger<<"register succeeded\n";
+                Debug<<"register succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                Logger<<"register failed\n";
+                Debug<<"register failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
@@ -78,7 +78,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 Logger<<"charge succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                Logger<<"charge failed\n";
+                Debug<<"charge failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);
@@ -93,10 +93,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 //verify session and retrieve phone
                 //query charge logs from db by target uid
                 
-                Logger<<"query succeeded\n";
+                Debug<<"query succeeded\n";
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
             }else{
-                Logger<<"query failed\n";
+                Debug<<"query failed\n";
                 omsg.set_result(proto3::pb_enum::ERR_FAILED);
             }
             PBHelper::Response(resp,omsg,omid);

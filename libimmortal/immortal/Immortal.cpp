@@ -21,6 +21,7 @@ enum TIMER:size_t{
 };
 
 std::shared_ptr<keye::logger> sLogger;
+std::shared_ptr<keye::logger> sDebug;
 
 Immortal* Immortal::sImmortal=nullptr;
 
@@ -35,7 +36,7 @@ void Immortal::run(const char* cfg){
     if(cfg && config.load(cfg)){
         auto port=(short)(int)config.value("port");
         ws_service::run(port,"127.0.0.1");
-        Logger<<"server start at "<<port<<endf;
+        Debug<<"server start at "<<port<<endf;
         
         // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
         // standalone mode if only one node, else cluster mode.
@@ -45,7 +46,7 @@ void Immortal::run(const char* cfg){
         if(!spdb->connect(db))
             spdb.reset();
     }else{
-        Logger<<"server start error: no config file"<<endf;
+        Debug<<"server start error: no config file"<<endf;
     }
 }
 
@@ -64,7 +65,7 @@ std::shared_ptr<Game> Immortal::createGame(int key,proto3::MsgCNCreate& msg){
         gameptr->id=gid;
         gameptr->rule=rule->second;
     }else
-        Logger<<"create game error no rule "<<msg.game()<<endl;
+        Debug<<"create game error no rule "<<msg.game()<<endl;
     return gameptr;
 }
 
@@ -83,14 +84,14 @@ void Immortal::addPlayer(size_t shid,std::shared_ptr<Player> sp){
 }
 
 void Immortal::on_open(svc_handler&) {
-    //Logger<<"on_open\n";
+    //Debug<<"on_open\n";
     //set_timer(WRITE_TIMER, WRITE_FREQ);
 }
 
 void Immortal::on_close(svc_handler& sh) {
     auto shid=sh.id();
     players.erase(shid);
-    //Logger<<"on_close\n";
+    //Debug<<"on_close\n";
 }
 
 void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
@@ -100,7 +101,7 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
     auto mid=pb.Id();
     
     if(mid<=pb_msg::MSG_CN_BEGIN || mid>=pb_msg::MSG_CN_END){
-        Logger<<"invalid message id "<<(int)mid<<endl;
+        Debug<<"invalid message id "<<(int)mid<<endl;
         return;
     }
 
@@ -139,7 +140,7 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
             
             omsg.set_result(proto3::pb_enum::SUCCEESS);
             omsg.mutable_player()->CopyFrom(*player);
-            //Logger<<"client connected,uid="<<imsg.uid()<<"\n";
+            //Debug<<"client connected,uid="<<imsg.uid()<<"\n";
         }while (false);
         omsg.set_mid(proto3::pb_msg::MSG_NC_CONNECT);
         PBHelper::Send(sh,omsg);
@@ -149,11 +150,11 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
         if(p!=players.end())
             p->second->on_read(pb);
     }
-    //Logger<<"on_read %zd,mid=%d\n", sz,mid);
+    //Debug<<"on_read %zd,mid=%d\n", sz,mid);
 }
 
 void Immortal::on_write(svc_handler&, void*, size_t sz) {
-//    Logger<<"on_write %zd\n",sz);
+//    Debug<<"on_write %zd\n",sz);
 }
 
 bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
@@ -189,11 +190,14 @@ bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
 void Immortal::setup_log(const char* file){
 #if defined(WIN32) || defined(__APPLE__)
     sLogger=std::make_shared<logger>();
+    sDebug=std::make_shared<logger>();
 #else
     time_t t=time(NULL);
     tm* aTm=localtime(&t);
     char logfile[32];
     sprintf(logfile,"%s-%02d-%02d-%02d.log",file,aTm->tm_year%100,aTm->tm_mon+1,aTm->tm_mday);
     sLogger=std::make_shared<logger>(logfile);
+    sprintf(logfile,"%sD-%02d-%02d-%02d.log",file,aTm->tm_year%100,aTm->tm_mon+1,aTm->tm_mday);
+    sDebug=std::make_shared<logger>(logfile);
 #endif
 }

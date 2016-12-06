@@ -49,23 +49,23 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     do{
         auto game=player.game;
         if(!game){
-            Logger<<"OnDiscard no game\n";
+            Debug<<"OnDiscard no game\n";
             break;
         }
         if(game->token!=pos){
             auto card=(unit_id_t)msg.bunch().pawns(0);
-            Logger<<"OnDiscard "<<card<<" wrong pos "<<pos<<"(need "<<game->token<<endl;
+            Debug<<"OnDiscard "<<card<<" wrong pos "<<pos<<"(need "<<game->token<<endl;
             break;
         }
         
         if(game->state!=Game::State::ST_DISCARD){
-            Logger<<"OnDiscard wrong state "<<game->state<<",pos="<<pos<<endl;
+            Debug<<"OnDiscard wrong state "<<game->state<<",pos="<<pos<<endl;
             break;
         }
         msg.mutable_bunch()->set_pos(pos);
         
         if(!verifyDiscard(*game,*msg.mutable_bunch())){
-            Logger<<"OnDiscard invalid bunch\n";
+            Debug<<"OnDiscard invalid bunch\n";
             break;
         }
         
@@ -73,26 +73,26 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         auto card=(unit_id_t)msg.bunch().pawns(0);
         //boundary check
         if(!validId(card)){
-            Logger<<"OnDiscard invalid cards "<<card<<endl;
+            Debug<<"OnDiscard invalid cards "<<card<<endl;
             break;
         }
 
         //shut discard after verify
         if(!game->pendingDiscard){
-            Logger<<"OnDiscard not on pending\n";
+            Debug<<"OnDiscard not on pending\n";
             break;
         }else
             player.game->pendingDiscard.reset();
 
         std::string str;
         cards2str(str,msg.bunch().pawns());
-        Logger<<pos<<" OnDiscard "<<str.c_str()<<endl;
+        Debug<<pos<<" OnDiscard "<<str.c_str()<<endl;
         //remove hands
         auto& hands=*player.playData.mutable_hands();
         for(auto j:msg.bunch().pawns()){
             for(auto i=hands.begin();i!=hands.end();++i){
                 if(j==*i){
-                    //Logger<<"OnDiscard pos=%d,erase card %d\n",pos,*i);
+                    //Debug<<"OnDiscard pos=%d,erase card %d\n",pos,*i);
                     hands.erase(i);
                     break;
                 }
@@ -102,7 +102,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //pass discard card
         if(msg.bunch().type()!=pb_enum::BUNCH_A){
             player.unpairedCards.push_back(card);
-            Logger<<pos<<" past discard "<<card<<endl;
+            Debug<<pos<<" past discard "<<card<<endl;
         }
 
         auto bDraw=game->pileMap.find(card)!=game->pileMap.end();
@@ -142,20 +142,20 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     auto pos=player.playData.seat();
     auto spgame=player.game;
     if(!spgame){
-        Logger<<"OnMeld no game\n";
+        Debug<<"OnMeld no game\n";
         return;
     }
     auto& game=*spgame;
     //state
     if(game.state!=Game::State::ST_MELD){
-        Logger<<"OnMeld wrong st="<<game.state<<",pos="<<pos<<endl;
+        Debug<<"OnMeld wrong st="<<game.state<<",pos="<<pos<<endl;
         return;
     }
     
     //pending queue
     auto& pendingMeld=game.pendingMeld;
     if(pendingMeld.empty()){
-        Logger<<"OnMeld with queue empty,pos="<<pos<<endl;
+        Debug<<"OnMeld with queue empty,pos="<<pos<<endl;
         return;
     }
 
@@ -165,20 +165,20 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         if(pos==pendingMeld[i].bunch.pos())
             break;
     if(i>=pendingMeld.size()){
-        Logger<<"OnMeld wrong player pos="<<pos<<endl;
+        Debug<<"OnMeld wrong player pos="<<pos<<endl;
         return;
     }
     
     //arrived and duplicated
     auto& pending=pendingMeld[i];
     if(pending.arrived){
-        Logger<<"OnMeld already arrived, pos="<<pos<<endl;
+        Debug<<"OnMeld already arrived, pos="<<pos<<endl;
         return;
     }
     pending.arrived=true;
 
     if(pending.bunch.pawns_size()<=0){
-        Logger<<"OnMeld empty cards,pos="<<pos<<endl;
+        Debug<<"OnMeld empty cards,pos="<<pos<<endl;
         return;
     }
 
@@ -187,7 +187,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     //force card check
     auto pcard=*pending.bunch.pawns().begin();
     if(pcard!=invalid_card && card!=pcard){
-        Logger<<"OnMeld wrong card="<<card<<",need="<<pcard<<",pos="<<pos<<endl;
+        Debug<<"OnMeld wrong card="<<card<<",need="<<pcard<<",pos="<<pos<<endl;
         return;
     }
     
@@ -198,7 +198,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
 
     //queue in
     std::string str;
-    //Logger<<pos<<" OnMeld queue in(total "<<(int)pendingMeld.size()<<"),"<<bunch2str(str,curr)<<endl;
+    //Debug<<pos<<" OnMeld queue in(total "<<(int)pendingMeld.size()<<"),"<<bunch2str(str,curr)<<endl;
     pending.bunch.CopyFrom(curr);
     
     int ready=0;
@@ -230,14 +230,14 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
             //deal invalid as pass
             if(result==pb_enum::BUNCH_INVALID){
                 std::string str;
-                Logger<<"OnMeld verify failed,bunch="<<bunch2str(str,what)<<", old_ops="<<old_ops<<", pos="<<localPos<<endl;
+                Debug<<"OnMeld verify failed,bunch="<<bunch2str(str,what)<<", old_ops="<<old_ops<<", pos="<<localPos<<endl;
                 //result=pb_enum::BUNCH_INVALID;
                 result=pb_enum::OP_PASS;
                 ret=pb_enum::BUNCH_INVALID;
             }
             
             if(what.type()!=pb_enum::OP_PASS)
-                Logger<<what.pos()<<" OnMeld "<<bunch2str(str,what)<<",token="<<from<<endl;
+                Debug<<what.pos()<<" OnMeld "<<bunch2str(str,what)<<",token="<<from<<endl;
             switch(result){
                 case pb_enum::BUNCH_WIN:{
                     std::vector<bunch_t> output;
@@ -317,7 +317,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         if(tokenPlayer){
             //then draw or discard
             if(!checkDiscard(*tokenPlayer,invalid_card)){
-                //Logger<<"OnMeld pass to draw\n");
+                //Debug<<"OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);
                 draw(game);
             }
@@ -338,7 +338,7 @@ void MeldGame::engage(Game& game,MsgNCEngage&){
 void MeldGame::draw(Game& game){
     if(game.pile.empty()){
         //dismiss
-        Logger<<"dismiss while pile empty, pos="<<game.token<<endl;
+        Debug<<"dismiss while pile empty, pos="<<game.token<<endl;
         changeState(game,Game::State::ST_SETTLE);
         auto tokenPlayer=game.players[game.token];
         std::vector<bunch_t> output;
@@ -349,7 +349,7 @@ void MeldGame::draw(Game& game){
         
         auto card=game.pile.back();
         game.pile.pop_back();
-        Logger<<game.token<<" draw "<<card<<endl;
+        Debug<<game.token<<" draw "<<card<<endl;
         
         //game.pendingMeld.clear();
         game.pendingMeld.push_back(Game::pending_t());
