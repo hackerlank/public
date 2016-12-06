@@ -354,6 +354,7 @@ void GameRule::persistReplay(Game& game){
         sprintf(key,"replay:%d",game.id);
         sprintf(field,"%d",game.round);
         Immortal::sImmortal->spdb->hset(key,field,replaybuf.c_str());
+        Immortal::sImmortal->spdb->expire(key,48*60*60);    //2 days
     }
 }
 
@@ -376,6 +377,7 @@ void GameRule::Release(Game& game){
             if(uid.find("robot")!=std::string::npos)continue;
             sprintf(key,"replay:player:%s",uid.c_str());
             Immortal::sImmortal->spdb->lpush(key,ll);
+            Immortal::sImmortal->spdb->expire(key,31*24*60*60); //1 month
         }
     }
 }

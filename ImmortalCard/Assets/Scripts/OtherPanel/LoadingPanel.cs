@@ -50,17 +50,6 @@ public class LoadingPanel : MonoBehaviour {
 	}
 
 	IEnumerator updateCo(){
-		//restart download manager
-		if(DownloadManager.Instance!=null)
-			DestroyImmediate(DownloadManager.Instance.gameObject);
-		yield return null;
-		
-		if(!string.IsNullOrEmpty(Config.updateUri)){
-			DownloadManager.SetManualUrl(Config.updateUri+"$(Platform)");
-		}
-		
-		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
-
 		//prepare download list via priority
 		var bundleInProgress=new List<string>();
 		var bundleProgress=new List<string>();

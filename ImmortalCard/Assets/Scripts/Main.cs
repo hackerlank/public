@@ -33,10 +33,21 @@ public class Main : MonoBehaviour {
 	}
 
 	IEnumerator Start () {
+		//local->server->(redirection->)bundles
 		//load config
 		TextAsset text = (TextAsset)Resources.Load(Config.file);
 		if(text!=null)
 			Config.Load(text.text);
+
+		//TODO: update uri should come from server
+		//we could not use uri from local or downloading
+		//remove Config.updateUri
+		if(!string.IsNullOrEmpty(Config.updateUri)){
+			if(!Config.updateUri.EndsWith("/"))
+				Config.updateUri+="/";
+			DownloadManager.SetManualUrl(Config.updateUri+"$(Platform)");
+		}
+		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 
 		//update config
 		yield return StartCoroutine(updater.Load<TextAsset>(

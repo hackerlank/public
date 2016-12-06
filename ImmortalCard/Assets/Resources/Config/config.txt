@@ -1,5 +1,6 @@
-uri=ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com:8800
-ws=ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com:8820
+uri=http://ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com:8800
+ws=ws://ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com:8820
+updateUri=http://ec2-52-221-242-102.ap-southeast-1.compute.amazonaws.com
 update=0
 limited=0
 #uri=http://127.0.0.1:8800
