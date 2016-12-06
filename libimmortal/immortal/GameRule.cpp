@@ -372,7 +372,9 @@ void GameRule::Release(Game& game){
         ll.push_back(replaybuf);
         
         for(auto p:game.players){
-            sprintf(key,"replay:player:%s",p->playData.player().uid().c_str());
+            auto& uid=p->playData.player().uid();
+            if(uid.find("robot"!=string::npos)continue;
+            sprintf(key,"replay:player:%s",uid.c_str());
             Immortal::sImmortal->spdb->lpush(key,ll);
         }
     }
