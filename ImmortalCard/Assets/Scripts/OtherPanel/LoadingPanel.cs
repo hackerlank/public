@@ -139,6 +139,7 @@ public class LoadingPanel : MonoBehaviour {
 		}else{
 			//login with cached account OR udid
 			var udid=SystemInfo.deviceUniqueIdentifier;
+			udid=Utils.string2md5(udid);
 			var account=PlayerPrefs.GetString(Cache.PrefsKey_Account,udid);
 
 			MsgCLLogin msg=new MsgCLLogin();

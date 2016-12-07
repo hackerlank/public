@@ -4,7 +4,9 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Security.Cryptography;
 
 public class Utils {
 
@@ -106,5 +108,18 @@ public class Utils {
 		                                                 RegexOptions.ExplicitCapture | RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline)
 		                   select m.Groups[1].Value).ToArray();
 		return values;      
+	}
+
+	public static string byte2string(byte[] bytes){
+		var res = new StringBuilder (bytes.Length*2);
+		foreach (var b in bytes)
+			res.Append (b.ToString ("x2"));
+		return res.ToString ();
+	}
+
+	public static string string2md5(string src){
+		var md5=MD5.Create();
+		var bytes = Encoding.UTF8.GetBytes (src);
+		return Utils.byte2string(md5.ComputeHash(bytes));
 	}
 }

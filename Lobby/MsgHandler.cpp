@@ -55,23 +55,25 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 
                 //account
                 auto& account=imsg.user().account();
+                auto md5a=MD5::HashAnsiString(account.c_str());
                 auto player=omsg.mutable_player();
                 std::string uid;
                 char key[128];
                 
                 //search db by account
-                sprintf(key,"user:%s",account.c_str());
+                sprintf(key,"user:%s",md5a.c_str());
                 spdb->hget(key,"uid",uid);
                 
                 if(uid.empty()){
                     //test udid if not found
                     if(imsg.user().udid()!=account){
-                        sprintf(key,"user:%s",imsg.user().udid().c_str());
+                        auto md5udid=MD5::HashAnsiString(imsg.user().udid().c_str());
+                        sprintf(key,"user:%s",md5udid.c_str());
                         spdb->hget(key,"uid",uid);
                         
                         //bind account if udid exists
                         if(!uid.empty()){
-                            spdb->hset(key,"account",account.c_str());
+                            spdb->hset(key,"account",md5a.c_str());
                         }
                     }
                 }
@@ -94,7 +96,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     hmap["uid"]=uid;
                     hmap["regtime"]=timestamp;
                     hmap["lastlogin"]=timestamp;
-                    hmap["account"]=account;
+                    hmap["account"]=md5a;
                     hmap["udid"]=imsg.user().udid();
                     hmap["dev_type"]=imsg.user().dev_type();
                     spdb->hmset(key,hmap);

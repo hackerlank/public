@@ -13,6 +13,7 @@ public class SignInGame : MonoBehaviour {
 			//always sign in to find the new user
 			yield return StartCoroutine(Main.Instance.share.SignIn(delegate(string account) {
 				//cache account for next time login
+				account=Utils.string2md5(account);
 				PlayerPrefs.SetString(Cache.PrefsKey_Account,account);
 			}));
 		}
