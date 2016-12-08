@@ -10,15 +10,18 @@
 #include "Fwd.h"
 using namespace proto3;
 
+MsgHandler::MsgHandler(){
+    paySvc.push_back(std::make_shared<AliPaySvc>());
+}
+
 void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     auto msgid=req.header("msgid");
     auto mid=(pb_msg)atoi(msgid);
-    if(mid<pb_msg::MSG_CH_BEGIN||mid>pb_msg::MSG_CH_END){
-        Debug<<"invalid msg id "<<(int)mid<<endl;
-        return;
-    }
-    
     if(mid<=pb_msg::MSG_CH_BEGIN || mid>=pb_msg::MSG_CH_END){
+        for(auto pay:paySvc){
+            if(pay->on_http(req,resp))
+                return;
+        }
         Debug<<"invalid message id "<<(int)mid<<endl;
         return;
     }

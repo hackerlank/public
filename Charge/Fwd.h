@@ -24,6 +24,7 @@ extern std::shared_ptr<keye::logger> sDebug;
 
 #include "PBHelper.h"
 #include "MsgHandler.h"
-#include "Server.h"
+#include "Charge.h"
+#include "PaySvc.h"
 
 #endif /* login_fwd_h */
