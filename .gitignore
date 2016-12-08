@@ -46,3 +46,7 @@ ImmortalCard/ImmortalCard.sln
 ImmortalCard.userprefs
 ImmortalCard/Assembly-UnityScript.unityproj
 ImmortalCard/Assembly-UnityScript-vs.unityproj
+ImmortalPay/ImmortalPay.userprefs
+ImmortalPay/ImmortalPay.sln
+ImmortalPay/ImmortalPay-csharp.sln
+ImmortalPay/Assembly-CSharp.csproj
