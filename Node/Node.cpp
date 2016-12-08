@@ -14,6 +14,9 @@ using namespace keye;
 using namespace proto3;
 using namespace std;
 
+std::shared_ptr<keye::logger> sLogger;
+std::shared_ptr<keye::logger> sDebug;
+
 enum TIMER:size_t{
     TIMER_SEC=100,
     TIMER_MIN,

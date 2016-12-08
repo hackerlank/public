@@ -20,9 +20,6 @@ enum TIMER:size_t{
     TIMER_DAY,
 };
 
-std::shared_ptr<keye::logger> sLogger;
-std::shared_ptr<keye::logger> sDebug;
-
 Immortal* Immortal::sImmortal=nullptr;
 
 Immortal::Immortal(size_t ios, size_t works, size_t rb_size)

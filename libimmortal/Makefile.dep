@@ -1,12 +1,13 @@
 NAME= immortal
 DEPENDENCIES=../sdks
+PLATFORM=ubuntu16
 BUILDMODE=dynamic
 CCDEBUG+= -g
 CCOPT+= -O0
 #CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -DBOOST_ALL_NO_LIB
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
 CFLAGS+=  -I./ -I../libkeye/ -I../libvic/ -I../protocol/ -I$(DEPENDENCIES)/include
-LDFLAGS+= -L$(DEPENDENCIES)/libs/ubuntu16 -L../protocol/ -Wl,-rpath-link=$(DEPENDENCIES)/libs/ubuntu16 -Wl,--no-as-needed
+LDFLAGS+= -L$(DEPENDENCIES)/libs/$(PLATFORM) -L../protocol/ -Wl,-rpath-link=$(DEPENDENCIES)/libs/$(PLATFORM) -Wl,--no-as-needed
 LIBS+=  -lkeye -lvic -lprotocol -lprotobuf-lite -lmysqlclient -lhiredis -lstdc++ -lm -lboost_system -lboost_date_time
 SRCS= $(wildcard immortal/*.cpp)
 INCS= $(wildcard immortal/*.h)
