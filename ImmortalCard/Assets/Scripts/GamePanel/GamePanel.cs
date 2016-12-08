@@ -137,18 +137,20 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 				foreach(Transform ch in DiscardAreas[pos].transform)Destroy(ch.gameObject);
 
 				//remove cards of other player
-				var meldHands=HandAreas[pos].GetComponentsInChildren<Card>();
-				var rm=Mathf.Min(meldHands.Length,cards.Length);
-				for(int i=0;i<rm;++i){
-					var hand=meldHands[i];
-					Destroy(hand.gameObject);
+				if(pos<HandAreas.Length){
+					var meldHands=HandAreas[pos].GetComponentsInChildren<Card>();
+					var rm=Mathf.Min(meldHands.Length,cards.Length);
+					for(int i=0;i<rm;++i){
+						var hand=meldHands[i];
+						Destroy(hand.gameObject);
+					}
 				}
 
 				//show new discards
+				var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
 				for(int i=0;i<cards.Length;++i){
 					var id=cards[i];
 					var fin=false;
-					var from=(pos<nHandCards.Length&&nHandCards[pos]!=null?nHandCards[pos].transform.parent:HandAreas[pos]);
 					Card.Create(Rule.CardPrefab,id,from,delegate(Card card) {
 						card.DiscardTo(DiscardAreas[pos],Rule.DiscardScalar);
 						card.state=Card.State.ST_DISCARD;

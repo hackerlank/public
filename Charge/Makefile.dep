@@ -1,5 +1,5 @@
 $(PLATFORM)NAME= Charge
-PLATFORM=ubuntu16
+PLATFORM=centos6
 DEPENDENCIES=../sdks
 CCDEBUG+= -g
 CCOPT+= -O0

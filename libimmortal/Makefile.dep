@@ -1,6 +1,6 @@
 NAME= immortal
 DEPENDENCIES=../sdks
-PLATFORM=ubuntu16
+PLATFORM=centos6
 BUILDMODE=dynamic
 CCDEBUG+= -g
 CCOPT+= -O0
