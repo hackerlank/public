@@ -115,19 +115,20 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 }else{
                     spdb->hset(key,"lastlogin",timestamp);
                     
+                    sprintf(key,"player:%s",uid.c_str());
                     std::map<std::string,std::string> hmap;
                     std::vector<std::string> fields;
                     fields.push_back("level");
                     fields.push_back("gold");
                     fields.push_back("silver");
-                    if(spdb->hmget(key,fields,hmap)==0){
+                    if(spdb->hmget(key,fields,hmap)!=-1){
                         player->set_level(atoi(hmap["level"].c_str()));
                         player->set_gold(atoi(hmap["gold"].c_str()));
                         player->set_silver(atoi(hmap["silver"].c_str()));
                     }
                 }
 
-                Debug<<"client login succeeded\n";
+                Debug<<"client login succeeded"<<uid.c_str()<<"\n";
                 player->set_uid(uid);
                 omsg.set_version(imsg.version()+1);
                 omsg.set_node("127.0.0.1");

@@ -298,7 +298,7 @@ void redis_proxy::hmset(const char* key,const std::map<std::string,std::string>&
 }	//set multiple values
 
 int redis_proxy::hmget(const char* key,const std::vector<std::string>& fields,std::map<std::string,std::string>& map){
-	DO_RET_ARG1(hmget,false,fields,&map)
+	DO_RET_ARG1(hmget,-1,fields,&map)
 }
 
 int64_t redis_proxy::hincrby(const char* key,const char* field,int64_t value){

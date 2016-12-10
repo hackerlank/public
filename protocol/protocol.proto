@@ -361,9 +361,14 @@ MSG_LC_EXIT             =4050;
 
 MSG_CL_END              =4999;
 //Client --  Charge
-MSG_CH_BEGIN            =5000;
-MSG_CH_LOGIN            =5001;
-MSG_HC_LOGIN            =5002;
+MSG_CP_BEGIN            =5000;
+MSG_CP_LOGIN            =5001;
+MSG_PC_LOGIN            =5002;
+MSG_CP_ORDER            =5021;
+MSG_PC_ORDER            =5022;
+MSG_CP_VERIFY           =5023;
+MSG_PC_VERIFY           =5024;
+//deprecated
 MSG_CH_REGISTER         =5003;
 MSG_HC_REGISTER         =5004;
 MSG_CH_CHARGE           =5005;
@@ -375,7 +380,7 @@ MSG_HC_FORGET           =5010;
 MSG_CH_RESET_PSWD       =5011;
 MSG_HC_RESET_PSWD       =5012;
 
-MSG_CH_END              =5999;
+MSG_CP_END              =5999;
 //Client --  Node
 MSG_CN_BEGIN            =6000;
 MSG_CN_CONNECT          =6001;
@@ -480,23 +485,58 @@ replay data             =2;
 pb_enum result			=3;
 };
 // ----------------------------------------------------------------
-// Charge
-message MsgCHLogin{
+// Payment
+message MsgCPLogin{
+
+pb_msg mid				=1;
+uint32 version          =2;
+user_t user             =3;
+};
+
+message MsgPCLogin{
 
 pb_msg mid				=1;
 uint32 version			=2;
-string phone            =3; //phone as id
-string pswd				=4;
+uint64 session          =3;
+player_t player         =4;
+pb_enum result			=5;
 };
 
-message MsgHCLogin{
+message MsgCPOrder{
 
 pb_msg mid				=1;
-int32 amount            =2;
-uint64 session          =3;
+uint64 session          =2;
+uint32 amount           =3;
+string uid              =4;
+};
+
+message MsgPCOrder{
+
+pb_msg mid				=1;
+string appScheme        =2;
+string orderString      =3;
 pb_enum result			=4;
 };
 
+message MsgCPVerify{
+
+pb_msg mid				=1;
+uint64 session          =2;
+string app_id           =3;
+string seller_id        =4;
+string out_trade_no     =5;
+string total_amount     =6;
+string uid              =7;
+};
+
+message MsgPCVerify{
+
+pb_msg mid				=1;
+player_t player         =2;
+pb_enum result			=3;
+};
+
+//deprecated below
 message MsgCHRegister{
 
 pb_msg mid				=1;
