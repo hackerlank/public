@@ -16,7 +16,7 @@ bool AliPaySvc::on_http(const http_parser& req,http_parser& resp){
 
 /** ++++++++++++++++++++++++++++++++++++++++++++++++ **/
 /** 此处替换为开发者在支付宝开放平台申请的应用ID **/
-string appId = "2016000066668888";
+string appId = "2016121004101224";
 
 /** 此处替换为开发者使用openssl生成的rsa私钥 **/
 string pKey = "-----BEGIN RSA PRIVATE KEY-----\n"
