@@ -32,7 +32,7 @@ namespace cn.sharesdk.unity3d
 
 		void Awake()
 		{				
-			print("ShareSDK Awake");
+			//print("ShareSDK Awake");
 			Type type = devInfo.GetType();
 			Hashtable platformConfigs = new Hashtable();
 			FieldInfo[] devInfoFields = type.GetFields();
@@ -61,6 +61,8 @@ namespace cn.sharesdk.unity3d
 			shareSDKUtils = new iOSImpl(gameObject);
 			#endif
 			shareSDKUtils.InitSDK(appKey);
+			if(Application.platform != RuntimePlatform.IPhonePlayer&&Application.platform != RuntimePlatform.Android)return;
+			
 			shareSDKUtils.SetPlatformConfig(platformConfigs);
 		}
 		

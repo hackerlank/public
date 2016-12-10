@@ -8,6 +8,7 @@ namespace cn.sharesdk.unity3d
 	public class DevInfoSet
 
 	{
+		/*
 		public SinaWeiboDevInfo sinaweibo;
 		public TencentWeiboDevInfo tencentweibo;
 		public Facebook facebook;
@@ -33,10 +34,12 @@ namespace cn.sharesdk.unity3d
 		public Mingdao mingdao;
 		public KakaoTalk kakaoTalk;
 		public KakaoStory kakaoStory;
+		*/
 		public QQ qq;
-		public QZone qzone;
+		//public QZone qzone;
 		public WeChat wechat;
 		public WeChatMoments wechatMoments; 
+		/*
 		public WeChatFavorites wechatFavorites;
 		public Yixin yixin;
 		public YixinMoments yixinMoments;
@@ -55,7 +58,7 @@ namespace cn.sharesdk.unity3d
 		public EvernoteInternational evernoteInternational;		//iOS配置印象笔记国内版在Evernote中配置;国际版在EvernoteInternational中配置												 
 		//安卓配置印象笔记国内与国际版直接在Evernote中配置														
 		#endif
-
+		*/
 	}
 
 	public class DevInfo 
