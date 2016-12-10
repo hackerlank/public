@@ -5,18 +5,17 @@ using Proto3;
 
 public class PlayerIcon : MonoBehaviour {
 	public Image	Icon;
-	public Image	Win;
 	public Text		Name;
 	public Text		Id;
-	public Text		Score;
-	public Text		Total;
+	public Text		Level;
+	public Text		Amount;
 
 	public play_t Value{
 		set{
-			Name.text="Player "+value.Seat;
-			Score.text=value.Score.ToString();
-			Total.text=value.Total.ToString();
-			Win.gameObject.SetActive(value.Win>0);
+			Name.text=value.Player.Pid.ToString();
+			Id.text=value.Player.Uid.ToString();
+			Level.text=value.Player.Level.ToString();
+			Amount.text=value.Player.Gold.ToString();
 		}
 	}
 	

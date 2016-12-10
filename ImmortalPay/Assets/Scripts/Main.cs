@@ -15,7 +15,6 @@ public class Main : MonoBehaviour {
 	}
 
 	IEnumerator Start () {
-		//local->server->(redirection->)bundles
 		//load config
 		TextAsset text = (TextAsset)Resources.Load(Config.file);
 		if(text!=null)
@@ -55,6 +54,7 @@ public class Main : MonoBehaviour {
 				PlayerPrefs.SetString(Cache.PrefsKey_Account,acc);
 			}));
 		}
+		spinner.gameObject.SetActive(false);
 		yield break;
 	}
 

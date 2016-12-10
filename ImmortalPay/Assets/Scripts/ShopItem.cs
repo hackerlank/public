@@ -38,8 +38,8 @@ public class ShopItem : MonoBehaviour {
 			}
 		}
 	}
+*/
 	public void OnClick(){
 		if(ShopPopup.Instance!=null)ShopPopup.Instance.OnBuy(this);
 	}
-*/
 }

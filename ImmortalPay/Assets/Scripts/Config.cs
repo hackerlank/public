@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Reflection;
 
 public class Config{
-	public static string file="Config/config";
+	public static string file="config";
 
 	public static string version="1.0.0";
 	public static string build	="100";
 
-	public static string uri="http://127.0.0.1:8800";
-	public static string ws="ws://127.0.0.1:8820";
-	public static string updateUri="";	//bundles update uri
-	public static string update="0";	//force update
+	public static string uri="http://127.0.0.1:8880";
 	public static string limited="0";	//feature limited: wechat,payment etc.
 
 	//ShareSDK app id
