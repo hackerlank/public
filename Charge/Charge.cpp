@@ -10,6 +10,8 @@
 #include <unistd.h>
 #endif
 
+#include "openapi/openapi_client.h"
+
 using namespace keye;
 
 #ifdef WRITE_FREQ
@@ -29,6 +31,28 @@ Server::Server(size_t ios, size_t works, size_t rb_size)
 }
 
 void Server::run(const char* cfg){
+    std::string wholeContent="{\"a\":\"123\"}";
+    
+    std::string privateKey="-----BEGIN RSA PRIVATE KEY-----\n"
+    "MIICXAIBAAKBgQDKYal6fb2j5LAIVYiXhl7yKiwBuqhGRwW752rXgCLLf/+R4FMN\n"
+    "dqle/Ac8JOSdmFE5Ej5DMyQ4tvb7O5LN1rav4Fdo58J8gTpiQU2E4Ryp8o6I75x6\n"
+    "vvnfdb25Mu1z6zS9NccLVSmUWcH/y3XLcLm46mRIRUtuCWtpQbLAc28SBQIDAQAB\n"
+    "AoGBAJpSel+TPmaZXbodLvkMV54llkUDRonAYpj0UD5f0SiIRCPCgNJFZ8WsPQAZ\n"
+    "ydJ6cYUpahzoBHjS2+abeMhJMCfzfysENg8GQjzH+v8OBsdYn0KvKPgaoS7EZEhI\n"
+    "m1muYcwf/geLczWzyoCNiuaC8/1FJWHxbLDydWIengkvLZYJAkEA/rIbFVPzNgW5\n"
+    "ved+f6xjoPWCR4GZAffosTpv4ObWTH/Umv+tWq7pyusa6zocJzPHNgcY1kSYx+d3\n"
+    "kc6N+pEGjwJBAMtq+YbQ1Xn1evDhmUh7V8UEvRpx09EktXyQlNWMB2TifMtKJA3U\n"
+    "Jz0MyF+IvVL048E9MZygGeoKAvCxOkh5iCsCQCBNhpHV6+rWHxCu46RdwOURPkzD\n"
+    "axyMzL5tovLrVBKvw89Ezj/KH2zVFLzwydFPB90aWVQTryzrdobPo8I70pECQCBu\n"
+    "qOQezbqJMhXP0lGlIMRP0hqyRVRWJv16S9CUZ+Vk2wLKil8OEUeBjzz0H0Nnuhxo\n"
+    "Nk3DlP4kpH1dtG4zuksCQCL0brfBxsbiNqPBS97TOAgjc1CbXQ0Z9U0q07p8CxvK\n"
+    "ASTUjcO3F3J7qTlz4d9gEnaJnRmQ47EUHquC2ALLH1c=\n"
+    "-----END RSA PRIVATE KEY-----";
+
+    std::string pub="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKYal6fb2j5LAIVYiXhl7yKiwBuqhGRwW752rXgCLLf/+R4FMNdqle/Ac8JOSdmFE5Ej5DMyQ4tvb7O5LN1rav4Fdo58J8gTpiQU2E4Ryp8o6I75x6vvnfdb25Mu1z6zS9NccLVSmUWcH/y3XLcLm46mRIRUtuCWtpQbLAc28SBQIDAQAB";
+    
+    std::string sign = OpenapiClient::rsaSign(wholeContent, privateKey);
+
     keye::ini_cfg_file  config;
     if(cfg && config.load(cfg)){
         auto port=(short)(int)config.value("port");
