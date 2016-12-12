@@ -1,0 +1,20 @@
+{
+    "group":       "AlipaySDK",
+    "libs":        [],
+    "frameworks":  ["CoreText.framework",
+                    "CoreTelephony.framework",
+                    ],
+    "zips":         ["AlipaySDK.zip"],                
+    "headerpaths": [],
+    "librarypaths": [],
+    "files":       ["AlipaySDK/AlipaySDK.framework",
+		     "AlipaySDK/MOBFoundation.framework"],
+    "folders":     [],
+    "buildSettings": { 
+        "OTHER_LDFLAGS" : ["-ObjC",
+                           "-lsqlite3.0",
+                           "-lz",
+                           "licucore"]
+    },
+    "excludes":    ["^.*.meta$", "^.*.mdown^", "^.*.pdf$"]
+}
