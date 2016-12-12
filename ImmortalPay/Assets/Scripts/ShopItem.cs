@@ -40,6 +40,7 @@ public class ShopItem : MonoBehaviour {
 	}
 */
 	public void OnClick(){
-		if(ShopPopup.Instance!=null)ShopPopup.Instance.OnBuy(this);
+		if(ShopPopup.Instance!=null)
+			ShopPopup.Instance.StartCoroutine(ShopPopup.Instance.OnBuy(this));
 	}
 }

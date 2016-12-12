@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using com.alipaysdk;
 using Proto3;
 
 public class Main : MonoBehaviour {
@@ -8,6 +9,7 @@ public class Main : MonoBehaviour {
 	public static Main		Instance=null;
 
 	public ShareAPI			share;
+	public AlipaySDK		alipay;
 	public Animator			spinner;
 
 	void Awake(){
@@ -25,6 +27,7 @@ public class Main : MonoBehaviour {
 
 		Application.runInBackground = true;
 		share=new ShareAPI();
+		alipay=gameObject.AddComponent<AlipaySDK>();
 
 		//login with cached account OR udid
 		var udid=SystemInfo.deviceUniqueIdentifier;

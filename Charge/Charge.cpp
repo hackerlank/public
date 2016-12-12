@@ -24,15 +24,34 @@ std::shared_ptr<keye::logger> sDebug;
 
 Server* Server::sServer=nullptr;
 
+string buildContent(const StringMap &contentPairs);
+
 Server::Server(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size) {
     sServer=this;
     setup_log("charge");
 }
 
-void Server::run(const char* cfg){
-    std::string wholeContent="{\"a\":\"123\"}";
-    
+int Server::quantity(float money){
+    auto p=money/2.5f;
+    int q=0;
+    switch ((int)money) {
+        case 50:
+            q=2;    break;
+        case 100:
+            q=5;    break;
+        case 500:
+            q=50;   break;
+        case 1000:
+            q=200;   break;
+        default:
+            break;
+    }
+    return q+(int)p;
+}
+
+void Server::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
+    string appId = "2016121004101224";
     std::string privateKey="-----BEGIN RSA PRIVATE KEY-----\n"
     "MIICXAIBAAKBgQDKYal6fb2j5LAIVYiXhl7yKiwBuqhGRwW752rXgCLLf/+R4FMN\n"
     "dqle/Ac8JOSdmFE5Ej5DMyQ4tvb7O5LN1rav4Fdo58J8gTpiQU2E4Ryp8o6I75x6\n"
@@ -49,10 +68,110 @@ void Server::run(const char* cfg){
     "ASTUjcO3F3J7qTlz4d9gEnaJnRmQ47EUHquC2ALLH1c=\n"
     "-----END RSA PRIVATE KEY-----";
 
-    std::string pub="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKYal6fb2j5LAIVYiXhl7yKiwBuqhGRwW752rXgCLLf/+R4FMNdqle/Ac8JOSdmFE5Ej5DMyQ4tvb7O5LN1rav4Fdo58J8gTpiQU2E4Ryp8o6I75x6vvnfdb25Mu1z6zS9NccLVSmUWcH/y3XLcLm46mRIRUtuCWtpQbLAc28SBQIDAQAB";
-    
-    std::string sign = OpenapiClient::rsaSign(wholeContent, privateKey);
+    string aliPubKey = "-----BEGIN PUBLIC KEY-----\n"
+    "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKYal6fb2j5LAIVYiXhl7yKiwB\n"
+    "uqhGRwW752rXgCLLf/+R4FMNdqle/Ac8JOSdmFE5Ej5DMyQ4tvb7O5LN1rav4Fdo\n"
+    "58J8gTpiQU2E4Ryp8o6I75x6vvnfdb25Mu1z6zS9NccLVSmUWcH/y3XLcLm46mRI\n"
+    "RUtuCWtpQbLAc28SBQIDAQAB\n"
+    "-----END PUBLIC KEY-----";
 
+    /** 实例化OpenapiClient工具类 **/
+    OpenapiClient openapiClient(appId,
+                                privateKey,
+                                OpenapiClient::default_url,
+                                OpenapiClient::default_charset,
+                                aliPubKey);
+    
+    /** ++++++++++++++++++++++++++++++++++++++++++++++++ **/
+    /** 各个具体业务接口参数组装模式具体参看Openapi官方文档 **/
+    /** https://doc.open.alipay.com/ **/
+    // demo1:当面付预下单示例
+    string method = "alipay.trade.app.pay";
+    JsonMap contentMap;
+    contentMap.insert(JsonMap::value_type(JsonType("out_trade_no"), JsonType(imsg.uid())));
+    contentMap.insert(JsonMap::value_type(JsonType("total_amount"), JsonType(0.01)));
+    contentMap.insert(JsonMap::value_type(JsonType("subject"), JsonType("ImmorCard")));
+    contentMap.insert(JsonMap::value_type(JsonType("product_code"), JsonType("QUICK_MSECURITY_PAY")));
+
+
+    /** ++++++++++++++++++++++++++++++++++++++++++++++++ **/
+    
+    /** ++++++++++++++++++++++++++++++++++++++++++++++++ **/
+    /** 网关扩展参数，例如商户需要回传notify_url等，可以在extendParamMap中传入 **/
+    /** 这是一个可选项，如不需要，可不传 **/
+    StringMap extendParamMap;
+    extendParamMap.insert(StringMap::value_type("notify_url", "http://120.77.146.47:8880"));
+    
+    /** ++++++++++++++++++++++++++++++++++++++++++++++++ **/
+
+    string content = JsonUtil::objectToString(JsonType(contentMap));
+    
+    time_t t = time(0);
+    char tmp[64];
+    strftime(tmp, sizeof(tmp), "%Y-%m-%d %X", localtime(&t));
+
+    StringMap requestPairs;
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_APP_ID, appId));
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_BIZ_CONTENT, content));
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_CHARSET, OpenapiClient::default_charset));
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_METHOD, method));
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_SIGN_TYPE, OpenapiClient::default_sign_type));
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_TIMESTAMP, tmp));
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_VERSION, OpenapiClient::default_version));
+    
+    // 追加外部传入的网关的补充参数，如notify_url等
+    for (StringMap::const_iterator iter = extendParamMap.begin(); iter != extendParamMap.end(); ++iter) {
+        requestPairs.insert(StringMap::value_type(iter->first, iter->second));
+    }
+    
+    //sign
+    string wholeContent=buildContent(requestPairs);
+    string sign = OpenapiClient::rsaSign(wholeContent, privateKey);
+    requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_SIGN, sign));
+
+    //encoding
+    string requestEntity;
+    CURL *curl;
+    curl_global_init(CURL_GLOBAL_ALL);
+    curl = curl_easy_init();
+    
+    if(curl){
+        string item;
+        for (ParamsMap::const_iterator iter = requestPairs.begin(); iter != requestPairs.end(); ++iter) {
+            const char *key = iter->first.c_str();
+            char *encodedKey = curl_easy_escape(curl, key, (int)strlen(key));
+            if (encodedKey) {
+                item = encodedKey;
+            }
+            item += "=";
+            const char *value = iter->second.c_str();
+            char *encodedValue = curl_easy_escape(curl, value, (int)strlen(value));
+            if (encodedValue) {
+                item += encodedValue;
+            }
+            if (!requestEntity.empty()) {
+                requestEntity.push_back('&');
+            }
+            requestEntity.append(item);
+            item.clear();
+            if (encodedKey) {
+                curl_free(encodedKey);
+            }
+            if (encodedValue) {
+                curl_free(encodedValue);
+            }
+        }
+    }
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+    
+    //response order string
+    std::string appScheme("immorpayScheme");
+    omsg.set_appscheme(appScheme);
+    omsg.set_orderstring(requestEntity);
+}
+
+void Server::run(const char* cfg){
     keye::ini_cfg_file  config;
     if(cfg && config.load(cfg)){
         auto port=(short)(int)config.value("port");
@@ -88,6 +207,29 @@ void Server::setup_log(const char* file){
     sprintf(logfile,"%sD-%02d-%02d-%02d.log",file,aTm->tm_year%100,aTm->tm_mon+1,aTm->tm_mday);
     sDebug=std::make_shared<logger>(logfile);
 #endif
+}
+
+/**
+ *
+ * STL map default sort order by key
+ *
+ * STL map 默认按照key升序排列
+ * 这里要注意如果使用的map必须按key升序排列
+ *
+ */
+string buildContent(const StringMap &contentPairs) {
+    
+    string content;
+    for (StringMap::const_iterator iter = contentPairs.begin();
+         iter != contentPairs.end(); ++iter) {
+        if (!content.empty()) {
+            content.push_back('&');
+        }
+        content.append(iter->first);
+        content.push_back('=');
+        content.append(iter->second);
+    }
+    return content;
 }
 
 int main(int argc, char* argv[]) {

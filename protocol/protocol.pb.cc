@@ -13141,7 +13141,7 @@ void MsgCPVerify::SharedCtor() {
   app_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   seller_id_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   out_trade_no_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  total_amount_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  total_amount_ = 0u;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
 
@@ -13154,7 +13154,6 @@ void MsgCPVerify::SharedDtor() {
   app_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   seller_id_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   out_trade_no_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  total_amount_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   uid_.DestroyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   if (this != &default_instance()) {
@@ -13190,13 +13189,32 @@ MsgCPVerify* MsgCPVerify::New(::google::protobuf::Arena* arena) const {
 
 void MsgCPVerify::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCPVerify)
-  mid_ = 0;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgCPVerify, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgCPVerify*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, total_amount_);
   session_ = GOOGLE_ULONGLONG(0);
   app_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   seller_id_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   out_trade_no_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-  total_amount_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool MsgCPVerify::MergePartialFromCodedStream(
@@ -13286,20 +13304,18 @@ bool MsgCPVerify::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(50)) goto parse_total_amount;
+        if (input->ExpectTag(48)) goto parse_total_amount;
         break;
       }
 
-      // optional string total_amount = 6;
+      // optional uint32 total_amount = 6;
       case 6: {
-        if (tag == 50) {
+        if (tag == 48) {
          parse_total_amount:
-          DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-                input, this->mutable_total_amount()));
-          DO_(::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-            this->total_amount().data(), this->total_amount().length(),
-            ::google::protobuf::internal::WireFormatLite::PARSE,
-            "proto3.MsgCPVerify.total_amount"));
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &total_amount_)));
+
         } else {
           goto handle_unusual;
         }
@@ -13389,14 +13405,9 @@ void MsgCPVerify::SerializeWithCachedSizes(
       5, this->out_trade_no(), output);
   }
 
-  // optional string total_amount = 6;
-  if (this->total_amount().size() > 0) {
-    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-      this->total_amount().data(), this->total_amount().length(),
-      ::google::protobuf::internal::WireFormatLite::SERIALIZE,
-      "proto3.MsgCPVerify.total_amount");
-    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
-      6, this->total_amount(), output);
+  // optional uint32 total_amount = 6;
+  if (this->total_amount() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->total_amount(), output);
   }
 
   // optional string uid = 7;
@@ -13450,10 +13461,10 @@ int MsgCPVerify::ByteSize() const {
         this->out_trade_no());
   }
 
-  // optional string total_amount = 6;
-  if (this->total_amount().size() > 0) {
+  // optional uint32 total_amount = 6;
+  if (this->total_amount() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::StringSize(
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->total_amount());
   }
 
@@ -13498,9 +13509,8 @@ void MsgCPVerify::MergeFrom(const MsgCPVerify& from) {
 
     out_trade_no_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.out_trade_no_);
   }
-  if (from.total_amount().size() > 0) {
-
-    total_amount_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.total_amount_);
+  if (from.total_amount() != 0) {
+    set_total_amount(from.total_amount());
   }
   if (from.uid().size() > 0) {
 
@@ -13530,7 +13540,7 @@ void MsgCPVerify::InternalSwap(MsgCPVerify* other) {
   app_id_.Swap(&other->app_id_);
   seller_id_.Swap(&other->seller_id_);
   out_trade_no_.Swap(&other->out_trade_no_);
-  total_amount_.Swap(&other->total_amount_);
+  std::swap(total_amount_, other->total_amount_);
   uid_.Swap(&other->uid_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
@@ -13703,48 +13713,18 @@ void MsgCPVerify::clear_out_trade_no() {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgCPVerify.out_trade_no)
 }
 
-// optional string total_amount = 6;
+// optional uint32 total_amount = 6;
 void MsgCPVerify::clear_total_amount() {
-  total_amount_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  total_amount_ = 0u;
 }
- const ::std::string& MsgCPVerify::total_amount() const {
+ ::google::protobuf::uint32 MsgCPVerify::total_amount() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCPVerify.total_amount)
-  return total_amount_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return total_amount_;
 }
- void MsgCPVerify::set_total_amount(const ::std::string& value) {
+ void MsgCPVerify::set_total_amount(::google::protobuf::uint32 value) {
   
-  total_amount_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  total_amount_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCPVerify.total_amount)
-}
- void MsgCPVerify::set_total_amount(const char* value) {
-  
-  total_amount_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgCPVerify.total_amount)
-}
- void MsgCPVerify::set_total_amount(const char* value, size_t size) {
-  
-  total_amount_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCPVerify.total_amount)
-}
- ::std::string* MsgCPVerify::mutable_total_amount() {
-  
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCPVerify.total_amount)
-  return total_amount_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- ::std::string* MsgCPVerify::release_total_amount() {
-  // @@protoc_insertion_point(field_release:proto3.MsgCPVerify.total_amount)
-  
-  return total_amount_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
- void MsgCPVerify::set_allocated_total_amount(::std::string* total_amount) {
-  if (total_amount != NULL) {
-    
-  } else {
-    
-  }
-  total_amount_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), total_amount);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCPVerify.total_amount)
 }
 
 // optional string uid = 7;

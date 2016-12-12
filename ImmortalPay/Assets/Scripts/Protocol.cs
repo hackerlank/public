@@ -96,7 +96,7 @@ namespace Proto3 {
             "GAMgASgJEh8KBnJlc3VsdBgEIAEoDjIPLnByb3RvMy5wYl9lbnVtIpcBCgtN",
             "c2dDUFZlcmlmeRIbCgNtaWQYASABKA4yDi5wcm90bzMucGJfbXNnEg8KB3Nl",
             "c3Npb24YAiABKAQSDgoGYXBwX2lkGAMgASgJEhEKCXNlbGxlcl9pZBgEIAEo",
-            "CRIUCgxvdXRfdHJhZGVfbm8YBSABKAkSFAoMdG90YWxfYW1vdW50GAYgASgJ",
+            "CRIUCgxvdXRfdHJhZGVfbm8YBSABKAkSFAoMdG90YWxfYW1vdW50GAYgASgN",
             "EgsKA3VpZBgHIAEoCSJtCgtNc2dQQ1ZlcmlmeRIbCgNtaWQYASABKA4yDi5w",
             "cm90bzMucGJfbXNnEiAKBnBsYXllchgCIAEoCzIQLnByb3RvMy5wbGF5ZXJf",
             "dBIfCgZyZXN1bHQYAyABKA4yDy5wcm90bzMucGJfZW51bSK5AQoNTXNnQ0hS",
@@ -6999,12 +6999,12 @@ namespace Proto3 {
 
     /// <summary>Field number for the "total_amount" field.</summary>
     public const int TotalAmountFieldNumber = 6;
-    private string totalAmount_ = "";
+    private uint totalAmount_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public string TotalAmount {
+    public uint TotalAmount {
       get { return totalAmount_; }
       set {
-        totalAmount_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        totalAmount_ = value;
       }
     }
 
@@ -7050,7 +7050,7 @@ namespace Proto3 {
       if (AppId.Length != 0) hash ^= AppId.GetHashCode();
       if (SellerId.Length != 0) hash ^= SellerId.GetHashCode();
       if (OutTradeNo.Length != 0) hash ^= OutTradeNo.GetHashCode();
-      if (TotalAmount.Length != 0) hash ^= TotalAmount.GetHashCode();
+      if (TotalAmount != 0) hash ^= TotalAmount.GetHashCode();
       if (Uid.Length != 0) hash ^= Uid.GetHashCode();
       return hash;
     }
@@ -7082,9 +7082,9 @@ namespace Proto3 {
         output.WriteRawTag(42);
         output.WriteString(OutTradeNo);
       }
-      if (TotalAmount.Length != 0) {
-        output.WriteRawTag(50);
-        output.WriteString(TotalAmount);
+      if (TotalAmount != 0) {
+        output.WriteRawTag(48);
+        output.WriteUInt32(TotalAmount);
       }
       if (Uid.Length != 0) {
         output.WriteRawTag(58);
@@ -7110,8 +7110,8 @@ namespace Proto3 {
       if (OutTradeNo.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(OutTradeNo);
       }
-      if (TotalAmount.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(TotalAmount);
+      if (TotalAmount != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TotalAmount);
       }
       if (Uid.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Uid);
@@ -7139,7 +7139,7 @@ namespace Proto3 {
       if (other.OutTradeNo.Length != 0) {
         OutTradeNo = other.OutTradeNo;
       }
-      if (other.TotalAmount.Length != 0) {
+      if (other.TotalAmount != 0) {
         TotalAmount = other.TotalAmount;
       }
       if (other.Uid.Length != 0) {
@@ -7175,8 +7175,8 @@ namespace Proto3 {
             OutTradeNo = input.ReadString();
             break;
           }
-          case 50: {
-            TotalAmount = input.ReadString();
+          case 48: {
+            TotalAmount = input.ReadUInt32();
             break;
           }
           case 58: {

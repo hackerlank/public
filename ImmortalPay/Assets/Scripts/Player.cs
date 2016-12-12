@@ -32,7 +32,7 @@ public class Player {
 		case pb_msg.MsgPcLogin:
 			MsgPCLogin msgLogin=MsgPCLogin.Parser.ParseFrom(bytes);
 			if(msgLogin.Result==pb_enum.Succeess){
-				Debug.Log("response mid="+mid+",uid="+msgLogin.Player.Uid);
+				Debug.Log(msgLogin.Player.Uid+" login");
 				playData.Player=msgLogin.Player;
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
@@ -41,8 +41,7 @@ public class Player {
 		case pb_msg.MsgPcOrder:
 			MsgPCOrder msgOrder=MsgPCOrder.Parser.ParseFrom(bytes);
 			if(msgOrder.Result==pb_enum.Succeess){
-				Debug.Log("response mid="+mid+",scheme="+msgOrder.AppScheme+",ostr="+msgOrder.OrderString);
-				//doPay
+				if(ShopPopup.Instance!=null)ShopPopup.Instance.msgOrder=msgOrder;
 			}else
 				Debug.LogError("order error: "+msgOrder.Result);
 			break;
@@ -50,8 +49,8 @@ public class Player {
 		case pb_msg.MsgPcVerify:
 			MsgPCVerify msgVerify=MsgPCVerify.Parser.ParseFrom(bytes);
 			if(msgVerify.Result==pb_enum.Succeess){
-				Debug.Log("response mid="+mid+",uid="+msgVerify.Player.Uid);
 				playData.Player=msgVerify.Player;
+				if(ShopPopup.Instance!=null)ShopPopup.Instance.msgVerify=msgVerify;
 			}else
 				Debug.LogError("verify error: "+msgVerify.Result);
 			break;
@@ -61,7 +60,7 @@ public class Player {
 		}
 	}
 
-	public void DoVerify(string app_id,string seller_id,string out_trade_no,string total_amount){
+	public void DoVerify(string app_id,string seller_id,string out_trade_no,uint total_amount){
 		MsgCPVerify msg=new MsgCPVerify();
 		msg.Mid=pb_msg.MsgCpVerify;
 		msg.AppId=app_id;

@@ -525,7 +525,7 @@ uint64 session          =2;
 string app_id           =3;
 string seller_id        =4;
 string out_trade_no     =5;
-string total_amount     =6;
+uint32 total_amount     =6;
 string uid              =7;
 };
 

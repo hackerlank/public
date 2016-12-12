@@ -99,12 +99,13 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     fields.push_back("level");
                     fields.push_back("gold");
                     fields.push_back("silver");
-                    if(spdb->hmget(key,fields,hmap)==0){
+                    sprintf(key,"player:%s",uid.c_str());
+                    if(spdb->hmget(key,fields,hmap)!=-1){
                         player->set_level(atoi(hmap["level"].c_str()));
                         player->set_gold(atoi(hmap["gold"].c_str()));
                         player->set_silver(atoi(hmap["silver"].c_str()));
                     }
-                    Debug<<"client login succeeded"<<uid.c_str()<<"\n";
+                    Debug<<"client "<<uid.c_str()<<" login succeeded\n";
                     player->set_uid(uid);
                     omsg.set_version(imsg.version()+1);
                     omsg.set_result(pb_enum::SUCCEESS);
@@ -129,15 +130,13 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 sprintf(key,"player:%s",uid.c_str());
                 if(spdb->hlen(key)<=0){
                     //not found
-                    Debug<<"client not exists\n";
+                    Debug<<"client "<<uid.c_str()<<" not exists\n";
                     omsg.set_result(pb_enum::ERR_NOTEXISTS);
                 }else{
-                    std::string appScheme("appScheme");
-                    std::string orderString("orderString");
-                    omsg.set_appscheme(appScheme);
-                    omsg.set_orderstring(orderString);
+                    Server::sServer->order(imsg,omsg);
                     omsg.set_result(pb_enum::SUCCEESS);
-                    Debug<<"client "<<uid.c_str()<<" ordered "<<appScheme.c_str()<<","<<orderString.c_str()<<"\n";
+                    Debug<<"client "<<uid.c_str()<<" ordered "<<
+                        (int)imsg.amount()<<","<<omsg.appscheme().c_str()<<","<<omsg.orderstring().c_str()<<"\n";
                 }
                 
                 PBHelper::Response(resp,omsg,mid);
@@ -159,11 +158,15 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 sprintf(key,"player:%s",uid.c_str());
                 if(spdb->hlen(key)<=0){
                     //not found
-                    Debug<<"client not exists\n";
+                    Debug<<"client "<<uid.c_str()<<" not exists\n";
                     omsg.set_result(pb_enum::ERR_NOTEXISTS);
                 }else{
+                    auto gold=Server::sServer->quantity(imsg.total_amount());
+                    auto player=omsg.mutable_player();
+                    player->set_uid(uid);
+                    player->set_gold(gold);
                     omsg.set_result(pb_enum::SUCCEESS);
-                    Debug<<"client "<<uid.c_str()<<" charged\n";
+                    Debug<<"client "<<uid.c_str()<<" charged "<<(int)imsg.total_amount()<<" for "<<gold<<"\n";
                 }
                 
                 PBHelper::Response(resp,omsg,mid);
@@ -177,6 +180,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             break;
     }
 }
+
 
 void split_line(std::vector<std::string>& o,std::string& line,char c){
     std::string comma;

@@ -3780,16 +3780,11 @@ class MsgCPVerify : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::std::string* release_out_trade_no();
   void set_allocated_out_trade_no(::std::string* out_trade_no);
 
-  // optional string total_amount = 6;
+  // optional uint32 total_amount = 6;
   void clear_total_amount();
   static const int kTotalAmountFieldNumber = 6;
-  const ::std::string& total_amount() const;
-  void set_total_amount(const ::std::string& value);
-  void set_total_amount(const char* value);
-  void set_total_amount(const char* value, size_t size);
-  ::std::string* mutable_total_amount();
-  ::std::string* release_total_amount();
-  void set_allocated_total_amount(::std::string* total_amount);
+  ::google::protobuf::uint32 total_amount() const;
+  void set_total_amount(::google::protobuf::uint32 value);
 
   // optional string uid = 7;
   void clear_uid();
@@ -3811,11 +3806,11 @@ class MsgCPVerify : public ::google::protobuf::MessageLite /* @@protoc_insertion
   bool _is_default_instance_;
   ::google::protobuf::uint64 session_;
   ::google::protobuf::internal::ArenaStringPtr app_id_;
+  int mid_;
+  ::google::protobuf::uint32 total_amount_;
   ::google::protobuf::internal::ArenaStringPtr seller_id_;
   ::google::protobuf::internal::ArenaStringPtr out_trade_no_;
-  ::google::protobuf::internal::ArenaStringPtr total_amount_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
-  int mid_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -10887,48 +10882,18 @@ inline void MsgCPVerify::set_allocated_out_trade_no(::std::string* out_trade_no)
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgCPVerify.out_trade_no)
 }
 
-// optional string total_amount = 6;
+// optional uint32 total_amount = 6;
 inline void MsgCPVerify::clear_total_amount() {
-  total_amount_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  total_amount_ = 0u;
 }
-inline const ::std::string& MsgCPVerify::total_amount() const {
+inline ::google::protobuf::uint32 MsgCPVerify::total_amount() const {
   // @@protoc_insertion_point(field_get:proto3.MsgCPVerify.total_amount)
-  return total_amount_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return total_amount_;
 }
-inline void MsgCPVerify::set_total_amount(const ::std::string& value) {
+inline void MsgCPVerify::set_total_amount(::google::protobuf::uint32 value) {
   
-  total_amount_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  total_amount_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCPVerify.total_amount)
-}
-inline void MsgCPVerify::set_total_amount(const char* value) {
-  
-  total_amount_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgCPVerify.total_amount)
-}
-inline void MsgCPVerify::set_total_amount(const char* value, size_t size) {
-  
-  total_amount_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
-      ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgCPVerify.total_amount)
-}
-inline ::std::string* MsgCPVerify::mutable_total_amount() {
-  
-  // @@protoc_insertion_point(field_mutable:proto3.MsgCPVerify.total_amount)
-  return total_amount_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline ::std::string* MsgCPVerify::release_total_amount() {
-  // @@protoc_insertion_point(field_release:proto3.MsgCPVerify.total_amount)
-  
-  return total_amount_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
-}
-inline void MsgCPVerify::set_allocated_total_amount(::std::string* total_amount) {
-  if (total_amount != NULL) {
-    
-  } else {
-    
-  }
-  total_amount_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), total_amount);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgCPVerify.total_amount)
 }
 
 // optional string uid = 7;

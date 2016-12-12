@@ -461,7 +461,7 @@ namespace cn.sharesdk.unity3d.sdkporter
 //				UnityEngine.Debug.Log( "DIR: " + directory );
 				if( directory.EndsWith( ".bundle" ) ) {
 					// Treath it like a file and copy even if not recursive
-					UnityEngine.Debug.LogWarning( "This is a special folder: " + directory );
+					//UnityEngine.Debug.LogWarning( "This is a special folder: " + directory );
 					AddFile( directory, newGroup, "SOURCE_ROOT", createBuildFile );
 //					UnityEngine.Debug.Log( "fatto" );
 					continue;

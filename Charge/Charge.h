@@ -16,6 +16,8 @@ public:
     virtual void	on_http(const http_parser& req,http_parser& resp);
     MsgHandler      handler;
     void            setup_log(const char*);
+    int             quantity(float money);
+    void            order(const proto3::MsgCPOrder&,proto3::MsgPCOrder&);
 
     static Server*   sServer;
     std::shared_ptr<vic_proxy>   spdb;
