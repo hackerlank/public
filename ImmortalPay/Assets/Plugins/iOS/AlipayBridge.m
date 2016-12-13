@@ -39,7 +39,7 @@ extern "C" {
         if(!orderString || !appScheme){
             NSString* error=@"invalid scheme or order string";
             NSLog(@"%@", error);
-            UnitySendMessage([observerStr UTF8String], "_Callback", [error UTF8String]);
+            UnitySendMessage([observerStr UTF8String], "_AliCallback", [error UTF8String]);
         }else{
             NSString* schemeStr=[NSString stringWithCString:appScheme encoding:NSUTF8StringEncoding];
             NSString* orderStr=[NSString stringWithCString:orderString encoding:NSUTF8StringEncoding];
@@ -48,7 +48,7 @@ extern "C" {
                 NSLog(@"reslut = %@",resultDict);
                 
                 NSString *resultStr = [MOBFJson jsonStringFromObject:resultDict];
-                UnitySendMessage([observerStr UTF8String], "_Callback", [resultStr UTF8String]);
+                UnitySendMessage([observerStr UTF8String], "_AliCallback", [resultStr UTF8String]);
             }];
         }
     }

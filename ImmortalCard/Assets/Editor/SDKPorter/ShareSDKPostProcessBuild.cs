@@ -5,7 +5,7 @@ using System.Collections;
 using cn.sharesdk.unity3d.sdkporter;
 using System.IO;
 
-
+#if UNITY_IPHONE
 public static class ShareSDKPostProcessBuild {
 	[PostProcessBuild]
 	public static void onPostProcessBuild(BuildTarget target,string targetPath){
@@ -81,6 +81,5 @@ public static class ShareSDKPostProcessBuild {
 		plist.AddKey (ATSAdd);
 		plist.Save();
 	}
-
-
 }
+#endif

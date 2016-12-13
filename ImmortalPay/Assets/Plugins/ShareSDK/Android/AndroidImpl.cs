@@ -11,7 +11,7 @@ namespace cn.sharesdk.unity3d
 
 		public AndroidImpl (GameObject go) 
 		{
-			Debug.Log("AndroidImpl  ===>>>  AndroidImpl" );
+			//Debug.Log("AndroidImpl  ===>>>  AndroidImpl" );
 			try{
 				ssdk = new AndroidJavaObject("cn.sharesdk.unity3d.ShareSDKUtils", go.name, "_Callback");
 			} catch(Exception e) {
@@ -21,7 +21,7 @@ namespace cn.sharesdk.unity3d
 
 		public override void InitSDK (String appKey) 
 		{
-			Debug.Log("AndroidImpl  ===>>>  InitSDK === " + appKey);
+			//Debug.Log("AndroidImpl  ===>>>  InitSDK === " + appKey);
 			if (ssdk != null) 
 			{			
 				ssdk.Call("initSDK", appKey);
@@ -31,7 +31,7 @@ namespace cn.sharesdk.unity3d
 		public override void SetPlatformConfig (Hashtable configs) 
 		{
 			String json = MiniJSON.jsonEncode(configs);
-			Debug.Log("AndroidImpl  ===>>>  SetPlatformConfig === " + json);
+			//Debug.Log("AndroidImpl  ===>>>  SetPlatformConfig === " + json);
 			if (ssdk != null) 
 			{			
 				ssdk.Call("setPlatformConfig", json);

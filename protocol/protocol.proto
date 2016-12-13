@@ -508,6 +508,7 @@ pb_msg mid				=1;
 uint64 session          =2;
 uint32 amount           =3;
 string uid              =4;
+bool pkcs8              =5;
 };
 
 message MsgPCOrder{

@@ -38,7 +38,7 @@ namespace com.alipaysdk
 			sdkImp.Pay(appScheme,orderString);
 		}
 
-		private void _Callback (string data)
+		private void _AliCallback (string data)
 		{
 			if (data == null) 
 			{

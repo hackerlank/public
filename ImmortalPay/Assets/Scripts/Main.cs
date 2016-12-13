@@ -22,6 +22,7 @@ public class Main : MonoBehaviour {
 		if(text!=null)
 			Config.Load(text.text);
 
+		Debug.Log("Uri="+Config.uri);
 		MainPlayer.http.SetUri(Config.uri);
 		MainPlayer.playData=new Proto3.play_t();
 

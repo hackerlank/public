@@ -68,6 +68,23 @@ void Server::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
     "ASTUjcO3F3J7qTlz4d9gEnaJnRmQ47EUHquC2ALLH1c=\n"
     "-----END RSA PRIVATE KEY-----";
 
+    string privateKeyPKCS8="-----BEGIN PRIVATE KEY-----\n"
+    "MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAMphqXp9vaPksAhV\n"
+    "iJeGXvIqLAG6qEZHBbvnateAIst//5HgUw12qV78Bzwk5J2YUTkSPkMzJDi29vs7\n"
+    "ks3Wtq/gV2jnwnyBOmJBTYThHKnyjojvnHq++d91vbky7XPrNL01xwtVKZRZwf/L\n"
+    "dctwubjqZEhFS24Ja2lBssBzbxIFAgMBAAECgYEAmlJ6X5M+Zplduh0u+QxXniWW\n"
+    "RQNGicBimPRQPl/RKIhEI8KA0kVnxaw9ABnJ0npxhSlqHOgEeNLb5pt4yEkwJ/N/\n"
+    "KwQ2DwZCPMf6/w4Gx1ifQq8o+BqhLsRkSEibWa5hzB/+B4tzNbPKgI2K5oLz/UUl\n"
+    "YfFssPJ1Yh6eCS8tlgkCQQD+shsVU/M2Bbm9535/rGOg9YJHgZkB9+ixOm/g5tZM\n"
+    "f9Sa/61arunK6xrrOhwnM8c2BxjWRJjH53eRzo36kQaPAkEAy2r5htDVefV68OGZ\n"
+    "SHtXxQS9GnHT0SS1fJCU1YwHZOJ8y0okDdQnPQzIX4i9UvTjwT0xnKAZ6goC8LE6\n"
+    "SHmIKwJAIE2GkdXr6tYfEK7jpF3A5RE+TMNrHIzMvm2i8utUEq/Dz0TOP8ofbNUU\n"
+    "vPDJ0U8H3RpZVBOvLOt2hs+jwjvSkQJAIG6o5B7NuokyFc/SUaUgxE/SGrJFVFYm\n"
+    "/XpL0JRn5WTbAsqKXw4RR4GPPPQfQ2e6HGg2TcOU/iSkfV20bjO6SwJAIvRut8HG\n"
+    "xuI2o8FL3tM4CCNzUJtdDRn1TSrTunwLG8oBJNSNw7cXcnupOXPh32ASdomdGZDj\n"
+    "sRQeq4LYAssfVw==\n"
+    "-----END PRIVATE KEY-----";
+
     string aliPubKey = "-----BEGIN PUBLIC KEY-----\n"
     "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKYal6fb2j5LAIVYiXhl7yKiwB\n"
     "uqhGRwW752rXgCLLf/+R4FMNdqle/Ac8JOSdmFE5Ej5DMyQ4tvb7O5LN1rav4Fdo\n"
@@ -75,9 +92,10 @@ void Server::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
     "RUtuCWtpQbLAc28SBQIDAQAB\n"
     "-----END PUBLIC KEY-----";
 
+    auto& pKey=imsg.pkcs8()?privateKeyPKCS8:privateKey;
     /** 实例化OpenapiClient工具类 **/
     OpenapiClient openapiClient(appId,
-                                privateKey,
+                                pKey,
                                 OpenapiClient::default_url,
                                 OpenapiClient::default_charset,
                                 aliPubKey);
@@ -126,7 +144,7 @@ void Server::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
     
     //sign
     string wholeContent=buildContent(requestPairs);
-    string sign = OpenapiClient::rsaSign(wholeContent, privateKey);
+    string sign = OpenapiClient::rsaSign(wholeContent, pKey);
     requestPairs.insert(StringMap::value_type(OpenapiClient::KEY_SIGN, sign));
 
     //encoding

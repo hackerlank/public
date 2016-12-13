@@ -17,7 +17,7 @@ public class MsgIntepreter{
 	public static string Encode<T>(T msg)where T:IMessage<T>{
 		var bytes=EncodeBytes<T>(msg);
 		string str=Convert.ToBase64String(bytes);
-		Debug.Log("----encode="+str);
+		//Debug.Log("----encode="+str);
 		return str;
 	}
 	

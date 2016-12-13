@@ -3523,6 +3523,12 @@ class MsgCPOrder : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::std::string* release_uid();
   void set_allocated_uid(::std::string* uid);
 
+  // optional bool pkcs8 = 5;
+  void clear_pkcs8();
+  static const int kPkcs8FieldNumber = 5;
+  bool pkcs8() const;
+  void set_pkcs8(bool value);
+
   // @@protoc_insertion_point(class_scope:proto3.MsgCPOrder)
  private:
 
@@ -3534,6 +3540,7 @@ class MsgCPOrder : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   int mid_;
   ::google::protobuf::uint32 amount_;
   ::google::protobuf::internal::ArenaStringPtr uid_;
+  bool pkcs8_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -10596,6 +10603,20 @@ inline void MsgCPOrder::set_allocated_uid(::std::string* uid) {
   }
   uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgCPOrder.uid)
+}
+
+// optional bool pkcs8 = 5;
+inline void MsgCPOrder::clear_pkcs8() {
+  pkcs8_ = false;
+}
+inline bool MsgCPOrder::pkcs8() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCPOrder.pkcs8)
+  return pkcs8_;
+}
+inline void MsgCPOrder::set_pkcs8(bool value) {
+  
+  pkcs8_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCPOrder.pkcs8)
 }
 
 // -------------------------------------------------------------------

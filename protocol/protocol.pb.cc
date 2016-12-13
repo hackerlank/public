@@ -12250,6 +12250,7 @@ const int MsgCPOrder::kMidFieldNumber;
 const int MsgCPOrder::kSessionFieldNumber;
 const int MsgCPOrder::kAmountFieldNumber;
 const int MsgCPOrder::kUidFieldNumber;
+const int MsgCPOrder::kPkcs8FieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MsgCPOrder::MsgCPOrder()
@@ -12278,6 +12279,7 @@ void MsgCPOrder::SharedCtor() {
   session_ = GOOGLE_ULONGLONG(0);
   amount_ = 0u;
   uid_.UnsafeSetDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  pkcs8_ = false;
 }
 
 MsgCPOrder::~MsgCPOrder() {
@@ -12339,6 +12341,7 @@ void MsgCPOrder::Clear() {
 
   ZR_(session_, amount_);
   uid_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  pkcs8_ = false;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -12413,6 +12416,21 @@ bool MsgCPOrder::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
+        if (input->ExpectTag(40)) goto parse_pkcs8;
+        break;
+      }
+
+      // optional bool pkcs8 = 5;
+      case 5: {
+        if (tag == 40) {
+         parse_pkcs8:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &pkcs8_)));
+
+        } else {
+          goto handle_unusual;
+        }
         if (input->ExpectAtEnd()) goto success;
         break;
       }
@@ -12467,6 +12485,11 @@ void MsgCPOrder::SerializeWithCachedSizes(
       4, this->uid(), output);
   }
 
+  // optional bool pkcs8 = 5;
+  if (this->pkcs8() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(5, this->pkcs8(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.MsgCPOrder)
 }
 
@@ -12501,6 +12524,11 @@ int MsgCPOrder::ByteSize() const {
         this->uid());
   }
 
+  // optional bool pkcs8 = 5;
+  if (this->pkcs8() != 0) {
+    total_size += 1 + 1;
+  }
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -12530,6 +12558,9 @@ void MsgCPOrder::MergeFrom(const MsgCPOrder& from) {
 
     uid_.AssignWithDefault(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), from.uid_);
   }
+  if (from.pkcs8() != 0) {
+    set_pkcs8(from.pkcs8());
+  }
 }
 
 void MsgCPOrder::CopyFrom(const MsgCPOrder& from) {
@@ -12553,6 +12584,7 @@ void MsgCPOrder::InternalSwap(MsgCPOrder* other) {
   std::swap(session_, other->session_);
   std::swap(amount_, other->amount_);
   uid_.Swap(&other->uid_);
+  std::swap(pkcs8_, other->pkcs8_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -12648,6 +12680,20 @@ void MsgCPOrder::clear_uid() {
   }
   uid_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), uid);
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgCPOrder.uid)
+}
+
+// optional bool pkcs8 = 5;
+void MsgCPOrder::clear_pkcs8() {
+  pkcs8_ = false;
+}
+ bool MsgCPOrder::pkcs8() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCPOrder.pkcs8)
+  return pkcs8_;
+}
+ void MsgCPOrder::set_pkcs8(bool value) {
+  
+  pkcs8_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCPOrder.pkcs8)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

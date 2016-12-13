@@ -7,29 +7,37 @@ namespace com.alipaysdk
 	#if UNITY_ANDROID
 	public class AlipaySDKAndroidImpl : AlipaySDKImpl
 	{
-		//private AndroidJavaObject ssdk;
-
+		string _objName;
 		public AlipaySDKAndroidImpl (GameObject go) 
 		{
-			/*
-			try{
-				ssdk = new AndroidJavaObject("cn.sharesdk.unity3d.ShareSDKUtils", go.name, "_Callback");
-			} catch(Exception e) {
-				Console.WriteLine("{0} Exception caught.", e);
-			}
-			*/
+			_objName=go.name;
 		}
 
 		public override void Pay(string appScheme,string orderString){
 			//invoke payment api
 			if(Application.platform != RuntimePlatform.Android)
 				return;
-			/*
-			if (ssdk != null) 
-			{			
-				ssdk.Call("initSDK", appKey);
+
+			using (AndroidJavaClass unity_player = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+			{
+				using (AndroidJavaObject current_activity = unity_player.GetStatic<AndroidJavaObject>("currentActivity"))
+				{
+					AndroidJavaObject ssdk=null;
+					try{
+						ssdk = new AndroidJavaObject("com.immorplay.pay.alipayBridge");
+					} catch(Exception e) {
+						Debug.LogError("Exception caught: "+e);
+					}
+
+					if (ssdk != null) 
+					{
+						Debug.Log("call alipay API");
+						ssdk.Call("__alipayBridgePay",current_activity,orderString,_objName,"_AliCallback");
+					}
+					else
+						Debug.LogError("alipayBridge null");
+				}
 			}
-			*/
 		}
 	}
 	#endif
