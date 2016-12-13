@@ -55,7 +55,7 @@ namespace cn.sharesdk.unity3d
 		private string _appKey;
 		public iOSImpl (GameObject go) 
 		{
-			Debug.Log("iOSUtils  ===>>>  iOSUtils" );
+//			Debug.Log("iOSUtils  ===>>>  iOSUtils" );
 			try{
 				_callbackObjectName = go.name;
 			} catch(Exception e) {

@@ -36,7 +36,7 @@ public class HttpProxy {
 				var headers=www.responseHeaders;
 				if(headers.ContainsKey("MSGID")){
 					var msgid=(pb_msg)uint.Parse(headers["MSGID"]);
-					Debug.Log("response="+www.text);
+//					Debug.Log("response="+www.text);
 					var content=MsgIntepreter.DecodeBytes(www.text);
 					onResponse.Invoke(msgid,content);
 				}else

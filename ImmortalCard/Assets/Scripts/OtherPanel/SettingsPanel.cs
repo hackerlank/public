@@ -37,6 +37,7 @@ public class SettingsPanel : MonoBehaviour {
 		musicOn.isOn=Cache.MusicOn;
 		sound.value=Cache.SoundVolume;
 		music.value=Cache.MusicVolume;
+		version.text="v"+Config.version+"("+Config.build+")";
 	}
 
 	public void OnSoundVolume(float x){
