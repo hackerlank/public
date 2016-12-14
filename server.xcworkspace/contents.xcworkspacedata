@@ -17,12 +17,6 @@
       location = "group:robot/robot.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:server/server.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:client/client.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:protocol/protocol.xcodeproj">
    </FileRef>
    <FileRef
