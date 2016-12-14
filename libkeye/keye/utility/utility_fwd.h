@@ -29,5 +29,6 @@
 #include <keye/utility/md5.h>
 #include <keye/utility/base64.hpp>
 #include <keye/utility/secure_hash.h>
+#include <keye/utility/scheduler.h>
 // --------------------------------------------------------
 #endif // _utility_fwd_h_

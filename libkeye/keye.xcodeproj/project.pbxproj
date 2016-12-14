@@ -61,6 +61,21 @@
 		5E5C425B1CEF5E32005CDF47 /* str_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42541CEF5E32005CDF47 /* str_util.h */; };
 		5E61E6AD1E016F9F0090DEFF /* system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E61E6AC1E016F9F0090DEFF /* system.cpp */; };
 		5E61E6AF1E016FB50090DEFF /* system.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E6AE1E016FB50090DEFF /* system.h */; };
+		5E61E70B1E0193B70090DEFF /* future.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E6FE1E0193B70090DEFF /* future.hpp */; };
+		5E61E70C1E0193B70090DEFF /* locking_ptr.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E6FF1E0193B70090DEFF /* locking_ptr.hpp */; };
+		5E61E70D1E0193B70090DEFF /* pool_core.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7001E0193B70090DEFF /* pool_core.hpp */; };
+		5E61E70E1E0193B70090DEFF /* scope_guard.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7011E0193B70090DEFF /* scope_guard.hpp */; };
+		5E61E70F1E0193B70090DEFF /* worker_thread.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7021E0193B70090DEFF /* worker_thread.hpp */; };
+		5E61E7101E0193B70090DEFF /* future.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7031E0193B70090DEFF /* future.hpp */; };
+		5E61E7111E0193B70090DEFF /* pool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7041E0193B70090DEFF /* pool.hpp */; };
+		5E61E7121E0193B70090DEFF /* pool_adaptors.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7051E0193B70090DEFF /* pool_adaptors.hpp */; };
+		5E61E7131E0193B70090DEFF /* scheduling_policies.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7061E0193B70090DEFF /* scheduling_policies.hpp */; };
+		5E61E7141E0193B70090DEFF /* shutdown_policies.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7071E0193B70090DEFF /* shutdown_policies.hpp */; };
+		5E61E7151E0193B70090DEFF /* size_policies.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7081E0193B70090DEFF /* size_policies.hpp */; };
+		5E61E7161E0193B70090DEFF /* task_adaptors.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7091E0193B70090DEFF /* task_adaptors.hpp */; };
+		5E61E7171E0193B70090DEFF /* threadpool.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E70A1E0193B70090DEFF /* threadpool.hpp */; };
+		5E61E71A1E0193C70090DEFF /* scheduler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E61E7181E0193C70090DEFF /* scheduler.cpp */; };
+		5E61E71B1E0193C70090DEFF /* scheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7191E0193C70090DEFF /* scheduler.h */; };
 		5E7838481D781E6500675E68 /* base64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E7838471D781E6500675E68 /* base64.hpp */; };
 		5EC0D2CC1C93E885000F3090 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CB1C93E885000F3090 /* libboost_date_time.a */; };
 		5EC0D2CE1C93E89F000F3090 /* libboost_thread-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CD1C93E89F000F3090 /* libboost_thread-mt.a */; };
@@ -122,8 +137,22 @@
 		5E5C42541CEF5E32005CDF47 /* str_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = str_util.h; path = utility/str_util.h; sourceTree = "<group>"; };
 		5E61E6AC1E016F9F0090DEFF /* system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = system.cpp; path = utility/system.cpp; sourceTree = "<group>"; };
 		5E61E6AE1E016FB50090DEFF /* system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = system.h; path = utility/system.h; sourceTree = "<group>"; };
+		5E61E6FE1E0193B70090DEFF /* future.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = future.hpp; sourceTree = "<group>"; };
+		5E61E6FF1E0193B70090DEFF /* locking_ptr.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = locking_ptr.hpp; sourceTree = "<group>"; };
+		5E61E7001E0193B70090DEFF /* pool_core.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pool_core.hpp; sourceTree = "<group>"; };
+		5E61E7011E0193B70090DEFF /* scope_guard.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scope_guard.hpp; sourceTree = "<group>"; };
+		5E61E7021E0193B70090DEFF /* worker_thread.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = worker_thread.hpp; sourceTree = "<group>"; };
+		5E61E7031E0193B70090DEFF /* future.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = future.hpp; sourceTree = "<group>"; };
+		5E61E7041E0193B70090DEFF /* pool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pool.hpp; sourceTree = "<group>"; };
+		5E61E7051E0193B70090DEFF /* pool_adaptors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = pool_adaptors.hpp; sourceTree = "<group>"; };
+		5E61E7061E0193B70090DEFF /* scheduling_policies.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = scheduling_policies.hpp; sourceTree = "<group>"; };
+		5E61E7071E0193B70090DEFF /* shutdown_policies.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = shutdown_policies.hpp; sourceTree = "<group>"; };
+		5E61E7081E0193B70090DEFF /* size_policies.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = size_policies.hpp; sourceTree = "<group>"; };
+		5E61E7091E0193B70090DEFF /* task_adaptors.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = task_adaptors.hpp; sourceTree = "<group>"; };
+		5E61E70A1E0193B70090DEFF /* threadpool.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = threadpool.hpp; sourceTree = "<group>"; };
+		5E61E7181E0193C70090DEFF /* scheduler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scheduler.cpp; path = utility/scheduler.cpp; sourceTree = "<group>"; };
+		5E61E7191E0193C70090DEFF /* scheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scheduler.h; path = utility/scheduler.h; sourceTree = "<group>"; };
 		5E7838471D781E6500675E68 /* base64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = base64.hpp; path = utility/base64.hpp; sourceTree = "<group>"; };
-		5E9AA44E1D7460AE0037FD90 /* websocketpp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = websocketpp; path = ../../../thirdpart/websocketpp/websocketpp; sourceTree = "<group>"; };
 		5E9FFF041C92F9D80069015B /* libkeye.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkeye.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EC0D2CB1C93E885000F3090 /* libboost_date_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost_date_time.a; path = ../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_date_time.a; sourceTree = "<group>"; };
 		5EC0D2CD1C93E89F000F3090 /* libboost_thread-mt.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libboost_thread-mt.a"; path = "../../../../../usr/local/Cellar/boost/1.58.0/lib/libboost_thread-mt.a"; sourceTree = "<group>"; };
@@ -147,7 +176,6 @@
 		5E2DBE941C92FAB9009FC394 /* htio */ = {
 			isa = PBXGroup;
 			children = (
-				5E9AA44E1D7460AE0037FD90 /* websocketpp */,
 				5E2B3B5C1D368B9E00744A9C /* ws_client.cpp */,
 				5E2B3B5D1D368B9E00744A9C /* ws_client.h */,
 				5E2B3B5E1D368B9E00744A9C /* ws_handler.hpp */,
@@ -217,6 +245,9 @@
 				5E5C42541CEF5E32005CDF47 /* str_util.h */,
 				5E61E6AE1E016FB50090DEFF /* system.h */,
 				5E61E6AC1E016F9F0090DEFF /* system.cpp */,
+				5E61E7181E0193C70090DEFF /* scheduler.cpp */,
+				5E61E7191E0193C70090DEFF /* scheduler.h */,
+				5E61E6FB1E0193B70090DEFF /* threadpool */,
 				5E2DBEE11C92FB43009FC394 /* conf_file.cpp */,
 				5E2DBEE21C92FB43009FC394 /* conf_file.h */,
 				5E2DBEE31C92FB43009FC394 /* logger.cpp */,
@@ -225,6 +256,43 @@
 				5E2DBEE61C92FB43009FC394 /* utility_pch.hpp */,
 			);
 			name = utility;
+			sourceTree = "<group>";
+		};
+		5E61E6FB1E0193B70090DEFF /* threadpool */ = {
+			isa = PBXGroup;
+			children = (
+				5E61E6FC1E0193B70090DEFF /* threadpool */,
+				5E61E70A1E0193B70090DEFF /* threadpool.hpp */,
+			);
+			name = threadpool;
+			path = utility/threadpool;
+			sourceTree = "<group>";
+		};
+		5E61E6FC1E0193B70090DEFF /* threadpool */ = {
+			isa = PBXGroup;
+			children = (
+				5E61E6FD1E0193B70090DEFF /* detail */,
+				5E61E7031E0193B70090DEFF /* future.hpp */,
+				5E61E7041E0193B70090DEFF /* pool.hpp */,
+				5E61E7051E0193B70090DEFF /* pool_adaptors.hpp */,
+				5E61E7061E0193B70090DEFF /* scheduling_policies.hpp */,
+				5E61E7071E0193B70090DEFF /* shutdown_policies.hpp */,
+				5E61E7081E0193B70090DEFF /* size_policies.hpp */,
+				5E61E7091E0193B70090DEFF /* task_adaptors.hpp */,
+			);
+			path = threadpool;
+			sourceTree = "<group>";
+		};
+		5E61E6FD1E0193B70090DEFF /* detail */ = {
+			isa = PBXGroup;
+			children = (
+				5E61E6FE1E0193B70090DEFF /* future.hpp */,
+				5E61E6FF1E0193B70090DEFF /* locking_ptr.hpp */,
+				5E61E7001E0193B70090DEFF /* pool_core.hpp */,
+				5E61E7011E0193B70090DEFF /* scope_guard.hpp */,
+				5E61E7021E0193B70090DEFF /* worker_thread.hpp */,
+			);
+			path = detail;
 			sourceTree = "<group>";
 		};
 		5E9FFEFB1C92F9D80069015B = {
@@ -283,15 +351,21 @@
 				5E2DBEBE1C92FAFC009FC394 /* packet.h in Headers */,
 				5E2DBEFA1C92FB80009FC394 /* keyeio_fwd.h in Headers */,
 				5E2DBEF81C92FB80009FC394 /* alloc.h in Headers */,
+				5E61E7131E0193B70090DEFF /* scheduling_policies.hpp in Headers */,
 				5E2DBEB61C92FAFC009FC394 /* htio_fwd.h in Headers */,
+				5E61E70E1E0193B70090DEFF /* scope_guard.hpp in Headers */,
+				5E61E7151E0193B70090DEFF /* size_policies.hpp in Headers */,
 				5E5C425B1CEF5E32005CDF47 /* str_util.h in Headers */,
 				5E2DBEC51C92FAFC009FC394 /* svc_handler.hpp in Headers */,
 				5E2B3B651D368B9E00744A9C /* ws_service.h in Headers */,
 				5E2DBF021C92FB80009FC394 /* work_handler.h in Headers */,
+				5E61E7111E0193B70090DEFF /* pool.hpp in Headers */,
 				5E2DBEEA1C92FB43009FC394 /* logger.h in Headers */,
 				5E2DBEC71C92FAFC009FC394 /* work_handler.hpp in Headers */,
 				5E5C42551CEF5E32005CDF47 /* buf_set.h in Headers */,
+				5E61E71B1E0193C70090DEFF /* scheduler.h in Headers */,
 				5E2DBEC21C92FAFC009FC394 /* service.h in Headers */,
+				5E61E7121E0193B70090DEFF /* pool_adaptors.hpp in Headers */,
 				5E2DBEA01C92FAEB009FC394 /* service_handler.hpp in Headers */,
 				5E2DBEFB1C92FB80009FC394 /* keyeio_pch.hpp in Headers */,
 				5E2B3B631D368B9E00744A9C /* ws_handler.hpp in Headers */,
@@ -299,13 +373,21 @@
 				5E5C42591CEF5E32005CDF47 /* secure_hash.h in Headers */,
 				5E2DBEFE1C92FB80009FC394 /* service.h in Headers */,
 				5E2DBEBC1C92FAFC009FC394 /* metric.h in Headers */,
+				5E61E7161E0193B70090DEFF /* task_adaptors.hpp in Headers */,
 				5E2DBEC41C92FAFC009FC394 /* svc_handler.h in Headers */,
+				5E61E7141E0193B70090DEFF /* shutdown_policies.hpp in Headers */,
 				5E2DBE9E1C92FAEB009FC394 /* io_service_pool.hpp in Headers */,
 				5E2DBECB1C92FB0F009FC394 /* keye_pch.hpp in Headers */,
+				5E61E70F1E0193B70090DEFF /* worker_thread.hpp in Headers */,
+				5E61E70D1E0193B70090DEFF /* pool_core.hpp in Headers */,
 				5E2DBEEB1C92FB43009FC394 /* utility_fwd.h in Headers */,
 				5E5C42571CEF5E32005CDF47 /* md5.h in Headers */,
 				5E2DBEEC1C92FB43009FC394 /* utility_pch.hpp in Headers */,
 				5E2DBEFD1C92FB80009FC394 /* packet.h in Headers */,
+				5E61E70B1E0193B70090DEFF /* future.hpp in Headers */,
+				5E61E7101E0193B70090DEFF /* future.hpp in Headers */,
+				5E61E7171E0193B70090DEFF /* threadpool.hpp in Headers */,
+				5E61E70C1E0193B70090DEFF /* locking_ptr.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +452,7 @@
 				5E5C425A1CEF5E32005CDF47 /* str_util.cpp in Sources */,
 				5E2DBEC11C92FAFC009FC394 /* service.cpp in Sources */,
 				5E2DBEE71C92FB43009FC394 /* conf_file.cpp in Sources */,
+				5E61E71A1E0193C70090DEFF /* scheduler.cpp in Sources */,
 				5E3845B01D35472600F9B096 /* md5.cpp in Sources */,
 				5E2DBEFC1C92FB80009FC394 /* packet.cpp in Sources */,
 				5E2B3B641D368B9E00744A9C /* ws_service.cpp in Sources */,
