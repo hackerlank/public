@@ -7,9 +7,9 @@ using Proto3;
 
 public class LoadingPanel : MonoBehaviour {
 	public GameObject	children;
-	public InputField	Node;
-	public Text			DefaultNode;
-	public GameObject	Login;
+	public InputField	Host;
+	public Text			DefaultHost;
+	public GameObject	LoginButton;
 
 	public Text			percentage;
 	public Slider		fileProgress;
@@ -24,28 +24,50 @@ public class LoadingPanel : MonoBehaviour {
 			Instance=null;
 	}
 
-	public IEnumerator Process(){
+	public IEnumerator Login(){
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
-		Node.gameObject.SetActive(true);
-		Login.SetActive(true);
+		Host.gameObject.SetActive(true);
+		LoginButton.SetActive(true);
 		//load host from cache
-		DefaultNode.text=Config.ws;
+		DefaultHost.text=Config.ws;
 #else
 		//update & login
 		StartCoroutine(loginCo());
 #endif
+		while(Main.Instance.MainPlayer.msgLCLogin==null)
+			yield return null;
+
+		//redirection
+		var msg=Main.Instance.MainPlayer.msgLCLogin;
+		if(!string.IsNullOrEmpty(msg.Redir)){
+			Host.text=msg.Redir;
+			Config.uri=msg.Redir;
+
+			StartCoroutine(loginCo());
+
+			while(Main.Instance.MainPlayer.msgLCLogin==null)
+				yield return null;
+		}
+
+		//override assets uri
+		if(!string.IsNullOrEmpty(msg.Assets))
+			Config.updateUri=msg.Assets;
+	}
+
+	public IEnumerator Process(){
+		//update
+		if(!Main.Instance.updater.SkipUpdate)
+			yield return StartCoroutine(updateCo());
 
 		StartCoroutine(Main.Instance.updater.Load<BlockView>(
 			"Prefabs/BlockView",Main.Instance.transform));
-
-		yield return StartCoroutine(updateCo());
-		while(Main.Instance.MainPlayer.msgLCLogin==null ||
-		      BlockView.Instance==null)
-			yield return null;
-
-		//all ready: enter lobby
+		
+		//ready to enter lobby
 		yield return StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel));
+
+		while(BlockView.Instance==null)
+			yield return null;
 
 		//start sign up/in
 		Main.Instance.gameObject.AddComponent<SignInGame>();
@@ -112,14 +134,14 @@ public class LoadingPanel : MonoBehaviour {
 	IEnumerator loginCo(){
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
 		//choice default if empty
-		if(Node.text.Length<=0)Node.text=DefaultNode.text;
+		if(Host.text.Length<=0)Host.text=DefaultHost.text;
 		//caching
-		if(Node.text.Length<=0){
+		if(Host.text.Length<=0){
 			Debug.LogError("Invalid host");
 			yield break;
 		}
 		
-		var node=Node.text;
+		var node=Host.text;
 		if(node.IndexOf(':')<=0){
 			node+=":8820";
 		}

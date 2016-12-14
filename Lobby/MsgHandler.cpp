@@ -131,8 +131,6 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 Debug<<"client login succeeded"<<uid.c_str()<<"\n";
                 player->set_uid(uid);
                 omsg.set_version(imsg.version()+1);
-                omsg.set_node("127.0.0.1");
-                omsg.set_port(8820);
                 omsg.set_result(pb_enum::SUCCEESS);
                 
                 PBHelper::Response(resp,omsg,mid);

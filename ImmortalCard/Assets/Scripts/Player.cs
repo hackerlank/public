@@ -218,7 +218,7 @@ public class Player {
 		case pb_msg.MsgLcLogin:
 			MsgLCLogin msgLogin=MsgLCLogin.Parser.ParseFrom(bytes);
 			if(msgLogin.Result==pb_enum.Succeess){
-				Debug.Log("response mid="+mid+",uid="+msgLogin.Player.Uid+",ip="+msgLogin.Node+",port="+msgLogin.Port);
+				Debug.Log(msgLogin.Player.Uid+" login");
 				playData.Player=msgLogin.Player;
 				msgLCLogin=msgLogin;
 			}else

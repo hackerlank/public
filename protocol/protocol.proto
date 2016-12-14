@@ -435,8 +435,8 @@ pb_msg mid				=1;
 uint32 version			=2;
 uint64 session          =3;
 player_t player         =4;
-string node				=5;
-uint32 port             =6;
+string redir			=5; //redirection uri
+string assets			=6; //assets uri
 pb_enum result			=7;
 };
 
@@ -499,7 +499,9 @@ pb_msg mid				=1;
 uint32 version			=2;
 uint64 session          =3;
 player_t player         =4;
-pb_enum result			=5;
+string redir			=5; //redirection uri
+string assets			=6; //assets uri
+pb_enum result			=7;
 };
 
 message MsgCPOrder{

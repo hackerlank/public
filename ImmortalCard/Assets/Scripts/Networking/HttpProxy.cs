@@ -11,6 +11,7 @@ public class HttpProxy {
 
 	public void SetUri(string _uri){
 		uri=_uri;
+		Debug.Log("uri="+uri);
 	}
 
 	public void Request<T>(pb_msg mid,T msg) where T : IMessage<T>{
@@ -30,7 +31,7 @@ public class HttpProxy {
 		yield return www;
 		
 		if (!string.IsNullOrEmpty(www.error)){
-			Debug.LogError("response : "+www.error+" "+www.url+" "+Name);
+			Debug.LogError("protocol need update: "+www.error+" "+www.url+" "+Name);
 		}else{
 			try {
 				var headers=www.responseHeaders;

@@ -14,7 +14,7 @@ public class Main : MonoBehaviour {
 	public ShareAPI			share;
 
 	public Transform		RootPanel;
-	public GameObject		tempLoadingPanel;
+	public LoadingPanel		loadingPanel;
 
 	public enum Mode{
 		STANDALONE,
@@ -32,30 +32,44 @@ public class Main : MonoBehaviour {
 	}
 
 	IEnumerator Start () {
-		//local->server->(redirection->)bundles
-		//load config
+		/* load config
+		 * uri could not be override anywhere
+		 * assets uri could be override by server
+		 * others include node could be override by assets
+		 */
 		TextAsset text = (TextAsset)Resources.Load(Config.file);
 		if(text!=null)
 			Config.Load(text.text);
 
-		//TODO: update uri should come from server
-		//we could not use uri from local or downloading
-		//remove Config.updateUri
-		if(!string.IsNullOrEmpty(Config.updateUri)){
+		//create play data
+		MainPlayer.playData=new Proto3.play_t();
+		
+		//login; get assets uri
+		MainPlayer.http.SetUri(Config.uri);
+		yield return StartCoroutine(
+			loadingPanel.Login()
+			);
+
+		//prepare updater
+		updater.SkipUpdate=string.IsNullOrEmpty(Config.updateUri);
+		if(!updater.SkipUpdate){
 			if(!Config.updateUri.EndsWith("/"))
 				Config.updateUri+="/";
 			DownloadManager.SetManualUrl(Config.updateUri+"$(Platform)");
+			while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 		}
-		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 
 		//update config
 		yield return StartCoroutine(updater.Load<TextAsset>(
 			"Config/config",null,delegate(Object obj,Hashtable param){
+			//donnot override uri; updateUri is useless
+			var uri=Config.uri;
+
 			var ta=obj as TextAsset;
 			Config.Load(ta.text);
+
+			Config.uri=uri;
 		}));
-		MainPlayer.http.SetUri(Config.uri);
-		MainPlayer.playData=new Proto3.play_t();
 
 		//force update
 		var forceUpdate=(int.Parse(Config.update)!=0);
@@ -67,15 +81,18 @@ public class Main : MonoBehaviour {
 			yield break;
 		}
 
-		//update LoadingPanel and reload
+		//reload LoadingPanel
 		yield return StartCoroutine(updater.Load<LoadingPanel>(
 			"Prefabs/LoadingPanel",RootPanel,delegate(Object arg1, Hashtable arg2) {
-			var panel=arg1 as LoadingPanel;
-			panel.StartCoroutine(panel.Process());
+			//destroy old
+			if(loadingPanel!=null)
+				Destroy(loadingPanel.gameObject);
+
+			loadingPanel=arg1 as LoadingPanel;
 		}));
 
-		if(tempLoadingPanel!=null)
-			Destroy(tempLoadingPanel);
+		//update
+		loadingPanel.StartCoroutine(loadingPanel.Process());
 
 		//init
 		Application.targetFrameRate = 30;

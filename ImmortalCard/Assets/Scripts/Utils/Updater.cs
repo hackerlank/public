@@ -9,6 +9,7 @@ public class Updater : MonoBehaviour {
 	private bool isResourceUpdatingReq = false;
 	private bool isResourceUpdatingOpt = false;
 	public bool SyncLoading = true;
+	public bool SkipUpdate = false;
 
 	void Start () {
 		SetupProgressBar (0f);
@@ -61,7 +62,9 @@ public class Updater : MonoBehaviour {
 	}
 
 	public IEnumerator Load<T>(string uri,Transform parent=null,System.Action<Object,Hashtable> handler=null,Hashtable param=null){
-		while(!DownloadManager.Instance.ConfigLoaded)yield return null;
+		if(!SkipUpdate)
+			while(!DownloadManager.Instance.ConfigLoaded)
+				yield return null;
 
 		Object lo=null;
 		//load from cache or remote

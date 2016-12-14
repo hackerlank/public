@@ -2468,22 +2468,27 @@ class MsgLCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::player_t* release_player();
   void set_allocated_player(::proto3::player_t* player);
 
-  // optional string node = 5;
-  void clear_node();
-  static const int kNodeFieldNumber = 5;
-  const ::std::string& node() const;
-  void set_node(const ::std::string& value);
-  void set_node(const char* value);
-  void set_node(const char* value, size_t size);
-  ::std::string* mutable_node();
-  ::std::string* release_node();
-  void set_allocated_node(::std::string* node);
+  // optional string redir = 5;
+  void clear_redir();
+  static const int kRedirFieldNumber = 5;
+  const ::std::string& redir() const;
+  void set_redir(const ::std::string& value);
+  void set_redir(const char* value);
+  void set_redir(const char* value, size_t size);
+  ::std::string* mutable_redir();
+  ::std::string* release_redir();
+  void set_allocated_redir(::std::string* redir);
 
-  // optional uint32 port = 6;
-  void clear_port();
-  static const int kPortFieldNumber = 6;
-  ::google::protobuf::uint32 port() const;
-  void set_port(::google::protobuf::uint32 value);
+  // optional string assets = 6;
+  void clear_assets();
+  static const int kAssetsFieldNumber = 6;
+  const ::std::string& assets() const;
+  void set_assets(const ::std::string& value);
+  void set_assets(const char* value);
+  void set_assets(const char* value, size_t size);
+  ::std::string* mutable_assets();
+  ::std::string* release_assets();
+  void set_allocated_assets(::std::string* assets);
 
   // optional .proto3.pb_enum result = 7;
   void clear_result();
@@ -2502,8 +2507,8 @@ class MsgLCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
   ::proto3::player_t* player_;
-  ::google::protobuf::internal::ArenaStringPtr node_;
-  ::google::protobuf::uint32 port_;
+  ::google::protobuf::internal::ArenaStringPtr redir_;
+  ::google::protobuf::internal::ArenaStringPtr assets_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3398,9 +3403,31 @@ class MsgPCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::proto3::player_t* release_player();
   void set_allocated_player(::proto3::player_t* player);
 
-  // optional .proto3.pb_enum result = 5;
+  // optional string redir = 5;
+  void clear_redir();
+  static const int kRedirFieldNumber = 5;
+  const ::std::string& redir() const;
+  void set_redir(const ::std::string& value);
+  void set_redir(const char* value);
+  void set_redir(const char* value, size_t size);
+  ::std::string* mutable_redir();
+  ::std::string* release_redir();
+  void set_allocated_redir(::std::string* redir);
+
+  // optional string assets = 6;
+  void clear_assets();
+  static const int kAssetsFieldNumber = 6;
+  const ::std::string& assets() const;
+  void set_assets(const ::std::string& value);
+  void set_assets(const char* value);
+  void set_assets(const char* value, size_t size);
+  ::std::string* mutable_assets();
+  ::std::string* release_assets();
+  void set_allocated_assets(::std::string* assets);
+
+  // optional .proto3.pb_enum result = 7;
   void clear_result();
-  static const int kResultFieldNumber = 5;
+  static const int kResultFieldNumber = 7;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -3415,6 +3442,8 @@ class MsgPCLogin : public ::google::protobuf::MessageLite /* @@protoc_insertion_
   ::google::protobuf::uint32 version_;
   ::google::protobuf::uint64 session_;
   ::proto3::player_t* player_;
+  ::google::protobuf::internal::ArenaStringPtr redir_;
+  ::google::protobuf::internal::ArenaStringPtr assets_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -9817,62 +9846,92 @@ inline void MsgLCLogin::set_allocated_player(::proto3::player_t* player) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLogin.player)
 }
 
-// optional string node = 5;
-inline void MsgLCLogin::clear_node() {
-  node_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// optional string redir = 5;
+inline void MsgLCLogin::clear_redir() {
+  redir_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& MsgLCLogin::node() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.node)
-  return node_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline const ::std::string& MsgLCLogin::redir() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.redir)
+  return redir_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgLCLogin::set_node(const ::std::string& value) {
+inline void MsgLCLogin::set_redir(const ::std::string& value) {
   
-  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.node)
+  redir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.redir)
 }
-inline void MsgLCLogin::set_node(const char* value) {
+inline void MsgLCLogin::set_redir(const char* value) {
   
-  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.MsgLCLogin.node)
+  redir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgLCLogin.redir)
 }
-inline void MsgLCLogin::set_node(const char* value, size_t size) {
+inline void MsgLCLogin::set_redir(const char* value, size_t size) {
   
-  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  redir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.MsgLCLogin.node)
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgLCLogin.redir)
 }
-inline ::std::string* MsgLCLogin::mutable_node() {
+inline ::std::string* MsgLCLogin::mutable_redir() {
   
-  // @@protoc_insertion_point(field_mutable:proto3.MsgLCLogin.node)
-  return node_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCLogin.redir)
+  return redir_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* MsgLCLogin::release_node() {
-  // @@protoc_insertion_point(field_release:proto3.MsgLCLogin.node)
+inline ::std::string* MsgLCLogin::release_redir() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCLogin.redir)
   
-  return node_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return redir_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgLCLogin::set_allocated_node(::std::string* node) {
-  if (node != NULL) {
+inline void MsgLCLogin::set_allocated_redir(::std::string* redir) {
+  if (redir != NULL) {
     
   } else {
     
   }
-  node_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), node);
-  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLogin.node)
+  redir_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), redir);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLogin.redir)
 }
 
-// optional uint32 port = 6;
-inline void MsgLCLogin::clear_port() {
-  port_ = 0u;
+// optional string assets = 6;
+inline void MsgLCLogin::clear_assets() {
+  assets_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::google::protobuf::uint32 MsgLCLogin::port() const {
-  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.port)
-  return port_;
+inline const ::std::string& MsgLCLogin::assets() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgLCLogin.assets)
+  return assets_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void MsgLCLogin::set_port(::google::protobuf::uint32 value) {
+inline void MsgLCLogin::set_assets(const ::std::string& value) {
   
-  port_ = value;
-  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.port)
+  assets_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgLCLogin.assets)
+}
+inline void MsgLCLogin::set_assets(const char* value) {
+  
+  assets_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgLCLogin.assets)
+}
+inline void MsgLCLogin::set_assets(const char* value, size_t size) {
+  
+  assets_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgLCLogin.assets)
+}
+inline ::std::string* MsgLCLogin::mutable_assets() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgLCLogin.assets)
+  return assets_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgLCLogin::release_assets() {
+  // @@protoc_insertion_point(field_release:proto3.MsgLCLogin.assets)
+  
+  return assets_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgLCLogin::set_allocated_assets(::std::string* assets) {
+  if (assets != NULL) {
+    
+  } else {
+    
+  }
+  assets_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), assets);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgLCLogin.assets)
 }
 
 // optional .proto3.pb_enum result = 7;
@@ -10501,7 +10560,95 @@ inline void MsgPCLogin::set_allocated_player(::proto3::player_t* player) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgPCLogin.player)
 }
 
-// optional .proto3.pb_enum result = 5;
+// optional string redir = 5;
+inline void MsgPCLogin::clear_redir() {
+  redir_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgPCLogin::redir() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgPCLogin.redir)
+  return redir_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgPCLogin::set_redir(const ::std::string& value) {
+  
+  redir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgPCLogin.redir)
+}
+inline void MsgPCLogin::set_redir(const char* value) {
+  
+  redir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgPCLogin.redir)
+}
+inline void MsgPCLogin::set_redir(const char* value, size_t size) {
+  
+  redir_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgPCLogin.redir)
+}
+inline ::std::string* MsgPCLogin::mutable_redir() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgPCLogin.redir)
+  return redir_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgPCLogin::release_redir() {
+  // @@protoc_insertion_point(field_release:proto3.MsgPCLogin.redir)
+  
+  return redir_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgPCLogin::set_allocated_redir(::std::string* redir) {
+  if (redir != NULL) {
+    
+  } else {
+    
+  }
+  redir_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), redir);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgPCLogin.redir)
+}
+
+// optional string assets = 6;
+inline void MsgPCLogin::clear_assets() {
+  assets_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& MsgPCLogin::assets() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgPCLogin.assets)
+  return assets_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgPCLogin::set_assets(const ::std::string& value) {
+  
+  assets_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.MsgPCLogin.assets)
+}
+inline void MsgPCLogin::set_assets(const char* value) {
+  
+  assets_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.MsgPCLogin.assets)
+}
+inline void MsgPCLogin::set_assets(const char* value, size_t size) {
+  
+  assets_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.MsgPCLogin.assets)
+}
+inline ::std::string* MsgPCLogin::mutable_assets() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.MsgPCLogin.assets)
+  return assets_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* MsgPCLogin::release_assets() {
+  // @@protoc_insertion_point(field_release:proto3.MsgPCLogin.assets)
+  
+  return assets_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void MsgPCLogin::set_allocated_assets(::std::string* assets) {
+  if (assets != NULL) {
+    
+  } else {
+    
+  }
+  assets_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), assets);
+  // @@protoc_insertion_point(field_set_allocated:proto3.MsgPCLogin.assets)
+}
+
+// optional .proto3.pb_enum result = 7;
 inline void MsgPCLogin::clear_result() {
   result_ = 0;
 }
