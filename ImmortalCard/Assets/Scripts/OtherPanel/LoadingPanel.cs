@@ -35,8 +35,12 @@ public class LoadingPanel : MonoBehaviour {
 		StartCoroutine(loginCo());
 #endif
 
+		StartCoroutine(Main.Instance.updater.Load<BlockView>(
+			"Prefabs/BlockView",Main.Instance.transform));
+
 		yield return StartCoroutine(updateCo());
-		while(Main.Instance.MainPlayer.msgLCLogin==null)
+		while(Main.Instance.MainPlayer.msgLCLogin==null ||
+		      BlockView.Instance==null)
 			yield return null;
 
 		//all ready: enter lobby
