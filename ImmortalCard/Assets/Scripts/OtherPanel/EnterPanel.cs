@@ -58,15 +58,15 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnCreateOK(){
-		if(!Main.Instance.Wait){
-			Main.Instance.Wait=true;
+		if(!BlockView.Instance.Blocking){
+			BlockView.Instance.Blocking=true;
 			StartCoroutine(createCo());
 		}
 	}
 	
 	public void OnJoinOK(){
-		if(!Main.Instance.Wait){
-			Main.Instance.Wait=true;
+		if(!BlockView.Instance.Blocking){
+			BlockView.Instance.Blocking=true;
 			StartCoroutine(joinCo());
 		}
 	}

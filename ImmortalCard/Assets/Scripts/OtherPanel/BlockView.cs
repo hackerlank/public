@@ -35,6 +35,9 @@ public class BlockView : MonoBehaviour {
 			blocking=value;
 			mask.SetActive(blocking || showDialog);
 		}
+		get{
+			return blocking;
+		}
 	}
 
 	public bool Slow{

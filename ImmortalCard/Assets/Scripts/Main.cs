@@ -8,14 +8,13 @@ public class Main : MonoBehaviour {
 
 	public const int		Round=2;
 
+	[HideInInspector]
+	public Updater			updater;
 	public GameController	gameController=null;
 	public ShareAPI			share;
-	public Updater			updater;
-	
 
 	public Transform		RootPanel;
-	public Animator			spinner;
-	public GameObject		loginPanel;
+	public GameObject		tempLoadingPanel;
 
 	public enum Mode{
 		STANDALONE,
@@ -75,8 +74,8 @@ public class Main : MonoBehaviour {
 			panel.StartCoroutine(panel.Process());
 		}));
 
-		if(loginPanel!=null)
-			Destroy(loginPanel);
+		if(tempLoadingPanel!=null)
+			Destroy(tempLoadingPanel);
 
 		//init
 		Application.targetFrameRate = 30;
@@ -103,15 +102,6 @@ public class Main : MonoBehaviour {
 	void OnApplicationQuit(){
 	}
 
-	public bool Wait{
-		get{
-			return Main.Instance.spinner.gameObject.activeSelf;
-		}
-		set{
-			Main.Instance.spinner.gameObject.SetActive(value);
-		}
-	}
-
 	public void StartWait(float t=5){
 		if(!waiting){
 			waiting=true;
@@ -120,14 +110,14 @@ public class Main : MonoBehaviour {
 	}
 	public void StopWait(){
 		StopCoroutine(waitCo(0));
-		Wait=false;
+		BlockView.Instance.Blocking=false;
 		waiting=false;
 	}
 
 	bool waiting=false;
 	IEnumerator waitCo(float t){
 		yield return new WaitForSeconds(t);
-		Wait=true;
+		BlockView.Instance.Blocking=true;
 	}
 
 	public Player MainPlayer=new Player();

@@ -117,7 +117,7 @@ public class Player {
 		panel.Rule.PrepareCache();
 		while(!CardCache.Ready)yield return null;
 
-		Main.Instance.Wait=false;
+		BlockView.Instance.Blocking=false;
 	}
 
 	public static void addRobots(int nRobots){
@@ -168,7 +168,7 @@ public class Player {
 		}
 		Loom.QueueOnMainThread(delegate{
 			//dispatch to main thread
-			Main.Instance.Wait=false;
+			BlockView.Instance.Blocking=false;
 		});
 	}
 
@@ -180,10 +180,10 @@ public class Player {
 			
 			var reconnect=false;
 			if(reconnect){
-				Main.Instance.Wait=true;
+				BlockView.Instance.Blocking=true;
 			}else{
 				InGame=false;
-				Main.Instance.Wait=false;
+				BlockView.Instance.Blocking=false;
 			}
 		});
 		connected=false;
