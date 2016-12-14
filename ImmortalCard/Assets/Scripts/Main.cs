@@ -59,25 +59,43 @@ public class Main : MonoBehaviour {
 			while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 		}
 
+		StartCoroutine(Main.Instance.updater.Load<BlockView>(
+			"Prefabs/BlockView",Main.Instance.transform));
+		
 		//update config
 		yield return StartCoroutine(updater.Load<TextAsset>(
 			"Config/config",null,delegate(Object obj,Hashtable param){
 			//donnot override uri; updateUri is useless
 			var uri=Config.uri;
+			var build=int.Parse(Config.build);
 
+			//reload config
 			var ta=obj as TextAsset;
 			Config.Load(ta.text);
 
+			//restore uri
 			Config.uri=uri;
+
+			//check version
+			if(build>=int.Parse(Config.build))
+				Config.update="0";
 		}));
+
+		while(BlockView.Instance==null)
+			yield return null;
 
 		//force update
 		var forceUpdate=(int.Parse(Config.update)!=0);
 		if(forceUpdate){
-			var storeUrl="";
-			if (Application.platform == RuntimePlatform.IPhonePlayer)
-				storeUrl="";
-			Application.OpenURL(storeUrl);
+			BlockView.Instance.ShowDialog(
+				"您的版本过低，需要更新才能继续！",
+				"",
+				delegate {
+				var storeUrl=Config.androidMarket;
+				if (Application.platform == RuntimePlatform.IPhonePlayer)
+					storeUrl=Config.appStore;
+				Application.OpenURL(storeUrl);
+			});
 			yield break;
 		}
 

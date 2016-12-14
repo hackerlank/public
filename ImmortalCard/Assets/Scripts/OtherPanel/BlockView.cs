@@ -33,16 +33,11 @@ public class BlockView : MonoBehaviour {
 	public bool Blocking{
 		set{
 			blocking=value;
+			Spinner.SetActive(value);
 			mask.SetActive(blocking || showDialog);
 		}
 		get{
 			return blocking;
-		}
-	}
-
-	public bool Slow{
-		set{
-			Spinner.SetActive(value);
 		}
 	}
 

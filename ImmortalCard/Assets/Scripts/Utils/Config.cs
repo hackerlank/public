@@ -15,6 +15,9 @@ public class Config{
 	public static string update="0";	//force update
 	public static string limited="0";	//feature limited: wechat,payment etc.
 
+	public static string appStore=		"http://fir.im/immorcard";
+	public static string androidMarket=	"http://fir.im/immorcarda";
+
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 

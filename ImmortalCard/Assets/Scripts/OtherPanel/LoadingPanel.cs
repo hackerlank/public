@@ -59,15 +59,9 @@ public class LoadingPanel : MonoBehaviour {
 		if(!Main.Instance.updater.SkipUpdate)
 			yield return StartCoroutine(updateCo());
 
-		StartCoroutine(Main.Instance.updater.Load<BlockView>(
-			"Prefabs/BlockView",Main.Instance.transform));
-		
 		//ready to enter lobby
 		yield return StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel));
-
-		while(BlockView.Instance==null)
-			yield return null;
 
 		//start sign up/in
 		Main.Instance.gameObject.AddComponent<SignInGame>();
@@ -192,6 +186,8 @@ public class LoadingPanel : MonoBehaviour {
 
 	public void OnLogin(){
 		StartCoroutine(loginCo());
+		Host.gameObject.SetActive(false);
+		LoginButton.SetActive(false);
 	}
 	
 	public void OnUpgrade(){
