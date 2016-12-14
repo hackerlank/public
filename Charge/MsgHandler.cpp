@@ -13,6 +13,17 @@ using namespace proto3;
 inline pb_msg extractBody(std::string& body,const char* inbody);
 inline void split_line(std::vector<std::string>& o,std::string& line,char c);
 
+inline unsigned long genSession(){
+    auto tt=keye::ticker();
+    srand((int)tt);
+    auto r=((unsigned long)rand())<<8;
+    auto a=(tt>>0);
+    auto b=(tt>>16);
+    auto c=(tt>>32);
+    auto d=(tt>>48);
+    return r + (a<<48) + (d<<32) + (b<<16) + c;
+}
+
 MsgHandler::MsgHandler(){
     paySvc.push_back(std::make_shared<AliPaySvc>());
 }
@@ -88,7 +99,8 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 }
                 
                 char timestamp[32];
-                sprintf(timestamp,"%ld",time(nullptr));
+                auto tt=time(nullptr);
+                sprintf(timestamp,"%ld",tt);
                 if(uid.empty()){
                     //new user
                     Debug<<"client not exists\n";
@@ -107,8 +119,12 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     }
                     Debug<<"client "<<uid.c_str()<<" login succeeded\n";
                     player->set_uid(uid);
+                    auto session=genSession();
                     omsg.set_version(imsg.version()+1);
+                    omsg.set_session(session);
                     omsg.set_result(pb_enum::SUCCEESS);
+                    
+                    Server::sServer->sessions[session]=tt;
                 }
                 
                 PBHelper::Response(resp,omsg,mid);
@@ -125,10 +141,8 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             omsg.set_mid(mid);
             if(imsg.ParseFromString(str)){
                 //account
-                char key[128];
                 auto& uid=imsg.uid();
-                sprintf(key,"player:%s",uid.c_str());
-                if(spdb->hlen(key)<=0){
+                if(Server::sServer->sessions.count(imsg.session())){
                     //not found
                     Debug<<"client "<<uid.c_str()<<" not exists\n";
                     omsg.set_result(pb_enum::ERR_NOTEXISTS);
@@ -153,20 +167,23 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             omsg.set_mid(mid);
             if(imsg.ParseFromString(str)){
                 //account
-                char key[128];
                 auto& uid=imsg.uid();
-                sprintf(key,"player:%s",uid.c_str());
-                if(spdb->hlen(key)<=0){
+                if(Server::sServer->sessions.count(imsg.session())){
                     //not found
                     Debug<<"client "<<uid.c_str()<<" not exists\n";
                     omsg.set_result(pb_enum::ERR_NOTEXISTS);
                 }else{
                     auto gold=Server::sServer->quantity(imsg.total_amount());
-                    auto player=omsg.mutable_player();
-                    player->set_uid(uid);
-                    player->set_gold(gold);
-                    omsg.set_result(pb_enum::SUCCEESS);
-                    Debug<<"client "<<uid.c_str()<<" charged "<<(int)imsg.total_amount()<<" for "<<gold<<"\n";
+                    
+                    char key[128];
+                    sprintf(key,"player:%s",uid.c_str());
+                    if(spdb->hincrby(key,"gold",gold)){
+                        auto player=omsg.mutable_player();
+                        player->set_uid(uid);
+                        player->set_gold(gold);
+                        omsg.set_result(pb_enum::SUCCEESS);
+                        Logger<<"client "<<uid.c_str()<<" charged "<<(int)imsg.total_amount()<<" for "<<gold<<"\n";
+                    }
                 }
                 
                 PBHelper::Response(resp,omsg,mid);

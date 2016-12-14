@@ -9,6 +9,7 @@ public class Player {
 	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
 	public HttpProxy		http;
 	public play_t			playData=new play_t();
+	public ulong			session;
 
 	//phz
 	public MsgLCLogin		msgLCLogin;
@@ -34,6 +35,7 @@ public class Player {
 			if(msgLogin.Result==pb_enum.Succeess){
 				Debug.Log(msgLogin.Player.Uid+" login");
 				playData.Player=msgLogin.Player;
+				session=msgLogin.Session;
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);
 			break;
@@ -68,6 +70,7 @@ public class Player {
 		msg.OutTradeNo=out_trade_no;
 		msg.TotalAmount=total_amount;
 		msg.Uid=playData.Player.Uid;
+		msg.Session=session;
 
 		//Debug.Log("----DoLogin account="+msg.User.Account);
 		Main.Instance.MainPlayer.http.Request<MsgCPVerify>(msg.Mid,msg);

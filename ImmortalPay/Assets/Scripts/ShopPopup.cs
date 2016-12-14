@@ -26,6 +26,7 @@ public class ShopPopup: MonoBehaviour{
 		msg.Mid=pb_msg.MsgCpOrder;
 		msg.Amount=price;
 		msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
+		msg.Session=Main.Instance.MainPlayer.session;
 		msg.Pkcs8=(Application.platform ==RuntimePlatform.Android);
 
 		

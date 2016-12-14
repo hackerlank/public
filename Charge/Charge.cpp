@@ -19,6 +19,13 @@ using namespace keye;
 #define WRITE_FREQ 1000
 #endif // WRITE_FREQ
 
+enum TIMER:size_t{
+    TIMER_SEC=100,
+    TIMER_MIN,
+    TIMER_HOUR,
+    TIMER_DAY,
+};
+
 std::shared_ptr<keye::logger> sLogger;
 std::shared_ptr<keye::logger> sDebug;
 
@@ -227,6 +234,36 @@ void Server::setup_log(const char* file){
 #endif
 }
 
+bool Server::on_timer(svc_handler&, size_t id, size_t milliseconds) {
+    switch (id) {
+        case TIMER::TIMER_SEC:
+            break;
+        case TIMER::TIMER_MIN:
+            break;
+        case TIMER::TIMER_HOUR:{
+            time_t t=time(NULL);
+            tm* aTm=localtime(&t);
+            if(aTm->tm_hour==0)
+                setup_log("charge");
+            break;
+        }
+        case TIMER::TIMER_DAY:{
+            auto tt=time(nullptr);
+            decltype(tt) thresh=60*60;  //1 hour
+            for(auto i=sessions.begin();i!=sessions.end();){
+                if(i->second-tt>thresh){
+                    i=sessions.erase(i);
+                }else
+                    ++i;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    return true;
+}
+
 /**
  *
  * STL map default sort order by key
@@ -266,6 +303,7 @@ int main(int argc, char* argv[]) {
 
     Server server;
     server.run(cfg);
+    server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
     while(true)usleep(1000);
 
 	return 0;

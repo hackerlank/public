@@ -59,6 +59,8 @@
 		5E5C42591CEF5E32005CDF47 /* secure_hash.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42521CEF5E32005CDF47 /* secure_hash.h */; };
 		5E5C425A1CEF5E32005CDF47 /* str_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E5C42531CEF5E32005CDF47 /* str_util.cpp */; };
 		5E5C425B1CEF5E32005CDF47 /* str_util.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E5C42541CEF5E32005CDF47 /* str_util.h */; };
+		5E61E6AD1E016F9F0090DEFF /* system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E61E6AC1E016F9F0090DEFF /* system.cpp */; };
+		5E61E6AF1E016FB50090DEFF /* system.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E6AE1E016FB50090DEFF /* system.h */; };
 		5E7838481D781E6500675E68 /* base64.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5E7838471D781E6500675E68 /* base64.hpp */; };
 		5EC0D2CC1C93E885000F3090 /* libboost_date_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CB1C93E885000F3090 /* libboost_date_time.a */; };
 		5EC0D2CE1C93E89F000F3090 /* libboost_thread-mt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5EC0D2CD1C93E89F000F3090 /* libboost_thread-mt.a */; };
@@ -118,6 +120,8 @@
 		5E5C42521CEF5E32005CDF47 /* secure_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = secure_hash.h; path = utility/secure_hash.h; sourceTree = "<group>"; };
 		5E5C42531CEF5E32005CDF47 /* str_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = str_util.cpp; path = utility/str_util.cpp; sourceTree = "<group>"; };
 		5E5C42541CEF5E32005CDF47 /* str_util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = str_util.h; path = utility/str_util.h; sourceTree = "<group>"; };
+		5E61E6AC1E016F9F0090DEFF /* system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = system.cpp; path = utility/system.cpp; sourceTree = "<group>"; };
+		5E61E6AE1E016FB50090DEFF /* system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = system.h; path = utility/system.h; sourceTree = "<group>"; };
 		5E7838471D781E6500675E68 /* base64.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = base64.hpp; path = utility/base64.hpp; sourceTree = "<group>"; };
 		5E9AA44E1D7460AE0037FD90 /* websocketpp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = websocketpp; path = ../../../thirdpart/websocketpp/websocketpp; sourceTree = "<group>"; };
 		5E9FFF041C92F9D80069015B /* libkeye.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkeye.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -211,6 +215,8 @@
 				5E5C42521CEF5E32005CDF47 /* secure_hash.h */,
 				5E5C42531CEF5E32005CDF47 /* str_util.cpp */,
 				5E5C42541CEF5E32005CDF47 /* str_util.h */,
+				5E61E6AE1E016FB50090DEFF /* system.h */,
+				5E61E6AC1E016F9F0090DEFF /* system.cpp */,
 				5E2DBEE11C92FB43009FC394 /* conf_file.cpp */,
 				5E2DBEE21C92FB43009FC394 /* conf_file.h */,
 				5E2DBEE31C92FB43009FC394 /* logger.cpp */,
@@ -261,6 +267,7 @@
 			files = (
 				5E2DBE9C1C92FAEB009FC394 /* bas_fwd.hpp in Headers */,
 				5E2DBEB71C92FAFC009FC394 /* htio_pch.hpp in Headers */,
+				5E61E6AF1E016FB50090DEFF /* system.h in Headers */,
 				5E2DBECA1C92FB0F009FC394 /* keye_fwd.h in Headers */,
 				5E2DBE9F1C92FAEB009FC394 /* service_handler_pool.hpp in Headers */,
 				5E2DBEB51C92FAFC009FC394 /* alloc.h in Headers */,
@@ -368,6 +375,7 @@
 				5E2B3B641D368B9E00744A9C /* ws_service.cpp in Sources */,
 				5E2DBEE91C92FB43009FC394 /* logger.cpp in Sources */,
 				5E2B3B611D368B9E00744A9C /* ws_client.cpp in Sources */,
+				5E61E6AD1E016F9F0090DEFF /* system.cpp in Sources */,
 				5E5C42581CEF5E32005CDF47 /* secure_hash.cpp in Sources */,
 				5E2DBEBB1C92FAFC009FC394 /* metric.cpp in Sources */,
 				5E2DBF001C92FB80009FC394 /* svc_handler.cpp in Sources */,
