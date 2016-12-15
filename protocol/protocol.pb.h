@@ -229,6 +229,9 @@ enum pb_enum {
   ERR_NOTEXISTS = 105,
   ERR_NOENOUGH = 106,
   ERR_VERSION = 107,
+  ERR_SESSION = 108,
+  ERR_DB = 109,
+  ERR_CHEAT = 110,
   ERR_UNKNOWN = 999,
   pb_enum_INT_MIN_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32min,
   pb_enum_INT_MAX_SENTINEL_DO_NOT_USE_ = ::google::protobuf::kint32max

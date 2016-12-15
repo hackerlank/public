@@ -85,6 +85,7 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
 
     if(mid==proto3::pb_msg::MSG_CN_CONNECT){
         MsgNCConnect omsg;
+        const auto omid=proto3::pb_msg::MSG_NC_CONNECT;
         do{
             MsgCNConnect imsg;
             if(!pb.Parse(imsg)){
@@ -92,35 +93,48 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
                 break;
             }
 
-            //access player from db
             if(!spdb){
-                omsg.set_result(proto3::pb_enum::ERR_FAILED);
+                omsg.set_result(proto3::pb_enum::ERR_DB);
                 break;
             }
 
+            //access player from db
             auto spPlayer=std::make_shared<Player>(sh);
-            auto player=spPlayer->playData.mutable_player();
-            player->set_uid(imsg.uid());
+            Immortal::sImmortal->tpool.schedule(std::bind([](
+                                                             std::shared_ptr<svc_handler> Spsh,
+                                                             std::string Uid,
+                                                             decltype(spPlayer) SpPlayer){
+
+                MsgNCConnect omsg;
+                auto player=SpPlayer->playData.mutable_player();
+                player->set_uid(Uid);
+                auto Shid=Spsh->id();
+                
+                //fill player
+                char key[64];
+                sprintf(key,"player:%s",Uid.c_str());
+                std::map<std::string,std::string> pmap;
+                Immortal::sImmortal->spdb->hgetall(key,pmap);
+                
+                if(pmap.count("level")) player->set_level(  atoi(pmap["level"].c_str()));
+                if(pmap.count("xp"))    player->set_xp(     atoi(pmap["xp"].c_str()));
+                if(pmap.count("gold"))  player->set_gold(   atoi(pmap["gold"].c_str()));
+                if(pmap.count("silver"))player->set_silver( atoi(pmap["silver"].c_str()));
+                if(pmap.count("energy"))player->set_energy( atoi(pmap["energy"].c_str()));
+                
+                Immortal::sImmortal->addPlayer(Shid,SpPlayer);
+                
+                omsg.set_result(proto3::pb_enum::SUCCEESS);
+                omsg.mutable_player()->CopyFrom(*player);
+                omsg.set_mid(omid);
+                PBHelper::Send(*Spsh,omsg);
+                //Debug<<"client connected,uid="<<imsg.uid()<<"\n";
+            },sh(), imsg.uid(), spPlayer));
             
-            //fill player
-            char key[64];
-            sprintf(key,"player:%s",imsg.uid().c_str());
-            std::map<std::string,std::string> pmap;
-            spdb->hgetall(key,pmap);
-            
-            if(pmap.count("level")) player->set_level(  atoi(pmap["level"].c_str()));
-            if(pmap.count("xp"))    player->set_xp(     atoi(pmap["xp"].c_str()));
-            if(pmap.count("gold"))  player->set_gold(   atoi(pmap["gold"].c_str()));
-            if(pmap.count("silver"))player->set_silver( atoi(pmap["silver"].c_str()));
-            if(pmap.count("energy"))player->set_energy( atoi(pmap["energy"].c_str()));
-            
-            addPlayer(shid,spPlayer);
-            
-            omsg.set_result(proto3::pb_enum::SUCCEESS);
-            omsg.mutable_player()->CopyFrom(*player);
-            //Debug<<"client connected,uid="<<imsg.uid()<<"\n";
+            return;
+
         }while (false);
-        omsg.set_mid(proto3::pb_msg::MSG_NC_CONNECT);
+        omsg.set_mid(omid);
         PBHelper::Send(sh,omsg);
     }
     else{

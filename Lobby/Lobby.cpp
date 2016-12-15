@@ -39,12 +39,6 @@ bool Lobby::run(const char* cfg){
             sprintf(idval,"%lld",id);
             spdb->setnx(idkey,idval);
         }
-        
-        tpool.schedule(std::bind([](decltype(spdb) db,const char* k){
-            std::string val;
-            db->get(k, val);
-            Debug<<"global_id:1="<<val<<endf;
-        },spdb,"global_id:1"));
         return true;
     }
     return false;

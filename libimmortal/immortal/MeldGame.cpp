@@ -28,10 +28,8 @@ void MeldGame::Tick(Game& game){
             //OnMeld
             break;
         case Game::State::ST_SETTLE:
-            if(GameRule::settle(game))
-                changeState(game,Game::State::ST_END);
-            else
-                changeState(game,Game::State::ST_WAIT);
+            GameRule::settle(game);
+            changeState(game,Game::State::ST_WAIT);
             break;
         case Game::State::ST_END:
             break;

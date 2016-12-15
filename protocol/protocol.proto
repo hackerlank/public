@@ -195,6 +195,9 @@ ERR_DUPLICATED          =104;
 ERR_NOTEXISTS           =105;
 ERR_NOENOUGH            =106;
 ERR_VERSION             =107;
+ERR_SESSION             =108;
+ERR_DB                  =109;
+ERR_CHEAT               =110;
 ERR_UNKNOWN             =999;
 };
 

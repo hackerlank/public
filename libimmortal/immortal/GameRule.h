@@ -31,7 +31,7 @@ protected:
     virtual int         maxHands(Game& game)=0;
     virtual int         bottom(Game& game)=0;
     
-    virtual bool        settle(Game&);
+    void                settle(Game&);
     
     virtual void        engage(Game&,proto3::MsgNCEngage&){};
     void                deal(Game&);
