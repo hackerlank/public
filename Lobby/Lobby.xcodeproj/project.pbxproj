@@ -29,11 +29,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5E1099031D6731AD00B02E6B /* liblibvic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibvic.a; path = ../libvic/build/Debug/liblibvic.a; sourceTree = "<group>"; };
+		5E1099031D6731AD00B02E6B /* liblibvic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibvic.a; path = ../Build/Debug/liblibvic.a; sourceTree = "<group>"; };
 		5E3845B11D3548FD00F9B096 /* libkeye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkeye.a; path = "../../../Library/Developer/Xcode/DerivedData/server-dwybynuuejmzmkeiqegwnxidbfhh/Build/Products/Debug/libkeye.a"; sourceTree = "<group>"; };
 		5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MsgHandler.cpp; sourceTree = "<group>"; };
 		5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandler.h; sourceTree = "<group>"; };
-		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
+		5E61E7211E021C8C0090DEFF /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PBHelper.h; path = ../include/PBHelper.h; sourceTree = "<group>"; };
+		5E61E7221E021CC90090DEFF /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../include/Server.h; sourceTree = "<group>"; };
 		5E8A17391D71E07800CDCE1D /* Lobby.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Lobby.cpp; sourceTree = "<group>"; };
 		5E8A173A1D71E07800CDCE1D /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lobby.h; sourceTree = "<group>"; };
 		5E8A173B1D71E07800CDCE1D /* LobbyFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LobbyFwd.h; sourceTree = "<group>"; };
@@ -62,12 +63,13 @@
 		5E3845981D35462A00F9B096 = {
 			isa = PBXGroup;
 			children = (
-				5E430E321D706F7900B85CB8 /* PBHelper.h */,
 				5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */,
 				5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */,
 				5E8A17391D71E07800CDCE1D /* Lobby.cpp */,
 				5E8A173A1D71E07800CDCE1D /* Lobby.h */,
 				5E8A173B1D71E07800CDCE1D /* LobbyFwd.h */,
+				5E61E7211E021C8C0090DEFF /* PBHelper.h */,
+				5E61E7221E021CC90090DEFF /* Server.h */,
 				5EEEA7B31D67A59D00630485 /* libprotocol.a */,
 				5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */,
 				5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */,
@@ -240,6 +242,7 @@
 					../libvic,
 					../sdks/include,
 					../protocol,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -258,6 +261,7 @@
 					../libvic,
 					../sdks/include,
 					../protocol,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

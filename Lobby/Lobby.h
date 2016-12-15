@@ -9,16 +9,14 @@
 #ifndef Lobby_h
 #define Lobby_h
 
-class Lobby :public keye::ws_service {
+class Lobby :public Server {
 public:
-                    Lobby(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
-    void            run(const char* =nullptr);
+                    Lobby();
+    virtual bool    run(const char* =nullptr);
     virtual void	on_http(const http_parser& req,http_parser& resp);
     MsgHandler      handler;
-    void            setup_log(const char*);
 
     static Lobby*   sLobby;
-    std::shared_ptr<vic_proxy>   spdb;
 };
 
 #endif /* Lobby_h */

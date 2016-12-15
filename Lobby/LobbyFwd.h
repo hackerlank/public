@@ -22,6 +22,7 @@ extern std::shared_ptr<keye::logger> sDebug;
 #define Debug sDebug->operator<<(begl)
 #endif
 
+#include "Server.h"
 #include "PBHelper.h"
 #include "MsgHandler.h"
 #include "Lobby.h"
