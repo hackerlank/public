@@ -110,16 +110,18 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                         Spdb->hmset(key,hmap);
                         
                         //new player
+                        auto defaultgold = (const char*)Lobby::sLobby->config.value("defaultgold");
+                        auto defaultsilver = (const char*)Lobby::sLobby->config.value("defaultsilver");
                         sprintf(key,"player:%s",uid.c_str());
                         hmap.clear();
                         hmap["level"]="1";
-                        hmap["gold"]="10";
-                        hmap["silver"]="1000";
+                        hmap["gold"]=defaultgold;
+                        hmap["silver"]=defaultsilver;
                         Spdb->hmset(key,hmap);
                         
                         player->set_level(1);
-                        player->set_gold(10);
-                        player->set_silver(1000);
+                        player->set_gold(atoi(defaultgold));
+                        player->set_silver(atoi(defaultsilver));
                     }else{
                         Spdb->hset(key,"lastlogin",timestamp);
                         
@@ -137,11 +139,11 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                     }//uid.empty()
                     
                     Debug<<"client login "<<uid.c_str()<<"\n";
+                    auto version = (int)Lobby::sLobby->config.value("version");
                     auto session=genSession();
-                    omsg.set_version(100+1);
+                    omsg.set_version(version);
                     omsg.set_session(session);
                     player->set_uid(uid);
-                    omsg.set_version(100+1);
                     omsg.set_result(pb_enum::SUCCEESS);
                     
                     Lobby::sLobby->sessions[session]=tt;

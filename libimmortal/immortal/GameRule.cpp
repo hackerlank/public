@@ -159,7 +159,7 @@ void GameRule::settle(Game& game){
             if(!is_free){
                 
                 int gold=0;
-                int cost=1;
+                auto cost=(int)Immortal::sImmortal->config.value("goldcost");
                 Spdb->lock(uid);
                 {
                     char gold_key[128];

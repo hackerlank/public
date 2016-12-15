@@ -603,8 +603,9 @@ uint64 session          =4;
 message MsgNCConnect{
 
 pb_msg mid				=1;
-player_t player         =2;
-pb_enum result			=3;
+uint32 version			=2;
+player_t player         =3;
+pb_enum result			=4;
 };
 
 message MsgCNCreate{

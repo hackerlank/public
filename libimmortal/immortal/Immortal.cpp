@@ -117,9 +117,11 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
                 
                 Immortal::sImmortal->addPlayer(Shid,SpPlayer);
                 
+                auto version = (int)Immortal::sImmortal->config.value("version");
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
                 omsg.mutable_player()->CopyFrom(*player);
                 omsg.set_mid(omid);
+                omsg.set_version(version);
                 PBHelper::Send(*Spsh,omsg);
                 //Debug<<"client connected,uid="<<imsg.uid()<<"\n";
             },sh(), imsg.uid(), spPlayer));

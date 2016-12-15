@@ -4900,18 +4900,24 @@ class MsgNCConnect : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional .proto3.player_t player = 2;
+  // optional uint32 version = 2;
+  void clear_version();
+  static const int kVersionFieldNumber = 2;
+  ::google::protobuf::uint32 version() const;
+  void set_version(::google::protobuf::uint32 value);
+
+  // optional .proto3.player_t player = 3;
   bool has_player() const;
   void clear_player();
-  static const int kPlayerFieldNumber = 2;
+  static const int kPlayerFieldNumber = 3;
   const ::proto3::player_t& player() const;
   ::proto3::player_t* mutable_player();
   ::proto3::player_t* release_player();
   void set_allocated_player(::proto3::player_t* player);
 
-  // optional .proto3.pb_enum result = 3;
+  // optional .proto3.pb_enum result = 4;
   void clear_result();
-  static const int kResultFieldNumber = 3;
+  static const int kResultFieldNumber = 4;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -4922,8 +4928,9 @@ class MsgNCConnect : public ::google::protobuf::MessageLite /* @@protoc_insertio
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::proto3::player_t* player_;
   int mid_;
+  ::google::protobuf::uint32 version_;
+  ::proto3::player_t* player_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -11999,7 +12006,21 @@ inline void MsgNCConnect::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCConnect.mid)
 }
 
-// optional .proto3.player_t player = 2;
+// optional uint32 version = 2;
+inline void MsgNCConnect::clear_version() {
+  version_ = 0u;
+}
+inline ::google::protobuf::uint32 MsgNCConnect::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCConnect.version)
+  return version_;
+}
+inline void MsgNCConnect::set_version(::google::protobuf::uint32 value) {
+  
+  version_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCConnect.version)
+}
+
+// optional .proto3.player_t player = 3;
 inline bool MsgNCConnect::has_player() const {
   return !_is_default_instance_ && player_ != NULL;
 }
@@ -12041,7 +12062,7 @@ inline void MsgNCConnect::set_allocated_player(::proto3::player_t* player) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCConnect.player)
 }
 
-// optional .proto3.pb_enum result = 3;
+// optional .proto3.pb_enum result = 4;
 inline void MsgNCConnect::clear_result() {
   result_ = 0;
 }

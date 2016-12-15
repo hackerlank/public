@@ -17441,6 +17441,7 @@ void MsgCNConnect::clear_session() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCConnect::kMidFieldNumber;
+const int MsgNCConnect::kVersionFieldNumber;
 const int MsgNCConnect::kPlayerFieldNumber;
 const int MsgNCConnect::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -17473,6 +17474,7 @@ void MsgNCConnect::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
+  version_ = 0u;
   player_ = NULL;
   result_ = 0;
 }
@@ -17534,9 +17536,10 @@ void MsgNCConnect::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, result_);
+  ZR_(mid_, version_);
   if (GetArenaNoVirtual() == NULL && player_ != NULL) delete player_;
   player_ = NULL;
+  result_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -17564,26 +17567,41 @@ bool MsgNCConnect::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_player;
+        if (input->ExpectTag(16)) goto parse_version;
         break;
       }
 
-      // optional .proto3.player_t player = 2;
+      // optional uint32 version = 2;
       case 2: {
-        if (tag == 18) {
+        if (tag == 16) {
+         parse_version:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
+                 input, &version_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(26)) goto parse_player;
+        break;
+      }
+
+      // optional .proto3.player_t player = 3;
+      case 3: {
+        if (tag == 26) {
          parse_player:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_player()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(24)) goto parse_result;
+        if (input->ExpectTag(32)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 3;
-      case 3: {
-        if (tag == 24) {
+      // optional .proto3.pb_enum result = 4;
+      case 4: {
+        if (tag == 32) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -17627,16 +17645,21 @@ void MsgNCConnect::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional .proto3.player_t player = 2;
-  if (this->has_player()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, *this->player_, output);
+  // optional uint32 version = 2;
+  if (this->version() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->version(), output);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // optional .proto3.player_t player = 3;
+  if (this->has_player()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      3, *this->player_, output);
+  }
+
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      3, this->result(), output);
+      4, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCConnect)
@@ -17652,14 +17675,21 @@ int MsgNCConnect::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional .proto3.player_t player = 2;
+  // optional uint32 version = 2;
+  if (this->version() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
+        this->version());
+  }
+
+  // optional .proto3.player_t player = 3;
   if (this->has_player()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->player_);
   }
 
-  // optional .proto3.pb_enum result = 3;
+  // optional .proto3.pb_enum result = 4;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
@@ -17683,6 +17713,9 @@ void MsgNCConnect::MergeFrom(const MsgNCConnect& from) {
   }
   if (from.mid() != 0) {
     set_mid(from.mid());
+  }
+  if (from.version() != 0) {
+    set_version(from.version());
   }
   if (from.has_player()) {
     mutable_player()->::proto3::player_t::MergeFrom(from.player());
@@ -17710,6 +17743,7 @@ void MsgNCConnect::Swap(MsgNCConnect* other) {
 }
 void MsgNCConnect::InternalSwap(MsgNCConnect* other) {
   std::swap(mid_, other->mid_);
+  std::swap(version_, other->version_);
   std::swap(player_, other->player_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -17737,7 +17771,21 @@ void MsgNCConnect::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCConnect.mid)
 }
 
-// optional .proto3.player_t player = 2;
+// optional uint32 version = 2;
+void MsgNCConnect::clear_version() {
+  version_ = 0u;
+}
+ ::google::protobuf::uint32 MsgNCConnect::version() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCConnect.version)
+  return version_;
+}
+ void MsgNCConnect::set_version(::google::protobuf::uint32 value) {
+  
+  version_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCConnect.version)
+}
+
+// optional .proto3.player_t player = 3;
 bool MsgNCConnect::has_player() const {
   return !_is_default_instance_ && player_ != NULL;
 }
@@ -17779,7 +17827,7 @@ void MsgNCConnect::set_allocated_player(::proto3::player_t* player) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCConnect.player)
 }
 
-// optional .proto3.pb_enum result = 3;
+// optional .proto3.pb_enum result = 4;
 void MsgNCConnect::clear_result() {
   result_ = 0;
 }

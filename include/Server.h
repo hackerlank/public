@@ -27,7 +27,6 @@ public:
     virtual ~Server(){}
     
     virtual bool    run(const char* cfg=nullptr){
-        keye::ini_cfg_file  config;
         if(cfg && config.load(cfg)){
             auto port=(short)(int)config.value("port");
             ws_service::run(port,"0.0.0.0");
@@ -69,6 +68,7 @@ public:
 #endif
     }
     
+    keye::ini_cfg_file          config;
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;
     std::map<unsigned long,long>    sessions; //[session,timestamp]
