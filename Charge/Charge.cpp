@@ -29,17 +29,17 @@ enum TIMER:size_t{
 std::shared_ptr<keye::logger> sLogger;
 std::shared_ptr<keye::logger> sDebug;
 
-Server* Server::sServer=nullptr;
+Charge* Charge::sCharge=nullptr;
 
 string buildContent(const StringMap &contentPairs);
 
-Server::Server(size_t ios, size_t works, size_t rb_size)
+Charge::Charge(size_t ios, size_t works, size_t rb_size)
 :ws_service(ios, works, rb_size) {
-    sServer=this;
+    sCharge=this;
     setup_log("charge");
 }
 
-int Server::quantity(float money){
+int Charge::quantity(float money){
     auto p=money/2.5f;
     int q=0;
     switch ((int)money) {
@@ -57,7 +57,7 @@ int Server::quantity(float money){
     return q+(int)p;
 }
 
-void Server::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
+void Charge::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
     string appId = "2016121004101224";
     std::string privateKey="-----BEGIN RSA PRIVATE KEY-----\n"
     "MIICXAIBAAKBgQDKYal6fb2j5LAIVYiXhl7yKiwBuqhGRwW752rXgCLLf/+R4FMN\n"
@@ -196,7 +196,7 @@ void Server::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
     omsg.set_orderstring(requestEntity);
 }
 
-void Server::run(const char* cfg){
+void Charge::run(const char* cfg){
     keye::ini_cfg_file  config;
     if(cfg && config.load(cfg)){
         auto port=(short)(int)config.value("port");
@@ -215,11 +215,11 @@ void Server::run(const char* cfg){
     }
 }
 
-void Server::on_http(const http_parser& req,http_parser& resp){
+void Charge::on_http(const http_parser& req,http_parser& resp){
     handler.on_http(req,resp);
 }
 
-void Server::setup_log(const char* file){
+void Charge::setup_log(const char* file){
 #if defined(WIN32) || defined(__APPLE__)
     sLogger=std::make_shared<logger>();
     sDebug=std::make_shared<logger>();
@@ -234,7 +234,7 @@ void Server::setup_log(const char* file){
 #endif
 }
 
-bool Server::on_timer(svc_handler&, size_t id, size_t milliseconds) {
+bool Charge::on_timer(svc_handler&, size_t id, size_t milliseconds) {
     switch (id) {
         case TIMER::TIMER_SEC:
             break;
@@ -301,7 +301,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    Server server;
+    Charge server;
     server.run(cfg);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
     while(true)usleep(1000);

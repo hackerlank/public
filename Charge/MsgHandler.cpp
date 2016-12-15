@@ -55,7 +55,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
     auto str=base64_decode(content);
     Debug<<"decode="<<str.c_str()<<endl;
     
-    auto spdb=Server::sServer->spdb;
+    auto spdb=Charge::sCharge->spdb;
     //process
     switch(msgid){
         case pb_msg::MSG_CP_LOGIN:{
@@ -124,7 +124,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     omsg.set_session(session);
                     omsg.set_result(pb_enum::SUCCEESS);
                     
-                    Server::sServer->sessions[session]=tt;
+                    Charge::sCharge->sessions[session]=tt;
                 }
                 
                 PBHelper::Response(resp,omsg,mid);
@@ -142,12 +142,12 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             if(imsg.ParseFromString(str)){
                 //account
                 auto& uid=imsg.uid();
-                if(Server::sServer->sessions.count(imsg.session())){
+                if(Charge::sCharge->sessions.count(imsg.session())){
                     //not found
                     Debug<<"client "<<uid.c_str()<<" not exists\n";
                     omsg.set_result(pb_enum::ERR_NOTEXISTS);
                 }else{
-                    Server::sServer->order(imsg,omsg);
+                    Charge::sCharge->order(imsg,omsg);
                     omsg.set_result(pb_enum::SUCCEESS);
                     Debug<<"client "<<uid.c_str()<<" ordered "<<
                         (int)imsg.amount()<<","<<omsg.appscheme().c_str()<<","<<omsg.orderstring().c_str()<<"\n";
@@ -168,12 +168,12 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             if(imsg.ParseFromString(str)){
                 //account
                 auto& uid=imsg.uid();
-                if(Server::sServer->sessions.count(imsg.session())){
+                if(Charge::sCharge->sessions.count(imsg.session())){
                     //not found
                     Debug<<"client "<<uid.c_str()<<" not exists\n";
                     omsg.set_result(pb_enum::ERR_NOTEXISTS);
                 }else{
-                    auto gold=Server::sServer->quantity(imsg.total_amount());
+                    auto gold=Charge::sCharge->quantity(imsg.total_amount());
                     
                     char key[128];
                     sprintf(key,"player:%s",uid.c_str());
