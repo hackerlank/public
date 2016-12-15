@@ -10,7 +10,7 @@
 // --------------------------------------------------------
 #include "stdafx.h"
 #include <keye/utility/utility_fwd.h>
-#include "threadpool.hpp"
+#include "threadpool/threadpool.hpp"
 
 using namespace keye;
 using namespace std;

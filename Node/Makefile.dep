@@ -5,8 +5,8 @@ CCDEBUG+= -g
 CCOPT+= -O0
 #CFLAGS+= -D_CRT_SECURE_NO_DEPRECATE -DBOOST_ALL_NO_LIB
 CCWARN+= -Wno-unknown-pragmas -Wno-reorder -Wno-deprecated-declarations -Wno-unused-value
-CFLAGS+=  -I./ -I../libkeye/ -I../libimmortal/ -I../libvic/ -I../protocol/ -I$(DEPENDENCIES)/include
+CFLAGS+=  -I./ -I../libkeye/ -I../libimmortal/ -I../libvic/ -I../protocol/ -I../include -I$(DEPENDENCIES)/include
 LDFLAGS+= -L$(DEPENDENCIES)/libs/$(PLATFORM) -L../protocol/ -L../libimmortal -Wl,-rpath-link=$(DEPENDENCIES)/libs/$(PLATFORM) -Wl,-rpath=$(DEPENDENCIES)/libs/$(PLATFORM) -Wl,--no-as-needed
-LIBS+=  -limmortal -lkeye -lvic -lprotocol -lprotobuf-lite -lmysqlclient -lhiredis -lstdc++ -lm -lboost_system -lboost_date_time
+LIBS+=  -limmortal -lkeye -lvic -lprotocol -lprotobuf-lite -lmysqlclient -lhiredis -lstdc++ -lm -lboost_system -lboost_date_time -lboost_thread
 SRCS= $(wildcard *.cpp)
 INCS= $(wildcard *.h)
