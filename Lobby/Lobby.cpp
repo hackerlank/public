@@ -50,8 +50,8 @@ bool Lobby::run(const char* cfg){
     return false;
 }
 
-void Lobby::on_http(const http_parser& req,http_parser& resp){
-    handler.on_http(req,resp);
+void Lobby::on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func){
+    handler.on_http(req,resp,func);
 }
 
 int main(int argc, char* argv[]) {

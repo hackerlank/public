@@ -71,7 +71,8 @@ public:
         http.request(req);
     }
     
-    static void Response(http_parser& resp,google::protobuf::MessageLite& msg,proto3::pb_msg mid,int code=200,const char* status="OK"){
+    static void Response(const std::function<void(const http_parser&)> func,
+                         http_parser& resp,google::protobuf::MessageLite& msg,proto3::pb_msg mid,int code=200,const char* status="OK"){
         char strmid[8];
         sprintf(strmid,"%d",mid);
         std::string str;
@@ -81,6 +82,9 @@ public:
         resp.set_header("msgid",strmid);
         resp.set_body(str.c_str());
         resp.set_status(code,status);
+        
+        //response
+        func(resp);
     }
     //make compiler happy
     void	on_message(keye::svc_handler&,keye::PacketWrapper&){}

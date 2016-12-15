@@ -13,7 +13,7 @@ class Lobby :public Server {
 public:
                     Lobby();
     virtual bool    run(const char* =nullptr);
-    virtual void	on_http(const http_parser& req,http_parser& resp);
+    virtual void	on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func);
     MsgHandler      handler;
 
     static Lobby*   sLobby;

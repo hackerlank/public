@@ -13,7 +13,7 @@ class PaySvc;
 class MsgHandler{
 public:
             MsgHandler();
-    void    on_http(const http_parser& req,http_parser& resp);
+    void    on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func);
 private:
     std::list<std::shared_ptr<PaySvc>>   paySvc;
 };

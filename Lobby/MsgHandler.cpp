@@ -13,7 +13,7 @@ using namespace proto3;
 inline pb_msg extractBody(std::string& body,const char* inbody);
 inline void split_line(std::vector<std::string>& o,std::string& line,char c);
 
-void MsgHandler::on_http(const http_parser& req,http_parser& resp){
+void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func){
     auto strmid=req.header("msgid");
     auto body=req.body();
     
@@ -49,7 +49,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 if(imsg.version()<100){
                     omsg.set_result(pb_enum::ERR_VERSION);
                     Debug<<"client login failed\n";
-                    PBHelper::Response(resp,omsg,mid);
+                    PBHelper::Response(func,resp,omsg,mid);
                     break;
                 }
                 
@@ -133,10 +133,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 omsg.set_version(imsg.version()+1);
                 omsg.set_result(pb_enum::SUCCEESS);
                 
-                PBHelper::Response(resp,omsg,mid);
+                PBHelper::Response(func,resp,omsg,mid);
             }else{
                 Debug<<"client login failed\n";
-                PBHelper::Response(resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
             }
             break;
         }
@@ -196,7 +196,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 Debug<<"client enter failed\n";
                 omsg.set_result(pb_enum::ERR_FAILED);
             }
-            PBHelper::Response(resp,omsg,omid);
+            PBHelper::Response(func,resp,omsg,omid);
             break;
         }
         case proto3::pb_msg::MSG_CL_REPLAYS:{
@@ -221,7 +221,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             }
             auto omid=pb_msg::MSG_LC_REPLAYS;
             omsg.set_mid(omid);
-            PBHelper::Response(resp,omsg,omid);
+            PBHelper::Response(func,resp,omsg,omid);
             break;
         }
         case proto3::pb_msg::MSG_CL_REPLAY:{
@@ -249,7 +249,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
             }
             auto omid=pb_msg::MSG_LC_REPLAY;
             omsg.set_mid(omid);
-            PBHelper::Response(resp,omsg,omid);
+            PBHelper::Response(func,resp,omsg,omid);
             break;
         }
         default:

@@ -195,8 +195,8 @@ void Charge::order(const proto3::MsgCPOrder& imsg,proto3::MsgPCOrder& omsg){
     omsg.set_orderstring(requestEntity);
 }
 
-void Charge::on_http(const http_parser& req,http_parser& resp){
-    handler.on_http(req,resp);
+void Charge::on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func){
+    handler.on_http(req,resp,func);
 }
 
 bool Charge::on_timer(svc_handler&, size_t id, size_t milliseconds) {

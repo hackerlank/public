@@ -150,12 +150,16 @@ private:
         req_parser.set_body(req.get_body().c_str());
 
         //handle and fill response
-        _handler.on_http(req_parser,resp_parser);
-
-        auto resp=(websocketpp::http::parser::response*)&con->get_response();
-        resp->consume(resp_parser.raw().c_str(),resp_parser.raw().size());
-        
-        //will close connection after sending response
+        _handler.on_http(req_parser,resp_parser,
+                         //must call this funcion object after handle
+                         std::bind(
+                         [](const http_parser& Resp, server_type::connection_ptr Con){
+                             //consume Resp by Con
+                             auto response=(websocketpp::http::parser::response*)&Con->get_response();
+                             response->consume(Resp.raw().c_str(),Resp.raw().size());
+                             
+                             //will close connection after sending response
+                         },std::placeholders::_1,con));
 	}
 
 	void on_timer(size_t id, size_t milliseconds, websocketpp::lib::error_code const & ec) {

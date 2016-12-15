@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "Fwd.h"
 using namespace proto3;
+using namespace std;
 
 inline pb_msg extractBody(std::string& body,const char* inbody);
 inline void split_line(std::vector<std::string>& o,std::string& line,char c);
@@ -28,7 +29,7 @@ MsgHandler::MsgHandler(){
     paySvc.push_back(std::make_shared<AliPaySvc>());
 }
 
-void MsgHandler::on_http(const http_parser& req,http_parser& resp){
+void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func){
     auto strmid=req.header("msgid");
     auto body=req.body();
     
@@ -69,7 +70,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 if(imsg.version()<100){
                     omsg.set_result(pb_enum::ERR_VERSION);
                     Debug<<"client login failed\n";
-                    PBHelper::Response(resp,omsg,mid);
+                    PBHelper::Response(func,resp,omsg,mid);
                     break;
                 }
                 
@@ -79,25 +80,25 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                 auto player=omsg.mutable_player();
                 std::string uid;
                 char key[128];
-                
+
                 //search db by account
                 sprintf(key,"user:%s",md5a.c_str());
                 spdb->hget(key,"uid",uid);
-                
+
                 if(uid.empty()){
                     //test udid if not found
                     if(imsg.user().udid()!=account){
                         auto md5udid=MD5::HashAnsiString(imsg.user().udid().c_str());
                         sprintf(key,"user:%s",md5udid.c_str());
                         spdb->hget(key,"uid",uid);
-                        
+
                         //bind account if udid exists
                         if(!uid.empty()){
                             spdb->hset(key,"account",md5a.c_str());
                         }
                     }
                 }
-                
+
                 char timestamp[32];
                 auto tt=time(nullptr);
                 sprintf(timestamp,"%ld",tt);
@@ -126,11 +127,11 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     
                     Charge::sCharge->sessions[session]=tt;
                 }
-                
-                PBHelper::Response(resp,omsg,mid);
+
+                PBHelper::Response(func,resp,omsg,mid);
             }else{
                 Debug<<"client login failed\n";
-                PBHelper::Response(resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
             }
             break;
         }
@@ -153,10 +154,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                         (int)imsg.amount()<<","<<omsg.appscheme().c_str()<<","<<omsg.orderstring().c_str()<<"\n";
                 }
                 
-                PBHelper::Response(resp,omsg,mid);
+                PBHelper::Response(func,resp,omsg,mid);
             }else{
                 Debug<<"client order failed\n";
-                PBHelper::Response(resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
             }
             break;
         }
@@ -186,10 +187,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp){
                     }
                 }
                 
-                PBHelper::Response(resp,omsg,mid);
+                PBHelper::Response(func,resp,omsg,mid);
             }else{
                 Debug<<"client order failed\n";
-                PBHelper::Response(resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
             }
             break;
         }
