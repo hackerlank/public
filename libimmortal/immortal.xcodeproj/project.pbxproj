@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E61E7251E0220350090DEFF /* Server.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E61E7241E0220350090DEFF /* Server.h */; };
 		5E991A701DE2E4E500D70431 /* DiscardGame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5E991A631DE2E4E500D70431 /* DiscardGame.cpp */; };
 		5E991A711DE2E4E500D70431 /* DiscardGame.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A641DE2E4E500D70431 /* DiscardGame.h */; };
 		5E991A721DE2E4E500D70431 /* Game.h in Headers */ = {isa = PBXBuildFile; fileRef = 5E991A651DE2E4E500D70431 /* Game.h */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5E61E7241E0220350090DEFF /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../include/Server.h; sourceTree = "<group>"; };
 		5E991A5B1DE2E16C00D70431 /* libimmortal.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libimmortal.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E991A631DE2E4E500D70431 /* DiscardGame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DiscardGame.cpp; sourceTree = "<group>"; };
 		5E991A641DE2E4E500D70431 /* DiscardGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscardGame.h; sourceTree = "<group>"; };
@@ -36,7 +38,7 @@
 		5E991A6A1DE2E4E500D70431 /* Immortal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Immortal.cpp; sourceTree = "<group>"; };
 		5E991A6B1DE2E4E500D70431 /* Immortal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Immortal.h; sourceTree = "<group>"; };
 		5E991A6C1DE2E4E500D70431 /* ImmortalFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmortalFwd.h; sourceTree = "<group>"; };
-		5E991A6D1DE2E4E500D70431 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
+		5E991A6D1DE2E4E500D70431 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PBHelper.h; path = ../../include/PBHelper.h; sourceTree = "<group>"; };
 		5E991A6E1DE2E4E500D70431 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		5E991A6F1DE2E4E500D70431 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = SOURCE_ROOT; };
@@ -59,6 +61,7 @@
 			children = (
 				5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */,
 				5E991A7E1DE2E7FF00D70431 /* stdafx.h */,
+				5E61E7241E0220350090DEFF /* Server.h */,
 				5E991A621DE2E4E500D70431 /* immortal */,
 				5E991A5C1DE2E16C00D70431 /* Products */,
 			);
@@ -108,6 +111,7 @@
 				5E991A791DE2E4E500D70431 /* ImmortalFwd.h in Headers */,
 				5E991A7A1DE2E4E500D70431 /* PBHelper.h in Headers */,
 				5E991A741DE2E4E500D70431 /* GameRule.h in Headers */,
+				5E61E7251E0220350090DEFF /* Server.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +280,7 @@
 					../libvic,
 					../sdks/include,
 					../protocol,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -295,6 +300,7 @@
 					../libvic,
 					../sdks/include,
 					../protocol,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -324,6 +330,7 @@
 				5E991A611DE2E16C00D70431 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

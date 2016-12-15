@@ -30,7 +30,8 @@ extern std::shared_ptr<keye::logger> sDebug;
 #define Debug sDebug->operator<<(begl)
 #endif
 
-#include <immortal/PBHelper.h>
+#include "PBHelper.h"
+#include "Server.h"
 #include <immortal/Player.h>
 #include <immortal/Game.h>
 #include <immortal/GameRule.h>

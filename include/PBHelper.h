@@ -12,17 +12,21 @@
 // --------------------------------------------------------
 // PBHelper: protobuf helper
 // --------------------------------------------------------
-class PBHelper{
+class KEYE_API PBHelper{
 public:
     static const size_t send_buffer_size=2048;
     PBHelper(keye::PacketWrapper& pw):_pw(pw){
-        keye::HeadUnpacker packer;
-        packer<<pw;
-        packer>>pw;
+        _packer<<pw;
+        _packer>>pw;
     }
     
     bool Parse(google::protobuf::MessageLite& msg){
-        return msg.ParseFromArray(_pw.data,(int)_pw.length);
+        auto ret=msg.ParseFromArray(_pw.data,(int)_pw.length);
+        if(!ret){
+            Debug<<"message parse error: mid="<<(int)Id()<<",length="<<(int)_pw.length<<",buf="<<
+            str_util::bytes2hex((const unsigned char*)_pw.data,_pw.length).c_str()<<endl;
+        }
+        return ret;
     }
     
     proto3::pb_msg Id(){
@@ -81,7 +85,8 @@ public:
     //make compiler happy
     void	on_message(keye::svc_handler&,keye::PacketWrapper&){}
 private:
-    keye::PacketWrapper& _pw;
+    keye::PacketWrapper&    _pw;        //wrapper cached here
+    keye::HeadUnpacker      _packer;    //private packer,data cached here
 };
 
 #endif /* PBHelper_h */

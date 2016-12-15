@@ -430,6 +430,7 @@
 					../sdks/include,
 					../protocol,
 					../libimmortal,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -449,6 +450,7 @@
 					../sdks/include,
 					../protocol,
 					../libimmortal,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

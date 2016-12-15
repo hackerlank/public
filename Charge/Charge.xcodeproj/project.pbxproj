@@ -45,7 +45,8 @@
 		5E3845B11D3548FD00F9B096 /* libkeye.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libkeye.a; path = "../../../Library/Developer/Xcode/DerivedData/server-dwybynuuejmzmkeiqegwnxidbfhh/Build/Products/Debug/libkeye.a"; sourceTree = "<group>"; };
 		5E430E2D1D701CFA00B85CB8 /* MsgHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MsgHandler.cpp; sourceTree = "<group>"; };
 		5E430E2E1D701CFA00B85CB8 /* MsgHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MsgHandler.h; sourceTree = "<group>"; };
-		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBHelper.h; sourceTree = "<group>"; };
+		5E430E321D706F7900B85CB8 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PBHelper.h; path = ../include/PBHelper.h; sourceTree = "<group>"; };
+		5E61E7231E0220260090DEFF /* Server.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Server.h; path = ../include/Server.h; sourceTree = "<group>"; };
 		5E8291A11DF9089D002EAADB /* http_client.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = http_client.cpp; sourceTree = "<group>"; };
 		5E8291A21DF9089D002EAADB /* http_client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = http_client.h; sourceTree = "<group>"; };
 		5E8291A41DF9089D002EAADB /* cJSON.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cJSON.c; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 				5E430E321D706F7900B85CB8 /* PBHelper.h */,
 				5E0C786A1DB71B9A00E2A7A3 /* Charge.cpp */,
 				5E0C786B1DB71B9A00E2A7A3 /* Charge.h */,
+				5E61E7231E0220260090DEFF /* Server.h */,
 				5E8291B11DF908D7002EAADB /* AliPaySvc.cpp */,
 				5E8291C61DF94C98002EAADB /* PaySvc.h */,
 				5E0C786C1DB71B9A00E2A7A3 /* Fwd.h */,
@@ -328,6 +330,7 @@
 					../libvic,
 					../sdks/include,
 					../protocol,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -347,6 +350,7 @@
 					../libvic,
 					../sdks/include,
 					../protocol,
+					../include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

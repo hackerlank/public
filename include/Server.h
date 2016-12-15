@@ -59,6 +59,7 @@ public:
     
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;
+    std::map<unsigned long,long>    sessions; //[session,timestamp]
 };
 
 #endif /* Server_h */

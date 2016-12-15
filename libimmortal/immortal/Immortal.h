@@ -9,10 +9,9 @@
 #ifndef Immortal_h
 #define Immortal_h
 
-class KEYE_API Immortal :public keye::ws_service {
+class KEYE_API Immortal :public Server {
 public:
-                    Immortal(size_t ios = 1, size_t works = 1, size_t rb_size = 510);
-    void            run(const char* =nullptr);
+                    Immortal();
     virtual void	on_open(keye::svc_handler&);
     virtual void	on_close(keye::svc_handler&);
     virtual void	on_read(keye::svc_handler& sh, void* buf, size_t sz);
@@ -29,9 +28,6 @@ public:
     
     static Immortal*        sImmortal;
     keye::ini_cfg_file      config;
-    std::shared_ptr<vic_proxy>   spdb;
-    
-    void            setup_log(const char*);
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;
