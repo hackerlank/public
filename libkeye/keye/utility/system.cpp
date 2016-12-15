@@ -40,5 +40,15 @@ bool is_bigendian(){
 	const int endian=1;
 	return ((*(char*)&endian)==0);
 }
+    
+void msleep(int millisecond){
+#if (defined(_WIN32)||defined(_WIN64))
+    Sleep(millisecond);
+#else
+    struct timespec ts = { millisecond / 1000, (millisecond % 1000) * 1000000 };
+    while ((-1 == nanosleep(&ts, &ts)) && (EINTR == errno));
+#endif
+}
+
 // --------------------------------------------------------
 };//namespace keye

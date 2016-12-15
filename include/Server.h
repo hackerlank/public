@@ -9,6 +9,13 @@
 #ifndef Server_h
 #define Server_h
 
+enum TIMER:size_t{
+    TIMER_SEC=100,
+    TIMER_MIN,
+    TIMER_HOUR,
+    TIMER_DAY,
+};
+
 class Server :public keye::ws_service {
 public:
     Server(const char* name,size_t ios = 1, size_t works = 1, size_t rb_size = 510)
@@ -31,11 +38,16 @@ public:
             char db[128];
             sprintf(db,"%s:%d",(const char*)config.value("dbhost"),(int)config.value("dbport"));
             spdb=std::make_shared<redis_proxy>();
-            if(!spdb->connect(db))
-                spdb.reset();
-            else{
-                return true;
+            int retry=3;
+            int retryTime=3000;
+            for(auto i=retry;i;--i){
+                if(spdb->connect(db))
+                    return true;
+                
+                msleep(retryTime);
             }
+            spdb.reset();
+            Debug<<"server start error: db not connect"<<endf;
         }else{
             Debug<<"server start error: no config file"<<endf;
         }
@@ -61,5 +73,53 @@ public:
     keye::scheduler             tpool;
     std::map<unsigned long,long>    sessions; //[session,timestamp]
 };
+
+inline unsigned long genSession(){
+    auto tt=keye::ticker();
+    srand((int)tt);
+    auto r=((unsigned long)rand())<<8;
+    auto a=(tt>>0);
+    auto b=(tt>>16);
+    auto c=(tt>>32);
+    auto d=(tt>>48);
+    return r + (a<<48) + (d<<32) + (b<<16) + c;
+}
+
+inline void split_line(std::vector<std::string>& o,std::string& line,char c){
+    std::string comma;
+    comma.push_back(c);
+    if(!line.empty()&&line.back()!=c)line+=comma;
+    while(true){
+        auto i=line.find(comma);
+        if(i==std::string::npos)break;
+        auto str=line.substr(0,i);
+        o.push_back(str);
+        line=line.substr(++i);
+    }
+}
+
+inline proto3::pb_msg extractBody(std::string& body,const char* inbody){
+    if(inbody){
+        std::vector<std::string> params;
+        std::string buf(inbody);
+        split_line(params,buf,'&');
+        
+        std::map<std::string,std::string> kvs;
+        for(auto& p:params){
+            std::vector<std::string> ss;
+            split_line(ss,p,'=');
+            if(ss.size()>1)
+                kvs[ss[0]]=ss[1];
+        }
+        
+        std::string line(inbody);
+        
+        if(kvs.count("body"))
+            body=kvs["body"];
+        if(kvs.count("msgid"))
+            return (proto3::pb_msg)atoi(kvs["msgid"].c_str());
+    }
+    return proto3::pb_msg::MSG_RAW;
+}
 
 #endif /* Server_h */

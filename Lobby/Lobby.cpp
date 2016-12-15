@@ -48,6 +48,36 @@ void Lobby::on_http(const http_parser& req,const std::function<void(const http_p
     handler.on_http(req,func);
 }
 
+bool Lobby::on_timer(svc_handler&, size_t id, size_t milliseconds) {
+    switch (id) {
+        case TIMER::TIMER_SEC:
+            break;
+        case TIMER::TIMER_MIN:
+            break;
+        case TIMER::TIMER_HOUR:{
+            time_t t=time(NULL);
+            tm* aTm=localtime(&t);
+            if(aTm->tm_hour==0)
+                setup_log("lobby");
+            
+            decltype(t) thresh=60*60;  //1 hour
+            for(auto i=sessions.begin();i!=sessions.end();){
+                if(i->second-t>thresh){
+                    i=sessions.erase(i);
+                }else
+                    ++i;
+            }
+            break;
+        }
+        case TIMER::TIMER_DAY:{
+            break;
+        }
+        default:
+            break;
+    }
+    return true;
+}
+
 int main(int argc, char* argv[]) {
     const char* cfg="lobby.cfg";
     for(auto i=1;i<argc;++i){
@@ -64,7 +94,9 @@ int main(int argc, char* argv[]) {
 
     Lobby server;
 	server.run(cfg);
-    while(true)usleep(1000);
+    server.set_timer(TIMER::TIMER_HOUR, 1000*60*60);
+    server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
+    while(true)msleep(1000000);
 
 	return 0;
 }

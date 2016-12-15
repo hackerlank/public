@@ -11,9 +11,6 @@
 using namespace proto3;
 using namespace std;
 
-inline pb_msg extractBody(std::string& body,const char* inbody);
-inline void split_line(std::vector<std::string>& o,std::string& line,char c);
-
 void MsgHandler::on_http(const http_parser& req,const std::function<void(const http_parser&)> func){
     auto strmid=req.header("msgid");
     auto body=req.body();
@@ -89,7 +86,8 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                     }
                     
                     char timestamp[32];
-                    sprintf(timestamp,"%ld",time(nullptr));
+                    auto tt=time(nullptr);
+                    sprintf(timestamp,"%ld",tt);
                     if(uid.empty()){
                         //new user
                         char idkey[32];
@@ -139,10 +137,15 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                     }//uid.empty()
                     
                     Debug<<"client login "<<uid.c_str()<<"\n";
+                    auto session=genSession();
+                    omsg.set_version(100+1);
+                    omsg.set_session(session);
                     player->set_uid(uid);
                     omsg.set_version(100+1);
                     omsg.set_result(pb_enum::SUCCEESS);
                     
+                    Lobby::sLobby->sessions[session]=tt;
+
                     PBHelper::Response(Func,omsg,mid);
                 },imsg.user().account(), imsg.user().udid(), imsg.user().dev_type(), func));
 
@@ -158,52 +161,57 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
             auto omid=pb_msg::MSG_LC_LOBBY;
             omsg.set_mid(omid);
             if(imsg.ParseFromString(str)){
-                Debug<<"client enter\n";
-                omsg.set_result(pb_enum::SUCCEESS);
-                
-                auto& lobby=*omsg.mutable_lobby();
-                lobby.set_version(100);
-                lobby.set_bulletin("欢迎进入风云世界！");
-                
-                auto game=lobby.add_games();
-                game->set_id(pb_enum::GAME_PHZ);
-                game->set_version(100);
-                game->set_desc("风云湖南跑胡子");
-                game->add_rules(pb_enum::PHZ_SY);
-                game->add_rules(pb_enum::PHZ_SYBP);
-                game->add_rules(pb_enum::PHZ_LD);
-                
-                game->add_rules(pb_enum::PHZ_HH);
-                game->add_rules(pb_enum::PHZ_CD_QMT);
-                game->add_rules(pb_enum::PHZ_CD_HHD);
-                
-                game->add_rules(pb_enum::PHZ_CS);
-                game->add_rules(pb_enum::PHZ_XX_GHZ);
-                game->add_rules(pb_enum::PHZ_HY);
-                
-                game->add_rules(pb_enum::PHZ_YZ_SBW);
-                game->add_rules(pb_enum::PHZ_PEGHZ);
-                game->add_rules(pb_enum::PHZ_SC_EQS);
-                
-                game->add_rules(pb_enum::PHZ_CZ);
-                game->add_rules(pb_enum::PHZ_GX);
-                
-                game=lobby.add_games();
-                game->set_id(pb_enum::GAME_MJ);
-                game->set_version(100);
-                game->set_desc("风云麻将");
-                game->add_rules(pb_enum::MJ_SICHUAN);
-                game->add_rules(pb_enum::MJ_GUANGDONG);
-                game->add_rules(pb_enum::MJ_HUNAN);
-                game->add_rules(pb_enum::MJ_FUJIAN);
-                game->add_rules(pb_enum::MJ_ZHEJIANG);
-                
-                game=lobby.add_games();
-                game->set_id(pb_enum::GAME_DDZ);
-                game->set_version(100);
-                game->set_desc("风云斗地主");
-                game->add_rules(pb_enum::DDZ_CLASIC);
-                game->add_rules(pb_enum::DDZ_FOR4);
+                if(Lobby::sLobby->sessions.count(imsg.session())){
+                    omsg.set_result(pb_enum::SUCCEESS);
+                    
+                    auto& lobby=*omsg.mutable_lobby();
+                    lobby.set_version(100);
+                    lobby.set_bulletin("欢迎进入风云世界！");
+                    
+                    auto game=lobby.add_games();
+                    game->set_id(pb_enum::GAME_PHZ);
+                    game->set_version(100);
+                    game->set_desc("风云湖南跑胡子");
+                    game->add_rules(pb_enum::PHZ_SY);
+                    game->add_rules(pb_enum::PHZ_SYBP);
+                    game->add_rules(pb_enum::PHZ_LD);
+                    
+                    game->add_rules(pb_enum::PHZ_HH);
+                    game->add_rules(pb_enum::PHZ_CD_QMT);
+                    game->add_rules(pb_enum::PHZ_CD_HHD);
+                    
+                    game->add_rules(pb_enum::PHZ_CS);
+                    game->add_rules(pb_enum::PHZ_XX_GHZ);
+                    game->add_rules(pb_enum::PHZ_HY);
+                    
+                    game->add_rules(pb_enum::PHZ_YZ_SBW);
+                    game->add_rules(pb_enum::PHZ_PEGHZ);
+                    game->add_rules(pb_enum::PHZ_SC_EQS);
+                    
+                    game->add_rules(pb_enum::PHZ_CZ);
+                    game->add_rules(pb_enum::PHZ_GX);
+                    
+                    game=lobby.add_games();
+                    game->set_id(pb_enum::GAME_MJ);
+                    game->set_version(100);
+                    game->set_desc("风云麻将");
+                    game->add_rules(pb_enum::MJ_SICHUAN);
+                    game->add_rules(pb_enum::MJ_GUANGDONG);
+                    game->add_rules(pb_enum::MJ_HUNAN);
+                    game->add_rules(pb_enum::MJ_FUJIAN);
+                    game->add_rules(pb_enum::MJ_ZHEJIANG);
+                    
+                    game=lobby.add_games();
+                    game->set_id(pb_enum::GAME_DDZ);
+                    game->set_version(100);
+                    game->set_desc("风云斗地主");
+                    game->add_rules(pb_enum::DDZ_CLASIC);
+                    game->add_rules(pb_enum::DDZ_FOR4);
+                }else{
+                    //not found
+                    Debug<<"client "<<imsg.uid().c_str()<<" invalid session\n";
+                    omsg.set_result(pb_enum::ERR_SESSION);
+                }
             }else{
                 Debug<<"client enter failed\n";
                 omsg.set_result(pb_enum::ERR_PROTOCOL);
@@ -214,114 +222,91 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
         case proto3::pb_msg::MSG_CL_REPLAYS:{
             MsgCLReplays imsg;
             const auto mid=pb_msg::MSG_LC_REPLAYS;
+            MsgLCReplays omsg;
+            omsg.set_mid(mid);
             if(imsg.ParseFromString(str)){
-                Lobby::sLobby->tpool.schedule(std::bind([](
-                                                             const string Uid,
-                                                             const std::function<void(const http_parser&)> Func){
-                    MsgLCReplays omsg;
-                    omsg.set_mid(mid);
-
-                    //player replay list - replay:player:<uid>{game id list}
-                    auto Spdb=Lobby::sLobby->spdb;
-                    char key[32];
-                    sprintf(key,"replay:player:%s",Uid.c_str());
-                    std::vector<std::string> values;
-                    Spdb->lrange(key,0,-1,values);
-                    for(auto& v:values){
-                        replays game_replay;
-                        if(game_replay.ParseFromString(v))
-                            omsg.add_all()->CopyFrom(game_replay);
-                    }
-                    omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    PBHelper::Response(Func,omsg,mid);
-                },imsg.uid(),func));
+                if(Lobby::sLobby->sessions.count(imsg.session())){
+                    Lobby::sLobby->tpool.schedule(std::bind([](
+                                                               const string Uid,
+                                                               const std::function<void(const http_parser&)> Func){
+                        MsgLCReplays omsg;
+                        omsg.set_mid(mid);
+                        
+                        //player replay list - replay:player:<uid>{game id list}
+                        auto Spdb=Lobby::sLobby->spdb;
+                        char key[32];
+                        sprintf(key,"replay:player:%s",Uid.c_str());
+                        std::vector<std::string> values;
+                        Spdb->lrange(key,0,-1,values);
+                        for(auto& v:values){
+                            replays game_replay;
+                            if(game_replay.ParseFromString(v))
+                                omsg.add_all()->CopyFrom(game_replay);
+                        }
+                        omsg.set_result(proto3::pb_enum::SUCCEESS);
+                        PBHelper::Response(Func,omsg,mid);
+                    },imsg.uid(),func));
+                    break;
+                }
+                
+                //not found
+                Debug<<"client "<<imsg.uid().c_str()<<" invalid session\n";
+                omsg.set_result(pb_enum::ERR_SESSION);
             }
             else
             {
-                MsgLCReplays omsg;
                 omsg.set_result(proto3::pb_enum::ERR_PROTOCOL);
-                omsg.set_mid(mid);
-                PBHelper::Response(func,omsg,mid);
             }
+            PBHelper::Response(func,omsg,mid);
             break;
         }
         case proto3::pb_msg::MSG_CL_REPLAY:{
             MsgCLReplay imsg;
             const auto mid=pb_msg::MSG_LC_REPLAY;
+            MsgLCReplay omsg;
+            omsg.set_mid(mid);
             if(imsg.ParseFromString(str)){
-                Lobby::sLobby->tpool.schedule(std::bind([](
-                                                             const int gameid,
-                                                             const int round,
-                                                             const std::function<void(const http_parser&)> Func){
-
-                    MsgLCReplay omsg;
-                    omsg.set_mid(mid);
-
-                    //replay hash data - replay:<game id>{round:data}
-                    auto Spdb=Lobby::sLobby->spdb;
-                    char key[32],field[32];
-                    sprintf(key,"replay:%d",gameid);
-                    sprintf(field,"%d",round);
-                    std::string buf;
-                    Spdb->hget(key,field,buf);
-                    
-                    if(omsg.mutable_data()->ParseFromString(buf)){
-                        omsg.set_result(pb_enum::SUCCEESS);
-                    }else{
-                        omsg.set_result(pb_enum::ERR_FAILED);
-                        omsg.clear_data();
-                    }
-
-                    PBHelper::Response(Func,omsg,mid);
-                },imsg.gameid(),imsg.round(),func));
+                if(Lobby::sLobby->sessions.count(imsg.session())){
+                    Lobby::sLobby->tpool.schedule(std::bind([](
+                                                               const int gameid,
+                                                               const int round,
+                                                               const std::function<void(const http_parser&)> Func){
+                        
+                        MsgLCReplay omsg;
+                        omsg.set_mid(mid);
+                        
+                        //replay hash data - replay:<game id>{round:data}
+                        auto Spdb=Lobby::sLobby->spdb;
+                        char key[32],field[32];
+                        sprintf(key,"replay:%d",gameid);
+                        sprintf(field,"%d",round);
+                        std::string buf;
+                        Spdb->hget(key,field,buf);
+                        
+                        if(omsg.mutable_data()->ParseFromString(buf)){
+                            omsg.set_result(pb_enum::SUCCEESS);
+                        }else{
+                            omsg.set_result(pb_enum::ERR_FAILED);
+                            omsg.clear_data();
+                        }
+                        
+                        PBHelper::Response(Func,omsg,mid);
+                    },imsg.gameid(),imsg.round(),func));
+                    break;
+                }
+                
+                //not found
+                Debug<<"client invalid session\n";
+                omsg.set_result(pb_enum::ERR_SESSION);
             }
             else
             {
-                MsgLCReplay omsg;
                 omsg.set_result(pb_enum::ERR_PROTOCOL);
-                omsg.set_mid(mid);
-                PBHelper::Response(func,omsg,mid);
             }
+            PBHelper::Response(func,omsg,mid);
             break;
         }
         default:
             break;
     }
-}
-
-void split_line(std::vector<std::string>& o,std::string& line,char c){
-    std::string comma;
-    comma.push_back(c);
-    if(!line.empty()&&line.back()!=c)line+=comma;
-    while(true){
-        auto i=line.find(comma);
-        if(i==std::string::npos)break;
-        auto str=line.substr(0,i);
-        o.push_back(str);
-        line=line.substr(++i);
-    }
-}
-
-pb_msg extractBody(std::string& body,const char* inbody){
-    if(inbody){
-        std::vector<std::string> params;
-        std::string buf(inbody);
-        split_line(params,buf,'&');
-        
-        std::map<std::string,std::string> kvs;
-        for(auto& p:params){
-            std::vector<std::string> ss;
-            split_line(ss,p,'=');
-            if(ss.size()>1)
-                kvs[ss[0]]=ss[1];
-        }
-        
-        std::string line(inbody);
-        
-        if(kvs.count("body"))
-            body=kvs["body"];
-        if(kvs.count("msgid"))
-            return (pb_msg)atoi(kvs["msgid"].c_str());
-    }
-    return pb_msg::MSG_RAW;
 }

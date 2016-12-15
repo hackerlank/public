@@ -11,20 +11,6 @@
 using namespace proto3;
 using namespace std;
 
-inline pb_msg extractBody(std::string& body,const char* inbody);
-inline void split_line(std::vector<std::string>& o,std::string& line,char c);
-
-inline unsigned long genSession(){
-    auto tt=keye::ticker();
-    srand((int)tt);
-    auto r=((unsigned long)rand())<<8;
-    auto a=(tt>>0);
-    auto b=(tt>>16);
-    auto c=(tt>>32);
-    auto d=(tt>>48);
-    return r + (a<<48) + (d<<32) + (b<<16) + c;
-}
-
 MsgHandler::MsgHandler(){
     paySvc.push_back(std::make_shared<AliPaySvc>());
 }
@@ -151,10 +137,10 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
             if(imsg.ParseFromString(str)){
                 //account
                 auto& uid=imsg.uid();
-                if(Charge::sCharge->sessions.count(imsg.session())){
+                if(!Charge::sCharge->sessions.count(imsg.session())){
                     //not found
-                    Debug<<"client "<<uid.c_str()<<" not exists\n";
-                    omsg.set_result(pb_enum::ERR_NOTEXISTS);
+                    Debug<<"client "<<uid.c_str()<<" invalid session\n";
+                    omsg.set_result(pb_enum::ERR_SESSION);
                 }else{
                     Charge::sCharge->order(imsg,omsg);
                     omsg.set_result(pb_enum::SUCCEESS);
@@ -217,42 +203,4 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
         default:
             break;
     }
-}
-
-
-void split_line(std::vector<std::string>& o,std::string& line,char c){
-    std::string comma;
-    comma.push_back(c);
-    if(!line.empty()&&line.back()!=c)line+=comma;
-    while(true){
-        auto i=line.find(comma);
-        if(i==std::string::npos)break;
-        auto str=line.substr(0,i);
-        o.push_back(str);
-        line=line.substr(++i);
-    }
-}
-
-pb_msg extractBody(std::string& body,const char* inbody){
-    if(inbody){
-        std::vector<std::string> params;
-        std::string buf(inbody);
-        split_line(params,buf,'&');
-        
-        std::map<std::string,std::string> kvs;
-        for(auto& p:params){
-            std::vector<std::string> ss;
-            split_line(ss,p,'=');
-            if(ss.size()>1)
-                kvs[ss[0]]=ss[1];
-        }
-        
-        std::string line(inbody);
-        
-        if(kvs.count("body"))
-            body=kvs["body"];
-        if(kvs.count("msgid"))
-            return (pb_msg)atoi(kvs["msgid"].c_str());
-    }
-    return pb_msg::MSG_RAW;
 }

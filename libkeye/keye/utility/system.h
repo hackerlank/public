@@ -18,6 +18,8 @@ time_t		KEYE_API ticker();
 void		KEYE_API pause();
 //big/little endian test
 bool		KEYE_API is_bigendian();
+//milli sleep
+void        KEYE_API msleep(int ms);
 };//namespace keye
 #endif//
 

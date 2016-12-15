@@ -17,13 +17,6 @@ using namespace std;
 std::shared_ptr<keye::logger> sLogger;
 std::shared_ptr<keye::logger> sDebug;
 
-enum TIMER:size_t{
-    TIMER_SEC=100,
-    TIMER_MIN,
-    TIMER_HOUR,
-    TIMER_DAY,
-};
-
 int main(int argc, char* argv[]) {
     const char* cfg="node.cfg";
     for(auto i=1;i<argc;++i){
@@ -50,7 +43,7 @@ int main(int argc, char* argv[]) {
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
 
     //DoudeZhu::test();
-    while(true)usleep(1000);
+    while(true)msleep(1000000);
 
 	return 0;
 }

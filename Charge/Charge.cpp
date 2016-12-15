@@ -14,18 +14,6 @@
 
 using namespace keye;
 
-#ifdef WRITE_FREQ
-#undef WRITE_FREQ
-#define WRITE_FREQ 1000
-#endif // WRITE_FREQ
-
-enum TIMER:size_t{
-    TIMER_SEC=100,
-    TIMER_MIN,
-    TIMER_HOUR,
-    TIMER_DAY,
-};
-
 std::shared_ptr<keye::logger> sLogger;
 std::shared_ptr<keye::logger> sDebug;
 
@@ -210,17 +198,17 @@ bool Charge::on_timer(svc_handler&, size_t id, size_t milliseconds) {
             tm* aTm=localtime(&t);
             if(aTm->tm_hour==0)
                 setup_log("charge");
-            break;
-        }
-        case TIMER::TIMER_DAY:{
-            auto tt=time(nullptr);
-            decltype(tt) thresh=60*60;  //1 hour
+
+            decltype(t) thresh=60*60;  //1 hour
             for(auto i=sessions.begin();i!=sessions.end();){
-                if(i->second-tt>thresh){
+                if(i->second-t>thresh){
                     i=sessions.erase(i);
                 }else
                     ++i;
             }
+            break;
+        }
+        case TIMER::TIMER_DAY:{
             break;
         }
         default:
@@ -268,8 +256,9 @@ int main(int argc, char* argv[]) {
 
     Charge server;
     server.run(cfg);
+    server.set_timer(TIMER::TIMER_HOUR, 1000*60*60);
     server.set_timer(TIMER::TIMER_DAY, 1000*60*60*24);
-    while(true)usleep(1000);
+    while(true)msleep(1000000);
 
 	return 0;
 }

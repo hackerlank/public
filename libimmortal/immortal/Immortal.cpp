@@ -13,13 +13,6 @@
 using namespace keye;
 using namespace proto3;
 
-enum TIMER:size_t{
-    TIMER_SEC=100,
-    TIMER_MIN,
-    TIMER_HOUR,
-    TIMER_DAY,
-};
-
 Immortal* Immortal::sImmortal=nullptr;
 
 Immortal::Immortal()
