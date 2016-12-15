@@ -30,9 +30,9 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
     }
     
     //decode
-    Debug<<"body="<<content.c_str()<<endl;
+    //Debug<<"body="<<content.c_str()<<endl;
     auto str=base64_decode(content);
-    Debug<<"decode="<<str.c_str()<<endl;
+    //Debug<<"decode="<<str.c_str()<<endl;
     
     //process
     switch(msgid){
@@ -138,7 +138,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                         }
                     }//uid.empty()
                     
-                    Debug<<"client login "<<uid.c_str()<<"\n";
+                    Debug<<"client "<<uid.c_str()<<" login\n";
                     auto version = (int)Lobby::sLobby->config.value("version");
                     auto session=genSession();
                     omsg.set_version(version);

@@ -89,6 +89,7 @@ public class EnterPanel : MonoBehaviour {
 
 		var msg=new MsgCLReplay();
 		msg.Mid=pb_msg.MsgClReplay;
+		msg.Session=Main.Instance.MainPlayer.session;
 		msg.GameId=10000;
 		Main.Instance.MainPlayer.Send<MsgCLReplay>(msg.Mid,msg);
 	}

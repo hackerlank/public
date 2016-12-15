@@ -149,6 +149,8 @@ private:
         req_parser.set_headers(req.raw_head().c_str());
         req_parser.set_body(req.get_body().c_str());
 
+        //deferred response
+        con->defer_http_response();
         //handle and fill response
         _handler.on_http(req_parser,
                          //must call this funcion object after handle
@@ -159,6 +161,7 @@ private:
                              response->consume(Resp.raw().c_str(),Resp.raw().size());
                              
                              //will close connection after sending response
+                             Con->send_http_response();
                          },std::placeholders::_1,con));
 	}
 

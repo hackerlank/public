@@ -38,9 +38,9 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
     }
 
     //decode
-    Debug<<"body="<<content.c_str()<<endl;
+    //Debug<<"body="<<content.c_str()<<endl;
     auto str=base64_decode(content);
-    Debug<<"decode="<<str.c_str()<<endl;
+    //Debug<<"decode="<<str.c_str()<<endl;
     
     //process
     switch(msgid){

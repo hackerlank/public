@@ -34,6 +34,7 @@ public class LobbyPanel : MonoBehaviour {
 				msg.Mid=pb_msg.MsgClLobby;
 				msg.Version=(old==null?0:old.Version);
 				msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
+				msg.Session=Main.Instance.MainPlayer.session;
 				Main.Instance.MainPlayer.http.Request<MsgCLLobby>(msg.Mid,msg);
 				
 				lobby=null;

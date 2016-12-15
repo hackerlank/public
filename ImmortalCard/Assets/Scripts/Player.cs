@@ -15,6 +15,7 @@ public class Player {
 
 	public List<PlayerController>	controllers=new List<PlayerController>();
 	public play_t			playData=new play_t();
+	public ulong			session;
 	public pb_enum			category;
 
 	//phz
@@ -27,7 +28,7 @@ public class Player {
 	public MsgLCLogin		msgLCLogin;
 	public MsgNCCreate		msgNCCreate;
 	public MsgNCJoin		msgNCJoin;
-	public MsgCNRevive	msgRevice;
+	public MsgCNRevive		msgRevice;
 
 	public Player(){
 		//networks
@@ -220,6 +221,7 @@ public class Player {
 			if(msgLogin.Result==pb_enum.Succeess){
 				Debug.Log(msgLogin.Player.Uid+" login");
 				playData.Player=msgLogin.Player;
+				session=msgLogin.Session;
 				msgLCLogin=msgLogin;
 			}else
 				Debug.LogError("login error: "+msgLogin.Result);

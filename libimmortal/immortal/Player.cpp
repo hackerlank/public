@@ -93,15 +93,15 @@ void Player::on_read(PBHelper& pb){
                         }
                     }
                     
-                    auto game=gameptr;
-                    game->players.push_back(player->shared_from_this());
-                    game->Round=maxRound;
+                    player->game=gameptr;
+                    gameptr->players.push_back(player->shared_from_this());
+                    gameptr->Round=maxRound;
                     //game->banker=game->rule->MaxPlayer(*game)-1; //test change banker
                     player->ready=true;
-                    player->playData.set_seat((int)game->players.size()-1);
+                    player->playData.set_seat((int)gameptr->players.size()-1);
                     //fill data
                     
-                    omsg.set_game_id((int)game->id);
+                    omsg.set_game_id((int)gameptr->id);
                     omsg.set_result(proto3::pb_enum::SUCCEESS);
                     //Debug<<"game created,gid="<<(int)game->id<<endl;
                     

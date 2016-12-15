@@ -117,11 +117,13 @@ inline size_t request::consume(char const * buf, size_t len) {
                 return bytes_processed;
             }
         } else {
-            if (m_method.empty()) {
-                this->process(begin,end);
-            } else {
-                this->process_header(begin,end);
-            }
+            try{
+                if (m_method.empty()) {
+                    this->process(begin,end);
+                } else {
+                    this->process_header(begin,end);
+                }
+            }catch(...){}
         }
 
         begin = end+(sizeof(header_delimiter)-1);

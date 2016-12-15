@@ -112,8 +112,6 @@ inline proto3::pb_msg extractBody(std::string& body,const char* inbody){
                 kvs[ss[0]]=ss[1];
         }
         
-        std::string line(inbody);
-        
         if(kvs.count("body"))
             body=kvs["body"];
         if(kvs.count("msgid"))
