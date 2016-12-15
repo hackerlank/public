@@ -72,13 +72,14 @@ public:
     }
     
     static void Response(const std::function<void(const http_parser&)> func,
-                         http_parser& resp,google::protobuf::MessageLite& msg,proto3::pb_msg mid,int code=200,const char* status="OK"){
+                         google::protobuf::MessageLite& msg,proto3::pb_msg mid,int code=200,const char* status="OK"){
         char strmid[8];
         sprintf(strmid,"%d",mid);
         std::string str;
         msg.SerializeToString(&str);
         str=base64_encode(str);
         
+        http_parser resp(false);
         resp.set_header("msgid",strmid);
         resp.set_body(str.c_str());
         resp.set_status(code,status);

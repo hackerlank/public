@@ -12,7 +12,7 @@
 class Charge :public Server {
 public:
                     Charge();
-    virtual void	on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func);
+    virtual void	on_http(const http_parser& req,const std::function<void(const http_parser&)> func);
     virtual bool	on_timer(keye::svc_handler&, size_t id, size_t milliseconds);
 
     MsgHandler      handler;

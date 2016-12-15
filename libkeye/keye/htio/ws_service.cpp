@@ -140,7 +140,7 @@ private:
 
 	void on_http(websocketpp::connection_hdl hdl) {
 		server_type::connection_ptr con = _server.get_con_from_hdl(hdl);
-        http_parser req_parser(true),resp_parser(false);
+        http_parser req_parser(true);
 
         auto& req=con->get_request();
         req_parser.set_uri(req.get_uri().c_str());
@@ -150,7 +150,7 @@ private:
         req_parser.set_body(req.get_body().c_str());
 
         //handle and fill response
-        _handler.on_http(req_parser,resp_parser,
+        _handler.on_http(req_parser,
                          //must call this funcion object after handle
                          std::bind(
                          [](const http_parser& Resp, server_type::connection_ptr Con){

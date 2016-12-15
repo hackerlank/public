@@ -10,9 +10,9 @@
 
 using namespace std;
 
-bool AliPaySvc::on_http(const http_parser& req,http_parser& resp){
+bool AliPaySvc::on_http(const http_parser& req){
     //auto head=resp.header("code");
-    auto body=resp.body();
+    auto body=req.body();
     Debug<<"alipay notify: body="<<body<<endf;
     return true;
 }

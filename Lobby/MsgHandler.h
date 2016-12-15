@@ -11,7 +11,7 @@
 
 class MsgHandler{
 public:
-    void    on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func);
+    void    on_http(const http_parser& req,const std::function<void(const http_parser&)> func);
 };
 
 #endif /* MsgHandler_hpp */

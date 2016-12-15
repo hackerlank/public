@@ -11,12 +11,12 @@
 
 class PaySvc {
 public:
-    virtual bool	on_http(const http_parser& req,http_parser& resp)=0;
+    virtual bool	on_http(const http_parser& req)=0;
 };
 
 class AliPaySvc:public PaySvc{
 public:
-    virtual bool	on_http(const http_parser& req,http_parser& resp);
+    virtual bool	on_http(const http_parser& req);
 };
 
 #endif /* PaySvc_h */

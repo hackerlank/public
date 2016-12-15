@@ -29,7 +29,7 @@ MsgHandler::MsgHandler(){
     paySvc.push_back(std::make_shared<AliPaySvc>());
 }
 
-void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::function<void(const http_parser&)> func){
+void MsgHandler::on_http(const http_parser& req,const std::function<void(const http_parser&)> func){
     auto strmid=req.header("msgid");
     auto body=req.body();
     
@@ -44,7 +44,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::fun
     
     if(msgid<=pb_msg::MSG_CP_BEGIN || msgid>=pb_msg::MSG_CP_END){
         for(auto pay:paySvc){
-            if(pay->on_http(req,resp))
+            if(pay->on_http(req))
                 return;
         }
         Debug<<"invalid message id "<<(int)msgid<<endl;
@@ -70,7 +70,7 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::fun
                 if(imsg.version()<100){
                     omsg.set_result(pb_enum::ERR_VERSION);
                     Debug<<"client login failed\n";
-                    PBHelper::Response(func,resp,omsg,mid);
+                    PBHelper::Response(func,omsg,mid);
                     break;
                 }
                 
@@ -128,10 +128,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::fun
                     Charge::sCharge->sessions[session]=tt;
                 }
 
-                PBHelper::Response(func,resp,omsg,mid);
+                PBHelper::Response(func,omsg,mid);
             }else{
                 Debug<<"client login failed\n";
-                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,omsg,mid,500,"Internal error");
             }
             break;
         }
@@ -154,10 +154,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::fun
                         (int)imsg.amount()<<","<<omsg.appscheme().c_str()<<","<<omsg.orderstring().c_str()<<"\n";
                 }
                 
-                PBHelper::Response(func,resp,omsg,mid);
+                PBHelper::Response(func,omsg,mid);
             }else{
                 Debug<<"client order failed\n";
-                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,omsg,mid,500,"Internal error");
             }
             break;
         }
@@ -187,10 +187,10 @@ void MsgHandler::on_http(const http_parser& req,http_parser& resp,const std::fun
                     }
                 }
                 
-                PBHelper::Response(func,resp,omsg,mid);
+                PBHelper::Response(func,omsg,mid);
             }else{
                 Debug<<"client order failed\n";
-                PBHelper::Response(func,resp,omsg,mid,500,"Internal error");
+                PBHelper::Response(func,omsg,mid,500,"Internal error");
             }
             break;
         }
