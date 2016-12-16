@@ -58,6 +58,10 @@ void str_util::wsplit_lines(std::vector<std::wstring>& lines,const std::wstring&
     ")"                                          // End group of value alternatives.
     "\\s*"                                       // Strip whitespace after value.
     "(?:\n|$)";                                  // Field ends on comma or EOS.
+    
+    std::locale old;
+    std::locale::global(std::locale("en_US.UTF-8"));
+    
     try{
         wregex pattern(_pattern);
         auto beg = std::wsregex_iterator(buf.begin(),buf.end(),pattern);
@@ -76,17 +80,16 @@ void str_util::wsplit_lines(std::vector<std::wstring>& lines,const std::wstring&
     } catch(regex_error e){
         KEYE_LOG("%s\n",e.what());
     }
+    std::locale::global(std::locale(old));
 }
 
 bool str_util::wstr2str(std::string& str,const wchar_t* wstr){
 	if(wstr){
-		//char* old_locale=_strdup(setlocale(LC_CTYPE,nullptr));	//store locale
-		setlocale(LC_CTYPE,setlocale(LC_ALL,""));
+        std::locale::global(std::locale());
 		auto len=wcstombs(nullptr,wstr,0);	//no need '\0' for string
 		if(len==(size_t)-1)return false;
 		str.resize(len);
 		len=wcstombs((char*)str.data(),wstr,len);
-		//if(old_locale){ setlocale(LC_CTYPE,old_locale);free(old_locale); }	//restore locale
 		return len>0;
 	}
 	return false;
@@ -94,7 +97,7 @@ bool str_util::wstr2str(std::string& str,const wchar_t* wstr){
 
 bool str_util::str2wstr(std::wstring& wstr,const char* str){
 	if(str){
-		setlocale(LC_CTYPE,setlocale(LC_ALL,""));
+        std::locale::global(std::locale());
 		auto len=mbstowcs(nullptr,str,0);	//no need '\0' for string
 		if(len==(size_t)-1)return false;
 		wstr.resize(len);
