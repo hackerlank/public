@@ -142,9 +142,9 @@ public class MahJongRule: GameRule {
 			break;
 		}
 		foreach(var meld in melds){
+			player.playData.Bunch.Add(meld);
 			foreach(var card in meld.Pawns){
 				player.playData.Hands.Remove(card);
-				player.playData.Bunch.Add(meld);
 			}
 			var A=meld.Pawns[0];
 			foreach(var a in player.AAAAs){

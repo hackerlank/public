@@ -158,6 +158,15 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
         return false;
     }
 
+    //log
+    /*
+    Debug<<"win bunches: "<<endl;
+    for(auto& b:bunch.child()){
+        std::string strbun;
+        Debug<<bunch2str(strbun,b)<<endl;
+    }
+    */
+
     auto pos=bunch.pos();
     auto card=bunch.pawns(0);
     auto& player=*game.players[pos];
