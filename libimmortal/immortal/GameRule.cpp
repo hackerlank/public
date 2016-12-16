@@ -188,6 +188,22 @@ void GameRule::settle(Game& game){
         
         //just send
         auto& msg=*game.spSettle;
+        
+        //log
+        /*
+        for(int i=0;i<msg.play_size();++i){
+            auto& hands=msg.play(i).hands();
+            auto& bun=msg.play(i).bunch();
+            std::string strhands;
+            Debug<<"hand "<<i<<":"<<This->cards2str(strhands,hands)<<endl<<"bunch:"<<endl;
+            std::string strbun;
+            for(auto& b:bun)
+                Debug<<This->bunch2str(strbun,b)<<endl;
+        }
+        std::string pile;
+        Debug<<"pile "<<This->cards2str(pile,msg.pile())<<endf;
+        */
+        
         if(cost_failed){
             //no data for cheater
             msg.Clear();
