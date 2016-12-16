@@ -26,7 +26,28 @@ public:
             Debug<<"server start at "<<port<<endf;
             
             //load game config
-            gameConfig.load("games.csv");
+            keye::csv_file gameCfg;
+            if(gameCfg.load("games.csv")){
+                Debug<<"----game config\n";
+                for(size_t r=0,ii=gameCfg.rows();r!=ii;++r){
+                    auto& game=*gameConfig.Add();
+                    game.set_rule((int)         gameCfg.value(r,0));
+                    game.set_available((int)    gameCfg.value(r,1));
+                    game.set_price((int)        gameCfg.value(r,2));
+                    game.set_rounds((int)       gameCfg.value(r,3));
+                    game.set_free((int)         gameCfg.value(r,4));
+                    game.set_event((int)        gameCfg.value(r,5));
+                    game.set_name((const char*) gameCfg.value(r,6));
+                    game.set_desc((const char*) gameCfg.value(r,7));
+
+                    Debug<<"rule="<<game.rule()<<
+                    ",aval="<<game.available()<<
+                    ",price="<<game.price()<<
+                    ",name="<<game.name()<<
+                    ",desc="<<game.desc()<<endl;
+                }
+                Debug<<endf;
+            }
 
             // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
             // standalone mode if only one node, else cluster mode.
@@ -65,7 +86,7 @@ public:
     }
     
     keye::ini_cfg_file          config;
-    keye::csv_file              gameConfig;
+    google::protobuf::RepeatedPtrField<proto3::game_t>    gameConfig;
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;
     std::map<unsigned long,long>    sessions; //[session,timestamp]

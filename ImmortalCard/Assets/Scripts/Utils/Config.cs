@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Proto3;
 
 public class Config{
 	public static string file="Config/config";
@@ -36,6 +37,19 @@ public class Config{
 				if(fi.FieldType!=typeof(string))continue;
 				fi.SetValue(null,kv.Value);
 			}
+		}
+	}
+
+	public static Dictionary<pb_enum,List<game_t>> games;
+	public static void parseLobby(MsgLCLobby msg){
+		games=new Dictionary<pb_enum, List<game_t>>();
+		foreach(game_t game in msg.Lobby.Games){
+			var rule=(pb_enum)(game.Rule/100);
+			//var cate=(pb_enum)(game.Rule%100);
+			if(!games.ContainsKey(rule)){
+				games.Add(rule,new List<game_t>());
+			}
+			games[rule].Add(game);
 		}
 	}
 }

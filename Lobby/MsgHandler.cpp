@@ -166,51 +166,10 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                 if(Lobby::sLobby->sessions.count(imsg.session())){
                     omsg.set_result(pb_enum::SUCCEESS);
                     
-                    //game_config
-                    
                     auto& lobby=*omsg.mutable_lobby();
                     lobby.set_version(100);
                     lobby.set_bulletin("欢迎进入风云世界！");
-                    
-                    auto game=lobby.add_games();
-                    game->set_id(pb_enum::GAME_PHZ);
-                    game->set_version(100);
-                    game->set_desc("风云湖南跑胡子");
-                    game->add_rules(pb_enum::PHZ_SY);
-                    game->add_rules(pb_enum::PHZ_SYBP);
-                    game->add_rules(pb_enum::PHZ_LD);
-                    
-                    game->add_rules(pb_enum::PHZ_HH);
-                    game->add_rules(pb_enum::PHZ_CD_QMT);
-                    game->add_rules(pb_enum::PHZ_CD_HHD);
-                    
-                    game->add_rules(pb_enum::PHZ_CS);
-                    game->add_rules(pb_enum::PHZ_XX_GHZ);
-                    game->add_rules(pb_enum::PHZ_HY);
-                    
-                    game->add_rules(pb_enum::PHZ_YZ_SBW);
-                    game->add_rules(pb_enum::PHZ_PEGHZ);
-                    game->add_rules(pb_enum::PHZ_SC_EQS);
-                    
-                    game->add_rules(pb_enum::PHZ_CZ);
-                    game->add_rules(pb_enum::PHZ_GX);
-                    
-                    game=lobby.add_games();
-                    game->set_id(pb_enum::GAME_MJ);
-                    game->set_version(100);
-                    game->set_desc("风云麻将");
-                    game->add_rules(pb_enum::MJ_SICHUAN);
-                    game->add_rules(pb_enum::MJ_GUANGDONG);
-                    game->add_rules(pb_enum::MJ_HUNAN);
-                    game->add_rules(pb_enum::MJ_FUJIAN);
-                    game->add_rules(pb_enum::MJ_ZHEJIANG);
-                    
-                    game=lobby.add_games();
-                    game->set_id(pb_enum::GAME_DDZ);
-                    game->set_version(100);
-                    game->set_desc("风云斗地主");
-                    game->add_rules(pb_enum::DDZ_CLASIC);
-                    game->add_rules(pb_enum::DDZ_FOR4);
+                    lobby.mutable_games()->CopyFrom(Lobby::sLobby->gameConfig);
                 }else{
                     //not found
                     Debug<<"client "<<imsg.uid().c_str()<<" invalid session\n";

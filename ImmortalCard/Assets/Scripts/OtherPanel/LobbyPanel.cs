@@ -40,7 +40,7 @@ public class LobbyPanel : MonoBehaviour {
 				lobby=null;
 			}
 			
-			while(lobby==null)
+			while(lobby==null || Config.games==null)
 				yield return null;
 
 			Dirty=false;
@@ -53,24 +53,25 @@ public class LobbyPanel : MonoBehaviour {
 			}
 			
 			//games
-			foreach(game_t game in lobby.Games){
+			foreach(var kv in Config.games){
+				var game=kv.Key;
 				Hashtable param=new Hashtable();
 				param["game"]=game;
 				StartCoroutine(Main.Instance.updater.Load<GameIcon>(
 					"Prefabs/GameIcon",GameRoot,delegate(Object obj,Hashtable arg){
 					var icon=obj as GameIcon;
-					icon.Value=arg["game"] as game_t;
+					icon.Value=(pb_enum)arg["game"];
 				},param));
 				yield return null;
 			}
 		}
 	}
 
-	public void OnGame(game_t game){
+	public void OnGame(pb_enum game){
 		StartCoroutine(Main.Instance.updater.Load<EnterPanel>(
 			"Prefabs/EnterPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2) {
 			var panel=arg1 as EnterPanel;
-			panel.CurrentGame=game;
+			panel.CurrentRule=game;
 			if(null!=this)
 				Destroy(gameObject);
 		}));

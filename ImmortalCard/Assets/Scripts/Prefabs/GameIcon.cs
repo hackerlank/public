@@ -8,11 +8,11 @@ public class GameIcon : MonoBehaviour {
 	public Image	Icon;
 	public Text		Name;
 
-	game_t game;
-	public game_t Value{
+	pb_enum game;
+	public pb_enum Value{
 		set{
 			game=value;
-			Name.text=id2name(game.Id);
+			Name.text=id2name(game);
 		}
 	}
 

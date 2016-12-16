@@ -232,6 +232,7 @@ public class Player {
 			MsgLCLobby msgLobby=MsgLCLobby.Parser.ParseFrom(bytes);
 			if(msgLobby.Result==pb_enum.Succeess){
 				LobbyPanel.lobby=msgLobby.Lobby;
+				Config.parseLobby(msgLobby);
 			}else
 				Debug.LogError("lobby error: "+msgLobby.Result);
 			break;
