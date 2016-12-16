@@ -9,13 +9,6 @@
 #ifndef Server_h
 #define Server_h
 
-enum TIMER:size_t{
-    TIMER_SEC=100,
-    TIMER_MIN,
-    TIMER_HOUR,
-    TIMER_DAY,
-};
-
 class Server :public keye::ws_service {
 public:
     Server(const char* name,size_t ios = 1, size_t works = 1, size_t rb_size = 510)
@@ -32,6 +25,9 @@ public:
             ws_service::run(port,"0.0.0.0");
             Debug<<"server start at "<<port<<endf;
             
+            //load game config
+            gameConfig.load("games.csv");
+
             // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
             // standalone mode if only one node, else cluster mode.
             char db[128];
@@ -69,6 +65,7 @@ public:
     }
     
     keye::ini_cfg_file          config;
+    keye::csv_file              gameConfig;
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;
     std::map<unsigned long,long>    sessions; //[session,timestamp]

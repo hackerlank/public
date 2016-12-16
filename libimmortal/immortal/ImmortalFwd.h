@@ -31,6 +31,7 @@ extern std::shared_ptr<keye::logger> sDebug;
 #endif
 
 #include "PBHelper.h"
+#include "GameDefine.h"
 #include "Server.h"
 #include <immortal/Player.h>
 #include <immortal/Game.h>

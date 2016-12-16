@@ -166,6 +166,8 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                 if(Lobby::sLobby->sessions.count(imsg.session())){
                     omsg.set_result(pb_enum::SUCCEESS);
                     
+                    //game_config
+                    
                     auto& lobby=*omsg.mutable_lobby();
                     lobby.set_version(100);
                     lobby.set_bulletin("欢迎进入风云世界！");

@@ -23,6 +23,7 @@ extern std::shared_ptr<keye::logger> sDebug;
 #endif
 
 #include "PBHelper.h"
+#include "GameDefine.h"
 #include "Server.h"
 #include "MsgHandler.h"
 #include "Charge.h"

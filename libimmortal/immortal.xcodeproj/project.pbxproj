@@ -38,7 +38,7 @@
 		5E991A6A1DE2E4E500D70431 /* Immortal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Immortal.cpp; sourceTree = "<group>"; };
 		5E991A6B1DE2E4E500D70431 /* Immortal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Immortal.h; sourceTree = "<group>"; };
 		5E991A6C1DE2E4E500D70431 /* ImmortalFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmortalFwd.h; sourceTree = "<group>"; };
-		5E991A6D1DE2E4E500D70431 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PBHelper.h; path = ../../include/PBHelper.h; sourceTree = "<group>"; };
+		5E991A6D1DE2E4E500D70431 /* PBHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PBHelper.h; path = ../include/PBHelper.h; sourceTree = "<group>"; };
 		5E991A6E1DE2E4E500D70431 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		5E991A6F1DE2E4E500D70431 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stdafx.cpp; sourceTree = SOURCE_ROOT; };
@@ -62,6 +62,7 @@
 				5E991A7D1DE2E7FF00D70431 /* stdafx.cpp */,
 				5E991A7E1DE2E7FF00D70431 /* stdafx.h */,
 				5E61E7241E0220350090DEFF /* Server.h */,
+				5E991A6D1DE2E4E500D70431 /* PBHelper.h */,
 				5E991A621DE2E4E500D70431 /* immortal */,
 				5E991A5C1DE2E16C00D70431 /* Products */,
 			);
@@ -88,7 +89,6 @@
 				5E991A6A1DE2E4E500D70431 /* Immortal.cpp */,
 				5E991A6B1DE2E4E500D70431 /* Immortal.h */,
 				5E991A6C1DE2E4E500D70431 /* ImmortalFwd.h */,
-				5E991A6D1DE2E4E500D70431 /* PBHelper.h */,
 				5E991A6E1DE2E4E500D70431 /* Player.cpp */,
 				5E991A6F1DE2E4E500D70431 /* Player.h */,
 			);

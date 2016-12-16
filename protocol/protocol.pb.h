@@ -84,6 +84,7 @@ class MsgPCVerify;
 class achv_t;
 class bunch_t;
 class charge_t;
+class game_config;
 class game_t;
 class key_value;
 class lobby_t;
@@ -1023,6 +1024,157 @@ class achv_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
 };
 // -------------------------------------------------------------------
 
+class game_config : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.game_config) */ {
+ public:
+  game_config();
+  virtual ~game_config();
+
+  game_config(const game_config& from);
+
+  inline game_config& operator=(const game_config& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  static const game_config& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const game_config* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
+
+  void Swap(game_config* other);
+
+  // implements Message ----------------------------------------------
+
+  inline game_config* New() const { return New(NULL); }
+
+  game_config* New(::google::protobuf::Arena* arena) const;
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
+  void CopyFrom(const game_config& from);
+  void MergeFrom(const game_config& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  void DiscardUnknownFields();
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  void InternalSwap(game_config* other);
+  private:
+  inline ::google::protobuf::Arena* GetArenaNoVirtual() const {
+    return _arena_ptr_;
+  }
+  inline ::google::protobuf::Arena* MaybeArenaPtr() const {
+    return _arena_ptr_;
+  }
+  public:
+
+  ::std::string GetTypeName() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 rule = 1;
+  void clear_rule();
+  static const int kRuleFieldNumber = 1;
+  ::google::protobuf::int32 rule() const;
+  void set_rule(::google::protobuf::int32 value);
+
+  // optional int32 available = 2;
+  void clear_available();
+  static const int kAvailableFieldNumber = 2;
+  ::google::protobuf::int32 available() const;
+  void set_available(::google::protobuf::int32 value);
+
+  // optional int32 price = 3;
+  void clear_price();
+  static const int kPriceFieldNumber = 3;
+  ::google::protobuf::int32 price() const;
+  void set_price(::google::protobuf::int32 value);
+
+  // optional int32 rounds = 4;
+  void clear_rounds();
+  static const int kRoundsFieldNumber = 4;
+  ::google::protobuf::int32 rounds() const;
+  void set_rounds(::google::protobuf::int32 value);
+
+  // optional int32 free = 5;
+  void clear_free();
+  static const int kFreeFieldNumber = 5;
+  ::google::protobuf::int32 free() const;
+  void set_free(::google::protobuf::int32 value);
+
+  // optional int32 event = 6;
+  void clear_event();
+  static const int kEventFieldNumber = 6;
+  ::google::protobuf::int32 event() const;
+  void set_event(::google::protobuf::int32 value);
+
+  // optional string name = 7;
+  void clear_name();
+  static const int kNameFieldNumber = 7;
+  const ::std::string& name() const;
+  void set_name(const ::std::string& value);
+  void set_name(const char* value);
+  void set_name(const char* value, size_t size);
+  ::std::string* mutable_name();
+  ::std::string* release_name();
+  void set_allocated_name(::std::string* name);
+
+  // optional string desc = 8;
+  void clear_desc();
+  static const int kDescFieldNumber = 8;
+  const ::std::string& desc() const;
+  void set_desc(const ::std::string& value);
+  void set_desc(const char* value);
+  void set_desc(const char* value, size_t size);
+  ::std::string* mutable_desc();
+  ::std::string* release_desc();
+  void set_allocated_desc(::std::string* desc);
+
+  // @@protoc_insertion_point(class_scope:proto3.game_config)
+ private:
+
+  ::google::protobuf::internal::ArenaStringPtr _unknown_fields_;
+  ::google::protobuf::Arena* _arena_ptr_;
+
+  bool _is_default_instance_;
+  ::google::protobuf::int32 rule_;
+  ::google::protobuf::int32 available_;
+  ::google::protobuf::int32 price_;
+  ::google::protobuf::int32 rounds_;
+  ::google::protobuf::int32 free_;
+  ::google::protobuf::int32 event_;
+  ::google::protobuf::internal::ArenaStringPtr name_;
+  ::google::protobuf::internal::ArenaStringPtr desc_;
+  mutable int _cached_size_;
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_protocol_2eproto_impl();
+  #else
+  friend void  protobuf_AddDesc_protocol_2eproto();
+  #endif
+  friend void protobuf_AssignDesc_protocol_2eproto();
+  friend void protobuf_ShutdownFile_protocol_2eproto();
+
+  void InitAsDefaultInstance();
+  static game_config* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_point(class_definition:proto3.game_t) */ {
  public:
   game_t();
@@ -1099,38 +1251,32 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::google::protobuf::uint32 version() const;
   void set_version(::google::protobuf::uint32 value);
 
-  // optional string ip = 3;
-  void clear_ip();
-  static const int kIpFieldNumber = 3;
-  const ::std::string& ip() const;
-  void set_ip(const ::std::string& value);
-  void set_ip(const char* value);
-  void set_ip(const char* value, size_t size);
-  ::std::string* mutable_ip();
-  ::std::string* release_ip();
-  void set_allocated_ip(::std::string* ip);
+  // optional string node = 3;
+  void clear_node();
+  static const int kNodeFieldNumber = 3;
+  const ::std::string& node() const;
+  void set_node(const ::std::string& value);
+  void set_node(const char* value);
+  void set_node(const char* value, size_t size);
+  ::std::string* mutable_node();
+  ::std::string* release_node();
+  void set_allocated_node(::std::string* node);
 
-  // optional uint32 port = 4;
-  void clear_port();
-  static const int kPortFieldNumber = 4;
-  ::google::protobuf::uint32 port() const;
-  void set_port(::google::protobuf::uint32 value);
-
-  // optional int32 occupied = 5;
+  // optional int32 occupied = 4;
   void clear_occupied();
-  static const int kOccupiedFieldNumber = 5;
+  static const int kOccupiedFieldNumber = 4;
   ::google::protobuf::int32 occupied() const;
   void set_occupied(::google::protobuf::int32 value);
 
-  // optional int32 capacity = 6;
+  // optional int32 capacity = 5;
   void clear_capacity();
-  static const int kCapacityFieldNumber = 6;
+  static const int kCapacityFieldNumber = 5;
   ::google::protobuf::int32 capacity() const;
   void set_capacity(::google::protobuf::int32 value);
 
-  // optional string desc = 7;
+  // optional string desc = 6;
   void clear_desc();
-  static const int kDescFieldNumber = 7;
+  static const int kDescFieldNumber = 6;
   const ::std::string& desc() const;
   void set_desc(const ::std::string& value);
   void set_desc(const char* value);
@@ -1139,34 +1285,34 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   ::std::string* release_desc();
   void set_allocated_desc(::std::string* desc);
 
-  // optional int32 status = 8;
+  // optional int32 status = 7;
   void clear_status();
-  static const int kStatusFieldNumber = 8;
+  static const int kStatusFieldNumber = 7;
   ::google::protobuf::int32 status() const;
   void set_status(::google::protobuf::int32 value);
 
-  // optional uint32 openning_time = 9;
+  // optional uint32 openning_time = 8;
   void clear_openning_time();
-  static const int kOpenningTimeFieldNumber = 9;
+  static const int kOpenningTimeFieldNumber = 8;
   ::google::protobuf::uint32 openning_time() const;
   void set_openning_time(::google::protobuf::uint32 value);
 
-  // optional uint32 maintain_start = 10;
+  // optional uint32 maintain_start = 9;
   void clear_maintain_start();
-  static const int kMaintainStartFieldNumber = 10;
+  static const int kMaintainStartFieldNumber = 9;
   ::google::protobuf::uint32 maintain_start() const;
   void set_maintain_start(::google::protobuf::uint32 value);
 
-  // optional uint32 maintain_end = 11;
+  // optional uint32 maintain_end = 10;
   void clear_maintain_end();
-  static const int kMaintainEndFieldNumber = 11;
+  static const int kMaintainEndFieldNumber = 10;
   ::google::protobuf::uint32 maintain_end() const;
   void set_maintain_end(::google::protobuf::uint32 value);
 
-  // repeated .proto3.pb_enum rules = 12;
+  // repeated .proto3.pb_enum rules = 11;
   int rules_size() const;
   void clear_rules();
-  static const int kRulesFieldNumber = 12;
+  static const int kRulesFieldNumber = 11;
   ::proto3::pb_enum rules(int index) const;
   void set_rules(int index, ::proto3::pb_enum value);
   void add_rules(::proto3::pb_enum value);
@@ -1182,17 +1328,16 @@ class game_t : public ::google::protobuf::MessageLite /* @@protoc_insertion_poin
   bool _is_default_instance_;
   int id_;
   ::google::protobuf::uint32 version_;
-  ::google::protobuf::internal::ArenaStringPtr ip_;
-  ::google::protobuf::uint32 port_;
+  ::google::protobuf::internal::ArenaStringPtr node_;
   ::google::protobuf::int32 occupied_;
-  ::google::protobuf::internal::ArenaStringPtr desc_;
   ::google::protobuf::int32 capacity_;
+  ::google::protobuf::internal::ArenaStringPtr desc_;
   ::google::protobuf::int32 status_;
   ::google::protobuf::uint32 openning_time_;
   ::google::protobuf::uint32 maintain_start_;
+  ::google::protobuf::uint32 maintain_end_;
   ::google::protobuf::RepeatedField<int> rules_;
   mutable int _rules_cached_byte_size_;
-  ::google::protobuf::uint32 maintain_end_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -8318,6 +8463,182 @@ inline void achv_t::set_value(::google::protobuf::int32 value) {
 
 // -------------------------------------------------------------------
 
+// game_config
+
+// optional int32 rule = 1;
+inline void game_config::clear_rule() {
+  rule_ = 0;
+}
+inline ::google::protobuf::int32 game_config::rule() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.rule)
+  return rule_;
+}
+inline void game_config::set_rule(::google::protobuf::int32 value) {
+  
+  rule_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_config.rule)
+}
+
+// optional int32 available = 2;
+inline void game_config::clear_available() {
+  available_ = 0;
+}
+inline ::google::protobuf::int32 game_config::available() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.available)
+  return available_;
+}
+inline void game_config::set_available(::google::protobuf::int32 value) {
+  
+  available_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_config.available)
+}
+
+// optional int32 price = 3;
+inline void game_config::clear_price() {
+  price_ = 0;
+}
+inline ::google::protobuf::int32 game_config::price() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.price)
+  return price_;
+}
+inline void game_config::set_price(::google::protobuf::int32 value) {
+  
+  price_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_config.price)
+}
+
+// optional int32 rounds = 4;
+inline void game_config::clear_rounds() {
+  rounds_ = 0;
+}
+inline ::google::protobuf::int32 game_config::rounds() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.rounds)
+  return rounds_;
+}
+inline void game_config::set_rounds(::google::protobuf::int32 value) {
+  
+  rounds_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_config.rounds)
+}
+
+// optional int32 free = 5;
+inline void game_config::clear_free() {
+  free_ = 0;
+}
+inline ::google::protobuf::int32 game_config::free() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.free)
+  return free_;
+}
+inline void game_config::set_free(::google::protobuf::int32 value) {
+  
+  free_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_config.free)
+}
+
+// optional int32 event = 6;
+inline void game_config::clear_event() {
+  event_ = 0;
+}
+inline ::google::protobuf::int32 game_config::event() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.event)
+  return event_;
+}
+inline void game_config::set_event(::google::protobuf::int32 value) {
+  
+  event_ = value;
+  // @@protoc_insertion_point(field_set:proto3.game_config.event)
+}
+
+// optional string name = 7;
+inline void game_config::clear_name() {
+  name_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& game_config::name() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.name)
+  return name_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void game_config::set_name(const ::std::string& value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.game_config.name)
+}
+inline void game_config::set_name(const char* value) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.game_config.name)
+}
+inline void game_config::set_name(const char* value, size_t size) {
+  
+  name_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.game_config.name)
+}
+inline ::std::string* game_config::mutable_name() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.game_config.name)
+  return name_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* game_config::release_name() {
+  // @@protoc_insertion_point(field_release:proto3.game_config.name)
+  
+  return name_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void game_config::set_allocated_name(::std::string* name) {
+  if (name != NULL) {
+    
+  } else {
+    
+  }
+  name_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), name);
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_config.name)
+}
+
+// optional string desc = 8;
+inline void game_config::clear_desc() {
+  desc_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline const ::std::string& game_config::desc() const {
+  // @@protoc_insertion_point(field_get:proto3.game_config.desc)
+  return desc_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void game_config::set_desc(const ::std::string& value) {
+  
+  desc_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.game_config.desc)
+}
+inline void game_config::set_desc(const char* value) {
+  
+  desc_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.game_config.desc)
+}
+inline void game_config::set_desc(const char* value, size_t size) {
+  
+  desc_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+      ::std::string(reinterpret_cast<const char*>(value), size));
+  // @@protoc_insertion_point(field_set_pointer:proto3.game_config.desc)
+}
+inline ::std::string* game_config::mutable_desc() {
+  
+  // @@protoc_insertion_point(field_mutable:proto3.game_config.desc)
+  return desc_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline ::std::string* game_config::release_desc() {
+  // @@protoc_insertion_point(field_release:proto3.game_config.desc)
+  
+  return desc_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+}
+inline void game_config::set_allocated_desc(::std::string* desc) {
+  if (desc != NULL) {
+    
+  } else {
+    
+  }
+  desc_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), desc);
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_config.desc)
+}
+
+// -------------------------------------------------------------------
+
 // game_t
 
 // optional .proto3.pb_enum id = 1;
@@ -8348,65 +8669,51 @@ inline void game_t::set_version(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.version)
 }
 
-// optional string ip = 3;
-inline void game_t::clear_ip() {
-  ip_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+// optional string node = 3;
+inline void game_t::clear_node() {
+  node_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline const ::std::string& game_t::ip() const {
-  // @@protoc_insertion_point(field_get:proto3.game_t.ip)
-  return ip_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+inline const ::std::string& game_t::node() const {
+  // @@protoc_insertion_point(field_get:proto3.game_t.node)
+  return node_.GetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void game_t::set_ip(const ::std::string& value) {
+inline void game_t::set_node(const ::std::string& value) {
   
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
-  // @@protoc_insertion_point(field_set:proto3.game_t.ip)
+  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), value);
+  // @@protoc_insertion_point(field_set:proto3.game_t.node)
 }
-inline void game_t::set_ip(const char* value) {
+inline void game_t::set_node(const char* value) {
   
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
-  // @@protoc_insertion_point(field_set_char:proto3.game_t.ip)
+  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ::std::string(value));
+  // @@protoc_insertion_point(field_set_char:proto3.game_t.node)
 }
-inline void game_t::set_ip(const char* value, size_t size) {
+inline void game_t::set_node(const char* value, size_t size) {
   
-  ip_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
+  node_.SetNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(),
       ::std::string(reinterpret_cast<const char*>(value), size));
-  // @@protoc_insertion_point(field_set_pointer:proto3.game_t.ip)
+  // @@protoc_insertion_point(field_set_pointer:proto3.game_t.node)
 }
-inline ::std::string* game_t::mutable_ip() {
+inline ::std::string* game_t::mutable_node() {
   
-  // @@protoc_insertion_point(field_mutable:proto3.game_t.ip)
-  return ip_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  // @@protoc_insertion_point(field_mutable:proto3.game_t.node)
+  return node_.MutableNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline ::std::string* game_t::release_ip() {
-  // @@protoc_insertion_point(field_release:proto3.game_t.ip)
+inline ::std::string* game_t::release_node() {
+  // @@protoc_insertion_point(field_release:proto3.game_t.node)
   
-  return ip_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
+  return node_.ReleaseNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
-inline void game_t::set_allocated_ip(::std::string* ip) {
-  if (ip != NULL) {
+inline void game_t::set_allocated_node(::std::string* node) {
+  if (node != NULL) {
     
   } else {
     
   }
-  ip_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), ip);
-  // @@protoc_insertion_point(field_set_allocated:proto3.game_t.ip)
+  node_.SetAllocatedNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited(), node);
+  // @@protoc_insertion_point(field_set_allocated:proto3.game_t.node)
 }
 
-// optional uint32 port = 4;
-inline void game_t::clear_port() {
-  port_ = 0u;
-}
-inline ::google::protobuf::uint32 game_t::port() const {
-  // @@protoc_insertion_point(field_get:proto3.game_t.port)
-  return port_;
-}
-inline void game_t::set_port(::google::protobuf::uint32 value) {
-  
-  port_ = value;
-  // @@protoc_insertion_point(field_set:proto3.game_t.port)
-}
-
-// optional int32 occupied = 5;
+// optional int32 occupied = 4;
 inline void game_t::clear_occupied() {
   occupied_ = 0;
 }
@@ -8420,7 +8727,7 @@ inline void game_t::set_occupied(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.occupied)
 }
 
-// optional int32 capacity = 6;
+// optional int32 capacity = 5;
 inline void game_t::clear_capacity() {
   capacity_ = 0;
 }
@@ -8434,7 +8741,7 @@ inline void game_t::set_capacity(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.capacity)
 }
 
-// optional string desc = 7;
+// optional string desc = 6;
 inline void game_t::clear_desc() {
   desc_.ClearToEmptyNoArena(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
 }
@@ -8478,7 +8785,7 @@ inline void game_t::set_allocated_desc(::std::string* desc) {
   // @@protoc_insertion_point(field_set_allocated:proto3.game_t.desc)
 }
 
-// optional int32 status = 8;
+// optional int32 status = 7;
 inline void game_t::clear_status() {
   status_ = 0;
 }
@@ -8492,7 +8799,7 @@ inline void game_t::set_status(::google::protobuf::int32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.status)
 }
 
-// optional uint32 openning_time = 9;
+// optional uint32 openning_time = 8;
 inline void game_t::clear_openning_time() {
   openning_time_ = 0u;
 }
@@ -8506,7 +8813,7 @@ inline void game_t::set_openning_time(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.openning_time)
 }
 
-// optional uint32 maintain_start = 10;
+// optional uint32 maintain_start = 9;
 inline void game_t::clear_maintain_start() {
   maintain_start_ = 0u;
 }
@@ -8520,7 +8827,7 @@ inline void game_t::set_maintain_start(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.maintain_start)
 }
 
-// optional uint32 maintain_end = 11;
+// optional uint32 maintain_end = 10;
 inline void game_t::clear_maintain_end() {
   maintain_end_ = 0u;
 }
@@ -8534,7 +8841,7 @@ inline void game_t::set_maintain_end(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.game_t.maintain_end)
 }
 
-// repeated .proto3.pb_enum rules = 12;
+// repeated .proto3.pb_enum rules = 11;
 inline int game_t::rules_size() const {
   return rules_.size();
 }
@@ -13583,6 +13890,8 @@ inline void MsgCNStats::set_allocated_value(::std::string* value) {
 }
 
 #endif  // !PROTOBUF_INLINE_NOT_IN_HEADERS
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

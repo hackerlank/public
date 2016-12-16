@@ -39,6 +39,7 @@ bool Lobby::run(const char* cfg){
             sprintf(idval,"%lld",id);
             spdb->setnx(idkey,idval);
         }
+        
         return true;
     }
     return false;

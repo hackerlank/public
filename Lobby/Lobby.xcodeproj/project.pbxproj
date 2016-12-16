@@ -39,6 +39,7 @@
 		5E8A173A1D71E07800CDCE1D /* Lobby.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Lobby.h; sourceTree = "<group>"; };
 		5E8A173B1D71E07800CDCE1D /* LobbyFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LobbyFwd.h; sourceTree = "<group>"; };
 		5E8A17411D71E2EA00CDCE1D /* Lobby */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lobby; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E8DB37F1E0381EE007E545F /* GameDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDefine.h; path = ../include/GameDefine.h; sourceTree = "<group>"; };
 		5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../../../../../usr/local/lib/libprotobuf-lite.a"; sourceTree = "<group>"; };
 		5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhiredis.dylib; path = ../sdks/libs/libhiredis.dylib; sourceTree = "<group>"; };
 		5EEEA7B31D67A59D00630485 /* libprotocol.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotocol.a; path = ../Build/Debug/libprotocol.a; sourceTree = "<group>"; };
@@ -70,6 +71,7 @@
 				5E8A173B1D71E07800CDCE1D /* LobbyFwd.h */,
 				5E61E7211E021C8C0090DEFF /* PBHelper.h */,
 				5E61E7221E021CC90090DEFF /* Server.h */,
+				5E8DB37F1E0381EE007E545F /* GameDefine.h */,
 				5EEEA7B31D67A59D00630485 /* libprotocol.a */,
 				5EEEA79B1D67A3EC00630485 /* libhiredis.dylib */,
 				5EEEA7971D67A19B00630485 /* libprotobuf-lite.a */,

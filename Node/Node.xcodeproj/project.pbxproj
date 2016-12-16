@@ -95,6 +95,7 @@
 		5E3845A11D35462A00F9B096 /* Node */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Node; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E8A17421D71E71600CDCE1D /* Node.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Node.cpp; sourceTree = "<group>"; };
 		5E8A17441D71E71600CDCE1D /* NodeFwd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NodeFwd.h; sourceTree = "<group>"; };
+		5E8DB37E1E0381E3007E545F /* GameDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameDefine.h; path = ../include/GameDefine.h; sourceTree = "<group>"; };
 		5E991A811DE2EF1900D70431 /* DoudeZhu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DoudeZhu.cpp; sourceTree = "<group>"; };
 		5E991A821DE2EF1900D70431 /* DoudeZhu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoudeZhu.h; sourceTree = "<group>"; };
 		5E991A831DE2EF1900D70431 /* Mahjong.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mahjong.h; sourceTree = "<group>"; };
@@ -129,6 +130,7 @@
 		5E3845981D35462A00F9B096 = {
 			isa = PBXGroup;
 			children = (
+				5E8DB37E1E0381E3007E545F /* GameDefine.h */,
 				5E991A811DE2EF1900D70431 /* DoudeZhu.cpp */,
 				5E991A821DE2EF1900D70431 /* DoudeZhu.h */,
 				5E991A831DE2EF1900D70431 /* Mahjong.h */,
