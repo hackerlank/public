@@ -87,9 +87,9 @@ private:
 	std::vector<cast_t>	_grids;
 };
 // --------------------------------------------------------
-// ini_cfg_file:elements inline split by "=".
+// ini_file:elements inline split by "=".
 // --------------------------------------------------------
-class KEYE_API ini_cfg_file:public txt_file{
+class KEYE_API ini_file:public txt_file{
 public:
 	/* retrieve values,usage:auto val=value(name)
 	cast_t will auto cast types */

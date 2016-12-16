@@ -325,7 +325,7 @@ void csv_file::print()const{
 	KEYE_LOG("|\n");
 }
 // --------------------------------------------------------
-bool ini_cfg_file::_parse(const std::string& buf){
+bool ini_file::_parse(const std::string& buf){
     wstring wbuf;
     str_util::str2wstr(wbuf,buf.c_str());
     //reset
@@ -350,7 +350,7 @@ bool ini_cfg_file::_parse(const std::string& buf){
     return nl>0;
 }
 
-bool ini_cfg_file::_parse(const std::wstring& wbuf){
+bool ini_file::_parse(const std::wstring& wbuf){
 	//reset
 	_wmap.clear();
 	//load
@@ -370,7 +370,7 @@ bool ini_cfg_file::_parse(const std::wstring& wbuf){
 	return nl>0;
 }
 
-bool ini_cfg_file::parse_ini(map<wstring,wstring>& dict,const wstring& line){
+bool ini_file::parse_ini(map<wstring,wstring>& dict,const wstring& line){
 	const wchar_t* ini_pattern=
 		L"(?!\\s*$)"                                     // Don't match empty last value.
 		"\\s*"                                          // Strip whitespace before value.
@@ -396,7 +396,7 @@ bool ini_cfg_file::parse_ini(map<wstring,wstring>& dict,const wstring& line){
 	return false;
 }
 
-const cast_t& ini_cfg_file::value(const char* key)const{
+const cast_t& ini_file::value(const char* key)const{
     if(key&&!_map.empty()){
         auto i=_map.find(key);
         if(i!=_map.end())
@@ -405,7 +405,7 @@ const cast_t& ini_cfg_file::value(const char* key)const{
     return _default;
 }
 
-const cast_t& ini_cfg_file::value(const wchar_t* key)const{
+const cast_t& ini_file::value(const wchar_t* key)const{
 	if(key&&!_wmap.empty()){
 		auto i=_wmap.find(key);
 		if(i!=_wmap.end())
@@ -414,7 +414,7 @@ const cast_t& ini_cfg_file::value(const wchar_t* key)const{
 	return _default;
 }
 
-bool ini_cfg_file::_make_buffer(std::string& buf){
+bool ini_file::_make_buffer(std::string& buf){
     if(_map.empty())return false;
     
     buf.clear();
@@ -426,7 +426,7 @@ bool ini_cfg_file::_make_buffer(std::string& buf){
     return true;
 }
 
-bool ini_cfg_file::_make_buffer(std::wstring& buf){
+bool ini_file::_make_buffer(std::wstring& buf){
 	if(_wmap.empty())return false;
 
 	buf.clear();
@@ -438,7 +438,7 @@ bool ini_cfg_file::_make_buffer(std::wstring& buf){
 	return true;
 }
 
-void ini_cfg_file::_clean(std::string& ss,char c){
+void ini_file::_clean(std::string& ss,char c){
     while(0==ss.find(c))ss=ss.substr(1);
     while(true){
         size_t i=ss.rfind(c),ii=ss.length()-1;
@@ -447,7 +447,7 @@ void ini_cfg_file::_clean(std::string& ss,char c){
     }
 }
 
-void ini_cfg_file::_clean(std::wstring& ss,wchar_t c){
+void ini_file::_clean(std::wstring& ss,wchar_t c){
 	while(0==ss.find(c))ss=ss.substr(1);
 	while(true){
 		size_t i=ss.rfind(c),ii=ss.length()-1;
@@ -456,7 +456,7 @@ void ini_cfg_file::_clean(std::wstring& ss,wchar_t c){
 	}
 }
 
-void ini_cfg_file::print()const{
+void ini_file::print()const{
 	for(auto i=_map.begin(),ii=_map.end();i!=ii;++i){
 		auto& key=i->first;
 		const char* val=i->second;

@@ -112,7 +112,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                             player->set_silver(atoi(hmap["silver"].c_str()));
                         }
                         Debug<<"client "<<uid.c_str()<<" login succeeded\n";
-                        auto version = (int)Charge::sCharge->config.value("version");
+                        auto version = (int)Charge::sCharge->config.value(L"version");
                         player->set_uid(uid);
                         auto session=genSession();
                         omsg.set_version(version);

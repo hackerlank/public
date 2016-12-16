@@ -56,7 +56,7 @@ void Player::on_read(PBHelper& pb){
                         char gold_key[128];
                         std::string str;
                         int gold=0;
-                        auto cost=(int)Immortal::sImmortal->config.value("goldcost");
+                        auto cost=(int)Immortal::sImmortal->config.value(L"goldcost");
                         sprintf(gold_key,"player:%s",uid);
                         spdb->hget(gold_key,"gold",str);
                         gold=atoi(str.c_str());

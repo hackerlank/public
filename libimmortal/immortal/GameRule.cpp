@@ -155,11 +155,11 @@ void GameRule::settle(Game& game){
             char key[64],field[32];
             sprintf(key,"player:%s",uid);
             
-            auto is_free=(int)Immortal::sImmortal->config.value("free");
+            auto is_free=(int)Immortal::sImmortal->config.value(L"free");
             if(!is_free){
                 
                 int gold=0;
-                auto cost=(int)Immortal::sImmortal->config.value("goldcost");
+                auto cost=(int)Immortal::sImmortal->config.value(L"goldcost");
                 Spdb->lock(uid);
                 {
                     char gold_key[128];

@@ -21,14 +21,14 @@ public:
     
     virtual bool    run(const char* cfg=nullptr){
         if(cfg && config.load(cfg)){
-            auto port=(short)(int)config.value("port");
+            auto port=(short)(int)config.value(L"port");
             ws_service::run(port,"0.0.0.0");
             Debug<<"server start at "<<port<<endf;
             
             //load game config
             keye::csv_file gameCfg;
             if(gameCfg.load("games.csv")){
-                Debug<<"----game config\n";
+                //Debug<<"----game config\n";
                 for(size_t r=0,ii=gameCfg.rows();r!=ii;++r){
                     auto& game=*gameConfig.Add();
                     game.set_rule((int)         gameCfg.value(r,0));
@@ -39,20 +39,23 @@ public:
                     game.set_event((int)        gameCfg.value(r,5));
                     game.set_name((const char*) gameCfg.value(r,6));
                     game.set_desc((const char*) gameCfg.value(r,7));
-
+/*
                     Debug<<"rule="<<game.rule()<<
                     ",aval="<<game.available()<<
                     ",price="<<game.price()<<
                     ",name="<<game.name()<<
                     ",desc="<<game.desc()<<endl;
+*/
                 }
-                Debug<<endf;
+                //Debug<<endf;
             }
 
             // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
             // standalone mode if only one node, else cluster mode.
             char db[128];
-            sprintf(db,"%s:%d",(const char*)config.value("dbhost"),(int)config.value("dbport"));
+            std::string dbhost;
+            str_util::wstr2str(dbhost,(const wchar_t*)config.value(L"dbhost"));
+            sprintf(db,"%s:%d",dbhost.c_str(),(int)config.value(L"dbport"));
             spdb=std::make_shared<redis_proxy>();
             int retry=3;
             int retryTime=3000;
@@ -85,7 +88,7 @@ public:
 #endif
     }
     
-    keye::ini_cfg_file          config;
+    keye::ini_file          config;
     google::protobuf::RepeatedPtrField<proto3::game_t>    gameConfig;
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;
