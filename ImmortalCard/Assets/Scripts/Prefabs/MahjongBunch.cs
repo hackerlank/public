@@ -30,6 +30,13 @@ public class MahjongBunch : Bunch{
 					if(obj.Value<1000)obj.tint.color=Color.clear;
 				});
 			}
+			//add a placeholder card
+			if(value.Pawns.Count<3){
+				Card.Create(prefab,0,Cards,delegate(Card obj) {
+					obj.state=Card.State.ST_MELD;
+					obj.tint.color=Color.clear;
+				});
+			}
 		}
 	}
 }
