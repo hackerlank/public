@@ -19,5 +19,8 @@ public class PlayerIcon : MonoBehaviour {
 			Win.gameObject.SetActive(value.Win>0);
 		}
 	}
-	
+
+	public void OnTap(){
+
+	}
 }
