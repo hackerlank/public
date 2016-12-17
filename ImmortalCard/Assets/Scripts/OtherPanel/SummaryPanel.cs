@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Proto3;
 
 public class SummaryPanel : MonoBehaviour {
-	public Text			Title;
 	public Transform	Items;
 
 	IEnumerator Start () {
