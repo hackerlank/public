@@ -1,21 +1,3 @@
 [
     
-    {
-        "bundleName" : "Prefabs/LobbyPanel",        
-        "version" : 0,        
-        "crc" : 1816082896,        
-        "size" : 38551,        
-        "changeTime" : -8587210985156942328,        
-        "lastBuildDependencies" : 
-        [
-            "Assets/Resources/Images/share.png",            
-            "Assets/Resources/Images/flower.png",            
-            "Assets/ResourcesForStreaming/Prefabs/LobbyPanel.prefab",            
-            "Assets/Resources/Images/proxy.png",            
-            "Assets/Scripts/OtherPanel/LobbyPanel.cs",            
-            "Assets/Resources/Images/mail.png",            
-            "Assets/Resources/Images/settings.png",            
-            "Assets/Resources/Images/heart.png"
-        ]
-    }
 ]
