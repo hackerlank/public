@@ -5,10 +5,17 @@ using System.Collections.Generic;
 using Proto3;
 
 public class EnterPanel : MonoBehaviour {
-	public InputField DefinedCards;
-	public GameObject CreateTab,JoinTab;
-	public Transform GameRoot;
-	public Text Information;
+	public InputField	DefinedCards;
+	public Toggle		CreateTap,JoinTap;
+	public GameObject	GameContent,GameOptions;
+	public GameObject	DialPanel,InputPanel;
+	public Transform	GameRoot;
+	public Text			Information;
+
+	[HideInInspector]
+	public pb_enum	CurrentRule;
+	[HideInInspector]
+	public RuleIcon	GameCategory;
 
 	public static EnterPanel Instance=null;
 	void Awake(){
@@ -16,11 +23,6 @@ public class EnterPanel : MonoBehaviour {
 		Instance=this;
 	}
 	void OnDestroy(){Instance=null;}
-
-	[HideInInspector]
-	public pb_enum	CurrentRule;
-	[HideInInspector]
-	public RuleIcon	GameCategory;
 
 	IEnumerator Start(){
 		if(!Config.games.ContainsKey(CurrentRule))
@@ -49,26 +51,26 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnCreate(){
-		CreateTab.SetActive(true);
-		JoinTab.SetActive(false);
+		GameContent.SetActive(true);
+		GameOptions.SetActive(true);
+		DialPanel.SetActive(false);
+		InputPanel.SetActive(false);
 	}
 
 	public void OnJoin(){
-		CreateTab.SetActive(false);
-		JoinTab.SetActive(true);
+		GameContent.SetActive(false);
+		GameOptions.SetActive(false);
+		DialPanel.SetActive(true);
+		InputPanel.SetActive(true);
 	}
 
-	public void OnCreateOK(){
+	public void OnOK(){
 		if(!BlockView.Instance.Blocking){
 			BlockView.Instance.Blocking=true;
-			StartCoroutine(createCo());
-		}
-	}
-	
-	public void OnJoinOK(){
-		if(!BlockView.Instance.Blocking){
-			BlockView.Instance.Blocking=true;
-			StartCoroutine(joinCo());
+			if(CreateTap.isOn)
+				StartCoroutine(createCo());
+			else
+				StartCoroutine(joinCo());
 		}
 	}
 	
@@ -78,11 +80,11 @@ public class EnterPanel : MonoBehaviour {
 	public void OnHelp(){
 	}
 
-	public void OnLog(){
-		StartCoroutine(logCo());
+	public void OnReplay(){
+		StartCoroutine(replayCo());
 	}
 
-	IEnumerator logCo(){
+	IEnumerator replayCo(){
 		//connect: unstable and only for test
 		if(!Main.Instance.MainPlayer.InGame)
 			Main.Instance.MainPlayer.Connect(100);

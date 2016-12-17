@@ -32,7 +32,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
     //decode
     //Debug<<"body="<<content.c_str()<<endl;
     auto str=base64_decode(content);
-    //Debug<<"decode="<<str.c_str()<<endl;
+    Debug<<"decode="<<str.c_str()<<endl;
     
     //process
     switch(msgid){
@@ -153,7 +153,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                 },imsg.user().account(), imsg.user().udid(), imsg.user().dev_type(), func));
 
             }else{
-                Debug<<"client login failed\n";
+                Debug<<"MsgCLLogin parse failed\n";
                 PBHelper::Response(func,omsg,mid,500,"Internal error");
             }
             break;
@@ -177,7 +177,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                     omsg.set_result(pb_enum::ERR_SESSION);
                 }
             }else{
-                Debug<<"client enter failed\n";
+                Debug<<"MsgCLLobby parse failed\n";
                 omsg.set_result(pb_enum::ERR_PROTOCOL);
             }
             PBHelper::Response(func,omsg,omid);
