@@ -13,7 +13,7 @@ public class EnterPanel : MonoBehaviour {
 	public Text			Information;
 
 	[HideInInspector]
-	public pb_enum	CurrentRule;
+	public pb_enum	CurrentGame;
 	[HideInInspector]
 	public RuleIcon	GameCategory;
 
@@ -25,13 +25,15 @@ public class EnterPanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 
 	IEnumerator Start(){
-		if(!Config.games.ContainsKey(CurrentRule))
+		if(!Config.games.ContainsKey(CurrentGame))
 			yield break;
 
 		//if(!string.IsNullOrEmpty(CurrentRule.Desc))
 		//	Information.text=CurrentRule.Desc;
 
-		var categories=Config.games[CurrentRule];
+		while(null==RuleSprites.Instance)yield return null;
+
+		var categories=Config.games[CurrentGame];
 		foreach(game_t game in categories){
 			var param=new Hashtable();
 			param["rule"]=game.Rule%100;
@@ -114,7 +116,7 @@ public class EnterPanel : MonoBehaviour {
 
 		var storeGame=new StoreGame();
 		Cache.storeGame=storeGame;
-		storeGame.gameType=(int)CurrentRule;
+		storeGame.gameType=(int)CurrentGame;
 		storeGame.robots=4;
 
 		var opRound=new key_value();
@@ -128,7 +130,9 @@ public class EnterPanel : MonoBehaviour {
 		
 		MsgCNCreate msgC=new MsgCNCreate();
 		msgC.Mid=pb_msg.MsgCnCreate;
-		msgC.Game=CurrentRule;
+		msgC.Game=CurrentGame;
+		if(msgC.Game>pb_enum.GameMj)
+			msgC.Game=pb_enum.GameMj;
 
 		msgC.Options.Add(opRound);
 		msgC.Options.Add(opCategory);
@@ -198,8 +202,8 @@ public class EnterPanel : MonoBehaviour {
 			panel.StartCoroutine(panel.Play(msg));
 		};
 
-		switch(CurrentRule){
-		case pb_enum.GameMj:
+		switch(CurrentGame){
+		case pb_enum.GameMjChengdu:
 			rule=new MahJongRule();
 			ReplayPanel.Create("MahjongPanel",handler);
 			break;

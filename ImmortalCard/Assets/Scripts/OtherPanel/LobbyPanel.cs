@@ -53,6 +53,7 @@ public class LobbyPanel : MonoBehaviour {
 			}
 			
 			//games
+			while(null==GameSprites.Instance)yield return null;
 			foreach(var kv in Config.games){
 				var game=kv.Key;
 				Hashtable param=new Hashtable();
@@ -64,6 +65,11 @@ public class LobbyPanel : MonoBehaviour {
 				},param));
 				yield return null;
 			}
+
+			if(RuleSprites.Instance==null){
+				Main.Instance.StartCoroutine(Main.Instance.updater.Load<RuleSprites>(
+					"Prefabs/RuleSprites"));
+			}
 		}
 	}
 
@@ -71,7 +77,7 @@ public class LobbyPanel : MonoBehaviour {
 		StartCoroutine(Main.Instance.updater.Load<EnterPanel>(
 			"Prefabs/EnterPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2) {
 			var panel=arg1 as EnterPanel;
-			panel.CurrentRule=game;
+			panel.CurrentGame=game;
 			if(null!=this)
 				Destroy(gameObject);
 		}));

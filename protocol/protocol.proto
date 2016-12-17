@@ -29,10 +29,45 @@ DEV_ANDROID             =4;
 DEV_WINPHONE            =5;
 
 // game rule
+GAME_PHZ                =10;
 GAME_DDZ                =20;
 GAME_PDK                =21;
-GAME_PHZ                =22;
-GAME_MJ                 =23;
+
+GAME_MJ                 =50;
+GAME_MJ_AOMEN           =51;
+GAME_MJ_BEIJING         =52;
+GAME_MJ_CHANGCHUN       =53;
+GAME_MJ_CHANGSHA        =54;
+GAME_MJ_CHENGDU         =55;
+GAME_MJ_CHONGQIN        =56;
+GAME_MJ_FUZHOU          =57;
+GAME_MJ_GUANGZHOU       =58;
+GAME_MJ_GUIYANG         =59;
+GAME_MJ_HAERBIN         =60;
+GAME_MJ_HAIKOU          =61;
+GAME_MJ_HANGZHOU        =62;
+GAME_MJ_HEFEI           =63;
+GAME_MJ_HUHEHAOTE       =64;
+GAME_MJ_JINAN           =65;
+GAME_MJ_KUNMING         =66;
+GAME_MJ_LANZHOU         =67;
+GAME_MJ_LASA            =68;
+GAME_MJ_NANCHANG        =69;
+GAME_MJ_NANJING         =70;
+GAME_MJ_NANNING         =71;
+GAME_MJ_SHANGHAI        =72;
+GAME_MJ_SHENGYANG       =73;
+GAME_MJ_SHIJIAZHUANG    =74;
+GAME_MJ_TAIBEI          =75;
+GAME_MJ_TAIYUAN         =76;
+GAME_MJ_TIANJIN         =77;
+GAME_MJ_WUHAN           =78;
+GAME_MJ_WULUMUQI        =79;
+GAME_MJ_XIAN            =80;
+GAME_MJ_XIANGGANG       =81;
+GAME_MJ_XINING          =82;
+GAME_MJ_YINCHUAN        =83;
+GAME_MJ_ZHENGZHOU       =84;
 
 // game options
 OPTION_ROUND            =10;
@@ -66,14 +101,20 @@ PHZ_GX                  =13;//广西跑胡子
 
 PHZ_MAX                 =14;
 
-MJ_SICHUAN              =30;
-MJ_GUANGDONG            =31;
-MJ_HUNAN                =32;
-MJ_FUJIAN               =33;
-MJ_ZHEJIANG             =34;
+DDZ_CLASIC              =20;
+DDZ_FOR4                =21;
 
-DDZ_CLASIC              =90;
-DDZ_FOR4                =91;
+MJ_SICHUAN              =40;
+MJ_GUANGDONG            =41;
+MJ_HUNAN                =42;
+MJ_HAINAN               =43;
+MJ_ZHEJIANG             =44;
+MJ_NANJING              =45;
+MJ_TIANJIN              =46;
+MJ_WUHAN                =47;
+MJ_YUNNAN               =48;
+MJ_FUJIAN               =49;
+MJ_XUEZHAN              =50;
 
 // game operation
 OP_PASS                 =0;

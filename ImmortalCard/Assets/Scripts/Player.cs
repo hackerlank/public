@@ -100,15 +100,15 @@ public class Player {
 		};
 
 		switch(game){
-		case pb_enum.GameMj:
-			MahJongPanel.Create(handler);
-			break;
 		case pb_enum.GamePhz:
 			PaohuziPanel.Create(handler);
 			break;
 		case pb_enum.GameDdz:
-		default:
 			DoudeZhuPanel.Create(handler);
+			break;
+		case pb_enum.GameMj:
+		default:
+			MahJongPanel.Create(handler);
 			break;
 		}
 		while (panel==null)

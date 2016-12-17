@@ -5,24 +5,42 @@ using Proto3;
 
 public class RuleIcon : MonoBehaviour {
 
-	public Image	Icon;
-	public Text		Name;
-	public GameObject	OutLineEfx;
+	public Image		Icon;
+	public Text			Name;
+
+	public Toggle		toggle;
+	public ToggleGroup	Group;
+
+	static public ToggleGroup	RuleGroup=null;
 
 	pb_enum	category;
 	public pb_enum Value{
 		set{
 			category=value;
+			if(RuleSprites.Instance!=null && 
+			   RuleSprites.Instance.dict.ContainsKey(category)){
+				
+				var sprite=RuleSprites.Instance.dict[category];
+				Icon.sprite=sprite;
+			}
 			Name.text=rule2name(value);
+
+			if(RuleGroup==null)
+				RuleGroup=Group;
+			else{
+				toggle.group=RuleGroup;
+			}
 		}
 		get{
 			return category;
 		}
 	}
 	public void OnGame(){
+		/*
 		if(EnterPanel.Instance.GameCategory!=null && EnterPanel.Instance.GameCategory!=this)
 			EnterPanel.Instance.GameCategory.OutLineEfx.SetActive(false);
 		OutLineEfx.SetActive(true);
+		*/
 		EnterPanel.Instance.GameCategory=this;
 	}
 	

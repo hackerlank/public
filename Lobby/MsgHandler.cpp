@@ -14,6 +14,7 @@ using namespace std;
 void MsgHandler::on_http(const http_parser& req,const std::function<void(const http_parser&)> func){
     auto strmid=req.header("msgid");
     auto body=req.body();
+    Debug<<"body="<<body<<endl;
     
     //extra msgid and content
     std::string content;
@@ -30,7 +31,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
     }
     
     //decode
-    //Debug<<"body="<<content.c_str()<<endl;
+    Debug<<"content="<<content.c_str()<<endl;
     auto str=base64_decode(content);
     Debug<<"decode="<<str.c_str()<<endl;
     

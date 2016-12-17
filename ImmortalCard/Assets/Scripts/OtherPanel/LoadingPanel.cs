@@ -60,6 +60,9 @@ public class LoadingPanel : MonoBehaviour {
 			yield return StartCoroutine(updateCo());
 
 		//ready to enter lobby
+		Main.Instance.StartCoroutine(Main.Instance.updater.Load<GameSprites>(
+			"Prefabs/GameSprites"));
+
 		yield return StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel));
 
