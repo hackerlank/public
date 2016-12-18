@@ -193,6 +193,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	virtual public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		while(null==_playerInfo) yield return null;
 		for(int i=0;i<maxPlayer;++i){
 			_playerInfo[i].Score=msg.Play[i].Score;
 			_playerInfo[i].Total=msg.Play[i].Total;
