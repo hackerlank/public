@@ -290,7 +290,9 @@ public class Player {
 				//clear rule data
 				rule.nHands=new int[M];
 				for(int i=0;i<M;++i)rule.nHands[i]=msgDeal.Count[i];
-				
+
+				//Debug.Log("---- deal "+playData.Seat+" score="+playData.Score+",total="+playData.Total);
+
 				//clear player data
 				playData.Hands.Clear();
 				playData.Discards.Clear();

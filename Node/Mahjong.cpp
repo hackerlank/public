@@ -227,10 +227,6 @@ void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         }else{
             play.set_score(-score);
         }
-        auto total=game.spFinish->play(i).score()+play.score();
-        play.set_total(total);
-        game.spFinish->mutable_play(i)->set_score(total);
-        game.spFinish->mutable_play(i)->set_total(total);
     }
 }
 

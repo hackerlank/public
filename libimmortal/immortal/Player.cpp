@@ -321,7 +321,10 @@ int Player::getKey(){
 void Player::reset(){
     play_t play(playData);
     playData.Clear();
+    
+    //restore: seat, total, player
     playData.set_seat(play.seat());
+    playData.set_total(play.total());
     playData.mutable_player()->CopyFrom(play.player());
     
     unpairedCards.clear();

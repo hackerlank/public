@@ -29,6 +29,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 	protected int			_pos;
 	protected List<Card>	_selection=new List<Card>();
+	play_t[]				_playerInfo;
 
 	public MsgNCFinish	Summary=null;
 	// ----------------------------------------------
@@ -51,6 +52,18 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 
 		//sort
 		yield return StartCoroutine(deal(msg));
+
+		//player info
+		if(null==_playerInfo){
+			_playerInfo=new play_t[maxPlayer];
+			for(int i=0;i<maxPlayer;++i){
+				_playerInfo[i]=new play_t();
+			}
+		}
+		for(int i=0;i<maxPlayer;++i){
+			//Debug.Log("---- "+i+" score="+_playerInfo[i].Score+",total="+_playerInfo[i].Total);
+			Players[i].Value=_playerInfo[i];
+		}
 
 		//the other player
 		for(int i=0;i<maxPlayer;++i){
@@ -180,6 +193,11 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	virtual public IEnumerator OnMsgSettle(Player player,MsgNCSettle msg){
+		for(int i=0;i<maxPlayer;++i){
+			_playerInfo[i].Score=msg.Play[i].Score;
+			_playerInfo[i].Total=msg.Play[i].Total;
+		}
+
 		for(int i=0;i<DiscardAreas.Length;++i)foreach(Transform ch in DiscardAreas[i].transform)Destroy(ch.gameObject);
 		for(int i=0;i<HandAreas.Length;++i)foreach(Transform ch in HandAreas[i].transform)Destroy(ch.gameObject);
 		yield break;

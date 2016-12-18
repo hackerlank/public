@@ -77,10 +77,6 @@ void DoudeZhu::settle(Player& player){
         }else{
             play.set_score(-score);
         }
-        auto total=game.spFinish->play(i).score()+play.score();
-        play.set_total(total);
-        game.spFinish->mutable_play(i)->set_score(total);
-        game.spFinish->mutable_play(i)->set_total(total);
     }
 }
 

@@ -129,8 +129,17 @@ void GameRule::settle(Game& game){
     game.spSettle->clear_play();
     
     //copy game data
-    for(int i=0;i<MaxPlayer(game);++i)
+    for(int i=0;i<MaxPlayer(game);++i){
+        //accumulate total score
+        auto& play=game.players[i]->playData;
+        auto total=play.total()+play.score();
+        play.set_total(total);
+        game.spFinish->mutable_play(i)->set_score(total);
+        game.spFinish->mutable_play(i)->set_total(total);
+
+        //copy to message
         game.spSettle->add_play()->CopyFrom(game.players[i]->playData);
+    }
     //copy pile
     for(auto c:game.pile)game.spSettle->mutable_pile()->Add(c);
     
@@ -192,6 +201,7 @@ void GameRule::settle(Game& game){
         //log
         /*
         for(int i=0;i<msg.play_size();++i){
+            Debug<<"settle "<<i<<" score="<<msg.play(i).score()<<",total="<<msg.play(i).total()<<endl;
             auto& hands=msg.play(i).hands();
             auto& bun=msg.play(i).bunch();
             std::string strhands;
@@ -226,6 +236,9 @@ void GameRule::settle(Game& game){
                     p->send(fin);
                     p->lastMsg=game.spFinish;
                 }
+                for(int i=0;i<fin.play_size();++i)
+                    Debug<<"finish "<<i<<" score="<<fin.play(i).score()<<",total="<<fin.play(i).total()<<endl;
+
             }
         }
 
