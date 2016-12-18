@@ -147,10 +147,8 @@ bool csv_file::_parse(const std::wstring& wbuf){
 		if(parse_csv(fields,lines[0],!_use_comma)){
 			//header
 			_cols=fields.size();
-			string f;
 			for(auto& wf:fields){
-				str_util::wstr2str(f,wf.c_str());
-				_grids.push_back(cast_t(f.c_str()));
+				_grids.push_back(cast_t(wf.c_str()));
 			}
 			//contents
 			for(decltype(nl) i=1;i<nl;++i){
@@ -160,16 +158,17 @@ bool csv_file::_parse(const std::wstring& wbuf){
 					auto jj=fields.size();
 					if(jj>0){
 						//skip empty lines
+                        wstring wfield;
 						for(size_t j=0;j<_cols;++j){
 							if(j<jj){
 								auto& wf=fields[j];
 								if(wf.empty())wf=L"0";
-								str_util::wstr2str(f,wf.c_str());
+                                wfield=wf;
 							} else{
 								//empty grids
-								f="0";
+								wfield=L"0";
 							}
-							_grids.push_back(cast_t(f.c_str()));
+							_grids.push_back(cast_t(wfield.c_str()));
 						}
 						++_rows;
 					}

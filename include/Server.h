@@ -28,17 +28,20 @@ public:
             //load game config
             keye::csv_file gameCfg;
             if(gameCfg.load("games.csv")){
-                //Debug<<"----game config\n";
+                //printf("----game config %d\n",(int)gameCfg.rows());
                 for(size_t r=0,ii=gameCfg.rows();r!=ii;++r){
                     auto& game=*gameConfig.Add();
+                    std::string name,desc;
                     game.set_rule((int)         gameCfg.value(r,0));
                     game.set_available((int)    gameCfg.value(r,1));
                     game.set_price((int)        gameCfg.value(r,2));
                     game.set_rounds((int)       gameCfg.value(r,3));
                     game.set_free((int)         gameCfg.value(r,4));
                     game.set_event((int)        gameCfg.value(r,5));
-                    game.set_name((const char*) gameCfg.value(r,6));
-                    game.set_desc((const char*) gameCfg.value(r,7));
+                    str_util::wstr2str(name,    gameCfg.value(r,6));
+                    str_util::wstr2str(desc,    gameCfg.value(r,7));
+                    game.set_name(name);
+                    game.set_desc(desc);
 /*
                     Debug<<"rule="<<game.rule()<<
                     ",aval="<<game.available()<<
@@ -47,7 +50,7 @@ public:
                     ",desc="<<game.desc()<<endl;
 */
                 }
-                //Debug<<endf;
+//                Debug<<endf;
             }
 
             // e.g., 127.0.0.1:6379,127.0.0.1:6380,127.0.0.2:6379,127.0.0.3:6379,
