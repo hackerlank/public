@@ -1,3 +1,29 @@
 [
     
+    {
+        "name" : "Config/config",        
+        "includs" : 
+        [
+            "Assets/ResourcesForStreaming/Config/config.txt"
+        ],        
+        "dependAssets" : 
+        [
+            
+        ],        
+        "includeGUIDs" : 
+        [
+            "9137299a529f143a39e00d44848ea33b"
+        ],        
+        "dependGUIDs" : 
+        [
+            
+        ],        
+        "sceneBundle" : false,        
+        "priority" : 0,        
+        "parent" : "",        
+        "children" : 
+        [
+            
+        ]
+    }
 ]

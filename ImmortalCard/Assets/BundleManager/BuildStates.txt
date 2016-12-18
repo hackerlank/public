@@ -1,3 +1,14 @@
 [
     
+    {
+        "bundleName" : "Config/config",        
+        "version" : 3,        
+        "crc" : 2273361937,        
+        "size" : 418,        
+        "changeTime" : -8587195645075670328,        
+        "lastBuildDependencies" : 
+        [
+            "Assets/Resources/Config/config.txt"
+        ]
+    }
 ]
