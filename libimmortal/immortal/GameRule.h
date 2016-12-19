@@ -12,7 +12,7 @@
 class KEYE_API GameRule{
 public:
     virtual             ~GameRule(){};
-    bool                Ready(Game&);
+    bool                IsReady(Game&);
     void                Release(Game&);
 
     virtual void        Tick(Game&)=0;
@@ -23,6 +23,7 @@ public:
     void                OnReady(Player&);
     virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
     virtual void        OnMeld(Player&,const proto3::bunch_t&)=0;
+    virtual void        OnRead(Player&,PBHelper& pb){}; //handle custom messages
 protected:
     virtual void        initCard(Game&)=0;
     virtual bool        validId(uint)=0;

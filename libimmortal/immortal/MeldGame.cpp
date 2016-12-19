@@ -13,7 +13,7 @@ using namespace proto3;
 void MeldGame::Tick(Game& game){
     switch (game.state) {
         case Game::State::ST_WAIT:
-            if(Ready(game)){
+            if(IsReady(game)){
                 changeState(game,Game::State::ST_ENGAGE);
                 deal(game);
             }

@@ -289,7 +289,7 @@ void GameRule::OnEngage(Player& player,uint key){
     }
 }
 
-bool GameRule::Ready(Game& game){
+bool GameRule::IsReady(Game& game){
     int n=0;
     for(auto p:game.players)if(p&&p->ready)++n;
     auto ready=(n>=MaxPlayer(game));

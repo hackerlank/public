@@ -119,7 +119,7 @@ void Player::on_read(PBHelper& pb){
                 auto gid=imsg.game_id();
                 if(auto gameptr=Immortal::sImmortal->findGame(gid)){
                     auto rule=gameptr->rule;
-                    if(!rule->Ready(*gameptr)){
+                    if(!rule->IsReady(*gameptr)){
                         game=gameptr;
                         game->players.push_back(shared_from_this());
                         ready=true;
@@ -297,6 +297,8 @@ void Player::on_read(PBHelper& pb){
             break;
         }
         default:
+            //handle other messages
+            game->rule->OnRead(*this,pb);
             break;
     }
     //Debug<<"on_read %zd,mid=%d\n", sz,mid);
