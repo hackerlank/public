@@ -2,9 +2,9 @@
     
     {
         "bundleName" : "Config/config",        
-        "version" : 2,        
-        "crc" : 4118995367,        
-        "size" : 416,        
+        "version" : 4,        
+        "crc" : 2359868823,        
+        "size" : 417,        
         "changeTime" : -8587195645075670328,        
         "lastBuildDependencies" : 
         [
