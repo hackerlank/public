@@ -10,16 +10,17 @@
 #define DiscardGame_h
 
 class KEYE_API DiscardGame: public GameRule{
-public:
-    virtual void            Tick(Game&);
+protected:
+    void                    Tick(Game&)override final;
 
     virtual void            OnDiscard(Player&,proto3::MsgCNDiscard&);
     virtual void            OnMeld(Player&,const proto3::bunch_t&){};
+
 protected:
     virtual bool            isGameOver(Game&);
     virtual bool            comparision(uint x,uint y);
     virtual void            settle(Player&)=0;
-    virtual void            engage(Game&,proto3::MsgNCEngage&);
+    void                    engage(Game&,proto3::MsgNCEngage&)override final;
 private:
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool            compareBunch(proto3::bunch_t&,proto3::bunch_t&)=0;

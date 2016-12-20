@@ -26,7 +26,7 @@ public class MahJongPanel : GamePanel {
 			yield break;
 
 		//turn off engages
-		if(Main.Instance.MainPlayer.playData.SelectedCard>1000){
+		if(Main.Instance.MainPlayer.playData.Engagement>1000){
 			var btns=new GameObject[]{BtnTong,BtnTiao,BtnWan};
 			foreach(var btn in btns)btn.SetActive(false);
 		}
@@ -68,7 +68,7 @@ public class MahJongPanel : GamePanel {
 		
 		for(int i=0;i<msg.Keys.Count;++i)
 			if(Main.Instance.MainPlayer.playData.Seat==i)
-				Main.Instance.MainPlayer.playData.SelectedCard=msg.Keys[i];
+				Main.Instance.MainPlayer.playData.Engagement=msg.Keys[i];
 		
 		MahJongRule.prepareAAAA(player);
 		checkNaturalWin();
@@ -220,6 +220,18 @@ public class MahJongPanel : GamePanel {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
 		}));
+	}
+
+	
+	override public IEnumerator PostMessage(pb_msg mid,byte[] bytes){
+		switch(mid){
+		case pb_msg.MsgNcBeforeStartup:
+			//MsgNcBeforeStartup msgBeforeStartup=MsgNcBeforeStartup.Parser.ParseFrom(bytes);
+			break;
+		default:
+			break;
+		}
+		yield break;
 	}
 
 	override protected bool showHints(bunch_t bunch,bool startup=false){

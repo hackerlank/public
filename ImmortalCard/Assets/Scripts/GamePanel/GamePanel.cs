@@ -209,6 +209,15 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		yield break;
 	}
 
+	
+	virtual public IEnumerator PreMessage(pb_msg mid,byte[] bytes){
+		yield break;
+	}
+	
+	virtual public IEnumerator PostMessage(pb_msg mid,byte[] bytes){
+		yield break;
+	}
+
 	virtual protected IEnumerator deal(MsgNCDeal msg){
 		var hands=new List<int>(msg.Hands);
 		hands.Sort(Rule.comparision);

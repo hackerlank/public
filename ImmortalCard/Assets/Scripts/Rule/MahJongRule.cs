@@ -60,7 +60,7 @@ public class MahJongRule: GameRule {
 		}
 
 		//default color check
-		if(A/1000==player.playData.SelectedCard){
+		if(A/1000==player.playData.Engagement){
 			Debug.Log("hint default color,pos="+pos);
 			return hints;
 		}
@@ -335,7 +335,7 @@ public class MahJongRule: GameRule {
 		//huazhu check
 		if(bunch.Pawns.Count<=0)return false;
 
-		var B=player.playData.SelectedCard;
+		var B=player.playData.Engagement;
 		var A=bunch.Pawns[0];
 		if(A/1000!=B/1000){
 			foreach(var card in player.playData.Hands){
@@ -368,7 +368,7 @@ public class MahJongRule: GameRule {
 			for(int l=0;l<9;++l)mc[i].Add(new List<int>());
 		}
 		foreach(var B in hands){
-			if(B/1000==player.playData.SelectedCard)continue;
+			if(B/1000==player.playData.Engagement)continue;
 			
 			int x=B/1000-1;
 			mc[x][B%100-1].Add(B);

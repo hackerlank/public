@@ -239,7 +239,7 @@ void Player::on_read(PBHelper& pb){
                         auto msgplay=msg.add_play();
                         //seat,select_card,bunch,discards,achvs
                         msgplay->set_seat(p->playData.seat());
-                        msgplay->set_selected_card(p->playData.selected_card());
+                        msgplay->set_engagement(p->playData.engagement());
                         msgplay->mutable_bunch()->CopyFrom(p->playData.bunch());
                         
                         //AAAAs if necessary

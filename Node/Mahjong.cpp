@@ -86,9 +86,9 @@ void Mahjong::initCard(Game& game){
     }
 }
 
-void Mahjong::engage(Game& game,MsgNCEngage& msg){
-    for(auto& p:game.players)msg.set_keys(p->playData.seat(),p->playData.selected_card());
-    MeldGame::engage(game,msg);
+bool Mahjong::PreEngage(Game& game,MsgNCEngage& msg){
+    for(auto& p:game.players)msg.set_keys(p->playData.seat(),p->playData.engagement());
+    return true;
 }
 
 bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
@@ -356,7 +356,7 @@ bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
         return false;
     auto& gdata=game.players[bunch.pos()]->playData;
     //huazhu
-    auto B=gdata.selected_card();
+    auto B=gdata.engagement();
     auto A=bunch.pawns(0);
     if(A/1000!=B/1000){
         for(auto card:gdata.hands()){

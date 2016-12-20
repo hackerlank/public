@@ -12,4 +12,7 @@ public interface PlayerController {
 	IEnumerator OnMsgDraw(Player player,MsgNCDraw msg);
 	IEnumerator OnMsgSettle(Player player,MsgNCSettle msg);
 	IEnumerator OnMsgFinish(Player player,MsgNCFinish msg);
+
+	IEnumerator PreMessage(pb_msg mid,byte[] bytes);
+	IEnumerator PostMessage(pb_msg mid,byte[] bytes);
 }

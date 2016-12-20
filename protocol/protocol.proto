@@ -337,7 +337,7 @@ player_t player         =1;
 repeated int32 hands    =2;
 repeated int32 discards =3;
 repeated bunch_t bunch  =4;
-int32 selected_card     =5; //default or selected card at startup
+int32 engagement        =5; //engagement parameter at startup
 int32 win               =6; //win sequence,minus means lose
 repeated int32 winby    =7; //others were win by me
 int32 point             =8;
@@ -450,6 +450,9 @@ MSG_NC_DISCARD          =6052;
 MSG_CN_MELD             =6053;
 MSG_NC_MELD             =6054;
 MSG_NC_DRAW             =6055;
+
+//some special gameplay
+MSG_NC_BEFORE_STARTUP   =6062;
 
 MSG_CN_STATS            =6081;
 
@@ -718,15 +721,14 @@ pb_enum result			=10;
 message MsgCNEngage{
 
 pb_msg mid              =1;
-int32 key              =2;
+int32 key               =2;
 }
 
 message MsgNCEngage{
 
 pb_msg mid              =1;
 repeated int32 keys     =2;
-repeated bunch_t bunch  =3;
-pb_enum result          =6;
+pb_enum result          =3;
 }
 
 message MsgCNDiscard{
@@ -808,4 +810,11 @@ message MsgCNStats{
 pb_msg mid				=1;
 string key              =2;
 string value            =3;
+};
+
+message MsgNcBeforeStartup{
+
+pb_msg mid				=1;
+repeated bunch_t bunch  =2;
+pb_enum result			=3;
 };

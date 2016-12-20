@@ -11,6 +11,8 @@
 
 class Mahjong: public MeldGame{
 public:
+    virtual bool            PreEngage(Game&,proto3::MsgNCEngage&);
+
     virtual int             Type();
     virtual int             MaxPlayer(Game& game);
 
@@ -22,7 +24,6 @@ protected:
     virtual int             maxHands(Game& game);
     virtual int             bottom(Game& game);
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
-    virtual void            engage(Game&,proto3::MsgNCEngage&);
     
     virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
 

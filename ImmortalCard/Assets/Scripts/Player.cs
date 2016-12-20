@@ -205,15 +205,9 @@ public class Player {
 	}
 
 	public void onMessage(pb_msg mid,byte[] bytes){
-		/*
-		Loom.QueueOnMainThread(delegate{
-			//dispatch to main thread
-			Main.Instance.StopWait();
-		});
-		*/
-
 		//receive and handle logic which PlayerController indenpendent
 		//Debug.Log("OnMessage "+mid);
+		foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.PreMessage(mid,bytes));
 		switch(mid){
 		//Login
 		case pb_msg.MsgLcLogin:
@@ -297,7 +291,7 @@ public class Player {
 				playData.Hands.Clear();
 				playData.Discards.Clear();
 				playData.Bunch.Clear();
-				playData.SelectedCard=-1;
+				playData.Engagement=-1;
 				AAAs.Clear();
 				AAAAs.Clear();
 				unpairedCards.Clear();
@@ -337,7 +331,7 @@ public class Player {
 				playData.Hands.Clear();
 				playData.Discards.Clear();
 				playData.Bunch.Clear();
-				playData.SelectedCard=-1;
+				playData.Engagement=-1;
 				AAAs.Clear();
 				AAAAs.Clear();
 				unpairedCards.Clear();
@@ -456,6 +450,7 @@ public class Player {
 		default:
 			break;
 		}
+		foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.PostMessage(mid,bytes));
 	}
 
 	public static string bunch2str(bunch_t bunch){

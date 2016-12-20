@@ -32,7 +32,7 @@ public class DoudeZhuPanel : GamePanel {
 			yield break;
 		
 		//turn off engages
-		if(Main.Instance.MainPlayer.playData.SelectedCard>1000){
+		if(Main.Instance.MainPlayer.playData.Engagement>1000){
 			BtnCall.SetActive(false);
 			BtnDouble.SetActive(false);
 		}

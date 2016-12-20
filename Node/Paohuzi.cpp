@@ -101,7 +101,7 @@ void Paohuzi::initCard(Game& game){
     }
 }
 
-void Paohuzi::engage(Game& game,MsgNCEngage& msg){
+bool Paohuzi::PreEngage(Game& game,MsgNCEngage&){
     //pick out AAAA,AAA;these process should be after engage,not at start time
     for(auto p:game.players){
         auto& hands=*p->playData.mutable_hands();
@@ -147,9 +147,10 @@ void Paohuzi::engage(Game& game,MsgNCEngage& msg){
     }//for game players
     
     //packed AAAAs into message
+    MsgNcBeforeStartup msg;
     for(auto p:game.players){
+        auto bunch=msg.add_bunch();
         if(!p->AAAAs.empty()){
-            auto bunch=msg.mutable_bunch(p->playData.seat());
             bunch->set_pos(p->playData.seat());
             bunch->set_type(pb_enum::PHZ_AAAAstart);
             for(auto& aaaa:p->AAAAs)
@@ -157,7 +158,13 @@ void Paohuzi::engage(Game& game,MsgNCEngage& msg){
         }
     }
     
-    MeldGame::engage(game,msg);
+    //engage message
+    msg.set_mid(pb_msg::MSG_NC_BEFORE_STARTUP);
+    msg.set_result(pb_enum::SUCCEESS);
+    for(auto p:game.players)
+        p->send(msg);
+    Debug<<"sent message before startup\n";
+    return true;
 }
 
 void Paohuzi::draw(Game& game){

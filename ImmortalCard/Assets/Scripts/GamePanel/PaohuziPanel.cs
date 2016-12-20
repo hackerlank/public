@@ -62,45 +62,13 @@ public class PaohuziPanel : GamePanel {
 		}
 		yield return StartCoroutine(sortHands());
 	}
-	
+
+	bool preEngage=false;
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
-		//process all players AAAA
-		PaohuziRule.prepareAAAA(player);
-
-		for(int i=0;i<maxPlayer;++i){
-			bunch_t bunch=msg.Bunch[i];
-			for(int j=0;j<bunch.Pawns.Count/4;++j){
-				var val=new bunch_t();
-				for(int k=j*4;k<(j+1)*4;++k)val.Pawns.Add(bunch.Pawns[k]);
-
-				//remove cards from hand area
-				if(_pos==i){
-					var hands=HandAreas[i].GetComponentsInChildren<Card>();
-					foreach(var pawn in bunch.Pawns){
-						foreach(var hand in hands){
-							if(hand.Value==pawn){
-								Destroy(hand.gameObject);
-								break;
-							}
-						}
-					}
-					//make destroy effective
-					yield return null;
-				}
-
-				//meld area
-				Bunch zb=null;
-				Rule.LoadBunch(MeldAreas[i],delegate(Bunch obj) {
-					zb=obj;
-					zb.Value=val;
-				});
-				while(zb==null)yield return null;
-			}
-		}
-
-		
+		while(!preEngage)yield return null;
 		yield return StartCoroutine(sortHands());
 		checkNaturalWin();
+		preEngage=false;
 	}
 	
 	override public IEnumerator OnMsgDiscard(Player player,MsgNCDiscard msg){
@@ -333,6 +301,52 @@ public class PaohuziPanel : GamePanel {
 			var popup=obj as SettlePopup;
 			popup.Value=msg;
 		}));
+	}
+
+	
+	override public IEnumerator PostMessage(pb_msg mid,byte[] bytes){
+		Debug.Log("----PostMessage "+mid.ToString());
+		switch(mid){
+		case pb_msg.MsgNcBeforeStartup:
+			MsgNcBeforeStartup msgBeforeStartup=MsgNcBeforeStartup.Parser.ParseFrom(bytes);
+			//process all players AAAA
+			PaohuziRule.prepareAAAA(Main.Instance.MainPlayer);
+			
+			for(int i=0;i<maxPlayer;++i){
+				bunch_t bunch=msgBeforeStartup.Bunch[i];
+				for(int j=0;j<bunch.Pawns.Count/4;++j){
+					var val=new bunch_t();
+					for(int k=j*4;k<(j+1)*4;++k)val.Pawns.Add(bunch.Pawns[k]);
+					
+					//remove cards from hand area
+					if(_pos==i){
+						var hands=HandAreas[i].GetComponentsInChildren<Card>();
+						foreach(var pawn in bunch.Pawns){
+							foreach(var hand in hands){
+								if(hand.Value==pawn){
+									Destroy(hand.gameObject);
+									break;
+								}
+							}
+						}
+						//make destroy effective
+						yield return null;
+					}
+					
+					//meld area
+					Bunch zb=null;
+					Rule.LoadBunch(MeldAreas[i],delegate(Bunch obj) {
+						zb=obj;
+						zb.Value=val;
+					});
+					while(zb==null)yield return null;
+				}
+			}
+			preEngage=true;
+			break;
+		default:
+			break;
+		}
 	}
 
 	override protected IEnumerator deal(MsgNCDeal msg){

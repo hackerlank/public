@@ -18,7 +18,7 @@ public class MahjongAIController:AIController{
 	override public IEnumerator OnMsgEngage(Player player,MsgNCEngage msg){
 		for(int i=0;i<msg.Keys.Count;++i)
 			if(player.playData.Seat==i)
-				player.playData.SelectedCard=msg.Keys[i];
+				player.playData.Engagement=msg.Keys[i];
 		MahJongRule.prepareAAAA(player);
 		yield break;
 	}
@@ -40,7 +40,7 @@ public class MahjongAIController:AIController{
 				var discard=player.playData.Hands[0];
 				foreach(var hand in player.playData.Hands){
 					//huazhu
-					if(hand/1000==player.playData.SelectedCard/1000){
+					if(hand/1000==player.playData.Engagement/1000){
 						discard=hand;
 						break;
 					}
@@ -89,5 +89,16 @@ public class MahjongAIController:AIController{
 			
 			player.Send<MsgCNMeld>(omsgMeld.Mid,omsgMeld);
 		}
+	}
+
+	override public IEnumerator PostMessage(pb_msg mid,byte[] bytes){
+		switch(mid){
+		case pb_msg.MsgNcBeforeStartup:
+			//MsgNcBeforeStartup msgBeforeStartup=MsgNcBeforeStartup.Parser.ParseFrom(bytes);
+			break;
+		default:
+			break;
+		}
+		yield break;
 	}
 }

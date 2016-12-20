@@ -11,6 +11,16 @@
 
 class KEYE_API GameRule{
 public:
+    //overridable methods
+    //engage after deal
+    virtual bool        PreEngage(Game&,proto3::MsgNCEngage&)   {return true;}
+    virtual bool        PreMeld()       {return true;}
+    virtual void        PostMeld()      {}
+    virtual bool        PreDiscard()    {return true;}
+    virtual void        PostDiscard()   {}
+    virtual bool        PreSettle()     {return true;}
+    virtual void        PostSettle()    {}
+    
     virtual             ~GameRule(){};
     bool                IsReady(Game&);
     void                Release(Game&);
@@ -34,7 +44,7 @@ protected:
     
     void                settle(Game&);
     
-    virtual void        engage(Game&,proto3::MsgNCEngage&){};
+    virtual void        engage(Game&,proto3::MsgNCEngage&)=0;
     void                deal(Game&);
     void                changeState(Game&,Game::State);
     void                changePos(Game&,pos_t);

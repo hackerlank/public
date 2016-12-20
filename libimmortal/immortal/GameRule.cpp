@@ -265,7 +265,7 @@ void GameRule::OnEngage(Player& player,uint key){
     if(auto game=player.game){
         if(!player.engaged){
             player.engaged=true;
-            player.playData.set_selected_card(key);
+            player.playData.set_engagement(key);
         }
 
         int engaged=0;
@@ -276,8 +276,11 @@ void GameRule::OnEngage(Player& player,uint key){
             omsg.set_mid(pb_msg::MSG_NC_ENGAGE);
             omsg.set_result(pb_enum::SUCCEESS);
             omsg.mutable_keys()->Resize(MaxPlayer(*game),1001);
-            for(int i=0;i<MaxPlayer(*game);++i)omsg.add_bunch();
-            engage(*game,omsg);
+
+            if(PreEngage(*game,omsg))
+                engage(*game,omsg);
+            else
+                omsg.set_result(pb_enum::ERR_FAILED);
 
             for(auto& p:game->players)p->send(omsg);
             

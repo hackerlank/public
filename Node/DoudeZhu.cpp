@@ -61,10 +61,6 @@ void DoudeZhu::initCard(Game& game){
     }
 }
 
-void DoudeZhu::engage(Game& game,MsgNCEngage& msg){
-    DiscardGame::engage(game,msg);
-}
-
 void DoudeZhu::settle(Player& player){
     auto& game=*player.game;
     auto M=(int)MaxPlayer(game);

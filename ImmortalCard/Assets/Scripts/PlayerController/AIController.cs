@@ -90,4 +90,12 @@ public class AIController:PlayerController{
 	virtual public IEnumerator OnMsgFinish(Player player,MsgNCFinish msg){
 		yield break;
 	}
+	
+	virtual public IEnumerator PreMessage(pb_msg mid,byte[] bytes){
+		yield break;
+	}
+
+	virtual public IEnumerator PostMessage(pb_msg mid,byte[] bytes){
+		yield break;
+	}
 }
