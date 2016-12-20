@@ -15,6 +15,7 @@ public class Config{
 	public static string updateUri="";	//bundles update uri
 	public static string update="0";	//force update
 	public static string limited="0";	//feature limited: wechat,payment etc.
+	public static string opsInterval="1";
 
 	public static string appStore=		"http://fir.im/immorcard";
 	public static string androidMarket=	"http://fir.im/immorcarda";
@@ -22,7 +23,7 @@ public class Config{
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 
-	public static float OpsInterval=0.5f;
+	public static float OpsInterval=1f;
 	public static int invalidCard=-1;
 
 	public static void Load(string text){
@@ -38,6 +39,8 @@ public class Config{
 				fi.SetValue(null,kv.Value);
 			}
 		}
+
+		OpsInterval=float.Parse(opsInterval);
 	}
 
 	public static Dictionary<pb_enum,List<game_t>> games;

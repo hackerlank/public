@@ -62,8 +62,8 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         }
         msg.mutable_bunch()->set_pos(pos);
         
-        if(!verifyDiscard(*game,*msg.mutable_bunch())){
-            Debug<<"OnDiscard invalid bunch\n";
+        if(!PreDiscard(*game,*msg.mutable_bunch())){
+            Debug<<"OnDiscard PreDiscard failed\n";
             break;
         }
         
@@ -133,6 +133,7 @@ void MeldGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         game->historical.push_back(msg.bunch());
         return;
     }while(false);
+    PostDiscard(*player.game,omsg);
     player.send(omsg);
 }
 
@@ -202,6 +203,8 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
     int ready=0;
     for(auto& p:pendingMeld)if(p.arrived)++ready;
     if(ready>=pendingMeld.size()){
+        PreMeld(game);
+        
         //sort
         std::vector<bunch_t> bunches;
         sortPendingMeld(spgame,bunches);
@@ -217,10 +220,17 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         auto who=game.players[where];
         auto from=game.token;
 
+        //change state before send message
+        MsgNCMeld msg;
+        msg.set_mid(pb_msg::MSG_NC_MELD);
+        msg.set_result(ret);
+        msg.set_from(from);
+        msg.mutable_bunch()->CopyFrom(front);
+        
         for(auto& what:bunches){
             //ok,verify
             auto old_ops=what.type();
-            auto result=verifyBunch(game,what);
+            auto result=verifyBunch(what);
             auto localPos=what.pos();
             auto localPlayer=game.players[localPos];
             
@@ -270,7 +280,6 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     what.set_pos(game.token);
                     if(!bDraw)
                         who->discardedCards.push_back(which);
-                    onMeld(game,*localPlayer,which,what);
                     
                     //abandon
                     if(validId(which)){
@@ -285,23 +294,16 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     //tokenPlayer.reset();
                     break;
                 default:
-                    //A,AAA,AAAA, meld or do some specials
-                    if(meld(game,*who,which,what)){
-                        onMeld(game,*localPlayer,which,what);
-                        tokenPlayer=who;
-                        changePos(game,who->playData.seat());
-                    }else
-                        onMeld(game,*localPlayer,which,what);
+                    break;
+            }   //switch
+
+            //A,AAA,AAAA, meld or do some specials
+            if(PostMeld(game,result,from,front,what)){
+                tokenPlayer=who;
+                changePos(game,who->playData.seat());
             }
         }
 
-        //change state before send message
-        MsgNCMeld msg;
-        msg.set_mid(pb_msg::MSG_NC_MELD);
-        msg.set_result(ret);
-        msg.set_from(from);
-        msg.mutable_bunch()->CopyFrom(front);
-        
         //clear after copy
         game.pendingMeld.clear();
         

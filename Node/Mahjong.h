@@ -11,7 +11,9 @@
 
 class Mahjong: public MeldGame{
 public:
-    virtual bool            PreEngage(Game&,proto3::MsgNCEngage&);
+    bool            PreEngage(Game&,proto3::MsgNCEngage&)override;
+    bool            PostMeld(Game& game,proto3::pb_enum,pos_t token,proto3::bunch_t&,proto3::bunch_t&)override;
+    bool            PreDiscard(Game&,proto3::bunch_t&)override;
 
     virtual int             Type();
     virtual int             MaxPlayer(Game& game);
@@ -25,17 +27,14 @@ protected:
     virtual int             bottom(Game& game);
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t);
     
-    virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
-
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
-    virtual bool            verifyDiscard(Game&,proto3::bunch_t&);
-    virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&);
+    proto3::pb_enum         verifyBunch(proto3::bunch_t&)override;
 private:
     virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>&);
     //is game over with melt card
     virtual bool            isWin(Game&,proto3::bunch_t&,std::vector<proto3::bunch_t>&);
 
-    virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&);
+    virtual bool            meld(Game& game,pos_t token,proto3::bunch_t& front,proto3::bunch_t&);
     
     void                    calcAchievement(Player&,const std::vector<proto3::bunch_t>&,std::vector<proto3::achv_t>&);
 };

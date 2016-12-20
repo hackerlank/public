@@ -24,7 +24,7 @@ protected:
     
     virtual void        settle(Player&);
 private:
-    proto3::pb_enum     verifyBunch(proto3::bunch_t&);
+    proto3::pb_enum     verifyBunch(proto3::bunch_t&)override;
     bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
 };
 

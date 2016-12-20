@@ -19,16 +19,22 @@ public:
     virtual int         MaxPlayer(Game&)=0;
 
     virtual bool        PreEngage(Game&,proto3::MsgNCEngage&)   {return true;}
-    virtual bool        PreMeld()       {return true;}
-    virtual void        PostMeld()      {}
-    virtual bool        PreDiscard()    {return true;}
-    virtual void        PostDiscard()   {}
+    
+    virtual bool        PreMeld(Game&)                          {return true;}
+    //token: token before meld; front,current:bunches in pending meld
+    virtual bool        PostMeld(Game&,proto3::pb_enum verifyBunchResult,pos_t token,proto3::bunch_t& front,
+                                 proto3::bunch_t& current)      {return true;}
+    
+    virtual bool        PreDiscard(Game&,proto3::bunch_t&)      {return true;}
+    virtual void        PostDiscard(Game&,proto3::MsgNCDiscard&){}
+    
     virtual bool        PreSettle()     {return true;}
     virtual void        PostSettle()    {}
     //handle messages customized, no post message 'cause async handle
     virtual bool        PreMessage(Player&,PBHelper&)     {return true;}
 protected:
     virtual void        initCard(Game&)=0;
+    virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool        validId(uint)=0;
     virtual bool        comparision(uint x,uint y)=0;
     virtual int         maxCards(Game& game)=0;

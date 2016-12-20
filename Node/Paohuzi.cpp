@@ -179,7 +179,11 @@ void Paohuzi::draw(Game& game){
     }
 }
 
-bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
+bool Paohuzi::meld(Game& game,pos_t token,proto3::bunch_t& front,bunch_t& bunch){
+    auto card=*front.pawns().begin();
+    auto where=front.pos();
+    auto& player=*game.players[where];
+
     //past,dodge and conflict
     auto past=std::find(player.unpairedCards.begin(),player.unpairedCards.end(),card)!=player.unpairedCards.end();
     if(past||player.conflictMeld){
@@ -277,7 +281,21 @@ bool Paohuzi::meld(Game& game,Player& player,unit_id_t card,bunch_t& bunch){
     return true;
 }
 
-void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
+bool Paohuzi::PostMeld(Game& game,pb_enum verifyBunchResult,pos_t token,proto3::bunch_t& front,proto3::bunch_t& current){
+    auto melt=false;
+    switch(verifyBunchResult){
+        case pb_enum::BUNCH_WIN:
+        case pb_enum::OP_PASS:
+        case pb_enum::BUNCH_INVALID:
+            break;
+        default:
+            melt=meld(game,token,front,current);
+            break;
+    }   //switch
+
+    auto card=*front.pawns().begin();
+    auto localPos=current.pos();
+    auto& player=*game.players[localPos];
     //remove all past cards,deal it below
     auto pos=player.playData.seat();
     for(auto pm:game.pendingMeld){
@@ -287,7 +305,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
         p->unpairedCards.resize(std::remove(p->unpairedCards.begin(),p->unpairedCards.end(),card)-p->unpairedCards.begin());
     }
 
-    switch (bunch.type()) {
+    switch (current.type()) {
         case proto3::OP_PASS:{
             //means all players passed,should mark all of them
             //clients bring all hints even pass,handle here
@@ -309,14 +327,14 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                 if(dodge){
                     game.players[i]->dodgeCards.push_back(card);
 
-                    auto chBunch=bunch.mutable_child()->Add();
+                    auto chBunch=current.mutable_child()->Add();
                     chBunch->set_pos(i);
                     chBunch->set_type(pb_enum::PHZ_BBB);
                     Debug<<dodge<<" dodge "<<card<<endl;
                 }else if(past){
                     game.players[i]->unpairedCards.push_back(card);
                     
-                    auto chBunch=bunch.mutable_child()->Add();
+                    auto chBunch=current.mutable_child()->Add();
                     chBunch->set_pos(i);
                     chBunch->set_type(pb_enum::PHZ_ABC);
                     Debug<<past<<" pass meld "<<card<<endl;
@@ -357,7 +375,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                         pasts[i]=0;
                         game.players[i]->dodgeCards.push_back(card);
                         
-                        auto chBunch=bunch.mutable_child()->Add();
+                        auto chBunch=current.mutable_child()->Add();
                         chBunch->set_pos(i);
                         chBunch->set_type(pb_enum::PHZ_BBB);
                         Debug<<i<<" dodge "<<card<<endl;
@@ -366,7 +384,7 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
             }
             
             //then find the highest one to be the responsible
-            for(int i=game.token;i<game.token+MaxPlayer(game);++i){
+            for(int i=token;i<token+MaxPlayer(game);++i){
                 auto j=i%MaxPlayer(game);
                 if(pasts[j]==0)
                     break;
@@ -374,22 +392,23 @@ void Paohuzi::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& b
                 //else all of then were pass
                 game.players[j]->unpairedCards.push_back(card);
                 
-                bunch.mutable_child()->Add()->set_pos(j);
-                bunch.mutable_child()->Add()->set_type(pb_enum::PHZ_ABC);
+                current.mutable_child()->Add()->set_pos(j);
+                current.mutable_child()->Add()->set_type(pb_enum::PHZ_ABC);
                 Debug<<j<<" past meld "<<card<<endl;
             }
             break;
         }
         case proto3::PHZ_BBBBdesk:
             //remember conflict meld
-            if(game.token!=pos && game.pileMap.find(card)==game.pileMap.end()){
-                game.players[game.token]->conflictMeld=true;
-                Debug<<game.token<<" conflict "<<card<<endl;
+            if(token!=pos && game.pileMap.find(card)==game.pileMap.end()){
+                game.players[token]->conflictMeld=true;
+                Debug<<token<<" conflict "<<card<<endl;
             }
             break;
         default:
             break;
     }
+    return melt;
 }
 
 bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
@@ -445,7 +464,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     
     //verify bunch
     for(auto& b:*bunch.mutable_child()){
-        if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
+        if(pb_enum::BUNCH_INVALID==verifyBunch(b)){
             std::string str;
             Debug<<"isWin failed: invalid bunch "<<bunch2str(str,b)<<endl;
             return false;
@@ -462,7 +481,7 @@ bool Paohuzi::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     return true;
 }
 
-pb_enum Paohuzi::verifyBunch(Game& game,bunch_t& bunch){
+pb_enum Paohuzi::verifyBunch(bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     auto type=fixOps(bunch.type());
     auto sz=bunch.pawns_size();
@@ -1760,8 +1779,8 @@ void Paohuzi::test(){
     ddz.make_bunch(A,va);
     ddz.make_bunch(B,vb);
     
-    ddz.verifyBunch(game,A);
-    ddz.verifyBunch(game,B);
+    ddz.verifyBunch(A);
+    ddz.verifyBunch(B);
 }
 
 

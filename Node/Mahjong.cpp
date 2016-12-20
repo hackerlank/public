@@ -91,7 +91,11 @@ bool Mahjong::PreEngage(Game& game,MsgNCEngage& msg){
     return true;
 }
 
-bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
+bool Mahjong::meld(Game& game,pos_t token,proto3::bunch_t& front,proto3::bunch_t& bunch){
+    auto card=*front.pawns().begin();
+    auto where=front.pos();
+    auto& player=*game.players[where];
+
     //could AAAA anywhere with draw
     std::vector<const bunch_t*> v;
     //unpack children
@@ -145,11 +149,23 @@ bool Mahjong::meld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bun
     return true;
 }
 
-void Mahjong::onMeld(Game& game,Player& player,unit_id_t card,proto3::bunch_t& bunch){
-    if(bunch.type()==pb_enum::BUNCH_AAAA){
+bool Mahjong::PostMeld(Game& game,pb_enum verifyBunchResult,pos_t token,proto3::bunch_t& front,proto3::bunch_t& current){
+    auto melt=false;
+    switch(verifyBunchResult){
+        case pb_enum::BUNCH_WIN:
+        case pb_enum::OP_PASS:
+        case pb_enum::BUNCH_INVALID:
+            break;
+        default:
+            melt=meld(game,token,front,current);
+            break;
+    }   //switch
+
+    if(current.type()==pb_enum::BUNCH_AAAA){
         //fix position for self draw
-        changePos(game,(game.token+MaxPlayer(game)-1)%MaxPlayer(game));
+        changePos(game,(token+MaxPlayer(game)-1)%MaxPlayer(game));
     }
+    return melt;
 }
 
 bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_t>& output){
@@ -203,7 +219,7 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     
     //verify bunch
     for(auto& b:*bunch.mutable_child()){
-        if(pb_enum::BUNCH_INVALID==verifyBunch(game,b)){
+        if(pb_enum::BUNCH_INVALID==verifyBunch(b)){
             std::string str;
             Debug<<"isWin failed: invalid bunch "<<bunch2str(str,b)<<endl;
             return false;
@@ -277,7 +293,7 @@ void Mahjong::calcAchievement(Player& player,const std::vector<bunch_t>& suites,
     }
 }
 
-pb_enum Mahjong::verifyBunch(Game& game,bunch_t& bunch){
+pb_enum Mahjong::verifyBunch(bunch_t& bunch){
     auto bt=pb_enum::BUNCH_INVALID;
     switch (bunch.type()) {
         case pb_enum::BUNCH_A:
@@ -351,7 +367,7 @@ bool Mahjong::checkDiscard(Player& player,unit_id_t drawCard){
     return ret;
 }
 
-bool Mahjong::verifyDiscard(Game& game,bunch_t& bunch){
+bool Mahjong::PreDiscard(Game& game,bunch_t& bunch){
     if(bunch.pawns_size()!=1)
         return false;
     auto& gdata=game.players[bunch.pos()]->playData;
@@ -389,8 +405,8 @@ void Mahjong::test(){
     ddz.make_bunch(A,va);
     ddz.make_bunch(B,vb);
     
-    ddz.verifyBunch(game,A);
-    ddz.verifyBunch(game,B);
+    ddz.verifyBunch(A);
+    ddz.verifyBunch(B);
 }
 
 

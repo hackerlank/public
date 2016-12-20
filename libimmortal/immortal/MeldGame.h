@@ -13,18 +13,13 @@ class KEYE_API MeldGame: public GameRule{
 protected:
     virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
 
-    virtual bool            verifyDiscard(Game&,proto3::bunch_t&){return true;}
-    virtual proto3::pb_enum verifyBunch(Game&,proto3::bunch_t&)=0;
-
     virtual bool            comparision(uint x,uint y);
     
     virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t)=0;
 
-    virtual bool            meld(Game& game,Player&,unit_id_t,proto3::bunch_t&)=0;
     virtual void            draw(Game& game);
     virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
 
-    virtual void            onMeld(Game& game,Player&,unit_id_t,proto3::bunch_t&){};
     virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>&);
 private:
     void                    Tick(Game&)override final;

@@ -30,7 +30,7 @@ void Player::on_read(PBHelper& pb){
     }
     
     //handle post messages
-    if(!game->rule->PreMessage(*this,pb))
+    if(game && !game->rule->PreMessage(*this,pb))
         return;
     
     switch (mid) {
@@ -100,7 +100,7 @@ void Player::on_read(PBHelper& pb){
                     player->game=gameptr;
                     gameptr->players.push_back(player->shared_from_this());
                     gameptr->Round=maxRound;
-                    //game->banker=game->rule->MaxPlayer(*game)-1; //test change banker
+                    //gameptr->banker=gameptr->rule->MaxPlayer(*gameptr)-1; //test change banker
                     player->ready=true;
                     player->playData.set_seat((int)gameptr->players.size()-1);
                     //fill data

@@ -82,6 +82,11 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
             break;
         }
 
+        if(!PreDiscard(*game,*msg.mutable_bunch())){
+            Debug<<"OnDiscard PreDiscard failed\n";
+            break;
+        }
+
         //verify
         auto& pawns=msg.bunch().pawns();
         std::vector<uint32> cards(pawns.begin(),pawns.end());
@@ -158,6 +163,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
     if(pb_enum::SUCCEESS==omsg.result()){
         auto game=player.game;
         omsg.mutable_bunch()->set_pos(pos);
+        PostDiscard(*player.game,omsg);
         for(auto& p:game->players)p->send(omsg);
         
         //historic
@@ -166,8 +172,10 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
         //pass token
         if(game->players[pos]->playData.hands().size()>0)
             changePos(*game,game->token+1);
-    }else
+    }else{
+        PostDiscard(*player.game,omsg);
         player.send(omsg);
+    }
 }
 
 bool DiscardGame::isGameOver(Game& game){

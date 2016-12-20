@@ -10,6 +10,7 @@ appStore=http://fir.im/immorcard
 androidMarket=http://fir.im/immorcarda
 update=1
 limited=0
+opsInterval=1.0
 user=vliu
 version=1.0.2
 build=102
