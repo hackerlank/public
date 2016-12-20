@@ -29,6 +29,10 @@ void Player::on_read(PBHelper& pb){
         return;
     }
     
+    //handle post messages
+    if(!game->rule->PreMessage(*this,pb))
+        return;
+    
     switch (mid) {
         case proto3::pb_msg::MSG_CN_CREATE:{
             MsgCNCreate imsg;
@@ -297,8 +301,6 @@ void Player::on_read(PBHelper& pb){
             break;
         }
         default:
-            //handle other messages
-            game->rule->OnRead(*this,pb);
             break;
     }
     //Debug<<"on_read %zd,mid=%d\n", sz,mid);

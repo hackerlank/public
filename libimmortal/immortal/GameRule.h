@@ -11,8 +11,13 @@
 
 class KEYE_API GameRule{
 public:
-    //overridable methods
+    //----------------------------------------------------------------
+    // shuld override
+    //----------------------------------------------------------------
     //engage after deal
+    virtual int         Type()=0;
+    virtual int         MaxPlayer(Game&)=0;
+
     virtual bool        PreEngage(Game&,proto3::MsgNCEngage&)   {return true;}
     virtual bool        PreMeld()       {return true;}
     virtual void        PostMeld()      {}
@@ -20,20 +25,8 @@ public:
     virtual void        PostDiscard()   {}
     virtual bool        PreSettle()     {return true;}
     virtual void        PostSettle()    {}
-    
-    virtual             ~GameRule(){};
-    bool                IsReady(Game&);
-    void                Release(Game&);
-
-    virtual void        Tick(Game&)=0;
-    virtual int         Type()=0;
-    virtual int         MaxPlayer(Game&)=0;
-
-    void                OnEngage(Player&,uint);
-    void                OnReady(Player&);
-    virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
-    virtual void        OnMeld(Player&,const proto3::bunch_t&)=0;
-    virtual void        OnRead(Player&,PBHelper& pb){}; //handle custom messages
+    //handle messages customized, no post message 'cause async handle
+    virtual bool        PreMessage(Player&,PBHelper&)     {return true;}
 protected:
     virtual void        initCard(Game&)=0;
     virtual bool        validId(uint)=0;
@@ -42,9 +35,30 @@ protected:
     virtual int         maxHands(Game& game)=0;
     virtual int         bottom(Game& game)=0;
     
+    //----------------------------------------------------------------
+    // override in Meld/DiscardGame
+    //----------------------------------------------------------------
+public:
+    virtual             ~GameRule(){};
+    virtual void        Tick(Game&)=0;
+    virtual void        OnDiscard(Player&,proto3::MsgCNDiscard&)=0;
+    virtual void        OnMeld(Player&,const proto3::bunch_t&)=0;
+    
+protected:
+    virtual void        engage(Game&,proto3::MsgNCEngage&)=0;
+    
+    //----------------------------------------------------------------
+    // functional
+    //----------------------------------------------------------------
+public:
+    bool                IsReady(Game&);
+    void                Release(Game&);
+    void                OnReady(Player&);
+    void                OnEngage(Player&,uint);
+
+protected:
     void                settle(Game&);
     
-    virtual void        engage(Game&,proto3::MsgNCEngage&)=0;
     void                deal(Game&);
     void                changeState(Game&,Game::State);
     void                changePos(Game&,pos_t);
