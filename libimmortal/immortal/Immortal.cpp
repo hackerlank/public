@@ -163,7 +163,7 @@ bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
             time_t t=time(NULL);
             tm* aTm=localtime(&t);
             if(aTm->tm_hour==0)
-                setup_log("immortal");
+                setup_log(name.c_str());
             break;
         }
         case TIMER::TIMER_DAY:

@@ -11,10 +11,11 @@
 
 class Server :public keye::ws_service {
 public:
-    Server(const char* name,size_t ios = 1, size_t works = 1, size_t rb_size = 510)
+    Server(const char* cname,size_t ios = 1, size_t works = 1, size_t rb_size = 510)
     :ws_service(ios, works, rb_size)
     ,tpool(100){
-        setup_log(name?name:"server");
+        name=(cname?cname:"server");
+        setup_log(name.c_str());
     }
     
     virtual ~Server(){}
@@ -91,7 +92,8 @@ public:
 #endif
     }
     
-    keye::ini_file          config;
+    std::string                 name;
+    keye::ini_file              config;
     google::protobuf::RepeatedPtrField<proto3::game_t>    gameConfig;
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;

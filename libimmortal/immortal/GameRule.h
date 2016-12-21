@@ -30,6 +30,7 @@ public:
     
     virtual bool        PreSettle()     {return true;}
     virtual void        PostSettle()    {}
+    
     //handle messages customized, no post message 'cause async handle
     virtual bool        PreMessage(Player&,PBHelper&)     {return true;}
 protected:

@@ -17,7 +17,7 @@ public:
     virtual int             Type();
     virtual int             MaxPlayer(Game& game);
     
-    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
+    bool                    comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y)override;
     static void             test();
 protected:
     virtual void            initCard(Game&);

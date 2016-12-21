@@ -59,7 +59,7 @@ bool Lobby::on_timer(svc_handler&, size_t id, size_t milliseconds) {
             time_t t=time(NULL);
             tm* aTm=localtime(&t);
             if(aTm->tm_hour==0)
-                setup_log("lobby");
+                setup_log(name.c_str());
             
             decltype(t) thresh=60*60;  //1 hour
             for(auto i=sessions.begin();i!=sessions.end();){
