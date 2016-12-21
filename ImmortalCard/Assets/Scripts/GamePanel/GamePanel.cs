@@ -257,6 +257,9 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		var O=(maxArea+2-_pos)%maxArea;
 		var L=(maxArea-1-_pos)%maxArea;
 		
+		if(maxArea>maxPlayer)
+			com[O].gameObject.SetActive(false);
+
 		if(com.Length>0)com[0]=tempD[M];
 		if(com.Length>1)com[1]=tempD[R];
 		if(com.Length>2)com[2]=tempD[O];
@@ -314,6 +317,12 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	
 	IEnumerator Start(){
 		maxPlayer=rule.MaxPlayer;
+
+		if(Players.Length>maxPlayer){
+			var maxArea=Players.Length;
+			var O=(maxArea+2-_pos)%maxArea;
+			Players[O].gameObject.SetActive(false);
+		}
 		yield break;
 	}
 	
@@ -345,8 +354,8 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnSettings(){
-		Main.Instance.updater.Load<SettingsPanel>(
-			"Prefabs/SettingsPanel",Main.Instance.RootPanel);
+		StartCoroutine(Main.Instance.updater.Load<SettingsPanel>(
+			"Prefabs/SettingsPanel",Main.Instance.RootPanel));
 	}
 
 	public void OnBack(){

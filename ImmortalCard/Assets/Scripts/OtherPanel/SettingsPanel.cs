@@ -8,6 +8,7 @@ public class SettingsPanel : MonoBehaviour {
 	public Toggle	soundOn;
 	public Toggle	musicOn;
 	public Text		version;
+	public GameObject	dismissButton;
 
 	public const string PrefsKey_SoundVolume	="PrefsKey_SoundVolume";
 	public const string PrefsKey_MusicVolume	="PrefsKey_MusicVolume";
@@ -38,6 +39,10 @@ public class SettingsPanel : MonoBehaviour {
 		sound.value=Cache.SoundVolume;
 		music.value=Cache.MusicVolume;
 		version.text="v"+Config.version+"("+Config.build+")";
+
+		var panel=Main.Instance.gameController as GamePanel;
+		if(null==panel)
+			dismissButton.SetActive(false);
 	}
 
 	public void OnSoundVolume(float x){

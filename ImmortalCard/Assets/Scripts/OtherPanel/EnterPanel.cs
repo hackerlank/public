@@ -80,6 +80,8 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnHelp(){
+		StartCoroutine(
+			Main.Instance.updater.Load<HelpPanel>("Prefabs/HelpPanel",Main.Instance.RootPanel));
 	}
 
 	public void OnReplay(){
@@ -87,6 +89,8 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	IEnumerator replayCo(){
+		//DoReplay(null);
+		//yield break;
 		//connect: unstable and only for test
 		if(!Main.Instance.MainPlayer.InGame)
 			Main.Instance.MainPlayer.Connect(100);

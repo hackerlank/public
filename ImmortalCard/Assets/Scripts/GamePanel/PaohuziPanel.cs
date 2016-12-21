@@ -239,8 +239,7 @@ public class PaohuziPanel : GamePanel {
 		case pb_enum.OpPass:
 			//abandon
 			if(A!=null){
-				if(to==-1)to=msg.From;
-				A.DiscardTo(AbandonAreas[to],AbandonScalar);
+				A.DiscardTo(AbandonAreas[from],AbandonScalar);
 				A.state=Card.State.ST_ABANDON;
 			}
 			break;
