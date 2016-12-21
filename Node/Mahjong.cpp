@@ -230,20 +230,26 @@ bool Mahjong::isWin(Game& game,proto3::bunch_t& bunch,std::vector<proto3::bunch_
     return true;
 }
 
-void Mahjong::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
+bool Mahjong::PreSettle(Player& player,std::vector<proto3::bunch_t>* allSuites,unit_id_t card){
+    if(!allSuites){
+        Debug<<"error settle: no output\n";
+        return false;
+    }
+    
     auto pos=player.playData.seat();
     auto& game=*player.game;
     auto M=MaxPlayer(game);
     int score=1;
     for(int i=0;i<M;++i){
         auto& play=game.players[i]->playData;
-        if(pos==i&&allSuites.size()>0){
+        if(pos==i&&allSuites->size()>0){
             play.set_win(1);
             play.set_score((M-1)*score);
         }else{
             play.set_score(-score);
         }
     }
+    return true;
 }
 
 void Mahjong::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::bunch_t>& pending){
@@ -353,18 +359,9 @@ pb_enum Mahjong::verifyBunch(bunch_t& bunch){
     return bt;
 }
 
-bool Mahjong::checkDiscard(Player& player,unit_id_t drawCard){
+bool Mahjong::canDiscard(Player& player,unit_id_t){
     auto sz=player.playData.hands_size();
-    if(sz<=0)
-        return false;
-    
-    auto ret=(sz%3==2);
-    if(ret){
-        MeldGame::checkDiscard(player,drawCard);
-        player.game->pendingDiscard->bunch.add_pawns(drawCard);
-    }
-    
-    return ret;
+    return (sz%3==2);
 }
 
 bool Mahjong::PreDiscard(Game& game,bunch_t& bunch){

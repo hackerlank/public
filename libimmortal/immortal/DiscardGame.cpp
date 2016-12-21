@@ -28,8 +28,9 @@ void DiscardGame::Tick(Game& game){
                 changeState(game,Game::State::ST_SETTLE);
             break;
         case Game::State::ST_SETTLE:
-            GameRule::settle(game);
             changeState(game,Game::State::ST_WAIT);
+            //will change to END
+            GameRule::settle(game);
             break;
         case Game::State::ST_END:
             break;
@@ -181,8 +182,7 @@ void DiscardGame::OnDiscard(Player& player,MsgCNDiscard& msg){
 bool DiscardGame::isGameOver(Game& game){
     for(auto player:game.players){
         if(player->playData.hands().size()<=0){
-            settle(*player);
-            return true;
+            return PreSettle(*player);
         }
     }
     return false;

@@ -11,21 +11,21 @@
 
 class DoudeZhu: public DiscardGame{
 public:
-    virtual int         Type();
-    virtual int         MaxPlayer(Game&);
+    bool            PreSettle(Player&,std::vector<proto3::bunch_t>*,unit_id_t)override;
 
-    static void         test();
+    int             Type()override;
+    int             MaxPlayer(Game&)override;
+
+    static void     test();
 protected:
-    virtual void        initCard(Game&);
-    virtual bool        validId(uint);
-    virtual int         maxCards(Game& game);
-    virtual int         maxHands(Game& game);
-    virtual int         bottom(Game& game);
-    
-    virtual void        settle(Player&);
+    void            initCard(Game&)override;
+    bool            validId(uint)override;
+    int             maxCards(Game& game)override;
+    int             maxHands(Game& game)override;
+    int             bottom(Game& game)override;
 private:
-    proto3::pb_enum     verifyBunch(proto3::bunch_t&)override;
-    bool                compareBunch(proto3::bunch_t&,proto3::bunch_t&);
+    proto3::pb_enum verifyBunch(proto3::bunch_t&)override;
+    bool            compareBunch(proto3::bunch_t&,proto3::bunch_t&)override;
 };
 
 #endif /* DoudeZhu_h */

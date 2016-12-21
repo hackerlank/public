@@ -167,16 +167,11 @@ bool Paohuzi::PreEngage(Game& game,MsgNCEngage&){
     return true;
 }
 
-void Paohuzi::draw(Game& game){
-    auto card=game.pile.empty()?invalid_card:game.pile.back();
-
-    MeldGame::draw(game);
-    
-    if(card!=invalid_card){
-        //no pending meld,just pending discard
-        checkDiscard(*game.players[game.token],card);
-        game.pendingMeld.clear();
-    }
+void Paohuzi::PostDraw(Game& game,unit_id_t card){
+    //discard directly after draw, canDiscard should be pass
+    auto& player=*game.players[game.token];
+    discard(player,card);
+    game.pendingMeld.clear();
 }
 
 bool Paohuzi::meld(Game& game,pos_t token,proto3::bunch_t& front,bunch_t& bunch){
@@ -567,7 +562,13 @@ bool Paohuzi::validId(uint id){
     return true;
 }
 
-void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit_id_t card){
+bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,unit_id_t card){
+    if(!pAllSuites){
+        Debug<<"error settle: no output\n";
+        return false;
+    }
+    
+    std::vector<proto3::bunch_t>& allSuites=*pAllSuites;
     //只结算不判断
     auto pos=player.playData.seat();
     auto& game=*player.game;
@@ -1229,6 +1230,7 @@ void Paohuzi::settle(Player& player,std::vector<proto3::bunch_t>& allSuites,unit
         playFinish.set_chunk(playFinish.chunk()+chunk);
         playFinish.set_multiple(playFinish.multiple()+multiple);
     }
+    return true;
 }
 
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
@@ -1676,7 +1678,7 @@ bool Paohuzi::chouWei(Game& game,Player& player,bunch_t& bunch){
     return false;
 }
 
-bool Paohuzi::checkDiscard(Player& player,unit_id_t drawCard){
+bool Paohuzi::canDiscard(Player& player,unit_id_t drawCard){
     auto sz=player.playData.hands_size();
     if(sz<=0)
         return false;
@@ -1693,13 +1695,7 @@ bool Paohuzi::checkDiscard(Player& player,unit_id_t drawCard){
     }
 
     if(drawCard!=invalid_card)sz++;
-    auto ret=(sz%3==(aaaa?2:0));
-    if(ret){
-        MeldGame::checkDiscard(player,drawCard);
-        player.game->pendingDiscard->bunch.add_pawns(drawCard);
-    }
-    
-    return ret;
+    return (sz%3==(aaaa?2:0));
 }
 
 int opWeight(pb_enum op){
@@ -1731,7 +1727,7 @@ int opWeight(pb_enum op){
     return (ops>=pb_enum::BUNCH_WIN?i+(ops/pb_enum::BUNCH_WIN*pb_enum::BUNCH_WIN):i);
 }
 
-bool Paohuzi::comparePending(std::shared_ptr<Game> game,Game::pending_t& x,Game::pending_t& y){
+bool Paohuzi::comparePendingMeld(std::shared_ptr<Game> game,Game::pending_t& x,Game::pending_t& y){
     auto a=x.bunch.type();
     auto b=y.bunch.type();
 

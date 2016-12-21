@@ -15,14 +15,20 @@ class KEYE_API MeldGame: public GameRule{
     //----------------------------------------------------------------
 protected:
     bool                    comparision(uint x,uint y)override;
-    virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>&);
-    virtual bool            checkDiscard(Player&,unit_id_t);  //check AAAA and AAA to decide discardable
-    virtual void            draw(Game& game);
+    //sort pending meld
+    virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>& output);
 private:
+    //precheck while draw
+    virtual bool            PreDraw(Game&)  {return true;}
+    //post draw process
+    virtual void            PostDraw(Game&,unit_id_t card) {}
+
     //game over here
     virtual bool            isWin(Game&,proto3::bunch_t&,std::vector<proto3::bunch_t>&)=0;
-    virtual void            settle(Player&,std::vector<proto3::bunch_t>&,unit_id_t)=0;
-    virtual bool            comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
+    //sort function for pending meld
+    virtual bool            comparePendingMeld(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y);
+    //check discardable after draw or meld, will pass to the next or draw one more if failed
+    virtual bool            canDiscard(Player&,unit_id_t)=0;
     //----------------------------------------------------------------
     // overrode
     //----------------------------------------------------------------
@@ -32,6 +38,14 @@ private:
     void                    OnMeld(Player&,const proto3::bunch_t&)override final;
     
     void                    engage(Game&,proto3::MsgNCEngage&)override final;
+    //----------------------------------------------------------------
+    // functional
+    //----------------------------------------------------------------
+    //draw and send to client
+    void                    draw(Game& game);
+protected:
+    //prepare server for accepting cient discard
+    void                    discard(Player&,unit_id_t);
 };
 
 #endif /* MeldGame_h */

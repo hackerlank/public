@@ -28,8 +28,9 @@ void MeldGame::Tick(Game& game){
             //OnMeld
             break;
         case Game::State::ST_SETTLE:
-            GameRule::settle(game);
             changeState(game,Game::State::ST_WAIT);
+            //will change to END
+            GameRule::settle(game);
             break;
         case Game::State::ST_END:
             break;
@@ -252,7 +253,7 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
                     if(isWin(game,what,output)){
                         //settle player
                         localPlayer->playData.clear_hands();
-                        settle(*localPlayer,output,which);
+                        PreSettle(*localPlayer,&output,which);
                         
                         //reset player bunches
                         localPlayer->playData.clear_bunch();
@@ -316,7 +317,9 @@ void MeldGame::OnMeld(Player& player,const proto3::bunch_t& curr){
         
         if(tokenPlayer){
             //then draw or discard
-            if(!checkDiscard(*tokenPlayer,invalid_card)){
+            if(canDiscard(*tokenPlayer,invalid_card))
+                discard(player,invalid_card);
+            else{
                 //Debug<<"OnMeld pass to draw\n");
                 changeState(game,Game::State::ST_MELD);
                 draw(game);
@@ -336,13 +339,13 @@ void MeldGame::engage(Game& game,MsgNCEngage&){
 }
 
 void MeldGame::draw(Game& game){
-    if(game.pile.empty()){
+    if(!PreDraw(game) || game.pile.empty()){
         //dismiss
         Debug<<"dismiss while pile empty, pos="<<game.token<<endl;
         changeState(game,Game::State::ST_SETTLE);
         auto tokenPlayer=game.players[game.token];
         std::vector<bunch_t> output;
-        settle(*tokenPlayer,output,invalid_card);
+        PreSettle(*tokenPlayer,&output,invalid_card);
     }else{
         changePos(game,game.token+1);
         auto player=game.players[game.token];
@@ -374,12 +377,13 @@ void MeldGame::draw(Game& game){
             p->send(msg);
             p->lastMsg=std::make_shared<MsgNCDraw>(msg);
         }
+        PostDraw(game,card);
     }
 }
 
 void MeldGame::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::bunch_t>& pending){
     std::sort(spgame->pendingMeld.begin(),spgame->pendingMeld.end()
-              ,std::bind(&MeldGame::comparePending,this,spgame,std::placeholders::_1,std::placeholders::_2));
+              ,std::bind(&MeldGame::comparePendingMeld,this,spgame,std::placeholders::_1,std::placeholders::_2));
     pending.push_back(spgame->pendingMeld.front().bunch);
 }
 
@@ -391,18 +395,17 @@ bool MeldGame::comparision(uint x,uint y){
     else return false;
 }
 
-bool MeldGame::comparePending(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y){
+bool MeldGame::comparePendingMeld(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y){
     auto a=(int)x.bunch.type();
     auto b=(int)y.bunch.type();
     return a>b;
 }
 
-bool MeldGame::checkDiscard(Player& player,unit_id_t){
+void MeldGame::discard(Player& player,unit_id_t card){
     auto& game=*player.game;
     changeState(game,Game::State::ST_DISCARD);
     //pending discard
     game.pendingDiscard=std::make_shared<Game::pending_t>();
     game.pendingDiscard->bunch.set_pos(player.playData.seat());
-
-    return true;
+    game.pendingDiscard->bunch.add_pawns(card);
 }

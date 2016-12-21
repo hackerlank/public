@@ -14,36 +14,46 @@ public:
     //----------------------------------------------------------------
     // shuld override
     //----------------------------------------------------------------
-    //engage after deal
+    //game type and max player
     virtual int         Type()=0;
     virtual int         MaxPlayer(Game&)=0;
 
+    //engage after deal
     virtual bool        PreEngage(Game&,proto3::MsgNCEngage&)   {return true;}
     
+    //check meld or hook pending meld sth.
     virtual bool        PreMeld(Game&)                          {return true;}
     //token: token before meld; front,current:bunches in pending meld
     virtual bool        PostMeld(Game&,proto3::pb_enum verifyBunchResult,pos_t token,proto3::bunch_t& front,
                                  proto3::bunch_t& current)      {return true;}
-    
+    //discard check specially
     virtual bool        PreDiscard(Game&,proto3::bunch_t&)      {return true;}
+    //post process
     virtual void        PostDiscard(Game&,proto3::MsgNCDiscard&){}
     
-    virtual bool        PreSettle()     {return true;}
-    virtual void        PostSettle()    {}
+    //settle for player,this is quite important
+    virtual bool        PreSettle(Player&,std::vector<proto3::bunch_t>* =nullptr,
+                                  unit_id_t =invalid_card)      =0;
+    //post process, e.g. avoid game end
+    virtual void        PostSettle(Game&)                       {}
     
     //handle messages customized, no post message 'cause async handle
-    virtual bool        PreMessage(Player&,PBHelper&)     {return true;}
+    virtual bool        PreMessage(Player&,PBHelper&)           {return true;}
 protected:
     virtual void        initCard(Game&)=0;
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool        validId(uint)=0;
+    //compare 2 cards,for sorting or fighting
     virtual bool        comparision(uint x,uint y)=0;
+    //total cards in game
     virtual int         maxCards(Game& game)=0;
+    //total hand cards,the banker gets more(bottom) usually
     virtual int         maxHands(Game& game)=0;
+    //more card(s) for the banker
     virtual int         bottom(Game& game)=0;
     
     //----------------------------------------------------------------
-    // override in Meld/DiscardGame
+    // override & final in Meld/DiscardGame
     //----------------------------------------------------------------
 public:
     virtual             ~GameRule(){};

@@ -61,7 +61,7 @@ void DoudeZhu::initCard(Game& game){
     }
 }
 
-void DoudeZhu::settle(Player& player){
+bool DoudeZhu::PreSettle(Player& player,std::vector<proto3::bunch_t>*,unit_id_t){
     auto& game=*player.game;
     auto M=(int)MaxPlayer(game);
     int score=1;
@@ -74,6 +74,7 @@ void DoudeZhu::settle(Player& player){
             play.set_score(-score);
         }
     }
+    return true;
 }
 
 pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){

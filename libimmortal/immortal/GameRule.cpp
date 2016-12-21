@@ -244,6 +244,7 @@ void GameRule::settle(Game& game){
 
         if(end)
             This->changeState(game,Game::State::ST_END);
+        This->PostSettle(game);
 
     },spGame,this));
 }

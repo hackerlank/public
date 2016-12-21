@@ -17,7 +17,7 @@ protected:
     bool                    comparision(uint x,uint y)override;
 private:
     virtual bool            isGameOver(Game&);
-    virtual void            settle(Player&)=0;
+    //compare bunches
     virtual bool            compareBunch(proto3::bunch_t&,proto3::bunch_t&)=0;
     //----------------------------------------------------------------
     // overrode
