@@ -80,30 +80,6 @@ bool Lobby::on_timer(svc_handler&, size_t id, size_t milliseconds) {
 }
 
 int main(int argc, char* argv[]) {
-    /*
-    std::string contents[]={
-    "CKMfEgo0MDAwMTAwMTAzINmQ%2ffSRsMCbCQ%3d%3d",
-    "CKMfEgo0MDAwMTAwMTAzINmi%2bv%2b7q8DAmQE%3d",
-    "CKMfEgo0MDAwMTAwMTAzINnW%2fJWDt4DAWQ%3d%3d",
-    "CKMfEgo0MDAwMTAwMTAzINmQo7nwsYCFxwE%3d",
-    };
-    
-    for(int i=0;i<4;++i){
-        auto& content=contents[i];
-        printf("content=%s\n",content.c_str());
-        auto str=UrlDecode(content);
-        printf("  content=%s\n",str.c_str());
-        str=base64_decode(content);
-        printf("  decode=%s\n",str.c_str());
-        proto3::MsgCLLobby imsg;
-        if(imsg.ParseFromString(str)){
-            printf("  OK: version=%d,session=%lld\n",imsg.version(),imsg.session());
-        }else
-            printf("--error\n");
-    }
-    return 0;
-    */
-    
     const char* cfg="lobby.cfg";
     for(auto i=1;i<argc;++i){
         auto arg=argv[i];

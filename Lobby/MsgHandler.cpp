@@ -33,7 +33,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
     //decode
     Debug<<"content="<<content.c_str()<<endl;
     auto str=UrlDecode(content);
-    str=base64_decode(content);
+    str=base64_decode(str);
     Debug<<"decode="<<str.c_str()<<endl;
     
     //process
