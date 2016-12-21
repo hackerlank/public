@@ -144,7 +144,7 @@ void Immortal::on_write(svc_handler&, void*, size_t sz) {
 //    Debug<<"on_write %zd\n",sz);
 }
 
-bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
+bool Immortal::on_timer(svc_handler& sh, size_t id, size_t milliseconds) {
     switch (id) {
         case TIMER::TIMER_SEC:
             for(auto iter=games.begin();iter!=games.end();){
@@ -171,5 +171,5 @@ bool Immortal::on_timer(svc_handler&, size_t id, size_t milliseconds) {
         default:
             break;
     }
-    return true;
+    return Server::on_timer(sh,id,milliseconds);
 }

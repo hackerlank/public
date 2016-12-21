@@ -9,6 +9,8 @@
 #ifndef Server_h
 #define Server_h
 
+#include <functional>
+
 class Server :public keye::ws_service {
 public:
     Server(const char* cname,size_t ios = 1, size_t works = 1, size_t rb_size = 510)
@@ -77,6 +79,14 @@ public:
         return false;
     }
 
+    virtual bool	on_timer(keye::svc_handler&, size_t id, size_t milliseconds){
+        return timer(id,milliseconds);
+    }
+
+    void    install_timer(const std::function<bool(size_t,size_t)>& t){
+        timer=t;
+    }
+    
     void    setup_log(const char* file){
 #if defined(WIN32) || defined(__APPLE__)
         sLogger=std::make_shared<logger>();
@@ -98,6 +108,9 @@ public:
     std::shared_ptr<vic_proxy>  spdb;
     keye::scheduler             tpool;
     std::map<unsigned long,long>    sessions; //[session,timestamp]
+
+    std::function<bool(size_t id,size_t milliseconds)> timer;
+
 };
 
 inline unsigned long genSession(){

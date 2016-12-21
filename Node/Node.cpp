@@ -37,6 +37,16 @@ int main(int argc, char* argv[]) {
     server.registerRule(std::make_shared<Paohuzi>());
 
 	server.run(cfg);
+    server.install_timer([](size_t id, size_t milliseconds){
+        //will terminate timer if return false
+        switch (id) {
+            case TIMER::TIMER_SEC:
+                break;
+            default:
+                break;
+        }
+        return true;
+    });
     server.set_timer(TIMER::TIMER_SEC, 1000);
     server.set_timer(TIMER::TIMER_MIN, 1000*60);
     server.set_timer(TIMER::TIMER_HOUR,1000*60*60);
