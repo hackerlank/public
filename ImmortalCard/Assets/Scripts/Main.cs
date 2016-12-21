@@ -6,7 +6,7 @@ public class Main : MonoBehaviour {
 
 	public static Main		Instance=null;
 
-	public const int		Round=2;
+	public int				Round=2;
 
 	[HideInInspector]
 	public Updater			updater;

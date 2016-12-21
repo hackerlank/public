@@ -17,6 +17,7 @@ public:
     bool            PreEngage(Game&,proto3::MsgNCEngage&)override;
     bool            PostMeld(Game& game,proto3::pb_enum,pos_t token,proto3::bunch_t&,proto3::bunch_t&)override;
     bool            PreSettle(Player&,std::vector<proto3::bunch_t>*,unit_id_t)override;
+    void            PostSettle(Game&)override;
 
     int             Type()override;
     int             MaxPlayer(Game& game)override;

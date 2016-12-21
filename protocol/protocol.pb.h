@@ -5354,10 +5354,16 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   ::proto3::pb_enum category() const;
   void set_category(::proto3::pb_enum value);
 
-  // repeated .proto3.player_t players = 4;
+  // optional int32 max_round = 4;
+  void clear_max_round();
+  static const int kMaxRoundFieldNumber = 4;
+  ::google::protobuf::int32 max_round() const;
+  void set_max_round(::google::protobuf::int32 value);
+
+  // repeated .proto3.player_t players = 5;
   int players_size() const;
   void clear_players();
-  static const int kPlayersFieldNumber = 4;
+  static const int kPlayersFieldNumber = 5;
   const ::proto3::player_t& players(int index) const;
   ::proto3::player_t* mutable_players(int index);
   ::proto3::player_t* add_players();
@@ -5366,9 +5372,9 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   const ::google::protobuf::RepeatedPtrField< ::proto3::player_t >&
       players() const;
 
-  // optional .proto3.pb_enum result = 5;
+  // optional .proto3.pb_enum result = 6;
   void clear_result();
-  static const int kResultFieldNumber = 5;
+  static const int kResultFieldNumber = 6;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -5381,8 +5387,9 @@ class MsgNCJoin : public ::google::protobuf::MessageLite /* @@protoc_insertion_p
   bool _is_default_instance_;
   int mid_;
   int game_;
-  ::google::protobuf::RepeatedPtrField< ::proto3::player_t > players_;
   int category_;
+  ::google::protobuf::int32 max_round_;
+  ::google::protobuf::RepeatedPtrField< ::proto3::player_t > players_;
   int result_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -5772,19 +5779,31 @@ class MsgNCRevive : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
-  // optional .proto3.MsgNCDeal deal = 2;
+  // optional int32 round = 2;
+  void clear_round();
+  static const int kRoundFieldNumber = 2;
+  ::google::protobuf::int32 round() const;
+  void set_round(::google::protobuf::int32 value);
+
+  // optional int32 max_round = 3;
+  void clear_max_round();
+  static const int kMaxRoundFieldNumber = 3;
+  ::google::protobuf::int32 max_round() const;
+  void set_max_round(::google::protobuf::int32 value);
+
+  // optional .proto3.MsgNCDeal deal = 4;
   bool has_deal() const;
   void clear_deal();
-  static const int kDealFieldNumber = 2;
+  static const int kDealFieldNumber = 4;
   const ::proto3::MsgNCDeal& deal() const;
   ::proto3::MsgNCDeal* mutable_deal();
   ::proto3::MsgNCDeal* release_deal();
   void set_allocated_deal(::proto3::MsgNCDeal* deal);
 
-  // repeated .proto3.play_t play = 3;
+  // repeated .proto3.play_t play = 5;
   int play_size() const;
   void clear_play();
-  static const int kPlayFieldNumber = 3;
+  static const int kPlayFieldNumber = 5;
   const ::proto3::play_t& play(int index) const;
   ::proto3::play_t* mutable_play(int index);
   ::proto3::play_t* add_play();
@@ -5793,9 +5812,9 @@ class MsgNCRevive : public ::google::protobuf::MessageLite /* @@protoc_insertion
   const ::google::protobuf::RepeatedPtrField< ::proto3::play_t >&
       play() const;
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 6;
   void clear_result();
-  static const int kResultFieldNumber = 4;
+  static const int kResultFieldNumber = 6;
   ::proto3::pb_enum result() const;
   void set_result(::proto3::pb_enum value);
 
@@ -5806,8 +5825,10 @@ class MsgNCRevive : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::proto3::MsgNCDeal* deal_;
   int mid_;
+  ::google::protobuf::int32 round_;
+  ::proto3::MsgNCDeal* deal_;
+  ::google::protobuf::int32 max_round_;
   int result_;
   ::google::protobuf::RepeatedPtrField< ::proto3::play_t > play_;
   mutable int _cached_size_;
@@ -12298,7 +12319,21 @@ inline void MsgNCJoin::set_category(::proto3::pb_enum value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.category)
 }
 
-// repeated .proto3.player_t players = 4;
+// optional int32 max_round = 4;
+inline void MsgNCJoin::clear_max_round() {
+  max_round_ = 0;
+}
+inline ::google::protobuf::int32 MsgNCJoin::max_round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCJoin.max_round)
+  return max_round_;
+}
+inline void MsgNCJoin::set_max_round(::google::protobuf::int32 value) {
+  
+  max_round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.max_round)
+}
+
+// repeated .proto3.player_t players = 5;
 inline int MsgNCJoin::players_size() const {
   return players_.size();
 }
@@ -12328,7 +12363,7 @@ MsgNCJoin::players() const {
   return players_;
 }
 
-// optional .proto3.pb_enum result = 5;
+// optional .proto3.pb_enum result = 6;
 inline void MsgNCJoin::clear_result() {
   result_ = 0;
 }
@@ -12470,7 +12505,35 @@ inline void MsgNCRevive::set_mid(::proto3::pb_msg value) {
   // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.mid)
 }
 
-// optional .proto3.MsgNCDeal deal = 2;
+// optional int32 round = 2;
+inline void MsgNCRevive::clear_round() {
+  round_ = 0;
+}
+inline ::google::protobuf::int32 MsgNCRevive::round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.round)
+  return round_;
+}
+inline void MsgNCRevive::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.round)
+}
+
+// optional int32 max_round = 3;
+inline void MsgNCRevive::clear_max_round() {
+  max_round_ = 0;
+}
+inline ::google::protobuf::int32 MsgNCRevive::max_round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.max_round)
+  return max_round_;
+}
+inline void MsgNCRevive::set_max_round(::google::protobuf::int32 value) {
+  
+  max_round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.max_round)
+}
+
+// optional .proto3.MsgNCDeal deal = 4;
 inline bool MsgNCRevive::has_deal() const {
   return !_is_default_instance_ && deal_ != NULL;
 }
@@ -12512,7 +12575,7 @@ inline void MsgNCRevive::set_allocated_deal(::proto3::MsgNCDeal* deal) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCRevive.deal)
 }
 
-// repeated .proto3.play_t play = 3;
+// repeated .proto3.play_t play = 5;
 inline int MsgNCRevive::play_size() const {
   return play_.size();
 }
@@ -12542,7 +12605,7 @@ MsgNCRevive::play() const {
   return play_;
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 6;
 inline void MsgNCRevive::clear_result() {
   result_ = 0;
 }

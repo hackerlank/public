@@ -28,7 +28,7 @@ public class Player {
 	public MsgLCLogin		msgLCLogin;
 	public MsgNCCreate		msgNCCreate;
 	public MsgNCJoin		msgNCJoin;
-	public MsgCNRevive		msgRevice;
+	public MsgCNRevive		msgRevive;
 
 	public Player(){
 		//networks
@@ -234,7 +234,7 @@ public class Player {
 		//Node
 		case pb_msg.MsgNcConnect:
 			MsgNCConnect msgEnter=MsgNCConnect.Parser.ParseFrom(bytes);
-			Debug.Log("connected node");
+			//Debug.Log("connected node");
 			if(msgEnter.Result==pb_enum.Succeess){
 				InGame=true;
 			}else{
@@ -262,6 +262,7 @@ public class Player {
 			//Debug.Log("joined game");
 			if(msgJoin.Result==pb_enum.Succeess){
 				msgNCJoin=msgJoin;
+				Main.Instance.Round=msgJoin.MaxRound;
 				if(this==Main.Instance.MainPlayer)
 				{
 					var storeGame=Cache.storeGame;
@@ -344,6 +345,8 @@ public class Player {
 				playData.Seat=msgRevive.Deal.Pos;
 				playData.Hands.AddRange(msgRevive.Deal.Hands);
 
+				Main.Instance.gameController.Round=msgRevive.Round;
+				Main.Instance.Round=msgRevive.MaxRound;
 				var str="revive deal "+playData.Seat+":";
 				foreach(var hand in playData.Hands)str+=hand+",";
 				Debug.Log(str);

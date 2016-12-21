@@ -121,7 +121,7 @@ public class EnterPanel : MonoBehaviour {
 
 		var opRound=new key_value();
 		opRound.Ikey=pb_enum.OptionRound;
-		opRound.Ivalue=Main.Round;
+		opRound.Ivalue=Main.Instance.Round;
 
 		Main.Instance.MainPlayer.category=GameCategory.Value;
 		var opCategory=new key_value();

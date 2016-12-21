@@ -670,11 +670,12 @@ int32 game_id			=2;
 
 message MsgNCJoin{
 
-pb_msg mid                  =1;
-pb_enum game                =2;
-pb_enum category            =3;
-repeated player_t players   =4;
-pb_enum result              =5;
+pb_msg mid              =1;
+pb_enum game            =2;
+pb_enum category        =3;
+int32 max_round         =4;
+repeated player_t players   =5;
+pb_enum result          =6;
 };
 
 message MsgCNReady{
@@ -699,9 +700,11 @@ uint64 session          =3;
 message MsgNCRevive{
 
 pb_msg mid				=1;
-MsgNCDeal deal          =2;
-repeated play_t play    =3;
-pb_enum result			=4;
+int32 round             =2;
+int32 max_round         =3;
+MsgNCDeal deal          =4;
+repeated play_t play    =5;
+pb_enum result			=6;
 };
 
 message MsgNCDeal{

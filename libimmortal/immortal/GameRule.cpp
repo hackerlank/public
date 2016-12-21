@@ -226,8 +226,12 @@ void GameRule::settle(Game& game){
         }
 
         //end round
-        auto end=game.round>=game.Round;
-        if(end){
+        if(game.round>=game.Round)
+            This->changeState(game,Game::State::ST_END);
+        //but may changed by post settle
+        This->PostSettle(game);
+        
+        if(Game::State::ST_END==game.state){
             if(game.spFinish){
                 auto& fin=*game.spFinish;
                 fin.set_mid(pb_msg::MSG_NC_FINISH);
@@ -241,10 +245,6 @@ void GameRule::settle(Game& game){
 
             }
         }
-
-        if(end)
-            This->changeState(game,Game::State::ST_END);
-        This->PostSettle(game);
 
     },spGame,this));
 }

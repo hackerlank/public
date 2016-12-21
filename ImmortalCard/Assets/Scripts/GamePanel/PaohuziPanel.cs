@@ -305,7 +305,6 @@ public class PaohuziPanel : GamePanel {
 
 	
 	override public IEnumerator PostMessage(pb_msg mid,byte[] bytes){
-		Debug.Log("----PostMessage "+mid.ToString());
 		switch(mid){
 		case pb_msg.MsgNcBeforeStartup:
 			MsgNcBeforeStartup msgBeforeStartup=MsgNcBeforeStartup.Parser.ParseFrom(bytes);

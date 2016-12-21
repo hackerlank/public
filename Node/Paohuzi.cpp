@@ -51,6 +51,10 @@ int nnn[pb_enum::WIN_MAX][pb_enum::PHZ_MAX]={
     {0,0,0,				0,0,0,			0,0,0,			0,2,0,0,				0},		//连胡
 };
 
+inline int Round(int i){
+    return (abs(i)+5)/10*10*(i<0?-1:1);
+}
+
 pb_enum fixOps(pb_enum ops){
     if(ops>=pb_enum::BUNCH_WIN)
         ops=(pb_enum)(ops%pb_enum::BUNCH_WIN);
@@ -1231,6 +1235,55 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
         playFinish.set_multiple(playFinish.multiple()+multiple);
     }
     return true;
+}
+
+void Paohuzi::PostSettle(Game& game){
+    bool bendgame=false;
+    if(pb_enum::PHZ_LD==game.category||pb_enum::PHZ_SYBP==game.category
+       ||pb_enum::PHZ_XX_GHZ==game.category){
+        auto banckerChanged=true;
+
+        if(!banckerChanged && pb_enum::PHZ_SYBP==game.category)
+            return;
+        
+        auto M=MaxPlayer(game);
+        int maxpoint=0;
+        int pos=-1;
+        for(int i=0,ii=game.spFinish->play_size();i<ii;++i){
+            auto& play=game.spFinish->play(i);
+            if(maxpoint<play.total()){
+                maxpoint=play.total();
+                pos=i;
+            }
+        }
+        
+        if(maxpoint>=100){
+            bendgame=true;
+            
+            int i=pos;
+            int j=(i+1)%M;
+            int k=M-i-j;
+            int I=Round(game.spFinish->play(i).total());
+            int J=Round(game.spFinish->play(j).total());
+            int K=Round(game.spFinish->play(k).total());
+            int C=I*2-J-K;
+            int A=J*2-I-K;
+            int B=K*2-I-J;
+
+            game.spSettle->mutable_play(i)->set_score(C);
+            game.spFinish->mutable_play(i)->set_score(C);
+            game.spFinish->mutable_play(i)->set_total(C);
+            game.spSettle->mutable_play(i)->set_score(A);
+            game.spFinish->mutable_play(i)->set_score(A);
+            game.spFinish->mutable_play(i)->set_total(A);
+            game.spSettle->mutable_play(i)->set_score(B);
+            game.spFinish->mutable_play(i)->set_score(B);
+            game.spFinish->mutable_play(i)->set_total(B);
+        }
+    } else if(game.round>=game.Round)
+        bendgame=true;
+    
+    changeState(game, bendgame? Game::State::ST_END: Game::State::ST_WAIT);
 }
 
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){

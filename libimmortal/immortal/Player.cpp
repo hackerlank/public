@@ -128,6 +128,9 @@ void Player::on_read(PBHelper& pb){
                         game->players.push_back(shared_from_this());
                         ready=true;
                         playData.set_seat((int)game->players.size()-1);
+                        omsg.set_game((pb_enum)rule->Type());
+                        omsg.set_category(game->category);
+                        omsg.set_max_round(game->Round);
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
                         //Debug<<"game joined,gid="<<gid<<endl;
                     }else{
@@ -262,6 +265,8 @@ void Player::on_read(PBHelper& pb){
                         for(auto a:aaa.pawns())
                             hands->Add(a);
                     
+                    msg.set_round(spGame->round);
+                    msg.set_max_round(spGame->Round);
                     msg.set_result(pb_enum::SUCCEESS);
                     
                     break;

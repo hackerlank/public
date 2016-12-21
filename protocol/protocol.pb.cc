@@ -18589,6 +18589,7 @@ void MsgCNJoin::clear_game_id() {
 const int MsgNCJoin::kMidFieldNumber;
 const int MsgNCJoin::kGameFieldNumber;
 const int MsgNCJoin::kCategoryFieldNumber;
+const int MsgNCJoin::kMaxRoundFieldNumber;
 const int MsgNCJoin::kPlayersFieldNumber;
 const int MsgNCJoin::kResultFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
@@ -18617,6 +18618,7 @@ void MsgNCJoin::SharedCtor() {
   mid_ = 0;
   game_ = 0;
   category_ = 0;
+  max_round_ = 0;
   result_ = 0;
 }
 
@@ -18676,8 +18678,8 @@ void MsgNCJoin::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, game_);
-  ZR_(category_, result_);
+  ZR_(mid_, max_round_);
+  result_ = 0;
 
 #undef ZR_HELPER_
 #undef ZR_
@@ -18738,13 +18740,28 @@ bool MsgNCJoin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_players;
+        if (input->ExpectTag(32)) goto parse_max_round;
         break;
       }
 
-      // repeated .proto3.player_t players = 4;
+      // optional int32 max_round = 4;
       case 4: {
-        if (tag == 34) {
+        if (tag == 32) {
+         parse_max_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &max_round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(42)) goto parse_players;
+        break;
+      }
+
+      // repeated .proto3.player_t players = 5;
+      case 5: {
+        if (tag == 42) {
          parse_players:
           DO_(input->IncrementRecursionDepth());
          parse_loop_players:
@@ -18753,15 +18770,15 @@ bool MsgNCJoin::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(34)) goto parse_loop_players;
+        if (input->ExpectTag(42)) goto parse_loop_players;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(40)) goto parse_result;
+        if (input->ExpectTag(48)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 5;
-      case 5: {
-        if (tag == 40) {
+      // optional .proto3.pb_enum result = 6;
+      case 6: {
+        if (tag == 48) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -18817,16 +18834,21 @@ void MsgNCJoin::SerializeWithCachedSizes(
       3, this->category(), output);
   }
 
-  // repeated .proto3.player_t players = 4;
-  for (unsigned int i = 0, n = this->players_size(); i < n; i++) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      4, this->players(i), output);
+  // optional int32 max_round = 4;
+  if (this->max_round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->max_round(), output);
   }
 
-  // optional .proto3.pb_enum result = 5;
+  // repeated .proto3.player_t players = 5;
+  for (unsigned int i = 0, n = this->players_size(); i < n; i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessage(
+      5, this->players(i), output);
+  }
+
+  // optional .proto3.pb_enum result = 6;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      5, this->result(), output);
+      6, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCJoin)
@@ -18854,13 +18876,20 @@ int MsgNCJoin::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->category());
   }
 
-  // optional .proto3.pb_enum result = 5;
+  // optional int32 max_round = 4;
+  if (this->max_round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->max_round());
+  }
+
+  // optional .proto3.pb_enum result = 6;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.player_t players = 4;
+  // repeated .proto3.player_t players = 5;
   total_size += 1 * this->players_size();
   for (int i = 0; i < this->players_size(); i++) {
     total_size +=
@@ -18894,6 +18923,9 @@ void MsgNCJoin::MergeFrom(const MsgNCJoin& from) {
   if (from.category() != 0) {
     set_category(from.category());
   }
+  if (from.max_round() != 0) {
+    set_max_round(from.max_round());
+  }
   if (from.result() != 0) {
     set_result(from.result());
   }
@@ -18919,6 +18951,7 @@ void MsgNCJoin::InternalSwap(MsgNCJoin* other) {
   std::swap(mid_, other->mid_);
   std::swap(game_, other->game_);
   std::swap(category_, other->category_);
+  std::swap(max_round_, other->max_round_);
   players_.UnsafeArenaSwap(&other->players_);
   std::swap(result_, other->result_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -18974,7 +19007,21 @@ void MsgNCJoin::clear_category() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.category)
 }
 
-// repeated .proto3.player_t players = 4;
+// optional int32 max_round = 4;
+void MsgNCJoin::clear_max_round() {
+  max_round_ = 0;
+}
+ ::google::protobuf::int32 MsgNCJoin::max_round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCJoin.max_round)
+  return max_round_;
+}
+ void MsgNCJoin::set_max_round(::google::protobuf::int32 value) {
+  
+  max_round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCJoin.max_round)
+}
+
+// repeated .proto3.player_t players = 5;
 int MsgNCJoin::players_size() const {
   return players_.size();
 }
@@ -19004,7 +19051,7 @@ MsgNCJoin::players() const {
   return players_;
 }
 
-// optional .proto3.pb_enum result = 5;
+// optional .proto3.pb_enum result = 6;
 void MsgNCJoin::clear_result() {
   result_ = 0;
 }
@@ -19874,6 +19921,8 @@ void MsgCNRevive::clear_session() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgNCRevive::kMidFieldNumber;
+const int MsgNCRevive::kRoundFieldNumber;
+const int MsgNCRevive::kMaxRoundFieldNumber;
 const int MsgNCRevive::kDealFieldNumber;
 const int MsgNCRevive::kPlayFieldNumber;
 const int MsgNCRevive::kResultFieldNumber;
@@ -19907,6 +19956,8 @@ void MsgNCRevive::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
+  round_ = 0;
+  max_round_ = 0;
   deal_ = NULL;
   result_ = 0;
 }
@@ -19968,7 +20019,8 @@ void MsgNCRevive::Clear() {
            ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
 } while (0)
 
-  ZR_(mid_, result_);
+  ZR_(mid_, round_);
+  ZR_(max_round_, result_);
   if (GetArenaNoVirtual() == NULL && deal_ != NULL) delete deal_;
   deal_ = NULL;
 
@@ -19999,26 +20051,56 @@ bool MsgNCRevive::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(18)) goto parse_deal;
+        if (input->ExpectTag(16)) goto parse_round;
         break;
       }
 
-      // optional .proto3.MsgNCDeal deal = 2;
+      // optional int32 round = 2;
       case 2: {
-        if (tag == 18) {
+        if (tag == 16) {
+         parse_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(24)) goto parse_max_round;
+        break;
+      }
+
+      // optional int32 max_round = 3;
+      case 3: {
+        if (tag == 24) {
+         parse_max_round:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &max_round_)));
+
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(34)) goto parse_deal;
+        break;
+      }
+
+      // optional .proto3.MsgNCDeal deal = 4;
+      case 4: {
+        if (tag == 34) {
          parse_deal:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                input, mutable_deal()));
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_play;
+        if (input->ExpectTag(42)) goto parse_play;
         break;
       }
 
-      // repeated .proto3.play_t play = 3;
-      case 3: {
-        if (tag == 26) {
+      // repeated .proto3.play_t play = 5;
+      case 5: {
+        if (tag == 42) {
          parse_play:
           DO_(input->IncrementRecursionDepth());
          parse_loop_play:
@@ -20027,15 +20109,15 @@ bool MsgNCRevive::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(26)) goto parse_loop_play;
+        if (input->ExpectTag(42)) goto parse_loop_play;
         input->UnsafeDecrementRecursionDepth();
-        if (input->ExpectTag(32)) goto parse_result;
+        if (input->ExpectTag(48)) goto parse_result;
         break;
       }
 
-      // optional .proto3.pb_enum result = 4;
-      case 4: {
-        if (tag == 32) {
+      // optional .proto3.pb_enum result = 6;
+      case 6: {
+        if (tag == 48) {
          parse_result:
           int value;
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
@@ -20079,22 +20161,32 @@ void MsgNCRevive::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
-  // optional .proto3.MsgNCDeal deal = 2;
+  // optional int32 round = 2;
+  if (this->round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->round(), output);
+  }
+
+  // optional int32 max_round = 3;
+  if (this->max_round() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->max_round(), output);
+  }
+
+  // optional .proto3.MsgNCDeal deal = 4;
   if (this->has_deal()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      2, *this->deal_, output);
+      4, *this->deal_, output);
   }
 
-  // repeated .proto3.play_t play = 3;
+  // repeated .proto3.play_t play = 5;
   for (unsigned int i = 0, n = this->play_size(); i < n; i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
-      3, this->play(i), output);
+      5, this->play(i), output);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 6;
   if (this->result() != 0) {
     ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      4, this->result(), output);
+      6, this->result(), output);
   }
 
   // @@protoc_insertion_point(serialize_end:proto3.MsgNCRevive)
@@ -20110,20 +20202,34 @@ int MsgNCRevive::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
   }
 
-  // optional .proto3.MsgNCDeal deal = 2;
+  // optional int32 round = 2;
+  if (this->round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->round());
+  }
+
+  // optional int32 max_round = 3;
+  if (this->max_round() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->max_round());
+  }
+
+  // optional .proto3.MsgNCDeal deal = 4;
   if (this->has_deal()) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         *this->deal_);
   }
 
-  // optional .proto3.pb_enum result = 4;
+  // optional .proto3.pb_enum result = 6;
   if (this->result() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->result());
   }
 
-  // repeated .proto3.play_t play = 3;
+  // repeated .proto3.play_t play = 5;
   total_size += 1 * this->play_size();
   for (int i = 0; i < this->play_size(); i++) {
     total_size +=
@@ -20151,6 +20257,12 @@ void MsgNCRevive::MergeFrom(const MsgNCRevive& from) {
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
+  if (from.round() != 0) {
+    set_round(from.round());
+  }
+  if (from.max_round() != 0) {
+    set_max_round(from.max_round());
+  }
   if (from.has_deal()) {
     mutable_deal()->::proto3::MsgNCDeal::MergeFrom(from.deal());
   }
@@ -20177,6 +20289,8 @@ void MsgNCRevive::Swap(MsgNCRevive* other) {
 }
 void MsgNCRevive::InternalSwap(MsgNCRevive* other) {
   std::swap(mid_, other->mid_);
+  std::swap(round_, other->round_);
+  std::swap(max_round_, other->max_round_);
   std::swap(deal_, other->deal_);
   play_.UnsafeArenaSwap(&other->play_);
   std::swap(result_, other->result_);
@@ -20205,7 +20319,35 @@ void MsgNCRevive::clear_mid() {
   // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.mid)
 }
 
-// optional .proto3.MsgNCDeal deal = 2;
+// optional int32 round = 2;
+void MsgNCRevive::clear_round() {
+  round_ = 0;
+}
+ ::google::protobuf::int32 MsgNCRevive::round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.round)
+  return round_;
+}
+ void MsgNCRevive::set_round(::google::protobuf::int32 value) {
+  
+  round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.round)
+}
+
+// optional int32 max_round = 3;
+void MsgNCRevive::clear_max_round() {
+  max_round_ = 0;
+}
+ ::google::protobuf::int32 MsgNCRevive::max_round() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgNCRevive.max_round)
+  return max_round_;
+}
+ void MsgNCRevive::set_max_round(::google::protobuf::int32 value) {
+  
+  max_round_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgNCRevive.max_round)
+}
+
+// optional .proto3.MsgNCDeal deal = 4;
 bool MsgNCRevive::has_deal() const {
   return !_is_default_instance_ && deal_ != NULL;
 }
@@ -20247,7 +20389,7 @@ void MsgNCRevive::set_allocated_deal(::proto3::MsgNCDeal* deal) {
   // @@protoc_insertion_point(field_set_allocated:proto3.MsgNCRevive.deal)
 }
 
-// repeated .proto3.play_t play = 3;
+// repeated .proto3.play_t play = 5;
 int MsgNCRevive::play_size() const {
   return play_.size();
 }
@@ -20277,7 +20419,7 @@ MsgNCRevive::play() const {
   return play_;
 }
 
-// optional .proto3.pb_enum result = 4;
+// optional .proto3.pb_enum result = 6;
 void MsgNCRevive::clear_result() {
   result_ = 0;
 }
