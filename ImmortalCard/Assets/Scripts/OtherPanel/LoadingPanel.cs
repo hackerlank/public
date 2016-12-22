@@ -147,35 +147,22 @@ public class LoadingPanel : MonoBehaviour {
 		}
 		Config.ws=node;
 #endif
-		if(Main.Instance.GameMode==Main.Mode.STANDALONE){
-			//only for testing
-			MahJongPanel.Create(delegate(Component obj){
-				var gp=obj as GamePanel;
-				var msg=gp.Rule.Deal();
 
-				gp.StartCoroutine(gp.OnMsgDeal(Main.Instance.MainPlayer,msg));
-				Destroy(gameObject);
-			});
-		}else if(Main.Instance.GameMode==Main.Mode.NODE){
-			Main.Instance.MainPlayer.playData.Player=new Proto3.player_t();
-			Main.Instance.MainPlayer.msgLCLogin=new MsgLCLogin();
-		}else{
-			//login with cached account OR udid
-			var udid=SystemInfo.deviceUniqueIdentifier;
-			udid=Utils.string2md5(udid);
-			var account=PlayerPrefs.GetString(Cache.PrefsKey_Account,udid);
-
-			MsgCLLogin msg=new MsgCLLogin();
-			msg.Mid=pb_msg.MsgClLogin;
-			msg.Version=uint.Parse(Config.build);
-			msg.User=new user_t();
-			msg.User.Account=account;
-			msg.User.DevType=pb_enum.DevPc;
-			msg.User.Udid=udid;
-			
-			//Debug.Log("----DoLogin account="+msg.User.Account);
-			Main.Instance.MainPlayer.http.Request<MsgCLLogin>(msg.Mid,msg);
-		}
+		//login with cached account OR udid
+		var udid=SystemInfo.deviceUniqueIdentifier;
+		udid=Utils.string2md5(udid);
+		var account=PlayerPrefs.GetString(Cache.PrefsKey_Account,udid);
+		
+		MsgCLLogin msg=new MsgCLLogin();
+		msg.Mid=pb_msg.MsgClLogin;
+		msg.Version=uint.Parse(Config.build);
+		msg.User=new user_t();
+		msg.User.Account=account;
+		msg.User.DevType=pb_enum.DevPc;
+		msg.User.Udid=udid;
+		
+		//Debug.Log("----DoLogin account="+msg.User.Account);
+		Main.Instance.MainPlayer.http.Request<MsgCLLogin>(msg.Mid,msg);
 		yield break;
 	}
 

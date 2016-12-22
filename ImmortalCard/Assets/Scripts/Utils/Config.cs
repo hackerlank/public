@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -22,6 +23,7 @@ public class Config{
 	public static string payAppStore=		"http://fir.im/immorpay";
 	public static string payAndroidMarket=	"http://fir.im/immorpaya";
 
+	public static Dictionary<pb_enum,Dictionary<pb_enum,ArrayList>> options;
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 
@@ -43,6 +45,73 @@ public class Config{
 		}
 
 		OpsInterval=float.Parse(opsInterval);
+	}
+
+	public static void LoadOptions(string json){
+		var array=MiniJSON.jsonDecode(json) as ArrayList;
+		if(null==array){
+			Debug.LogError("load options failed");
+			return;
+		}
+
+		options=new Dictionary<pb_enum, Dictionary<pb_enum, ArrayList>>();
+		foreach(var arr in array){
+			var hRule=arr as Hashtable;
+			if(null!=hRule && hRule.Count>0){
+				//rule
+				var rule=Convert.ToInt32(hRule["rule"]);
+				var dictCategory=new Dictionary<pb_enum, ArrayList>();
+				options[(pb_enum)rule]=dictCategory;
+
+				var aCategory=hRule["category"] as ArrayList;
+				if(aCategory !=null && aCategory.Count>0){
+					foreach(var arrcat in aCategory){
+						var hCategory=arrcat as Hashtable;
+						if(hCategory!=null && hCategory.Count>0){
+							//category
+							var category=Convert.ToInt32(hCategory["category"]);
+
+							var aOptions=hCategory["options"] as ArrayList;
+							if(aOptions !=null && aOptions.Count>0){
+								//options
+								foreach(var arropt in aOptions){
+									var optionsList=new ArrayList();
+									dictCategory[(pb_enum)category]=optionsList;
+
+									var hopt=arropt as Hashtable;
+									if(hopt!=null && hopt.Count>0){
+										optionsList.Add(hopt);
+										/*
+										var aOption=hopt["option"] as ArrayList;
+										if(aOption !=null){
+											//group
+											foreach(var option in aOption){
+												var hOption=option as Hashtable;
+												if(hOption!=null && hOption.Count>0){
+													foreach(var key in hOption.Keys){
+														//key value
+														var val=hOption[key];
+														int x=0;
+													}
+												}
+											}
+										}else{
+											//option
+											foreach(var key in hopt.Keys){
+												//key value
+												var val=hopt[key];
+												int x=0;
+											}
+										}//option
+										*/
+									}//hopt
+								}//arropt
+							}//aOptions
+						}//hCategory
+					}//arrcat
+				}//aCatetory
+			}//hRule
+		}//arr
 	}
 
 	public static Dictionary<pb_enum,List<game_t>> games;

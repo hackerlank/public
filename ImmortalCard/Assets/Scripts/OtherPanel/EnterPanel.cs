@@ -28,10 +28,15 @@ public class EnterPanel : MonoBehaviour {
 		if(!Config.games.ContainsKey(CurrentGame))
 			yield break;
 
-		//if(!string.IsNullOrEmpty(CurrentRule.Desc))
-		//	Information.text=CurrentRule.Desc;
+		if(null==Config.options)
+			StartCoroutine(Main.Instance.updater.Load<TextAsset>(
+				"Config/options",null,delegate(Object obj,Hashtable param){
+				var ta=obj as TextAsset;
+				Config.LoadOptions(ta.text);
+			}));
 
-		while(null==RuleSprites.Instance)yield return null;
+		while(null==RuleSprites.Instance || null==Config.options)
+			yield return null;
 
 		var categories=Config.games[CurrentGame];
 		foreach(game_t game in categories){

@@ -16,13 +16,6 @@ public class Main : MonoBehaviour {
 	public Transform		RootPanel;
 	public LoadingPanel		loadingPanel;
 
-	public enum Mode{
-		STANDALONE,
-		NODE,
-		NORMAL,
-	}
-	public Mode GameMode{get{return Mode.NORMAL;}}
-
 	void Awake(){
 		Instance=this;
 
