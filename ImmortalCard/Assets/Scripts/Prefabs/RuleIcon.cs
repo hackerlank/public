@@ -44,7 +44,7 @@ public class RuleIcon : MonoBehaviour {
 		EnterPanel.Instance.GameCategory=this;
 	}
 	
-	string rule2name(pb_enum rule){
+	public static string rule2name(pb_enum rule){
 		switch(rule){
 			//phz
 		case pb_enum.PhzSy: return "邵阳字牌";

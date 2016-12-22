@@ -6,17 +6,27 @@ using Proto3;
 
 public class ReplayView: MonoBehaviour {
 	public Transform ReplaysList,ReplayList;
-	
-	public void OnSelect(ReplaysItem item) {
-		
+
+	public void OnSelect(ReplayItem item) {
+		var _item=item.Item;
+		for(int i=0;i<_item.Rounds;++i){
+			Hashtable param=new Hashtable();
+			param["round"]=i;
+			/*
+				StartCoroutine(Main.Instance.updater.Load<ReplayItem>(
+					"Prefabs/ReplayItem",DetailRoot,delegate(Object obj,Hashtable arg){
+					var round=(int)arg["round"];
+					var item=obj as ReplayItem;
+					item.SetData(_item,round);
+				},param));
+				*/
+		}
 	}
 	
 	public void OnReplay(ReplayItem item) {
-		
-	}
-	
-	public void OnRemove(ReplaysItem item) {
-		
+		Destroy(gameObject);
+
+		ReplayView.Create("ReplayPanel");
 	}
 	
 	public void OnBack() {

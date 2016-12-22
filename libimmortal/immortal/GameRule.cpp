@@ -87,7 +87,7 @@ void GameRule::deal(Game& game){
     game.lastCard=game.pile.front();
 
     //init game replay
-    auto spReplay=std::make_shared<replay>();
+    auto spReplay=std::make_shared<replay_data>();
     spReplay->set_round(game.round);
     spReplay->set_banker(game.banker);
     spReplay->set_gameid(game.id);
@@ -150,9 +150,6 @@ void GameRule::settle(Game& game){
     Immortal::sImmortal->tpool.schedule(std::bind([](
                                                      decltype(spGame) SpGame,
                                                      decltype(this) This){
-        //persistence replay
-        This->persistReplay(*SpGame);
-        
         auto Spdb=Immortal::sImmortal->spdb;
         auto& game=*SpGame;
         //permanent data
@@ -218,6 +215,9 @@ void GameRule::settle(Game& game){
             //no data for cheater
             msg.Clear();
             msg.set_result(pb_enum::ERR_NOENOUGH);
+        }else{
+            //persistence replay
+            This->persistReplay(*SpGame);
         }
         msg.set_mid(pb_msg::MSG_NC_SETTLE);
         for(auto p:game.players){
@@ -401,20 +401,35 @@ void GameRule::persistReplay(Game& game){
         spdb->hset(key,field,replaybuf.c_str());
         spdb->expire(key,48*60*60);    //2 days
     }
+    
+    if(!game.spReplayItem)
+        game.spReplayItem=std::make_shared<replay_item>();
+    auto scores=game.spReplayItem->mutable_round_scores();
+    for(auto& play:game.spSettle->play()){
+        scores->Add(play.score());
+    }
 }
 
 void GameRule::Release(Game& game){
     auto spGame=game.players[0]->game;
     Immortal::sImmortal->tpool.schedule(
                                         std::bind([](decltype(spGame) SpGame){
+        while(!SpGame->spReplayItem)
+            msleep(300);
+
         auto spdb=Immortal::sImmortal->spdb;
         auto& game=*SpGame;
         //player replay list - replay:player:<uid>{replays list}
-        replays all;
+        replay_item& all=*SpGame->spReplayItem;
         all.set_gameid(game.id);
         all.set_gamecategory(game.category);
         all.set_rounds(game.round+1);
         all.set_max_round(game.Round);
+        for(auto& player:SpGame->players){
+            auto kv=all.add_total();
+            kv->set_key(player->userData.name());
+            kv->set_ivalue(player->playData.total());
+        }
         
         std::string replaybuf;
         if(all.SerializeToString(&replaybuf)){

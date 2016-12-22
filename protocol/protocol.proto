@@ -356,17 +356,18 @@ uint32 time             =3;
 int32 amount            =4;
 }
 
-message replays{
+message replay_item{
 
 int32 gameId            =1;
 pb_enum gameCategory    =2;
 int32 rounds            =3;
 int32 max_round         =4;
-repeated user_t users   =5;
-uint32 timestamp        =6;
+repeated key_value total    =5; //total score [name,score]
+repeated int32 round_scores =6; //size should be total.count * rounds
+uint32 timestamp        =7;
 }
 
-message replay{
+message replay_data{
 
 int32 gameId            =1;
 int32 banker            =2;
@@ -508,9 +509,9 @@ uint64 session          =3;
 
 message MsgLCReplays{
 
-pb_msg mid				=1;
-repeated replays all    =2;
-pb_enum result			=3;
+pb_msg mid                  =1;
+repeated replay_item all    =2;
+pb_enum result              =3;
 };
 
 message MsgCLReplay{
@@ -524,7 +525,7 @@ uint64 session          =4;
 message MsgLCReplay{
 
 pb_msg mid				=1;
-replay data             =2;
+replay_data data        =2;
 pb_enum result			=3;
 };
 // ----------------------------------------------------------------

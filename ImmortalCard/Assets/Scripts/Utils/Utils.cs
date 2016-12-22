@@ -64,6 +64,13 @@ public class Utils {
 		}
 	}
 
+	public static System.DateTime timestamp_date(double d){
+		System.DateTime time = System.DateTime.MinValue;
+		System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
+		time = startTime.AddMilliseconds(d);
+		return time;
+	}
+
 	public static Vector2 ScreenToUIPoing(Vector2 pt){
 		return new Vector2(pt.x-Screen.width/2f,pt.y-Screen.height/2f);
 	}

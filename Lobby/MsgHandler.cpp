@@ -205,7 +205,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                         std::vector<std::string> values;
                         Spdb->lrange(key,0,-1,values);
                         for(auto& v:values){
-                            replays game_replay;
+                            replay_item game_replay;
                             if(game_replay.ParseFromString(v))
                                 omsg.add_all()->CopyFrom(game_replay);
                         }
