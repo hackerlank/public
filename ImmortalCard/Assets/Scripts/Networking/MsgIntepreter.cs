@@ -3,8 +3,11 @@ using System.Collections;
 using System.IO;
 using System;
 using Google.Protobuf;
+using Proto3;
 
 public class MsgIntepreter{
+	public delegate void	ErrorHandler(pb_msg mid,string error);
+	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
 
 	public static byte[] EncodeBytes<T>(T msg)where T:IMessage<T>{
 		MemoryStream ms=new MemoryStream();

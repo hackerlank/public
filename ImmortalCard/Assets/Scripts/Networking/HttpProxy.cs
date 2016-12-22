@@ -6,8 +6,10 @@ using Google.Protobuf;
 using Proto3;
 
 public class HttpProxy {
+	public event MsgIntepreter.ErrorHandler onError=delegate(pb_msg mid,string error){};
+	public event MsgIntepreter.MessageHandler onResponse=delegate(pb_msg mid,byte[] bytes){};
+
 	private string uri="";
-	public event Player.MessageHandler onResponse=delegate(pb_msg mid,byte[] bytes){};
 
 	public void SetUri(string _uri){
 		uri=_uri;
@@ -32,6 +34,7 @@ public class HttpProxy {
 		
 		if (!string.IsNullOrEmpty(www.error)){
 			Debug.LogError("protocol need update: "+www.error+" "+www.url+" "+Name);
+			onError.Invoke(mid,www.error);
 		}else{
 			try {
 				var headers=www.responseHeaders;

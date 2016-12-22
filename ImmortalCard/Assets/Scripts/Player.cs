@@ -6,7 +6,6 @@ using Google.Protobuf;
 
 public class Player {
 	//networking
-	public delegate void	MessageHandler(pb_msg mid,byte[] bytes);
 	public HttpProxy		http;
 	WSProxy					ws;
 	bool					connected=false;
@@ -33,6 +32,7 @@ public class Player {
 	public Player(){
 		//networks
 		http=new HttpProxy();
+		http.onError+=onError;
 		http.onResponse+=onMessage;
 		
 		ws=new WSProxy();
@@ -209,6 +209,16 @@ public class Player {
 		});
 		*/
 		ws.Send<T>(mid,msg);
+	}
+
+	public void onError(pb_msg mid,string error){
+		switch(mid){
+		case pb_msg.MsgClLogin:
+			BlockView.Instance.ShowDialog(error,"登录错误!");
+			break;
+		default:
+			break;
+		}
 	}
 
 	public void onMessage(pb_msg mid,byte[] bytes){

@@ -52,9 +52,13 @@ public class Main : MonoBehaviour {
 			while(!DownloadManager.Instance.ConfigLoaded)yield return null;
 		}
 
+		//reload BlockView
+		DestroyImmediate(BlockView.Instance.gameObject);
 		StartCoroutine(Main.Instance.updater.Load<BlockView>(
 			"Prefabs/BlockView",Main.Instance.transform));
-		
+		while(BlockView.Instance==null)
+			yield return null;
+
 		//update config
 		yield return StartCoroutine(updater.Load<TextAsset>(
 			"Config/config",null,delegate(Object obj,Hashtable param){
