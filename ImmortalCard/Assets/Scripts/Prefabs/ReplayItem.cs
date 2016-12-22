@@ -14,6 +14,8 @@ public class ReplayItem : MonoBehaviour {
 	public Text[]	Scores;
 
 	replay_item _item;
+
+	[HideInInspector]
 	public int _round;
 
 	ReplayView view;

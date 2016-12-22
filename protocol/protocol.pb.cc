@@ -24154,6 +24154,7 @@ void MsgNCDismissSync::clear_result() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int MsgCNDismissAck::kMidFieldNumber;
+const int MsgCNDismissAck::kOpsFieldNumber;
 #endif  // !defined(_MSC_VER) || _MSC_VER >= 1900
 
 MsgCNDismissAck::MsgCNDismissAck()
@@ -24178,6 +24179,7 @@ void MsgCNDismissAck::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   mid_ = 0;
+  ops_ = 0;
 }
 
 MsgCNDismissAck::~MsgCNDismissAck() {
@@ -24220,7 +24222,27 @@ MsgCNDismissAck* MsgCNDismissAck::New(::google::protobuf::Arena* arena) const {
 
 void MsgCNDismissAck::Clear() {
 // @@protoc_insertion_point(message_clear_start:proto3.MsgCNDismissAck)
-  mid_ = 0;
+#if defined(__clang__)
+#define ZR_HELPER_(f) \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Winvalid-offsetof\"") \
+  __builtin_offsetof(MsgCNDismissAck, f) \
+  _Pragma("clang diagnostic pop")
+#else
+#define ZR_HELPER_(f) reinterpret_cast<char*>(\
+  &reinterpret_cast<MsgCNDismissAck*>(16)->f)
+#endif
+
+#define ZR_(first, last) do {\
+  ::memset(&first, 0,\
+           ZR_HELPER_(last) - ZR_HELPER_(first) + sizeof(last));\
+} while (0)
+
+  ZR_(mid_, ops_);
+
+#undef ZR_HELPER_
+#undef ZR_
+
 }
 
 bool MsgCNDismissAck::MergePartialFromCodedStream(
@@ -24241,6 +24263,22 @@ bool MsgCNDismissAck::MergePartialFromCodedStream(
                    int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
                  input, &value)));
           set_mid(static_cast< ::proto3::pb_msg >(value));
+        } else {
+          goto handle_unusual;
+        }
+        if (input->ExpectTag(16)) goto parse_ops;
+        break;
+      }
+
+      // optional .proto3.pb_enum ops = 2;
+      case 2: {
+        if (tag == 16) {
+         parse_ops:
+          int value;
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
+                 input, &value)));
+          set_ops(static_cast< ::proto3::pb_enum >(value));
         } else {
           goto handle_unusual;
         }
@@ -24278,6 +24316,12 @@ void MsgCNDismissAck::SerializeWithCachedSizes(
       1, this->mid(), output);
   }
 
+  // optional .proto3.pb_enum ops = 2;
+  if (this->ops() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->ops(), output);
+  }
+
   // @@protoc_insertion_point(serialize_end:proto3.MsgCNDismissAck)
 }
 
@@ -24289,6 +24333,12 @@ int MsgCNDismissAck::ByteSize() const {
   if (this->mid() != 0) {
     total_size += 1 +
       ::google::protobuf::internal::WireFormatLite::EnumSize(this->mid());
+  }
+
+  // optional .proto3.pb_enum ops = 2;
+  if (this->ops() != 0) {
+    total_size += 1 +
+      ::google::protobuf::internal::WireFormatLite::EnumSize(this->ops());
   }
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
@@ -24310,6 +24360,9 @@ void MsgCNDismissAck::MergeFrom(const MsgCNDismissAck& from) {
   if (from.mid() != 0) {
     set_mid(from.mid());
   }
+  if (from.ops() != 0) {
+    set_ops(from.ops());
+  }
 }
 
 void MsgCNDismissAck::CopyFrom(const MsgCNDismissAck& from) {
@@ -24330,6 +24383,7 @@ void MsgCNDismissAck::Swap(MsgCNDismissAck* other) {
 }
 void MsgCNDismissAck::InternalSwap(MsgCNDismissAck* other) {
   std::swap(mid_, other->mid_);
+  std::swap(ops_, other->ops_);
   _unknown_fields_.Swap(&other->_unknown_fields_);
   std::swap(_cached_size_, other->_cached_size_);
 }
@@ -24353,6 +24407,20 @@ void MsgCNDismissAck::clear_mid() {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.mid)
+}
+
+// optional .proto3.pb_enum ops = 2;
+void MsgCNDismissAck::clear_ops() {
+  ops_ = 0;
+}
+ ::proto3::pb_enum MsgCNDismissAck::ops() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissAck.ops)
+  return static_cast< ::proto3::pb_enum >(ops_);
+}
+ void MsgCNDismissAck::set_ops(::proto3::pb_enum value) {
+  
+  ops_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.ops)
 }
 
 #endif  // PROTOBUF_INLINE_NOT_IN_HEADERS

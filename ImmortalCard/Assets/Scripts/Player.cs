@@ -158,6 +158,13 @@ public class Player {
 		while(msgNCJoin==null)yield return null;
 	}
 
+	public void DismissAck(pb_enum ops){
+		var msg=new MsgCNDismissAck();
+		msg.Mid=pb_msg.MsgCnDismissAck;
+		msg.Ops=ops;
+		Send<MsgCNDismissAck>(msg.Mid,msg);
+	}
+
 	public void onOpen(string error){
 		if(!connected){
 			connected=true;
@@ -439,6 +446,18 @@ public class Player {
 		case pb_msg.MsgNcDismissSync:
 			MsgNCDismissSync msgDismissSync=MsgNCDismissSync.Parser.ParseFrom(bytes);
 			if(msgDismissSync.Result==pb_enum.Succeess){
+				var panel=Main.Instance.gameController as GamePanel;
+				if(this==Main.Instance.MainPlayer && null!=panel){
+					var info=string.Format("玩家 {0} 申请解散房间，是否同意？",msgDismissSync.Pos);
+					BlockView.Instance.ShowDialog(info,"",
+					                              delegate {
+						DismissAck(pb_enum.Succeess);
+						panel.StartCoroutine(panel.DismissWaiting());
+					},delegate {
+						DismissAck(pb_enum.ErrCancelled);
+					});
+				}else
+					DismissAck(pb_enum.Succeess);
 			}else
 				Debug.LogError("dismiss sync error: "+msgDismissSync.Result);
 			//foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMessage(this,msg));
@@ -446,6 +465,9 @@ public class Player {
 		case pb_msg.MsgNcDismissAck:
 			MsgNCDismissAck msgDismissAck=MsgNCDismissAck.Parser.ParseFrom(bytes);
 			if(msgDismissAck.Result==pb_enum.Succeess){
+				var panel=Main.Instance.gameController as GamePanel;
+				if(null!=panel && this==Main.Instance.MainPlayer)
+					panel.msgDismissAck=msgDismissAck;
 			}else
 				Debug.LogError("dismiss ack error: "+msgDismissAck.Result);
 			//foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.OnMessage(this,msg));

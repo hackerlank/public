@@ -147,6 +147,7 @@ void Immortal::on_write(svc_handler&, void*, size_t sz) {
 bool Immortal::on_timer(svc_handler& sh, size_t id, size_t milliseconds) {
     switch (id) {
         case TIMER::TIMER_SEC:
+            //tick game
             for(auto iter=games.begin();iter!=games.end();){
                 auto game=iter->second;
                 game->rule->Tick(*game);
@@ -157,9 +158,26 @@ bool Immortal::on_timer(svc_handler& sh, size_t id, size_t milliseconds) {
                     ++iter;
             }
             break;
-        case TIMER::TIMER_MIN:
+            
+        case TIMER::TIMER_MIN:{
+            //dismiss game
+            auto ts=time(nullptr);
+            auto lifetime=decltype(ts)(60*60*8);  //8 hours
+            auto dismisstime=decltype(ts)(60*5);  //5 minutes
+            auto lt=(int)config.value("game_life_time");
+            auto dt=(int)config.value("dismiss_time");
+            if(lt>0)lifetime=lt;
+            if(dt>0)dismisstime=dt;
+            for(auto iter=games.begin();iter!=games.end();++iter){
+                auto game=iter->second;
+                if(ts - game->start_timestamp >= lifetime
+                    || ts - game->dismiss_timestamp >= dismisstime)
+                    game->rule->Dismiss(*game);
+            }
             break;
+        }
         case TIMER::TIMER_HOUR:{
+            //setup log every day in the morning
             time_t t=time(NULL);
             tm* aTm=localtime(&t);
             if(aTm->tm_hour==0)

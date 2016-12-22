@@ -7063,6 +7063,12 @@ class MsgCNDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
   ::proto3::pb_msg mid() const;
   void set_mid(::proto3::pb_msg value);
 
+  // optional .proto3.pb_enum ops = 2;
+  void clear_ops();
+  static const int kOpsFieldNumber = 2;
+  ::proto3::pb_enum ops() const;
+  void set_ops(::proto3::pb_enum value);
+
   // @@protoc_insertion_point(class_scope:proto3.MsgCNDismissAck)
  private:
 
@@ -7071,6 +7077,7 @@ class MsgCNDismissAck : public ::google::protobuf::MessageLite /* @@protoc_inser
 
   bool _is_default_instance_;
   int mid_;
+  int ops_;
   mutable int _cached_size_;
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_protocol_2eproto_impl();
@@ -13387,6 +13394,20 @@ inline void MsgCNDismissAck::set_mid(::proto3::pb_msg value) {
   
   mid_ = value;
   // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.mid)
+}
+
+// optional .proto3.pb_enum ops = 2;
+inline void MsgCNDismissAck::clear_ops() {
+  ops_ = 0;
+}
+inline ::proto3::pb_enum MsgCNDismissAck::ops() const {
+  // @@protoc_insertion_point(field_get:proto3.MsgCNDismissAck.ops)
+  return static_cast< ::proto3::pb_enum >(ops_);
+}
+inline void MsgCNDismissAck::set_ops(::proto3::pb_enum value) {
+  
+  ops_ = value;
+  // @@protoc_insertion_point(field_set:proto3.MsgCNDismissAck.ops)
 }
 
 // -------------------------------------------------------------------

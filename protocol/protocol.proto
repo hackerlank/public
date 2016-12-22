@@ -785,6 +785,7 @@ pb_enum result			=3;
 message MsgCNDismissAck{
 
 pb_msg mid				=1;
+pb_enum ops             =2;
 };
 
 message MsgNCDismissAck{

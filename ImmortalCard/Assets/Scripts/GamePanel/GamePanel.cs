@@ -239,6 +239,37 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		Debug.Log(str);
 	}
 
+	public MsgNCDismissAck msgDismissAck=null;
+	public IEnumerator DismissWaiting(){
+		int cd=300;
+		var info="等待其他玩家同意解散: \n";
+		BlockView.Instance.ShowDialog(string.Format("{0} {1}s",info,cd));
+
+		while(null==msgDismissAck){
+			yield return new WaitForSeconds(1);
+			if(cd>0){
+				--cd;
+				BlockView.Instance.DlgContent.text=string.Format("{0} {1}s",info,cd);
+			}
+		}
+
+		switch(msgDismissAck.Result){
+		case pb_enum.Succeess:
+			//dismiss
+			BlockView.Instance.CloseDialog();
+			dismiss();
+			break;
+		case pb_enum.ErrCancelled:
+			//refused
+			BlockView.Instance.ShowDialog("其他玩家不同意解散游戏！");
+			break;
+		default:
+			break;
+		}
+
+		msgDismissAck=null;
+	}
+
 	protected void transformComponent(Component[] com){
 		if(com.Length<=0)return;
 		/* position transform
@@ -365,12 +396,20 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 	}
 	
 	public void OnExit(){
-		PlayerPrefs.DeleteKey(Cache.PrefsKey_StoreGame);
-		Main.Instance.MainPlayer.InGame=false;
-		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
-			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
-			Destroy(gameObject);
-		}));
+		if(Round<=0){
+			//not started yet
+			BlockView.Instance.ShowDialog("游戏尚未开始，您确定要退出吗？","",delegate {
+				dismiss();
+			});
+		}else{
+			BlockView.Instance.ShowDialog("游戏已经开始，您要申请解散吗？","",delegate {
+				var msg=new MsgCNDismissSync();
+				msg.Mid=pb_msg.MsgCnDismissSync;
+				Main.Instance.MainPlayer.Send<MsgCNDismissSync>(msg.Mid,msg);
+
+				StartCoroutine(DismissWaiting());
+			});
+		}
 	}
 	
 	bool pointerDown=false;
@@ -481,6 +520,15 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		msg.Bunch=bunch;
 		
 		player.Send<MsgCNMeld>(msg.Mid,msg);
+	}
+
+	void dismiss(){
+		PlayerPrefs.DeleteKey(Cache.PrefsKey_StoreGame);
+		Main.Instance.MainPlayer.InGame=false;
+		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
+			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2){
+			Destroy(gameObject);
+		}));
 	}
 
 	protected void deselectAll(){

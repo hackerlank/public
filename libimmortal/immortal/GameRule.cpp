@@ -226,7 +226,7 @@ void GameRule::settle(Game& game){
         }
 
         //end round
-        if(game.round>=game.Round)
+        if(game.round>=game.Round || This->IsDismissed(game))
             This->changeState(game,Game::State::ST_END);
         //but may changed by post settle
         This->PostSettle(game);
@@ -300,6 +300,10 @@ bool GameRule::IsReady(Game& game){
     //reset after all ready
     if(ready)for(auto p:game.players)if(p)p->ready=false;
     return ready;
+}
+
+bool GameRule::IsDismissed(Game& game){
+    return (game.dismissRequest>=MaxPlayer(game)-1);
 }
 
 void GameRule::changePos(Game& game,pos_t pos){
@@ -408,6 +412,17 @@ void GameRule::persistReplay(Game& game){
     for(auto& play:game.spSettle->play()){
         scores->Add(play.score());
     }
+}
+
+void GameRule::Dismiss(Game& game){
+    auto M=MaxPlayer(game);
+    for(int i=0;i<M;++i){
+        auto& play=game.players[i]->playData;
+        play.set_win(0);
+        play.set_score(0);
+    }
+
+    changeState(game,Game::State::ST_SETTLE);
 }
 
 void GameRule::Release(Game& game){

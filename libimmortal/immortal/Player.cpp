@@ -100,6 +100,7 @@ void Player::on_read(PBHelper& pb){
                     player->game=gameptr;
                     gameptr->players.push_back(player->shared_from_this());
                     gameptr->Round=maxRound;
+                    gameptr->start_timestamp=time(nullptr);
                     //gameptr->banker=gameptr->rule->MaxPlayer(*gameptr)-1; //test change banker
                     player->ready=true;
                     player->playData.set_seat((int)gameptr->players.size()-1);
@@ -153,18 +154,26 @@ void Player::on_read(PBHelper& pb){
             MsgCNDismissSync imsg;
             MsgNCDismissSync omsg;
             omsg.set_mid(proto3::pb_msg::MSG_NC_DISMISS_SYNC);
-            if(pb.Parse(imsg)){
-                if(game){
-                    omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    for(auto p:game->players){
-                        if(p!=shared_from_this()){
+            omsg.set_pos(playData.seat());
+            if(game->dismissRequest>0){
+                //already request
+                omsg.set_result(proto3::pb_enum::SUCCEESS);
+            }else{
+                if(pb.Parse(imsg)){
+                    if(game){
+                        omsg.set_result(proto3::pb_enum::SUCCEESS);
+                        for(auto p:game->players)
                             PBHelper::Send(*p->spsh,omsg);
-                        }
-                    }
-                    break;
-                }
+                        
+                        //setup dismiss timer
+                        game->dismissRequest++;
+                        game->dismiss_timestamp=time(nullptr);
+                        break;
+                    }else
+                        omsg.set_result(proto3::pb_enum::ERR_FAILED);
+                }else
+                    omsg.set_result(proto3::pb_enum::ERR_PROTOCOL);
             }
-            omsg.set_result(proto3::pb_enum::ERR_FAILED);
             PBHelper::Send(sh,omsg);
             break;
         }
@@ -174,16 +183,35 @@ void Player::on_read(PBHelper& pb){
             omsg.set_mid(proto3::pb_msg::MSG_NC_DISMISS_ACK);
             if(pb.Parse(imsg)){
                 if(game){
-                    omsg.set_result(proto3::pb_enum::SUCCEESS);
-                    for(auto p:game->players){
-                        if(p!=shared_from_this()){
-                            PBHelper::Send(*p->spsh,omsg);
-                        }
+                    if(imsg.ops()==pb_enum::ERR_CANCELLED){
+                        //refuse
+                        omsg.set_result(proto3::pb_enum::ERR_CANCELLED);
+                        
+                        //clear dismiss timer
+                        game->dismissRequest=0;
+                        game->dismiss_timestamp=0;
+                    }else{
+                        game->dismissRequest++;
+
+                        if(game->rule->IsDismissed(*game)){
+                            //dismiss
+                            omsg.set_result(proto3::pb_enum::SUCCEESS);
+                            
+                            game->rule->Dismiss(*game);
+                            
+                        }else
+                            //do nothing when agreed but need others
+                            break;
                     }
+                    
+                    for(auto p:game->players)
+                        PBHelper::Send(*p->spsh,omsg);
+                    
                     break;
-                }
-            }
-            omsg.set_result(proto3::pb_enum::ERR_FAILED);
+                }else
+                    omsg.set_result(proto3::pb_enum::ERR_FAILED);
+            }else
+                omsg.set_result(proto3::pb_enum::ERR_PROTOCOL);
             PBHelper::Send(sh,omsg);
             break;
         }

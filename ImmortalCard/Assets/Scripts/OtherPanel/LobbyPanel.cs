@@ -87,6 +87,15 @@ public class LobbyPanel : MonoBehaviour {
 	}
 	
 	public void OnCurrency(){
+		BlockView.Instance.ShowDialog(
+			"请使用商城购买，是否去下载商城？",
+			"",
+			delegate {
+			var storeUrl=Config.payAndroidMarket;
+			if (Application.platform == RuntimePlatform.IPhonePlayer)
+				storeUrl=Config.payAppStore;
+			Application.OpenURL(storeUrl);
+		});
 	}
 	
 	public void OnMail(){

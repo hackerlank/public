@@ -31,6 +31,13 @@ public:
     //post process
     virtual void        PostDiscard(Game&,proto3::MsgNCDiscard&){}
     
+    /* settle workflow:
+     => draw, meld, gameover, dismiss
+     => State::ST_SETTLE
+     => GameRule::settle()
+     => State::ST_END or State::ST_WAIT
+     => GameRule::Release()
+     */
     //settle for player,this is quite important
     virtual bool        PreSettle(Player&,std::vector<proto3::bunch_t>* =nullptr,
                                   unit_id_t =invalid_card)      =0;
@@ -69,6 +76,8 @@ protected:
     //----------------------------------------------------------------
 public:
     bool                IsReady(Game&);
+    bool                IsDismissed(Game&);
+    void                Dismiss(Game&);
     void                Release(Game&);
     void                OnReady(Player&);
     void                OnEngage(Player&,uint);

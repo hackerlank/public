@@ -27,33 +27,38 @@ struct KEYE_API Game{
     
     int         id;
     State       state;
+    long        start_timestamp;
+    long        dismiss_timestamp;
     pos_t       banker;
     pos_t       token;
     int         round,Round;
+    unit_id_t   firstCard,lastCard;
+    int         dismissRequest;
+    
     proto3::pb_enum                     category;
     std::string                         definedCards;
     std::vector<unit_id_t>              pile;       //cards library
     std::vector<unit_id_t>              bottom;     //bottom cards
     std::map<unit_id_t,int>             pileMap;    //cards map
-    std::vector<std::shared_ptr<Player>> players;
     std::vector<proto3::bunch_t>        historical; //historical game data
     std::vector<pending_t>              pendingMeld;    //pending meld
     std::shared_ptr<pending_t>          pendingDiscard; //pending discard
-    int                                 delay;
-    std::shared_ptr<GameRule>           rule;
     std::shared_ptr<proto3::replay_item>    spReplayItem;
     std::shared_ptr<proto3::replay_data>    spReplay;   //record for replaying
     std::shared_ptr<proto3::MsgNCSettle>    spSettle;
     std::shared_ptr<proto3::MsgNCFinish>    spFinish;
     
-    unit_id_t       firstCard,lastCard;
+    std::shared_ptr<GameRule>               rule;
+    std::vector<std::shared_ptr<Player>>    players;
+    std::shared_ptr<void*>                  spExtra;    //custom data
+
     //special for phz
     int     noWinner;
     bool    bankerChanged;
     int     m_winPeo;
-    int						_multiScore;	//单局番数或者分数阈值
-    int						_limitType;		//郴州，起手双提，控制能否继续吃碰，0：能，1：不能
-    int						_fireDouble;	//广西跑胡子一炮双向。0未选择，1选择了
+    int		_multiScore;	//单局番数或者分数阈值
+    int		_limitType;		//郴州，起手双提，控制能否继续吃碰，0：能，1：不能
+    int		_fireDouble;	//广西跑胡子一炮双向。0未选择，1选择了
     
     //special for ddz
     int     anti;
@@ -61,7 +66,8 @@ struct KEYE_API Game{
     
     Game()
     :id(-1)
-    ,delay(0)
+    ,dismissRequest(0)
+    ,dismiss_timestamp(0)
     ,state(State::ST_WAIT)
     ,banker(0)
     ,token(0)

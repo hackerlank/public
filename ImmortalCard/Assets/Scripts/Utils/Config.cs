@@ -19,6 +19,8 @@ public class Config{
 
 	public static string appStore=		"http://fir.im/immorcard";
 	public static string androidMarket=	"http://fir.im/immorcarda";
+	public static string payAppStore=		"http://fir.im/immorpay";
+	public static string payAndroidMarket=	"http://fir.im/immorpaya";
 
 	//ShareSDK app id
 	public static string modId="180127d1c7541";

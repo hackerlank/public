@@ -342,10 +342,7 @@ void MeldGame::draw(Game& game){
     if(!PreDraw(game) || game.pile.empty()){
         //dismiss
         Debug<<"dismiss while pile empty, pos="<<game.token<<endl;
-        changeState(game,Game::State::ST_SETTLE);
-        auto tokenPlayer=game.players[game.token];
-        std::vector<bunch_t> output;
-        PreSettle(*tokenPlayer,&output,invalid_card);
+        Dismiss(game);
     }else{
         changePos(game,game.token+1);
         auto player=game.players[game.token];

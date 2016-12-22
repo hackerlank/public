@@ -1238,7 +1238,6 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
 }
 
 void Paohuzi::PostSettle(Game& game){
-    bool bendgame=false;
     if(pb_enum::PHZ_LD==game.category||pb_enum::PHZ_SYBP==game.category
        ||pb_enum::PHZ_XX_GHZ==game.category){
         auto banckerChanged=true;
@@ -1258,7 +1257,6 @@ void Paohuzi::PostSettle(Game& game){
         }
         
         if(maxpoint>=100){
-            bendgame=true;
             
             int i=pos;
             int j=(i+1)%M;
@@ -1279,11 +1277,10 @@ void Paohuzi::PostSettle(Game& game){
             game.spSettle->mutable_play(i)->set_score(B);
             game.spFinish->mutable_play(i)->set_score(B);
             game.spFinish->mutable_play(i)->set_total(B);
-        }
-    } else if(game.round>=game.Round)
-        bendgame=true;
-    
-    changeState(game, bendgame? Game::State::ST_END: Game::State::ST_WAIT);
+
+            changeState(game, Game::State::ST_END);
+        }   //maxpoint >= 100
+    }
 }
 
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
