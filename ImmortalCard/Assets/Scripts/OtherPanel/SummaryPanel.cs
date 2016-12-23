@@ -34,7 +34,8 @@ public class SummaryPanel : MonoBehaviour {
 	
 	public void OnClose(){
 		Destroy(gameObject);
-		if(Main.Instance.gameController!=null)Main.Instance.gameController.OnExit();
+		var panel=Main.Instance.gameController as GamePanel;
+		if(panel!=null)panel.Dismiss();
 	}
 
 	public void OnShare(){

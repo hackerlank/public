@@ -170,8 +170,8 @@ bool Immortal::on_timer(svc_handler& sh, size_t id, size_t milliseconds) {
             if(dt>0)dismisstime=dt;
             for(auto iter=games.begin();iter!=games.end();++iter){
                 auto game=iter->second;
-                if(ts - game->start_timestamp >= lifetime
-                    || ts - game->dismiss_timestamp >= dismisstime)
+                if((game->dismiss_timestamp > 0 && ts - game->dismiss_timestamp >= dismisstime)
+                   || ts - game->start_timestamp >= lifetime)
                     game->rule->Dismiss(*game);
             }
             break;

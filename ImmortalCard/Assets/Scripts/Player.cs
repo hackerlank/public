@@ -445,7 +445,7 @@ public class Player {
 			{
 				if(this==Main.Instance.MainPlayer)
 				{
-					Debug.Log("----finish game and clear cache");
+					//Debug.Log("----finish game and clear cache");
 					PlayerPrefs.DeleteKey(Cache.PrefsKey_StoreGame);
 				}
 			}

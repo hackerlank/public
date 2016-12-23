@@ -27,7 +27,6 @@ public:
     void                    removeGame(game_id_t);
     
     static Immortal*        sImmortal;
-    keye::ini_file          config;
 private:
     std::map<size_t,std::shared_ptr<Player>>    players;
     std::map<int,std::shared_ptr<GameRule>>     gameRules;

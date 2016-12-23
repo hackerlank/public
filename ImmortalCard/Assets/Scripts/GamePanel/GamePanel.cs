@@ -257,7 +257,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		case pb_enum.Succeess:
 			//dismiss
 			BlockView.Instance.CloseDialog();
-			dismiss();
+			//dismiss();
 			break;
 		case pb_enum.ErrCancelled:
 			//refused
@@ -399,7 +399,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		if(Round<=0){
 			//not started yet
 			BlockView.Instance.ShowDialog("游戏尚未开始，您确定要退出吗？","",delegate {
-				dismiss();
+				Dismiss();
 			});
 		}else{
 			BlockView.Instance.ShowDialog("游戏已经开始，您要申请解散吗？","",delegate {
@@ -522,7 +522,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		player.Send<MsgCNMeld>(msg.Mid,msg);
 	}
 
-	void dismiss(){
+	public void Dismiss(){
 		PlayerPrefs.DeleteKey(Cache.PrefsKey_StoreGame);
 		Main.Instance.MainPlayer.InGame=false;
 		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(

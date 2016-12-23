@@ -176,8 +176,8 @@ void GameRule::settle(Game& game){
                     
                     if(gold>=cost){
                         owner->set_gold(gold-cost);
-                        Spdb->hincrby(gold_key,"gold",gold-cost);
-                        Logger<<uid<<"cost gold ("<<gold<<"-"<<cost<<") for game "<<(int)game.id<<endf;
+                        Spdb->hincrby(gold_key,"gold",-cost);
+                        Logger<<uid<<" cost gold ("<<gold<<"-"<<cost<<") for game "<<(int)game.id<<endf;
                     }else{
                         cost_failed=true;
                         Debug<<"game "<<(int)game.id<<" no enough gold "<<gold<<endf;
