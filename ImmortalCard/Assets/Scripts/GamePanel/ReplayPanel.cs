@@ -137,7 +137,7 @@ public class ReplayPanel : GamePanel {
 		yield break;
 	}
 
-	public void OnExit(){
+	public void OnExitReplay(){
 		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
 			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
 			Destroy(gameObject);

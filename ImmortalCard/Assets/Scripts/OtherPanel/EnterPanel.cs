@@ -10,6 +10,7 @@ public class EnterPanel : MonoBehaviour {
 	public GameObject	GameContent,GameOptions;
 	public GameObject	DialPanel,InputPanel;
 	public Transform	GameRoot;
+	public Transform	OptionRoot;
 	public Text			Information;
 
 	[HideInInspector]
