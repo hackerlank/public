@@ -54,11 +54,11 @@ namespace Proto3 {
             "IAEoBRINCgV0b3RhbBgMIAEoBRIMCgRzZWF0GA0gASgFEh0KBWFjaHZzGA4g",
             "AygLMg4ucHJvdG8zLmFjaHZfdCJECghjaGFyZ2VfdBINCgVwaG9uZRgBIAEo",
             "CRILCgN1aWQYAiABKAkSDAoEdGltZRgDIAEoDRIOCgZhbW91bnQYBCABKAUi",
-            "sgEKC3JlcGxheV9pdGVtEg4KBmdhbWVJZBgBIAEoBRIlCgxnYW1lQ2F0ZWdv",
+            "sgEKC3JlcGxheV9pdGVtEg4KBmdhbWVJZBgBIAEoDRIlCgxnYW1lQ2F0ZWdv",
             "cnkYAiABKA4yDy5wcm90bzMucGJfZW51bRIOCgZyb3VuZHMYAyABKAUSEQoJ",
             "bWF4X3JvdW5kGAQgASgFEiAKBXRvdGFsGAUgAygLMhEucHJvdG8zLmtleV92",
             "YWx1ZRIUCgxyb3VuZF9zY29yZXMYBiADKAUSEQoJdGltZXN0YW1wGAcgASgN",
-            "IrwBCgtyZXBsYXlfZGF0YRIOCgZnYW1lSWQYASABKAUSDgoGYmFua2VyGAIg",
+            "IrwBCgtyZXBsYXlfZGF0YRIOCgZnYW1lSWQYASABKA0SDgoGYmFua2VyGAIg",
             "ASgFEg0KBXJvdW5kGAMgASgFEg0KBXBpbGVzGAQgAygFEg4KBmJvdHRvbRgF",
             "IAMoBRIeCgVoYW5kcxgGIAMoCzIPLnByb3RvMy5idW5jaF90Eg4KBmVuZ2Fn",
             "ZRgHIAMoBRIcCgNvcHMYCCADKAsyDy5wcm90bzMuYnVuY2hfdBIRCgl0aW1l",
@@ -3820,9 +3820,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "gameId" field.</summary>
     public const int GameIdFieldNumber = 1;
-    private int gameId_;
+    private uint gameId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int GameId {
+    public uint GameId {
       get { return gameId_; }
       set {
         gameId_ = value;
@@ -3944,7 +3944,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (GameId != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(GameId);
+        output.WriteUInt32(GameId);
       }
       if (GameCategory != 0) {
         output.WriteRawTag(16);
@@ -3970,7 +3970,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (GameId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(GameId);
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameId);
       }
       if (GameCategory != 0) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) GameCategory);
@@ -4022,7 +4022,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            GameId = input.ReadInt32();
+            GameId = input.ReadUInt32();
             break;
           }
           case 16: {
@@ -4098,9 +4098,9 @@ namespace Proto3 {
 
     /// <summary>Field number for the "gameId" field.</summary>
     public const int GameIdFieldNumber = 1;
-    private int gameId_;
+    private uint gameId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int GameId {
+    public uint GameId {
       get { return gameId_; }
       set {
         gameId_ = value;
@@ -4239,7 +4239,7 @@ namespace Proto3 {
     public void WriteTo(pb::CodedOutputStream output) {
       if (GameId != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(GameId);
+        output.WriteUInt32(GameId);
       }
       if (Banker != 0) {
         output.WriteRawTag(16);
@@ -4264,7 +4264,7 @@ namespace Proto3 {
     public int CalculateSize() {
       int size = 0;
       if (GameId != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(GameId);
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(GameId);
       }
       if (Banker != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(Banker);
@@ -4316,7 +4316,7 @@ namespace Proto3 {
             input.SkipLastField();
             break;
           case 8: {
-            GameId = input.ReadInt32();
+            GameId = input.ReadUInt32();
             break;
           }
           case 16: {

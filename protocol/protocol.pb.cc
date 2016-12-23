@@ -6662,7 +6662,7 @@ replay_item::replay_item(const replay_item& from)
 void replay_item::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  gameid_ = 0;
+  gameid_ = 0u;
   gamecategory_ = 0;
   rounds_ = 0;
   max_round_ = 0;
@@ -6745,11 +6745,11 @@ bool replay_item::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 gameId = 1;
+      // optional uint32 gameId = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &gameid_)));
 
         } else {
@@ -6879,9 +6879,9 @@ failure:
 void replay_item::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.replay_item)
-  // optional int32 gameId = 1;
+  // optional uint32 gameId = 1;
   if (this->gameid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->gameid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->gameid(), output);
   }
 
   // optional .proto3.pb_enum gameCategory = 2;
@@ -6928,10 +6928,10 @@ int replay_item::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.replay_item)
   int total_size = 0;
 
-  // optional int32 gameId = 1;
+  // optional uint32 gameId = 1;
   if (this->gameid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->gameid());
   }
 
@@ -7057,15 +7057,15 @@ void replay_item::InternalSwap(replay_item* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // replay_item
 
-// optional int32 gameId = 1;
+// optional uint32 gameId = 1;
 void replay_item::clear_gameid() {
-  gameid_ = 0;
+  gameid_ = 0u;
 }
- ::google::protobuf::int32 replay_item::gameid() const {
+ ::google::protobuf::uint32 replay_item::gameid() const {
   // @@protoc_insertion_point(field_get:proto3.replay_item.gameId)
   return gameid_;
 }
- void replay_item::set_gameid(::google::protobuf::int32 value) {
+ void replay_item::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
   // @@protoc_insertion_point(field_set:proto3.replay_item.gameId)
@@ -7224,7 +7224,7 @@ replay_data::replay_data(const replay_data& from)
 void replay_data::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
-  gameid_ = 0;
+  gameid_ = 0u;
   banker_ = 0;
   round_ = 0;
   timestamp_ = 0u;
@@ -7310,11 +7310,11 @@ bool replay_data::MergePartialFromCodedStream(
     tag = p.first;
     if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 gameId = 1;
+      // optional uint32 gameId = 1;
       case 1: {
         if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                   ::google::protobuf::uint32, ::google::protobuf::internal::WireFormatLite::TYPE_UINT32>(
                  input, &gameid_)));
 
         } else {
@@ -7481,9 +7481,9 @@ failure:
 void replay_data::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // @@protoc_insertion_point(serialize_start:proto3.replay_data)
-  // optional int32 gameId = 1;
+  // optional uint32 gameId = 1;
   if (this->gameid() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->gameid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->gameid(), output);
   }
 
   // optional int32 banker = 2;
@@ -7550,10 +7550,10 @@ int replay_data::ByteSize() const {
 // @@protoc_insertion_point(message_byte_size_start:proto3.replay_data)
   int total_size = 0;
 
-  // optional int32 gameId = 1;
+  // optional uint32 gameId = 1;
   if (this->gameid() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::Int32Size(
+      ::google::protobuf::internal::WireFormatLite::UInt32Size(
         this->gameid());
   }
 
@@ -7717,15 +7717,15 @@ void replay_data::InternalSwap(replay_data* other) {
 #if PROTOBUF_INLINE_NOT_IN_HEADERS
 // replay_data
 
-// optional int32 gameId = 1;
+// optional uint32 gameId = 1;
 void replay_data::clear_gameid() {
-  gameid_ = 0;
+  gameid_ = 0u;
 }
- ::google::protobuf::int32 replay_data::gameid() const {
+ ::google::protobuf::uint32 replay_data::gameid() const {
   // @@protoc_insertion_point(field_get:proto3.replay_data.gameId)
   return gameid_;
 }
- void replay_data::set_gameid(::google::protobuf::int32 value) {
+ void replay_data::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
   // @@protoc_insertion_point(field_set:proto3.replay_data.gameId)

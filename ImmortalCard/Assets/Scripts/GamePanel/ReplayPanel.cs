@@ -16,14 +16,17 @@ public class ReplayPanel : GamePanel {
 		btnOps=new GameObject[]{BtnPlay,BtnPause,BtnStop,BtnPre,BtnNext};
 	}
 
-	public IEnumerator Play(MsgLCReplay msg){
+	public IEnumerator Play(replay_data data){
 		//prepare cache before panel shown,to ensure revive
 		if(!CardCache.Ready){
 			Rule.PrepareCache();
 			while(!CardCache.Ready)yield return null;
 		}
 
-		maxPlayer=msg.Data.Hands.Count;
+		//wait for rule ready
+		while(maxPlayer<=0)yield return null;
+
+		//maxPlayer=data.Hands.Count;
 		_pos=0;
 		transformComponent(DiscardAreas);
 		transformComponent(HandAreas);
@@ -34,7 +37,7 @@ public class ReplayPanel : GamePanel {
 
 		//deal
 		for(int i=0;i<maxPlayer;++i){
-			var hands=msg.Data.Hands[i].Pawns;
+			var hands=data.Hands[i].Pawns;
 			int fin=0;
 			foreach(var id in hands){
 				Card.Create(Rule.CardPrefab,id,HandAreas[i],delegate(Card card) {
@@ -48,9 +51,8 @@ public class ReplayPanel : GamePanel {
 		//engage
 
 		//replay
-		foreach(bunch_t op in msg.Data.Ops){
+		foreach(bunch_t op in data.Ops){
 			yield return new WaitForSeconds(1.5f);
-			Debug.Log("----replay "+op.Pos.ToString()+":"+Player.bunch2str(op));
 
 			//remove
 			if(op.Type != pb_enum.BunchA)

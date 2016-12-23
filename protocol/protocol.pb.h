@@ -1938,11 +1938,11 @@ class replay_item : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // optional int32 gameId = 1;
+  // optional uint32 gameId = 1;
   void clear_gameid();
   static const int kGameIdFieldNumber = 1;
-  ::google::protobuf::int32 gameid() const;
-  void set_gameid(::google::protobuf::int32 value);
+  ::google::protobuf::uint32 gameid() const;
+  void set_gameid(::google::protobuf::uint32 value);
 
   // optional .proto3.pb_enum gameCategory = 2;
   void clear_gamecategory();
@@ -1999,7 +1999,7 @@ class replay_item : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::int32 gameid_;
+  ::google::protobuf::uint32 gameid_;
   int gamecategory_;
   ::google::protobuf::int32 rounds_;
   ::google::protobuf::int32 max_round_;
@@ -2085,11 +2085,11 @@ class replay_data : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   // accessors -------------------------------------------------------
 
-  // optional int32 gameId = 1;
+  // optional uint32 gameId = 1;
   void clear_gameid();
   static const int kGameIdFieldNumber = 1;
-  ::google::protobuf::int32 gameid() const;
-  void set_gameid(::google::protobuf::int32 value);
+  ::google::protobuf::uint32 gameid() const;
+  void set_gameid(::google::protobuf::uint32 value);
 
   // optional int32 banker = 2;
   void clear_banker();
@@ -2176,7 +2176,7 @@ class replay_data : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::Arena* _arena_ptr_;
 
   bool _is_default_instance_;
-  ::google::protobuf::int32 gameid_;
+  ::google::protobuf::uint32 gameid_;
   ::google::protobuf::int32 banker_;
   ::google::protobuf::RepeatedField< ::google::protobuf::int32 > piles_;
   mutable int _piles_cached_byte_size_;
@@ -9444,15 +9444,15 @@ inline void charge_t::set_amount(::google::protobuf::int32 value) {
 
 // replay_item
 
-// optional int32 gameId = 1;
+// optional uint32 gameId = 1;
 inline void replay_item::clear_gameid() {
-  gameid_ = 0;
+  gameid_ = 0u;
 }
-inline ::google::protobuf::int32 replay_item::gameid() const {
+inline ::google::protobuf::uint32 replay_item::gameid() const {
   // @@protoc_insertion_point(field_get:proto3.replay_item.gameId)
   return gameid_;
 }
-inline void replay_item::set_gameid(::google::protobuf::int32 value) {
+inline void replay_item::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
   // @@protoc_insertion_point(field_set:proto3.replay_item.gameId)
@@ -9578,15 +9578,15 @@ inline void replay_item::set_timestamp(::google::protobuf::uint32 value) {
 
 // replay_data
 
-// optional int32 gameId = 1;
+// optional uint32 gameId = 1;
 inline void replay_data::clear_gameid() {
-  gameid_ = 0;
+  gameid_ = 0u;
 }
-inline ::google::protobuf::int32 replay_data::gameid() const {
+inline ::google::protobuf::uint32 replay_data::gameid() const {
   // @@protoc_insertion_point(field_get:proto3.replay_data.gameId)
   return gameid_;
 }
-inline void replay_data::set_gameid(::google::protobuf::int32 value) {
+inline void replay_data::set_gameid(::google::protobuf::uint32 value) {
   
   gameid_ = value;
   // @@protoc_insertion_point(field_set:proto3.replay_data.gameId)

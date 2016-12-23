@@ -19,8 +19,8 @@ public class ReplayItem : MonoBehaviour {
 	public int _round;
 
 	ReplayView view;
-	void Awake(){
-		var parent=transform.parent.parent;
+	void Start(){
+		var parent=transform.parent.parent.parent;
 		view=parent.gameObject.GetComponent<ReplayView>();
 	}
 
@@ -75,7 +75,7 @@ public class ReplayItem : MonoBehaviour {
 		if(Id.gameObject.activeSelf){
 			view.OnSelect(this);
 		}else{
-			view.OnReplay(this);
+			view.StartCoroutine(view.OnReplay(this));
 		}
 	}
 }

@@ -226,6 +226,9 @@ public class Player {
 		//Debug.Log("OnMessage "+mid);
 		foreach(var ctrl in controllers)Main.Instance.StartCoroutine(ctrl.PreMessage(mid,bytes));
 		switch(mid){
+			// -----------------------------------------------------------
+			// Lobby
+			// -----------------------------------------------------------
 		//Login
 		case pb_msg.MsgLcLogin:
 			MsgLCLogin msgLogin=MsgLCLogin.Parser.ParseFrom(bytes);
@@ -248,6 +251,24 @@ public class Player {
 				Debug.LogError("lobby error: "+msgLobby.Result);
 			break;
 
+		case pb_msg.MsgLcReplays:
+			MsgLCReplays msgReplays=MsgLCReplays.Parser.ParseFrom(bytes);
+			if(msgReplays.Result==pb_enum.Succeess){
+				ReplayView.msgReplays=msgReplays;
+			}else
+				Debug.LogError("lobby error: "+msgReplays.Result);
+			break;
+
+		case pb_msg.MsgLcReplay:
+			MsgLCReplay msgReplay=MsgLCReplay.Parser.ParseFrom(bytes);
+			if(msgReplay.Result==pb_enum.Succeess){
+				ReplayView.msgReplayData=msgReplay;
+			}else
+				Debug.LogError("lobby error: "+msgReplay.Result);
+			break;
+			// -----------------------------------------------------------
+			// Node
+			// -----------------------------------------------------------
 		//Node
 		case pb_msg.MsgNcConnect:
 			MsgNCConnect msgEnter=MsgNCConnect.Parser.ParseFrom(bytes);

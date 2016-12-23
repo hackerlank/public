@@ -25,7 +25,7 @@ public class EnterPanel : MonoBehaviour {
 	void OnDestroy(){Instance=null;}
 
 	IEnumerator Start(){
-		if(!Config.games.ContainsKey(CurrentGame))
+		if(Config.games==null || !Config.games.ContainsKey(CurrentGame))
 			yield break;
 
 		if(null==Config.options)
@@ -90,22 +90,14 @@ public class EnterPanel : MonoBehaviour {
 	}
 
 	public void OnReplay(){
-		StartCoroutine(replayCo());
-	}
-
-	IEnumerator replayCo(){
-		//DoReplay(null);
-		//yield break;
-		//connect: unstable and only for test
-		if(!Main.Instance.MainPlayer.InGame)
-			Main.Instance.MainPlayer.Connect(100);
-		while(!Main.Instance.MainPlayer.InGame)yield return null;
-
-		var msg=new MsgCLReplay();
-		msg.Mid=pb_msg.MsgClReplay;
-		msg.Session=Main.Instance.MainPlayer.session;
-		msg.GameId=10000;
-		Main.Instance.MainPlayer.Send<MsgCLReplay>(msg.Mid,msg);
+		StartCoroutine(Main.Instance.updater.Load<ReplayView>(
+			"Prefabs/ReplayView",Main.Instance.RootPanel,delegate(Object arg1, Hashtable arg2) {
+			var msg=new MsgCLReplays();
+			msg.Mid=pb_msg.MsgClReplays;
+			msg.Session=Main.Instance.MainPlayer.session;
+			msg.Uid=Main.Instance.MainPlayer.playData.Player.Uid;
+			Main.Instance.MainPlayer.http.Request<MsgCLReplays>(msg.Mid,msg);
+		}));
 	}
 	
 	public void OnTest(){
@@ -199,33 +191,5 @@ public class EnterPanel : MonoBehaviour {
 		if(LobbyPanel.Instance!=null)
 			Destroy(LobbyPanel.Instance.gameObject);
 		Destroy(gameObject);
-	}
-
-	public void DoReplay(MsgLCReplay msg){
-		ReplayPanel panel=null;
-		GameRule rule=null;
-		System.Action<Component> handler=delegate(Component obj) {
-			Destroy(gameObject);
-			panel=obj as ReplayPanel;
-			panel.Rule=rule;
-			panel.StartCoroutine(panel.Play(msg));
-		};
-
-		switch(CurrentGame){
-		case pb_enum.GameMjChengdu:
-			rule=new MahJongRule();
-			ReplayPanel.Create("MahjongPanel",handler);
-			break;
-		case pb_enum.GameDdz:
-			rule=new DoudeZhuRule();
-			ReplayPanel.Create("MahjongPanel",handler);
-			//PaohuziReplay.Create("DoudeZheReplay");
-			break;
-		case pb_enum.GamePhz:
-		default:
-			rule=new PaohuziRule();
-			ReplayPanel.Create("PaohuziReplay",handler);
-			break;
-		}
 	}
 }
