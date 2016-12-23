@@ -137,6 +137,13 @@ public class ReplayPanel : GamePanel {
 		yield break;
 	}
 
+	public void OnExit(){
+		StartCoroutine(Main.Instance.updater.Load<LobbyPanel>(
+			"Prefabs/LobbyPanel",Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){
+			Destroy(gameObject);
+		}));
+	}
+
 	public static void Create(string path,System.Action<Component> handler=null){
 		Main.Instance.StartCoroutine(Main.Instance.updater.Load<ReplayPanel>(
 			"Prefabs/"+path,Main.Instance.RootPanel,delegate(Object obj,Hashtable arg){

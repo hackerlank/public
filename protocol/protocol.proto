@@ -358,8 +358,8 @@ int32 amount            =4;
 
 message replay_item{
 
-uint32 gameId            =1;
-pb_enum gameCategory    =2;
+uint32 gameId           =1;
+int32 gameRule          =2;     //rule*100+category
 int32 rounds            =3;
 int32 max_round         =4;
 repeated key_value total    =5; //total score [name,score]
@@ -369,7 +369,7 @@ uint32 timestamp        =7;
 
 message replay_data{
 
-uint32 gameId            =1;
+uint32 gameId           =1;
 int32 banker            =2;
 int32 round             =3;
 repeated int32 piles    =4;

@@ -1944,11 +1944,11 @@ class replay_item : public ::google::protobuf::MessageLite /* @@protoc_insertion
   ::google::protobuf::uint32 gameid() const;
   void set_gameid(::google::protobuf::uint32 value);
 
-  // optional .proto3.pb_enum gameCategory = 2;
-  void clear_gamecategory();
-  static const int kGameCategoryFieldNumber = 2;
-  ::proto3::pb_enum gamecategory() const;
-  void set_gamecategory(::proto3::pb_enum value);
+  // optional int32 gameRule = 2;
+  void clear_gamerule();
+  static const int kGameRuleFieldNumber = 2;
+  ::google::protobuf::int32 gamerule() const;
+  void set_gamerule(::google::protobuf::int32 value);
 
   // optional int32 rounds = 3;
   void clear_rounds();
@@ -2000,7 +2000,7 @@ class replay_item : public ::google::protobuf::MessageLite /* @@protoc_insertion
 
   bool _is_default_instance_;
   ::google::protobuf::uint32 gameid_;
-  int gamecategory_;
+  ::google::protobuf::int32 gamerule_;
   ::google::protobuf::int32 rounds_;
   ::google::protobuf::int32 max_round_;
   ::google::protobuf::RepeatedPtrField< ::proto3::key_value > total_;
@@ -9458,18 +9458,18 @@ inline void replay_item::set_gameid(::google::protobuf::uint32 value) {
   // @@protoc_insertion_point(field_set:proto3.replay_item.gameId)
 }
 
-// optional .proto3.pb_enum gameCategory = 2;
-inline void replay_item::clear_gamecategory() {
-  gamecategory_ = 0;
+// optional int32 gameRule = 2;
+inline void replay_item::clear_gamerule() {
+  gamerule_ = 0;
 }
-inline ::proto3::pb_enum replay_item::gamecategory() const {
-  // @@protoc_insertion_point(field_get:proto3.replay_item.gameCategory)
-  return static_cast< ::proto3::pb_enum >(gamecategory_);
+inline ::google::protobuf::int32 replay_item::gamerule() const {
+  // @@protoc_insertion_point(field_get:proto3.replay_item.gameRule)
+  return gamerule_;
 }
-inline void replay_item::set_gamecategory(::proto3::pb_enum value) {
+inline void replay_item::set_gamerule(::google::protobuf::int32 value) {
   
-  gamecategory_ = value;
-  // @@protoc_insertion_point(field_set:proto3.replay_item.gameCategory)
+  gamerule_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay_item.gameRule)
 }
 
 // optional int32 rounds = 3;

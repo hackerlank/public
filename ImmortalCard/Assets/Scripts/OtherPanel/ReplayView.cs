@@ -62,7 +62,7 @@ public class ReplayView: MonoBehaviour {
 		Destroy(gameObject);
 
 		var data=msgReplayData.Data;
-		var gameRule=item.Item.GameCategory;
+		var gameRule=item.Item.GameRule/100;
 		ReplayPanel panel=null;
 		GameRule rule=null;
 		System.Action<Component> handler=delegate(Component obj) {
@@ -71,7 +71,7 @@ public class ReplayView: MonoBehaviour {
 			panel.StartCoroutine(panel.Play(data));
 		};
 		
-		switch(gameRule){
+		switch((pb_enum)gameRule){
 		case pb_enum.GameMjChengdu:
 			rule=new MahJongRule();
 			ReplayPanel.Create("MahjongPanel",handler);

@@ -6633,7 +6633,7 @@ void charge_t::clear_amount() {
 
 #if !defined(_MSC_VER) || _MSC_VER >= 1900
 const int replay_item::kGameIdFieldNumber;
-const int replay_item::kGameCategoryFieldNumber;
+const int replay_item::kGameRuleFieldNumber;
 const int replay_item::kRoundsFieldNumber;
 const int replay_item::kMaxRoundFieldNumber;
 const int replay_item::kTotalFieldNumber;
@@ -6663,7 +6663,7 @@ void replay_item::SharedCtor() {
     _is_default_instance_ = false;
   _cached_size_ = 0;
   gameid_ = 0u;
-  gamecategory_ = 0;
+  gamerule_ = 0;
   rounds_ = 0;
   max_round_ = 0;
   timestamp_ = 0u;
@@ -6755,19 +6755,18 @@ bool replay_item::MergePartialFromCodedStream(
         } else {
           goto handle_unusual;
         }
-        if (input->ExpectTag(16)) goto parse_gameCategory;
+        if (input->ExpectTag(16)) goto parse_gameRule;
         break;
       }
 
-      // optional .proto3.pb_enum gameCategory = 2;
+      // optional int32 gameRule = 2;
       case 2: {
         if (tag == 16) {
-         parse_gameCategory:
-          int value;
+         parse_gameRule:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   int, ::google::protobuf::internal::WireFormatLite::TYPE_ENUM>(
-                 input, &value)));
-          set_gamecategory(static_cast< ::proto3::pb_enum >(value));
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &gamerule_)));
+
         } else {
           goto handle_unusual;
         }
@@ -6884,10 +6883,9 @@ void replay_item::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->gameid(), output);
   }
 
-  // optional .proto3.pb_enum gameCategory = 2;
-  if (this->gamecategory() != 0) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      2, this->gamecategory(), output);
+  // optional int32 gameRule = 2;
+  if (this->gamerule() != 0) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->gamerule(), output);
   }
 
   // optional int32 rounds = 3;
@@ -6935,10 +6933,11 @@ int replay_item::ByteSize() const {
         this->gameid());
   }
 
-  // optional .proto3.pb_enum gameCategory = 2;
-  if (this->gamecategory() != 0) {
+  // optional int32 gameRule = 2;
+  if (this->gamerule() != 0) {
     total_size += 1 +
-      ::google::protobuf::internal::WireFormatLite::EnumSize(this->gamecategory());
+      ::google::protobuf::internal::WireFormatLite::Int32Size(
+        this->gamerule());
   }
 
   // optional int32 rounds = 3;
@@ -7008,8 +7007,8 @@ void replay_item::MergeFrom(const replay_item& from) {
   if (from.gameid() != 0) {
     set_gameid(from.gameid());
   }
-  if (from.gamecategory() != 0) {
-    set_gamecategory(from.gamecategory());
+  if (from.gamerule() != 0) {
+    set_gamerule(from.gamerule());
   }
   if (from.rounds() != 0) {
     set_rounds(from.rounds());
@@ -7040,7 +7039,7 @@ void replay_item::Swap(replay_item* other) {
 }
 void replay_item::InternalSwap(replay_item* other) {
   std::swap(gameid_, other->gameid_);
-  std::swap(gamecategory_, other->gamecategory_);
+  std::swap(gamerule_, other->gamerule_);
   std::swap(rounds_, other->rounds_);
   std::swap(max_round_, other->max_round_);
   total_.UnsafeArenaSwap(&other->total_);
@@ -7071,18 +7070,18 @@ void replay_item::clear_gameid() {
   // @@protoc_insertion_point(field_set:proto3.replay_item.gameId)
 }
 
-// optional .proto3.pb_enum gameCategory = 2;
-void replay_item::clear_gamecategory() {
-  gamecategory_ = 0;
+// optional int32 gameRule = 2;
+void replay_item::clear_gamerule() {
+  gamerule_ = 0;
 }
- ::proto3::pb_enum replay_item::gamecategory() const {
-  // @@protoc_insertion_point(field_get:proto3.replay_item.gameCategory)
-  return static_cast< ::proto3::pb_enum >(gamecategory_);
+ ::google::protobuf::int32 replay_item::gamerule() const {
+  // @@protoc_insertion_point(field_get:proto3.replay_item.gameRule)
+  return gamerule_;
 }
- void replay_item::set_gamecategory(::proto3::pb_enum value) {
+ void replay_item::set_gamerule(::google::protobuf::int32 value) {
   
-  gamecategory_ = value;
-  // @@protoc_insertion_point(field_set:proto3.replay_item.gameCategory)
+  gamerule_ = value;
+  // @@protoc_insertion_point(field_set:proto3.replay_item.gameRule)
 }
 
 // optional int32 rounds = 3;

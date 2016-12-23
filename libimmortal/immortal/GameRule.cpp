@@ -437,7 +437,7 @@ void GameRule::Release(Game& game){
         //player replay list - replay:player:<uid>{replays list}
         replay_item& all=*SpGame->spReplayItem;
         all.set_gameid(game.id);
-        all.set_gamecategory(game.category);
+        all.set_gamerule(100*SpGame->rule->Type()+(int)game.category);
         all.set_rounds(game.round+1);
         all.set_max_round(game.Round);
         for(auto& player:SpGame->players){

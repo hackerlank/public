@@ -29,7 +29,7 @@ public class ReplayItem : MonoBehaviour {
 			_item=value;
 			//Id,GameName,MaxRound,Scores,Date
 			Id.text		="ID: "+value.GameId;
-			Name.text	=RuleIcon.rule2name(value.GameCategory);
+			Name.text	=RuleIcon.rule2name((pb_enum)(value.GameRule%100));
 			Date.text	=Utils.timestamp_date(value.Timestamp).ToString("yyyy-MM-dd hh:mm");
 			MaxRound.text=value.Rounds.ToString();
 
