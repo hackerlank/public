@@ -65,38 +65,52 @@ public class EnterPanel : MonoBehaviour {
 			if(optionGroups!=null){
 				foreach(var _optionGroup in optionGroups){
 					//option group
-					var param=new Hashtable();
-					param["group"]=_optionGroup;
+					MonoBehaviour group=null;
 					StartCoroutine(Main.Instance.updater.Load<MonoBehaviour>(
 						"Prefabs/OptionGroup",OptionRoot,delegate(Object obj,Hashtable arg){
-						var group=obj as MonoBehaviour;
-						var optionGroup=arg["group"] as List<Hashtable>;
+						group=obj as MonoBehaviour;
+					}));
 
-						foreach(var option in optionGroup){
-							System.Action<Hashtable> action=delegate(Hashtable h) {
-								var para=new Hashtable();
-								para["option"]=h;
-								StartCoroutine(Main.Instance.updater.Load<Option>(
-									"Prefabs/Option",group.transform,delegate(Object obj1,Hashtable arg1){
-									(obj1 as Option).Value=arg1["option"] as Hashtable;
-								},para));
-							};
+					while(group==null)yield return null;
 
-							var radios=option["option"] as ArrayList;
-							if(radios !=null){
-								//group
-								foreach(var radio in radios){
-									var radioHash=radio as Hashtable;
-									if(radioHash!=null && radioHash.Count>0){
-										action.Invoke(radioHash);
-									}
+					var optionGroup=_optionGroup;
+					
+					foreach(var option in optionGroup){
+						var radios=option["option"] as ArrayList;
+						if(radios !=null){
+							//group
+							ToggleGroup tg=null;
+							foreach(var radio in radios){
+								var radioHash=radio as Hashtable;
+								if(radioHash!=null && radioHash.Count>0){
+									Option Opt=null;
+									StartCoroutine(Main.Instance.updater.Load<Option>(
+										"Prefabs/Option",group.transform,delegate(Object obj1,Hashtable arg1){
+										Opt=(obj1 as Option);
+									}));
+									
+									while(Opt==null)
+										yield return null;
+									
+									Opt.toggle.graphic=Opt.radioMarker;
+									Opt.toggle.targetGraphic=Opt.radioMarker;
+									if(null==tg)
+										tg=Opt.toggle.group;
+									else
+										Opt.group=tg;
+									Opt.Value=radioHash;
 								}
-							}else{
-								//option
-								action.Invoke(option);
-							}//option
-						}
-					},param));
+							}
+						}else{
+							//option
+							var para=new Hashtable();
+							para["option"]=option;
+							StartCoroutine(Main.Instance.updater.Load<Option>(
+								"Prefabs/Option",group.transform,delegate(Object obj1,Hashtable arg1){
+								(obj1 as Option).Value=arg1["option"] as Hashtable;
+							},para));
+						}//option
+					}
 				}
 			}
 		}
