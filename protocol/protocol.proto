@@ -69,17 +69,7 @@ GAME_MJ_XINING          =82;
 GAME_MJ_YINCHUAN        =83;
 GAME_MJ_ZHENGZHOU       =84;
 
-// game options
-OPTION_ROUND            =10;
-OPTION_ANTI             =11;
-OPTION_CATEGORY         =12;
-OPTION_DEFINED_CARDS    =13;
-
 // game category
-CATEGORY_EASY           =10;
-CATEGORY_NORMAL         =11;
-CATEGORY_HARD           =12;
-
 PHZ_SY                  =0;	//邵阳字牌
 PHZ_SYBP                =1;	//邵阳剥皮
 PHZ_LD                  =2;//娄底放炮

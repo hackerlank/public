@@ -82,19 +82,15 @@ void Player::on_read(PBHelper& pb){
                     }
                     int maxRound=1;
                     for(auto kv:imsg.options()){
-                        switch (kv.ikey()) {
-                            case pb_enum::OPTION_CATEGORY:
-                                gameptr->category=(pb_enum)kv.ivalue();
-                                break;
-                            case pb_enum::OPTION_ROUND:
-                                maxRound=kv.ivalue();
-                                break;
-                            case pb_enum::OPTION_DEFINED_CARDS:
-                                gameptr->definedCards=kv.value();
-                                break;
-                            default:
-                                break;
-                        }
+                        auto& key=kv.key();
+                        if(key=="round")
+                            maxRound=kv.ivalue();
+                        else if(key=="defined_cards")
+                            gameptr->definedCards=kv.value();
+                        else if(key=="catetory")
+                            gameptr->category=(pb_enum)kv.ivalue();
+                        else
+                            gameptr->options[key]=kv;
                     }
                     
                     player->game=gameptr;

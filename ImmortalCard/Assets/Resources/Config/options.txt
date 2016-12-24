@@ -1,9 +1,11 @@
 [
 	{
+		"comments" : "Paohuzi"
 		"rule" : 10,
 		"categories" :
 		[
 			{
+				"comments" : "Shaoyang"
 				"category" : 0,
 				"options" :
 				[
@@ -21,12 +23,676 @@
 						]
 					},{
 						"group" : 1,
-						"continuebanker" : 1,
-						"label" : "连庄"
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "ShaoyangBopi"
+				"category" : 1,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Loudi"
+				"category" : 2,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Huaihua"
+				"category" : 3,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 1,
+						"option" :
+						[
+							{
+								"maxmultiple" : 5,
+								"label" : "5番"
+							},{
+								"maxmultiple" : 10,
+								"label" : "10番"
+							},{
+								"maxmultiple" : 1000,
+								"label" : "不限番"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Quanmingtang"
+				"category" : 4,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 1,
+						"option" :
+						[
+							{
+								"maxscore" : 10,
+								"label" : "单局封顶10分"
+							},{
+								"maxscore" : 20,
+								"label" : "单局封顶20分"
+							},{
+								"maxscore" : 1000,
+								"label" : "无封顶"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Hongheidian"
+				"category" : 5,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 1,
+						"option" :
+						[
+							{
+								"maxscore" : 10,
+								"label" : "单局封顶10分"
+							},{
+								"maxscore" : 20,
+								"label" : "单局封顶20分"
+							},{
+								"maxscore" : 1000,
+								"label" : "无封顶"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Changsha"
+				"category" : 6,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 1,
+						"option" :
+						[
+							{
+								"maxmultiple" : 5,
+								"label" : "5番"
+							},{
+								"maxmultiple" : 10,
+								"label" : "10番"
+							},{
+								"maxmultiple" : 1000,
+								"label" : "不限番"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Xiangxiang"
+				"category" : 7,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Hengyang"
+				"category" : 8,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Yongzhou"
+				"category" : 9,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Penghuzi"
+				"category" : 10,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+
+						"group" : 1,
+						"option" :
+						[
+							{
+								"continue2" : 1,
+								"label" : "中庄x2"
+							},{
+								"continuedouble" : 1,
+								"label" : "中庄翻番"
+							},{
+								"continue" : 1,
+								"label" : "连中"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Sichuan"
+				"category" : 11,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 2,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Chenzhou"
+				"category" : 12,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 1,
+						"nomeldwhenA4x2" : 1,
+						"label" : "起手双龙不能吃碰"
 					},{
 						"group" : 1,
 						"meldconflict" : 1,
 						"label" : "冲招"
+					}
+				]
+			},{
+				"comments" : "Guangxi"
+				"category" : 13,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					},{
+						"group" : 1,
+						"option" :
+						[
+							{
+								"minpoint" : 10,
+								"label" : "10胡起胡"
+							},{
+								"minpoint" : 15,
+								"label" : "15胡起胡"
+							}
+						]
+					},{
+						"group" : 2,
+						"option" :
+						[
+							{
+								"bonuspre" : 1,
+								"label" : "上醒"
+							},{
+								"bonus" : 1,
+								"label" : "本醒"
+							},{
+								"bonusnext" : 1,
+								"label" : "下醒"
+							}
+						]
+					},{
+						"group" : 3,
+						"meldconflict" : 1,
+						"label" : "冲招"
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "DoudeZhe"
+		"rule" : 20,
+		"categories" :
+		[
+			{
+				"comments" : "Classic"
+				"category" : 20,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			},{
+				"comments" : "For4"
+				"category" : 21,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongChengdu"
+		"rule" : 55,
+		"categories" :
+		[
+			{
+				"comments" : "Xuezhan"
+				"category" : 40,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			},{
+				"comments" : "Xueliu"
+				"category" : 80,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongGuangZhou"
+		"rule" : 58,
+		"categories" :
+		[
+			{
+				"comments" : "GuangZhou"
+				"category" : 41,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongChangsha"
+		"rule" : 54,
+		"categories" :
+		[
+			{
+				"comments" : "Changsha"
+				"category" : 42,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongHainan"
+		"rule" : 61,
+		"categories" :
+		[
+			{
+				"comments" : "Hainan"
+				"category" : 43,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongHangZhou"
+		"rule" : 62,
+		"categories" :
+		[
+			{
+				"comments" : "HangZhou"
+				"category" : 44,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongNanjing"
+		"rule" : 70,
+		"categories" :
+		[
+			{
+				"comments" : "Nanjing"
+				"category" : 45,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongTianjin"
+		"rule" : 77,
+		"categories" :
+		[
+			{
+				"comments" : "Tianjin"
+				"category" : 46,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongWuhan"
+		"rule" : 78,
+		"categories" :
+		[
+			{
+				"comments" : "Wuhan"
+				"category" : 47,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
+					}
+				]
+			}
+		]
+	},{
+		"comments" : "MahjongKunming"
+		"rule" : 66,
+		"categories" :
+		[
+			{
+				"comments" : "Kunming"
+				"category" : 48,
+				"options" :
+				[
+					{
+						"group" : 0,
+						"option" :
+						[
+							{
+								"round" : 5,
+								"label" : "5局（1张房卡）"
+							},{
+								"round" : 10,
+								"label" : "10局（2张房卡）"
+							}
+						]
 					}
 				]
 			}

@@ -36,12 +36,8 @@ public class RuleIcon : MonoBehaviour {
 		}
 	}
 	public void OnGame(){
-		/*
-		if(EnterPanel.Instance.GameCategory!=null && EnterPanel.Instance.GameCategory!=this)
-			EnterPanel.Instance.GameCategory.OutLineEfx.SetActive(false);
-		OutLineEfx.SetActive(true);
-		*/
-		EnterPanel.Instance.GameCategory=this;
+		if(toggle.isOn)
+			EnterPanel.Instance.GameCategory=this;
 	}
 	
 	public static string rule2name(pb_enum rule){

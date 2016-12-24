@@ -50,6 +50,7 @@ struct KEYE_API Game{
     
     std::shared_ptr<GameRule>               rule;
     std::vector<std::shared_ptr<Player>>    players;
+    std::map<std::string,proto3::key_value> options;    //game options
     std::shared_ptr<void*>                  spExtra;    //custom data
 
     //special for phz

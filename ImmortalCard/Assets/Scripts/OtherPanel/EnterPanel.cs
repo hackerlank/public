@@ -15,8 +15,17 @@ public class EnterPanel : MonoBehaviour {
 
 	[HideInInspector]
 	public pb_enum	CurrentGame;
-	[HideInInspector]
-	public RuleIcon	GameCategory;
+
+	RuleIcon icon;
+	public RuleIcon	GameCategory{
+		get{
+			return icon;
+		}
+		set{
+			icon=value;
+			StartCoroutine(loadOption());
+		}
+	}
 
 	public static EnterPanel Instance=null;
 	void Awake(){
@@ -59,6 +68,14 @@ public class EnterPanel : MonoBehaviour {
 		}
 
 		//options
+		yield return StartCoroutine(loadOption());
+	}
+
+	IEnumerator loadOption(){
+		foreach(Transform ch in OptionRoot)
+			Destroy(ch.gameObject);
+		yield return null;
+
 		var categoryOptions=Config.options[CurrentGame];
 		if(categoryOptions!=null){
 			var optionGroups=categoryOptions[GameCategory.Value];
@@ -70,9 +87,9 @@ public class EnterPanel : MonoBehaviour {
 						"Prefabs/OptionGroup",OptionRoot,delegate(Object obj,Hashtable arg){
 						group=obj as MonoBehaviour;
 					}));
-
+					
 					while(group==null)yield return null;
-
+					
 					var optionGroup=_optionGroup;
 					
 					foreach(var option in optionGroup){
@@ -91,7 +108,7 @@ public class EnterPanel : MonoBehaviour {
 									
 									while(Opt==null)
 										yield return null;
-
+									
 									Opt.checker.sprite=Opt.radio.sprite;
 									Opt.checkerMarker.sprite=Opt.radioMarker.sprite;
 									if(null==tg){
@@ -119,8 +136,6 @@ public class EnterPanel : MonoBehaviour {
 				}
 			}
 		}
-
-		yield return null;
 	}
 
 	public void OnCreate(){
@@ -186,13 +201,14 @@ public class EnterPanel : MonoBehaviour {
 		storeGame.gameType=(int)CurrentGame;
 		storeGame.robots=4;
 
+		//game options
 		var opRound=new key_value();
-		opRound.Ikey=pb_enum.OptionRound;
+		opRound.Key="round";
 		opRound.Ivalue=Main.Instance.Round;
 
 		Main.Instance.MainPlayer.category=GameCategory.Value;
 		var opCategory=new key_value();
-		opCategory.Ikey=pb_enum.OptionCategory;
+		opCategory.Key="category";
 		opCategory.Ivalue=(int)Main.Instance.MainPlayer.category;
 		
 		MsgCNCreate msgC=new MsgCNCreate();
@@ -211,7 +227,7 @@ public class EnterPanel : MonoBehaviour {
 			cards.Replace("\n","");
 
 			var opCards=new key_value();
-			opCards.Ikey=pb_enum.OptionDefinedCards;
+			opCards.Key="defined_cards";
 			opCards.Value=cards;
 			msgC.Options.Add(opCards);
 
@@ -219,7 +235,15 @@ public class EnterPanel : MonoBehaviour {
 			PlayerPrefs.SetString(Cache.PrefsKey_DefinedCards,cards);
 			PlayerPrefs.Save();
 		}
-		
+
+		//user options
+		var options=OptionRoot.GetComponentsInChildren<Option>();
+		foreach(var Opt in options){
+			if(Opt.toggle.isOn)
+				msgC.Options.Add(Opt.KeyValue);
+		}
+
+		//send message
 		Main.Instance.MainPlayer.msgNCCreate=null;
 		Main.Instance.MainPlayer.Send<MsgCNCreate>(msgC.Mid,msgC);
 		//Debug.Log("create game by key "+Main.Instance.MainPlayer.gameId%(uint)pb_enum.DefMaxNodes);
