@@ -23,7 +23,13 @@ public class Config{
 	public static string payAppStore=		"http://fir.im/immorpay";
 	public static string payAndroidMarket=	"http://fir.im/immorpaya";
 
-	public static Dictionary<pb_enum,Dictionary<pb_enum,ArrayList>> options;
+	//{rule:[category:[group:[options]]]}
+	public static Dictionary<pb_enum,
+	Dictionary<pb_enum,		//rules
+		List<				//category
+			List<			//group
+				Hashtable	//option
+			>>>> options;
 	//ShareSDK app id
 	public static string modId="180127d1c7541";
 
@@ -54,16 +60,16 @@ public class Config{
 			return;
 		}
 
-		options=new Dictionary<pb_enum, Dictionary<pb_enum, ArrayList>>();
+		options=new Dictionary<pb_enum, Dictionary<pb_enum, List<List<Hashtable>>>>();
 		foreach(var arr in array){
 			var hRule=arr as Hashtable;
 			if(null!=hRule && hRule.Count>0){
 				//rule
 				var rule=Convert.ToInt32(hRule["rule"]);
-				var dictCategory=new Dictionary<pb_enum, ArrayList>();
+				var dictCategory=new Dictionary<pb_enum, List<List<Hashtable>>>();
 				options[(pb_enum)rule]=dictCategory;
 
-				var aCategory=hRule["category"] as ArrayList;
+				var aCategory=hRule["categories"] as ArrayList;
 				if(aCategory !=null && aCategory.Count>0){
 					foreach(var arrcat in aCategory){
 						var hCategory=arrcat as Hashtable;
@@ -73,39 +79,27 @@ public class Config{
 
 							var aOptions=hCategory["options"] as ArrayList;
 							if(aOptions !=null && aOptions.Count>0){
+								//groups
+								var optionsGroups=new List<List<Hashtable>>();
+								dictCategory[(pb_enum)category]=optionsGroups;
+
+								var dictGroups=new Dictionary<int,List<Hashtable>>();
+
 								//options
 								foreach(var arropt in aOptions){
-									var optionsList=new ArrayList();
-									dictCategory[(pb_enum)category]=optionsList;
-
 									var hopt=arropt as Hashtable;
 									if(hopt!=null && hopt.Count>0){
-										optionsList.Add(hopt);
-										/*
-										var aOption=hopt["option"] as ArrayList;
-										if(aOption !=null){
-											//group
-											foreach(var option in aOption){
-												var hOption=option as Hashtable;
-												if(hOption!=null && hOption.Count>0){
-													foreach(var key in hOption.Keys){
-														//key value
-														var val=hOption[key];
-														int x=0;
-													}
-												}
-											}
-										}else{
-											//option
-											foreach(var key in hopt.Keys){
-												//key value
-												var val=hopt[key];
-												int x=0;
-											}
-										}//option
-										*/
+
+										var g=Convert.ToInt32(hopt["group"]);
+										if(!dictGroups.ContainsKey(g))
+											dictGroups[g]=new List<Hashtable>();
+
+										dictGroups[g].Add(hopt);
 									}//hopt
 								}//arropt
+
+								foreach(var val in dictGroups.Values)
+									optionsGroups.Add(val);
 							}//aOptions
 						}//hCategory
 					}//arrcat

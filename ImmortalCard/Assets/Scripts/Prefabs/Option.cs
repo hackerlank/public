@@ -5,6 +5,7 @@ using System.Collections;
 public class Option : MonoBehaviour {
 
 	public Toggle		toggle;
+	public Text			label;
 	public Image		checker;
 	public Image		checkerMarker;
 	public Image		radio;
@@ -22,6 +23,8 @@ public class Option : MonoBehaviour {
 	public Hashtable Value{
 		set{
 			hash=value;
+
+			label.text=value["label"] as string;
 		}
 		get{
 			return hash;

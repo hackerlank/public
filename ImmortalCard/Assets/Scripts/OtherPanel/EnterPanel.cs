@@ -39,6 +39,7 @@ public class EnterPanel : MonoBehaviour {
 		while(null==RuleSprites.Instance || null==Config.options)
 			yield return null;
 
+		//game icons
 		var categories=Config.games[CurrentGame];
 		foreach(game_t game in categories){
 			var param=new Hashtable();
@@ -56,6 +57,51 @@ public class EnterPanel : MonoBehaviour {
 			},param));
 			yield return null;
 		}
+
+		//options
+		var categoryOptions=Config.options[CurrentGame];
+		if(categoryOptions!=null){
+			var optionGroups=categoryOptions[GameCategory.Value];
+			if(optionGroups!=null){
+				foreach(var _optionGroup in optionGroups){
+					//option group
+					var param=new Hashtable();
+					param["group"]=_optionGroup;
+					StartCoroutine(Main.Instance.updater.Load<MonoBehaviour>(
+						"Prefabs/OptionGroup",OptionRoot,delegate(Object obj,Hashtable arg){
+						var group=obj as MonoBehaviour;
+						var optionGroup=arg["group"] as List<Hashtable>;
+
+						foreach(var option in optionGroup){
+							System.Action<Hashtable> action=delegate(Hashtable h) {
+								var para=new Hashtable();
+								para["option"]=h;
+								StartCoroutine(Main.Instance.updater.Load<Option>(
+									"Prefabs/Option",group.transform,delegate(Object obj1,Hashtable arg1){
+									(obj1 as Option).Value=arg1["option"] as Hashtable;
+								},para));
+							};
+
+							var radios=option["option"] as ArrayList;
+							if(radios !=null){
+								//group
+								foreach(var radio in radios){
+									var radioHash=radio as Hashtable;
+									if(radioHash!=null && radioHash.Count>0){
+										action.Invoke(radioHash);
+									}
+								}
+							}else{
+								//option
+								action.Invoke(option);
+							}//option
+						}
+					},param));
+				}
+			}
+		}
+
+		yield return null;
 	}
 
 	public void OnCreate(){

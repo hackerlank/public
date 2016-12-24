@@ -1,26 +1,32 @@
 [
 	{
 		"rule" : 10,
-		"category" :
+		"categories" :
 		[
 			{
 				"category" : 0,
 				"options" :
 				[
 					{
+						"group" : 0,
 						"option" :
 						[
 							{
 								"round" : 5,
-								"desc" : "5局（1张房卡）"
+								"label" : "5局（1张房卡）"
 							},{
 								"round" : 10,
-								"desc" : "10局（2张房卡）"
+								"label" : "10局（2张房卡）"
 							}
 						]
 					},{
+						"group" : 1,
+						"continuebanker" : 1,
+						"label" : "连庄"
+					},{
+						"group" : 1,
 						"meldconflict" : 1,
-						"desc" : "冲招"
+						"label" : "冲招"
 					}
 				]
 			}
