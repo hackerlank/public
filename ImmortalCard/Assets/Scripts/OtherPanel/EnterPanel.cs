@@ -91,13 +91,16 @@ public class EnterPanel : MonoBehaviour {
 									
 									while(Opt==null)
 										yield return null;
-									
-									Opt.toggle.graphic=Opt.radioMarker;
-									Opt.toggle.targetGraphic=Opt.radioMarker;
-									if(null==tg)
+
+									Opt.checker.sprite=Opt.radio.sprite;
+									Opt.checkerMarker.sprite=Opt.radioMarker.sprite;
+									if(null==tg){
 										tg=Opt.toggle.group;
-									else
-										Opt.group=tg;
+										Opt.toggle.isOn=true;
+									}else{
+										Opt.toggle.group=tg;
+										Opt.toggle.isOn=false;
+									}
 									Opt.Value=radioHash;
 								}
 							}
@@ -107,7 +110,9 @@ public class EnterPanel : MonoBehaviour {
 							para["option"]=option;
 							StartCoroutine(Main.Instance.updater.Load<Option>(
 								"Prefabs/Option",group.transform,delegate(Object obj1,Hashtable arg1){
-								(obj1 as Option).Value=arg1["option"] as Hashtable;
+								var Opt=(obj1 as Option);
+								Destroy(Opt.toggle.group);
+								Opt.Value=arg1["option"] as Hashtable;
 							},para));
 						}//option
 					}
