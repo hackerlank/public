@@ -2,28 +2,16 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="..\protocol\game_protocol.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
-    <ClInclude Include="..\protocol\game_protocol.pb.h">
-      <Filter>protocol</Filter>
-    </ClInclude>
+    <ClInclude Include="Paohuzi.h" />
+    <ClInclude Include="DoudeZhu.h" />
+    <ClInclude Include="Mahjong.h" />
+    <ClInclude Include="NodeFwd.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="server.cpp" />
-    <ClCompile Include="..\protocol\game_protocol.pb.cc">
-      <Filter>protocol</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="protocol">
-      <UniqueIdentifier>{7f602ff1-bf55-4117-9e24-23c4c17e4370}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\protocol\game_protocol.proto">
-      <Filter>protocol</Filter>
-    </None>
+    <ClCompile Include="DoudeZhu.cpp" />
+    <ClCompile Include="Mahjong.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Paohuzi.cpp" />
   </ItemGroup>
 </Project>

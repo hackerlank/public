@@ -2,28 +2,55 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="..\protocol\game_protocol.h">
-      <Filter>protocol</Filter>
+    <ClInclude Include="immortal\DiscardGame.h">
+      <Filter>immortal</Filter>
     </ClInclude>
-    <ClInclude Include="..\protocol\game_protocol.pb.h">
-      <Filter>protocol</Filter>
+    <ClInclude Include="immortal\Game.h">
+      <Filter>immortal</Filter>
     </ClInclude>
+    <ClInclude Include="immortal\GameListener.h">
+      <Filter>immortal</Filter>
+    </ClInclude>
+    <ClInclude Include="immortal\GameRule.h">
+      <Filter>immortal</Filter>
+    </ClInclude>
+    <ClInclude Include="immortal\Immortal.h">
+      <Filter>immortal</Filter>
+    </ClInclude>
+    <ClInclude Include="immortal\ImmortalFwd.h">
+      <Filter>immortal</Filter>
+    </ClInclude>
+    <ClInclude Include="immortal\MeldGame.h">
+      <Filter>immortal</Filter>
+    </ClInclude>
+    <ClInclude Include="immortal\Player.h">
+      <Filter>immortal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\GameDefine.h" />
+    <ClInclude Include="..\include\Server.h" />
+    <ClInclude Include="..\include\PBHelper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="server.cpp" />
-    <ClCompile Include="..\protocol\game_protocol.pb.cc">
-      <Filter>protocol</Filter>
+    <ClCompile Include="immortal\DiscardGame.cpp">
+      <Filter>immortal</Filter>
+    </ClCompile>
+    <ClCompile Include="immortal\GameRule.cpp">
+      <Filter>immortal</Filter>
+    </ClCompile>
+    <ClCompile Include="immortal\Immortal.cpp">
+      <Filter>immortal</Filter>
+    </ClCompile>
+    <ClCompile Include="immortal\MeldGame.cpp">
+      <Filter>immortal</Filter>
+    </ClCompile>
+    <ClCompile Include="immortal\Player.cpp">
+      <Filter>immortal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="protocol">
-      <UniqueIdentifier>{7f602ff1-bf55-4117-9e24-23c4c17e4370}</UniqueIdentifier>
+    <Filter Include="immortal">
+      <UniqueIdentifier>{e81bad55-439a-4a40-a86e-d03e689f68f2}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\protocol\game_protocol.proto">
-      <Filter>protocol</Filter>
-    </None>
   </ItemGroup>
 </Project>

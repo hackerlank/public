@@ -2,28 +2,56 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="..\protocol\game_protocol.h">
-      <Filter>protocol</Filter>
+    <ClInclude Include="PaySvc.h" />
+    <ClInclude Include="Charge.h" />
+    <ClInclude Include="Fwd.h" />
+    <ClInclude Include="MsgHandler.h" />
+    <ClInclude Include="openapi\openapi_client.h">
+      <Filter>openapi</Filter>
     </ClInclude>
-    <ClInclude Include="..\protocol\game_protocol.pb.h">
-      <Filter>protocol</Filter>
+    <ClInclude Include="openapi\http\http_client.h">
+      <Filter>openapi\http</Filter>
+    </ClInclude>
+    <ClInclude Include="openapi\json\cJSON.h">
+      <Filter>openapi\json</Filter>
+    </ClInclude>
+    <ClInclude Include="openapi\json\json_type.h">
+      <Filter>openapi\json</Filter>
+    </ClInclude>
+    <ClInclude Include="openapi\json\json_util.h">
+      <Filter>openapi\json</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="server.cpp" />
-    <ClCompile Include="..\protocol\game_protocol.pb.cc">
-      <Filter>protocol</Filter>
+    <ClCompile Include="AliPaySvc.cpp" />
+    <ClCompile Include="Charge.cpp" />
+    <ClCompile Include="MsgHandler.cpp" />
+    <ClCompile Include="openapi\openapi_client.cpp">
+      <Filter>openapi</Filter>
+    </ClCompile>
+    <ClCompile Include="openapi\http\http_client.cpp">
+      <Filter>openapi\http</Filter>
+    </ClCompile>
+    <ClCompile Include="openapi\json\json_type.cpp">
+      <Filter>openapi\json</Filter>
+    </ClCompile>
+    <ClCompile Include="openapi\json\json_util.cpp">
+      <Filter>openapi\json</Filter>
+    </ClCompile>
+    <ClCompile Include="openapi\json\cJSON.c">
+      <Filter>openapi\json</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="protocol">
-      <UniqueIdentifier>{7f602ff1-bf55-4117-9e24-23c4c17e4370}</UniqueIdentifier>
+    <Filter Include="openapi">
+      <UniqueIdentifier>{6e2c15b9-2079-4039-9679-965814a0eab0}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\protocol\game_protocol.proto">
-      <Filter>protocol</Filter>
-    </None>
+    <Filter Include="openapi\http">
+      <UniqueIdentifier>{fb5cc444-6b12-462b-a299-ac0768c3a89a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="openapi\json">
+      <UniqueIdentifier>{bd56c25d-3796-4bad-a987-d625d2d25eda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

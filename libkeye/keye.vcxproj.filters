@@ -13,6 +13,18 @@
     <Filter Include="htio\bas">
       <UniqueIdentifier>{c1df2e89-bf44-402f-a6a0-dfb2b3aaacc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="utility\threadpool">
+      <UniqueIdentifier>{e53b648f-eb8c-4222-8248-320d953a35d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\threadpool\threadpool">
+      <UniqueIdentifier>{e9b4850a-c24c-45a1-8640-90fb0987629d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utility\threadpool\threadpool\detail">
+      <UniqueIdentifier>{86068036-5332-4c09-ae0a-e80477040caf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="htio\websocketpp">
+      <UniqueIdentifier>{eb375cdd-460b-4b16-a348-bd93991d8322}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="keye\keye_fwd.h" />
@@ -41,43 +53,7 @@
     <ClInclude Include="keye\keyeio\service.h">
       <Filter>keyeio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\utility\logger.h">
-      <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\utility\utility_fwd.h">
-      <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\utility\utility_pch.hpp">
-      <Filter>utility</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\utility\conf_file.h">
-      <Filter>utility</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="keye\htio\htio_fwd.h">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\htio_pch.hpp">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\http_client.h">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\metric.h">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\service.h">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\svc_handler.h">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\svc_handler.hpp">
-      <Filter>htio</Filter>
-    </ClInclude>
-    <ClInclude Include="keye\htio\work_handler.hpp">
-      <Filter>htio</Filter>
-    </ClInclude>
     <ClInclude Include="keye\htio\bas\io_service_pool.hpp">
       <Filter>htio\bas</Filter>
     </ClInclude>
@@ -96,26 +72,119 @@
     <ClInclude Include="keye\htio\bas\bas_pch.hpp">
       <Filter>htio\bas</Filter>
     </ClInclude>
+    <ClInclude Include="keye\utility\base64.hpp">
+      <Filter>utility</Filter>
+    </ClInclude>
     <ClInclude Include="keye\utility\buf_set.h">
       <Filter>utility</Filter>
     </ClInclude>
-    <ClInclude Include="keye\htio\packer.h">
+    <ClInclude Include="keye\utility\conf_file.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\logger.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\md5.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\scheduler.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\secure_hash.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\str_util.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\system.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\utility_fwd.h">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\utility_pch.hpp">
+      <Filter>utility</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool.hpp">
+      <Filter>utility\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\size_policies.hpp">
+      <Filter>utility\threadpool\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\future.hpp">
+      <Filter>utility\threadpool\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\pool.hpp">
+      <Filter>utility\threadpool\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\pool_adaptors.hpp">
+      <Filter>utility\threadpool\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\scheduling_policies.hpp">
+      <Filter>utility\threadpool\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\shutdown_policies.hpp">
+      <Filter>utility\threadpool\threadpool</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\detail\pool_core.hpp">
+      <Filter>utility\threadpool\threadpool\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\detail\scope_guard.hpp">
+      <Filter>utility\threadpool\threadpool\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\detail\worker_thread.hpp">
+      <Filter>utility\threadpool\threadpool\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\detail\future.hpp">
+      <Filter>utility\threadpool\threadpool\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\utility\threadpool\threadpool\detail\locking_ptr.hpp">
+      <Filter>utility\threadpool\threadpool\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\alloc.h">
       <Filter>htio</Filter>
     </ClInclude>
     <ClInclude Include="keye\htio\htio_demo.h">
       <Filter>htio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\utility\secure_hash.h">
-      <Filter>utility</Filter>
+    <ClInclude Include="keye\htio\htio_fwd.h">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\htio_pch.hpp">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\http_client.h">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\metric.h">
+      <Filter>htio</Filter>
     </ClInclude>
     <ClInclude Include="keye\htio\op_packer.h">
       <Filter>htio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\utility\str_util.h">
-      <Filter>utility</Filter>
+    <ClInclude Include="keye\htio\packer.h">
+      <Filter>htio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\utility\md5.h">
-      <Filter>utility</Filter>
+    <ClInclude Include="keye\htio\packet.h">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\service.h">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\svc_handler.h">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\svc_handler.hpp">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\work_handler.h">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\work_handler.hpp">
+      <Filter>htio</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\ws_client.h">
+      <Filter>htio</Filter>
     </ClInclude>
     <ClInclude Include="keye\htio\ws_handler.hpp">
       <Filter>htio</Filter>
@@ -123,8 +192,44 @@
     <ClInclude Include="keye\htio\ws_service.h">
       <Filter>htio</Filter>
     </ClInclude>
-    <ClInclude Include="keye\htio\ws_client.h">
-      <Filter>htio</Filter>
+    <ClInclude Include="keye\htio\websocketpp\version.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\client.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\close.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\connection.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\connection_base.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\endpoint.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\endpoint_base.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\error.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\frame.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\server.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\uri.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\utf8_validator.hpp">
+      <Filter>htio\websocketpp</Filter>
+    </ClInclude>
+    <ClInclude Include="keye\htio\websocketpp\utilities.hpp">
+      <Filter>htio\websocketpp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,21 +242,21 @@
     <ClCompile Include="keye\keyeio\svc_handler.cpp">
       <Filter>keyeio</Filter>
     </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="keye\utility\system.cpp">
+      <Filter>utility</Filter>
+    </ClCompile>
     <ClCompile Include="keye\utility\conf_file.cpp">
       <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="keye\utility\logger.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="keye\htio\http_client.cpp">
-      <Filter>htio</Filter>
+    <ClCompile Include="keye\utility\md5.cpp">
+      <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="keye\htio\metric.cpp">
-      <Filter>htio</Filter>
-    </ClCompile>
-    <ClCompile Include="keye\htio\service.cpp">
-      <Filter>htio</Filter>
+    <ClCompile Include="keye\utility\scheduler.cpp">
+      <Filter>utility</Filter>
     </ClCompile>
     <ClCompile Include="keye\utility\secure_hash.cpp">
       <Filter>utility</Filter>
@@ -159,10 +264,16 @@
     <ClCompile Include="keye\utility\str_util.cpp">
       <Filter>utility</Filter>
     </ClCompile>
-    <ClCompile Include="keye\utility\md5.cpp">
-      <Filter>utility</Filter>
-    </ClCompile>
     <ClCompile Include="keye\htio\ws_service.cpp">
+      <Filter>htio</Filter>
+    </ClCompile>
+    <ClCompile Include="keye\htio\http_client.cpp">
+      <Filter>htio</Filter>
+    </ClCompile>
+    <ClCompile Include="keye\htio\metric.cpp">
+      <Filter>htio</Filter>
+    </ClCompile>
+    <ClCompile Include="keye\htio\service.cpp">
       <Filter>htio</Filter>
     </ClCompile>
     <ClCompile Include="keye\htio\ws_client.cpp">

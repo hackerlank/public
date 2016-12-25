@@ -112,13 +112,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;../;../libkeye/;../libvic/;$(DEPENDENCIES)/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../libkeye/;../libvic/;../include;../protocol;../sdks/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>keye_d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TargetDir);../sdks/libs/win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -154,7 +154,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>false</IntrinsicFunctions>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>./;../;../libkeye/;../libvic/;$(DEPENDENCIES)/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;../libkeye/;../libvic/;../include;../protocol;../sdks/include</AdditionalIncludeDirectories>
       <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
@@ -165,22 +165,31 @@
       <OptimizeReferences>
       </OptimizeReferences>
       <AdditionalDependencies>keye.lib;libvic.lib;libprotobuf-lite.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(TargetDir);$(DEPENDENCIES)/libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(TargetDir);../sdks/libs/win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <LinkTimeCodeGeneration />
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\protocol\game_protocol.h" />
-    <ClInclude Include="..\protocol\game_protocol.pb.h" />
+    <ClInclude Include="..\include\GameDefine.h" />
+    <ClInclude Include="..\include\PBHelper.h" />
+    <ClInclude Include="..\include\Server.h" />
+    <ClInclude Include="immortal\DiscardGame.h" />
+    <ClInclude Include="immortal\Game.h" />
+    <ClInclude Include="immortal\GameListener.h" />
+    <ClInclude Include="immortal\GameRule.h" />
+    <ClInclude Include="immortal\Immortal.h" />
+    <ClInclude Include="immortal\ImmortalFwd.h" />
+    <ClInclude Include="immortal\MeldGame.h" />
+    <ClInclude Include="immortal\Player.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\protocol\game_protocol.pb.cc" />
-    <ClCompile Include="server.cpp" />
+    <ClCompile Include="immortal\DiscardGame.cpp" />
+    <ClCompile Include="immortal\GameRule.cpp" />
+    <ClCompile Include="immortal\Immortal.cpp" />
+    <ClCompile Include="immortal\MeldGame.cpp" />
+    <ClCompile Include="immortal\Player.cpp" />
     <ClCompile Include="stdafx.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\protocol\game_protocol.proto" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
