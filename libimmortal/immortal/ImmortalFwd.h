@@ -21,8 +21,8 @@ typedef short value_t;
 typedef unsigned game_id_t;
 static const unit_id_t invalid_card=-1; //more reliable than 0
 
-extern std::shared_ptr<keye::logger> sLogger;
-extern std::shared_ptr<keye::logger> sDebug;
+extern KEYE_API std::shared_ptr<keye::logger> sLogger;
+extern KEYE_API std::shared_ptr<keye::logger> sDebug;
 #ifndef Logger
 #define Logger sLogger->operator<<(begl)
 #endif
@@ -40,6 +40,6 @@ extern std::shared_ptr<keye::logger> sDebug;
 #include <immortal/MeldGame.h>
 #include <immortal/Immortal.h>
 
-extern Immortal* sImmortal;
+extern KEYE_API Immortal* sImmortal;
 
 #endif /* immortal_fwd_h */

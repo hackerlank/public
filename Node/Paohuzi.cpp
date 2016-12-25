@@ -562,7 +562,7 @@ pb_enum Paohuzi::verifyBunch(bunch_t& bunch){
     return bt;
 }
 
-bool Paohuzi::validId(uint id){
+bool Paohuzi::validId(unsigned id){
     auto color=id/1000;
     if(color<1||color>2)return false;
     auto value=id%100;
@@ -1290,7 +1290,7 @@ void Paohuzi::PostSettle(Game& game){
 
 void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
     //统计工作
-    int red=0,big=0,small=0;
+    int red=0,big=0,_small=0;
     auto pair=true;
     auto last=false;
     std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
@@ -1304,7 +1304,7 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
                 ++redmap[v];
             }
             //大小牌
-            if(A/1000==1)++small;
+            if(A/1000==1)++_small;
             else ++big;
             //海底牌
             if(game.lastCard==j)last=true;
@@ -1470,12 +1470,12 @@ void Paohuzi::calcAchievement(Game& game,pb_enum rule,const std::vector<bunch_t>
             ach.set_value(nnn[ach.type()][rule]+big-18);
         }
         int S=(rule==pb_enum::PHZ_CS?18:16);
-        if(small>=S){
+        if(_small>=S){
             avs.push_back(achv_t());
             auto& ach=avs.back();
             ach.set_type(pb_enum::WIN_SMALL);
             ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
-            ach.set_value(nnn[ach.type()][rule]+small-S);
+            ach.set_value(nnn[ach.type()][rule]+_small-S);
         }
     }
     //对胡
@@ -1648,26 +1648,26 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
     for(auto i=allSuites.begin(),ii=allSuites.end(); i!=ii; ++i){
         auto& suite=*i;
         if(suite.pawns().size()<3)continue;
-        auto small=(1==suite.pawns(0)/1000);
+        auto _small=(1==suite.pawns(0)/1000);
         int pt=0;
         switch(fixOps(suite.type())){
             case pb_enum::PHZ_AAAA:
             case pb_enum::PHZ_AAAAstart:
             case pb_enum::PHZ_AAAAdesk:
-                pt+=(small?9:12);
+                pt+=(_small?9:12);
                 break;
             case pb_enum::PHZ_B4B3:
             case pb_enum::PHZ_BBBBdesk:
             case pb_enum::PHZ_BBB_B:
-                pt+=(small?6:9);
+                pt+=(_small?6:9);
                 break;
             case pb_enum::PHZ_AAAwei:
             case pb_enum::PHZ_AAA:
             case pb_enum::PHZ_AAAchou:
-                pt+=(small?3:6);
+                pt+=(_small?3:6);
                 break;
             case pb_enum::PHZ_BBB:
-                pt+=(small?1:3);
+                pt+=(_small?1:3);
                 break;
             case pb_enum::PHZ_ABC:{
                 std::vector<unit_id_t> sl(suite.pawns().begin(),suite.pawns().end());
@@ -1676,14 +1676,14 @@ int Paohuzi::calcPoints(Game&,std::vector<bunch_t>& allSuites){
                 auto B=sl[1];
                 auto C=sl[2];
                 if(A/1000==B/1000 && A/1000==C/1000 && (A%100==1 || (A%100==2&&B%100==7)))
-                    pt+=(small?3:6);
+                    pt+=(_small?3:6);
                 break;
             }
             default:
                 break;
         }
         point+=pt;
-        //log("settle point=%d, small=%d, ops=%s", pt, small, ops2String(suite.ops).c_str());
+        //log("settle point=%d, small=%d, ops=%s", pt, _small, ops2String(suite.ops).c_str());
     }
     return point;
 }
@@ -1825,8 +1825,8 @@ void Paohuzi::test(){
     bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);
-    std::vector<uint> va{5,6,7,8,9};
-    std::vector<uint> vb{4,5,6,7,8};
+    std::vector<unsigned> va{5,6,7,8,9};
+    std::vector<unsigned> vb{4,5,6,7,8};
     ddz.make_bunch(A,va);
     ddz.make_bunch(B,vb);
     

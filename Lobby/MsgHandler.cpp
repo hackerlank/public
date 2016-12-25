@@ -171,7 +171,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                     
                     auto& lobby=*omsg.mutable_lobby();
                     lobby.set_version(100);
-                    lobby.set_bulletin("欢迎进入风云世界！");
+                    lobby.set_bulletin("Welcome!");
                     lobby.mutable_games()->CopyFrom(Lobby::sLobby->gameConfig);
                 }else{
                     //not found
@@ -196,7 +196,8 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                                                                const string Uid,
                                                                const std::function<void(const http_parser&)> Func){
                         MsgLCReplays omsg;
-                        omsg.set_mid(mid);
+						const auto _mid = pb_msg::MSG_LC_REPLAYS;
+						omsg.set_mid(_mid);
                         
                         //player replay list - replay:player:<uid>{game id list}
                         auto Spdb=Lobby::sLobby->spdb;
@@ -210,7 +211,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                                 omsg.add_all()->CopyFrom(game_replay);
                         }
                         omsg.set_result(proto3::pb_enum::SUCCEESS);
-                        PBHelper::Response(Func,omsg,mid);
+                        PBHelper::Response(Func,omsg,_mid);
                     },imsg.uid(),func));
                     break;
                 }
@@ -239,7 +240,8 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                                                                const std::function<void(const http_parser&)> Func){
                         
                         MsgLCReplay omsg;
-                        omsg.set_mid(mid);
+						const auto _mid = pb_msg::MSG_LC_REPLAY;
+						omsg.set_mid(_mid);
                         
                         //replay hash data - replay:<game id>{round:data}
                         auto Spdb=Lobby::sLobby->spdb;
@@ -256,7 +258,7 @@ void MsgHandler::on_http(const http_parser& req,const std::function<void(const h
                             omsg.clear_data();
                         }
                         
-                        PBHelper::Response(Func,omsg,mid);
+                        PBHelper::Response(Func,omsg,_mid);
                     },imsg.gameid(),imsg.round(),func));
                     break;
                 }

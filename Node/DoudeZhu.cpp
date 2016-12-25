@@ -171,7 +171,7 @@ pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
                     else{
                         //more than 1: AAABBBCD,AAABBBCCCDEF
                         std::vector<int> B;
-                        std::vector<uint> vAAA;
+                        std::vector<unsigned> vAAA;
                         for(auto imap:valCount){
                             if(imap.second!=3)
                                 B.push_back(imap.second);
@@ -242,7 +242,7 @@ pb_enum DoudeZhu::verifyBunch(bunch_t& bunch){
     return bt;
 }
 
-bool DoudeZhu::validId(uint id){
+bool DoudeZhu::validId(unsigned id){
     auto color=id/1000;
     if(color<1||color>4)return false;
     auto value=id%100;
@@ -323,8 +323,8 @@ void DoudeZhu::test(){
     proto3::bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);
-    std::vector<uint> va{5,6,7,8,9};
-    std::vector<uint> vb{4,5,6,7,8};
+    std::vector<unsigned> va{5,6,7,8,9};
+    std::vector<unsigned> vb{4,5,6,7,8};
     ddz.make_bunch(A,va);
     ddz.make_bunch(B,vb);
     

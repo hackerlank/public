@@ -263,7 +263,7 @@ void Mahjong::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::b
 void Mahjong::calcAchievement(Player& player,const std::vector<bunch_t>& suites,std::vector<achv_t>& avs){
     Game& game=*player.game;
     //统计工作
-    int red=0,big=0,small=0;
+    int red=0,big=0,_small=0;
     auto last=false;
     std::map<int,int> redmap;redmap[2]=0;redmap[7]=0;redmap[10]=0;
     for(auto i=suites.begin(),ii=suites.end(); i!=ii; ++i){
@@ -276,7 +276,7 @@ void Mahjong::calcAchievement(Player& player,const std::vector<bunch_t>& suites,
                 ++redmap[v];
             }
             //大小牌
-            if(A/1000==1)++small;
+            if(A/1000==1)++_small;
             else ++big;
             //海底牌
             if(game.lastCard==j)last=true;
@@ -382,7 +382,7 @@ bool Mahjong::PreDiscard(Game& game,bunch_t& bunch){
     return true;
 }
 
-bool Mahjong::validId(uint id){
+bool Mahjong::validId(unsigned id){
     auto color=id/1000;
     if(color<1||color>4)return false;
     auto value=id%100;
@@ -397,8 +397,8 @@ void Mahjong::test(){
     proto3::bunch_t A,B;
     A.set_pos(0);
     B.set_pos(1);
-    std::vector<uint> va{5,6,7,8,9};
-    std::vector<uint> vb{4,5,6,7,8};
+    std::vector<unsigned> va{5,6,7,8,9};
+    std::vector<unsigned> vb{4,5,6,7,8};
     ddz.make_bunch(A,va);
     ddz.make_bunch(B,vb);
     

@@ -11,6 +11,8 @@
 #include <string>
 #include <memory>
 #include <string.h>
+#include <functional>
+#include <time.h>
 
 #include <stdexcept>
 #ifdef _WIN32
