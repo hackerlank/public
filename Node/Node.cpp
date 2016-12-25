@@ -14,9 +14,6 @@ using namespace keye;
 using namespace proto3;
 using namespace std;
 
-std::shared_ptr<keye::logger> sLogger;
-std::shared_ptr<keye::logger> sDebug;
-
 int main(int argc, char* argv[]) {
     const char* cfg="node.cfg";
     for(auto i=1;i<argc;++i){

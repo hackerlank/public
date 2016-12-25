@@ -14,7 +14,7 @@ class KEYE_API MeldGame: public GameRule{
     // shuld override
     //----------------------------------------------------------------
 protected:
-    bool                    comparision(uint x,uint y)override;
+    bool                    comparision(unsigned x,unsigned y)override;
     //sort pending meld
     virtual void            sortPendingMeld(std::shared_ptr<Game>,std::vector<proto3::bunch_t>& output);
 private:

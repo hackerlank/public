@@ -10,6 +10,7 @@
 #include "ImmortalFwd.h"
 #include <random>
 #include <algorithm>
+
 using namespace proto3;
 
 inline void parseCardsByString(std::vector<int>& o,const std::string& line);
@@ -51,7 +52,8 @@ void GameRule::deal(Game& game){
     if(!game.definedCards.empty()){
         std::vector<int> o;
         parseCardsByString(o,game.definedCards);
-        auto C=std::min((int)o.size(),maxCards(game));
+		//auto C = std::min((int)o.size(), maxCards(game));
+		auto C=((int)o.size())<maxCards(game)? ((int)o.size()): maxCards(game);
         for(size_t i=0,ii=C;i!=ii;++i){
             auto I=o[i];
             for(size_t j=0,jj=game.pile.size();j!=jj;++j){
@@ -151,10 +153,10 @@ void GameRule::settle(Game& game){
     
     auto spGame=game.players[0]->game;
 
-    Immortal::sImmortal->tpool.schedule(std::bind([](
+    sImmortal->tpool.schedule(std::bind([](
                                                      decltype(spGame) SpGame,
                                                      decltype(this) This){
-        auto Spdb=Immortal::sImmortal->spdb;
+        auto Spdb=sImmortal->spdb;
         auto& game=*SpGame;
         //permanent data
         bool cost_failed=false;
@@ -165,11 +167,11 @@ void GameRule::settle(Game& game){
             char key[64],field[32];
             sprintf(key,"player:%s",uid);
             
-            auto is_free=(int)Immortal::sImmortal->config.value(L"free");
+            auto is_free=(int)sImmortal->config.value(L"free");
             if(!is_free){
                 
                 int gold=0;
-                auto cost=(int)Immortal::sImmortal->config.value(L"goldcost");
+                auto cost=(int)sImmortal->config.value(L"goldcost");
                 Spdb->lock(uid);
                 {
                     char gold_key[128];
@@ -266,7 +268,7 @@ void GameRule::OnReady(Player& player){
     }
 }
 
-void GameRule::OnEngage(Player& player,uint key){
+void GameRule::OnEngage(Player& player,unsigned key){
     if(auto game=player.game){
         if(!player.engaged){
             player.engaged=true;
@@ -389,7 +391,7 @@ const char* GameRule::cards2str(std::string& str,const google::protobuf::Repeate
     return str.c_str();
 }
 
-void GameRule::make_bunch(proto3::bunch_t& bunch,const std::vector<uint>& vals){
+void GameRule::make_bunch(proto3::bunch_t& bunch,const std::vector<unsigned>& vals){
     bunch.mutable_pawns()->Clear();
     for(auto id:vals){
         bunch.mutable_pawns()->Add(id);
@@ -402,7 +404,7 @@ void GameRule::persistReplay(Game& game){
     std::string replaybuf;
     if(game.spReplay->SerializeToString(&replaybuf)){
         //replay hash data - replay:<game id>{round:data}
-        auto spdb=Immortal::sImmortal->spdb;
+        auto spdb=sImmortal->spdb;
         char key[32],field[32];
         sprintf(key,"replay:%d",game.id);
         sprintf(field,"%d",game.round-1);
@@ -431,12 +433,12 @@ void GameRule::Dismiss(Game& game){
 
 void GameRule::Release(Game& game){
     auto spGame=game.players[0]->game;
-    Immortal::sImmortal->tpool.schedule(
+    sImmortal->tpool.schedule(
                                         std::bind([](decltype(spGame) SpGame){
         while(!SpGame->spReplayItem)
             msleep(300);
 
-        auto spdb=Immortal::sImmortal->spdb;
+        auto spdb=sImmortal->spdb;
         auto& game=*SpGame;
         //player replay list - replay:player:<uid>{replays list}
         replay_item& all=*SpGame->spReplayItem;

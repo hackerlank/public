@@ -118,8 +118,8 @@ namespace keye{
     // connection for http
     // --------------------------------------------------------
     class http_connect: public connection<config>{
-        typedef typename config::transport_type transport_type;
-        typedef typename transport_type::transport_con_type transport_con_type;
+        typedef config::transport_type transport_type;
+        typedef transport_type::transport_con_type transport_con_type;
         typedef http_connect type;
         typedef lib::function<void(lib::error_code const &,const char*,size_t)> response_handler;
     public:
@@ -185,10 +185,10 @@ namespace keye{
         typedef http_client_impl client_type;
         typedef http_client_impl type;
         typedef lib::shared_ptr<type> ptr;
-        typedef typename config::transport_type transport_type;
+        typedef config::transport_type transport_type;
         typedef http_connect connection_type;
-        typedef typename connection_type::ptr connection_ptr;
-        typedef typename transport_type::transport_con_type transport_con_type;
+        typedef connection_type::ptr connection_ptr;
+        typedef transport_type::transport_con_type transport_con_type;
         typedef endpoint<connection_type,config> endpoint_type;
     public:
         

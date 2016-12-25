@@ -384,7 +384,7 @@ void MeldGame::sortPendingMeld(std::shared_ptr<Game> spgame,std::vector<proto3::
     pending.push_back(spgame->pendingMeld.front().bunch);
 }
 
-bool MeldGame::comparision(uint x,uint y){
+bool MeldGame::comparision(unsigned x, unsigned y){
     auto cx=x/1000;
     auto cy=y/1000;
     if(cx<cy)return true;

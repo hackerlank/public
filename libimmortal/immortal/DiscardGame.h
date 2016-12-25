@@ -14,7 +14,7 @@ class KEYE_API DiscardGame: public GameRule{
     // shuld override
     //----------------------------------------------------------------
 protected:
-    bool                    comparision(uint x,uint y)override;
+    bool                    comparision(unsigned x,unsigned y)override;
 private:
     virtual bool            isGameOver(Game&);
     //compare bunches

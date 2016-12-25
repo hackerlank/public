@@ -13,7 +13,10 @@
 using namespace keye;
 using namespace proto3;
 
-Immortal* Immortal::sImmortal=nullptr;
+std::shared_ptr<keye::logger> sLogger;
+std::shared_ptr<keye::logger> sDebug;
+
+Immortal* sImmortal=nullptr;
 
 Immortal::Immortal()
 :Server("node")
@@ -93,13 +96,14 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
 
             //access player from db
             auto spPlayer=std::make_shared<Player>(sh);
-            Immortal::sImmortal->tpool.schedule(std::bind([](
+            sImmortal->tpool.schedule(std::bind([](
                                                              std::shared_ptr<svc_handler> Spsh,
                                                              std::string Uid,
                                                              decltype(spPlayer) SpPlayer){
 
                 MsgNCConnect omsg;
-                auto player=SpPlayer->playData.mutable_player();
+				const auto _omid = proto3::pb_msg::MSG_NC_CONNECT;
+				auto player=SpPlayer->playData.mutable_player();
                 player->set_uid(Uid);
                 auto Shid=Spsh->id();
                 
@@ -107,7 +111,7 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
                 char key[64];
                 sprintf(key,"player:%s",Uid.c_str());
                 std::map<std::string,std::string> pmap;
-                Immortal::sImmortal->spdb->hgetall(key,pmap);
+                sImmortal->spdb->hgetall(key,pmap);
                 
                 if(pmap.count("level")) player->set_level(  atoi(pmap["level"].c_str()));
                 if(pmap.count("xp"))    player->set_xp(     atoi(pmap["xp"].c_str()));
@@ -115,12 +119,12 @@ void Immortal::on_read(svc_handler& sh, void* buf, size_t sz) {
                 if(pmap.count("silver"))player->set_silver( atoi(pmap["silver"].c_str()));
                 if(pmap.count("energy"))player->set_energy( atoi(pmap["energy"].c_str()));
                 
-                Immortal::sImmortal->addPlayer(Shid,SpPlayer);
+                sImmortal->addPlayer(Shid,SpPlayer);
                 
-                auto version = (int)Immortal::sImmortal->config.value(L"version");
+                auto version = (int)sImmortal->config.value(L"version");
                 omsg.set_result(proto3::pb_enum::SUCCEESS);
                 omsg.mutable_player()->CopyFrom(*player);
-                omsg.set_mid(omid);
+                omsg.set_mid(_omid);
                 omsg.set_version(version);
                 PBHelper::Send(*Spsh,omsg);
                 //Debug<<"client connected,uid="<<imsg.uid()<<"\n";

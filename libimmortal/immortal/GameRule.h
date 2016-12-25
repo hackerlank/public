@@ -51,9 +51,9 @@ protected:
     virtual void        init(Game&){}
     virtual void        initCard(Game&)=0;
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
-    virtual bool        validId(uint)=0;
+    virtual bool        validId(unsigned)=0;
     //compare 2 cards,for sorting or fighting
-    virtual bool        comparision(uint x,uint y)=0;
+    virtual bool        comparision(unsigned x,unsigned y)=0;
     //total cards in game
     virtual int         maxCards(Game& game)=0;
     //total hand cards,the banker gets more(bottom) usually
@@ -83,7 +83,7 @@ public:
     void                Dismiss(Game&);
     void                Release(Game&);
     void                OnReady(Player&);
-    void                OnEngage(Player&,uint);
+    void                OnEngage(Player&,unsigned);
 
 protected:
     void                settle(Game&);
@@ -98,7 +98,7 @@ protected:
     void                logHands(Game&,uint32,std::string="");
     
     void                persistReplay(Game&);
-    void                make_bunch(proto3::bunch_t&,const std::vector<uint>&);
+    void                make_bunch(proto3::bunch_t&,const std::vector<unsigned>&);
 };
 
 #endif /* GameRule_h */

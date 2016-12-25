@@ -45,22 +45,23 @@ void Player::on_read(PBHelper& pb){
                 break;
             }
             
-            Immortal::sImmortal->tpool.schedule(std::bind([](
+            sImmortal->tpool.schedule(std::bind([](
                                                              decltype(spsh) Spsh,
                                                              Player* player,
                                                              MsgCNCreate imsg){
                 MsgNCCreate omsg;
-                omsg.set_mid(omid);
+				const auto _omid = proto3::pb_msg::MSG_NC_CREATE;
+				omsg.set_mid(_omid);
                 do{
                     //gold check
-                    auto spdb=Immortal::sImmortal->spdb;
+                    auto spdb=sImmortal->spdb;
                     auto uid=player->playData.player().uid().c_str();
                     spdb->lock(uid);
                     {
                         char gold_key[128];
                         std::string str;
                         int gold=0;
-                        auto cost=(int)Immortal::sImmortal->config.value(L"goldcost");
+                        auto cost=(int)sImmortal->config.value(L"goldcost");
                         sprintf(gold_key,"player:%s",uid);
                         spdb->hget(gold_key,"gold",str);
                         gold=atoi(str.c_str());
@@ -74,7 +75,7 @@ void Player::on_read(PBHelper& pb){
                     spdb->unlock(uid);
                     
                     auto key=player->getKey();
-                    auto gameptr=Immortal::sImmortal->createGame(key,imsg);
+                    auto gameptr=sImmortal->createGame(key,imsg);
                     if(!gameptr){
                         omsg.set_result(proto3::pb_enum::ERR_PARAM);
                         Debug<<"game create failed,no rule "<<imsg.game()<<endl;
@@ -119,7 +120,7 @@ void Player::on_read(PBHelper& pb){
             MsgNCJoin omsg;
             if(pb.Parse(imsg)){
                 auto gid=imsg.game_id();
-                if(auto gameptr=Immortal::sImmortal->findGame(gid)){
+                if(auto gameptr=sImmortal->findGame(gid)){
                     auto rule=gameptr->rule;
                     if(!rule->IsReady(*gameptr)){
                         game=gameptr;
@@ -222,7 +223,7 @@ void Player::on_read(PBHelper& pb){
             std::shared_ptr<Player> spPlayer=shared_from_this();
             while (pb.Parse(imsg)){
                 auto gameId=imsg.game();
-                auto spGame=Immortal::sImmortal->findGame(gameId);
+                auto spGame=sImmortal->findGame(gameId);
                 if(!spGame){
                     Debug<<"reconnect: game "<<gameId<<" not found"<<endl;
                     break;
@@ -238,12 +239,12 @@ void Player::on_read(PBHelper& pb){
                             auto newsh=spsh;
                             spsh=p->spsh;
                             //close current player
-                            Immortal::sImmortal->on_close(*spsh);
-                            Immortal::sImmortal->on_close(*newsh);
+                            sImmortal->on_close(*spsh);
+                            sImmortal->on_close(*newsh);
                             
                             //revive player network handler
                             p->spsh=newsh;
-                            Immortal::sImmortal->addPlayer(newsh->id(),p);
+                            sImmortal->addPlayer(newsh->id(),p);
                             spPlayer=p;
                             break;
                         }

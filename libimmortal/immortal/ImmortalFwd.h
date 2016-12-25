@@ -40,4 +40,6 @@ extern std::shared_ptr<keye::logger> sDebug;
 #include <immortal/MeldGame.h>
 #include <immortal/Immortal.h>
 
+extern Immortal* sImmortal;
+
 #endif /* immortal_fwd_h */

@@ -188,6 +188,6 @@ bool DiscardGame::isGameOver(Game& game){
     return false;
 }
 
-bool DiscardGame::comparision(uint x,uint y){
+bool DiscardGame::comparision(unsigned x,unsigned y){
     return x%100<y%100;
 }
