@@ -48,7 +48,8 @@ public:
     virtual bool        PreMessage(Player&,PBHelper&)           {return true;}
 protected:
     //should init cards,extra data
-    virtual void        init(Game&)=0;
+    virtual void        init(Game&){}
+    virtual void        initCard(Game&)=0;
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool        validId(uint)=0;
     //compare 2 cards,for sorting or fighting

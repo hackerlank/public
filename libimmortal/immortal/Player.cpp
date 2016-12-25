@@ -87,7 +87,7 @@ void Player::on_read(PBHelper& pb){
                             maxRound=kv.ivalue();
                         else if(key=="defined_cards")
                             gameptr->definedCards=kv.value();
-                        else if(key=="catetory")
+                        else if(key=="category")
                             gameptr->category=(pb_enum)kv.ivalue();
                         else
                             gameptr->options[key]=kv;

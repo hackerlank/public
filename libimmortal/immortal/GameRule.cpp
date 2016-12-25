@@ -39,6 +39,9 @@ void GameRule::deal(Game& game){
         for(pos_t i=0; i < MP; ++i)game.spFinish->add_play();
     }
     
+    //init cards
+    initCard(game);
+    
     //shuffle
     std::random_device rd;
     std::mt19937 gen(rd());

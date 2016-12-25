@@ -288,7 +288,7 @@ public abstract class GamePanel : MonoBehaviour,GameController,IPointerDownHandl
 		var O=(maxArea+2-_pos)%maxArea;
 		var L=(maxArea-1-_pos)%maxArea;
 		
-		if(maxArea>maxPlayer)
+		if(maxArea>maxPlayer && com[O]!=com[L])
 			com[O].gameObject.SetActive(false);
 
 		if(com.Length>0)com[0]=tempD[M];

@@ -49,7 +49,9 @@ int DoudeZhu::bottom(Game& game){
 
 void DoudeZhu::init(Game& game){
     game.spExtra=std::make_shared<DoudeZhuData>();
-    
+}
+
+void DoudeZhu::initCard(Game& game){
     //id: [color-index-value]
     for(int i=1;i<=13;++i){     //value: A-K => 1-13
         for(int j=1;j<=4;++j){  //color: clubs,diamonds,hearts,spades => 1-4

@@ -95,7 +95,9 @@ int Paohuzi::bottom(Game& game){
 
 void Paohuzi::init(Game& game){
     game.spExtra=std::make_shared<PaohuziData>();
-    
+}
+
+void Paohuzi::initCard(Game& game){
     //id: [color-index-value]
     for(int j=1;j<=2;++j){          //Small,Big => 1-2
         for(int i=1;i<=10;++i){      //1-10

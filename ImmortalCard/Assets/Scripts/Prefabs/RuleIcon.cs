@@ -6,8 +6,6 @@ using Proto3;
 public class RuleIcon : MonoBehaviour {
 
 	public Image		Icon;
-	public Text			Name;
-
 	public Toggle		toggle;
 	public ToggleGroup	Group;
 
@@ -23,7 +21,6 @@ public class RuleIcon : MonoBehaviour {
 				var sprite=RuleSprites.Instance.dict[category];
 				Icon.sprite=sprite;
 			}
-			Name.text=rule2name(value);
 
 			if(RuleGroup==null)
 				RuleGroup=Group;

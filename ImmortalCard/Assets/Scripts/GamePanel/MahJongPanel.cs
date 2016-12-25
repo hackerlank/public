@@ -165,8 +165,7 @@ public class MahJongPanel : GamePanel {
 			break;
 		default:
 			//abandon
-			if(to==-1)to=msg.From;
-			A.DiscardTo(AbandonAreas[to],AbandonScalar);
+			A.DiscardTo(AbandonAreas[from],AbandonScalar);
 			break;
 		}
 		//do meld
