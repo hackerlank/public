@@ -93,7 +93,9 @@ int Paohuzi::bottom(Game& game){
     return 1;
 }
 
-void Paohuzi::initCard(Game& game){
+void Paohuzi::init(Game& game){
+    game.spExtra=std::make_shared<PaohuziData>();
+    
     //id: [color-index-value]
     for(int j=1;j<=2;++j){          //Small,Big => 1-2
         for(int i=1;i<=10;++i){      //1-10
@@ -605,6 +607,7 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
     //log("settle pos=%d, suites=%d, point=%d",pos,allSuites.size(),point);
     
     std::vector<achv_t> achvs;
+    auto& extraData=*static_cast<PaohuziData*>(game.spExtra.get());
     if(point>=winPoint(game,game.category)){
         //胡了
         play.set_win(1);
@@ -709,14 +712,14 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
                 }
         }
         //荒番
-        if(game.noWinner>0&&game.category==pb_enum::PHZ_CD_QMT){
+        if(extraData.noWinner>0&&game.category==pb_enum::PHZ_CD_QMT){
             achvs.push_back(achv_t());
             auto& ach=achvs.back();
             ach.set_type(pb_enum::WIN_YELLOW);
             ach.set_key(pb_enum::ACHV_KEY_MULTIPLE);
-            ach.set_value(nnn[ach.type()][game.category]+game.noWinner-1);
+            ach.set_value(nnn[ach.type()][game.category]+extraData.noWinner-1);
             //赢牌后重计荒庄次数
-            game.noWinner=0;
+            extraData.noWinner=0;
         }
         
         
@@ -834,7 +837,7 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
         //log("end point=%d, chunk=%d, multiple=%d, score=%d",point,chunk,multiple,score);
         
         //换庄
-        game.bankerChanged=(game.banker!=pos);
+        extraData.bankerChanged=(game.banker!=pos);
         game.banker=pos;
         //点炮
         if(fire){
@@ -917,14 +920,14 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
             //郴州毛胡子玩法，荒庄需要换庄
             auto M=MaxPlayer(game);
             auto p=(game.banker+1)%M;
-            game.bankerChanged=true;
+            extraData.bankerChanged=true;
             game.banker=p;
             changePos(game,p);
         }
         
         //荒庄
-        ++game.noWinner;
-        game.bankerChanged=false;
+        ++extraData.noWinner;
+        extraData.bankerChanged=false;
         if(game.category==pb_enum::PHZ_SYBP||game.category==pb_enum::PHZ_XX_GHZ)
             //剥皮和湘乡告胡子，庄家扣10分
             game.players[game.banker]->playData.set_score(-10);
@@ -1013,7 +1016,7 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
         }
         
         //计算胡牌算分
-        if(game.m_winPeo>0&&pos!=-1){
+        if(extraData.m_winPeo>0&&pos!=-1){
             //天胡，双龙，小七对也进来处理
             if(game.pile.size()>=23){
                 //地胡：1，闲家；2，闲家无进张；3，牌堆满的；4，庄家出了一张牌
@@ -1139,14 +1142,14 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
             //胡牌番数含义：中庄x2:0 中庄翻番：1 连中：2   注：有5福名堂
             if(pos==game.banker&&game.players[pos]->winCount>1&&!b5FU){
                 //只有庄家赢了才做，中庄X2，连胡，中庄翻番的限制计算
-                if(game._multiScore==0){
+                if(extraData._multiScore==0){
                     //中庄算胡分
                     //连胡处理
                     lastScore*=2;
-                } else if(game._multiScore==1){
+                } else if(extraData._multiScore==1){
                     //中庄翻番算胡分
                     lastScore*=std::pow(2,game.players[pos]->winCount-1);
-                } else if(game._multiScore==2){
+                } else if(extraData._multiScore==2){
                     //连中算胡分
                     lastScore+=4;
                 }
@@ -1176,8 +1179,8 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
             //封装消息
             
             //换庄
-            game.bankerChanged=(game.banker!=pos);
-            if(game.bankerChanged){
+            extraData.bankerChanged=(game.banker!=pos);
+            if(extraData.bankerChanged){
                 //说明庄家输了 ，连胡计数要归零
                 game.players[game.banker]->winCount=0;
             }
@@ -1193,7 +1196,7 @@ bool Paohuzi::PreSettle(Player& player,std::vector<proto3::bunch_t>* pAllSuites,
             //到这里，pos可能非法，
             for(auto i=0;i<M;++i)
                 game.players[i]->winCount=0;
-            game.bankerChanged=false;
+            extraData.bankerChanged=false;
             for(int i=0; i<M; ++i){
                 game.spFinish->mutable_play(i)->set_score(game.spFinish->play(i).score()+game.players[i]->playData.score());
                 //spFinalEnd->m_total[i].score+=msg.m_scores[i];

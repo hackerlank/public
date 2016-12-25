@@ -40,7 +40,7 @@ int Mahjong::bottom(Game& game){
     return 1;
 }
 
-void Mahjong::initCard(Game& game){
+void Mahjong::init(Game& game){
     //id: [color-index-value]
     for(int j=1;j<=3;++j){          //Tong,Suo,Wan => 1-3
         for(int i=1;i<=9;++i){      //1-9

@@ -47,7 +47,8 @@ public:
     //handle messages customized, no post message 'cause async handle
     virtual bool        PreMessage(Player&,PBHelper&)           {return true;}
 protected:
-    virtual void        initCard(Game&)=0;
+    //should init cards,extra data
+    virtual void        init(Game&)=0;
     virtual proto3::pb_enum verifyBunch(proto3::bunch_t&)=0;
     virtual bool        validId(uint)=0;
     //compare 2 cards,for sorting or fighting
@@ -75,6 +76,7 @@ protected:
     // functional
     //----------------------------------------------------------------
 public:
+    void                Init(Game&);
     bool                IsReady(Game&);
     bool                IsDismissed(Game&);
     void                Dismiss(Game&);

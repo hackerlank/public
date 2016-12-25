@@ -51,20 +51,8 @@ struct KEYE_API Game{
     std::shared_ptr<GameRule>               rule;
     std::vector<std::shared_ptr<Player>>    players;
     std::map<std::string,proto3::key_value> options;    //game options
-    std::shared_ptr<void*>                  spExtra;    //custom data
+    std::shared_ptr<void>                   spExtra;    //custom data
 
-    //special for phz
-    int     noWinner;
-    bool    bankerChanged;
-    int     m_winPeo;
-    int		_multiScore;	//单局番数或者分数阈值
-    int		_limitType;		//郴州，起手双提，控制能否继续吃碰，0：能，1：不能
-    int		_fireDouble;	//广西跑胡子一炮双向。0未选择，1选择了
-    
-    //special for ddz
-    int     anti;
-    int     multiple;
-    
     Game()
     :id(-1)
     ,dismissRequest(0)
@@ -74,8 +62,6 @@ struct KEYE_API Game{
     ,token(0)
     ,round(0)
     ,Round(1)
-    ,noWinner(0)
-    ,bankerChanged(false)
     {}
 };
 #endif /* Game_hpp */

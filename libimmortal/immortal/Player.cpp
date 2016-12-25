@@ -94,6 +94,7 @@ void Player::on_read(PBHelper& pb){
                     }
                     
                     player->game=gameptr;
+                    gameptr->rule->Init(*gameptr);
                     gameptr->players.push_back(player->shared_from_this());
                     gameptr->Round=maxRound;
                     gameptr->start_timestamp=time(nullptr);
@@ -257,8 +258,6 @@ void Player::on_read(PBHelper& pb){
                     auto& start=*msg.mutable_deal();
                     start.set_banker(spGame->banker);
                     start.set_pos(spPlayer->playData.seat());
-                    start.set_ante(spGame->anti);
-                    start.set_multiple(spGame->multiple);
                     for(int i=0;i<MP;++i)
                         start.mutable_count()->Add((int)spGame->players[i]->playData.hands().size());
                     for(auto b:spGame->bottom)start.add_bottom(b);

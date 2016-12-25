@@ -25,7 +25,7 @@ public:
     bool            comparePendingMeld(std::shared_ptr<Game>,Game::pending_t& x,Game::pending_t& y)override;
     static void     test();
 protected:
-    void            initCard(Game&)override;
+    void            init(Game&)override;
     bool            validId(uint)override;
     int             maxCards(Game& game)override;
     int             maxHands(Game& game)override;

@@ -14,6 +14,10 @@ using namespace proto3;
 
 inline void parseCardsByString(std::vector<int>& o,const std::string& line);
 
+void GameRule::Init(Game& game){
+    init(game);
+}
+
 void GameRule::deal(Game& game){
     Debug<<"game "<<(int)game.id<<" begin, type("<<Type()<<")"<<endl;
 
@@ -34,9 +38,6 @@ void GameRule::deal(Game& game){
         game.spFinish=std::make_shared<MsgNCFinish>();
         for(pos_t i=0; i < MP; ++i)game.spFinish->add_play();
     }
-    
-    //init cards
-    initCard(game);
     
     //shuffle
     std::random_device rd;

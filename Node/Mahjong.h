@@ -24,7 +24,7 @@ public:
 
     static void     test();
 protected:
-    void            initCard(Game&)override;
+    void            init(Game&)override;
     bool            validId(uint)override;
     int             maxCards(Game& game)override;
     int             maxHands(Game& game)override;
