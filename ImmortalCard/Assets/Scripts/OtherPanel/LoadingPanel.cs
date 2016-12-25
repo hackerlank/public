@@ -163,7 +163,14 @@ public class LoadingPanel : MonoBehaviour {
 		
 		//Debug.Log("----DoLogin account="+msg.User.Account);
 		Main.Instance.MainPlayer.http.Request<MsgCLLogin>(msg.Mid,msg);
-		yield break;
+
+		var now=Time.unscaledTime;
+		while(Main.Instance.MainPlayer.msgLCLogin==null){
+			if(Time.unscaledTime-now>5 && !BlockView.Instance.Blocking){
+				BlockView.Instance.Blocking=true;
+			}
+			yield return null;
+		}
 	}
 
 	void setProgress(float percent,int bundleInProgress,int totalInProgress){

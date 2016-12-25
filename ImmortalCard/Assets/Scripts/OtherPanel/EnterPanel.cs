@@ -13,6 +13,9 @@ public class EnterPanel : MonoBehaviour {
 	public Transform	OptionRoot;
 	public Text			Information;
 
+	public Image		Title;
+	public Sprite[]		TitleSprites;
+
 	[HideInInspector]
 	public pb_enum	CurrentGame;
 
@@ -37,6 +40,19 @@ public class EnterPanel : MonoBehaviour {
 	IEnumerator Start(){
 		if(Config.games==null || !Config.games.ContainsKey(CurrentGame))
 			yield break;
+
+		//title
+		switch(CurrentGame){
+		case pb_enum.GameDdz:
+			Title.sprite=TitleSprites[2];
+			break;
+		case pb_enum.GamePhz:
+			Title.sprite=TitleSprites[1];
+			break;
+		default:
+			Title.sprite=TitleSprites[0];
+			break;
+		}
 
 		if(null==Config.options)
 			StartCoroutine(Main.Instance.updater.Load<TextAsset>(
