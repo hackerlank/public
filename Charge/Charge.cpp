@@ -14,9 +14,8 @@
 
 using namespace keye;
 
-std::shared_ptr<keye::logger> sLogger;
-std::shared_ptr<keye::logger> sDebug;
-
+std::shared_ptr<keye::logger> Server::sLogger;
+std::shared_ptr<keye::logger> Server::sDebug;
 Charge* Charge::sCharge=nullptr;
 
 string buildContent(const StringMap &contentPairs);

@@ -11,7 +11,14 @@
 
 #include <functional>
 
-class Server :public keye::ws_service {
+#ifndef Logger
+#define Logger Server::sLogger->operator<<(begl)
+#endif
+#ifndef Debug
+#define Debug Server::sDebug->operator<<(begl)
+#endif
+
+class KEYE_API Server :public keye::ws_service {
 public:
     Server(const char* cname,size_t ios = 1, size_t works = 1, size_t rb_size = 510)
     :ws_service(ios, works, rb_size)
@@ -111,6 +118,8 @@ public:
 
     std::function<bool(size_t id,size_t milliseconds)> timer;
 
+    static std::shared_ptr<keye::logger> sLogger;
+    static std::shared_ptr<keye::logger> sDebug;
 };
 
 inline unsigned long genSession(){

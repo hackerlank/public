@@ -17,9 +17,9 @@ using namespace keye;
 #define WRITE_FREQ 1000
 #endif // WRITE_FREQ
 
-std::shared_ptr<keye::logger> sLogger;
-std::shared_ptr<keye::logger> sDebug;
 
+std::shared_ptr<keye::logger> Server::sLogger;
+std::shared_ptr<keye::logger> Server::sDebug;
 Lobby* Lobby::sLobby=nullptr;
 
 Lobby::Lobby()

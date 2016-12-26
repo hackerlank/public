@@ -13,18 +13,9 @@
 
 #include "protocol.pb.h"
 
-extern std::shared_ptr<keye::logger> sLogger;
-extern std::shared_ptr<keye::logger> sDebug;
-#ifndef Logger
-#define Logger sLogger->operator<<(begl)
-#endif
-#ifndef Debug
-#define Debug sDebug->operator<<(begl)
-#endif
-
-#include "PBHelper.h"
 #include "GameDefine.h"
 #include "Server.h"
+#include "PBHelper.h"
 #include "MsgHandler.h"
 #include "Charge.h"
 #include "PaySvc.h"

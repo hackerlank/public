@@ -21,18 +21,9 @@ typedef short value_t;
 typedef unsigned game_id_t;
 static const unit_id_t invalid_card=-1; //more reliable than 0
 
-extern KEYE_API std::shared_ptr<keye::logger> sLogger;
-extern KEYE_API std::shared_ptr<keye::logger> sDebug;
-#ifndef Logger
-#define Logger sLogger->operator<<(begl)
-#endif
-#ifndef Debug
-#define Debug sDebug->operator<<(begl)
-#endif
-
-#include "PBHelper.h"
 #include "GameDefine.h"
 #include "Server.h"
+#include "PBHelper.h"
 #include <immortal/Player.h>
 #include <immortal/Game.h>
 #include <immortal/GameRule.h>
