@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0BDB96A0-5E33-4AD9-8178-9B0330FDB360}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Immortal</RootNamespace>
+    <AssemblyName>Immortal</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\..\..\..\Applications\Unity\Unity.app\Contents\Frameworks\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MyClass.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Google.Protobuf\ByteArray.cs" />
+    <Compile Include="Google.Protobuf\ByteString.cs" />
+    <Compile Include="Google.Protobuf\CodedInputStream.cs" />
+    <Compile Include="Google.Protobuf\CodedOutputStream.ComputeSize.cs" />
+    <Compile Include="Google.Protobuf\CodedOutputStream.cs" />
+    <Compile Include="Google.Protobuf\Collections\MapField.cs" />
+    <Compile Include="Google.Protobuf\Collections\ReadOnlyDictionary.cs" />
+    <Compile Include="Google.Protobuf\Collections\RepeatedField.cs" />
+    <Compile Include="Google.Protobuf\Compatibility\PropertyInfoExtensions.cs" />
+    <Compile Include="Google.Protobuf\Compatibility\TypeExtensions.cs" />
+    <Compile Include="Google.Protobuf\FieldCodec.cs" />
+    <Compile Include="Google.Protobuf\FrameworkPortability.cs" />
+    <Compile Include="Google.Protobuf\ICustomDiagnosticMessage.cs" />
+    <Compile Include="Google.Protobuf\IDeepCloneable.cs" />
+    <Compile Include="Google.Protobuf\IMessage.cs" />
+    <Compile Include="Google.Protobuf\InvalidJsonException.cs" />
+    <Compile Include="Google.Protobuf\InvalidProtocolBufferException.cs" />
+    <Compile Include="Google.Protobuf\JsonFormatter.cs" />
+    <Compile Include="Google.Protobuf\JsonParser.cs" />
+    <Compile Include="Google.Protobuf\JsonToken.cs" />
+    <Compile Include="Google.Protobuf\JsonTokenizer.cs" />
+    <Compile Include="Google.Protobuf\LimitedInputStream.cs" />
+    <Compile Include="Google.Protobuf\MessageExtensions.cs" />
+    <Compile Include="Google.Protobuf\MessageParser.cs" />
+    <Compile Include="Google.Protobuf\Properties\AssemblyInfo.cs" />
+    <Compile Include="Google.Protobuf\ProtoPreconditions.cs" />
+    <Compile Include="Google.Protobuf\Reflection\Descriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\DescriptorBase.cs" />
+    <Compile Include="Google.Protobuf\Reflection\DescriptorPool.cs" />
+    <Compile Include="Google.Protobuf\Reflection\DescriptorUtil.cs" />
+    <Compile Include="Google.Protobuf\Reflection\DescriptorValidationException.cs" />
+    <Compile Include="Google.Protobuf\Reflection\EnumDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\EnumValueDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\FieldAccessorBase.cs" />
+    <Compile Include="Google.Protobuf\Reflection\FieldDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\FieldType.cs" />
+    <Compile Include="Google.Protobuf\Reflection\FileDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\GeneratedClrTypeInfo.cs" />
+    <Compile Include="Google.Protobuf\Reflection\IDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\IFieldAccessor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\MapFieldAccessor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\MessageDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\MethodDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\OneofAccessor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\OneofDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\OriginalNameAttribute.cs" />
+    <Compile Include="Google.Protobuf\Reflection\PackageDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\PartialClasses.cs" />
+    <Compile Include="Google.Protobuf\Reflection\ReflectionUtil.cs" />
+    <Compile Include="Google.Protobuf\Reflection\RepeatedFieldAccessor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\ServiceDescriptor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\SingleFieldAccessor.cs" />
+    <Compile Include="Google.Protobuf\Reflection\TypeRegistry.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Any.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\AnyPartial.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Api.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Duration.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\DurationPartial.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Empty.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\FieldMask.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\FieldMaskPartial.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\SourceContext.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Struct.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\TimeExtensions.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Timestamp.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\TimestampPartial.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Type.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\ValuePartial.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\Wrappers.cs" />
+    <Compile Include="Google.Protobuf\WellKnownTypes\WrappersPartial.cs" />
+    <Compile Include="Google.Protobuf\WireFormat.cs" />
+    <Compile Include="Scripts\Networking\HttpProxy.cs" />
+    <Compile Include="Scripts\Networking\MsgIntepreter.cs" />
+    <Compile Include="Scripts\Networking\WSProxy.cs" />
+    <Compile Include="Scripts\Utils\CSV.cs" />
+    <Compile Include="Scripts\Utils\Utils.cs" />
+    <Compile Include="SocketIO\JSONObject\JSONObject.cs" />
+    <Compile Include="SocketIO\JSONObject\JSONTemplates.cs" />
+    <Compile Include="SocketIO\JSONObject\VectorTemplates.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\Ack.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\Decoder.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\Encoder.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\EnginePacketType.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\Packet.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\Parser.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\SocketIOComponent.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\SocketIOEvent.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\SocketIOException.cs" />
+    <Compile Include="SocketIO\Scripts\SocketIO\SocketPacketType.cs" />
+    <Compile Include="SocketIO\Scripts\Test\TestSocketIO.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\AssemblyInfo.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\ByteOrder.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\CloseEventArgs.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\CloseStatusCode.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\CompressionMethod.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\ErrorEventArgs.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Ext.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Fin.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\HandshakeBase.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\HandshakeRequest.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\HandshakeResponse.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\LogData.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\LogLevel.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Logger.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Mask.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\MessageEventArgs.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\AuthenticationBase.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\AuthenticationChallenge.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\AuthenticationResponse.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\AuthenticationSchemes.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\Chunk.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\ChunkStream.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\ChunkedRequestStream.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\Cookie.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\CookieCollection.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\CookieException.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\EndPointListener.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\EndPointManager.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpBasicIdentity.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpConnection.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpDigestIdentity.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpHeaderInfo.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpHeaderType.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpListener.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpListenerContext.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpListenerException.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpListenerPrefixCollection.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpListenerRequest.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpListenerResponse.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpStatusCode.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpStreamAsyncResult.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpUtility.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\HttpVersion.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\InputChunkState.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\InputState.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\LineState.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\ListenerAsyncResult.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\ListenerPrefix.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\NetworkCredential.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\QueryStringCollection.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\ReadBufferState.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\RequestStream.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\ResponseStream.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\Security\SslStream.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\WebHeaderCollection.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\WebSockets\HttpListenerWebSocketContext.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\WebSockets\TcpListenerWebSocketContext.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Net\WebSockets\WebSocketContext.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Opcode.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\PayloadData.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\Rsv.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\WebSocket.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\WebSocketException.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\WebSocketFrame.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\WebSocketState.cs" />
+    <Compile Include="SocketIO\WebsocketSharp\WebSocketStream.cs" />
+    <Compile Include="Plugins\Loom.cs">
+      <DependentUpon>iTween.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="SocketIO\JSONObject\readme.txt" />
+    <None Include="SocketIO\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\" />
+  </ItemGroup>
+</Project>
